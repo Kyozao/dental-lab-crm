@@ -1,0 +1,322 @@
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { prisma } from "@/lib/prisma";
+import { createClient } from "@/lib/supabase/server";
+import { getAuthenticatedAppUser } from "@/lib/auth/get-app-user";
+import type { CaseStatusValue } from "@/app/cases/case.shared";
+import { CaseStatus } from "@/app/generated/prisma/client";
+import { parseCaseComponentsPayload } from "@/lib/validators/case";
+
+type UpdateCaseStatusInput = {
+  caseId: string;
+  status: CaseStatusValue;
+};
+
+const VALID_CASE_STATUSES: ReadonlyArray<CaseStatus> = [
+  "ENTRY",
+  "WAITING_INFO",
+  "DESIGNING",
+  "WAITING_APPROVAL",
+  "DESIGN_READY",
+  "MILLING_PRINTING",
+  "DONE",
+];
+
+function isValidCaseStatus(status: string): status is CaseStatus {
+  return VALID_CASE_STATUSES.includes(status as CaseStatus);
+}
+
+export async function updateCaseStatusAction({
+  caseId,
+  status,
+}: UpdateCaseStatusInput) {
+  const appUser = await getAuthenticatedAppUser();
+
+  if (!appUser) throw new Error("Not authenticated.");
+  if (!isValidCaseStatus(status)) throw new Error("Invalid case status.");
+
+  const existingCase = await prisma.case.findUnique({
+    where: { id: caseId },
+    select: { id: true, cadDesignerId: true },
+  });
+
+  if (!existingCase) throw new Error("Case not found.");
+
+  if (
+    appUser.role === "CAD_DESIGNER" &&
+    existingCase.cadDesignerId !== appUser.id
+  ) {
+    throw new Error("Unauthorized.");
+  }
+
+  await prisma.case.update({
+    where: { id: caseId },
+    data: { currentStatus: status },
+  });
+
+  revalidatePath("/kanban");
+}
+
+export async function uploadCaseAttachmentAction(formData: FormData) {
+  const appUser = await getAuthenticatedAppUser();
+  if (!appUser) throw new Error("Not authenticated.");
+
+  const caseId = String(formData.get("caseId") ?? "");
+  const file = formData.get("file");
+
+  if (!caseId) throw new Error("Missing caseId.");
+  if (!(file instanceof File)) throw new Error("Missing file.");
+  if (!file.size) throw new Error("Empty file.");
+
+  const allowedExtensions = [".html", ".htm", ".zip", ".pdf", ".png", ".jpg", ".jpeg", ".webp", ".stl"];
+  const lowerName = file.name.toLowerCase();
+
+  if (!allowedExtensions.some((ext) => lowerName.endsWith(ext))) {
+    throw new Error("Unsupported file type.");
+  }
+
+  const existingCase = await prisma.case.findUnique({
+    where: { id: caseId },
+    select: { id: true, cadDesignerId: true },
+  });
+
+  if (!existingCase) throw new Error("Case not found.");
+
+  if (
+    appUser.role === "CAD_DESIGNER" &&
+    existingCase.cadDesignerId !== appUser.id
+  ) {
+    throw new Error("Unauthorized.");
+  }
+
+  const supabase = await createClient();
+
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+  const filePath = `${caseId}/${Date.now()}-${safeName}`;
+
+  const { error: uploadError } = await supabase.storage
+    .from("case-files")
+    .upload(filePath, buffer, {
+      contentType: file.type || "application/octet-stream",
+      upsert: false,
+    });
+
+  if (uploadError) {
+    throw new Error(uploadError.message);
+  }
+
+  await prisma.caseAttachment.create({
+    data: {
+      caseId,
+      fileName: file.name,
+      filePath,
+      fileType: file.type || null,
+      fileSize: file.size,
+      uploadedById: appUser.id,
+    },
+  });
+
+  revalidatePath("/kanban");
+}
+
+export async function getCaseAttachmentUrlAction(filePath: string) {
+  const appUser = await getAuthenticatedAppUser();
+  if (!appUser) throw new Error("Not authenticated.");
+
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.storage
+    .from("case-files")
+    .createSignedUrl(filePath, 60 * 10);
+
+  if (error || !data?.signedUrl) {
+    throw new Error(error?.message ?? "Could not create file url.");
+  }
+
+  return data.signedUrl;  
+}
+
+export async function deleteKanbanCaseAction(caseId: string) {
+  if (!caseId) {
+    throw new Error("Case id is required.");
+  }
+
+  await prisma.caseAttachment.deleteMany({
+    where: { caseId },
+  });
+
+  await prisma.case.delete({
+    where: { id: caseId },
+  });
+
+  revalidatePath("/cases");
+}
+
+export async function updateKanbanCaseAction(formData: FormData) {
+  const appUser = await getAuthenticatedAppUser();
+  if (!appUser) throw new Error("Not authenticated.");
+
+  const caseId = String(formData.get("id") ?? "");
+  if (!caseId) throw new Error("Missing case id.");
+
+  const existingCase = await prisma.case.findUnique({
+    where: { id: caseId },
+    select: {
+      id: true,
+      cadDesignerId: true,
+    },
+  });
+
+  if (!existingCase) {
+    throw new Error("Case not found.");
+  }
+
+  const pendingNote = String(formData.get("pendingNote") ?? "").trim();
+  const parsedComponents = parseCaseComponentsPayload(
+    formData.get("componentsPayload"),
+  );
+
+  if (!parsedComponents.success) {
+    throw new Error("Invalid component data.");
+  }
+
+  const components = parsedComponents.data;
+
+  if (components.length) {
+    const uniqueIds = [...new Set(components.map((item) => item.componentId))];
+    const existingCount = await prisma.component.count({
+      where: {
+        id: {
+          in: uniqueIds,
+        },
+      },
+    });
+
+    if (existingCount !== uniqueIds.length) {
+      throw new Error("One or more components are invalid.");
+    }
+  }
+
+  if (appUser.role === "CAD_DESIGNER") {
+    if (existingCase.cadDesignerId !== appUser.id) {
+      throw new Error("Unauthorized.");
+    }
+
+    const existingUsages = await prisma.caseComponentUsage.findMany({
+      where: { caseId },
+      orderBy: { createdAt: "asc" },
+      select: {
+        componentId: true,
+        quantity: true,
+        chargeClient: true,
+        unitCost: true,
+        unitPrice: true,
+        notes: true,
+      },
+    });
+
+    const existingByComponentId = new Map<string, typeof existingUsages>();
+
+    for (const usage of existingUsages) {
+      const usages = existingByComponentId.get(usage.componentId) ?? [];
+      usages.push(usage);
+      existingByComponentId.set(usage.componentId, usages);
+    }
+
+    const nextComponents = components.map((component) => {
+      const available = existingByComponentId.get(component.componentId);
+      const matched = available?.shift();
+
+      return {
+        componentId: component.componentId,
+        quantity: matched?.quantity ?? 1,
+        chargeClient: matched?.chargeClient ?? true,
+        unitCost: matched?.unitCost ?? null,
+        unitPrice: matched?.unitPrice ?? null,
+        notes: matched?.notes ?? null,
+      };
+    });
+
+    await prisma.case.update({
+      where: { id: caseId },
+      data: {
+        pendingNote: pendingNote || null,
+        caseComponentUsages: {
+          deleteMany: {},
+          create: nextComponents,
+        },
+      },
+    });
+
+    revalidatePath("/kanban");
+    return;
+  }
+  
+
+  const code = String(formData.get("code") ?? "").trim();
+  const patientName = String(formData.get("patientName") ?? "").trim();
+  const clinicIdRaw = String(formData.get("clinicId") ?? "").trim();
+  const dentistIdRaw = String(formData.get("dentistId") ?? "").trim();
+  const serviceTypeIdRaw = String(formData.get("serviceTypeId") ?? "").trim();
+  const cadDesignerIdRaw = String(formData.get("cadDesignerId") ?? "").trim();
+  const currentStatusRaw = String(formData.get("currentStatus") ?? "").trim();
+  const teeth = String(formData.get("teeth") ?? "").trim();
+  const elementsQtyRaw = String(formData.get("elementsQty") ?? "").trim();
+  const shade = String(formData.get("shade") ?? "").trim();
+  const dueDateRaw = String(formData.get("dueDate") ?? "").trim();
+  const observations = String(formData.get("observations") ?? "").trim();
+  const isUrgentRaw = String(formData.get("isUrgent") ?? "");
+  const isUrgent = isUrgentRaw === "on";
+  const parsedElementsQty = elementsQtyRaw ? Number(elementsQtyRaw) : NaN;
+  const elementsQty = elementsQtyRaw ? parsedElementsQty : null;
+
+  if (!code) throw new Error("Code is required.");
+  if (!patientName) throw new Error("Patient name is required.");
+  if (!isValidCaseStatus(currentStatusRaw)) {
+    throw new Error("Invalid case status.");
+  }
+  if (
+    elementsQtyRaw &&
+    (!Number.isInteger(parsedElementsQty) || parsedElementsQty < 1)
+  ) {
+    throw new Error("Elements quantity must be a whole number greater than 0.");
+  }
+
+  await prisma.case.update({
+    where: { id: caseId },
+    data: {
+      code,
+      patientName,
+      clinicId: clinicIdRaw || null,
+      dentistId: dentistIdRaw || null,
+      serviceTypeId: serviceTypeIdRaw || null,
+      cadDesignerId: cadDesignerIdRaw || null,
+      currentStatus: currentStatusRaw,
+      teeth: teeth || null,
+      elementsQty,
+      shade: shade || null,
+      
+      dueDate: dueDateRaw ? new Date(`${dueDateRaw}T00:00:00`) : null,
+      isUrgent,
+      pendingNote: pendingNote || null,
+      observations: observations || null,
+      caseComponentUsages: {
+        deleteMany: {},
+        create: components.map((component) => ({
+          componentId: component.componentId,
+          quantity: component.quantity,
+          chargeClient: component.chargeClient,
+          unitCost: component.unitCost ?? null,
+          unitPrice: component.unitPrice ?? null,
+          notes: component.notes || null,
+        })),
+      },
+    },
+  });
+
+  revalidatePath("/kanban");
+}

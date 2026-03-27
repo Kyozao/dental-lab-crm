@@ -1,0 +1,252 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider   = "prisma-client"
+  output     = "../app/generated/prisma"
+  engineType = "client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum CaseStatus {
+  ENTRY
+  WAITING_INFO
+  DESIGNING
+  WAITING_APPROVAL
+  DESIGN_READY
+  MILLING_PRINTING
+  DONE
+}
+
+enum MillingStatus {
+  SUCCESS
+  FAILED
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  CAD_DESIGNER
+  PRODUCTION
+}
+
+model User {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  email     String   @unique
+  role      UserRole
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  assignedCases   Case[]           @relation("CaseCadDesigner")
+  createdCases    Case[]           @relation("CaseCreatedBy")
+  caseAttachments CaseAttachment[]
+}
+
+model ServiceType {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  isActive  Boolean  @default(true)
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  cases Case[]
+}
+
+model MillingDrill {
+  id                  String    @id @default(cuid())
+  name                String
+  type                String?
+  brand               String?
+  serialNumber        String?   @unique
+  maxTeethRecommended Int?
+  installedAt         DateTime?
+  changedAt           DateTime?
+  isActive            Boolean   @default(true)
+  notes               String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  millings CaseMilling[]
+}
+
+model CaseMilling {
+  id                  String        @id @default(cuid())
+  caseId              String
+  blockTypeId         String
+  millingDrillId      String?
+  redoneFromMillingId String?
+  status              MillingStatus @default(SUCCESS)
+
+  teethMilledQty Int      @default(0)
+  failureReason  String?
+  notes          String?
+  milledAt       DateTime @default(now())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  case              Case          @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  blockType         BlockType     @relation(fields: [blockTypeId], references: [id], onDelete: Restrict)
+  millingDrill      MillingDrill? @relation(fields: [millingDrillId], references: [id], onDelete: SetNull)
+  redoneFromMilling CaseMilling?  @relation("MillingRedo", fields: [redoneFromMillingId], references: [id], onDelete: SetNull)
+  redos             CaseMilling[] @relation("MillingRedo")
+
+  @@index([caseId])
+  @@index([blockTypeId])
+  @@index([millingDrillId])
+  @@index([redoneFromMillingId])
+  @@index([status])
+}
+
+model CaseAttachment {
+  id           String   @id @default(cuid())
+  caseId       String
+  fileName     String
+  filePath     String
+  fileType     String?
+  fileSize     Int?
+  uploadedById String?  @db.Uuid
+  createdAt    DateTime @default(now())
+  case         Case     @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  uploadedBy   User?    @relation(fields: [uploadedById], references: [id])
+
+  @@index([caseId, createdAt])
+}
+
+model Clinic {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String?
+  email     String?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  dentists Dentist[]
+  cases    Case[]
+}
+
+model Dentist {
+  id        String   @id @default(cuid())
+  clinicId  String
+  name      String
+  phone     String?
+  email     String?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  clinic Clinic @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  cases  Case[]
+}
+
+model Component {
+  id           String   @id @default(cuid())
+  name         String   @unique
+  category     String?
+  brand        String?
+  defaultCost  Decimal? @db.Decimal(10, 2)
+  defaultPrice Decimal? @db.Decimal(10, 2)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  caseUsages CaseComponentUsage[]
+}
+
+model CaseComponentUsage {
+  id           String   @id @default(cuid())
+  caseId       String
+  componentId  String
+  quantity     Int      @default(1)
+  chargeClient Boolean  @default(true)
+  unitCost     Decimal? @db.Decimal(10, 2)
+  unitPrice    Decimal? @db.Decimal(10, 2)
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  case      Case      @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  component Component @relation(fields: [componentId], references: [id], onDelete: Restrict)
+
+  @@index([caseId])
+  @@index([componentId])
+}
+
+model BlockType {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  material    String?
+  brand       String?
+  size        String?
+  shade       String?
+  defaultCost Decimal? @db.Decimal(10, 2)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  millings CaseMilling[]
+}
+
+model Case {
+  id              String     @id @default(cuid())
+  code            String     @unique
+  clientCaseCode  String?
+  patientName     String
+  clinicId        String?
+  serviceTypeId   String?
+  dentistId       String?
+  cadDesignerId   String?    @db.Uuid
+  createdByUserId String?    @db.Uuid
+  currentStatus   CaseStatus @default(ENTRY)
+
+  teeth        String?
+  elementsQty  Int?
+  shade        String?
+  dueDate      DateTime?
+  isUrgent     Boolean   @default(false)
+  observations String?
+  pendingNote  String?
+
+  caseComponentUsages CaseComponentUsage[]
+  statusHistory       CaseStatusHistory[]
+  millings            CaseMilling[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  clinic          Clinic?          @relation(fields: [clinicId], references: [id])
+  dentist         Dentist?         @relation(fields: [dentistId], references: [id])
+  serviceType     ServiceType?     @relation(fields: [serviceTypeId], references: [id], onDelete: SetNull)
+  cadDesigner     User?            @relation("CaseCadDesigner", fields: [cadDesignerId], references: [id], onDelete: SetNull)
+  createdByUser   User?            @relation("CaseCreatedBy", fields: [createdByUserId], references: [id])
+  caseAttachments CaseAttachment[]
+
+  @@index([clinicId])
+  @@index([dentistId])
+  @@index([currentStatus])
+  @@index([serviceTypeId])
+  @@index([cadDesignerId])
+  @@index([createdByUserId])
+}
+
+model CaseStatusHistory {
+  id         String      @id @default(cuid())
+  caseId     String
+  fromStatus CaseStatus?
+  toStatus   CaseStatus
+  note       String?
+  changedAt  DateTime    @default(now())
+
+  case Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  @@index([caseId])
+  @@index([toStatus])
+}
