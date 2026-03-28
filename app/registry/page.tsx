@@ -78,7 +78,7 @@ export default async function RegistryPage() {
     ]);
 
   return (
-    <main className="mx-auto max-w-6xl space-y-6 p-6">
+    <main className="mx-auto max-w-6xl space-y-6 p-4 sm:p-6">
       <div>
         <h1 className="text-2xl font-semibold">Registry Management</h1>
         <p className="text-sm text-muted-foreground">
@@ -87,7 +87,7 @@ export default async function RegistryPage() {
       </div>
 
       <Tabs defaultValue="clinics" className="w-full">
-        <TabsList className="grid w-full grid-cols-6">
+        <TabsList className="grid h-auto w-full grid-cols-2 gap-1 sm:grid-cols-3 lg:grid-cols-6">
           <TabsTrigger value="clinics">Clinics</TabsTrigger>
           <TabsTrigger value="dentists">Dentists</TabsTrigger>
           <TabsTrigger value="components">Components</TabsTrigger>

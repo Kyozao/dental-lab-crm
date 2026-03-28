@@ -751,6 +751,24 @@ function CaseCard({
           </div>
         ) : null}
 
+        {item.components.length > 0 ? (
+          <div className="rounded-lg border bg-muted/30 px-2.5 py-2 text-xs text-muted-foreground">
+            <div className="mb-2 font-medium text-foreground">Componentes</div>
+            <div className="space-y-1.5">
+              {item.components.map((component) => (
+                <div key={component.id} className="rounded-md border bg-background/80 px-2 py-1.5">
+                  <div className="font-medium text-foreground">
+                    {component.componentName} x{component.quantity}
+                  </div>
+                  {component.notes ? (
+                    <div className="line-clamp-2">{component.notes}</div>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
+
         {item.observations ? (
           <p className="line-clamp-3 text-xs text-muted-foreground">
             {item.observations}

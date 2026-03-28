@@ -1,0 +1,133 @@
+"use client";
+
+import * as React from "react";
+import { Search } from "lucide-react";
+
+import type {
+  CadDesignerOption,
+  ClinicOption,
+  ComponentOption,
+  EditableCase,
+  ServiceTypeOption,
+} from "@/app/cases/case.shared";
+import { CaseDetailsDialog } from "@/app/kanban/components/case-details-dialog";
+import {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandShortcut,
+} from "@/components/ui/command";
+
+type Props = {
+  cases: EditableCase[];
+  clinics: ClinicOption[];
+  serviceTypes: ServiceTypeOption[];
+  cadDesigners: CadDesignerOption[];
+  components: ComponentOption[];
+  currentUserRole: string;
+};
+
+export function CaseSearch({
+  cases,
+  clinics,
+  serviceTypes,
+  cadDesigners,
+  components,
+  currentUserRole,
+}: Props) {
+  const [open, setOpen] = React.useState(false);
+  const [detailsOpen, setDetailsOpen] = React.useState(false);
+  const [selectedCaseId, setSelectedCaseId] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const isCtrlSpace = event.ctrlKey && event.code === "Space";
+      const isCommandSearch = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k";
+
+      if (isCtrlSpace || isCommandSearch) {
+        event.preventDefault();
+        setOpen((current) => !current);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  const selectedCase = React.useMemo(
+    () => cases.find((item) => item.id === selectedCaseId) ?? null,
+    [cases, selectedCaseId],
+  );
+
+  function handleSelect(caseId: string) {
+    setSelectedCaseId(caseId);
+    setOpen(false);
+    setDetailsOpen(true);
+  }
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="flex items-center gap-2 rounded-md border border-border/60 bg-background px-2.5 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground sm:px-3"
+      >
+        <Search className="h-4 w-4" />
+        <span className="hidden sm:inline">Buscar caso</span>
+        <span className="rounded border border-border/60 px-1.5 py-0.5 text-xs hidden md:inline">
+          Ctrl+Space
+        </span>
+      </button>
+
+      <CommandDialog
+        open={open}
+        onOpenChange={setOpen}
+        title="Buscar caso"
+        description="Procure por código ou nome do paciente"
+        className="sm:max-w-2xl"
+      >
+        <Command shouldFilter>
+          <CommandInput placeholder="Digite o código ou nome do caso..." />
+          <CommandList>
+            <CommandEmpty>Nenhum caso encontrado.</CommandEmpty>
+            <CommandGroup heading="Casos">
+              {cases.map((item) => (
+                <CommandItem
+                  key={item.id}
+                  value={`${item.code} ${item.patientName} ${item.clinicName}`}
+                  onSelect={() => handleSelect(item.id)}
+                >
+                  <div className="min-w-0">
+                    <div className="truncate font-medium">
+                      {item.code || "Sem código"} - {item.patientName}
+                    </div>
+                    <div className="truncate text-xs text-muted-foreground">
+                      {item.clinicName || "Sem clínica"}
+                      {item.currentStatus ? ` • ${item.currentStatus.replace(/_/g, " ")}` : ""}
+                    </div>
+                  </div>
+                  <CommandShortcut>Abrir</CommandShortcut>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </CommandDialog>
+
+      <CaseDetailsDialog
+        open={detailsOpen}
+        onOpenChange={setDetailsOpen}
+        item={selectedCase}
+        currentUserRole={currentUserRole}
+        clinics={clinics}
+        serviceTypes={serviceTypes}
+        cadDesigners={cadDesigners}
+        components={components}
+      />
+    </>
+  );
+}

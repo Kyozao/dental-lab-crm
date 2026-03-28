@@ -95,7 +95,7 @@ export default async function ProductionPage() {
     .sort((a, b) => b.totalTeeth - a.totalTeeth);
 
   return (
-    <main className="mx-auto w-full max-w-350 space-y-6 px-6 py-8">
+    <main className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
       <div className="space-y-2">
         <h1 className="text-3xl font-bold">Production & Milling</h1>
         <p className="text-muted-foreground">
@@ -290,7 +290,7 @@ export default async function ProductionPage() {
       </section>
 
       <section className="rounded-lg border border-border/40 bg-card shadow-sm overflow-hidden">
-        <div className="border-b border-border/40 px-6 py-4">
+        <div className="border-b border-border/40 px-4 py-4 sm:px-6">
           <h2 className="text-xl font-semibold">Drill History</h2>
           <p className="text-sm text-muted-foreground">
             Track lifetime usage and last replacement date for each active
@@ -407,7 +407,7 @@ export default async function ProductionPage() {
       </section>
 
       {/* Notes Section */}
-      <div className="rounded-lg border border-border/40 bg-card p-6">
+      <div className="rounded-lg border border-border/40 bg-card p-4 sm:p-6">
         <h2 className="font-semibold mb-3">Quick Stats</h2>
         <div className="grid gap-4 md:grid-cols-3">
           <div>

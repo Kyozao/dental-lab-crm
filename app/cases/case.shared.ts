@@ -75,6 +75,18 @@ export type CaseAttachmentItem = {
   uploadedByName: string | null;
 };
 
+export type CaseMillingItem = {
+  id: string;
+  status: "SUCCESS" | "FAILED";
+  teethMilledQty: number;
+  failureReason: string | null;
+  notes: string | null;
+  milledAt: string;
+  blockTypeName: string;
+  blockTypeShade: string | null;
+  millingDrillName: string | null;
+};
+
 export type EditableCase = {
   id: string;
   code: string;
@@ -99,6 +111,7 @@ export type EditableCase = {
   cadDesignerName: string;
   attachments: CaseAttachmentItem[];
   components: CaseComponentItem[];
+  millings: CaseMillingItem[];
 };
 
 export type CaseFormValues = {

@@ -66,6 +66,28 @@ export default async function KanbanPage() {
             createdAt: true,
           },
         },
+        millings: {
+          orderBy: { milledAt: "desc" },
+          select: {
+            id: true,
+            status: true,
+            teethMilledQty: true,
+            failureReason: true,
+            notes: true,
+            milledAt: true,
+            blockType: {
+              select: {
+                name: true,
+                shade: true,
+              },
+            },
+            millingDrill: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
       },
     }),
     prisma.user.findMany({
@@ -162,6 +184,17 @@ export default async function KanbanPage() {
           unitCost: usage.unitCost?.toString() ?? null,
           unitPrice: usage.unitPrice?.toString() ?? null,
           notes: usage.notes,
+        })),
+        millings: c.millings.map((milling) => ({
+          id: milling.id,
+          status: milling.status,
+          teethMilledQty: milling.teethMilledQty,
+          failureReason: milling.failureReason,
+          notes: milling.notes,
+          milledAt: milling.milledAt.toISOString(),
+          blockTypeName: milling.blockType.name,
+          blockTypeShade: milling.blockType.shade ?? null,
+          millingDrillName: milling.millingDrill?.name ?? null,
         })),
       }))}
       designers={cadDesigners}

@@ -42,6 +42,22 @@ export default async function CasesPage() {
             },
           },
         },
+        millings: {
+          orderBy: { milledAt: "desc" },
+          include: {
+            blockType: {
+              select: {
+                name: true,
+                shade: true,
+              },
+            },
+            millingDrill: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
       },
     }),
     prisma.clinic.findMany({
@@ -80,7 +96,7 @@ export default async function CasesPage() {
     ]);
 
   return (
-    <main className="mx-auto w-full max-w-7xl space-y-6 px-6 py-8">
+    <main className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
       <div className="space-y-2">
         <h1 className="text-3xl font-bold">Cases</h1>
         <p className="text-muted-foreground">Manage all dental lab cases</p>
@@ -105,7 +121,7 @@ export default async function CasesPage() {
 
       <div className="rounded-lg border border-border/40 bg-card shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="w-full min-w-[900px] text-sm">
             <thead>
               <tr className="border-b border-border/40 bg-muted/50">
                 <th className="px-6 py-4 text-left font-semibold">Code</th>
@@ -163,6 +179,17 @@ export default async function CasesPage() {
                     unitCost: usage.unitCost?.toString() ?? null,
                     unitPrice: usage.unitPrice?.toString() ?? null,
                     notes: usage.notes,
+                  })),
+                  millings: item.millings.map((milling) => ({
+                    id: milling.id,
+                    status: milling.status,
+                    teethMilledQty: milling.teethMilledQty,
+                    failureReason: milling.failureReason,
+                    notes: milling.notes,
+                    milledAt: milling.milledAt.toISOString(),
+                    blockTypeName: milling.blockType.name,
+                    blockTypeShade: milling.blockType.shade ?? null,
+                    millingDrillName: milling.millingDrill?.name ?? null,
                   })),
                 };
 

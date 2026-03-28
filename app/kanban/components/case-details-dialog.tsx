@@ -99,6 +99,13 @@ function toDateInputValue(date: string | null) {
   return `${year}-${month}-${day}`;
 }
 
+function formatDateTime(value: string) {
+  return new Intl.DateTimeFormat("pt-BR", {
+    dateStyle: "short",
+    timeStyle: "short",
+  }).format(new Date(value));
+}
+
 export function CaseDetailsDialog({
   open,
   onOpenChange,
@@ -139,6 +146,7 @@ export function CaseDetailsDialog({
       cadDesignerName: "",
       attachments: [],
       components: [],
+      millings: [],
     }),
     [],
   );
@@ -167,7 +175,6 @@ export function CaseDetailsDialog({
   const canEditAll = currentUserRole !== "CAD_DESIGNER";
   const canEditPendingOnly = currentUserRole === "CAD_DESIGNER";
   const canSelectComponents = canEditAll || canEditPendingOnly;
-  const isDesigner = currentUserRole === "CAD_DESIGNER";
 
   const selectedClinic = clinics.find(
     (clinic) => clinic.id === selectedClinicId,
@@ -346,6 +353,117 @@ export function CaseDetailsDialog({
             ) : null}
           </div>
 
+          <div className="grid gap-3 rounded-xl border p-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Clínica
+              </p>
+              <p>{caseItem.clinicName || "Sem clínica"}</p>
+            </div>
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Dentista
+              </p>
+              <p>{caseItem.dentistName || "Sem dentista"}</p>
+            </div>
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Serviço
+              </p>
+              <p>{caseItem.serviceTypeName || "Sem tipo"}</p>
+            </div>
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                CADista
+              </p>
+              <p>{caseItem.cadDesignerName || "Não atribuído"}</p>
+            </div>
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Criado em
+              </p>
+              <p>{formatDateTime(caseItem.createdAt)}</p>
+            </div>
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                Atualizado em
+              </p>
+              <p>{formatDateTime(caseItem.updatedAt)}</p>
+            </div>
+          </div>
+
+          {!isCreateMode ? (
+            <div className="rounded-xl border p-4">
+              <div className="mb-3">
+                <p className="font-medium">Fresagem</p>
+                <p className="text-sm text-muted-foreground">
+                  Histórico de produção deste caso.
+                </p>
+              </div>
+
+              {caseItem.millings.length === 0 ? (
+                <div className="text-sm text-muted-foreground">
+                  Nenhum registro de fresagem.
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {caseItem.millings.map((milling) => (
+                    <div key={milling.id} className="rounded-lg border p-3 text-sm">
+                      <div className="mb-2 flex flex-wrap items-center gap-2">
+                        <p className="font-medium">{milling.blockTypeName}</p>
+                        <Badge
+                          variant={
+                            milling.status === "SUCCESS"
+                              ? "secondary"
+                              : "destructive"
+                          }
+                        >
+                          {milling.status === "SUCCESS" ? "Sucesso" : "Falhou"}
+                        </Badge>
+                        {milling.blockTypeShade ? (
+                          <Badge variant="outline">{milling.blockTypeShade}</Badge>
+                        ) : null}
+                      </div>
+
+                      <div className="grid gap-2 text-sm text-muted-foreground sm:grid-cols-2 lg:grid-cols-3">
+                        <div>
+                          <span className="font-medium text-foreground">
+                            Dentes fresados:
+                          </span>{" "}
+                          {milling.teethMilledQty}
+                        </div>
+                        <div>
+                          <span className="font-medium text-foreground">
+                            Broca:
+                          </span>{" "}
+                          {milling.millingDrillName ?? "-"}
+                        </div>
+                        <div>
+                          <span className="font-medium text-foreground">
+                            Data:
+                          </span>{" "}
+                          {formatDateTime(milling.milledAt)}
+                        </div>
+                      </div>
+
+                      {milling.failureReason ? (
+                        <p className="mt-2 text-sm text-red-600">
+                          Motivo da falha: {milling.failureReason}
+                        </p>
+                      ) : null}
+
+                      {milling.notes ? (
+                        <p className="mt-2 text-sm text-muted-foreground">
+                          Notas: {milling.notes}
+                        </p>
+                      ) : null}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ) : null}
+
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <label className="text-sm font-medium">Código</label>
@@ -367,51 +485,47 @@ export function CaseDetailsDialog({
               />
             </div>
 
-            {!isDesigner ? (
-              <>
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Clínica</label>
-                  <select
-                    name="clinicId"
-                    value={selectedClinicId}
-                    onChange={(e) => setSelectedClinicId(e.target.value)}
-                    disabled={!canEditAll}
-                    className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:opacity-60"
-                  >
-                    <option value="">Sem clínica</option>
-                    {clinics.map((clinic) => (
-                      <option key={clinic.id} value={clinic.id}>
-                        {clinic.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Clínica</label>
+              <select
+                name="clinicId"
+                value={selectedClinicId}
+                onChange={(e) => setSelectedClinicId(e.target.value)}
+                disabled={!canEditAll}
+                className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:opacity-60"
+              >
+                <option value="">Sem clínica</option>
+                {clinics.map((clinic) => (
+                  <option key={clinic.id} value={clinic.id}>
+                    {clinic.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Dentista</label>
-                  <select
-                    key={selectedClinicId}
-                    name="dentistId"
-                    defaultValue={
-                      availableDentists.some(
-                        (dentist) => dentist.id === caseItem.dentistId,
-                      )
-                        ? (caseItem.dentistId ?? "")
-                        : ""
-                    }
-                    disabled={!canEditAll}
-                    className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:opacity-60"
-                  >
-                    <option value="">Sem dentista</option>
-                    {availableDentists.map((dentist) => (
-                      <option key={dentist.id} value={dentist.id}>
-                        {dentist.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </>
-            ) : null}
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Dentista</label>
+              <select
+                key={selectedClinicId}
+                name="dentistId"
+                defaultValue={
+                  availableDentists.some(
+                    (dentist) => dentist.id === caseItem.dentistId,
+                  )
+                    ? (caseItem.dentistId ?? "")
+                    : ""
+                }
+                disabled={!canEditAll}
+                className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:opacity-60"
+              >
+                <option value="">Sem dentista</option>
+                {availableDentists.map((dentist) => (
+                  <option key={dentist.id} value={dentist.id}>
+                    {dentist.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
             <div className="space-y-2">
               <label className="text-sm font-medium">Tipo de serviço</label>
