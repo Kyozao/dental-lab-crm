@@ -156,12 +156,13 @@ export function CaseDetailsDialog({
   const [isUploading, setIsUploading] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
   const [isDeleting, setIsDeleting] = React.useState(false);
+  const [submitError, setSubmitError] = React.useState<string | null>(null);
   const [selectedClinicId, setSelectedClinicId] = React.useState(
     caseItem?.clinicId ?? "",
   );
-  const [componentRows, setComponentRows] = React.useState<CaseComponentDraft[]>(
-    () => buildDraftFromCaseItem(caseItem),
-  );
+  const [componentRows, setComponentRows] = React.useState<
+    CaseComponentDraft[]
+  >(() => buildDraftFromCaseItem(caseItem));
 
   // We intentionally depend on `caseItem.id` and `open` instead of the full
   // `caseItem` object to avoid resetting state on every render.
@@ -212,8 +213,12 @@ export function CaseDetailsDialog({
     updateComponentRow(localId, (row) => ({
       ...row,
       componentId,
-      unitCost: canEditAll ? row.unitCost || component?.defaultCost || "" : row.unitCost,
-      unitPrice: canEditAll ? row.unitPrice || component?.defaultPrice || "" : row.unitPrice,
+      unitCost: canEditAll
+        ? row.unitCost || component?.defaultCost || ""
+        : row.unitCost,
+      unitPrice: canEditAll
+        ? row.unitPrice || component?.defaultPrice || ""
+        : row.unitPrice,
     }));
   }
 
@@ -291,6 +296,7 @@ export function CaseDetailsDialog({
   async function handleSubmit(formData: FormData) {
     try {
       setIsSaving(true);
+      setSubmitError(null);
 
       if (isCreateMode) {
         const result = await createCaseAction(
@@ -299,7 +305,8 @@ export function CaseDetailsDialog({
         );
 
         if (!result.success) {
-          throw new Error(result.message || "Could not create case.");
+          setSubmitError(result.message || "Could not create case.");
+          return;
         }
 
         onOpenChange(false);
@@ -312,6 +319,13 @@ export function CaseDetailsDialog({
       router.refresh();
     } catch (error) {
       console.error(error);
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : isCreateMode
+            ? "Could not create case."
+            : "Could not save case.",
+      );
       alert(
         error instanceof Error
           ? error.message
@@ -324,6 +338,11 @@ export function CaseDetailsDialog({
     }
   }
 
+  function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    void handleSubmit(new FormData(event.currentTarget));
+  }
+
   const overdue = isCaseOverdue(caseItem.dueDate);
 
   return (
@@ -334,7 +353,7 @@ export function CaseDetailsDialog({
             {caseItem.patientName} {caseItem.code ? `— ${caseItem.code}` : ""}
           </DialogTitle>
         </DialogHeader>
-        <form action={handleSubmit} className="grid gap-6">
+        <form onSubmit={handleFormSubmit} className="grid gap-6">
           <input type="hidden" name="id" value={caseItem.id} />
           <input
             type="hidden"
@@ -408,7 +427,10 @@ export function CaseDetailsDialog({
               ) : (
                 <div className="space-y-3">
                   {caseItem.millings.map((milling) => (
-                    <div key={milling.id} className="rounded-lg border p-3 text-sm">
+                    <div
+                      key={milling.id}
+                      className="rounded-lg border p-3 text-sm"
+                    >
                       <div className="mb-2 flex flex-wrap items-center gap-2">
                         <p className="font-medium">{milling.blockTypeName}</p>
                         <Badge
@@ -421,7 +443,9 @@ export function CaseDetailsDialog({
                           {milling.status === "SUCCESS" ? "Sucesso" : "Falhou"}
                         </Badge>
                         {milling.blockTypeShade ? (
-                          <Badge variant="outline">{milling.blockTypeShade}</Badge>
+                          <Badge variant="outline">
+                            {milling.blockTypeShade}
+                          </Badge>
                         ) : null}
                       </div>
 
@@ -673,7 +697,11 @@ export function CaseDetailsDialog({
               </div>
 
               {canSelectComponents ? (
-                <Button type="button" variant="outline" onClick={handleAddComponentRow}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleAddComponentRow}
+                >
                   Adicionar componente
                 </Button>
               ) : null}
@@ -704,11 +732,16 @@ export function CaseDetailsDialog({
 
                     <div className="grid gap-3 md:grid-cols-2">
                       <div className="space-y-2 md:col-span-2">
-                        <label className="text-sm font-medium">Componente</label>
+                        <label className="text-sm font-medium">
+                          Componente
+                        </label>
                         <select
                           value={row.componentId}
                           onChange={(event) =>
-                            handleComponentSelected(row.localId, event.target.value)
+                            handleComponentSelected(
+                              row.localId,
+                              event.target.value,
+                            )
                           }
                           disabled={!canSelectComponents}
                           className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:opacity-60"
@@ -725,7 +758,9 @@ export function CaseDetailsDialog({
                       {canEditAll ? (
                         <>
                           <div className="space-y-2">
-                            <label className="text-sm font-medium">Quantidade</label>
+                            <label className="text-sm font-medium">
+                              Quantidade
+                            </label>
                             <input
                               type="number"
                               min={1}
@@ -735,7 +770,9 @@ export function CaseDetailsDialog({
                                 updateComponentRow(row.localId, (current) => ({
                                   ...current,
                                   quantity:
-                                    Number.isInteger(parsed) && parsed > 0 ? parsed : 1,
+                                    Number.isInteger(parsed) && parsed > 0
+                                      ? parsed
+                                      : 1,
                                 }));
                               }}
                               disabled={!canEditAll}
@@ -744,26 +781,35 @@ export function CaseDetailsDialog({
                           </div>
 
                           <div className="space-y-2">
-                            <label className="text-sm font-medium">Cobrar da clínica</label>
+                            <label className="text-sm font-medium">
+                              Cobrar da clínica
+                            </label>
                             <div className="flex h-10 items-center gap-2 rounded-md border bg-background px-3 py-2">
                               <input
                                 type="checkbox"
                                 checked={row.chargeClient}
                                 onChange={(event) =>
-                                  updateComponentRow(row.localId, (current) => ({
-                                    ...current,
-                                    chargeClient: event.target.checked,
-                                  }))
+                                  updateComponentRow(
+                                    row.localId,
+                                    (current) => ({
+                                      ...current,
+                                      chargeClient: event.target.checked,
+                                    }),
+                                  )
                                 }
                                 disabled={!canEditAll}
                                 className="h-4 w-4"
                               />
-                              <span className="text-sm">Incluir na cobrança</span>
+                              <span className="text-sm">
+                                Incluir na cobrança
+                              </span>
                             </div>
                           </div>
 
                           <div className="space-y-2">
-                            <label className="text-sm font-medium">Custo unitário</label>
+                            <label className="text-sm font-medium">
+                              Custo unitário
+                            </label>
                             <input
                               type="number"
                               step="0.01"
@@ -781,7 +827,9 @@ export function CaseDetailsDialog({
                           </div>
 
                           <div className="space-y-2">
-                            <label className="text-sm font-medium">Preço unitário</label>
+                            <label className="text-sm font-medium">
+                              Preço unitário
+                            </label>
                             <input
                               type="number"
                               step="0.01"
@@ -799,7 +847,9 @@ export function CaseDetailsDialog({
                           </div>
 
                           <div className="space-y-2 md:col-span-2">
-                            <label className="text-sm font-medium">Observações do item</label>
+                            <label className="text-sm font-medium">
+                              Observações do item
+                            </label>
                             <textarea
                               value={row.notes}
                               onChange={(event) =>
@@ -903,6 +953,10 @@ export function CaseDetailsDialog({
                   : "Salvar alterações"}
             </Button>
           </div>
+
+          {submitError ? (
+            <p className="text-sm text-red-600">{submitError}</p>
+          ) : null}
         </form>{" "}
       </DialogContent>
     </Dialog>

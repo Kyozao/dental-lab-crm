@@ -15,84 +15,84 @@ export default async function CasesPage() {
 
   const [cases, clinics, serviceTypes, cadDesigners, components] =
     await Promise.all([
-    prisma.case.findMany({
-      orderBy: { createdAt: "desc" },
-      include: {
-        clinic: true,
-        dentist: true,
-        serviceType: true,
-        cadDesigner: true,
-        caseComponentUsages: {
-          orderBy: { createdAt: "asc" },
-          include: {
-            component: {
-              select: {
-                name: true,
+      prisma.case.findMany({
+        orderBy: { createdAt: "desc" },
+        include: {
+          clinic: true,
+          dentist: true,
+          serviceType: true,
+          cadDesigner: true,
+          caseComponentUsages: {
+            orderBy: { createdAt: "asc" },
+            include: {
+              component: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+          caseAttachments: {
+            orderBy: { createdAt: "desc" },
+            include: {
+              uploadedBy: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+          millings: {
+            orderBy: { milledAt: "desc" },
+            include: {
+              blockType: {
+                select: {
+                  name: true,
+                  shade: true,
+                },
+              },
+              millingDrill: {
+                select: {
+                  name: true,
+                },
               },
             },
           },
         },
-        caseAttachments: {
-          orderBy: { createdAt: "desc" },
-          include: {
-            uploadedBy: {
-              select: {
-                name: true,
-              },
-            },
+      }),
+      prisma.clinic.findMany({
+        orderBy: { name: "asc" },
+        include: {
+          dentists: {
+            orderBy: { name: "asc" },
           },
         },
-        millings: {
-          orderBy: { milledAt: "desc" },
-          include: {
-            blockType: {
-              select: {
-                name: true,
-                shade: true,
-              },
-            },
-            millingDrill: {
-              select: {
-                name: true,
-              },
-            },
-          },
+      }),
+      prisma.serviceType.findMany({
+        where: { isActive: true },
+        orderBy: { name: "asc" },
+      }),
+      prisma.user.findMany({
+        where: {
+          role: "CAD_DESIGNER",
+          isActive: true,
         },
-      },
-    }),
-    prisma.clinic.findMany({
-      orderBy: { name: "asc" },
-      include: {
-        dentists: {
-          orderBy: { name: "asc" },
+        orderBy: { name: "asc" },
+      }),
+      prisma.component.findMany({
+        where: {
+          isActive: true,
         },
-      },
-    }),
-    prisma.serviceType.findMany({
-      where: { isActive: true },
-      orderBy: { name: "asc" },
-    }),
-    prisma.user.findMany({
-      where: {
-        role: "CAD_DESIGNER",
-        isActive: true,
-      },
-      orderBy: { name: "asc" },
-    }),
-    prisma.component.findMany({
-      where: {
-        isActive: true,
-      },
-      orderBy: { name: "asc" },
-      select: {
-        id: true,
-        name: true,
-        category: true,
-        brand: true,
-        defaultCost: true,
-        defaultPrice: true,
-      },
-    }),
+        orderBy: { name: "asc" },
+        select: {
+          id: true,
+          name: true,
+          category: true,
+          brand: true,
+          defaultCost: true,
+          defaultPrice: true,
+        },
+      }),
     ]);
 
   return (
@@ -253,7 +253,8 @@ export default async function CasesPage() {
                           name: component.name,
                           category: component.category,
                           brand: component.brand,
-                          defaultCost: component.defaultCost?.toString() ?? null,
+                          defaultCost:
+                            component.defaultCost?.toString() ?? null,
                           defaultPrice:
                             component.defaultPrice?.toString() ?? null,
                         }))}

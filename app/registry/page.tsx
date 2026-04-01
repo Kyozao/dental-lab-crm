@@ -139,15 +139,42 @@ export default async function RegistryPage() {
             updateAction={updateClinicAction}
             deleteAction={deleteClinicAction}
             fields={[
-              { name: "name", label: "Clinic Name", placeholder: "Silva Dental" },
-              { name: "phone", label: "Phone", type: "text", placeholder: "(11) 3456-7890", optional: true },
-              { name: "email", label: "Email", type: "email", placeholder: "contact@clinic.com", optional: true },
-              { name: "notes", label: "Notes", type: "textarea", placeholder: "Additional information...", optional: true },
+              {
+                name: "name",
+                label: "Clinic Name",
+                placeholder: "Silva Dental",
+              },
+              {
+                name: "phone",
+                label: "Phone",
+                type: "text",
+                placeholder: "(11) 3456-7890",
+                optional: true,
+              },
+              {
+                name: "email",
+                label: "Email",
+                type: "email",
+                placeholder: "contact@clinic.com",
+                optional: true,
+              },
+              {
+                name: "notes",
+                label: "Notes",
+                type: "textarea",
+                placeholder: "Additional information...",
+                optional: true,
+              },
             ]}
             rows={clinics.map((c) => ({
               id: c.id,
               cells: [c.name, c.phone ?? "-", c.email ?? "-"],
-              values: { name: c.name, phone: c.phone ?? "", email: c.email ?? "", notes: c.notes ?? "" },
+              values: {
+                name: c.name,
+                phone: c.phone ?? "",
+                email: c.email ?? "",
+                notes: c.notes ?? "",
+              },
             }))}
           />
         </TabsContent>
@@ -171,7 +198,12 @@ export default async function RegistryPage() {
               { name: "name", label: "Dentist Name", placeholder: "Dr. Silva" },
               { name: "phone", label: "Phone", type: "text", optional: true },
               { name: "email", label: "Email", type: "email", optional: true },
-              { name: "notes", label: "Notes", type: "textarea", optional: true },
+              {
+                name: "notes",
+                label: "Notes",
+                type: "textarea",
+                optional: true,
+              },
             ]}
             rows={dentists.map((d) => ({
               id: d.id,
@@ -237,17 +269,56 @@ export default async function RegistryPage() {
           />
 
           <RegistryList
-            columnLabels={["Name", "Category", "Brand", "Cost", "Price", "Status"]}
+            columnLabels={[
+              "Name",
+              "Category",
+              "Brand",
+              "Cost",
+              "Price",
+              "Status",
+            ]}
             entityLabel="Component"
             updateAction={updateComponentAction}
             deleteAction={deleteComponentAction}
             fields={[
-              { name: "name", label: "Component Name", placeholder: "Zirconium Disc" },
-              { name: "category", label: "Category", placeholder: "Materials", optional: true },
-              { name: "brand", label: "Brand", placeholder: "Ivoclar", optional: true },
-              { name: "defaultCost", label: "Default Cost", type: "number", placeholder: "0.00", optional: true },
-              { name: "defaultPrice", label: "Default Price", type: "number", placeholder: "0.00", optional: true },
-              { name: "isActive", label: "Active", type: "checkbox", placeholder: "This component is active", optional: true },
+              {
+                name: "name",
+                label: "Component Name",
+                placeholder: "Zirconium Disc",
+              },
+              {
+                name: "category",
+                label: "Category",
+                placeholder: "Materials",
+                optional: true,
+              },
+              {
+                name: "brand",
+                label: "Brand",
+                placeholder: "Ivoclar",
+                optional: true,
+              },
+              {
+                name: "defaultCost",
+                label: "Default Cost",
+                type: "number",
+                placeholder: "0.00",
+                optional: true,
+              },
+              {
+                name: "defaultPrice",
+                label: "Default Price",
+                type: "number",
+                placeholder: "0.00",
+                optional: true,
+              },
+              {
+                name: "isActive",
+                label: "Active",
+                type: "checkbox",
+                placeholder: "This component is active",
+                optional: true,
+              },
             ]}
             rows={components.map((c) => ({
               id: c.id,
@@ -256,8 +327,13 @@ export default async function RegistryPage() {
                 c.category ?? "-",
                 c.brand ?? "-",
                 c.defaultCost ? `R$ ${Number(c.defaultCost).toFixed(2)}` : "-",
-                c.defaultPrice ? `R$ ${Number(c.defaultPrice).toFixed(2)}` : "-",
-                <Badge key="status" variant={c.isActive ? "outline" : "secondary"}>
+                c.defaultPrice
+                  ? `R$ ${Number(c.defaultPrice).toFixed(2)}`
+                  : "-",
+                <Badge
+                  key="status"
+                  variant={c.isActive ? "outline" : "secondary"}
+                >
                   {c.isActive ? "Active" : "Inactive"}
                 </Badge>,
               ],
@@ -328,18 +404,62 @@ export default async function RegistryPage() {
           />
 
           <RegistryList
-            columnLabels={["Name", "Material", "Brand", "Size", "Shade", "Cost", "Status"]}
+            columnLabels={[
+              "Name",
+              "Material",
+              "Brand",
+              "Size",
+              "Shade",
+              "Cost",
+              "Status",
+            ]}
             entityLabel="Block Type"
             updateAction={updateBlockTypeAction}
             deleteAction={deleteBlockTypeAction}
             fields={[
-              { name: "name", label: "Block Type Name", placeholder: "Zirconia Block A1" },
-              { name: "material", label: "Material", placeholder: "Zirconia", optional: true },
-              { name: "brand", label: "Brand", placeholder: "Ivoclar", optional: true },
-              { name: "size", label: "Size", placeholder: "14x19x71", optional: true },
-              { name: "shade", label: "Shade", placeholder: "A1", optional: true },
-              { name: "defaultCost", label: "Default Cost", type: "number", placeholder: "0.00", optional: true },
-              { name: "isActive", label: "Active", type: "checkbox", placeholder: "This block type is active", optional: true },
+              {
+                name: "name",
+                label: "Block Type Name",
+                placeholder: "Zirconia Block A1",
+              },
+              {
+                name: "material",
+                label: "Material",
+                placeholder: "Zirconia",
+                optional: true,
+              },
+              {
+                name: "brand",
+                label: "Brand",
+                placeholder: "Ivoclar",
+                optional: true,
+              },
+              {
+                name: "size",
+                label: "Size",
+                placeholder: "14x19x71",
+                optional: true,
+              },
+              {
+                name: "shade",
+                label: "Shade",
+                placeholder: "A1",
+                optional: true,
+              },
+              {
+                name: "defaultCost",
+                label: "Default Cost",
+                type: "number",
+                placeholder: "0.00",
+                optional: true,
+              },
+              {
+                name: "isActive",
+                label: "Active",
+                type: "checkbox",
+                placeholder: "This block type is active",
+                optional: true,
+              },
             ]}
             rows={blockTypes.map((b) => ({
               id: b.id,
@@ -350,7 +470,10 @@ export default async function RegistryPage() {
                 b.size ?? "-",
                 b.shade ?? "-",
                 b.defaultCost ? `R$ ${Number(b.defaultCost).toFixed(2)}` : "-",
-                <Badge key="status" variant={b.isActive ? "outline" : "secondary"}>
+                <Badge
+                  key="status"
+                  variant={b.isActive ? "outline" : "secondary"}
+                >
                   {b.isActive ? "Active" : "Inactive"}
                 </Badge>,
               ],
@@ -403,20 +526,43 @@ export default async function RegistryPage() {
             updateAction={updateServiceTypeAction}
             deleteAction={deleteServiceTypeAction}
             fields={[
-              { name: "name", label: "Service Type Name", placeholder: "Full Crown" },
-              { name: "notes", label: "Notes", type: "textarea", placeholder: "Description...", optional: true },
-              { name: "isActive", label: "Active", type: "checkbox", placeholder: "This service type is active", optional: true },
+              {
+                name: "name",
+                label: "Service Type Name",
+                placeholder: "Full Crown",
+              },
+              {
+                name: "notes",
+                label: "Notes",
+                type: "textarea",
+                placeholder: "Description...",
+                optional: true,
+              },
+              {
+                name: "isActive",
+                label: "Active",
+                type: "checkbox",
+                placeholder: "This service type is active",
+                optional: true,
+              },
             ]}
             rows={serviceTypes.map((s) => ({
               id: s.id,
               cells: [
                 s.name,
                 s.notes ?? "-",
-                <Badge key="status" variant={s.isActive ? "outline" : "secondary"}>
+                <Badge
+                  key="status"
+                  variant={s.isActive ? "outline" : "secondary"}
+                >
                   {s.isActive ? "Active" : "Inactive"}
                 </Badge>,
               ],
-              values: { name: s.name, notes: s.notes ?? "", isActive: s.isActive },
+              values: {
+                name: s.name,
+                notes: s.notes ?? "",
+                isActive: s.isActive,
+              },
             }))}
           />
         </TabsContent>
@@ -591,18 +737,62 @@ export default async function RegistryPage() {
           </div>
 
           <RegistryList
-            columnLabels={["Name", "Type", "Brand", "Serial", "Max Teeth", "Status"]}
+            columnLabels={[
+              "Name",
+              "Type",
+              "Brand",
+              "Serial",
+              "Max Teeth",
+              "Status",
+            ]}
             entityLabel="Drill"
             updateAction={updateMillingDrillAction}
             deleteAction={deleteMillingDrillAction}
             fields={[
-              { name: "name", label: "Drill Name", placeholder: "Cylindrical Drill 0.8mm" },
-              { name: "type", label: "Type", placeholder: "Cylindrical", optional: true },
-              { name: "brand", label: "Brand", placeholder: "Ivoclar", optional: true },
-              { name: "serialNumber", label: "Serial Number", placeholder: "SN123456", optional: true },
-              { name: "maxTeethRecommended", label: "Max Teeth Recommended", type: "number", placeholder: "100", optional: true },
-              { name: "notes", label: "Notes", type: "textarea", placeholder: "Additional information...", optional: true },
-              { name: "isActive", label: "Active", type: "checkbox", placeholder: "This drill is active", optional: true },
+              {
+                name: "name",
+                label: "Drill Name",
+                placeholder: "Cylindrical Drill 0.8mm",
+              },
+              {
+                name: "type",
+                label: "Type",
+                placeholder: "Cylindrical",
+                optional: true,
+              },
+              {
+                name: "brand",
+                label: "Brand",
+                placeholder: "Ivoclar",
+                optional: true,
+              },
+              {
+                name: "serialNumber",
+                label: "Serial Number",
+                placeholder: "SN123456",
+                optional: true,
+              },
+              {
+                name: "maxTeethRecommended",
+                label: "Max Teeth Recommended",
+                type: "number",
+                placeholder: "100",
+                optional: true,
+              },
+              {
+                name: "notes",
+                label: "Notes",
+                type: "textarea",
+                placeholder: "Additional information...",
+                optional: true,
+              },
+              {
+                name: "isActive",
+                label: "Active",
+                type: "checkbox",
+                placeholder: "This drill is active",
+                optional: true,
+              },
             ]}
             rows={drills.map((d) => ({
               id: d.id,
@@ -612,7 +802,10 @@ export default async function RegistryPage() {
                 d.brand ?? "-",
                 d.serialNumber ?? "-",
                 d.maxTeethRecommended ?? "-",
-                <Badge key="status" variant={d.isActive ? "outline" : "secondary"}>
+                <Badge
+                  key="status"
+                  variant={d.isActive ? "outline" : "secondary"}
+                >
                   {d.isActive ? "Active" : "Inactive"}
                 </Badge>,
               ],

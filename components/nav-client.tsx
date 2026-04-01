@@ -108,7 +108,11 @@ export function NavClient({
               className="inline-flex md:hidden items-center justify-center rounded-md border border-border/60 p-2 text-muted-foreground hover:text-foreground hover:bg-accent/50"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
             >
-              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              {mobileOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
             </button>
           ) : null}
         </div>

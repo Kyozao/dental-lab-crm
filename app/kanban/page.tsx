@@ -12,129 +12,129 @@ export default async function KanbanPage() {
 
   const [cases, cadDesigners, clinics, serviceTypes, components] =
     await Promise.all([
-    prisma.case.findMany({
-      where:
-        appUser.role === "CAD_DESIGNER" ? { cadDesignerId: appUser.id } : {},
-      orderBy: { updatedAt: "desc" },
-      select: {
-        id: true,
-        code: true,
-        patientName: true,
-        currentStatus: true,
-        teeth: true,
-        elementsQty: true,
-        shade: true,
-        dueDate: true,
-        observations: true,
-        pendingNote: true,
-        isUrgent: true,
-        createdAt: true,
-        updatedAt: true,
-        clinicId: true,
-        dentistId: true,
-        serviceTypeId: true,
-        cadDesignerId: true,
-        clinic: { select: { name: true } },
-        dentist: { select: { name: true } },
-        serviceType: { select: { name: true } },
-        cadDesigner: { select: { name: true } },
-        caseComponentUsages: {
-          orderBy: { createdAt: "asc" },
-          select: {
-            id: true,
-            componentId: true,
-            quantity: true,
-            chargeClient: true,
-            unitCost: true,
-            unitPrice: true,
-            notes: true,
-            component: {
-              select: {
-                name: true,
+      prisma.case.findMany({
+        where:
+          appUser.role === "CAD_DESIGNER" ? { cadDesignerId: appUser.id } : {},
+        orderBy: { updatedAt: "desc" },
+        select: {
+          id: true,
+          code: true,
+          patientName: true,
+          currentStatus: true,
+          teeth: true,
+          elementsQty: true,
+          shade: true,
+          dueDate: true,
+          observations: true,
+          pendingNote: true,
+          isUrgent: true,
+          createdAt: true,
+          updatedAt: true,
+          clinicId: true,
+          dentistId: true,
+          serviceTypeId: true,
+          cadDesignerId: true,
+          clinic: { select: { name: true } },
+          dentist: { select: { name: true } },
+          serviceType: { select: { name: true } },
+          cadDesigner: { select: { name: true } },
+          caseComponentUsages: {
+            orderBy: { createdAt: "asc" },
+            select: {
+              id: true,
+              componentId: true,
+              quantity: true,
+              chargeClient: true,
+              unitCost: true,
+              unitPrice: true,
+              notes: true,
+              component: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+          caseAttachments: {
+            orderBy: { createdAt: "desc" },
+            select: {
+              id: true,
+              fileName: true,
+              filePath: true,
+              fileType: true,
+              fileSize: true,
+              createdAt: true,
+            },
+          },
+          millings: {
+            orderBy: { milledAt: "desc" },
+            select: {
+              id: true,
+              status: true,
+              teethMilledQty: true,
+              failureReason: true,
+              notes: true,
+              milledAt: true,
+              blockType: {
+                select: {
+                  name: true,
+                  shade: true,
+                },
+              },
+              millingDrill: {
+                select: {
+                  name: true,
+                },
               },
             },
           },
         },
-        caseAttachments: {
-          orderBy: { createdAt: "desc" },
-          select: {
-            id: true,
-            fileName: true,
-            filePath: true,
-            fileType: true,
-            fileSize: true,
-            createdAt: true,
-          },
+      }),
+      prisma.user.findMany({
+        where: {
+          role: "CAD_DESIGNER",
+          isActive: true,
         },
-        millings: {
-          orderBy: { milledAt: "desc" },
-          select: {
-            id: true,
-            status: true,
-            teethMilledQty: true,
-            failureReason: true,
-            notes: true,
-            milledAt: true,
-            blockType: {
-              select: {
-                name: true,
-                shade: true,
-              },
-            },
-            millingDrill: {
-              select: {
-                name: true,
-              },
+        orderBy: { name: "asc" },
+        select: {
+          id: true,
+          name: true,
+        },
+      }),
+      prisma.clinic.findMany({
+        orderBy: { name: "asc" },
+        include: {
+          dentists: {
+            orderBy: { name: "asc" },
+            select: {
+              id: true,
+              name: true,
             },
           },
         },
-      },
-    }),
-    prisma.user.findMany({
-      where: {
-        role: "CAD_DESIGNER",
-        isActive: true,
-      },
-      orderBy: { name: "asc" },
-      select: {
-        id: true,
-        name: true,
-      },
-    }),
-    prisma.clinic.findMany({
-      orderBy: { name: "asc" },
-      include: {
-        dentists: {
-          orderBy: { name: "asc" },
-          select: {
-            id: true,
-            name: true,
-          },
+      }),
+      prisma.serviceType.findMany({
+        where: { isActive: true },
+        orderBy: { name: "asc" },
+        select: {
+          id: true,
+          name: true,
         },
-      },
-    }),
-    prisma.serviceType.findMany({
-      where: { isActive: true },
-      orderBy: { name: "asc" },
-      select: {
-        id: true,
-        name: true,
-      },
-    }),
-    prisma.component.findMany({
-      where: {
-        isActive: true,
-      },
-      orderBy: { name: "asc" },
-      select: {
-        id: true,
-        name: true,
-        category: true,
-        brand: true,
-        defaultCost: true,
-        defaultPrice: true,
-      },
-    }),
+      }),
+      prisma.component.findMany({
+        where: {
+          isActive: true,
+        },
+        orderBy: { name: "asc" },
+        select: {
+          id: true,
+          name: true,
+          category: true,
+          brand: true,
+          defaultCost: true,
+          defaultPrice: true,
+        },
+      }),
     ]);
 
   return (

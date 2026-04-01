@@ -41,12 +41,15 @@ export function CaseSearch({
 }: Props) {
   const [open, setOpen] = React.useState(false);
   const [detailsOpen, setDetailsOpen] = React.useState(false);
-  const [selectedCaseId, setSelectedCaseId] = React.useState<string | null>(null);
+  const [selectedCaseId, setSelectedCaseId] = React.useState<string | null>(
+    null,
+  );
 
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       const isCtrlSpace = event.ctrlKey && event.code === "Space";
-      const isCommandSearch = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k";
+      const isCommandSearch =
+        (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k";
 
       if (isCtrlSpace || isCommandSearch) {
         event.preventDefault();
@@ -107,7 +110,9 @@ export function CaseSearch({
                     </div>
                     <div className="truncate text-xs text-muted-foreground">
                       {item.clinicName || "Sem clínica"}
-                      {item.currentStatus ? ` • ${item.currentStatus.replace(/_/g, " ")}` : ""}
+                      {item.currentStatus
+                        ? ` • ${item.currentStatus.replace(/_/g, " ")}`
+                        : ""}
                     </div>
                   </div>
                   <CommandShortcut>Abrir</CommandShortcut>

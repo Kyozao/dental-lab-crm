@@ -756,7 +756,10 @@ function CaseCard({
             <div className="mb-2 font-medium text-foreground">Componentes</div>
             <div className="space-y-1.5">
               {item.components.map((component) => (
-                <div key={component.id} className="rounded-md border bg-background/80 px-2 py-1.5">
+                <div
+                  key={component.id}
+                  className="rounded-md border bg-background/80 px-2 py-1.5"
+                >
                   <div className="font-medium text-foreground">
                     {component.componentName} x{component.quantity}
                   </div>
