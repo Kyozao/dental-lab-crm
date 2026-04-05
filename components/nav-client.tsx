@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { UserRole } from "@/app/generated/prisma/client";
+import { AddCaseDialog } from "@/app/cases/components/add-case-dialog";
 import { createClient } from "@/lib/supabase/client";
 import { Menu, X } from "lucide-react";
 import type {
@@ -38,6 +39,8 @@ export function NavClient({
   const pathname = usePathname();
   const router = useRouter();
   const routes = getNavRoutes(userRole, pathname);
+  const resolvedUserRole = currentUserRole ?? userRole ?? "";
+  const canAddCase = Boolean(userRole && userRole !== "CAD_DESIGNER");
 
   async function handleLogout() {
     const supabase = createClient();
@@ -67,7 +70,16 @@ export function NavClient({
                 serviceTypes={serviceTypes}
                 cadDesigners={cadDesigners}
                 components={components}
-                currentUserRole={currentUserRole ?? userRole}
+                currentUserRole={resolvedUserRole}
+              />
+            ) : null}
+            {canAddCase ? (
+              <AddCaseDialog
+                clinics={clinics}
+                serviceTypes={serviceTypes}
+                cadDesigners={cadDesigners}
+                components={components}
+                currentUserRole={resolvedUserRole}
               />
             ) : null}
             {routes.map((route) => (
@@ -126,8 +138,17 @@ export function NavClient({
                 serviceTypes={serviceTypes}
                 cadDesigners={cadDesigners}
                 components={components}
-                currentUserRole={currentUserRole ?? userRole}
+                currentUserRole={resolvedUserRole}
               />
+              {canAddCase ? (
+                <AddCaseDialog
+                  clinics={clinics}
+                  serviceTypes={serviceTypes}
+                  cadDesigners={cadDesigners}
+                  components={components}
+                  currentUserRole={resolvedUserRole}
+                />
+              ) : null}
             </div>
             <div className="grid gap-1">
               {routes.map((route) => (

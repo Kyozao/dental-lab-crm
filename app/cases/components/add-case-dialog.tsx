@@ -30,7 +30,7 @@ export function AddCaseDialog({
   return (
     <>
       <Button type="button" onClick={() => setOpen(true)}>
-        Add case
+        Add Case
       </Button>
 
       <CaseDetailsDialog
