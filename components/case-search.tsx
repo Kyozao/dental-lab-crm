@@ -1,15 +1,17 @@
 "use client";
 
 import * as React from "react";
-import { Search } from "lucide-react";
+import { Loader2, Search } from "lucide-react";
 
 import type {
   CadDesignerOption,
   ClinicOption,
   ComponentOption,
   EditableCase,
+  SearchCaseItem,
   ServiceTypeOption,
 } from "@/app/cases/case.shared";
+import { getCaseDetailsAction } from "@/app/kanban/actions";
 import { CaseDetailsDialog } from "@/app/kanban/components/case-details-dialog";
 import {
   Command,
@@ -23,7 +25,7 @@ import {
 } from "@/components/ui/command";
 
 type Props = {
-  cases: EditableCase[];
+  cases: SearchCaseItem[];
   clinics: ClinicOption[];
   serviceTypes: ServiceTypeOption[];
   cadDesigners: CadDesignerOption[];
@@ -41,9 +43,10 @@ export function CaseSearch({
 }: Props) {
   const [open, setOpen] = React.useState(false);
   const [detailsOpen, setDetailsOpen] = React.useState(false);
-  const [selectedCaseId, setSelectedCaseId] = React.useState<string | null>(
+  const [selectedCase, setSelectedCase] = React.useState<EditableCase | null>(
     null,
   );
+  const [loadingCaseId, setLoadingCaseId] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -61,15 +64,23 @@ export function CaseSearch({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const selectedCase = React.useMemo(
-    () => cases.find((item) => item.id === selectedCaseId) ?? null,
-    [cases, selectedCaseId],
-  );
-
-  function handleSelect(caseId: string) {
-    setSelectedCaseId(caseId);
-    setOpen(false);
-    setDetailsOpen(true);
+  async function handleSelect(caseId: string) {
+    try {
+      setLoadingCaseId(caseId);
+      const caseDetails = await getCaseDetailsAction(caseId);
+      setSelectedCase(caseDetails);
+      setOpen(false);
+      setDetailsOpen(true);
+    } catch (error) {
+      console.error(error);
+      alert(
+        error instanceof Error
+          ? error.message
+          : "Could not load case details.",
+      );
+    } finally {
+      setLoadingCaseId(null);
+    }
   }
 
   return (
@@ -102,7 +113,8 @@ export function CaseSearch({
                 <CommandItem
                   key={item.id}
                   value={`${item.code} ${item.patientName} ${item.clinicName}`}
-                  onSelect={() => handleSelect(item.id)}
+                  onSelect={() => void handleSelect(item.id)}
+                  disabled={loadingCaseId !== null}
                 >
                   <div className="min-w-0">
                     <div className="truncate font-medium">
@@ -115,7 +127,13 @@ export function CaseSearch({
                         : ""}
                     </div>
                   </div>
-                  <CommandShortcut>Abrir</CommandShortcut>
+                  <CommandShortcut>
+                    {loadingCaseId === item.id ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      "Abrir"
+                    )}
+                  </CommandShortcut>
                 </CommandItem>
               ))}
             </CommandGroup>

@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { getAuthenticatedAppUser } from "@/lib/auth/get-app-user";
+import { getCaseFormOptions } from "@/lib/case-data";
 import { redirect } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 
@@ -13,7 +14,7 @@ export default async function CasesPage() {
     redirect("/login");
   }
 
-  const [cases, clinics, serviceTypes, cadDesigners, components] =
+  const [cases, { clinics, serviceTypes, cadDesigners, components }] =
     await Promise.all([
       prisma.case.findMany({
         orderBy: { createdAt: "desc" },
@@ -60,39 +61,7 @@ export default async function CasesPage() {
           },
         },
       }),
-      prisma.clinic.findMany({
-        orderBy: { name: "asc" },
-        include: {
-          dentists: {
-            orderBy: { name: "asc" },
-          },
-        },
-      }),
-      prisma.serviceType.findMany({
-        where: { isActive: true },
-        orderBy: { name: "asc" },
-      }),
-      prisma.user.findMany({
-        where: {
-          role: "CAD_DESIGNER",
-          isActive: true,
-        },
-        orderBy: { name: "asc" },
-      }),
-      prisma.component.findMany({
-        where: {
-          isActive: true,
-        },
-        orderBy: { name: "asc" },
-        select: {
-          id: true,
-          name: true,
-          category: true,
-          brand: true,
-          defaultCost: true,
-          defaultPrice: true,
-        },
-      }),
+      getCaseFormOptions(),
     ]);
 
   return (
@@ -107,14 +76,7 @@ export default async function CasesPage() {
           clinics={clinics}
           serviceTypes={serviceTypes}
           cadDesigners={cadDesigners}
-          components={components.map((component) => ({
-            id: component.id,
-            name: component.name,
-            category: component.category,
-            brand: component.brand,
-            defaultCost: component.defaultCost?.toString() ?? null,
-            defaultPrice: component.defaultPrice?.toString() ?? null,
-          }))}
+          components={components}
           currentUserRole={appUser.role}
         />
       </div>
@@ -248,16 +210,7 @@ export default async function CasesPage() {
                         clinics={clinics}
                         serviceTypes={serviceTypes}
                         cadDesigners={cadDesigners}
-                        components={components.map((component) => ({
-                          id: component.id,
-                          name: component.name,
-                          category: component.category,
-                          brand: component.brand,
-                          defaultCost:
-                            component.defaultCost?.toString() ?? null,
-                          defaultPrice:
-                            component.defaultPrice?.toString() ?? null,
-                        }))}
+                        components={components}
                         currentUserRole={appUser.role}
                       />
                     </td>

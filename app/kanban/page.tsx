@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getAuthenticatedAppUser } from "@/lib/auth/get-app-user";
+import { getCaseFormOptions } from "@/lib/case-data";
 import { KanbanBoardWrapper } from "./components/kanban-board-wrapper";
 
 export default async function KanbanPage() {
@@ -10,11 +11,15 @@ export default async function KanbanPage() {
     redirect("/login");
   }
 
-  const [cases, cadDesigners, clinics, serviceTypes, components] =
+  const [cases, { cadDesigners, clinics, serviceTypes, components }] =
     await Promise.all([
       prisma.case.findMany({
-        where:
-          appUser.role === "CAD_DESIGNER" ? { cadDesignerId: appUser.id } : {},
+        where: {
+          ...(appUser.role === "CAD_DESIGNER"
+            ? { cadDesignerId: appUser.id }
+            : {}),
+          currentStatus: { not: "DONE" },
+        },
         orderBy: { updatedAt: "desc" },
         select: {
           id: true,
@@ -90,51 +95,7 @@ export default async function KanbanPage() {
           },
         },
       }),
-      prisma.user.findMany({
-        where: {
-          role: "CAD_DESIGNER",
-          isActive: true,
-        },
-        orderBy: { name: "asc" },
-        select: {
-          id: true,
-          name: true,
-        },
-      }),
-      prisma.clinic.findMany({
-        orderBy: { name: "asc" },
-        include: {
-          dentists: {
-            orderBy: { name: "asc" },
-            select: {
-              id: true,
-              name: true,
-            },
-          },
-        },
-      }),
-      prisma.serviceType.findMany({
-        where: { isActive: true },
-        orderBy: { name: "asc" },
-        select: {
-          id: true,
-          name: true,
-        },
-      }),
-      prisma.component.findMany({
-        where: {
-          isActive: true,
-        },
-        orderBy: { name: "asc" },
-        select: {
-          id: true,
-          name: true,
-          category: true,
-          brand: true,
-          defaultCost: true,
-          defaultPrice: true,
-        },
-      }),
+      getCaseFormOptions(),
     ]);
 
   return (
@@ -200,14 +161,7 @@ export default async function KanbanPage() {
       designers={cadDesigners}
       clinics={clinics}
       serviceTypes={serviceTypes}
-      components={components.map((component) => ({
-        id: component.id,
-        name: component.name,
-        category: component.category,
-        brand: component.brand,
-        defaultCost: component.defaultCost?.toString() ?? null,
-        defaultPrice: component.defaultPrice?.toString() ?? null,
-      }))}
+      components={components}
     />
   );
 }

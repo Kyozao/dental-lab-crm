@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 import { getAuthenticatedAppUser } from "@/lib/auth/get-app-user";
-import type { CaseStatusValue } from "@/app/cases/case.shared";
+import type { CaseStatusValue, EditableCase } from "@/app/cases/case.shared";
 import { CaseStatus } from "@/app/generated/prisma/client";
 import { parseCaseComponentsPayload } from "@/lib/validators/case";
 
@@ -25,6 +25,209 @@ const VALID_CASE_STATUSES: ReadonlyArray<CaseStatus> = [
 
 function isValidCaseStatus(status: string): status is CaseStatus {
   return VALID_CASE_STATUSES.includes(status as CaseStatus);
+}
+
+function toEditableCase(caseItem: {
+  id: string;
+  code: string | null;
+  patientName: string | null;
+  currentStatus: CaseStatus;
+  teeth: string | null;
+  elementsQty: number | null;
+  shade: string | null;
+  dueDate: Date | null;
+  observations: string | null;
+  pendingNote: string | null;
+  isUrgent: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  clinicId: string | null;
+  dentistId: string | null;
+  serviceTypeId: string | null;
+  cadDesignerId: string | null;
+  clinic: { name: string } | null;
+  dentist: { name: string } | null;
+  serviceType: { name: string } | null;
+  cadDesigner: { name: string | null } | null;
+  caseComponentUsages: Array<{
+    id: string;
+    componentId: string;
+    quantity: number;
+    chargeClient: boolean;
+    unitCost: unknown;
+    unitPrice: unknown;
+    notes: string | null;
+    component: { name: string };
+  }>;
+  caseAttachments: Array<{
+    id: string;
+    fileName: string;
+    filePath: string;
+    fileType: string | null;
+    fileSize: number | null;
+    createdAt: Date;
+  }>;
+  millings: Array<{
+    id: string;
+    status: "SUCCESS" | "FAILED";
+    teethMilledQty: number;
+    failureReason: string | null;
+    notes: string | null;
+    milledAt: Date;
+    blockType: { name: string; shade: string | null };
+    millingDrill: { name: string } | null;
+  }>;
+}): EditableCase {
+  return {
+    id: caseItem.id,
+    code: caseItem.code ?? "",
+    patientName: caseItem.patientName ?? "Sem nome",
+    currentStatus: caseItem.currentStatus,
+    teeth: caseItem.teeth ?? "",
+    elementsQty: caseItem.elementsQty ?? null,
+    shade: caseItem.shade ?? "",
+    dueDate: caseItem.dueDate ? caseItem.dueDate.toISOString() : null,
+    observations: caseItem.observations ?? "",
+    pendingNote: caseItem.pendingNote ?? "",
+    isUrgent: caseItem.isUrgent,
+    createdAt: caseItem.createdAt.toISOString(),
+    updatedAt: caseItem.updatedAt.toISOString(),
+    clinicName: caseItem.clinic?.name ?? "",
+    clinicId: caseItem.clinicId ?? null,
+    dentistName: caseItem.dentist?.name ?? "",
+    dentistId: caseItem.dentistId ?? null,
+    serviceTypeId: caseItem.serviceTypeId ?? null,
+    serviceTypeName: caseItem.serviceType?.name ?? "",
+    cadDesignerId: caseItem.cadDesignerId ?? null,
+    cadDesignerName: caseItem.cadDesigner?.name ?? "",
+    attachments: caseItem.caseAttachments.map((attachment) => ({
+      id: attachment.id,
+      fileName: attachment.fileName,
+      filePath: attachment.filePath,
+      fileType: attachment.fileType ?? null,
+      fileSize: attachment.fileSize ?? null,
+      createdAt: attachment.createdAt.toISOString(),
+      uploadedByName: null,
+    })),
+    components: caseItem.caseComponentUsages.map((usage) => ({
+      id: usage.id,
+      componentId: usage.componentId,
+      componentName: usage.component.name,
+      quantity: usage.quantity,
+      chargeClient: usage.chargeClient,
+      unitCost: usage.unitCost?.toString() ?? null,
+      unitPrice: usage.unitPrice?.toString() ?? null,
+      notes: usage.notes,
+    })),
+    millings: caseItem.millings.map((milling) => ({
+      id: milling.id,
+      status: milling.status,
+      teethMilledQty: milling.teethMilledQty,
+      failureReason: milling.failureReason,
+      notes: milling.notes,
+      milledAt: milling.milledAt.toISOString(),
+      blockTypeName: milling.blockType.name,
+      blockTypeShade: milling.blockType.shade ?? null,
+      millingDrillName: milling.millingDrill?.name ?? null,
+    })),
+  };
+}
+
+export async function getCaseDetailsAction(caseId: string): Promise<EditableCase> {
+  const appUser = await getAuthenticatedAppUser();
+
+  if (!appUser) throw new Error("Not authenticated.");
+  if (!caseId) throw new Error("Case id is required.");
+
+  const caseItem = await prisma.case.findUnique({
+    where: { id: caseId },
+    select: {
+      id: true,
+      code: true,
+      patientName: true,
+      currentStatus: true,
+      teeth: true,
+      elementsQty: true,
+      shade: true,
+      dueDate: true,
+      observations: true,
+      pendingNote: true,
+      isUrgent: true,
+      createdAt: true,
+      updatedAt: true,
+      clinicId: true,
+      dentistId: true,
+      serviceTypeId: true,
+      cadDesignerId: true,
+      clinic: { select: { name: true } },
+      dentist: { select: { name: true } },
+      serviceType: { select: { name: true } },
+      cadDesigner: { select: { name: true } },
+      caseComponentUsages: {
+        orderBy: { createdAt: "asc" },
+        select: {
+          id: true,
+          componentId: true,
+          quantity: true,
+          chargeClient: true,
+          unitCost: true,
+          unitPrice: true,
+          notes: true,
+          component: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+      caseAttachments: {
+        orderBy: { createdAt: "desc" },
+        select: {
+          id: true,
+          fileName: true,
+          filePath: true,
+          fileType: true,
+          fileSize: true,
+          createdAt: true,
+        },
+      },
+      millings: {
+        orderBy: { milledAt: "desc" },
+        select: {
+          id: true,
+          status: true,
+          teethMilledQty: true,
+          failureReason: true,
+          notes: true,
+          milledAt: true,
+          blockType: {
+            select: {
+              name: true,
+              shade: true,
+            },
+          },
+          millingDrill: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!caseItem) {
+    throw new Error("Case not found.");
+  }
+
+  if (
+    appUser.role === "CAD_DESIGNER" &&
+    caseItem.cadDesignerId !== appUser.id
+  ) {
+    throw new Error("Unauthorized.");
+  }
+
+  return toEditableCase(caseItem);
 }
 
 export async function updateCaseStatusAction({

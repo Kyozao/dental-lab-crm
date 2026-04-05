@@ -114,6 +114,14 @@ export type EditableCase = {
   millings: CaseMillingItem[];
 };
 
+export type SearchCaseItem = {
+  id: string;
+  code: string;
+  patientName: string;
+  currentStatus: CaseStatusValue;
+  clinicName: string;
+};
+
 export type CaseFormValues = {
   code?: string;
   patientName?: string;

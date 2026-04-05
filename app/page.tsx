@@ -1,65 +1,232 @@
-import Image from "next/image";
+import { redirect } from "next/navigation";
+import { CadStatsDashboard } from "@/components/cad-stats-dashboard";
+import { getAuthenticatedAppUser } from "@/lib/auth/get-app-user";
+import { prisma } from "@/lib/prisma";
 
-export default function Home() {
+const STATUS_META = [
+  { status: "ENTRY", label: "Entry", fill: "#64748b" },
+  { status: "WAITING_INFO", label: "Waiting info", fill: "#eab308" },
+  { status: "DESIGNING", label: "Designing", fill: "#2563eb" },
+  { status: "WAITING_APPROVAL", label: "Approval", fill: "#8b5cf6" },
+  { status: "DESIGN_READY", label: "Ready", fill: "#22c55e" },
+  { status: "MILLING_PRINTING", label: "Milling", fill: "#f97316" },
+  { status: "DONE", label: "Done", fill: "#14b8a6" },
+] as const;
+
+function getDoneDate(caseItem: {
+  updatedAt: Date;
+  statusHistory: Array<{ changedAt: Date }>;
+}) {
+  return caseItem.statusHistory[0]?.changedAt ?? caseItem.updatedAt;
+}
+
+function getCaseTeethCount(caseItem: {
+  elementsQty: number | null;
+  teeth: string | null;
+}) {
+  if (
+    typeof caseItem.elementsQty === "number" &&
+    Number.isFinite(caseItem.elementsQty)
+  ) {
+    return Math.max(caseItem.elementsQty, 0);
+  }
+
+  return (caseItem.teeth ?? "")
+    .split(/[\s,;/]+/)
+    .map((value) => value.trim())
+    .filter(Boolean).length;
+}
+
+export default async function HomePage() {
+  const appUser = await getAuthenticatedAppUser();
+
+  if (!appUser) {
+    redirect("/login");
+  }
+
+  const designers = await prisma.user.findMany({
+    where: {
+      role: "CAD_DESIGNER",
+      isActive: true,
+      ...(appUser.role === "CAD_DESIGNER" ? { id: appUser.id } : {}),
+    },
+    orderBy: { name: "asc" },
+    select: {
+      id: true,
+      name: true,
+      assignedCases: {
+        orderBy: { updatedAt: "desc" },
+        select: {
+          id: true,
+          currentStatus: true,
+          teeth: true,
+          elementsQty: true,
+          isUrgent: true,
+          createdAt: true,
+          updatedAt: true,
+          dueDate: true,
+          statusHistory: {
+            where: { toStatus: "DONE" },
+            orderBy: { changedAt: "desc" },
+            take: 1,
+            select: { changedAt: true },
+          },
+        },
+      },
+    },
+  });
+
+  const now = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const weekStart = new Date(now);
+  weekStart.setDate(now.getDate() - 6);
+  weekStart.setHours(0, 0, 0, 0);
+
+  const allCases = designers.flatMap((designer) => designer.assignedCases);
+
+  const designerStats = designers
+    .map((designer) => {
+      const totalCases = designer.assignedCases.length;
+      const activeCases = designer.assignedCases.filter(
+        (caseItem) => caseItem.currentStatus !== "DONE",
+      );
+      const completedCases = designer.assignedCases.filter(
+        (caseItem) => caseItem.currentStatus === "DONE",
+      );
+      const completedThisMonth = completedCases.filter(
+        (caseItem) => getDoneDate(caseItem) >= monthStart,
+      ).length;
+      const completedThisWeek = completedCases.filter(
+        (caseItem) => getDoneDate(caseItem) >= weekStart,
+      ).length;
+      const totalTeethDesigned = designer.assignedCases.reduce(
+        (sum, caseItem) => sum + getCaseTeethCount(caseItem),
+        0,
+      );
+      const activeTeeth = activeCases.reduce(
+        (sum, caseItem) => sum + getCaseTeethCount(caseItem),
+        0,
+      );
+      const completedTeeth = completedCases.reduce(
+        (sum, caseItem) => sum + getCaseTeethCount(caseItem),
+        0,
+      );
+      const completedTeethThisMonth = completedCases
+        .filter((caseItem) => getDoneDate(caseItem) >= monthStart)
+        .reduce((sum, caseItem) => sum + getCaseTeethCount(caseItem), 0);
+      const overdueCases = activeCases.filter(
+        (caseItem) => caseItem.dueDate && caseItem.dueDate < now,
+      ).length;
+      const urgentOpenCases = activeCases.filter(
+        (caseItem) => caseItem.isUrgent,
+      ).length;
+      const avgTurnaroundDays = completedCases.length
+        ? Number(
+            (
+              completedCases.reduce((sum, caseItem) => {
+                const elapsedMs =
+                  getDoneDate(caseItem).getTime() -
+                  caseItem.createdAt.getTime();
+
+                return sum + elapsedMs / 86_400_000;
+              }, 0) / completedCases.length
+            ).toFixed(1),
+          )
+        : null;
+
+      return {
+        id: designer.id,
+        name: designer.name,
+        totalCases,
+        totalTeethDesigned,
+        activeCases: activeCases.length,
+        activeTeeth,
+        completedCases: completedCases.length,
+        completedTeeth,
+        completedThisWeek,
+        completedThisMonth,
+        completedTeethThisMonth,
+        urgentOpenCases,
+        overdueCases,
+        avgTurnaroundDays,
+        completionRate: totalCases
+          ? Math.round((completedCases.length / totalCases) * 100)
+          : 0,
+      };
+    })
+    .sort(
+      (a, b) =>
+        b.completedThisMonth - a.completedThisMonth ||
+        b.completedCases - a.completedCases ||
+        a.name.localeCompare(b.name),
+    );
+
+  const summary = {
+    totalDesigners: designers.length,
+    totalAssignedCases: allCases.length,
+    totalTeethDesigned: allCases.reduce(
+      (sum, caseItem) => sum + getCaseTeethCount(caseItem),
+      0,
+    ),
+    openCases: allCases.filter((caseItem) => caseItem.currentStatus !== "DONE")
+      .length,
+    openTeeth: allCases
+      .filter((caseItem) => caseItem.currentStatus !== "DONE")
+      .reduce((sum, caseItem) => sum + getCaseTeethCount(caseItem), 0),
+    completedThisMonth: allCases.filter(
+      (caseItem) =>
+        caseItem.currentStatus === "DONE" &&
+        getDoneDate(caseItem) >= monthStart,
+    ).length,
+    urgentOpenCases: allCases.filter(
+      (caseItem) => caseItem.currentStatus !== "DONE" && caseItem.isUrgent,
+    ).length,
+    avgTurnaroundDays: (() => {
+      const completedCases = allCases.filter(
+        (caseItem) => caseItem.currentStatus === "DONE",
+      );
+
+      if (!completedCases.length) {
+        return null;
+      }
+
+      return Number(
+        (
+          completedCases.reduce((sum, caseItem) => {
+            const elapsedMs =
+              getDoneDate(caseItem).getTime() - caseItem.createdAt.getTime();
+
+            return sum + elapsedMs / 86_400_000;
+          }, 0) / completedCases.length
+        ).toFixed(1),
+      );
+    })(),
+  };
+
+  const statusData = STATUS_META.map(({ status, label, fill }) => ({
+    status,
+    label,
+    fill,
+    value: allCases.filter((caseItem) => caseItem.currentStatus === status)
+      .length,
+  })).filter((item) => item.value > 0);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between bg-white px-5 py-14 dark:bg-black sm:items-start sm:px-8 md:px-12 md:py-24">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex w-full flex-col gap-4 text-base font-medium sm:w-auto sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] sm:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] sm:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <CadStatsDashboard
+      title={
+        appUser.role === "CAD_DESIGNER"
+          ? "My CAD Statistics"
+          : "CAD Designer Statistics"
+      }
+      description={
+        appUser.role === "CAD_DESIGNER"
+          ? "Monitor your workload, urgent cases, and turnaround time in one place."
+          : "Track workload, completions, and bottlenecks across your CAD design team."
+      }
+      summary={summary}
+      designerStats={designerStats}
+      statusData={statusData}
+      isSelfView={appUser.role === "CAD_DESIGNER"}
+    />
   );
 }

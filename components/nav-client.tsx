@@ -11,7 +11,7 @@ import type {
   CadDesignerOption,
   ClinicOption,
   ComponentOption,
-  EditableCase,
+  SearchCaseItem,
   ServiceTypeOption,
 } from "@/app/cases/case.shared";
 import { CaseSearch } from "./case-search";
@@ -19,7 +19,7 @@ import { CaseSearch } from "./case-search";
 interface NavClientProps {
   userRole?: UserRole;
   currentUserRole?: string;
-  cases?: EditableCase[];
+  cases?: SearchCaseItem[];
   clinics?: ClinicOption[];
   serviceTypes?: ServiceTypeOption[];
   cadDesigners?: CadDesignerOption[];
@@ -185,9 +185,13 @@ function getNavRoutes(role?: UserRole, pathname?: string) {
     return [];
   }
 
-  // CAD_DESIGNER users only see Kanban
   if (role === "CAD_DESIGNER") {
     return [
+      {
+        href: "/",
+        label: "My Stats",
+        active: pathname === "/",
+      },
       {
         href: "/kanban",
         label: "Kanban",
@@ -196,8 +200,12 @@ function getNavRoutes(role?: UserRole, pathname?: string) {
     ];
   }
 
-  // All other roles see all routes
   return [
+    {
+      href: "/",
+      label: "Dashboard",
+      active: pathname === "/",
+    },
     {
       href: "/cases",
       label: "Cases",
