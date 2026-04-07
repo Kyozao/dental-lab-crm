@@ -15,6 +15,7 @@ import type {
   ServiceTypeOption,
 } from "@/app/cases/case.shared";
 import { CaseSearch } from "./case-search";
+import { NotificationsMenu } from "./notifications-menu";
 
 interface NavClientProps {
   userRole?: UserRole;
@@ -24,6 +25,14 @@ interface NavClientProps {
   serviceTypes?: ServiceTypeOption[];
   cadDesigners?: CadDesignerOption[];
   components?: ComponentOption[];
+  notifications?: Array<{
+    id: string;
+    title: string;
+    message: string;
+    createdAt: string;
+    isRead: boolean;
+    caseId: string | null;
+  }>;
 }
 
 export function NavClient({
@@ -34,6 +43,7 @@ export function NavClient({
   serviceTypes = [],
   cadDesigners = [],
   components = [],
+  notifications = [],
 }: NavClientProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
@@ -63,6 +73,7 @@ export function NavClient({
           </Link>
 
           <div className="hidden md:flex items-center gap-1">
+            {userRole ? <NotificationsMenu notifications={notifications} /> : null}
             {userRole ? (
               <CaseSearch
                 cases={cases}
@@ -132,6 +143,7 @@ export function NavClient({
         {userRole && mobileOpen ? (
           <div className="mt-3 space-y-2 rounded-lg border border-border/60 bg-background p-3 md:hidden">
             <div className="flex flex-wrap gap-2">
+              <NotificationsMenu notifications={notifications} />
               <CaseSearch
                 cases={cases}
                 clinics={clinics}

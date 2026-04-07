@@ -129,6 +129,10 @@ export default async function CasesPage() {
                     filePath: attachment.filePath,
                     fileType: attachment.fileType ?? null,
                     fileSize: attachment.fileSize ?? null,
+                    kind: attachment.kind,
+                    retentionUntil: attachment.retentionUntil
+                      ? attachment.retentionUntil.toISOString()
+                      : null,
                     createdAt: attachment.createdAt.toISOString(),
                     uploadedByName: attachment.uploadedBy?.name ?? null,
                   })),

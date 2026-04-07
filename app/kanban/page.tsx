@@ -68,7 +68,14 @@ export default async function KanbanPage() {
               filePath: true,
               fileType: true,
               fileSize: true,
+              kind: true,
+              retentionUntil: true,
               createdAt: true,
+              uploadedBy: {
+                select: {
+                  name: true,
+                },
+              },
             },
           },
           millings: {
@@ -133,8 +140,10 @@ export default async function KanbanPage() {
           filePath: a.filePath,
           fileType: a.fileType ?? null,
           fileSize: a.fileSize ?? null,
+          kind: a.kind,
+          retentionUntil: a.retentionUntil ? a.retentionUntil.toISOString() : null,
           createdAt: a.createdAt.toISOString(),
-          uploadedByName: null,
+          uploadedByName: a.uploadedBy?.name ?? null,
         })),
         components: c.caseComponentUsages.map((usage) => ({
           id: usage.id,

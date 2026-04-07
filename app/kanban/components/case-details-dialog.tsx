@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Download, Paperclip } from "lucide-react";
+import { Download, Paperclip, Trash2 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 
 import {
   CASE_STATUS_OPTIONS,
+  type AttachmentKindValue,
   type CadDesignerOption,
   type ClinicOption,
   type ComponentOption,
@@ -24,6 +25,7 @@ import {
 import { createCaseAction } from "@/app/cases/actions";
 import { isCaseOverdue } from "../kanban.shared";
 import {
+  deleteCaseAttachmentAction,
   updateKanbanCaseAction,
   uploadCaseAttachmentAction,
   deleteKanbanCaseAction,
@@ -106,6 +108,18 @@ function formatDateTime(value: string) {
   }).format(new Date(value));
 }
 
+function getAttachmentKindLabel(kind: AttachmentKindValue) {
+  switch (kind) {
+    case "SCAN_INPUT":
+      return "Scan";
+    case "DESIGN_OUTPUT":
+    case "MODEL_OUTPUT":
+      return "Final";
+    default:
+      return "Arquivo";
+  }
+}
+
 export function CaseDetailsDialog({
   open,
   onOpenChange,
@@ -156,6 +170,9 @@ export function CaseDetailsDialog({
   const [isUploading, setIsUploading] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
   const [isDeleting, setIsDeleting] = React.useState(false);
+  const [deletingAttachmentId, setDeletingAttachmentId] = React.useState<
+    string | null
+  >(null);
   const [submitError, setSubmitError] = React.useState<string | null>(null);
   const [selectedClinicId, setSelectedClinicId] = React.useState(
     caseItem?.clinicId ?? "",
@@ -251,7 +268,10 @@ export function CaseDetailsDialog({
     }
   }
 
-  async function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleFileChange(
+    event: React.ChangeEvent<HTMLInputElement>,
+    kind: AttachmentKindValue,
+  ) {
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -259,8 +279,10 @@ export function CaseDetailsDialog({
       setIsUploading(true);
       const formData = new FormData();
       formData.append("caseId", caseItem.id);
+      formData.append("kind", kind);
       formData.append("file", file);
       await uploadCaseAttachmentAction(formData);
+      router.refresh();
     } catch (error) {
       console.error(error);
       alert(error instanceof Error ? error.message : "Upload failed.");
@@ -290,6 +312,28 @@ export function CaseDetailsDialog({
     } catch (error) {
       console.error(error);
       alert(error instanceof Error ? error.message : "Download failed.");
+    }
+  }
+
+  async function handleDeleteAttachment(
+    attachmentId: string,
+    fileName: string,
+  ) {
+    const confirmed = window.confirm(
+      `Delete the uploaded file "${fileName}"?`,
+    );
+
+    if (!confirmed) return;
+
+    try {
+      setDeletingAttachmentId(attachmentId);
+      await deleteCaseAttachmentAction(attachmentId);
+      router.refresh();
+    } catch (error) {
+      console.error(error);
+      alert(error instanceof Error ? error.message : "Could not delete file.");
+    } finally {
+      setDeletingAttachmentId(null);
     }
   }
 
@@ -344,6 +388,22 @@ export function CaseDetailsDialog({
   }
 
   const overdue = isCaseOverdue(caseItem.dueDate);
+  const scanAttachments = caseItem.attachments.filter(
+    (attachment) => attachment.kind === "SCAN_INPUT",
+  );
+  const finalAttachments = caseItem.attachments.filter(
+    (attachment) =>
+      attachment.kind === "DESIGN_OUTPUT" ||
+      attachment.kind === "MODEL_OUTPUT",
+  );
+  const otherAttachments = caseItem.attachments.filter(
+    (attachment) =>
+      attachment.kind !== "SCAN_INPUT" &&
+      attachment.kind !== "DESIGN_OUTPUT" &&
+      attachment.kind !== "MODEL_OUTPUT",
+  );
+  const canUploadScan = canEditAll;
+  const canUploadFinal = canEditAll || currentUserRole === "CAD_DESIGNER";
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -873,61 +933,108 @@ export function CaseDetailsDialog({
 
           {!isCreateMode ? (
             <div className="rounded-xl border p-4">
-              <div className="mb-4 flex items-center justify-between gap-3">
-                <div className="font-medium">Arquivos</div>
-
-                <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm">
-                  <Paperclip className="h-4 w-4" />
-                  {isUploading ? "Enviando..." : "Anexar arquivo"}
-                  <input
-                    type="file"
-                    className="hidden"
-                    onChange={handleFileChange}
-                    disabled={isUploading}
-                  />
-                </label>
+              <div className="mb-4">
+                <p className="font-medium">Arquivos do caso</p>
+                <p className="text-sm text-muted-foreground">
+                  Primeiro envie o scan compactado, depois o CAD envia o arquivo
+                  final `.zip`/`.rar`. O histórico fica disponível por pelo
+                  menos 90 dias.
+                </p>
               </div>
 
-              <div className="space-y-3">
-                {caseItem.attachments.length === 0 ? (
-                  <div className="text-sm text-muted-foreground">
-                    Nenhum arquivo anexado.
-                  </div>
-                ) : (
-                  caseItem.attachments.map((attachment) => (
-                    <div
-                      key={attachment.id}
-                      className="flex items-center justify-between gap-3 rounded-lg border p-3"
-                    >
-                      <div className="min-w-0">
-                        <div className="truncate font-medium">
-                          {attachment.fileName}
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          {attachment.fileType || "arquivo"} •{" "}
-                          {formatBytes(attachment.fileSize)} •{" "}
-                          {new Intl.DateTimeFormat("pt-BR").format(
-                            new Date(attachment.createdAt),
-                          )}
-                          {attachment.uploadedByName
-                            ? ` • ${attachment.uploadedByName}`
-                            : ""}
-                        </div>
-                      </div>
-
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleDownload(attachment.filePath)}
-                      >
-                        <Download className="mr-2 h-4 w-4" />
-                        Baixar
-                      </Button>
+              <div className="grid gap-4 lg:grid-cols-2">
+                <div className="rounded-lg border p-3">
+                  <div className="mb-3 flex items-start justify-between gap-3">
+                    <div>
+                      <p className="font-medium">1. Scan do caso</p>
+                      <p className="text-xs text-muted-foreground">
+                        Envie o scan em `.zip`, `.rar` ou `.7z`.
+                      </p>
                     </div>
-                  ))
-                )}
+
+                    {canUploadScan ? (
+                      <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm">
+                        <Paperclip className="h-4 w-4" />
+                        {isUploading ? "Enviando..." : "Enviar scan"}
+                        <input
+                          type="file"
+                          accept=".zip,.rar,.7z"
+                          className="hidden"
+                          onChange={(event) =>
+                            handleFileChange(event, "SCAN_INPUT")
+                          }
+                          disabled={isUploading}
+                        />
+                      </label>
+                    ) : null}
+                  </div>
+
+                  <AttachmentList
+                    attachments={scanAttachments}
+                    emptyMessage="Nenhum scan enviado ainda."
+                    onDownload={handleDownload}
+                    onDelete={handleDeleteAttachment}
+                    deletingAttachmentId={deletingAttachmentId}
+                    canDelete={canUploadFinal}
+                  />
+                </div>
+
+                <div className="rounded-lg border p-3">
+                  <div className="mb-3 flex items-start justify-between gap-3">
+                    <div>
+                      <p className="font-medium">2. Arquivo final</p>
+                      <p className="text-xs text-muted-foreground">
+                        Envie a entrega final em `.zip`, `.rar` ou `.7z`.
+                      </p>
+                    </div>
+
+                    {canUploadFinal ? (
+                      <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm">
+                        <Paperclip className="h-4 w-4" />
+                        {isUploading ? "Enviando..." : "Enviar final"}
+                        <input
+                          type="file"
+                          accept=".zip,.rar,.7z"
+                          className="hidden"
+                          onChange={(event) =>
+                            handleFileChange(event, "DESIGN_OUTPUT")
+                          }
+                          disabled={isUploading}
+                        />
+                      </label>
+                    ) : null}
+                  </div>
+
+                  <AttachmentList
+                    attachments={finalAttachments}
+                    emptyMessage="Nenhum arquivo final enviado ainda."
+                    onDownload={handleDownload}
+                    onDelete={handleDeleteAttachment}
+                    deletingAttachmentId={deletingAttachmentId}
+                    canDelete={canUploadFinal}
+                  />
+                </div>
               </div>
+
+              {otherAttachments.length > 0 ? (
+                <div className="mt-4 rounded-lg border p-3">
+                  <div className="mb-3">
+                    <p className="font-medium">Outros anexos</p>
+                    <p className="text-xs text-muted-foreground">
+                      Arquivos extras vinculados ao caso.
+                    </p>
+                  </div>
+
+                  <AttachmentList
+                    attachments={otherAttachments}
+                    emptyMessage="Sem anexos extras."
+                    onDownload={handleDownload}
+                    onDelete={handleDeleteAttachment}
+                    deletingAttachmentId={deletingAttachmentId}
+                    canDelete={canUploadFinal}
+                  />
+                </div>
+              ) : null}
             </div>
           ) : null}
 
@@ -960,5 +1067,81 @@ export function CaseDetailsDialog({
         </form>{" "}
       </DialogContent>
     </Dialog>
+  );
+}
+
+function AttachmentList({
+  attachments,
+  emptyMessage,
+  onDownload,
+  onDelete,
+  deletingAttachmentId,
+  canDelete,
+}: {
+  attachments: EditableCase["attachments"];
+  emptyMessage: string;
+  onDownload: (filePath: string) => void | Promise<void>;
+  onDelete: (attachmentId: string, fileName: string) => void | Promise<void>;
+  deletingAttachmentId: string | null;
+  canDelete: boolean;
+}) {
+  if (attachments.length === 0) {
+    return <div className="text-sm text-muted-foreground">{emptyMessage}</div>;
+  }
+
+  return (
+    <div className="space-y-3">
+      {attachments.map((attachment) => (
+        <div
+          key={attachment.id}
+          className="flex items-center justify-between gap-3 rounded-lg border p-3"
+        >
+          <div className="min-w-0">
+            <div className="mb-1 flex flex-wrap items-center gap-2">
+              <div className="truncate font-medium">{attachment.fileName}</div>
+              <Badge variant="outline">
+                {getAttachmentKindLabel(attachment.kind)}
+              </Badge>
+            </div>
+            <div className="text-xs text-muted-foreground">
+              {attachment.fileType || "arquivo"} • {formatBytes(attachment.fileSize)} • {new Intl.DateTimeFormat("pt-BR").format(
+                new Date(attachment.createdAt),
+              )}
+              {attachment.retentionUntil
+                ? ` • histórico até ${new Intl.DateTimeFormat("pt-BR").format(new Date(attachment.retentionUntil))}`
+                : ""}
+              {attachment.uploadedByName ? ` • ${attachment.uploadedByName}` : ""}
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => void onDownload(attachment.filePath)}
+            >
+              <Download className="mr-2 h-4 w-4" />
+              Baixar
+            </Button>
+
+            {canDelete ? (
+              <Button
+                type="button"
+                variant="destructive"
+                size="sm"
+                onClick={() => void onDelete(attachment.id, attachment.fileName)}
+                disabled={deletingAttachmentId === attachment.id}
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                {deletingAttachmentId === attachment.id
+                  ? "Excluindo..."
+                  : "Excluir"}
+              </Button>
+            ) : null}
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }

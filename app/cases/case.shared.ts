@@ -65,12 +65,20 @@ export type CaseComponentItem = {
   notes: string | null;
 };
 
+export type AttachmentKindValue =
+  | "SCAN_INPUT"
+  | "DESIGN_OUTPUT"
+  | "MODEL_OUTPUT"
+  | "OTHER";
+
 export type CaseAttachmentItem = {
   id: string;
   fileName: string;
   filePath: string;
   fileType: string | null;
   fileSize: number | null;
+  kind: AttachmentKindValue;
+  retentionUntil: string | null;
   createdAt: string;
   uploadedByName: string | null;
 };

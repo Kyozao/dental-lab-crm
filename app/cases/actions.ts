@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
+import { getAuthenticatedAppUser } from "@/lib/auth/get-app-user";
+import { notifyCaseAssignment } from "@/lib/notifications";
 import {
   createCaseSchema,
   parseCaseComponentsPayload,
@@ -60,6 +62,7 @@ export async function createCaseAction(
     };
   }
 
+  const appUser = await getAuthenticatedAppUser();
   const data = parsed.data;
   const parsedComponents = parseCaseComponentsPayload(
     formData.get("componentsPayload"),
@@ -99,7 +102,7 @@ export async function createCaseAction(
   }
 
   try {
-    await prisma.case.create({
+    const createdCase = await prisma.case.create({
       data: {
         code: data.code,
         patientName: data.patientName,
@@ -107,6 +110,7 @@ export async function createCaseAction(
         serviceTypeId: data.serviceTypeId || null,
         dentistId: data.dentistId || null,
         cadDesignerId: data.cadDesignerId || null,
+        createdByUserId: appUser?.id ?? null,
         currentStatus: data.currentStatus,
         pendingNote: data.pendingNote || null,
         observations: data.observations || null,
@@ -115,6 +119,12 @@ export async function createCaseAction(
         shade: data.shade || null,
         dueDate: data.dueDate ? new Date(data.dueDate) : null,
         isUrgent: data.isUrgent,
+        statusHistory: {
+          create: {
+            toStatus: data.currentStatus,
+            note: "Case created",
+          },
+        },
         caseComponentUsages: components.length
           ? {
               create: components.map((component) => ({
@@ -128,9 +138,27 @@ export async function createCaseAction(
             }
           : undefined,
       },
+      select: {
+        id: true,
+        code: true,
+        patientName: true,
+        cadDesignerId: true,
+      },
     });
 
+    if (createdCase.cadDesignerId) {
+      await notifyCaseAssignment({
+        recipientUserId: createdCase.cadDesignerId,
+        caseId: createdCase.id,
+        caseCode: createdCase.code,
+        patientName: createdCase.patientName,
+        assignedByName: appUser?.name ?? null,
+      });
+    }
+
+    revalidatePath("/");
     revalidatePath("/cases");
+    revalidatePath("/kanban");
 
     return {
       success: true,

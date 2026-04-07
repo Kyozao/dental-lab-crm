@@ -35,6 +35,20 @@ enum UserRole {
   PRODUCTION
 }
 
+enum AttachmentKind {
+  SCAN_INPUT
+  DESIGN_OUTPUT
+  MODEL_OUTPUT
+  OTHER
+}
+
+enum NotificationType {
+  CASE_ASSIGNED
+  SCAN_UPLOADED
+  DESIGN_UPLOADED
+  CASE_STATUS_CHANGED
+}
+
 model User {
   id        String   @id @default(uuid()) @db.Uuid
   name      String
@@ -47,6 +61,7 @@ model User {
   assignedCases   Case[]           @relation("CaseCadDesigner")
   createdCases    Case[]           @relation("CaseCreatedBy")
   caseAttachments CaseAttachment[]
+  notifications   Notification[]   @relation("NotificationRecipient")
 }
 
 model ServiceType {
@@ -106,18 +121,21 @@ model CaseMilling {
 }
 
 model CaseAttachment {
-  id           String   @id @default(cuid())
-  caseId       String
-  fileName     String
-  filePath     String
-  fileType     String?
-  fileSize     Int?
-  uploadedById String?  @db.Uuid
-  createdAt    DateTime @default(now())
-  case         Case     @relation(fields: [caseId], references: [id], onDelete: Cascade)
-  uploadedBy   User?    @relation(fields: [uploadedById], references: [id])
+  id             String         @id @default(cuid())
+  caseId         String
+  fileName       String
+  filePath       String
+  fileType       String?
+  fileSize       Int?
+  kind           AttachmentKind @default(OTHER)
+  retentionUntil DateTime?
+  archivedAt     DateTime?
+  uploadedById   String?        @db.Uuid
+  createdAt      DateTime       @default(now())
+  case           Case           @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  uploadedBy     User?          @relation(fields: [uploadedById], references: [id])
 
-  @@index([caseId, createdAt])
+  @@index([caseId, kind, createdAt])
 }
 
 model Clinic {
@@ -228,6 +246,7 @@ model Case {
   cadDesigner     User?            @relation("CaseCadDesigner", fields: [cadDesignerId], references: [id], onDelete: SetNull)
   createdByUser   User?            @relation("CaseCreatedBy", fields: [createdByUserId], references: [id])
   caseAttachments CaseAttachment[]
+  notifications   Notification[]
 
   @@index([clinicId])
   @@index([dentistId])
@@ -249,4 +268,23 @@ model CaseStatusHistory {
 
   @@index([caseId])
   @@index([toStatus])
+}
+
+model Notification {
+  id              String           @id @default(cuid())
+  recipientUserId String           @db.Uuid
+  caseId          String?
+  type            NotificationType
+  title           String
+  message         String
+  payload         Json?
+  isRead          Boolean          @default(false)
+  readAt          DateTime?
+  createdAt       DateTime         @default(now())
+
+  recipientUser User @relation("NotificationRecipient", fields: [recipientUserId], references: [id], onDelete: Cascade)
+  case          Case? @relation(fields: [caseId], references: [id], onDelete: SetNull)
+
+  @@index([recipientUserId, isRead, createdAt])
+  @@index([caseId])
 }

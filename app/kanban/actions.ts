@@ -5,8 +5,16 @@ import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 import { getAuthenticatedAppUser } from "@/lib/auth/get-app-user";
 import type { CaseStatusValue, EditableCase } from "@/app/cases/case.shared";
-import { CaseStatus } from "@/app/generated/prisma/client";
+import {
+  AttachmentKind,
+  CaseStatus,
+} from "@/app/generated/prisma/client";
 import { parseCaseComponentsPayload } from "@/lib/validators/case";
+import {
+  notifyCaseAssignment,
+  notifyCaseFileUpload,
+  notifyCaseStatusChange,
+} from "@/lib/notifications";
 
 type UpdateCaseStatusInput = {
   caseId: string;
@@ -23,8 +31,21 @@ const VALID_CASE_STATUSES: ReadonlyArray<CaseStatus> = [
   "DONE",
 ];
 
+const VALID_ATTACHMENT_KINDS: ReadonlyArray<AttachmentKind> = [
+  "SCAN_INPUT",
+  "DESIGN_OUTPUT",
+  "MODEL_OUTPUT",
+  "OTHER",
+];
+
+const MAX_UPLOAD_SIZE = 100 * 1024 * 1024;
+
 function isValidCaseStatus(status: string): status is CaseStatus {
   return VALID_CASE_STATUSES.includes(status as CaseStatus);
+}
+
+function isValidAttachmentKind(kind: string): kind is AttachmentKind {
+  return VALID_ATTACHMENT_KINDS.includes(kind as AttachmentKind);
 }
 
 function toEditableCase(caseItem: {
@@ -65,7 +86,10 @@ function toEditableCase(caseItem: {
     filePath: string;
     fileType: string | null;
     fileSize: number | null;
+    kind: AttachmentKind;
+    retentionUntil: Date | null;
     createdAt: Date;
+    uploadedBy: { name: string | null } | null;
   }>;
   millings: Array<{
     id: string;
@@ -106,8 +130,12 @@ function toEditableCase(caseItem: {
       filePath: attachment.filePath,
       fileType: attachment.fileType ?? null,
       fileSize: attachment.fileSize ?? null,
+      kind: attachment.kind,
+      retentionUntil: attachment.retentionUntil
+        ? attachment.retentionUntil.toISOString()
+        : null,
       createdAt: attachment.createdAt.toISOString(),
-      uploadedByName: null,
+      uploadedByName: attachment.uploadedBy?.name ?? null,
     })),
     components: caseItem.caseComponentUsages.map((usage) => ({
       id: usage.id,
@@ -188,7 +216,14 @@ export async function getCaseDetailsAction(caseId: string): Promise<EditableCase
           filePath: true,
           fileType: true,
           fileSize: true,
+          kind: true,
+          retentionUntil: true,
           createdAt: true,
+          uploadedBy: {
+            select: {
+              name: true,
+            },
+          },
         },
       },
       millings: {
@@ -241,7 +276,11 @@ export async function updateCaseStatusAction({
 
   const existingCase = await prisma.case.findUnique({
     where: { id: caseId },
-    select: { id: true, cadDesignerId: true },
+    select: {
+      id: true,
+      cadDesignerId: true,
+      currentStatus: true,
+    },
   });
 
   if (!existingCase) throw new Error("Case not found.");
@@ -255,9 +294,26 @@ export async function updateCaseStatusAction({
 
   await prisma.case.update({
     where: { id: caseId },
-    data: { currentStatus: status },
+    data: {
+      currentStatus: status,
+      statusHistory: {
+        create: {
+          fromStatus: existingCase.currentStatus,
+          toStatus: status,
+        },
+      },
+    },
   });
 
+  if (existingCase.currentStatus !== status) {
+    await notifyCaseStatusChange({
+      caseId,
+      toStatus: status,
+      changedByUserId: appUser.id,
+    });
+  }
+
+  revalidatePath("/");
   revalidatePath("/kanban");
 }
 
@@ -267,16 +323,47 @@ export async function uploadCaseAttachmentAction(formData: FormData) {
 
   const caseId = String(formData.get("caseId") ?? "");
   const file = formData.get("file");
+  const kindRaw = String(formData.get("kind") ?? "OTHER").trim();
 
   if (!caseId) throw new Error("Missing caseId.");
   if (!(file instanceof File)) throw new Error("Missing file.");
   if (!file.size) throw new Error("Empty file.");
+  if (file.size > MAX_UPLOAD_SIZE) {
+    throw new Error("File too large. Limit is 100 MB per file.");
+  }
+  if (!isValidAttachmentKind(kindRaw)) {
+    throw new Error("Invalid attachment type.");
+  }
 
-  const allowedExtensions = [".html", ".htm", ".zip", ".pdf", ".png", ".jpg", ".jpeg", ".webp", ".stl"];
+  const isArchiveUpload =
+    kindRaw === "SCAN_INPUT" ||
+    kindRaw === "DESIGN_OUTPUT" ||
+    kindRaw === "MODEL_OUTPUT";
+  const allowedExtensions = isArchiveUpload
+    ? [".zip", ".rar", ".7z"]
+    : [
+        ".html",
+        ".htm",
+        ".zip",
+        ".pdf",
+        ".png",
+        ".jpg",
+        ".jpeg",
+        ".webp",
+        ".stl",
+        ".obj",
+        ".ply",
+        ".rar",
+        ".7z",
+      ];
   const lowerName = file.name.toLowerCase();
 
   if (!allowedExtensions.some((ext) => lowerName.endsWith(ext))) {
-    throw new Error("Unsupported file type.");
+    throw new Error(
+      isArchiveUpload
+        ? "Use a .zip, .rar, or .7z archive for scans and final deliveries."
+        : "Unsupported file type.",
+    );
   }
 
   const existingCase = await prisma.case.findUnique({
@@ -293,13 +380,18 @@ export async function uploadCaseAttachmentAction(formData: FormData) {
     throw new Error("Unauthorized.");
   }
 
+  if (appUser.role === "CAD_DESIGNER" && kindRaw === "SCAN_INPUT") {
+    throw new Error("CAD designers can only upload the final archive.");
+  }
+
   const supabase = await createClient();
 
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
 
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-  const filePath = `${caseId}/${Date.now()}-${safeName}`;
+  const storageFolder = kindRaw.toLowerCase();
+  const filePath = `${caseId}/${storageFolder}/${Date.now()}-${safeName}`;
 
   const { error: uploadError } = await supabase.storage
     .from("case-files")
@@ -319,10 +411,66 @@ export async function uploadCaseAttachmentAction(formData: FormData) {
       filePath,
       fileType: file.type || null,
       fileSize: file.size,
+      kind: kindRaw,
+      retentionUntil: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
       uploadedById: appUser.id,
     },
   });
 
+  await notifyCaseFileUpload({
+    caseId,
+    fileName: file.name,
+    kind: kindRaw,
+    uploadedById: appUser.id,
+    uploadedByName: appUser.name,
+  });
+
+  revalidatePath("/");
+  revalidatePath("/kanban");
+}
+
+export async function deleteCaseAttachmentAction(attachmentId: string) {
+  const appUser = await getAuthenticatedAppUser();
+  if (!appUser) throw new Error("Not authenticated.");
+  if (!attachmentId) throw new Error("Attachment id is required.");
+
+  const attachment = await prisma.caseAttachment.findUnique({
+    where: { id: attachmentId },
+    select: {
+      id: true,
+      filePath: true,
+      case: {
+        select: {
+          cadDesignerId: true,
+        },
+      },
+    },
+  });
+
+  if (!attachment) throw new Error("File not found.");
+
+  if (
+    appUser.role === "CAD_DESIGNER" &&
+    attachment.case.cadDesignerId !== appUser.id
+  ) {
+    throw new Error("Unauthorized.");
+  }
+
+  const supabase = await createClient();
+  const { error } = await supabase.storage
+    .from("case-files")
+    .remove([attachment.filePath]);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  await prisma.caseAttachment.delete({
+    where: { id: attachmentId },
+  });
+
+  revalidatePath("/");
+  revalidatePath("/cases");
   revalidatePath("/kanban");
 }
 
@@ -348,6 +496,21 @@ export async function deleteKanbanCaseAction(caseId: string) {
     throw new Error("Case id is required.");
   }
 
+  const protectedAttachmentCount = await prisma.caseAttachment.count({
+    where: {
+      caseId,
+      retentionUntil: {
+        gt: new Date(),
+      },
+    },
+  });
+
+  if (protectedAttachmentCount > 0) {
+    throw new Error(
+      "This case still has files inside the 90-day history window and cannot be deleted yet.",
+    );
+  }
+
   await prisma.caseAttachment.deleteMany({
     where: { caseId },
   });
@@ -357,6 +520,86 @@ export async function deleteKanbanCaseAction(caseId: string) {
   });
 
   revalidatePath("/cases");
+  revalidatePath("/kanban");
+}
+
+export async function getColumnDownloadUrlsAction({
+  caseIds,
+  kind,
+}: {
+  caseIds: string[];
+  kind?: AttachmentKind | "ALL" | "FINAL_OUTPUTS";
+}) {
+  const appUser = await getAuthenticatedAppUser();
+  if (!appUser) throw new Error("Not authenticated.");
+
+  const uniqueCaseIds = [...new Set(caseIds.filter(Boolean))];
+
+  if (!uniqueCaseIds.length) {
+    return [];
+  }
+
+  const allowedCases = await prisma.case.findMany({
+    where: {
+      id: { in: uniqueCaseIds },
+      ...(appUser.role === "CAD_DESIGNER" ? { cadDesignerId: appUser.id } : {}),
+    },
+    select: { id: true },
+  });
+
+  if (allowedCases.length !== uniqueCaseIds.length) {
+    throw new Error("Unauthorized.");
+  }
+
+  const attachments = await prisma.caseAttachment.findMany({
+    where: {
+      caseId: { in: uniqueCaseIds },
+      ...(kind === "FINAL_OUTPUTS"
+        ? { kind: { in: ["DESIGN_OUTPUT", "MODEL_OUTPUT"] } }
+        : kind && kind !== "ALL"
+          ? { kind }
+          : {}),
+    },
+    orderBy: [{ caseId: "asc" }, { createdAt: "desc" }],
+    select: {
+      id: true,
+      caseId: true,
+      fileName: true,
+      filePath: true,
+      kind: true,
+      case: {
+        select: {
+          code: true,
+          patientName: true,
+        },
+      },
+    },
+  });
+
+  const supabase = await createClient();
+  const signedDownloads = await Promise.all(
+    attachments.map(async (attachment) => {
+      const { data, error } = await supabase.storage
+        .from("case-files")
+        .createSignedUrl(attachment.filePath, 60 * 10);
+
+      if (error || !data?.signedUrl) {
+        return null;
+      }
+
+      return {
+        id: attachment.id,
+        caseId: attachment.caseId,
+        caseLabel: attachment.case.code || attachment.case.patientName,
+        fileName: attachment.fileName,
+        filePath: attachment.filePath,
+        kind: attachment.kind,
+        signedUrl: data.signedUrl,
+      };
+    }),
+  );
+
+  return signedDownloads.filter((item): item is NonNullable<typeof item> => Boolean(item));
 }
 
 export async function updateKanbanCaseAction(formData: FormData) {
@@ -370,7 +613,10 @@ export async function updateKanbanCaseAction(formData: FormData) {
     where: { id: caseId },
     select: {
       id: true,
+      code: true,
+      patientName: true,
       cadDesignerId: true,
+      currentStatus: true,
     },
   });
 
@@ -455,6 +701,7 @@ export async function updateKanbanCaseAction(formData: FormData) {
       },
     });
 
+    revalidatePath("/");
     revalidatePath("/kanban");
     return;
   }
@@ -502,11 +749,19 @@ export async function updateKanbanCaseAction(formData: FormData) {
       teeth: teeth || null,
       elementsQty,
       shade: shade || null,
-      
       dueDate: dueDateRaw ? new Date(`${dueDateRaw}T00:00:00`) : null,
       isUrgent,
       pendingNote: pendingNote || null,
       observations: observations || null,
+      statusHistory:
+        existingCase.currentStatus !== currentStatusRaw
+          ? {
+              create: {
+                fromStatus: existingCase.currentStatus,
+                toStatus: currentStatusRaw,
+              },
+            }
+          : undefined,
       caseComponentUsages: {
         deleteMany: {},
         create: components.map((component) => ({
@@ -521,5 +776,24 @@ export async function updateKanbanCaseAction(formData: FormData) {
     },
   });
 
+  if ((existingCase.cadDesignerId ?? "") !== cadDesignerIdRaw && cadDesignerIdRaw) {
+    await notifyCaseAssignment({
+      recipientUserId: cadDesignerIdRaw,
+      caseId,
+      caseCode: code,
+      patientName,
+      assignedByName: appUser.name,
+    });
+  }
+
+  if (existingCase.currentStatus !== currentStatusRaw) {
+    await notifyCaseStatusChange({
+      caseId,
+      toStatus: currentStatusRaw,
+      changedByUserId: appUser.id,
+    });
+  }
+
+  revalidatePath("/");
   revalidatePath("/kanban");
 }

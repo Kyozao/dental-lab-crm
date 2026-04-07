@@ -20,13 +20,22 @@ import {
   useSortable,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { CalendarDays, ClipboardList, User2, Paperclip } from "lucide-react";
+import {
+  CalendarDays,
+  ClipboardList,
+  Download,
+  User2,
+  Paperclip,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { updateCaseStatusAction } from "../actions";
+import {
+  getColumnDownloadUrlsAction,
+  updateCaseStatusAction,
+} from "../actions";
 import {
   type CadDesignerOption,
   type ClinicOption,
@@ -549,6 +558,55 @@ function FilterChip({
   );
 }
 
+function getScanCount(item: EditableCase) {
+  return item.attachments.filter(
+    (attachment) => attachment.kind === "SCAN_INPUT",
+  ).length;
+}
+
+function getFinalCount(item: EditableCase) {
+  return item.attachments.filter(
+    (attachment) =>
+      attachment.kind === "DESIGN_OUTPUT" ||
+      attachment.kind === "MODEL_OUTPUT",
+  ).length;
+}
+
+function getColumnDownloadKind(
+  columnId: (typeof KANBAN_COLUMNS)[number]["id"],
+): "SCAN_INPUT" | "FINAL_OUTPUTS" | "ALL" {
+  if (
+    columnId === "ENTRY" ||
+    columnId === "WAITING_INFO" ||
+    columnId === "DESIGNING"
+  ) {
+    return "SCAN_INPUT";
+  }
+
+  if (
+    columnId === "WAITING_APPROVAL" ||
+    columnId === "DESIGN_READY" ||
+    columnId === "MILLING_PRINTING" ||
+    columnId === "DONE"
+  ) {
+    return "FINAL_OUTPUTS";
+  }
+
+  return "ALL";
+}
+
+function getColumnDownloadLabel(kind: "SCAN_INPUT" | "FINAL_OUTPUTS" | "ALL") {
+  if (kind === "SCAN_INPUT") {
+    return "Baixar scans";
+  }
+
+  if (kind === "FINAL_OUTPUTS") {
+    return "Baixar finais";
+  }
+
+  return "Baixar arquivos";
+}
+
 function KanbanColumn({
   columnId,
   title,
@@ -565,6 +623,67 @@ function KanbanColumn({
   currentUserRole: string;
 }) {
   const { setNodeRef, isOver } = useDroppable({ id: columnId });
+  const [isDownloading, setIsDownloading] = React.useState(false);
+  const preferredDownloadKind = getColumnDownloadKind(columnId);
+  const hasDownloads = cards.some((card) => {
+    if (preferredDownloadKind === "SCAN_INPUT") {
+      return getScanCount(card) > 0;
+    }
+
+    if (preferredDownloadKind === "FINAL_OUTPUTS") {
+      return getFinalCount(card) > 0;
+    }
+
+    return card.attachments.length > 0;
+  });
+
+  async function handleDownloadAll() {
+    if (!cards.length) {
+      return;
+    }
+
+    try {
+      setIsDownloading(true);
+      const downloads = await getColumnDownloadUrlsAction({
+        caseIds: cards.map((card) => card.id),
+        kind: preferredDownloadKind,
+      });
+
+      if (!downloads.length) {
+        alert("Nenhum arquivo disponível nesta coluna ainda.");
+        return;
+      }
+
+      for (const item of downloads) {
+        const response = await fetch(item.signedUrl);
+        if (!response.ok) {
+          throw new Error(`Could not download ${item.fileName}.`);
+        }
+
+        const blob = await response.blob();
+        const objectUrl = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        const safeCaseLabel = (item.caseLabel || item.caseId).replace(
+          /[^a-zA-Z0-9._-]/g,
+          "_",
+        );
+
+        link.href = objectUrl;
+        link.download = `${safeCaseLabel}-${item.fileName}`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(objectUrl);
+      }
+    } catch (error) {
+      console.error(error);
+      alert(
+        error instanceof Error ? error.message : "Could not download files.",
+      );
+    } finally {
+      setIsDownloading(false);
+    }
+  }
 
   return (
     <div
@@ -579,7 +698,22 @@ function KanbanColumn({
           <h2 className="font-semibold">{title}</h2>
           <p className="text-xs text-muted-foreground">{hint}</p>
         </div>
-        <Badge variant="secondary">{cards.length}</Badge>
+        <div className="flex flex-col items-end gap-2">
+          <Badge variant="secondary">{cards.length}</Badge>
+          {hasDownloads ? (
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => void handleDownloadAll()}
+              disabled={isDownloading}
+              className="h-8 px-2 text-xs"
+            >
+              <Download className="mr-1 h-3.5 w-3.5" />
+              {isDownloading ? "Baixando..." : getColumnDownloadLabel(preferredDownloadKind)}
+            </Button>
+          ) : null}
+        </div>
       </div>
 
       <SortableContext
@@ -656,6 +790,8 @@ function CaseCard({
 }) {
   const overdue = isCaseOverdue(item.dueDate);
   const isDesigner = currentUserRole === "CAD_DESIGNER";
+  const scanCount = getScanCount(item);
+  const finalCount = getFinalCount(item);
 
   return (
     <Card
@@ -738,9 +874,17 @@ function CaseCard({
           ) : null}
 
           {item.attachments.length > 0 ? (
-            <div className="flex items-center gap-2">
-              <Paperclip className="h-3.5 w-3.5" />
-              <span>{item.attachments.length} arquivo(s)</span>
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="flex items-center gap-2">
+                <Paperclip className="h-3.5 w-3.5" />
+                <span>{item.attachments.length} arquivo(s)</span>
+              </div>
+              {scanCount > 0 ? (
+                <Badge variant="outline">Scan {scanCount}</Badge>
+              ) : null}
+              {finalCount > 0 ? (
+                <Badge variant="secondary">Final {finalCount}</Badge>
+              ) : null}
             </div>
           ) : null}
         </div>
