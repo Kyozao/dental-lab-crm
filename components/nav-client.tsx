@@ -20,6 +20,7 @@ import { NotificationsMenu } from "./notifications-menu";
 interface NavClientProps {
   userRole?: UserRole;
   currentUserRole?: string;
+  currentUserId?: string;
   cases?: SearchCaseItem[];
   clinics?: ClinicOption[];
   serviceTypes?: ServiceTypeOption[];
@@ -38,6 +39,7 @@ interface NavClientProps {
 export function NavClient({
   userRole,
   currentUserRole,
+  currentUserId,
   cases = [],
   clinics = [],
   serviceTypes = [],
@@ -73,7 +75,12 @@ export function NavClient({
           </Link>
 
           <div className="hidden md:flex items-center gap-1">
-            {userRole ? <NotificationsMenu notifications={notifications} /> : null}
+            {userRole ? (
+              <NotificationsMenu
+                notifications={notifications}
+                currentUserId={currentUserId}
+              />
+            ) : null}
             {userRole ? (
               <CaseSearch
                 cases={cases}
@@ -143,7 +150,10 @@ export function NavClient({
         {userRole && mobileOpen ? (
           <div className="mt-3 space-y-2 rounded-lg border border-border/60 bg-background p-3 md:hidden">
             <div className="flex flex-wrap gap-2">
-              <NotificationsMenu notifications={notifications} />
+              <NotificationsMenu
+                notifications={notifications}
+                currentUserId={currentUserId}
+              />
               <CaseSearch
                 cases={cases}
                 clinics={clinics}

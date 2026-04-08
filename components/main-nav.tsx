@@ -33,6 +33,7 @@ export async function MainNav() {
     <NavClient
       userRole={appUser.role}
       currentUserRole={appUser.role}
+      currentUserId={appUser.id}
       cases={cases}
       clinics={clinics}
       serviceTypes={serviceTypes}
