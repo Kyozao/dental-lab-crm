@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Bell, BellRing, CheckCheck } from "lucide-react";
 
 import {
+  getLatestNotificationsAction,
   markAllNotificationsReadAction,
   markNotificationReadAction,
 } from "@/app/notifications/actions";
@@ -18,6 +19,7 @@ import {
 } from "@/components/ui/popover";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 export type NotificationMenuItem = {
   id: string;
@@ -73,9 +75,11 @@ export function NotificationsMenu({
   const [browserPermission, setBrowserPermission] = React.useState<
     NotificationPermission | "unsupported"
   >("default");
+  const knownIdsRef = React.useRef(new Set(notifications.map((item) => item.id)));
 
   React.useEffect(() => {
     setItems(notifications);
+    knownIdsRef.current = new Set(notifications.map((item) => item.id));
   }, [notifications]);
 
   React.useEffect(() => {
@@ -96,10 +100,6 @@ export function NotificationsMenu({
       return;
     }
 
-    if (document.visibilityState === "visible") {
-      return;
-    }
-
     const alert = new window.Notification(notification.title, {
       body: notification.message,
       tag: notification.id,
@@ -115,10 +115,57 @@ export function NotificationsMenu({
     }
   }, []);
 
+  const announceNotification = React.useCallback(
+    (notification: NotificationMenuItem) => {
+      toast(notification.title, {
+        description: notification.message,
+      });
+      showBrowserAlert(notification);
+    },
+    [showBrowserAlert],
+  );
+
   React.useEffect(() => {
     if (!currentUserId) {
       return;
     }
+
+    let isMounted = true;
+
+    const refreshNotifications = async () => {
+      try {
+        const latest = await getLatestNotificationsAction();
+
+        if (!isMounted) {
+          return;
+        }
+
+        for (const notification of latest) {
+          if (!knownIdsRef.current.has(notification.id) && !notification.isRead) {
+            knownIdsRef.current.add(notification.id);
+            announceNotification(notification);
+          }
+        }
+
+        knownIdsRef.current = new Set(latest.map((item) => item.id));
+        setItems(latest);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    void refreshNotifications();
+
+    const pollId = window.setInterval(() => {
+      void refreshNotifications();
+    }, 8000);
+
+    const handleVisibilityOrFocus = () => {
+      void refreshNotifications();
+    };
+
+    window.addEventListener("focus", handleVisibilityOrFocus);
+    document.addEventListener("visibilitychange", handleVisibilityOrFocus);
 
     const supabase = createClient();
     const channel = supabase
@@ -140,14 +187,17 @@ export function NotificationsMenu({
             return;
           }
 
+          if (!knownIdsRef.current.has(nextItem.id)) {
+            knownIdsRef.current.add(nextItem.id);
+            announceNotification(nextItem);
+          }
+
           setItems((previous) =>
             [nextItem, ...previous.filter((item) => item.id !== nextItem.id)].slice(
               0,
               12,
             ),
           );
-
-          showBrowserAlert(nextItem);
         },
       )
       .on(
@@ -177,9 +227,13 @@ export function NotificationsMenu({
       .subscribe();
 
     return () => {
+      isMounted = false;
+      window.clearInterval(pollId);
+      window.removeEventListener("focus", handleVisibilityOrFocus);
+      document.removeEventListener("visibilitychange", handleVisibilityOrFocus);
       void supabase.removeChannel(channel);
     };
-  }, [currentUserId, showBrowserAlert]);
+  }, [announceNotification, currentUserId]);
 
   const unreadCount = items.filter((item) => !item.isRead).length;
 

@@ -45,3 +45,32 @@ export async function markAllNotificationsReadAction() {
 
   revalidatePath("/");
 }
+
+export async function getLatestNotificationsAction() {
+  const appUser = await getAuthenticatedAppUser();
+
+  if (!appUser) {
+    return [];
+  }
+
+  const notifications = await prisma.notification.findMany({
+    where: {
+      recipientUserId: appUser.id,
+    },
+    orderBy: { createdAt: "desc" },
+    take: 12,
+    select: {
+      id: true,
+      title: true,
+      message: true,
+      createdAt: true,
+      isRead: true,
+      caseId: true,
+    },
+  });
+
+  return notifications.map((notification) => ({
+    ...notification,
+    createdAt: notification.createdAt.toISOString(),
+  }));
+}
