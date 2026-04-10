@@ -17,6 +17,7 @@ import {
   PopoverTitle,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { PushRegistration } from "@/components/push-registration";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
@@ -348,6 +349,8 @@ export function NotificationsMenu({
               Os alertas do navegador estão bloqueados. Ative nas permissões do browser para receber aviso no celular/computador.
             </p>
           ) : null}
+
+          <PushRegistration />
         </PopoverHeader>
 
         <div className="max-h-96 overflow-y-auto">

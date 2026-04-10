@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { MainNav } from "@/components/main-nav";
 import { Toaster } from "@/components/ui/sonner";
+import { PwaBootstrap } from "@/components/pwa-bootstrap";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
   title: "Synoa Dental Lab CRM",
   description:
     "CAD workload, case tracking, and production dashboard for the dental lab.",
+  manifest: "/manifest.webmanifest",
 };
 
 export default function RootLayout({
@@ -41,6 +43,7 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-screen flex flex-col bg-background">
+        <PwaBootstrap />
         <MainNav />
         <div className="flex-1">{children}</div>
         <Toaster richColors position="top-right" />

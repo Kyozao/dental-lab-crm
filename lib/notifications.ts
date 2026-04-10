@@ -6,6 +6,7 @@ import type {
   UserRole,
   Prisma,
 } from "@/app/generated/prisma/client";
+import { sendPushToUser } from "@/lib/push";
 
 async function createNotifications({
   recipientIds,
@@ -38,6 +39,16 @@ async function createNotifications({
       payload,
     })),
   });
+
+  await Promise.all(
+    uniqueRecipientIds.map((recipientId) =>
+      sendPushToUser(recipientId, {
+        title,
+        body: message,
+        url: caseId ? "/kanban" : "/",
+      }),
+    ),
+  );
 }
 
 export async function notifyCaseAssignment({
@@ -110,7 +121,7 @@ export async function notifyCaseFileUpload({
     }
   } else {
     type = "DESIGN_UPLOADED";
-    title = kind === "MODEL_OUTPUT" ? "Modelos enviados" : "Design enviado";
+    title = "Arquivo final enviado";
     message = `${uploadedByName ?? "Um usuário"} enviou arquivo(s) finais para o caso ${caseItem.code || caseItem.patientName}.`;
 
     if (caseItem.createdByUserId) {

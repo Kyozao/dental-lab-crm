@@ -1,0 +1,19 @@
+{
+  "name": "Synoa Dental Lab CRM",
+  "short_name": "Synoa Lab",
+  "description": "Dental lab workflow and CAD notifications",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1d4ed8",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/next.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
