@@ -1,0 +1,853 @@
+openapi: 3.1.0
+info:
+  title: Dental Lab CRM API
+  version: 0.1.0-draft
+  summary: Shared backend contract for web and future mobile clients
+  description: |
+    Draft Swagger/OpenAPI specification for `dental-lab-crm`.
+    This file is the machine-readable API contract and should be kept in sync
+    with `docs/api-contracts.md` as routes are added or changed.
+servers:
+  - url: http://localhost:3000
+    description: Local development
+security:
+  - bearerAuth: []
+tags:
+  - name: Auth
+  - name: Cases
+  - name: Kanban
+  - name: Production
+  - name: Registry
+  - name: Uploads
+  - name: Notifications
+paths:
+  /api/auth/login:
+    post:
+      tags: [Auth]
+      summary: Login user
+      description: Authenticate a user for web or mobile access.
+      operationId: loginUser
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/me:
+    get:
+      tags: [Auth]
+      summary: Get current user
+      description: Returns the authenticated user profile for session bootstrap.
+      operationId: getCurrentUser
+      responses:
+        "200":
+          description: Current user returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MeResponse"
+        "401":
+          description: Missing or invalid auth
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/cases:
+    get:
+      tags: [Cases]
+      summary: List cases
+      description: Returns paginated case summaries for dashboards and mobile lists.
+      operationId: listCases
+      parameters:
+        - in: query
+          name: status
+          schema:
+            $ref: "#/components/schemas/CaseStatus"
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: Search by patient, clinic, or case code.
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        "200":
+          description: Case list returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CaseListResponse"
+    post:
+      tags: [Cases]
+      summary: Create case
+      description: Creates a new dental case entry.
+      operationId: createCase
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCaseRequest"
+      responses:
+        "201":
+          description: Case created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CaseMutationResponse"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/cases/{id}:
+    get:
+      tags: [Cases]
+      summary: Get case details
+      description: Returns the full detail of a single case.
+      operationId: getCaseById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Case detail returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CaseResponse"
+        "404":
+          description: Case not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    patch:
+      tags: [Cases]
+      summary: Update case
+      description: Updates editable case fields.
+      operationId: updateCase
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCaseRequest"
+      responses:
+        "200":
+          description: Case updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CaseMutationResponse"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/kanban/cases/{id}/status:
+    patch:
+      tags: [Kanban]
+      summary: Update case status
+      description: Moves a case between kanban stages and records an optional note.
+      operationId: updateKanbanCaseStatus
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCaseStatusRequest"
+      responses:
+        "200":
+          description: Case status updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CaseMutationResponse"
+        "400":
+          description: Invalid status transition
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/production:
+    get:
+      tags: [Production]
+      summary: List production items
+      description: Returns production-related work items, optionally filtered by date or team.
+      operationId: listProductionItems
+      parameters:
+        - in: query
+          name: date
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: team
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Production items returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductionListResponse"
+  /api/registry/bootstrap:
+    get:
+      tags: [Registry]
+      summary: Load registry bootstrap data
+      description: Returns reference data needed to populate forms and dropdowns.
+      operationId: getRegistryBootstrap
+      responses:
+        "200":
+          description: Registry bootstrap returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegistryBootstrapResponse"
+  /api/uploads/presign:
+    post:
+      tags: [Uploads]
+      summary: Create pre-signed upload URL
+      description: Issues a temporary upload URL for case attachments.
+      operationId: createUploadPresignUrl
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UploadPresignRequest"
+      responses:
+        "200":
+          description: Upload URL generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadPresignResponse"
+        "400":
+          description: Invalid upload request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/notifications:
+    get:
+      tags: [Notifications]
+      summary: List notifications
+      description: Draft notification contract for the future redesign.
+      operationId: listNotifications
+      parameters:
+        - in: query
+          name: unreadOnly
+          schema:
+            type: boolean
+            default: false
+      responses:
+        "200":
+          description: Notifications returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationsListResponse"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    ErrorObject:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          example: VALIDATION_ERROR
+        message:
+          type: string
+          example: Explain what went wrong
+    ErrorResponse:
+      type: object
+      required: [data, error, meta]
+      properties:
+        data:
+          type: "null"
+          example: null
+        error:
+          $ref: "#/components/schemas/ErrorObject"
+        meta:
+          type: object
+          additionalProperties: true
+          example: {}
+    UserRole:
+      type: string
+      enum: [ADMIN, MANAGER, CAD_DESIGNER, PRODUCTION]
+    CaseStatus:
+      type: string
+      enum:
+        [
+          ENTRY,
+          WAITING_INFO,
+          DESIGNING,
+          WAITING_APPROVAL,
+          DESIGN_READY,
+          MILLING_PRINTING,
+          DONE,
+        ]
+    AttachmentKind:
+      type: string
+      enum: [SCAN_INPUT, DESIGN_OUTPUT, MODEL_OUTPUT, OTHER]
+    NotificationType:
+      type: string
+      enum: [CASE_ASSIGNED, SCAN_UPLOADED, DESIGN_UPLOADED, CASE_STATUS_CHANGED]
+    UserSummary:
+      type: object
+      required: [id, name, email, role]
+      properties:
+        id:
+          type: string
+          example: 8f5ee9f0-8d21-4ad7-b50b-0123456789ab
+        name:
+          type: string
+          example: Camila Santos
+        email:
+          type: string
+          format: email
+          example: designer@lab.com
+        role:
+          $ref: "#/components/schemas/UserRole"
+    ClinicSummary:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+          example: clinic_001
+        name:
+          type: string
+          example: Smile Center
+    ServiceTypeSummary:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+          example: service_001
+        name:
+          type: string
+          example: Zirconia Crown
+    CaseAttachment:
+      type: object
+      required: [id, kind, fileName, uploadedAt]
+      properties:
+        id:
+          type: string
+          example: attach_001
+        kind:
+          $ref: "#/components/schemas/AttachmentKind"
+        fileName:
+          type: string
+          example: scan-upper.stl
+        uploadedAt:
+          type: string
+          format: date-time
+    CaseTimelineItem:
+      type: object
+      required: [id, toStatus, changedAt]
+      properties:
+        id:
+          type: string
+          example: hist_001
+        fromStatus:
+          allOf:
+            - $ref: "#/components/schemas/CaseStatus"
+          nullable: true
+        toStatus:
+          $ref: "#/components/schemas/CaseStatus"
+        note:
+          type: string
+          nullable: true
+          example: CAD aprovado
+        changedAt:
+          type: string
+          format: date-time
+    CaseSummary:
+      type: object
+      required:
+        [id, code, patientName, currentStatus, isUrgent, createdAt, updatedAt]
+      properties:
+        id:
+          type: string
+          example: case_001
+        code:
+          type: string
+          example: C-2026-001
+        clientCaseCode:
+          type: string
+          nullable: true
+          example: CL-44A
+        patientName:
+          type: string
+          example: João Silva
+        clinicName:
+          type: string
+          nullable: true
+          example: Smile Center
+        serviceTypeName:
+          type: string
+          nullable: true
+          example: Zirconia Crown
+        cadDesignerName:
+          type: string
+          nullable: true
+          example: Camila Santos
+        currentStatus:
+          $ref: "#/components/schemas/CaseStatus"
+        dueDate:
+          type: string
+          format: date-time
+          nullable: true
+        isUrgent:
+          type: boolean
+          example: false
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    CaseDetail:
+      allOf:
+        - $ref: "#/components/schemas/CaseSummary"
+        - type: object
+          properties:
+            teeth:
+              type: string
+              nullable: true
+              example: 11,12
+            elementsQty:
+              type: integer
+              nullable: true
+              example: 2
+            shade:
+              type: string
+              nullable: true
+              example: A2
+            observations:
+              type: string
+              nullable: true
+            pendingNote:
+              type: string
+              nullable: true
+            attachments:
+              type: array
+              items:
+                $ref: "#/components/schemas/CaseAttachment"
+            timeline:
+              type: array
+              items:
+                $ref: "#/components/schemas/CaseTimelineItem"
+    PageMeta:
+      type: object
+      required: [page, pageSize, total]
+      properties:
+        page:
+          type: integer
+          example: 1
+        pageSize:
+          type: integer
+          example: 20
+        total:
+          type: integer
+          example: 42
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+          example: designer@lab.com
+        password:
+          type: string
+          format: password
+          example: secret123
+    CreateCaseRequest:
+      type: object
+      required: [patientName]
+      properties:
+        clinicId:
+          type: string
+          nullable: true
+          example: clinic_001
+        serviceTypeId:
+          type: string
+          nullable: true
+          example: service_001
+        dentistId:
+          type: string
+          nullable: true
+          example: dentist_001
+        cadDesignerId:
+          type: string
+          nullable: true
+          example: 8f5ee9f0-8d21-4ad7-b50b-0123456789ab
+        patientName:
+          type: string
+          example: João Silva
+        dueDate:
+          type: string
+          format: date
+          nullable: true
+        isUrgent:
+          type: boolean
+          default: false
+        teeth:
+          type: string
+          nullable: true
+        elementsQty:
+          type: integer
+          nullable: true
+        shade:
+          type: string
+          nullable: true
+        observations:
+          type: string
+          nullable: true
+    UpdateCaseRequest:
+      type: object
+      properties:
+        patientName:
+          type: string
+        clinicId:
+          type: string
+          nullable: true
+        serviceTypeId:
+          type: string
+          nullable: true
+        dentistId:
+          type: string
+          nullable: true
+        cadDesignerId:
+          type: string
+          nullable: true
+        dueDate:
+          type: string
+          format: date
+          nullable: true
+        isUrgent:
+          type: boolean
+        teeth:
+          type: string
+          nullable: true
+        elementsQty:
+          type: integer
+          nullable: true
+        shade:
+          type: string
+          nullable: true
+        observations:
+          type: string
+          nullable: true
+        pendingNote:
+          type: string
+          nullable: true
+    UpdateCaseStatusRequest:
+      type: object
+      required: [currentStatus]
+      properties:
+        currentStatus:
+          $ref: "#/components/schemas/CaseStatus"
+        note:
+          type: string
+          nullable: true
+          example: CAD aprovado
+    ProductionItem:
+      type: object
+      required: [id, caseId, patientName, currentStatus]
+      properties:
+        id:
+          type: string
+          example: prod_001
+        caseId:
+          type: string
+          example: case_001
+        patientName:
+          type: string
+          example: João Silva
+        currentStatus:
+          $ref: "#/components/schemas/CaseStatus"
+        dueDate:
+          type: string
+          format: date-time
+          nullable: true
+        cadDesignerName:
+          type: string
+          nullable: true
+    RegistryBootstrap:
+      type: object
+      required: [clinics, serviceTypes, dentists, components]
+      properties:
+        clinics:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClinicSummary"
+        serviceTypes:
+          type: array
+          items:
+            $ref: "#/components/schemas/ServiceTypeSummary"
+        dentists:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+        components:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+    UploadPresignRequest:
+      type: object
+      required: [caseId, fileName, contentType, kind]
+      properties:
+        caseId:
+          type: string
+          example: case_001
+        fileName:
+          type: string
+          example: scan-upper.stl
+        contentType:
+          type: string
+          example: model/stl
+        kind:
+          $ref: "#/components/schemas/AttachmentKind"
+    UploadPresignResult:
+      type: object
+      required: [uploadUrl, path]
+      properties:
+        uploadUrl:
+          type: string
+          format: uri
+          example: https://example.supabase.co/storage/v1/object/sign/...
+        path:
+          type: string
+          example: cases/case_001/scan-upper.stl
+        expiresInSeconds:
+          type: integer
+          example: 300
+    NotificationItem:
+      type: object
+      required: [id, type, title, message, isRead, createdAt]
+      properties:
+        id:
+          type: string
+          example: notif_001
+        type:
+          $ref: "#/components/schemas/NotificationType"
+        caseId:
+          type: string
+          nullable: true
+          example: case_001
+        title:
+          type: string
+          example: Novo caso atribuído
+        message:
+          type: string
+          example: Caso C-2026-001 foi atribuído a você
+        isRead:
+          type: boolean
+          example: false
+        createdAt:
+          type: string
+          format: date-time
+    LoginResponse:
+      type: object
+      required: [data, error, meta]
+      properties:
+        data:
+          type: object
+          required: [user, token]
+          properties:
+            user:
+              $ref: "#/components/schemas/UserSummary"
+            token:
+              type: string
+              example: jwt-or-session-token
+        error:
+          nullable: true
+          example: null
+        meta:
+          type: object
+          additionalProperties: true
+          example: {}
+    MeResponse:
+      type: object
+      required: [data, error, meta]
+      properties:
+        data:
+          $ref: "#/components/schemas/UserSummary"
+        error:
+          nullable: true
+          example: null
+        meta:
+          type: object
+          additionalProperties: true
+          example: {}
+    CaseListResponse:
+      type: object
+      required: [data, error, meta]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/CaseSummary"
+        error:
+          nullable: true
+          example: null
+        meta:
+          $ref: "#/components/schemas/PageMeta"
+    CaseResponse:
+      type: object
+      required: [data, error, meta]
+      properties:
+        data:
+          $ref: "#/components/schemas/CaseDetail"
+        error:
+          nullable: true
+          example: null
+        meta:
+          type: object
+          additionalProperties: true
+          example: {}
+    CaseMutationResponse:
+      type: object
+      required: [data, error, meta]
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              example: case_001
+            code:
+              type: string
+              example: C-2026-001
+            currentStatus:
+              $ref: "#/components/schemas/CaseStatus"
+            updatedAt:
+              type: string
+              format: date-time
+        error:
+          nullable: true
+          example: null
+        meta:
+          type: object
+          additionalProperties: true
+          example: {}
+    ProductionListResponse:
+      type: object
+      required: [data, error, meta]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProductionItem"
+        error:
+          nullable: true
+          example: null
+        meta:
+          type: object
+          additionalProperties: true
+          example: {}
+    RegistryBootstrapResponse:
+      type: object
+      required: [data, error, meta]
+      properties:
+        data:
+          $ref: "#/components/schemas/RegistryBootstrap"
+        error:
+          nullable: true
+          example: null
+        meta:
+          type: object
+          additionalProperties: true
+          example: {}
+    UploadPresignResponse:
+      type: object
+      required: [data, error, meta]
+      properties:
+        data:
+          $ref: "#/components/schemas/UploadPresignResult"
+        error:
+          nullable: true
+          example: null
+        meta:
+          type: object
+          additionalProperties: true
+          example: {}
+    NotificationsListResponse:
+      type: object
+      required: [data, error, meta]
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/NotificationItem"
+        error:
+          nullable: true
+          example: null
+        meta:
+          type: object
+          additionalProperties: true
+          example: {}
