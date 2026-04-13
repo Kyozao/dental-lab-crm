@@ -1,12 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { MainNav } from "@/components/main-nav";
+import { ConditionalMainNav } from "@/components/conditional-main-nav";
 import { Toaster } from "@/components/ui/sonner";
 import { PwaBootstrap } from "@/components/pwa-bootstrap";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  weight: ["400", "500", "600"],
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,11 +46,12 @@ export default function RootLayout({
         geistMono.variable,
         "font-sans",
         inter.variable,
+        spaceGrotesk.variable,
       )}
     >
       <body className="min-h-screen flex flex-col bg-background">
         <PwaBootstrap />
-        <MainNav />
+        <ConditionalMainNav />
         <div className="flex-1">{children}</div>
         <Toaster richColors position="top-right" />
       </body>
