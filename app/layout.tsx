@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { MainNav } from "@/components/main-nav";
+import { ConditionalMainNavWrapper } from "@/components/conditional-main-nav-wrapper";
 import { Toaster } from "@/components/ui/sonner";
 import { PwaBootstrap } from "@/components/pwa-bootstrap";
 
@@ -44,7 +45,9 @@ export default function RootLayout({
     >
       <body className="min-h-screen flex flex-col bg-background">
         <PwaBootstrap />
-        <MainNav />
+        <ConditionalMainNavWrapper>
+          <MainNav />
+        </ConditionalMainNavWrapper>
         <div className="flex-1">{children}</div>
         <Toaster richColors position="top-right" />
       </body>

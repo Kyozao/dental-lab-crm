@@ -11,8 +11,7 @@ import type {
   SearchCaseItem,
   ServiceTypeOption,
 } from "@/app/cases/case.shared";
-import { getCaseDetailsAction } from "@/app/kanban/actions";
-import { CaseDetailsDialog } from "@/app/kanban/components/case-details-dialog";
+import { CaseDetailsDialog } from "@/components/cases/case-details-dialog";
 import {
   Command,
   CommandDialog,
@@ -67,16 +66,104 @@ export function CaseSearch({
   async function handleSelect(caseId: string) {
     try {
       setLoadingCaseId(caseId);
-      const caseDetails = await getCaseDetailsAction(caseId);
+      const response = await fetch(`/api/cases/${caseId}`);
+      const payload = (await response.json().catch(() => null)) as {
+        data?: {
+          id: string;
+          code: string | null;
+          patientName: string | null;
+          caseScope: EditableCase["caseScope"];
+          currentStatus: EditableCase["currentStatus"];
+          teeth: string | null;
+          elementsQty: number | null;
+          shade: string | null;
+          dueDate: string | null;
+          observations: string | null;
+          pendingNote: string | null;
+          isUrgent: boolean;
+          createdAt: string;
+          updatedAt: string;
+          clinic: { id: string; name: string } | null;
+          dentist: { id: string; name: string } | null;
+          serviceType: { id: string; name: string } | null;
+          cadDesigner: { id: string; name: string | null } | null;
+          attachments: Array<{
+            id: string;
+            fileName: string;
+            filePath: string;
+            fileType: string | null;
+            fileSize: number | null;
+            kind: EditableCase["attachments"][number]["kind"];
+            retentionUntil: string | null;
+            createdAt: string;
+            uploadedByName: string | null;
+          }>;
+          components: Array<{
+            id: string;
+            componentId: string;
+            componentName: string;
+            quantity: number;
+            chargeClient: boolean;
+            unitCost: string | null;
+            unitPrice: string | null;
+            notes: string | null;
+          }>;
+          millings: Array<{
+            id: string;
+            status: "SUCCESS" | "FAILED";
+            teethMilledQty: number;
+            failureReason: string | null;
+            notes: string | null;
+            milledAt: string;
+            blockTypeName: string;
+            blockTypeShade: string | null;
+            millingDrillName: string | null;
+          }>;
+        };
+        error?: { message?: string } | null;
+      } | null;
+
+      if (!response.ok || !payload?.data) {
+        throw new Error(
+          payload?.error?.message || "Could not load case details.",
+        );
+      }
+
+      const caseDetails: EditableCase = {
+        id: payload.data.id,
+        code: payload.data.code ?? "",
+        patientName: payload.data.patientName ?? "Sem nome",
+        caseScope: payload.data.caseScope,
+        currentStatus: payload.data.currentStatus,
+        teeth: payload.data.teeth ?? "",
+        elementsQty: payload.data.elementsQty,
+        shade: payload.data.shade ?? "",
+        dueDate: payload.data.dueDate,
+        observations: payload.data.observations ?? "",
+        pendingNote: payload.data.pendingNote ?? "",
+        isUrgent: payload.data.isUrgent,
+        createdAt: payload.data.createdAt,
+        updatedAt: payload.data.updatedAt,
+        clinicName: payload.data.clinic?.name ?? "",
+        clinicId: payload.data.clinic?.id ?? null,
+        dentistName: payload.data.dentist?.name ?? "",
+        dentistId: payload.data.dentist?.id ?? null,
+        serviceTypeId: payload.data.serviceType?.id ?? null,
+        serviceTypeName: payload.data.serviceType?.name ?? "",
+        cadDesignerId: payload.data.cadDesigner?.id ?? null,
+        cadDesignerName: payload.data.cadDesigner?.name ?? "",
+        attachments: payload.data.attachments,
+        components: payload.data.components,
+        millings: payload.data.millings,
+      };
+
       setSelectedCase(caseDetails);
       setOpen(false);
       setDetailsOpen(true);
     } catch (error) {
       console.error(error);
       alert(
-        error instanceof Error
-          ? error.message
-          : "Could not load case details.",
+        error instanceof Error ? error.message : "Could not load case details.",
       );
     } finally {
       setLoadingCaseId(null);

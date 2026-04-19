@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { VelaWordmark } from "@/components/vela-icons";
 import { usePathname, useRouter } from "next/navigation";
 import { UserRole } from "@/app/generated/prisma/client";
-import { AddCaseDialog } from "@/app/cases/components/add-case-dialog";
+import { AddCaseDialog } from "@/components/cases/add-case-dialog";
 import { createClient } from "@/lib/supabase/client";
 import { Menu, X } from "lucide-react";
 import type {
@@ -66,13 +67,19 @@ export function NavClient({
       <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 sm:py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="flex items-center justify-center p-2 rounded-lg bg-linear-to-br from-blue-600 to-blue-700 text-white font-bold text-sm">
-              Synoa
-            </div>
-            <span className="hidden sm:inline font-semibold text-lg bg-linear-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">
-              Dental Lab
-            </span>
+            <VelaWordmark />
           </Link>
+
+          {!userRole ? (
+            <div className="hidden md:flex items-center gap-2">
+              <Link
+                href="/login"
+                className="rounded-md border border-border/60 px-4 py-2 text-sm font-medium hover:bg-accent/50 transition-colors"
+              >
+                Login
+              </Link>
+            </div>
+          ) : null}
 
           <div className="hidden md:flex items-center gap-1">
             {userRole ? (
@@ -210,9 +217,9 @@ function getNavRoutes(role?: UserRole, pathname?: string) {
   if (role === "CAD_DESIGNER") {
     return [
       {
-        href: "/",
+        href: "/dashboard",
         label: "My Stats",
-        active: pathname === "/",
+        active: pathname === "/dashboard",
       },
       {
         href: "/kanban",
@@ -224,9 +231,9 @@ function getNavRoutes(role?: UserRole, pathname?: string) {
 
   return [
     {
-      href: "/",
+      href: "/dashboard",
       label: "Dashboard",
-      active: pathname === "/",
+      active: pathname === "/dashboard",
     },
     {
       href: "/cases",

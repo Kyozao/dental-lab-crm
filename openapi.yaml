@@ -18,35 +18,7 @@ tags:
   - name: Kanban
   - name: Production
   - name: Registry
-  - name: Uploads
-  - name: Notifications
 paths:
-  /api/auth/login:
-    post:
-      tags: [Auth]
-      summary: Login user
-      description: Authenticate a user for web or mobile access.
-      operationId: loginUser
-      security: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/LoginRequest"
-      responses:
-        "200":
-          description: Login successful
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/LoginResponse"
-        "401":
-          description: Invalid credentials
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
   /api/me:
     get:
       tags: [Auth]
@@ -181,6 +153,146 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags: [Cases]
+      summary: Delete case
+      description: Deletes a case when no protected attachments are still within retention.
+      operationId: deleteCase
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Case deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteEntityResponse"
+        "400":
+          description: Case cannot be deleted because attachments are still retained
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Case not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/cases/{id}/attachments:
+    post:
+      tags: [Cases]
+      summary: Upload case attachment
+      description: Uploads a case file and stores metadata with 90-day retention.
+      operationId: uploadCaseAttachment
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [kind, file]
+              properties:
+                kind:
+                  $ref: "#/components/schemas/AttachmentKind"
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "201":
+          description: Attachment uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegistryEntityMutationResponse"
+        "400":
+          description: Invalid upload payload
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/cases/{id}/attachments/{attachmentId}:
+    delete:
+      tags: [Cases]
+      summary: Delete case attachment
+      description: Deletes a file attachment from storage and database.
+      operationId: deleteCaseAttachment
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: attachmentId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Attachment deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteEntityResponse"
+        "404":
+          description: Attachment not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/cases/downloads:
+    post:
+      tags: [Cases]
+      summary: Generate signed attachment download URLs
+      description: Returns temporary URLs for case attachments by ids and kind filter.
+      operationId: createCaseDownloadUrls
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [caseIds]
+              properties:
+                caseIds:
+                  type: array
+                  items:
+                    type: string
+                kind:
+                  type: string
+                  enum:
+                    [
+                      SCAN_INPUT,
+                      DESIGN_OUTPUT,
+                      MODEL_OUTPUT,
+                      OTHER,
+                      FINAL_OUTPUTS,
+                      ALL,
+                    ]
+      responses:
+        "200":
+          description: Download urls returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegistryEntityMutationResponse"
+        "403":
+          description: Unauthorized case access
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/kanban/cases/{id}/status:
     patch:
       tags: [Kanban]
@@ -235,6 +347,85 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProductionListResponse"
+    post:
+      tags: [Production]
+      summary: Create milling record
+      description: Creates a new milling log for a case.
+      operationId: createProductionMilling
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMillingRequest"
+      responses:
+        "201":
+          description: Milling record created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductionMutationResponse"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/production/{id}:
+    patch:
+      tags: [Production]
+      summary: Update milling record
+      description: Updates an existing milling log by id.
+      operationId: updateProductionMilling
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMillingRequest"
+      responses:
+        "200":
+          description: Milling record updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductionMutationResponse"
+        "404":
+          description: Milling record not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags: [Production]
+      summary: Delete milling record
+      description: Deletes a milling log by id.
+      operationId: deleteProductionMilling
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Milling record deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteEntityResponse"
+        "404":
+          description: Milling record not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/registry/bootstrap:
     get:
       tags: [Registry]
@@ -248,50 +439,154 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RegistryBootstrapResponse"
-  /api/uploads/presign:
+  /api/registry/{entity}:
     post:
-      tags: [Uploads]
-      summary: Create pre-signed upload URL
-      description: Issues a temporary upload URL for case attachments.
-      operationId: createUploadPresignUrl
+      tags: [Registry]
+      summary: Create registry entity
+      description: Creates a registry row for the provided entity type.
+      operationId: createRegistryEntity
+      parameters:
+        - in: path
+          name: entity
+          required: true
+          schema:
+            type: string
+            enum:
+              [
+                clinics,
+                dentists,
+                components,
+                block-types,
+                service-types,
+                milling-drills,
+              ]
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UploadPresignRequest"
+              $ref: "#/components/schemas/RegistryEntityPayload"
       responses:
-        "200":
-          description: Upload URL generated successfully
+        "201":
+          description: Registry entity created successfully
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UploadPresignResponse"
+                $ref: "#/components/schemas/RegistryEntityMutationResponse"
         "400":
-          description: Invalid upload request
+          description: Invalid request payload
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-  /api/notifications:
-    get:
-      tags: [Notifications]
-      summary: List notifications
-      description: Draft notification contract for the future redesign.
-      operationId: listNotifications
+  /api/registry/{entity}/{id}:
+    patch:
+      tags: [Registry]
+      summary: Update registry entity
+      description: Updates a registry row by entity type and id.
+      operationId: updateRegistryEntity
       parameters:
-        - in: query
-          name: unreadOnly
+        - in: path
+          name: entity
+          required: true
           schema:
-            type: boolean
-            default: false
+            type: string
+            enum:
+              [
+                clinics,
+                dentists,
+                components,
+                block-types,
+                service-types,
+                milling-drills,
+              ]
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegistryEntityPayload"
       responses:
         "200":
-          description: Notifications returned successfully
+          description: Registry entity updated successfully
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/NotificationsListResponse"
+                $ref: "#/components/schemas/RegistryEntityMutationResponse"
+        "404":
+          description: Registry entity not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      tags: [Registry]
+      summary: Delete registry entity
+      description: Deletes a registry row by entity type and id.
+      operationId: deleteRegistryEntity
+      parameters:
+        - in: path
+          name: entity
+          required: true
+          schema:
+            type: string
+            enum:
+              [
+                clinics,
+                dentists,
+                components,
+                block-types,
+                service-types,
+                milling-drills,
+              ]
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Registry entity deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeleteEntityResponse"
+        "404":
+          description: Registry entity not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /api/registry/milling-drills/{id}/changed:
+    post:
+      tags: [Registry]
+      summary: Mark milling drill changed
+      description: Updates changedAt for a milling drill when it is replaced/serviced.
+      operationId: markMillingDrillChanged
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Drill timestamp updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DrillChangedResponse"
+        "404":
+          description: Milling drill not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   securitySchemes:
     bearerAuth:
@@ -844,6 +1139,144 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/NotificationItem"
+        error:
+          nullable: true
+          example: null
+        meta:
+          type: object
+          additionalProperties: true
+          example: {}
+    CreateMillingRequest:
+      type: object
+      required:
+        [
+          caseId,
+          blockTypeId,
+          fineMillingDrillId,
+          coarseMillingDrillId,
+          teethMilledQty,
+          status,
+          milledAt,
+        ]
+      properties:
+        caseId:
+          type: string
+        blockTypeId:
+          type: string
+        millingDrillId:
+          type: string
+          nullable: true
+        fineMillingDrillId:
+          type: string
+          nullable: true
+          description: 1.0mm drill id used in the milling cycle.
+        coarseMillingDrillId:
+          type: string
+          nullable: true
+          description: 2.5mm drill id used in the milling cycle.
+        teethMilledQty:
+          type: integer
+          minimum: 1
+        status:
+          type: string
+          enum: [SUCCESS, FAILED]
+        failureReason:
+          type: string
+          nullable: true
+        notes:
+          type: string
+          nullable: true
+        milledAt:
+          type: string
+          format: date-time
+    ProductionMutationResponse:
+      type: object
+      required: [data, error, meta]
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+            caseId:
+              type: string
+            blockTypeId:
+              type: string
+            millingDrillId:
+              type: string
+              nullable: true
+            fineMillingDrillId:
+              type: string
+              nullable: true
+            coarseMillingDrillId:
+              type: string
+              nullable: true
+            teethMilledQty:
+              type: integer
+            status:
+              type: string
+            milledAt:
+              type: string
+              format: date-time
+        error:
+          nullable: true
+          example: null
+        meta:
+          type: object
+          additionalProperties: true
+          example: {}
+    RegistryEntityPayload:
+      type: object
+      additionalProperties: true
+      description: Generic payload. Shape depends on `entity` and is validated server-side.
+    RegistryEntityMutationResponse:
+      type: object
+      required: [data, error, meta]
+      properties:
+        data:
+          type: object
+          additionalProperties: true
+        error:
+          nullable: true
+          example: null
+        meta:
+          type: object
+          additionalProperties: true
+          example: {}
+    DeleteEntityResponse:
+      type: object
+      required: [data, error, meta]
+      properties:
+        data:
+          type: object
+          required: [id, deleted]
+          properties:
+            id:
+              type: string
+            deleted:
+              type: boolean
+              example: true
+        error:
+          nullable: true
+          example: null
+        meta:
+          type: object
+          additionalProperties: true
+          example: {}
+    DrillChangedResponse:
+      type: object
+      required: [data, error, meta]
+      properties:
+        data:
+          type: object
+          required: [id, changedAt]
+          properties:
+            id:
+              type: string
+            changedAt:
+              type: string
+              format: date-time
+              nullable: true
         error:
           nullable: true
           example: null

@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { CaseDetailsDialog } from "@/app/kanban/components/case-details-dialog";
+import { CaseDetailsDialog } from "@/components/cases/case-details-dialog";
 import type {
+  CaseScopeValue,
   CadDesignerOption,
   ClinicOption,
   ComponentOption,
@@ -16,6 +17,7 @@ type Props = {
   cadDesigners: CadDesignerOption[];
   components: ComponentOption[];
   currentUserRole: string;
+  defaultCaseScope?: CaseScopeValue;
 };
 
 export function AddCaseDialog({
@@ -24,6 +26,7 @@ export function AddCaseDialog({
   cadDesigners,
   components,
   currentUserRole,
+  defaultCaseScope = "LAB",
 }: Props) {
   const [open, setOpen] = useState(false);
 
@@ -38,6 +41,7 @@ export function AddCaseDialog({
         onOpenChange={setOpen}
         mode="create"
         currentUserRole={currentUserRole}
+        defaultCaseScope={defaultCaseScope}
         clinics={clinics}
         serviceTypes={serviceTypes}
         cadDesigners={cadDesigners}

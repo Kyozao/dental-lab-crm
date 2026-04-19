@@ -105,6 +105,7 @@ export const getNavCaseSearchItems = cache(
       id: caseItem.id,
       code: caseItem.code ?? "",
       patientName: caseItem.patientName ?? "Sem nome",
+      caseScope: "LAB",
       currentStatus: caseItem.currentStatus,
       clinicName: caseItem.clinic?.name ?? "",
     }));

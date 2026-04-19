@@ -27,15 +27,10 @@ import {
   User2,
   Paperclip,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import {
-  getColumnDownloadUrlsAction,
-  updateCaseStatusAction,
-} from "../actions";
 import {
   type CadDesignerOption,
   type ClinicOption,
@@ -52,7 +47,11 @@ import {
   isCaseDueToday,
   isCaseOverdue,
 } from "../kanban.shared";
-import { CaseDetailsDialog } from "./case-details-dialog";
+import { CaseDetailsDialog } from "@/components/cases/case-details-dialog";
+import {
+  getColumnDownloadUrlsApi,
+  updateCaseStatusApi,
+} from "@/lib/api/cases-client";
 
 type Props = {
   currentUser: CurrentUser;
@@ -71,7 +70,6 @@ export function CadKanbanBoard({
   serviceTypes,
   components,
 }: Props) {
-  const router = useRouter();
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: { distance: 6 },
@@ -252,11 +250,7 @@ export function CadKanbanBoard({
     );
 
     try {
-      await updateCaseStatusAction({
-        caseId: draggedId,
-        status: nextStatus,
-      });
-      router.refresh();
+      await updateCaseStatusApi(draggedId, nextStatus);
     } catch (error) {
       console.error(error);
       setCases(previousCases);
@@ -567,8 +561,7 @@ function getScanCount(item: EditableCase) {
 function getFinalCount(item: EditableCase) {
   return item.attachments.filter(
     (attachment) =>
-      attachment.kind === "DESIGN_OUTPUT" ||
-      attachment.kind === "MODEL_OUTPUT",
+      attachment.kind === "DESIGN_OUTPUT" || attachment.kind === "MODEL_OUTPUT",
   ).length;
 }
 
@@ -644,10 +637,10 @@ function KanbanColumn({
 
     try {
       setIsDownloading(true);
-      const downloads = await getColumnDownloadUrlsAction({
-        caseIds: cards.map((card) => card.id),
-        kind: preferredDownloadKind,
-      });
+      const downloads = await getColumnDownloadUrlsApi(
+        cards.map((card) => card.id),
+        preferredDownloadKind,
+      );
 
       if (!downloads.length) {
         alert("Nenhum arquivo disponível nesta coluna ainda.");
@@ -710,7 +703,9 @@ function KanbanColumn({
               className="h-8 px-2 text-xs"
             >
               <Download className="mr-1 h-3.5 w-3.5" />
-              {isDownloading ? "Baixando..." : getColumnDownloadLabel(preferredDownloadKind)}
+              {isDownloading
+                ? "Baixando..."
+                : getColumnDownloadLabel(preferredDownloadKind)}
             </Button>
           ) : null}
         </div>

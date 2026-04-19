@@ -23,6 +23,11 @@ enum CaseStatus {
   DONE
 }
 
+enum CaseScope {
+  LAB
+  AGENCY
+}
+
 enum MillingStatus {
   SUCCESS
   FAILED
@@ -58,10 +63,10 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  assignedCases   Case[]           @relation("CaseCadDesigner")
-  createdCases    Case[]           @relation("CaseCreatedBy")
-  caseAttachments CaseAttachment[]
-  notifications   Notification[]   @relation("NotificationRecipient")
+  assignedCases     Case[]             @relation("CaseCadDesigner")
+  createdCases      Case[]             @relation("CaseCreatedBy")
+  caseAttachments   CaseAttachment[]
+  notifications     Notification[]     @relation("NotificationRecipient")
   pushSubscriptions PushSubscription[]
 }
 
@@ -90,16 +95,20 @@ model MillingDrill {
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
 
-  millings CaseMilling[]
+  millings       CaseMilling[] @relation("LegacyMillingDrill")
+  fineMillings   CaseMilling[] @relation("FineMillingDrill")
+  coarseMillings CaseMilling[] @relation("CoarseMillingDrill")
 }
 
 model CaseMilling {
-  id                  String        @id @default(cuid())
-  caseId              String
-  blockTypeId         String
-  millingDrillId      String?
-  redoneFromMillingId String?
-  status              MillingStatus @default(SUCCESS)
+  id                   String        @id @default(cuid())
+  caseId               String
+  blockTypeId          String
+  millingDrillId       String?
+  fineMillingDrillId   String?
+  coarseMillingDrillId String?
+  redoneFromMillingId  String?
+  status               MillingStatus @default(SUCCESS)
 
   teethMilledQty Int      @default(0)
   failureReason  String?
@@ -108,15 +117,19 @@ model CaseMilling {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  case              Case          @relation(fields: [caseId], references: [id], onDelete: Cascade)
-  blockType         BlockType     @relation(fields: [blockTypeId], references: [id], onDelete: Restrict)
-  millingDrill      MillingDrill? @relation(fields: [millingDrillId], references: [id], onDelete: SetNull)
-  redoneFromMilling CaseMilling?  @relation("MillingRedo", fields: [redoneFromMillingId], references: [id], onDelete: SetNull)
-  redos             CaseMilling[] @relation("MillingRedo")
+  case               Case          @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  blockType          BlockType     @relation(fields: [blockTypeId], references: [id], onDelete: Restrict)
+  millingDrill       MillingDrill? @relation("LegacyMillingDrill", fields: [millingDrillId], references: [id], onDelete: SetNull)
+  fineMillingDrill   MillingDrill? @relation("FineMillingDrill", fields: [fineMillingDrillId], references: [id], onDelete: SetNull)
+  coarseMillingDrill MillingDrill? @relation("CoarseMillingDrill", fields: [coarseMillingDrillId], references: [id], onDelete: SetNull)
+  redoneFromMilling  CaseMilling?  @relation("MillingRedo", fields: [redoneFromMillingId], references: [id], onDelete: SetNull)
+  redos              CaseMilling[] @relation("MillingRedo")
 
   @@index([caseId])
   @@index([blockTypeId])
   @@index([millingDrillId])
+  @@index([fineMillingDrillId])
+  @@index([coarseMillingDrillId])
   @@index([redoneFromMillingId])
   @@index([status])
 }
@@ -219,6 +232,7 @@ model Case {
   code            String     @unique
   clientCaseCode  String?
   patientName     String
+  caseScope       CaseScope  @default(LAB)
   clinicId        String?
   serviceTypeId   String?
   dentistId       String?
@@ -252,6 +266,7 @@ model Case {
   @@index([clinicId])
   @@index([dentistId])
   @@index([currentStatus])
+  @@index([caseScope])
   @@index([serviceTypeId])
   @@index([cadDesignerId])
   @@index([createdByUserId])
@@ -283,7 +298,7 @@ model Notification {
   readAt          DateTime?
   createdAt       DateTime         @default(now())
 
-  recipientUser User @relation("NotificationRecipient", fields: [recipientUserId], references: [id], onDelete: Cascade)
+  recipientUser User  @relation("NotificationRecipient", fields: [recipientUserId], references: [id], onDelete: Cascade)
   case          Case? @relation(fields: [caseId], references: [id], onDelete: SetNull)
 
   @@index([recipientUserId, isRead, createdAt])

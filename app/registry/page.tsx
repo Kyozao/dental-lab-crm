@@ -2,7 +2,6 @@ import { prisma } from "@/lib/prisma";
 import { getAuthenticatedAppUser } from "@/lib/auth/get-app-user";
 import { redirect } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -15,27 +14,6 @@ import {
 import { RegistryForm } from "./components/registry-form";
 import { CreateDentistForm } from "./components/create-dentist-form";
 import { RegistryList } from "./components/registry-list";
-import {
-  createClinicAction,
-  createDentistAction,
-  createComponentAction,
-  createBlockTypeAction,
-  createServiceTypeAction,
-  createMillingDrillAction,
-  markMillingDrillChangedAction,
-  updateClinicAction,
-  updateDentistAction,
-  updateComponentAction,
-  updateBlockTypeAction,
-  updateServiceTypeAction,
-  updateMillingDrillAction,
-  deleteClinicAction,
-  deleteDentistAction,
-  deleteComponentAction,
-  deleteBlockTypeAction,
-  deleteServiceTypeAction,
-  deleteMillingDrillAction,
-} from "./actions";
 
 export default async function RegistryPage() {
   const appUser = await getAuthenticatedAppUser();
@@ -66,11 +44,34 @@ export default async function RegistryPage() {
       prisma.millingDrill.findMany({
         orderBy: { name: "asc" },
         include: {
-          millings: {
+          fineMillings: {
+            take: 20, // Limit to last 20 fine millings instead of all
+            orderBy: { milledAt: "desc" },
             select: {
               id: true,
               teethMilledQty: true,
               milledAt: true,
+              case: {
+                select: {
+                  code: true,
+                  patientName: true,
+                },
+              },
+            },
+          },
+          coarseMillings: {
+            take: 20, // Limit to last 20 coarse millings instead of all
+            orderBy: { milledAt: "desc" },
+            select: {
+              id: true,
+              teethMilledQty: true,
+              milledAt: true,
+              case: {
+                select: {
+                  code: true,
+                  patientName: true,
+                },
+              },
             },
           },
         },
@@ -101,7 +102,7 @@ export default async function RegistryPage() {
           <RegistryForm
             title="Add New Clinic"
             description="Register a new dental clinic"
-            action={createClinicAction}
+            entity="clinics"
             fields={[
               {
                 name: "name",
@@ -134,10 +135,9 @@ export default async function RegistryPage() {
           />
 
           <RegistryList
+            entity="clinics"
             columnLabels={["Name", "Phone", "Email"]}
             entityLabel="Clinic"
-            updateAction={updateClinicAction}
-            deleteAction={deleteClinicAction}
             fields={[
               {
                 name: "name",
@@ -181,13 +181,12 @@ export default async function RegistryPage() {
 
         {/* Dentists Tab */}
         <TabsContent value="dentists" className="space-y-4">
-          <CreateDentistForm action={createDentistAction} clinics={clinics} />
+          <CreateDentistForm clinics={clinics} />
 
           <RegistryList
+            entity="dentists"
             columnLabels={["Name", "Clinic", "Phone", "Email"]}
             entityLabel="Dentist"
-            updateAction={updateDentistAction}
-            deleteAction={deleteDentistAction}
             fields={[
               {
                 name: "clinicId",
@@ -224,7 +223,7 @@ export default async function RegistryPage() {
           <RegistryForm
             title="Add New Component"
             description="Register a new dental component or material"
-            action={createComponentAction}
+            entity="components"
             fields={[
               {
                 name: "name",
@@ -269,6 +268,7 @@ export default async function RegistryPage() {
           />
 
           <RegistryList
+            entity="components"
             columnLabels={[
               "Name",
               "Category",
@@ -278,8 +278,6 @@ export default async function RegistryPage() {
               "Status",
             ]}
             entityLabel="Component"
-            updateAction={updateComponentAction}
-            deleteAction={deleteComponentAction}
             fields={[
               {
                 name: "name",
@@ -354,7 +352,7 @@ export default async function RegistryPage() {
           <RegistryForm
             title="Add New Block Type"
             description="Register a new milling block or CAD/CAM material"
-            action={createBlockTypeAction}
+            entity="block-types"
             fields={[
               {
                 name: "name",
@@ -404,6 +402,7 @@ export default async function RegistryPage() {
           />
 
           <RegistryList
+            entity="block-types"
             columnLabels={[
               "Name",
               "Material",
@@ -414,8 +413,6 @@ export default async function RegistryPage() {
               "Status",
             ]}
             entityLabel="Block Type"
-            updateAction={updateBlockTypeAction}
-            deleteAction={deleteBlockTypeAction}
             fields={[
               {
                 name: "name",
@@ -495,7 +492,7 @@ export default async function RegistryPage() {
           <RegistryForm
             title="Add New Service Type"
             description="Register a new dental service or treatment type"
-            action={createServiceTypeAction}
+            entity="service-types"
             fields={[
               {
                 name: "name",
@@ -521,10 +518,9 @@ export default async function RegistryPage() {
           />
 
           <RegistryList
+            entity="service-types"
             columnLabels={["Name", "Notes", "Status"]}
             entityLabel="Service Type"
-            updateAction={updateServiceTypeAction}
-            deleteAction={deleteServiceTypeAction}
             fields={[
               {
                 name: "name",
@@ -572,7 +568,7 @@ export default async function RegistryPage() {
           <RegistryForm
             title="Add New Milling Drill"
             description="Register a new milling drill or cutting tool"
-            action={createMillingDrillAction}
+            entity="milling-drills"
             fields={[
               {
                 name: "name",
@@ -582,8 +578,12 @@ export default async function RegistryPage() {
               {
                 name: "type",
                 label: "Type",
-                placeholder: "Cylindrical",
-                optional: true,
+                type: "select",
+                placeholder: "Select drill type",
+                options: [
+                  { value: "1.0MM", label: "1.0mm" },
+                  { value: "2.5MM", label: "2.5mm" },
+                ],
               },
               {
                 name: "brand",
@@ -626,7 +626,7 @@ export default async function RegistryPage() {
             <div className="border-b border-border/40 px-4 py-3">
               <h3 className="font-semibold">Drill History</h3>
               <p className="text-sm text-muted-foreground">
-                Total teeth milled and replacement date per drill.
+                Total teeth milled and recent jobs per drill.
               </p>
             </div>
 
@@ -641,22 +641,39 @@ export default async function RegistryPage() {
                       Max Recommended
                     </TableHead>
                     <TableHead>Last Milling</TableHead>
-                    <TableHead>Changed At</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                    <TableHead>Recent Jobs</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {drills.map((drill) => {
-                    const totalTeeth = drill.millings.reduce(
+                    const usages = [
+                      ...drill.fineMillings,
+                      ...drill.coarseMillings,
+                    ]
+                      .reduce<
+                        Array<{
+                          id: string;
+                          teethMilledQty: number;
+                          milledAt: Date;
+                          case: { code: string; patientName: string };
+                        }>
+                      >((acc, usage) => {
+                        if (!acc.some((item) => item.id === usage.id)) {
+                          acc.push(usage);
+                        }
+                        return acc;
+                      }, [])
+                      .sort(
+                        (a, b) => b.milledAt.getTime() - a.milledAt.getTime(),
+                      );
+
+                    const totalTeeth = usages.reduce(
                       (sum, milling) => sum + milling.teethMilledQty,
                       0,
                     );
                     const lastMilledAt =
-                      drill.millings.length > 0
-                        ? drill.millings
-                            .map((m) => m.milledAt)
-                            .sort((a, b) => b.getTime() - a.getTime())[0]
-                        : null;
+                      usages.length > 0 ? usages[0].milledAt : null;
+                    const recentJobs = usages.slice(0, 3);
 
                     return (
                       <TableRow key={drill.id}>
@@ -692,30 +709,14 @@ export default async function RegistryPage() {
                             : "-"}
                         </TableCell>
                         <TableCell className="text-sm text-muted-foreground">
-                          {drill.changedAt
-                            ? new Date(drill.changedAt).toLocaleDateString(
-                                "pt-BR",
-                                {
-                                  month: "short",
-                                  day: "numeric",
-                                  year: "numeric",
-                                },
-                              )
-                            : "Never"}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <div className="flex items-center justify-end gap-2">
-                            <form
-                              action={async () => {
-                                "use server";
-                                await markMillingDrillChangedAction(drill.id);
-                              }}
-                            >
-                              <Button type="submit" variant="outline" size="sm">
-                                Mark Changed
-                              </Button>
-                            </form>
-                          </div>
+                          {recentJobs.length
+                            ? recentJobs
+                                .map(
+                                  (job) =>
+                                    job.case.code || job.case.patientName,
+                                )
+                                .join(", ")
+                            : "-"}
                         </TableCell>
                       </TableRow>
                     );
@@ -724,7 +725,7 @@ export default async function RegistryPage() {
                   {drills.length === 0 && (
                     <TableRow>
                       <TableCell
-                        colSpan={7}
+                        colSpan={6}
                         className="py-8 text-center text-muted-foreground"
                       >
                         No drills registered yet.
@@ -737,6 +738,7 @@ export default async function RegistryPage() {
           </div>
 
           <RegistryList
+            entity="milling-drills"
             columnLabels={[
               "Name",
               "Type",
@@ -746,8 +748,6 @@ export default async function RegistryPage() {
               "Status",
             ]}
             entityLabel="Drill"
-            updateAction={updateMillingDrillAction}
-            deleteAction={deleteMillingDrillAction}
             fields={[
               {
                 name: "name",
@@ -757,8 +757,12 @@ export default async function RegistryPage() {
               {
                 name: "type",
                 label: "Type",
-                placeholder: "Cylindrical",
-                optional: true,
+                type: "select",
+                placeholder: "Select drill type",
+                options: [
+                  { value: "1.0MM", label: "1.0mm" },
+                  { value: "2.5MM", label: "2.5mm" },
+                ],
               },
               {
                 name: "brand",

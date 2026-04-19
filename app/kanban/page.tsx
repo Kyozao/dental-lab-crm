@@ -13,6 +13,7 @@ export default async function KanbanPage() {
 
   const [cases, { cadDesigners, clinics, serviceTypes, components }] =
     await Promise.all([
+      // Optimized query: only fetch essential kanban columns, not nested relationships
       prisma.case.findMany({
         where: {
           ...(appUser.role === "CAD_DESIGNER"
@@ -25,6 +26,7 @@ export default async function KanbanPage() {
           id: true,
           code: true,
           patientName: true,
+          caseScope: true,
           currentStatus: true,
           teeth: true,
           elementsQty: true,
@@ -43,63 +45,8 @@ export default async function KanbanPage() {
           dentist: { select: { name: true } },
           serviceType: { select: { name: true } },
           cadDesigner: { select: { name: true } },
-          caseComponentUsages: {
-            orderBy: { createdAt: "asc" },
-            select: {
-              id: true,
-              componentId: true,
-              quantity: true,
-              chargeClient: true,
-              unitCost: true,
-              unitPrice: true,
-              notes: true,
-              component: {
-                select: {
-                  name: true,
-                },
-              },
-            },
-          },
-          caseAttachments: {
-            orderBy: { createdAt: "desc" },
-            select: {
-              id: true,
-              fileName: true,
-              filePath: true,
-              fileType: true,
-              fileSize: true,
-              kind: true,
-              retentionUntil: true,
-              createdAt: true,
-              uploadedBy: {
-                select: {
-                  name: true,
-                },
-              },
-            },
-          },
-          millings: {
-            orderBy: { milledAt: "desc" },
-            select: {
-              id: true,
-              status: true,
-              teethMilledQty: true,
-              failureReason: true,
-              notes: true,
-              milledAt: true,
-              blockType: {
-                select: {
-                  name: true,
-                  shade: true,
-                },
-              },
-              millingDrill: {
-                select: {
-                  name: true,
-                },
-              },
-            },
-          },
+          // Removed: caseComponentUsages, caseAttachments, millings
+          // These will be loaded on-demand when a case detail is opened
         },
       }),
       getCaseFormOptions(),
@@ -116,6 +63,7 @@ export default async function KanbanPage() {
         id: c.id,
         code: c.code ?? "",
         patientName: c.patientName ?? "Sem nome",
+        caseScope: c.caseScope,
         currentStatus: c.currentStatus,
         teeth: c.teeth ?? "",
         elementsQty: c.elementsQty ?? null,
@@ -134,38 +82,9 @@ export default async function KanbanPage() {
         serviceTypeName: c.serviceType?.name ?? "",
         cadDesignerId: c.cadDesignerId ?? null,
         cadDesignerName: c.cadDesigner?.name ?? "",
-        attachments: c.caseAttachments.map((a) => ({
-          id: a.id,
-          fileName: a.fileName,
-          filePath: a.filePath,
-          fileType: a.fileType ?? null,
-          fileSize: a.fileSize ?? null,
-          kind: a.kind,
-          retentionUntil: a.retentionUntil ? a.retentionUntil.toISOString() : null,
-          createdAt: a.createdAt.toISOString(),
-          uploadedByName: a.uploadedBy?.name ?? null,
-        })),
-        components: c.caseComponentUsages.map((usage) => ({
-          id: usage.id,
-          componentId: usage.componentId,
-          componentName: usage.component.name,
-          quantity: usage.quantity,
-          chargeClient: usage.chargeClient,
-          unitCost: usage.unitCost?.toString() ?? null,
-          unitPrice: usage.unitPrice?.toString() ?? null,
-          notes: usage.notes,
-        })),
-        millings: c.millings.map((milling) => ({
-          id: milling.id,
-          status: milling.status,
-          teethMilledQty: milling.teethMilledQty,
-          failureReason: milling.failureReason,
-          notes: milling.notes,
-          milledAt: milling.milledAt.toISOString(),
-          blockTypeName: milling.blockType.name,
-          blockTypeShade: milling.blockType.shade ?? null,
-          millingDrillName: milling.millingDrill?.name ?? null,
-        })),
+        attachments: [], // Load on-demand when case is opened
+        components: [], // Load on-demand when case is opened
+        millings: [], // Load on-demand when case is opened
       }))}
       designers={cadDesigners}
       clinics={clinics}

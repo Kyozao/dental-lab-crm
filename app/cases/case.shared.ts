@@ -8,6 +8,21 @@ export const CASE_STATUS = {
   DONE: "DONE",
 } as const;
 
+export const CASE_SCOPE = {
+  LAB: "LAB",
+  AGENCY: "AGENCY",
+} as const;
+
+export type CaseScopeValue = (typeof CASE_SCOPE)[keyof typeof CASE_SCOPE];
+
+export const CASE_SCOPE_OPTIONS: ReadonlyArray<{
+  value: CaseScopeValue;
+  label: string;
+}> = [
+  { value: CASE_SCOPE.LAB, label: "Lab" },
+  { value: CASE_SCOPE.AGENCY, label: "Agency" },
+];
+
 export type CaseStatusValue =
   (typeof CASE_STATUS)[keyof typeof CASE_STATUS];
 
@@ -99,6 +114,7 @@ export type EditableCase = {
   id: string;
   code: string;
   patientName: string;
+  caseScope: CaseScopeValue;
   currentStatus: CaseStatusValue;
   teeth: string;
   elementsQty: number | null;
@@ -126,6 +142,7 @@ export type SearchCaseItem = {
   id: string;
   code: string;
   patientName: string;
+  caseScope: CaseScopeValue;
   currentStatus: CaseStatusValue;
   clinicName: string;
 };
@@ -133,6 +150,7 @@ export type SearchCaseItem = {
 export type CaseFormValues = {
   code?: string;
   patientName?: string;
+  caseScope?: CaseScopeValue;
   currentStatus?: CaseStatusValue;
   teeth?: string | null;
   elementsQty?: number | null;

@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { useActionState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -13,7 +12,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import type { RegistryActionState } from "../actions";
+import { deleteRegistryEntity, updateRegistryEntity } from "./registry-api";
+import type { RegistryActionState } from "./registry-types";
+import type { RegistryEntity } from "./registry-types";
 
 export type FieldDef = {
   name: string;
@@ -27,15 +28,11 @@ export type FieldDef = {
 type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  entity: RegistryEntity;
   id: string;
   entityLabel: string;
   fields: FieldDef[];
   values: Record<string, string | number | boolean | null | undefined>;
-  updateAction: (
-    prevState: RegistryActionState,
-    formData: FormData,
-  ) => Promise<RegistryActionState>;
-  deleteAction: (id: string) => Promise<void>;
 };
 
 const initialState: RegistryActionState = { success: false, message: "" };
@@ -43,14 +40,14 @@ const initialState: RegistryActionState = { success: false, message: "" };
 export function EditRegistryDialog({
   open,
   onOpenChange,
+  entity,
   id,
   entityLabel,
   fields,
   values,
-  updateAction,
-  deleteAction,
 }: Props) {
-  const [state, formAction, pending] = useActionState(updateAction, initialState);
+  const [state, setState] = React.useState<RegistryActionState>(initialState);
+  const [pending, setPending] = React.useState(false);
   const [isDeleting, setIsDeleting] = React.useState(false);
   const [confirmDelete, setConfirmDelete] = React.useState(false);
   const [deleteError, setDeleteError] = React.useState<string | null>(null);
@@ -74,7 +71,7 @@ export function EditRegistryDialog({
     setIsDeleting(true);
     setDeleteError(null);
     try {
-      await deleteAction(id);
+      await deleteRegistryEntity(entity, id);
       onOpenChange(false);
     } catch (err) {
       setDeleteError(
@@ -97,6 +94,15 @@ export function EditRegistryDialog({
     return String(v);
   }
 
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setPending(true);
+    const formData = new FormData(event.currentTarget);
+    const result = await updateRegistryEntity(entity, id, formData);
+    setState(result);
+    setPending(false);
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
@@ -104,7 +110,7 @@ export function EditRegistryDialog({
           <DialogTitle>Edit {entityLabel}</DialogTitle>
         </DialogHeader>
 
-        <form action={formAction} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input type="hidden" name="id" value={id} />
 
           {state.message && !state.success ? (

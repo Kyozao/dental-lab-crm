@@ -86,8 +86,6 @@ Short description of what the route does.
 
 ### Auth
 
-- `POST /api/auth/login`
-- `POST /api/auth/logout`
 - `GET /api/me`
 
 ### Cases
@@ -96,32 +94,32 @@ Short description of what the route does.
 - `POST /api/cases`
 - `GET /api/cases/:id`
 - `PATCH /api/cases/:id`
+- `DELETE /api/cases/:id`
+- `POST /api/cases/:id/attachments`
+- `DELETE /api/cases/:id/attachments/:attachmentId`
+- `POST /api/cases/downloads`
 
 ### Kanban
 
-- `GET /api/kanban`
 - `PATCH /api/kanban/cases/:id/status`
 
 ### Production
 
 - `GET /api/production`
+- `POST /api/production`
 - `PATCH /api/production/:id`
+- `DELETE /api/production/:id`
 
 ### Registry
 
 - `GET /api/registry/bootstrap`
-- `POST /api/registry/clinics`
-- `POST /api/registry/dentists`
-- `POST /api/registry/components`
-
-### Uploads
-
-- `POST /api/uploads/presign`
-- `POST /api/uploads/complete`
+- `POST /api/registry/:entity`
+- `PATCH /api/registry/:entity/:id`
+- `DELETE /api/registry/:entity/:id`
 
 ### Notifications
 
-- document only after the redesign is stable
+- intentionally disabled for now
 
 ## Rule for contributors
 

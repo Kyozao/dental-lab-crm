@@ -14,6 +14,7 @@ import {
 import { useRouter } from "next/navigation";
 
 import {
+  CASE_SCOPE_OPTIONS,
   CASE_STATUS_OPTIONS,
   type AttachmentKindValue,
   type CadDesignerOption,
@@ -22,15 +23,14 @@ import {
   type EditableCase,
   type ServiceTypeOption,
 } from "@/app/cases/case.shared";
-import { createCaseAction } from "@/app/cases/actions";
-import { isCaseOverdue } from "../kanban.shared";
-import {
-  deleteCaseAttachmentAction,
-  updateKanbanCaseAction,
-  uploadCaseAttachmentAction,
-  deleteKanbanCaseAction,
-} from "../actions";
+import { isCaseOverdue } from "@/app/kanban/kanban.shared";
 import { createClient } from "@/lib/supabase/client";
+import {
+  deleteCaseApi,
+  deleteCaseAttachmentApi,
+  updateCaseApi,
+  uploadCaseAttachmentApi,
+} from "@/lib/api/cases-client";
 
 const supabase = createClient();
 
@@ -44,6 +44,7 @@ type Props = {
   serviceTypes: ServiceTypeOption[];
   cadDesigners: CadDesignerOption[];
   components: ComponentOption[];
+  defaultCaseScope?: "LAB" | "AGENCY";
 };
 
 type CaseComponentDraft = {
@@ -130,6 +131,7 @@ export function CaseDetailsDialog({
   serviceTypes,
   cadDesigners,
   components,
+  defaultCaseScope = "LAB",
 }: Props) {
   const router = useRouter();
 
@@ -140,6 +142,7 @@ export function CaseDetailsDialog({
       id: "",
       code: "",
       patientName: "",
+      caseScope: defaultCaseScope,
       currentStatus: "ENTRY",
       teeth: "",
       elementsQty: null,
@@ -162,7 +165,7 @@ export function CaseDetailsDialog({
       components: [],
       millings: [],
     }),
-    [],
+    [defaultCaseScope],
   );
 
   const caseItem = item ?? defaultCaseItem;
@@ -258,7 +261,7 @@ export function CaseDetailsDialog({
 
     try {
       setIsDeleting(true);
-      await deleteKanbanCaseAction(caseItem.id);
+      await deleteCaseApi(caseItem.id);
       onOpenChange(false);
     } catch (error) {
       console.error(error);
@@ -277,11 +280,7 @@ export function CaseDetailsDialog({
 
     try {
       setIsUploading(true);
-      const formData = new FormData();
-      formData.append("caseId", caseItem.id);
-      formData.append("kind", kind);
-      formData.append("file", file);
-      await uploadCaseAttachmentAction(formData);
+      await uploadCaseAttachmentApi(caseItem.id, kind, file);
       router.refresh();
     } catch (error) {
       console.error(error);
@@ -319,15 +318,13 @@ export function CaseDetailsDialog({
     attachmentId: string,
     fileName: string,
   ) {
-    const confirmed = window.confirm(
-      `Delete the uploaded file "${fileName}"?`,
-    );
+    const confirmed = window.confirm(`Delete the uploaded file "${fileName}"?`);
 
     if (!confirmed) return;
 
     try {
       setDeletingAttachmentId(attachmentId);
-      await deleteCaseAttachmentAction(attachmentId);
+      await deleteCaseAttachmentApi(caseItem.id, attachmentId);
       router.refresh();
     } catch (error) {
       console.error(error);
@@ -343,13 +340,44 @@ export function CaseDetailsDialog({
       setSubmitError(null);
 
       if (isCreateMode) {
-        const result = await createCaseAction(
-          { success: false, message: "" },
-          formData,
-        );
+        const componentsPayload = formData.get("componentsPayload");
+        const parsedComponents =
+          typeof componentsPayload === "string" &&
+          componentsPayload.trim().length
+            ? JSON.parse(componentsPayload)
+            : [];
 
-        if (!result.success) {
-          setSubmitError(result.message || "Could not create case.");
+        const response = await fetch("/api/cases", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            code: formData.get("code") || undefined,
+            patientName: formData.get("patientName") || undefined,
+            caseScope: formData.get("caseScope") || "LAB",
+            clinicId: formData.get("clinicId") || undefined,
+            serviceTypeId: formData.get("serviceTypeId") || undefined,
+            dentistId: formData.get("dentistId") || undefined,
+            cadDesignerId: formData.get("cadDesignerId") || undefined,
+            currentStatus: formData.get("currentStatus") || "ENTRY",
+            pendingNote: formData.get("pendingNote") || undefined,
+            observations: formData.get("observations") || undefined,
+            teeth: formData.get("teeth") || undefined,
+            elementsQty: formData.get("elementsQty") || undefined,
+            shade: formData.get("shade") || undefined,
+            dueDate: formData.get("dueDate") || undefined,
+            isUrgent: formData.get("isUrgent") === "on",
+            components: parsedComponents,
+          }),
+        });
+
+        const result = (await response.json().catch(() => null)) as {
+          error?: { message?: string } | null;
+        } | null;
+
+        if (!response.ok) {
+          setSubmitError(result?.error?.message || "Could not create case.");
           return;
         }
 
@@ -358,7 +386,30 @@ export function CaseDetailsDialog({
         return;
       }
 
-      await updateKanbanCaseAction(formData);
+      const componentsPayload = formData.get("componentsPayload");
+      const parsedComponents =
+        typeof componentsPayload === "string" && componentsPayload.trim().length
+          ? JSON.parse(componentsPayload)
+          : [];
+
+      await updateCaseApi(caseItem.id, {
+        code: formData.get("code") || undefined,
+        patientName: formData.get("patientName") || undefined,
+        caseScope: formData.get("caseScope") || undefined,
+        clinicId: formData.get("clinicId") || undefined,
+        serviceTypeId: formData.get("serviceTypeId") || undefined,
+        dentistId: formData.get("dentistId") || undefined,
+        cadDesignerId: formData.get("cadDesignerId") || undefined,
+        currentStatus: formData.get("currentStatus") || undefined,
+        pendingNote: formData.get("pendingNote") || undefined,
+        observations: formData.get("observations") || undefined,
+        teeth: formData.get("teeth") || undefined,
+        elementsQty: formData.get("elementsQty") || undefined,
+        shade: formData.get("shade") || undefined,
+        dueDate: formData.get("dueDate") || undefined,
+        isUrgent: formData.get("isUrgent") === "on",
+        components: parsedComponents,
+      });
       onOpenChange(false);
       router.refresh();
     } catch (error) {
@@ -393,8 +444,7 @@ export function CaseDetailsDialog({
   );
   const finalAttachments = caseItem.attachments.filter(
     (attachment) =>
-      attachment.kind === "DESIGN_OUTPUT" ||
-      attachment.kind === "MODEL_OUTPUT",
+      attachment.kind === "DESIGN_OUTPUT" || attachment.kind === "MODEL_OUTPUT",
   );
   const otherAttachments = caseItem.attachments.filter(
     (attachment) =>
@@ -640,6 +690,22 @@ export function CaseDetailsDialog({
                 {cadDesigners.map((designer) => (
                   <option key={designer.id} value={designer.id}>
                     {designer.name ?? "Sem nome"}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Case type</label>
+              <select
+                name="caseScope"
+                defaultValue={caseItem.caseScope}
+                disabled={!canEditAll}
+                className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:opacity-60"
+              >
+                {CASE_SCOPE_OPTIONS.map((scope) => (
+                  <option key={scope.value} value={scope.value}>
+                    {scope.label}
                   </option>
                 ))}
               </select>
@@ -1104,13 +1170,17 @@ function AttachmentList({
               </Badge>
             </div>
             <div className="text-xs text-muted-foreground">
-              {attachment.fileType || "arquivo"} • {formatBytes(attachment.fileSize)} • {new Intl.DateTimeFormat("pt-BR").format(
+              {attachment.fileType || "arquivo"} •{" "}
+              {formatBytes(attachment.fileSize)} •{" "}
+              {new Intl.DateTimeFormat("pt-BR").format(
                 new Date(attachment.createdAt),
               )}
               {attachment.retentionUntil
                 ? ` • histórico até ${new Intl.DateTimeFormat("pt-BR").format(new Date(attachment.retentionUntil))}`
                 : ""}
-              {attachment.uploadedByName ? ` • ${attachment.uploadedByName}` : ""}
+              {attachment.uploadedByName
+                ? ` • ${attachment.uploadedByName}`
+                : ""}
             </div>
           </div>
 
@@ -1130,7 +1200,9 @@ function AttachmentList({
                 type="button"
                 variant="destructive"
                 size="sm"
-                onClick={() => void onDelete(attachment.id, attachment.fileName)}
+                onClick={() =>
+                  void onDelete(attachment.id, attachment.fileName)
+                }
                 disabled={deletingAttachmentId === attachment.id}
               >
                 <Trash2 className="mr-2 h-4 w-4" />

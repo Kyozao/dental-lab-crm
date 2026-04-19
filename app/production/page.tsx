@@ -2,7 +2,6 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getAuthenticatedAppUser } from "@/lib/auth/get-app-user";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -11,9 +10,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Trash2, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { AlertTriangle, CheckCircle2 } from "lucide-react";
 import { MillingDialog } from "./components/milling-dialog";
-import { deleteMillingAction } from "./actions";
+import { DeleteMillingButton } from "./components/delete-milling-button";
 
 export default async function ProductionPage() {
   const appUser = await getAuthenticatedAppUser();
@@ -27,7 +26,9 @@ export default async function ProductionPage() {
   }
 
   const [millings, blockTypes, millingDrills, readyCases] = await Promise.all([
+    // Optimized: Only fetch recent millings, not all historical data
     prisma.caseMilling.findMany({
+      take: 500, // Limit to last 500 records
       orderBy: { milledAt: "desc" },
       include: {
         case: {
@@ -40,6 +41,8 @@ export default async function ProductionPage() {
         },
         blockType: { select: { id: true, name: true, shade: true } },
         millingDrill: { select: { id: true, name: true } },
+        fineMillingDrill: { select: { id: true, name: true, type: true } },
+        coarseMillingDrill: { select: { id: true, name: true, type: true } },
       },
     }),
     prisma.blockType.findMany({
@@ -59,7 +62,6 @@ export default async function ProductionPage() {
         name: true,
         brand: true,
         maxTeethRecommended: true,
-        changedAt: true,
       },
     }),
     prisma.case.findMany({
@@ -75,7 +77,12 @@ export default async function ProductionPage() {
 
   const drillStats = millingDrills
     .map((drill) => {
-      const usages = millings.filter((m) => m.millingDrill?.id === drill.id);
+      const usages = millings.filter(
+        (m) =>
+          m.fineMillingDrill?.id === drill.id ||
+          m.coarseMillingDrill?.id === drill.id ||
+          m.millingDrill?.id === drill.id,
+      );
       const totalTeeth = usages.reduce((sum, m) => sum + m.teethMilledQty, 0);
       const lastUsedAt = usages.length > 0 ? usages[0].milledAt : null;
       const wearPercent = drill.maxTeethRecommended
@@ -171,7 +178,7 @@ export default async function ProductionPage() {
                   Block Type
                 </TableHead>
                 <TableHead className="px-6 py-4 text-left font-semibold">
-                  Drill Used
+                  Drills Used
                 </TableHead>
                 <TableHead className="px-6 py-4 text-center font-semibold">
                   Teeth Milled
@@ -213,7 +220,19 @@ export default async function ProductionPage() {
                     </div>
                   </TableCell>
                   <TableCell className="px-6 py-4 text-muted-foreground">
-                    {milling.millingDrill?.name ?? "-"}
+                    {milling.fineMillingDrill?.name ||
+                    milling.coarseMillingDrill?.name ? (
+                      <div className="space-y-1">
+                        <p className="text-xs">
+                          1.0mm: {milling.fineMillingDrill?.name ?? "-"}
+                        </p>
+                        <p className="text-xs">
+                          2.5mm: {milling.coarseMillingDrill?.name ?? "-"}
+                        </p>
+                      </div>
+                    ) : (
+                      (milling.millingDrill?.name ?? "-")
+                    )}
                   </TableCell>
                   <TableCell className="px-6 py-4 text-center font-medium">
                     {milling.teethMilledQty}
@@ -257,22 +276,7 @@ export default async function ProductionPage() {
                       cases={readyCases}
                       milling={milling}
                     />
-                    <form
-                      action={async () => {
-                        "use server";
-                        await deleteMillingAction(milling.id);
-                      }}
-                      style={{ display: "inline" }}
-                    >
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        type="submit"
-                        className="text-destructive hover:text-destructive"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </form>
+                    <DeleteMillingButton millingId={milling.id} />
                   </TableCell>
                 </TableRow>
               ))}
@@ -293,8 +297,7 @@ export default async function ProductionPage() {
         <div className="border-b border-border/40 px-4 py-4 sm:px-6">
           <h2 className="text-xl font-semibold">Drill History</h2>
           <p className="text-sm text-muted-foreground">
-            Track lifetime usage and last replacement date for each active
-            drill.
+            Track lifetime usage and break risk for each active drill.
           </p>
         </div>
         <div className="overflow-x-auto">
@@ -315,9 +318,6 @@ export default async function ProductionPage() {
                 </TableHead>
                 <TableHead className="px-6 py-4 text-left font-semibold">
                   Last Used
-                </TableHead>
-                <TableHead className="px-6 py-4 text-left font-semibold">
-                  Changed At
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -375,18 +375,6 @@ export default async function ProductionPage() {
                           })
                         : "-"}
                     </TableCell>
-                    <TableCell className="px-6 py-4 text-sm text-muted-foreground">
-                      {drill.changedAt
-                        ? new Date(drill.changedAt).toLocaleDateString(
-                            "pt-BR",
-                            {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            },
-                          )
-                        : "Never"}
-                    </TableCell>
                   </TableRow>
                 ),
               )}
@@ -394,7 +382,7 @@ export default async function ProductionPage() {
               {drillStats.length === 0 && (
                 <TableRow>
                   <TableCell
-                    colSpan={6}
+                    colSpan={5}
                     className="px-6 py-8 text-center text-muted-foreground"
                   >
                     No active drills found.

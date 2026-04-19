@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { EditRegistryDialog, type FieldDef } from "./edit-registry-dialog";
-import type { RegistryActionState } from "../actions";
+import type { RegistryEntity } from "./registry-types";
 
 export type RegistryRow = {
   id: string;
@@ -22,22 +22,17 @@ export type RegistryRow = {
 type Props = {
   columnLabels: string[];
   rows: RegistryRow[];
+  entity: RegistryEntity;
   entityLabel: string;
   fields: FieldDef[];
-  updateAction: (
-    prevState: RegistryActionState,
-    formData: FormData,
-  ) => Promise<RegistryActionState>;
-  deleteAction: (id: string) => Promise<void>;
 };
 
 export function RegistryList({
   columnLabels,
   rows,
+  entity,
   entityLabel,
   fields,
-  updateAction,
-  deleteAction,
 }: Props) {
   const [editingId, setEditingId] = React.useState<string | null>(null);
 
@@ -98,11 +93,10 @@ export function RegistryList({
             if (!open) setEditingId(null);
           }}
           id={editingRow.id}
+          entity={entity}
           entityLabel={entityLabel}
           fields={fields}
           values={editingRow.values}
-          updateAction={updateAction}
-          deleteAction={deleteAction}
         />
       ) : null}
     </>

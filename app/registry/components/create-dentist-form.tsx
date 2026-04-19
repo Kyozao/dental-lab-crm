@@ -1,13 +1,17 @@
 "use client";
 
-import { useActionState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import type { RegistryActionState } from "../actions";
+import { createRegistryEntity } from "./registry-api";
+import type {
+  RegistryActionState,
+  RegistryClinicOption,
+} from "./registry-types";
 
 type FormErrors = Record<string, string[]> | undefined;
 
@@ -26,21 +30,16 @@ function ErrorText({ errors, field }: { errors?: FormErrors; field: string }) {
   );
 }
 
-type Clinic = {
-  id: string;
-  name: string;
-};
-
 type Props = {
-  action: (prevState: RegistryActionState, formData: FormData) => Promise<RegistryActionState>;
-  clinics: Clinic[];
+  clinics: RegistryClinicOption[];
 };
 
-export function CreateDentistForm({ action, clinics }: Props) {
-  const [state, formAction, pending] = useActionState(action, {
+export function CreateDentistForm({ clinics }: Props) {
+  const [state, setState] = useState<RegistryActionState>({
     success: false,
     message: "",
   });
+  const [pending, setPending] = useState(false);
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -50,16 +49,29 @@ export function CreateDentistForm({ action, clinics }: Props) {
     }
   }, [state.success]);
 
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setPending(true);
+    const formData = new FormData(event.currentTarget);
+    const result = await createRegistryEntity("dentists", formData);
+    setState(result);
+    setPending(false);
+  }
+
   return (
     <Card className="w-full">
       <CardHeader>
         <CardTitle>Add New Dentist</CardTitle>
       </CardHeader>
       <CardContent>
-        <form ref={formRef} action={formAction} className="space-y-4">
+        <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
           {state.message && (
             <Alert
-              className={state.success ? "border-green-200 bg-green-50" : "border-red-200 bg-red-50"}
+              className={
+                state.success
+                  ? "border-green-200 bg-green-50"
+                  : "border-red-200 bg-red-50"
+              }
             >
               <AlertDescription
                 className={state.success ? "text-green-800" : "text-red-800"}
@@ -99,7 +111,9 @@ export function CreateDentistForm({ action, clinics }: Props) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="phone">Phone <span className="text-gray-400">(optional)</span></Label>
+            <Label htmlFor="phone">
+              Phone <span className="text-gray-400">(optional)</span>
+            </Label>
             <Input
               id="phone"
               name="phone"
@@ -110,7 +124,9 @@ export function CreateDentistForm({ action, clinics }: Props) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="email">Email <span className="text-gray-400">(optional)</span></Label>
+            <Label htmlFor="email">
+              Email <span className="text-gray-400">(optional)</span>
+            </Label>
             <Input
               id="email"
               name="email"
@@ -121,7 +137,9 @@ export function CreateDentistForm({ action, clinics }: Props) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="notes">Notes <span className="text-gray-400">(optional)</span></Label>
+            <Label htmlFor="notes">
+              Notes <span className="text-gray-400">(optional)</span>
+            </Label>
             <Textarea
               id="notes"
               name="notes"

@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { CaseDetailsDialog } from "@/app/kanban/components/case-details-dialog";
+import { CaseDetailsDialog } from "@/components/cases/case-details-dialog";
+import { getCaseDetailsApi } from "@/lib/api/cases-client";
 import type {
   CadDesignerOption,
   ClinicOption,
@@ -12,7 +13,7 @@ import type {
 } from "../case.shared";
 
 type Props = {
-  caseItem: EditableCase;
+  caseId: string;
   clinics: ClinicOption[];
   serviceTypes: ServiceTypeOption[];
   cadDesigners: CadDesignerOption[];
@@ -21,7 +22,7 @@ type Props = {
 };
 
 export function EditCaseDialog({
-  caseItem,
+  caseId,
   clinics,
   serviceTypes,
   cadDesigners,
@@ -29,6 +30,32 @@ export function EditCaseDialog({
   currentUserRole,
 }: Props) {
   const [open, setOpen] = useState(false);
+  const [caseItem, setCaseItem] = useState<EditableCase | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function handleOpenDialog() {
+    try {
+      setIsLoading(true);
+      const details = await getCaseDetailsApi(caseId);
+      setCaseItem(details);
+      setOpen(true);
+    } catch (error) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "Nao foi possivel carregar os detalhes do caso.";
+      window.alert(message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  function handleOpenChange(nextOpen: boolean) {
+    setOpen(nextOpen);
+    if (!nextOpen) {
+      setCaseItem(null);
+    }
+  }
 
   return (
     <>
@@ -36,14 +63,15 @@ export function EditCaseDialog({
         type="button"
         variant="outline"
         size="sm"
-        onClick={() => setOpen(true)}
+        onClick={handleOpenDialog}
+        disabled={isLoading}
       >
-        Edit
+        {isLoading ? "Loading..." : "Edit"}
       </Button>
 
       <CaseDetailsDialog
         open={open}
-        onOpenChange={setOpen}
+        onOpenChange={handleOpenChange}
         item={caseItem}
         currentUserRole={currentUserRole}
         clinics={clinics}

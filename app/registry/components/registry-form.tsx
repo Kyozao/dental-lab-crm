@@ -1,13 +1,15 @@
 "use client";
 
-import { useActionState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import type { RegistryActionState } from "../actions";
+import { createRegistryEntity } from "./registry-api";
+import type { RegistryActionState } from "./registry-types";
+import type { RegistryEntity } from "./registry-types";
 
 type FormErrors = Record<string, string[]> | undefined;
 
@@ -29,14 +31,15 @@ function ErrorText({ errors, field }: { errors?: FormErrors; field: string }) {
 type Props = {
   title: string;
   description?: string;
-  action: (prevState: RegistryActionState, formData: FormData) => Promise<RegistryActionState>;
+  entity: RegistryEntity;
   fields: Array<{
     name: string;
     label: string;
-    type?: "text" | "email" | "number" | "checkbox" | "textarea";
+    type?: "text" | "email" | "number" | "checkbox" | "textarea" | "select";
     placeholder?: string;
     optional?: boolean;
     pattern?: string;
+    options?: Array<{ value: string; label: string }>;
   }>;
   submitLabel?: string;
 };
@@ -44,14 +47,15 @@ type Props = {
 export function RegistryForm({
   title,
   description,
-  action,
+  entity,
   fields,
   submitLabel = "Create",
 }: Props) {
-  const [state, formAction, pending] = useActionState(action, {
+  const [state, setState] = useState<RegistryActionState>({
     success: false,
     message: "",
   });
+  const [pending, setPending] = useState(false);
 
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -61,6 +65,15 @@ export function RegistryForm({
     }
   }, [state.success]);
 
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setPending(true);
+    const formData = new FormData(event.currentTarget);
+    const result = await createRegistryEntity(entity, formData);
+    setState(result);
+    setPending(false);
+  }
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -68,10 +81,14 @@ export function RegistryForm({
         {description && <p className="text-sm text-gray-500">{description}</p>}
       </CardHeader>
       <CardContent>
-        <form ref={formRef} action={formAction} className="space-y-4">
+        <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
           {state.message && (
             <Alert
-              className={state.success ? "border-green-200 bg-green-50" : "border-red-200 bg-red-50"}
+              className={
+                state.success
+                  ? "border-green-200 bg-green-50"
+                  : "border-red-200 bg-red-50"
+              }
             >
               <AlertDescription
                 className={state.success ? "text-green-800" : "text-red-800"}
@@ -85,7 +102,9 @@ export function RegistryForm({
             <div key={field.name} className="space-y-2">
               <Label htmlFor={field.name}>
                 {field.label}
-                {field.optional && <span className="text-gray-400"> (optional)</span>}
+                {field.optional && (
+                  <span className="text-gray-400"> (optional)</span>
+                )}
               </Label>
 
               {field.type === "textarea" ? (
@@ -96,6 +115,23 @@ export function RegistryForm({
                   rows={3}
                   required={!field.optional}
                 />
+              ) : field.type === "select" ? (
+                <select
+                  id={field.name}
+                  name={field.name}
+                  required={!field.optional}
+                  defaultValue=""
+                  className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm"
+                >
+                  <option value="" disabled>
+                    {field.placeholder ?? "Select an option"}
+                  </option>
+                  {field.options?.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
               ) : field.type === "checkbox" ? (
                 <div className="flex items-center space-x-2">
                   <input

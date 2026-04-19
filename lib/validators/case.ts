@@ -27,13 +27,17 @@ export const caseStatusEnum = z.enum([
   "WAITING_INFO",
   "DESIGNING",
   "WAITING_APPROVAL",
+  "DESIGN_READY",
   "MILLING_PRINTING",
   "DONE",
 ]);
 
+export const caseScopeEnum = z.enum(["LAB", "AGENCY"]);
+
 export const createCaseSchema = z.object({
   code: z.string().trim().min(1, "Code is required"),
   patientName: z.string().trim().min(1, "Patient name is required"),
+  caseScope: caseScopeEnum.default("LAB"),
   clinicId: z.string().trim().min(1, "Clinic is required"),
   serviceTypeId: z.string().trim().optional(),
   dentistId: z.string().trim().optional(),
@@ -54,6 +58,7 @@ export const updateCaseSchema = z.object({
   id: z.string().trim().min(1, "Case id is required"),
   code: z.string().trim().min(1, "Code is required"),
   patientName: z.string().trim().min(1, "Patient name is required"),
+  caseScope: caseScopeEnum,
   clinicId: z.string().trim().min(1, "Clinic is required"),
   serviceTypeId: z.string().trim().optional(),
   dentistId: z.string().trim().optional(),
@@ -104,7 +109,7 @@ export const caseComponentInputSchema = z.object({
   notes: z.string().trim().optional(),
 });
 
-const caseComponentsPayloadSchema = z.array(caseComponentInputSchema);
+export const caseComponentsPayloadSchema = z.array(caseComponentInputSchema);
 
 export function parseCaseComponentsPayload(payload: FormDataEntryValue | null) {
   if (typeof payload !== "string" || !payload.trim()) {

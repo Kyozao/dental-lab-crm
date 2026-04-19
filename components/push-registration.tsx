@@ -68,7 +68,8 @@ export function PushRegistration() {
         throw new Error("Missing VAPID key configuration.");
       }
 
-      const existingSubscription = await registration.pushManager.getSubscription();
+      const existingSubscription =
+        await registration.pushManager.getSubscription();
       const subscription =
         existingSubscription ||
         (await registration.pushManager.subscribe({
@@ -87,7 +88,11 @@ export function PushRegistration() {
     } catch (error) {
       console.error(error);
       setState("disabled");
-      alert(error instanceof Error ? error.message : "Could not enable push notifications.");
+      alert(
+        error instanceof Error
+          ? error.message
+          : "Could not enable push notifications.",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -111,7 +116,11 @@ export function PushRegistration() {
       setState("disabled");
     } catch (error) {
       console.error(error);
-      alert(error instanceof Error ? error.message : "Could not disable push notifications.");
+      alert(
+        error instanceof Error
+          ? error.message
+          : "Could not disable push notifications.",
+      );
     } finally {
       setIsLoading(false);
     }

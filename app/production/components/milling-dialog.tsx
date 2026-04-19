@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -21,8 +22,8 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Pencil, Plus } from "lucide-react";
-import { createMillingAction, updateMillingAction } from "../actions";
 import type { CaseMilling } from "@/app/generated/prisma/client";
+import { createMilling, updateMilling } from "./production-api";
 
 type DialogBlockType = {
   id: string;
@@ -34,6 +35,7 @@ type DialogMillingDrill = {
   id: string;
   name: string;
   brand: string | null;
+  type?: string | null;
 };
 
 type DialogCase = {
@@ -53,7 +55,8 @@ interface MillingDialogProps {
 type MillingFormData = {
   caseId: string;
   blockTypeId: string;
-  millingDrillId: string | null;
+  fineMillingDrillId: string;
+  coarseMillingDrillId: string;
   teethMilledQty: string;
   status: "SUCCESS" | "FAILED";
   failureReason: string;
@@ -68,6 +71,7 @@ export function MillingDialog({
   caseId,
   milling,
 }: MillingDialogProps) {
+  const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -75,7 +79,12 @@ export function MillingDialog({
   const [formData, setFormData] = React.useState<MillingFormData>({
     caseId: milling?.caseId ?? caseId ?? (cases.length ? cases[0].id : ""),
     blockTypeId: milling?.blockTypeId ?? "",
-    millingDrillId: milling?.millingDrillId ?? null,
+    fineMillingDrillId:
+      (milling as CaseMilling & { fineMillingDrillId?: string | null })
+        ?.fineMillingDrillId ?? "",
+    coarseMillingDrillId:
+      (milling as CaseMilling & { coarseMillingDrillId?: string | null })
+        ?.coarseMillingDrillId ?? "",
     teethMilledQty: milling?.teethMilledQty?.toString() ?? "0",
     status: (milling?.status ?? "SUCCESS") as "SUCCESS" | "FAILED",
     failureReason: milling?.failureReason ?? "",
@@ -90,25 +99,64 @@ export function MillingDialog({
     setError(null);
     setLoading(true);
 
+    if (!formData.fineMillingDrillId || !formData.coarseMillingDrillId) {
+      setError("Select both 1.0mm and 2.5mm drills.");
+      setLoading(false);
+      return;
+    }
+
+    if (formData.fineMillingDrillId === formData.coarseMillingDrillId) {
+      setError("1.0mm and 2.5mm drills must be different tools.");
+      setLoading(false);
+      return;
+    }
+
     try {
       if (milling?.id) {
-        await updateMillingAction(milling.id, {
+        await updateMilling(milling.id, {
           ...formData,
           milledAt: new Date(formData.milledAt).toISOString(),
         });
       } else {
-        await createMillingAction({
+        await createMilling({
           ...formData,
           milledAt: new Date(formData.milledAt).toISOString(),
         });
       }
       setOpen(false);
+      router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setLoading(false);
     }
   }
+
+  const fineDrills = React.useMemo(
+    () =>
+      millingDrills.filter((drill) => {
+        const label = `${drill.name} ${drill.type ?? ""}`.toLowerCase();
+        return (
+          label.includes("1mm") ||
+          label.includes("1.0") ||
+          label.includes("1.00")
+        );
+      }),
+    [millingDrills],
+  );
+
+  const coarseDrills = React.useMemo(
+    () =>
+      millingDrills.filter((drill) => {
+        const label = `${drill.name} ${drill.type ?? ""}`.toLowerCase();
+        return (
+          label.includes("2.5") ||
+          label.includes("2,5") ||
+          label.includes("2.5mm")
+        );
+      }),
+    [millingDrills],
+  );
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -195,29 +243,56 @@ export function MillingDialog({
             </Select>
           </div>
 
-          {/* Milling Drill */}
           <div className="space-y-2">
-            <Label>Milling Drill</Label>
+            <Label>1.0mm Drill</Label>
             <Select
-              value={formData.millingDrillId ?? "none"}
+              value={formData.fineMillingDrillId}
               onValueChange={(value) =>
                 setFormData((p) => ({
                   ...p,
-                  millingDrillId: value === "none" ? null : value,
+                  fineMillingDrillId: value,
                 }))
               }
             >
               <SelectTrigger>
-                <SelectValue placeholder="Select drill (optional)" />
+                <SelectValue placeholder="Select 1.0mm drill" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="none">None</SelectItem>
-                {millingDrills.map((drill) => (
-                  <SelectItem key={drill.id} value={drill.id}>
-                    {drill.name}
-                    {drill.brand && ` (${drill.brand})`}
-                  </SelectItem>
-                ))}
+                {(fineDrills.length ? fineDrills : millingDrills).map(
+                  (drill) => (
+                    <SelectItem key={drill.id} value={drill.id}>
+                      {drill.name}
+                      {drill.brand && ` (${drill.brand})`}
+                    </SelectItem>
+                  ),
+                )}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label>2.5mm Drill</Label>
+            <Select
+              value={formData.coarseMillingDrillId}
+              onValueChange={(value) =>
+                setFormData((p) => ({
+                  ...p,
+                  coarseMillingDrillId: value,
+                }))
+              }
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select 2.5mm drill" />
+              </SelectTrigger>
+              <SelectContent>
+                {(coarseDrills.length ? coarseDrills : millingDrills).map(
+                  (drill) => (
+                    <SelectItem key={drill.id} value={drill.id}>
+                      {drill.name}
+                      {drill.brand && ` (${drill.brand})`}
+                    </SelectItem>
+                  ),
+                )}
               </SelectContent>
             </Select>
           </div>

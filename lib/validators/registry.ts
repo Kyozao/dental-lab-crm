@@ -60,7 +60,9 @@ export const createServiceTypeSchema = z.object({
 
 export const createMillingDrillSchema = z.object({
   name: z.string().trim().min(1, "Drill name is required"),
-  type: z.string().trim().optional(),
+  type: z.enum(["1.0MM", "2.5MM"], {
+    error: "Drill type must be 1.0mm or 2.5mm",
+  }),
   brand: z.string().trim().optional(),
   serialNumber: z.string().trim().optional(),
   maxTeethRecommended: z

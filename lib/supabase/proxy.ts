@@ -35,9 +35,22 @@ export async function updateSession(request: NextRequest) {
 
   // IMPORTANT: If you remove getClaims() and you use server-side rendering
   // with the Supabase client, your users may be randomly logged out.
-  const { data } = await supabase.auth.getClaims()
-
-  const user = data?.claims
+  let user = null
+  
+  try {
+    const { data } = await supabase.auth.getClaims()
+    user = data?.claims
+  } catch (error) {
+    // Network errors or timeouts - log but don't redirect if user has valid cookies
+    // This prevents redirecting authenticated users when network is temporarily unavailable
+    console.error('[Auth Middleware] Error checking claims:', error)
+    
+    // If user has a session cookie, trust it and continue
+    // The page-level auth checks will still validate the session
+    if (request.cookies.has('sb-' + process.env.NEXT_PUBLIC_SUPABASE_URL?.split('//')[1]?.split('.')[0])) {
+      return supabaseResponse
+    }
+  }
 
   if (
     !user &&
