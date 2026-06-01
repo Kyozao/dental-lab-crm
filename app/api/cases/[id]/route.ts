@@ -12,7 +12,6 @@ function normalizePartialCasePayload(payload: Record<string, unknown>) {
   return {
     code: payload.code,
     patientName: payload.patientName,
-    caseScope: payload.caseScope,
     clinicId: payload.clinicId,
     serviceTypeId: payload.serviceTypeId,
     dentistId: payload.dentistId,
@@ -51,7 +50,6 @@ export async function GET(
       id: true,
       code: true,
       patientName: true,
-      caseScope: true,
       currentStatus: true,
       teeth: true,
       elementsQty: true,
@@ -172,7 +170,6 @@ export async function GET(
     id: caseItem.id,
     code: caseItem.code,
     patientName: caseItem.patientName,
-    caseScope: caseItem.caseScope,
     currentStatus: caseItem.currentStatus,
     teeth: caseItem.teeth,
     elementsQty: caseItem.elementsQty,
@@ -274,7 +271,6 @@ export async function PATCH(
     const forbiddenField = [
       "code",
       "patientName",
-      "caseScope",
       "clinicId",
       "serviceTypeId",
       "dentistId",
@@ -342,9 +338,6 @@ export async function PATCH(
     ...(parsed.data.code !== undefined ? { code: parsed.data.code } : {}),
     ...(parsed.data.patientName !== undefined
       ? { patientName: parsed.data.patientName }
-      : {}),
-    ...(parsed.data.caseScope !== undefined
-      ? { caseScope: parsed.data.caseScope }
       : {}),
     ...(parsed.data.clinicId !== undefined
       ? { clinicId: parsed.data.clinicId || null }

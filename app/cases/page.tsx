@@ -3,12 +3,12 @@ import { getAuthenticatedAppUser } from "@/lib/auth/get-app-user";
 import { getCaseFormOptions } from "@/lib/case-data";
 import { redirect } from "next/navigation";
 import { AddCaseDialog } from "@/components/cases/add-case-dialog";
-import {
-  CASE_SCOPE,
-  CASE_STATUS_OPTIONS,
-  type CaseScopeValue,
-  type CaseStatusValue,
-} from "./case.shared";
+import { EmptyState } from "@/components/app/empty-state";
+import { PageHeader } from "@/components/app/page-header";
+import { PageShell } from "@/components/app/page-shell";
+import { Panel } from "@/components/app/panel";
+import { Button } from "@/components/ui/button";
+import { CASE_STATUS_OPTIONS, type CaseStatusValue } from "./case.shared";
 import { CasesTable } from "./components/cases-table";
 import { CasesSearchBar } from "./components/cases-search-bar";
 
@@ -26,7 +26,6 @@ function parsePositiveInt(value: string, fallback: number) {
 
 function buildCasesUrl(params: {
   q: string;
-  scope: string;
   status: string;
   urgent: string;
   clinicId: string;
@@ -36,7 +35,6 @@ function buildCasesUrl(params: {
   const search = new URLSearchParams();
 
   if (params.q) search.set("q", params.q);
-  if (params.scope) search.set("scope", params.scope);
   if (params.status) search.set("status", params.status);
   if (params.urgent) search.set("urgent", params.urgent);
   if (params.clinicId) search.set("clinicId", params.clinicId);
@@ -65,7 +63,6 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
 
   const params = (await searchParams) ?? {};
   const query = readParam(params, "q").trim();
-  const selectedScope = readParam(params, "scope").trim();
   const selectedStatus = readParam(params, "status").trim();
   const selectedUrgent = readParam(params, "urgent").trim();
   const selectedClinicId = readParam(params, "clinicId").trim();
@@ -78,11 +75,6 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
     ? Number(selectedPageSizeRaw)
     : PAGE_SIZE_OPTIONS[0];
 
-  const validScopes = new Set([CASE_SCOPE.LAB, CASE_SCOPE.AGENCY]);
-  const scopeFilter = validScopes.has(selectedScope as CaseScopeValue)
-    ? (selectedScope as CaseScopeValue)
-    : CASE_SCOPE.LAB;
-
   const validStatuses = new Set(
     CASE_STATUS_OPTIONS.map((option) => option.value),
   );
@@ -91,7 +83,6 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
     : "";
 
   const where = {
-    caseScope: scopeFilter,
     ...(statusFilter ? { currentStatus: statusFilter } : {}),
     ...(selectedClinicId ? { clinicId: selectedClinicId } : {}),
     ...(selectedUrgent === "urgent"
@@ -173,7 +164,6 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
 
   const previousPageUrl = buildCasesUrl({
     q: query,
-    scope: scopeFilter,
     status: statusFilter,
     urgent: selectedUrgent,
     clinicId: selectedClinicId,
@@ -182,7 +172,6 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
   });
   const nextPageUrl = buildCasesUrl({
     q: query,
-    scope: scopeFilter,
     status: statusFilter,
     urgent: selectedUrgent,
     clinicId: selectedClinicId,
@@ -191,76 +180,24 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
   });
 
   return (
-    <main className="min-h-screen bg-linear-to-br from-background via-background to-muted/30">
-      <div className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <div className="space-y-2">
-            <h1 className="text-4xl font-bold tracking-tight">Cases</h1>
-            <p className="text-base text-muted-foreground">
-              {scopeFilter === CASE_SCOPE.AGENCY
-                ? "Manage your agency cases and deliveries in one place"
-                : "Manage and track all dental lab cases in one place"}
-            </p>
-          </div>
-          <AddCaseDialog
+    <PageShell width="wide">
+      <PageHeader
+        title="Cases"
+        description="Manage and track all dental lab cases in one place"
+        actions={
+            <AddCaseDialog
             clinics={clinics}
             serviceTypes={serviceTypes}
             cadDesigners={cadDesigners}
             components={components}
             currentUserRole={appUser.role}
-            defaultCaseScope={scopeFilter}
           />
-        </div>
+        }
+      />
 
-        <div className="mb-4 flex flex-wrap gap-2">
-          <a
-            href={buildCasesUrl({
-              q: query,
-              scope: CASE_SCOPE.LAB,
-              status: statusFilter,
-              urgent: selectedUrgent,
-              clinicId: selectedClinicId,
-              page: 1,
-              pageSize: selectedPageSize,
-            })}
-            className={`rounded-lg border px-3 py-2 text-sm font-medium transition-colors ${
-              scopeFilter === CASE_SCOPE.LAB
-                ? "border-primary bg-primary/10 text-primary"
-                : "border-border/60 hover:bg-muted/50"
-            }`}
-          >
-            Lab Cases
-          </a>
-          <a
-            href={buildCasesUrl({
-              q: query,
-              scope: CASE_SCOPE.AGENCY,
-              status: statusFilter,
-              urgent: selectedUrgent,
-              clinicId: selectedClinicId,
-              page: 1,
-              pageSize: selectedPageSize,
-            })}
-            className={`rounded-lg border px-3 py-2 text-sm font-medium transition-colors ${
-              scopeFilter === CASE_SCOPE.AGENCY
-                ? "border-primary bg-primary/10 text-primary"
-                : "border-border/60 hover:bg-muted/50"
-            }`}
-          >
-            Agency Cases
-          </a>
-        </div>
+      <CasesSearchBar clinics={clinics} totalCases={totalCases} />
 
-        {/* Filters */}
-        <CasesSearchBar
-          clinics={clinics}
-          totalCases={totalCases}
-          scope={scopeFilter}
-        />
-
-        {/* Table Container */}
-        <div className="rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm shadow-sm overflow-hidden">
+      <Panel>
           <CasesTable
             cases={cases.map((item) => ({
               id: item.id,
@@ -280,56 +217,51 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
             currentUserRole={appUser.role}
           />
 
-          {/* Empty State */}
           {cases.length === 0 && (
-            <div className="px-6 py-16 text-center">
-              <div className="mx-auto mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-muted">
-                <svg
-                  className="h-6 w-6 text-muted-foreground"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
-                  <path d="M12 6v6m3 3H9"></path>
-                </svg>
-              </div>
-              <h3 className="mb-1 text-sm font-semibold">No cases found</h3>
-              <p className="text-sm text-muted-foreground">
-                Create a new case to get started
-              </p>
-            </div>
+            <EmptyState
+              title="No cases found"
+              description="Create a new case to get started"
+              className="py-16"
+            />
           )}
 
-          {/* Pagination */}
           {totalCases > 0 && (
-            <div className="flex flex-col gap-4 border-t border-border/50 px-6 py-5 sm:flex-row sm:items-center sm:justify-between bg-muted/30">
+            <div className="flex flex-col gap-4 border-t border-border/40 bg-muted/30 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
               <p className="text-sm font-medium text-muted-foreground">
                 Page <span className="text-foreground">{currentPage}</span> of{" "}
                 <span className="text-foreground">{totalPages}</span>
               </p>
               <div className="flex items-center gap-2">
+                <Button
+                  asChild
+                  variant="outline"
+                  size="sm"
+                  aria-disabled={currentPage <= 1}
+                >
                 <a
                   href={previousPageUrl}
-                  aria-disabled={currentPage <= 1}
-                  className="inline-flex items-center justify-center rounded-lg border border-border/50 px-3 py-2 text-sm font-medium hover:bg-muted/50 transition-colors aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed"
+                  tabIndex={currentPage <= 1 ? -1 : undefined}
                 >
                   Previous
                 </a>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="sm"
+                  aria-disabled={currentPage >= totalPages}
+                >
                 <a
                   href={nextPageUrl}
-                  aria-disabled={currentPage >= totalPages}
-                  className="inline-flex items-center justify-center rounded-lg border border-border/50 px-3 py-2 text-sm font-medium hover:bg-muted/50 transition-colors aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-disabled:cursor-not-allowed"
+                  tabIndex={currentPage >= totalPages ? -1 : undefined}
                 >
                   Next
                 </a>
+                </Button>
               </div>
             </div>
           )}
-        </div>
-      </div>
-    </main>
+      </Panel>
+    </PageShell>
   );
 }

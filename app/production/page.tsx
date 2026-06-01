@@ -1,6 +1,10 @@
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getAuthenticatedAppUser } from "@/lib/auth/get-app-user";
+import { EmptyState } from "@/components/app/empty-state";
+import { PageHeader } from "@/components/app/page-header";
+import { PageShell } from "@/components/app/page-shell";
+import { Panel, PanelHeader } from "@/components/app/panel";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -102,13 +106,11 @@ export default async function ProductionPage() {
     .sort((a, b) => b.totalTeeth - a.totalTeeth);
 
   return (
-    <main className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold">Production & Milling</h1>
-        <p className="text-muted-foreground">
-          Track milling operations, block types, drills, and production details
-        </p>
-      </div>
+    <PageShell width="wide">
+      <PageHeader
+        title="Production & Milling"
+        description="Track milling operations, block types, drills, and production details"
+      />
 
       <section className="space-y-3">
         <div className="flex items-center justify-between">
@@ -123,44 +125,48 @@ export default async function ProductionPage() {
           </div>
         </div>
 
-        <div className="overflow-x-auto rounded-lg border border-border/40 bg-card">
-          <Table>
-            <TableHeader>
-              <TableRow className="border-b border-border/40 bg-muted/50">
-                <TableHead className="px-4 py-3 text-left font-semibold">
-                  Case
-                </TableHead>
-                <TableHead className="px-4 py-3 text-left font-semibold">
-                  Patient
-                </TableHead>
-                <TableHead className="px-4 py-3 text-right font-semibold">
-                  Action
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {readyCases.map((c) => (
-                <TableRow key={c.id} className="border-b border-border/40">
-                  <TableCell className="px-4 py-3 font-medium">
-                    {c.code}
-                  </TableCell>
-                  <TableCell className="px-4 py-3">{c.patientName}</TableCell>
-                  <TableCell className="px-4 py-3 text-right">
-                    <MillingDialog
-                      blockTypes={blockTypes}
-                      millingDrills={millingDrills}
-                      cases={readyCases}
-                      caseId={c.id}
-                    />
-                  </TableCell>
+        <Panel>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="border-b border-border/40 bg-muted/50">
+                  <TableHead className="px-4 py-3 text-left font-semibold">
+                    Case
+                  </TableHead>
+                  <TableHead className="px-4 py-3 text-left font-semibold">
+                    Patient
+                  </TableHead>
+                  <TableHead className="px-4 py-3 text-right font-semibold">
+                    Action
+                  </TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+              </TableHeader>
+              <TableBody>
+                {readyCases.map((c) => (
+                  <TableRow key={c.id} className="border-b border-border/40">
+                    <TableCell className="px-4 py-3 font-medium">
+                      {c.code}
+                    </TableCell>
+                    <TableCell className="px-4 py-3">
+                      {c.patientName}
+                    </TableCell>
+                    <TableCell className="px-4 py-3 text-right">
+                      <MillingDialog
+                        blockTypes={blockTypes}
+                        millingDrills={millingDrills}
+                        cases={readyCases}
+                        caseId={c.id}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </Panel>
       </section>
 
-      <section className="rounded-lg border border-border/40 bg-card shadow-sm overflow-hidden">
+      <Panel>
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
@@ -239,18 +245,12 @@ export default async function ProductionPage() {
                   </TableCell>
                   <TableCell className="px-6 py-4">
                     {milling.status === "SUCCESS" ? (
-                      <Badge
-                        variant="outline"
-                        className="bg-green-50 text-green-700 border-green-200"
-                      >
+                      <Badge variant="success">
                         <CheckCircle2 className="h-3 w-3 mr-1" />
                         Success
                       </Badge>
                     ) : (
-                      <Badge
-                        variant="destructive"
-                        className="bg-red-50 text-red-700 border-red-200"
-                      >
+                      <Badge variant="danger">
                         <AlertTriangle className="h-3 w-3 mr-1" />
                         Failed
                       </Badge>
@@ -285,21 +285,20 @@ export default async function ProductionPage() {
         </div>
 
         {millings.length === 0 && (
-          <div className="px-6 py-12 text-center">
-            <p className="text-muted-foreground">
-              No milling records yet. Create one to get started.
-            </p>
-          </div>
+          <EmptyState
+            title="No milling records yet"
+            description="Create one to get started."
+          />
         )}
-      </section>
+      </Panel>
 
-      <section className="rounded-lg border border-border/40 bg-card shadow-sm overflow-hidden">
-        <div className="border-b border-border/40 px-4 py-4 sm:px-6">
+      <Panel>
+        <PanelHeader>
           <h2 className="text-xl font-semibold">Drill History</h2>
           <p className="text-sm text-muted-foreground">
             Track lifetime usage and break risk for each active drill.
           </p>
-        </div>
+        </PanelHeader>
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
@@ -346,21 +345,15 @@ export default async function ProductionPage() {
                       {wearPercent === null ? (
                         <span className="text-muted-foreground">-</span>
                       ) : wearPercent >= 90 ? (
-                        <Badge
-                          variant="destructive"
-                          className="bg-red-50 text-red-700 border-red-200"
-                        >
+                        <Badge variant="danger">
                           {wearPercent}%
                         </Badge>
                       ) : wearPercent >= 70 ? (
-                        <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-100">
+                        <Badge variant="warning">
                           {wearPercent}%
                         </Badge>
                       ) : (
-                        <Badge
-                          variant="outline"
-                          className="bg-green-50 text-green-700 border-green-200"
-                        >
+                        <Badge variant="success">
                           {wearPercent}%
                         </Badge>
                       )}
@@ -392,10 +385,9 @@ export default async function ProductionPage() {
             </TableBody>
           </Table>
         </div>
-      </section>
+      </Panel>
 
-      {/* Notes Section */}
-      <div className="rounded-lg border border-border/40 bg-card p-4 sm:p-6">
+      <Panel className="p-4 sm:p-6">
         <h2 className="font-semibold mb-3">Quick Stats</h2>
         <div className="grid gap-4 md:grid-cols-3">
           <div>
@@ -415,7 +407,7 @@ export default async function ProductionPage() {
             </p>
           </div>
         </div>
-      </div>
-    </main>
+      </Panel>
+    </PageShell>
   );
 }

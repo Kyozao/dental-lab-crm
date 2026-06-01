@@ -1,6 +1,9 @@
 "use client";
 
 import * as React from "react";
+import { Pencil } from "lucide-react";
+import { EmptyState } from "@/components/app/empty-state";
+import { Panel } from "@/components/app/panel";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -40,7 +43,7 @@ export function RegistryList({
 
   return (
     <>
-      <div className="rounded-lg border border-border/40 bg-card overflow-hidden">
+      <Panel>
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
@@ -64,6 +67,7 @@ export function RegistryList({
                       size="sm"
                       onClick={() => setEditingId(row.id)}
                     >
+                      <Pencil className="h-3.5 w-3.5" />
                       Edit
                     </Button>
                   </TableCell>
@@ -72,18 +76,17 @@ export function RegistryList({
 
               {rows.length === 0 ? (
                 <TableRow>
-                  <TableCell
-                    colSpan={columnLabels.length + 1}
-                    className="py-8 text-center text-muted-foreground"
-                  >
-                    No {entityLabel.toLowerCase()}s registered yet.
+                  <TableCell colSpan={columnLabels.length + 1}>
+                    <EmptyState
+                      title={`No ${entityLabel.toLowerCase()}s registered yet`}
+                    />
                   </TableCell>
                 </TableRow>
               ) : null}
             </TableBody>
           </Table>
         </div>
-      </div>
+      </Panel>
 
       {editingRow ? (
         <EditRegistryDialog

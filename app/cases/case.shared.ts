@@ -1,43 +1,10 @@
-export const CASE_STATUS = {
-  ENTRY: "ENTRY",
-  WAITING_INFO: "WAITING_INFO",
-  DESIGNING: "DESIGNING",
-  WAITING_APPROVAL: "WAITING_APPROVAL",
-  DESIGN_READY: "DESIGN_READY",
-  MILLING_PRINTING: "MILLING_PRINTING",
-  DONE: "DONE",
-} as const;
+import {
+  CASE_STATUS,
+  CASE_STATUS_OPTIONS,
+  type CaseStatusValue,
+} from "@/lib/case-status";
 
-export const CASE_SCOPE = {
-  LAB: "LAB",
-  AGENCY: "AGENCY",
-} as const;
-
-export type CaseScopeValue = (typeof CASE_SCOPE)[keyof typeof CASE_SCOPE];
-
-export const CASE_SCOPE_OPTIONS: ReadonlyArray<{
-  value: CaseScopeValue;
-  label: string;
-}> = [
-  { value: CASE_SCOPE.LAB, label: "Lab" },
-  { value: CASE_SCOPE.AGENCY, label: "Agency" },
-];
-
-export type CaseStatusValue =
-  (typeof CASE_STATUS)[keyof typeof CASE_STATUS];
-
-export const CASE_STATUS_OPTIONS: ReadonlyArray<{
-  value: CaseStatusValue;
-  label: string;
-}> = [
-  { value: CASE_STATUS.ENTRY, label: "Entrada" },
-  { value: CASE_STATUS.WAITING_INFO, label: "Aguardando Informações" },
-  { value: CASE_STATUS.DESIGNING, label: "Desenhando" },
-  { value: CASE_STATUS.WAITING_APPROVAL, label: "Aguardando Aprovação" },
-  { value: CASE_STATUS.DESIGN_READY, label: "Design Pronto" },
-  { value: CASE_STATUS.MILLING_PRINTING, label: "Impressão/Fresagem" },
-  { value: CASE_STATUS.DONE, label: "Concluído" },
-];
+export { CASE_STATUS, CASE_STATUS_OPTIONS, type CaseStatusValue };
 
 export type DentistOption = {
   id: string;
@@ -114,7 +81,6 @@ export type EditableCase = {
   id: string;
   code: string;
   patientName: string;
-  caseScope: CaseScopeValue;
   currentStatus: CaseStatusValue;
   teeth: string;
   elementsQty: number | null;
@@ -142,7 +108,6 @@ export type SearchCaseItem = {
   id: string;
   code: string;
   patientName: string;
-  caseScope: CaseScopeValue;
   currentStatus: CaseStatusValue;
   clinicName: string;
 };
@@ -150,7 +115,6 @@ export type SearchCaseItem = {
 export type CaseFormValues = {
   code?: string;
   patientName?: string;
-  caseScope?: CaseScopeValue;
   currentStatus?: CaseStatusValue;
   teeth?: string | null;
   elementsQty?: number | null;

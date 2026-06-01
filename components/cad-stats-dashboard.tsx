@@ -19,6 +19,9 @@ import {
   YAxis,
 } from "recharts";
 import { Badge } from "@/components/ui/badge";
+import { EmptyState } from "@/components/app/empty-state";
+import { PageHeader } from "@/components/app/page-header";
+import { PageShell } from "@/components/app/page-shell";
 import {
   Card,
   CardContent,
@@ -32,6 +35,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
+import { CASE_STATUS_META } from "@/lib/case-status";
 
 type SummaryStats = {
   totalDesigners: number;
@@ -89,15 +93,12 @@ const workloadConfig = {
   },
 } satisfies ChartConfig;
 
-const statusConfig = {
-  ENTRY: { label: "Entry", color: "#64748b" },
-  WAITING_INFO: { label: "Waiting info", color: "#eab308" },
-  DESIGNING: { label: "Designing", color: "#2563eb" },
-  WAITING_APPROVAL: { label: "Approval", color: "#8b5cf6" },
-  DESIGN_READY: { label: "Ready", color: "#22c55e" },
-  MILLING_PRINTING: { label: "Milling", color: "#f97316" },
-  DONE: { label: "Done", color: "#14b8a6" },
-} satisfies ChartConfig;
+const statusConfig = Object.fromEntries(
+  Object.entries(CASE_STATUS_META).map(([status, meta]) => [
+    status,
+    { label: meta.shortLabel, color: meta.chartColor },
+  ]),
+) satisfies ChartConfig;
 
 function formatDays(value: number | null) {
   if (value === null) {
@@ -167,18 +168,18 @@ export function CadStatsDashboard({
   ];
 
   return (
-    <main className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
-      <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-        <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
-          <p className="text-muted-foreground">{description}</p>
-        </div>
-        {isSelfView ? (
+    <PageShell width="wide">
+      <PageHeader
+        title={title}
+        description={description}
+        badge={
+          isSelfView ? (
           <Badge variant="outline" className="w-fit">
             Showing only your assigned cases
           </Badge>
-        ) : null}
-      </div>
+          ) : null
+        }
+      />
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {summaryCards.map((item) => {
@@ -235,9 +236,10 @@ export function CadStatsDashboard({
                 </BarChart>
               </ChartContainer>
             ) : (
-              <div className="flex h-80 items-center justify-center rounded-lg border border-dashed text-sm text-muted-foreground">
-                No CAD activity yet.
-              </div>
+              <EmptyState
+                title="No CAD activity yet"
+                className="flex h-80 flex-col items-center justify-center rounded-lg border border-dashed"
+              />
             )}
           </CardContent>
         </Card>
@@ -301,9 +303,10 @@ export function CadStatsDashboard({
                 </div>
               </>
             ) : (
-              <div className="flex h-72 items-center justify-center rounded-lg border border-dashed text-sm text-muted-foreground">
-                No case statuses to display yet.
-              </div>
+              <EmptyState
+                title="No case statuses to display yet"
+                className="flex h-72 flex-col items-center justify-center rounded-lg border border-dashed"
+              />
             )}
           </CardContent>
         </Card>
@@ -386,12 +389,10 @@ export function CadStatsDashboard({
               ))}
             </div>
           ) : (
-            <div className="rounded-lg border border-dashed px-4 py-10 text-center text-sm text-muted-foreground">
-              No CAD designers were found in the system yet.
-            </div>
+            <EmptyState title="No CAD designers were found in the system yet" />
           )}
         </CardContent>
       </Card>
-    </main>
+    </PageShell>
   );
 }

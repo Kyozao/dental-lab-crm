@@ -2,24 +2,23 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Search, X } from "lucide-react";
+import { Panel } from "@/components/app/panel";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { NativeSelect } from "@/components/ui/native-select";
 import { CASE_STATUS_OPTIONS } from "../case.shared";
 import type { ClinicOption } from "../case.shared";
 
 type Props = {
   clinics: ClinicOption[];
   totalCases: number;
-  scope: "LAB" | "AGENCY";
   onSearchChange?: (query: string) => void;
 };
 
 const PAGE_SIZE_OPTIONS = [25, 50, 100] as const;
 
-export function CasesSearchBar({
-  clinics,
-  totalCases,
-  scope,
-  onSearchChange,
-}: Props) {
+export function CasesSearchBar({ clinics, totalCases, onSearchChange }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -47,7 +46,6 @@ export function CasesSearchBar({
       debounceTimeoutRef.current = setTimeout(() => {
         const params = new URLSearchParams();
         if (query) params.set("q", query);
-        params.set("scope", scope);
         if (st) params.set("status", st);
         if (urg) params.set("urgent", urg);
         if (cid) params.set("clinicId", cid);
@@ -57,7 +55,7 @@ export function CasesSearchBar({
         router.push(`/cases?${params.toString()}`);
       }, 300);
     },
-    [router, onSearchChange, scope],
+    [router, onSearchChange],
   );
 
   // Handle query changes
@@ -97,7 +95,7 @@ export function CasesSearchBar({
       clearTimeout(debounceTimeoutRef.current);
     }
 
-    router.push(`/cases?scope=${scope}`);
+    router.push(`/cases`);
   };
 
   // Cleanup timeout on unmount
@@ -110,83 +108,57 @@ export function CasesSearchBar({
   }, []);
 
   return (
-    <div className="mb-8 space-y-4">
-      <div className="flex flex-col gap-4 rounded-xl border border-border/50 bg-card/50 backdrop-blur-sm p-5 shadow-sm">
-        {/* Search Bar */}
-        <div className="flex items-center gap-3 rounded-lg border border-border/50 bg-background px-4 py-3 focus-within:border-primary/50 focus-within:ring-1 focus-within:ring-primary/20 transition-all">
-          <svg
-            className="h-5 w-5 shrink-0 text-muted-foreground"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.35-4.35"></path>
-          </svg>
-          <input
+    <Panel className="p-5">
+        <div className="flex items-center gap-3 rounded-md border border-input bg-background px-3 shadow-xs transition-[color,box-shadow] focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50">
+          <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
+          <Input
             type="text"
             value={localQuery}
             onChange={(e) => handleQueryChange(e.target.value)}
             placeholder="Search by code, patient, clinic, dentist..."
-            className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+            className="h-10 border-0 bg-transparent px-0 shadow-none focus-visible:ring-0"
           />
           {localQuery && (
-            <button
+            <Button
               type="button"
+              variant="ghost"
+              size="icon-sm"
               onClick={() => handleQueryChange("")}
-              className="text-muted-foreground hover:text-foreground transition-colors"
               aria-label="Clear search"
             >
-              <svg
-                className="h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M18 6l-12 12M6 6l12 12"></path>
-              </svg>
-            </button>
+              <X className="h-4 w-4" />
+            </Button>
           )}
         </div>
 
-        {/* Filter Row */}
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          <div className="relative">
-            <select
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          <NativeSelect
+            className="w-full"
               value={status}
               onChange={(e) => handleStatusChange(e.target.value)}
-              className="w-full h-10 rounded-lg border border-border/50 bg-background px-3 text-sm appearance-none cursor-pointer hover:border-border/70 transition-colors"
             >
-              <option value="">All statuses</option>
+              <option value="">All status</option>
               {CASE_STATUS_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>
                   {opt.label}
                 </option>
               ))}
-            </select>
-          </div>
+          </NativeSelect>
 
-          <div className="relative">
-            <select
+          <NativeSelect
+            className="w-full"
               value={urgent}
               onChange={(e) => handleUrgentChange(e.target.value)}
-              className="w-full h-10 rounded-lg border border-border/50 bg-background px-3 text-sm appearance-none cursor-pointer hover:border-border/70 transition-colors"
             >
               <option value="">Urgency: all</option>
               <option value="urgent">Urgent only</option>
               <option value="normal">Non-urgent only</option>
-            </select>
-          </div>
+          </NativeSelect>
 
-          <div className="relative">
-            <select
+          <NativeSelect
+            className="w-full"
               value={clinicId}
               onChange={(e) => handleClinicChange(e.target.value)}
-              className="w-full h-10 rounded-lg border border-border/50 bg-background px-3 text-sm appearance-none cursor-pointer hover:border-border/70 transition-colors"
             >
               <option value="">All clinics</option>
               {clinics.map((clinic) => (
@@ -194,36 +166,33 @@ export function CasesSearchBar({
                   {clinic.name}
                 </option>
               ))}
-            </select>
-          </div>
+          </NativeSelect>
 
-          <div className="relative">
-            <select
+          <NativeSelect
+            className="w-full"
               value={pageSize}
               onChange={(e) => handlePageSizeChange(e.target.value)}
-              className="w-full h-10 rounded-lg border border-border/50 bg-background px-3 text-sm appearance-none cursor-pointer hover:border-border/70 transition-colors"
             >
               {PAGE_SIZE_OPTIONS.map((size) => (
                 <option key={size} value={size}>
                   {size} per page
                 </option>
               ))}
-            </select>
-          </div>
+          </NativeSelect>
 
           <div className="flex items-center gap-2">
-            <button
+            <Button
               type="button"
+              variant="outline"
               onClick={handleClear}
-              className="flex-1 rounded-lg border border-border/50 px-4 py-2.5 text-sm font-medium hover:bg-muted/50 transition-colors"
+              className="flex-1"
             >
               Clear
-            </button>
+            </Button>
           </div>
         </div>
 
-        {/* Filter Info */}
-        <div className="flex items-center justify-between text-xs text-muted-foreground pt-1">
+        <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
           <span>
             Total:{" "}
             <span className="font-semibold text-foreground">{totalCases}</span>{" "}
@@ -235,7 +204,6 @@ export function CasesSearchBar({
             </span>
           )}
         </div>
-      </div>
-    </div>
+    </Panel>
   );
 }

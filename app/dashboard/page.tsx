@@ -1,17 +1,8 @@
 import { redirect } from "next/navigation";
 import { CadStatsDashboard } from "@/components/cad-stats-dashboard";
 import { getAuthenticatedAppUser } from "@/lib/auth/get-app-user";
+import { CASE_STATUS_META } from "@/lib/case-status";
 import { prisma } from "@/lib/prisma";
-
-const STATUS_META = [
-  { status: "ENTRY", label: "Entry", fill: "#64748b" },
-  { status: "WAITING_INFO", label: "Waiting info", fill: "#eab308" },
-  { status: "DESIGNING", label: "Designing", fill: "#2563eb" },
-  { status: "WAITING_APPROVAL", label: "Approval", fill: "#8b5cf6" },
-  { status: "DESIGN_READY", label: "Ready", fill: "#22c55e" },
-  { status: "MILLING_PRINTING", label: "Milling", fill: "#f97316" },
-  { status: "DONE", label: "Done", fill: "#14b8a6" },
-] as const;
 
 function getDoneDate(caseItem: {
   updatedAt: Date;
@@ -203,10 +194,10 @@ export default async function DashboardPage() {
     })(),
   };
 
-  const statusData = STATUS_META.map(({ status, label, fill }) => ({
+  const statusData = Object.entries(CASE_STATUS_META).map(([status, meta]) => ({
     status,
-    label,
-    fill,
+    label: meta.shortLabel,
+    fill: meta.chartColor,
     value: allCases.filter((caseItem) => caseItem.currentStatus === status)
       .length,
   })).filter((item) => item.value > 0);

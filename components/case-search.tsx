@@ -72,7 +72,6 @@ export function CaseSearch({
           id: string;
           code: string | null;
           patientName: string | null;
-          caseScope: EditableCase["caseScope"];
           currentStatus: EditableCase["currentStatus"];
           teeth: string | null;
           elementsQty: number | null;
@@ -133,7 +132,6 @@ export function CaseSearch({
         id: payload.data.id,
         code: payload.data.code ?? "",
         patientName: payload.data.patientName ?? "Sem nome",
-        caseScope: payload.data.caseScope,
         currentStatus: payload.data.currentStatus,
         teeth: payload.data.teeth ?? "",
         elementsQty: payload.data.elementsQty,

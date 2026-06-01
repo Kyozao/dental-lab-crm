@@ -16,13 +16,10 @@ const VALID_CASE_STATUSES = [
   "DONE",
 ] as const;
 
-const VALID_CASE_SCOPES = ["LAB", "AGENCY"] as const;
-
 function normalizeCasePayload(payload: Record<string, unknown>) {
   return {
     code: payload.code,
     patientName: payload.patientName,
-    caseScope: payload.caseScope ?? "LAB",
     clinicId: payload.clinicId,
     serviceTypeId: payload.serviceTypeId ?? undefined,
     dentistId: payload.dentistId ?? undefined,
@@ -52,7 +49,6 @@ export async function GET(request: Request) {
 
   const { searchParams } = new URL(request.url);
   const statusParam = searchParams.get("status");
-  const scopeParam = searchParams.get("scope");
   const search = searchParams.get("search")?.trim() ?? "";
   const page = Math.max(Number(searchParams.get("page") ?? 1), 1);
   const pageSize = Math.min(
@@ -69,20 +65,9 @@ export async function GET(request: Request) {
     return apiError(400, "INVALID_STATUS", "Invalid case status filter.");
   }
 
-  if (
-    scopeParam &&
-    !VALID_CASE_SCOPES.includes(
-      scopeParam as (typeof VALID_CASE_SCOPES)[number],
-    )
-  ) {
-    return apiError(400, "INVALID_SCOPE", "Invalid case scope filter.");
-  }
 
   const statusFilter = statusParam
     ? (statusParam as (typeof VALID_CASE_STATUSES)[number])
-    : undefined;
-  const scopeFilter = scopeParam
-    ? (scopeParam as (typeof VALID_CASE_SCOPES)[number])
     : undefined;
 
   const where: NonNullable<
@@ -90,7 +75,6 @@ export async function GET(request: Request) {
   >["where"] = {
     ...(appUser.role === "CAD_DESIGNER" ? { cadDesignerId: appUser.id } : {}),
     ...(statusFilter ? { currentStatus: statusFilter } : {}),
-    ...(scopeFilter ? { caseScope: scopeFilter } : {}),
     ...(search
       ? {
           OR: [
@@ -152,7 +136,6 @@ export async function GET(request: Request) {
       id: caseItem.id,
       code: caseItem.code,
       patientName: caseItem.patientName,
-      caseScope: caseItem.caseScope,
       clinicName: caseItem.clinic?.name ?? null,
       serviceTypeName: caseItem.serviceType?.name ?? null,
       cadDesignerName: caseItem.cadDesigner?.name ?? null,
@@ -226,7 +209,6 @@ export async function POST(request: Request) {
       data: {
         code: data.code,
         patientName: data.patientName,
-        caseScope: data.caseScope,
         clinicId: data.clinicId,
         serviceTypeId: data.serviceTypeId || null,
         dentistId: data.dentistId || null,

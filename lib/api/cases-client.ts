@@ -19,7 +19,6 @@ type CaseDetailsResponse = {
   id: string;
   code: string;
   patientName: string;
-  caseScope: "LAB" | "AGENCY";
   currentStatus: CaseStatusValue;
   teeth: string;
   elementsQty: number | null;
@@ -86,7 +85,6 @@ export async function getCaseDetailsApi(caseId: string): Promise<EditableCase> {
     id: data.id,
     code: data.code,
     patientName: data.patientName,
-    caseScope: data.caseScope,
     currentStatus: data.currentStatus,
     teeth: data.teeth,
     elementsQty: data.elementsQty,

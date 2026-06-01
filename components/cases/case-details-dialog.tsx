@@ -14,7 +14,6 @@ import {
 import { useRouter } from "next/navigation";
 
 import {
-  CASE_SCOPE_OPTIONS,
   CASE_STATUS_OPTIONS,
   type AttachmentKindValue,
   type CadDesignerOption,
@@ -694,23 +693,6 @@ export function CaseDetailsDialog({
                 ))}
               </select>
             </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Case type</label>
-              <select
-                name="caseScope"
-                defaultValue={caseItem.caseScope}
-                disabled={!canEditAll}
-                className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:opacity-60"
-              >
-                {CASE_SCOPE_OPTIONS.map((scope) => (
-                  <option key={scope.value} value={scope.value}>
-                    {scope.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-
             <div className="space-y-2">
               <label className="text-sm font-medium">Status</label>
               <select

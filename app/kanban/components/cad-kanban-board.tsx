@@ -28,8 +28,11 @@ import {
   Paperclip,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { PageHeader } from "@/components/app/page-header";
+import { PageShell } from "@/components/app/page-shell";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { NativeSelect } from "@/components/ui/native-select";
 import { cn } from "@/lib/utils";
 import {
   type CadDesignerOption,
@@ -261,18 +264,12 @@ export function CadKanbanBoard({
   }
 
   return (
-    <main className="min-h-screen bg-background">
-      <div className="mx-auto space-y-6 p-4 md:p-6 md:px-12">
-        <header className="space-y-4">
-          <div>
-            <h1 className="text-2xl font-semibold tracking-tight">
-              CAD Kanban
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              Arraste no desktop. No celular, abra o caso e atualize por
-              detalhes.
-            </p>
-          </div>
+    <PageShell width="kanban">
+        <div className="space-y-4">
+          <PageHeader
+            title="CAD Kanban"
+            description="Arraste no desktop. No celular, abra o caso e atualize por detalhes."
+          />
 
           <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
             <div className="flex flex-wrap gap-2">
@@ -311,10 +308,10 @@ export function CadKanbanBoard({
             {currentUser.role !== "CAD_DESIGNER" ? (
               <div className="grid gap-1">
                 <label className="text-sm font-medium">Filtrar CADista</label>
-                <select
+                <NativeSelect
+                  className="w-full min-w-52"
                   value={selectedDesignerId}
                   onChange={(e) => setSelectedDesignerId(e.target.value)}
-                  className="h-10 rounded-md border bg-background px-3 text-sm"
                 >
                   <option value="all">Todos</option>
                   <option value="unassigned">Não atribuído</option>
@@ -323,13 +320,13 @@ export function CadKanbanBoard({
                       {designer.name ?? "Sem nome"}
                     </option>
                   ))}
-                </select>
+                </NativeSelect>
               </div>
             ) : null}
           </div>
 
           <KanbanSummary summary={boardSummary} />
-        </header>
+        </div>
 
         <div className="hidden md:block">
           <DndContext
@@ -413,8 +410,7 @@ export function CadKanbanBoard({
           cadDesigners={designers}
           components={components}
         />
-      </div>
-    </main>
+    </PageShell>
   );
 }
 

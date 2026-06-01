@@ -1,6 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import { getAuthenticatedAppUser } from "@/lib/auth/get-app-user";
 import { redirect } from "next/navigation";
+import { EmptyState } from "@/components/app/empty-state";
+import { PageHeader } from "@/components/app/page-header";
+import { PageShell } from "@/components/app/page-shell";
+import { Panel, PanelHeader } from "@/components/app/panel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -79,13 +83,11 @@ export default async function RegistryPage() {
     ]);
 
   return (
-    <main className="mx-auto max-w-6xl space-y-6 p-4 sm:p-6">
-      <div>
-        <h1 className="text-2xl font-semibold">Registry Management</h1>
-        <p className="text-sm text-muted-foreground">
-          Create and manage clinics, dentists, components, and equipment
-        </p>
-      </div>
+    <PageShell width="default">
+      <PageHeader
+        title="Registry Management"
+        description="Create and manage clinics, dentists, components, and equipment"
+      />
 
       <Tabs defaultValue="clinics" className="w-full">
         <TabsList className="grid h-auto w-full grid-cols-2 gap-1 sm:grid-cols-3 lg:grid-cols-6">
@@ -330,7 +332,7 @@ export default async function RegistryPage() {
                   : "-",
                 <Badge
                   key="status"
-                  variant={c.isActive ? "outline" : "secondary"}
+                  variant={c.isActive ? "success" : "neutral"}
                 >
                   {c.isActive ? "Active" : "Inactive"}
                 </Badge>,
@@ -469,7 +471,7 @@ export default async function RegistryPage() {
                 b.defaultCost ? `R$ ${Number(b.defaultCost).toFixed(2)}` : "-",
                 <Badge
                   key="status"
-                  variant={b.isActive ? "outline" : "secondary"}
+                  variant={b.isActive ? "success" : "neutral"}
                 >
                   {b.isActive ? "Active" : "Inactive"}
                 </Badge>,
@@ -549,7 +551,7 @@ export default async function RegistryPage() {
                 s.notes ?? "-",
                 <Badge
                   key="status"
-                  variant={s.isActive ? "outline" : "secondary"}
+                  variant={s.isActive ? "success" : "neutral"}
                 >
                   {s.isActive ? "Active" : "Inactive"}
                 </Badge>,
@@ -622,13 +624,13 @@ export default async function RegistryPage() {
             submitLabel="Add Drill"
           />
 
-          <div className="rounded-lg border border-border/40 bg-card">
-            <div className="border-b border-border/40 px-4 py-3">
+          <Panel>
+            <PanelHeader className="py-3">
               <h3 className="font-semibold">Drill History</h3>
               <p className="text-sm text-muted-foreground">
                 Total teeth milled and recent jobs per drill.
               </p>
-            </div>
+            </PanelHeader>
 
             <div className="overflow-x-auto">
               <Table>
@@ -687,9 +689,9 @@ export default async function RegistryPage() {
                         </TableCell>
                         <TableCell>
                           {drill.isActive ? (
-                            <Badge variant="outline">Active</Badge>
+                            <Badge variant="success">Active</Badge>
                           ) : (
-                            <Badge variant="secondary">Inactive</Badge>
+                            <Badge variant="neutral">Inactive</Badge>
                           )}
                         </TableCell>
                         <TableCell className="text-center font-medium">
@@ -724,18 +726,15 @@ export default async function RegistryPage() {
 
                   {drills.length === 0 && (
                     <TableRow>
-                      <TableCell
-                        colSpan={6}
-                        className="py-8 text-center text-muted-foreground"
-                      >
-                        No drills registered yet.
+                      <TableCell colSpan={6}>
+                        <EmptyState title="No drills registered yet" />
                       </TableCell>
                     </TableRow>
                   )}
                 </TableBody>
               </Table>
             </div>
-          </div>
+          </Panel>
 
           <RegistryList
             entity="milling-drills"
@@ -808,7 +807,7 @@ export default async function RegistryPage() {
                 d.maxTeethRecommended ?? "-",
                 <Badge
                   key="status"
-                  variant={d.isActive ? "outline" : "secondary"}
+                  variant={d.isActive ? "success" : "neutral"}
                 >
                   {d.isActive ? "Active" : "Inactive"}
                 </Badge>,
@@ -826,6 +825,6 @@ export default async function RegistryPage() {
           />
         </TabsContent>
       </Tabs>
-    </main>
+    </PageShell>
   );
 }

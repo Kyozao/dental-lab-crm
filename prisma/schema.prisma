@@ -23,11 +23,6 @@ enum CaseStatus {
   DONE
 }
 
-enum CaseScope {
-  LAB
-  AGENCY
-}
-
 enum MillingStatus {
   SUCCESS
   FAILED
@@ -232,7 +227,6 @@ model Case {
   code            String     @unique
   clientCaseCode  String?
   patientName     String
-  caseScope       CaseScope  @default(LAB)
   clinicId        String?
   serviceTypeId   String?
   dentistId       String?
@@ -266,7 +260,6 @@ model Case {
   @@index([clinicId])
   @@index([dentistId])
   @@index([currentStatus])
-  @@index([caseScope])
   @@index([serviceTypeId])
   @@index([cadDesignerId])
   @@index([createdByUserId])

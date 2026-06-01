@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import { MainNav } from "@/components/main-nav";
 import { ConditionalMainNavWrapper } from "@/components/conditional-main-nav-wrapper";
 import { Toaster } from "@/components/ui/sonner";
-import { PwaBootstrap } from "@/components/pwa-bootstrap";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -44,7 +43,6 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-screen flex flex-col bg-background">
-        <PwaBootstrap />
         <ConditionalMainNavWrapper>
           <MainNav />
         </ConditionalMainNavWrapper>
