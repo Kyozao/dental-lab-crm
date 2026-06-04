@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import { Space_Grotesk } from "next/font/google";
-import { VelaLanding } from "@/components/vela-landing";
+import localFont from "next/font/local";
+import { VelaLanding } from "@/features/marketing/components/vela-landing";
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["500"],
+const spaceGrotesk = localFont({
+  src: "../public/fonts/geist/Geist-VariableFont_wght.ttf",
   variable: "--font-space-grotesk",
   display: "swap",
 });

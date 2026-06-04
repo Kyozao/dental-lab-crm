@@ -1,0 +1,107 @@
+"use client";
+
+import * as React from "react";
+import { Pencil } from "lucide-react";
+import { EmptyState } from "@/components/app/empty-state";
+import { Panel } from "@/components/app/panel";
+import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { EditRegistryDialog, type FieldDef } from "./edit-registry-dialog";
+import type { RegistryEntity } from "@/features/registry/types";
+
+export type RegistryRow = {
+  id: string;
+  cells: React.ReactNode[];
+  values: Record<string, string | number | boolean | null | undefined>;
+};
+
+type Props = {
+  columnLabels: string[];
+  rows: RegistryRow[];
+  entity: RegistryEntity;
+  entityLabel: string;
+  fields: FieldDef[];
+};
+
+export function RegistryList({
+  columnLabels,
+  rows,
+  entity,
+  entityLabel,
+  fields,
+}: Props) {
+  const [editingId, setEditingId] = React.useState<string | null>(null);
+
+  const editingRow = rows.find((r) => r.id === editingId) ?? null;
+
+  return (
+    <>
+      <Panel>
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                {columnLabels.map((col) => (
+                  <TableHead key={col}>{col}</TableHead>
+                ))}
+                <TableHead className="w-16" />
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {rows.map((row) => (
+                <TableRow key={row.id}>
+                  {row.cells.map((cell, i) => (
+                    <TableCell key={i}>{cell}</TableCell>
+                  ))}
+                  <TableCell className="text-right">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setEditingId(row.id)}
+                    >
+                      <Pencil className="h-3.5 w-3.5" />
+                      Edit
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+
+              {rows.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={columnLabels.length + 1}>
+                    <EmptyState
+                      title={`No ${entityLabel.toLowerCase()}s registered yet`}
+                    />
+                  </TableCell>
+                </TableRow>
+              ) : null}
+            </TableBody>
+          </Table>
+        </div>
+      </Panel>
+
+      {editingRow ? (
+        <EditRegistryDialog
+          key={editingId}
+          open={Boolean(editingId)}
+          onOpenChange={(open) => {
+            if (!open) setEditingId(null);
+          }}
+          id={editingRow.id}
+          entity={entity}
+          entityLabel={entityLabel}
+          fields={fields}
+          values={editingRow.values}
+        />
+      ) : null}
+    </>
+  );
+}

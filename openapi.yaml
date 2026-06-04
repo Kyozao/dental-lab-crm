@@ -1,19 +1,20 @@
 openapi: 3.1.0
 info:
   title: Dental Lab CRM API
-  version: 0.1.0-draft
-  summary: Shared backend contract for web and future mobile clients
+  version: 0.2.0-mock
+  summary: API-only mock contract for web and future mobile clients
   description: |
     Draft Swagger/OpenAPI specification for `dental-lab-crm`.
-    This file is the machine-readable API contract and should be kept in sync
-    with `docs/api-contracts.md` as routes are added or changed.
+    The current runtime is API-only demo mode: auth is bypassed, Prisma and
+    Supabase are disconnected, and mutations are in-memory for the active
+    server process.
 servers:
   - url: http://localhost:3000
     description: Local development
-security:
-  - bearerAuth: []
+security: []
 tags:
   - name: Auth
+  - name: Dashboard
   - name: Cases
   - name: Kanban
   - name: Production
@@ -22,8 +23,8 @@ paths:
   /api/me:
     get:
       tags: [Auth]
-      summary: Get current user
-      description: Returns the authenticated user profile for session bootstrap.
+      summary: Get mock current user
+      description: Returns the fixed demo user profile for mock session bootstrap.
       operationId: getCurrentUser
       responses:
         "200":
@@ -33,11 +34,33 @@ paths:
               schema:
                 $ref: "#/components/schemas/MeResponse"
         "401":
-          description: Missing or invalid auth
+          description: Not used in the current mock runtime
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /api/dashboard:
+    get:
+      tags: [Dashboard]
+      summary: Get mock dashboard data
+      description: Returns summary, designer stats, and status chart data from the in-memory mock store.
+      operationId: getDashboard
+      responses:
+        "200":
+          description: Dashboard data returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: true
+                  error:
+                    type: "null"
+                  meta:
+                    type: object
+                    additionalProperties: true
   /api/cases:
     get:
       tags: [Cases]
@@ -439,6 +462,58 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RegistryBootstrapResponse"
+  /api/registry:
+    get:
+      tags: [Registry]
+      summary: Get mock registry data
+      description: Returns clinics, dentists, components, block types, service types, and milling drills from the in-memory mock store.
+      operationId: getRegistry
+      responses:
+        "200":
+          description: Registry data returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    additionalProperties: true
+                  error:
+                    type: "null"
+                  meta:
+                    type: object
+                    additionalProperties: true
+  /api/reports/cad-designer-cases:
+    get:
+      tags: [Production]
+      summary: Disabled CAD designer cases report
+      description: Returns a disabled mock response; PDF generation is not available in the mock runtime.
+      operationId: getCadDesignerCasesReport
+      responses:
+        "200":
+          description: Disabled report response returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                        const: false
+                      message:
+                        type: string
+                      items:
+                        type: array
+                        items: {}
+                  error:
+                    type: "null"
+                  meta:
+                    type: object
+                    additionalProperties: true
   /api/registry/{entity}:
     post:
       tags: [Registry]

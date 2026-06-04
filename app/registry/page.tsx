@@ -1,6 +1,3 @@
-import { prisma } from "@/lib/prisma";
-import { getAuthenticatedAppUser } from "@/lib/auth/get-app-user";
-import { redirect } from "next/navigation";
 import { EmptyState } from "@/components/app/empty-state";
 import { PageHeader } from "@/components/app/page-header";
 import { PageShell } from "@/components/app/page-shell";
@@ -15,72 +12,79 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { RegistryForm } from "./components/registry-form";
-import { CreateDentistForm } from "./components/create-dentist-form";
-import { RegistryList } from "./components/registry-list";
+import { RegistryForm } from "@/features/registry/components/registry-form";
+import { CreateDentistForm } from "@/features/registry/components/create-dentist-form";
+import { RegistryList } from "@/features/registry/components/registry-list";
+import { serverApiGet } from "@/lib/api/server";
 
 export default async function RegistryPage() {
-  const appUser = await getAuthenticatedAppUser();
-
-  if (!appUser) {
-    redirect("/login");
-  }
-
-  const [clinics, dentists, components, blockTypes, serviceTypes, drills] =
-    await Promise.all([
-      prisma.clinic.findMany({
-        orderBy: { name: "asc" },
-        select: { id: true, name: true, phone: true, email: true, notes: true },
-      }),
-      prisma.dentist.findMany({
-        orderBy: { name: "asc" },
-        include: { clinic: { select: { name: true } } },
-      }),
-      prisma.component.findMany({
-        orderBy: { name: "asc" },
-      }),
-      prisma.blockType.findMany({
-        orderBy: { name: "asc" },
-      }),
-      prisma.serviceType.findMany({
-        orderBy: { name: "asc" },
-      }),
-      prisma.millingDrill.findMany({
-        orderBy: { name: "asc" },
-        include: {
-          fineMillings: {
-            take: 20, // Limit to last 20 fine millings instead of all
-            orderBy: { milledAt: "desc" },
-            select: {
-              id: true,
-              teethMilledQty: true,
-              milledAt: true,
-              case: {
-                select: {
-                  code: true,
-                  patientName: true,
-                },
-              },
-            },
-          },
-          coarseMillings: {
-            take: 20, // Limit to last 20 coarse millings instead of all
-            orderBy: { milledAt: "desc" },
-            select: {
-              id: true,
-              teethMilledQty: true,
-              milledAt: true,
-              case: {
-                select: {
-                  code: true,
-                  patientName: true,
-                },
-              },
-            },
-          },
-        },
-      }),
-    ]);
+  const registryEnvelope = await serverApiGet<{
+    clinics: Array<{
+      id: string;
+      name: string;
+      phone?: string | null;
+      email?: string | null;
+      notes?: string | null;
+    }>;
+    dentists: Array<{
+      id: string;
+      clinicId?: string;
+      name: string;
+      phone?: string | null;
+      email?: string | null;
+      notes?: string | null;
+      clinic: { name: string };
+    }>;
+    components: Array<{
+      id: string;
+      name: string;
+      category?: string | null;
+      brand?: string | null;
+      defaultCost?: string | null;
+      defaultPrice?: string | null;
+      isActive?: boolean;
+    }>;
+    blockTypes: Array<{
+      id: string;
+      name: string;
+      material?: string | null;
+      brand?: string | null;
+      size?: string | null;
+      shade?: string | null;
+      defaultCost?: string | null;
+      isActive?: boolean;
+    }>;
+    serviceTypes: Array<{
+      id: string;
+      name: string;
+      notes?: string | null;
+      isActive?: boolean;
+    }>;
+    drills: Array<{
+      id: string;
+      name: string;
+      type?: string | null;
+      brand?: string | null;
+      serialNumber?: string | null;
+      maxTeethRecommended?: number | null;
+      notes?: string | null;
+      isActive?: boolean;
+      fineMillings: Array<{
+        id: string;
+        teethMilledQty: number;
+        milledAt: string;
+        case: { code: string; patientName: string };
+      }>;
+      coarseMillings: Array<{
+        id: string;
+        teethMilledQty: number;
+        milledAt: string;
+        case: { code: string; patientName: string };
+      }>;
+    }>;
+  }>("/api/registry");
+  const { clinics, dentists, components, blockTypes, serviceTypes, drills } =
+    registryEnvelope.data;
 
   return (
     <PageShell width="default">
@@ -656,7 +660,7 @@ export default async function RegistryPage() {
                         Array<{
                           id: string;
                           teethMilledQty: number;
-                          milledAt: Date;
+                          milledAt: string;
                           case: { code: string; patientName: string };
                         }>
                       >((acc, usage) => {
@@ -666,7 +670,9 @@ export default async function RegistryPage() {
                         return acc;
                       }, [])
                       .sort(
-                        (a, b) => b.milledAt.getTime() - a.milledAt.getTime(),
+                        (a, b) =>
+                          new Date(b.milledAt).getTime() -
+                          new Date(a.milledAt).getTime(),
                       );
 
                     const totalTeeth = usages.reduce(
@@ -674,7 +680,7 @@ export default async function RegistryPage() {
                       0,
                     );
                     const lastMilledAt =
-                      usages.length > 0 ? usages[0].milledAt : null;
+                      usages.length > 0 ? new Date(usages[0].milledAt) : null;
                     const recentJobs = usages.slice(0, 3);
 
                     return (

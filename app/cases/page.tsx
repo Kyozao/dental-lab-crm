@@ -1,19 +1,35 @@
-import { prisma } from "@/lib/prisma";
-import { getAuthenticatedAppUser } from "@/lib/auth/get-app-user";
-import { getCaseFormOptions } from "@/lib/case-data";
-import { redirect } from "next/navigation";
-import { AddCaseDialog } from "@/components/cases/add-case-dialog";
+import { AddCaseDialog } from "@/features/cases/components/add-case-dialog";
 import { EmptyState } from "@/components/app/empty-state";
 import { PageHeader } from "@/components/app/page-header";
 import { PageShell } from "@/components/app/page-shell";
 import { Panel } from "@/components/app/panel";
 import { Button } from "@/components/ui/button";
-import { CASE_STATUS_OPTIONS, type CaseStatusValue } from "./case.shared";
-import { CasesTable } from "./components/cases-table";
-import { CasesSearchBar } from "./components/cases-search-bar";
+import {
+  CASE_STATUS_OPTIONS,
+  type CadDesignerOption,
+  type CaseStatusValue,
+  type ClinicOption,
+  type ComponentOption,
+  type EditableCase,
+  type ServiceTypeOption,
+} from "@/features/cases/types";
+import { CasesTable } from "@/features/cases/components/cases-table";
+import { CasesSearchBar } from "@/features/cases/components/cases-search-bar";
+import { serverApiGet } from "@/lib/api/server";
 
 type CasesPageProps = {
   searchParams?: Promise<Record<string, string | string[] | undefined>>;
+};
+
+type UserResponse = {
+  role: string;
+};
+
+type BootstrapResponse = {
+  clinics: ClinicOption[];
+  serviceTypes: ServiceTypeOption[];
+  cadDesigners: CadDesignerOption[];
+  components: ComponentOption[];
 };
 
 const PAGE_SIZE_OPTIONS = [25, 50, 100] as const;
@@ -55,12 +71,6 @@ function readParam(
 }
 
 export default async function CasesPage({ searchParams }: CasesPageProps) {
-  const appUser = await getAuthenticatedAppUser();
-
-  if (!appUser) {
-    redirect("/login");
-  }
-
   const params = (await searchParams) ?? {};
   const query = readParam(params, "q").trim();
   const selectedStatus = readParam(params, "status").trim();
@@ -81,86 +91,28 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
   const statusFilter = validStatuses.has(selectedStatus as CaseStatusValue)
     ? (selectedStatus as CaseStatusValue)
     : "";
+  const requestedPage = parsePositiveInt(requestedPageRaw, 1);
 
-  const where = {
-    ...(statusFilter ? { currentStatus: statusFilter } : {}),
-    ...(selectedClinicId ? { clinicId: selectedClinicId } : {}),
-    ...(selectedUrgent === "urgent"
-      ? { isUrgent: true }
-      : selectedUrgent === "normal"
-        ? { isUrgent: false }
-        : {}),
-    ...(query
-      ? {
-          OR: [
-            { code: { contains: query, mode: "insensitive" as const } },
-            { patientName: { contains: query, mode: "insensitive" as const } },
-            {
-              clinic: {
-                name: {
-                  contains: query,
-                  mode: "insensitive" as const,
-                },
-              },
-            },
-            {
-              dentist: {
-                name: {
-                  contains: query,
-                  mode: "insensitive" as const,
-                },
-              },
-            },
-          ],
-        }
-      : {}),
-  };
+  const apiParams = new URLSearchParams({
+    page: String(requestedPage),
+    pageSize: String(selectedPageSize),
+  });
+  if (query) apiParams.set("q", query);
+  if (statusFilter) apiParams.set("status", statusFilter);
+  if (selectedUrgent) apiParams.set("urgent", selectedUrgent);
+  if (selectedClinicId) apiParams.set("clinicId", selectedClinicId);
 
-  const totalCases = await prisma.case.count({ where });
+  const [userEnvelope, casesEnvelope, bootstrapEnvelope] = await Promise.all([
+    serverApiGet<UserResponse>("/api/me"),
+    serverApiGet<EditableCase[]>(`/api/cases?${apiParams.toString()}`),
+    serverApiGet<BootstrapResponse>("/api/registry/bootstrap"),
+  ]);
+
+  const { clinics, serviceTypes, cadDesigners, components } =
+    bootstrapEnvelope.data;
+  const totalCases = Number(casesEnvelope.meta?.total ?? casesEnvelope.data.length);
   const totalPages = Math.max(1, Math.ceil(totalCases / selectedPageSize));
-  const currentPage = Math.min(
-    parsePositiveInt(requestedPageRaw, 1),
-    totalPages,
-  );
-  const skip = (currentPage - 1) * selectedPageSize;
-
-  const [cases, { clinics, serviceTypes, cadDesigners, components }] =
-    await Promise.all([
-      prisma.case.findMany({
-        where,
-        skip,
-        take: selectedPageSize,
-        orderBy: { createdAt: "desc" },
-        select: {
-          id: true,
-          code: true,
-          patientName: true,
-          currentStatus: true,
-          isUrgent: true,
-          clinic: {
-            select: {
-              name: true,
-            },
-          },
-          dentist: {
-            select: {
-              name: true,
-            },
-          },
-          serviceType: {
-            select: {
-              name: true,
-            },
-          },
-          cadDesigner: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      }),
-      getCaseFormOptions(),
-    ]);
+  const currentPage = Math.min(requestedPage, totalPages);
 
   const previousPageUrl = buildCasesUrl({
     q: query,
@@ -185,12 +137,12 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
         title="Cases"
         description="Manage and track all dental lab cases in one place"
         actions={
-            <AddCaseDialog
+          <AddCaseDialog
             clinics={clinics}
             serviceTypes={serviceTypes}
             cadDesigners={cadDesigners}
             components={components}
-            currentUserRole={appUser.role}
+            currentUserRole={userEnvelope.data.role}
           />
         }
       />
@@ -198,69 +150,69 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
       <CasesSearchBar clinics={clinics} totalCases={totalCases} />
 
       <Panel>
-          <CasesTable
-            cases={cases.map((item) => ({
-              id: item.id,
-              code: item.code,
-              patientName: item.patientName,
-              currentStatus: item.currentStatus,
-              isUrgent: item.isUrgent,
-              clinicName: item.clinic?.name ?? "-",
-              dentistName: item.dentist?.name ?? "-",
-              serviceTypeName: item.serviceType?.name ?? "-",
-              cadDesignerName: item.cadDesigner?.name ?? "-",
-            }))}
-            clinics={clinics}
-            serviceTypes={serviceTypes}
-            cadDesigners={cadDesigners}
-            components={components}
-            currentUserRole={appUser.role}
+        <CasesTable
+          cases={casesEnvelope.data.map((item) => ({
+            id: item.id,
+            code: item.code,
+            patientName: item.patientName,
+            currentStatus: item.currentStatus,
+            isUrgent: item.isUrgent,
+            clinicName: item.clinicName || "-",
+            dentistName: item.dentistName || "-",
+            serviceTypeName: item.serviceTypeName || "-",
+            cadDesignerName: item.cadDesignerName || "-",
+          }))}
+          clinics={clinics}
+          serviceTypes={serviceTypes}
+          cadDesigners={cadDesigners}
+          components={components}
+          currentUserRole={userEnvelope.data.role}
+        />
+
+        {casesEnvelope.data.length === 0 && (
+          <EmptyState
+            title="No cases found"
+            description="Create a new case to get started"
+            className="py-16"
           />
+        )}
 
-          {cases.length === 0 && (
-            <EmptyState
-              title="No cases found"
-              description="Create a new case to get started"
-              className="py-16"
-            />
-          )}
-
-          {totalCases > 0 && (
-            <div className="flex flex-col gap-4 border-t border-border/40 bg-muted/30 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-sm font-medium text-muted-foreground">
-                Page <span className="text-foreground">{currentPage}</span> of{" "}
-                <span className="text-foreground">{totalPages}</span>
-              </p>
-              <div className="flex items-center gap-2">
-                <Button
-                  asChild
-                  variant="outline"
-                  size="sm"
-                  aria-disabled={currentPage <= 1}
-                >
+        {totalCases > 0 && (
+          <div className="flex flex-col gap-4 border-t border-border/40 bg-muted/30 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm font-medium text-muted-foreground">
+              Page <span className="text-foreground">{currentPage}</span> of{" "}
+              <span className="text-foreground">{totalPages}</span>
+            </p>
+            <div className="flex items-center gap-2">
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                aria-disabled={currentPage <= 1}
+              >
                 <a
                   href={previousPageUrl}
                   tabIndex={currentPage <= 1 ? -1 : undefined}
                 >
                   Previous
                 </a>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="sm"
-                  aria-disabled={currentPage >= totalPages}
-                >
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                aria-disabled={currentPage >= totalPages}
+              >
                 <a
                   href={nextPageUrl}
                   tabIndex={currentPage >= totalPages ? -1 : undefined}
                 >
                   Next
                 </a>
-                </Button>
-              </div>
+              </Button>
             </div>
-          )}
+          </div>
+        )}
       </Panel>
     </PageShell>
   );

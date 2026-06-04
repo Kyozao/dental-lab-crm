@@ -2,11 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { VelaWordmark } from "@/components/vela-icons";
-import { usePathname, useRouter } from "next/navigation";
-import { UserRole } from "@/app/generated/prisma/client";
-import { AddCaseDialog } from "@/components/cases/add-case-dialog";
-import { createClient } from "@/lib/supabase/client";
+import { VelaWordmark } from "@/features/marketing/components/vela-icons";
+import { usePathname } from "next/navigation";
+import { AddCaseDialog } from "@/features/cases/components/add-case-dialog";
 import { Menu, X } from "lucide-react";
 import type {
   CadDesignerOption,
@@ -14,12 +12,12 @@ import type {
   ComponentOption,
   SearchCaseItem,
   ServiceTypeOption,
-} from "@/app/cases/case.shared";
-import { CaseSearch } from "./case-search";
-import { NotificationsMenu } from "./notifications-menu";
+} from "@/features/cases/types";
+import { CaseSearch } from "@/features/cases/components/case-search";
+import { NotificationsMenu } from "@/features/notifications/components/notifications-menu";
 
 interface NavClientProps {
-  userRole?: UserRole;
+  userRole?: string;
   currentUserRole?: string;
   currentUserId?: string;
   cases?: SearchCaseItem[];
@@ -50,17 +48,9 @@ export function NavClient({
 }: NavClientProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
   const routes = getNavRoutes(userRole, pathname);
   const resolvedUserRole = currentUserRole ?? userRole ?? "";
   const canAddCase = Boolean(userRole && userRole !== "CAD_DESIGNER");
-
-  async function handleLogout() {
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    setMobileOpen(false);
-    router.push("/login");
-  }
 
   return (
     <nav className="sticky top-0 z-50 border-b border-border/40 bg-background/95 backdrop-blur  supports-backdrop-filter:bg-background/60">
@@ -69,17 +59,6 @@ export function NavClient({
           <Link href="/" className="flex items-center gap-3 group">
             <VelaWordmark />
           </Link>
-
-          {!userRole ? (
-            <div className="hidden md:flex items-center gap-2">
-              <Link
-                href="/login"
-                className="rounded-md border border-border/60 px-4 py-2 text-sm font-medium hover:bg-accent/50 transition-colors"
-              >
-                Login
-              </Link>
-            </div>
-          ) : null}
 
           <div className="hidden md:flex items-center gap-1">
             {userRole ? (
@@ -128,14 +107,6 @@ export function NavClient({
                 {route.label}
               </Link>
             ))}
-            {userRole && (
-              <button
-                onClick={handleLogout}
-                className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent/50 transition-colors rounded-md"
-              >
-                Logout
-              </button>
-            )}
           </div>
 
           {userRole ? (
@@ -195,12 +166,6 @@ export function NavClient({
                   {route.label}
                 </Link>
               ))}
-              <button
-                onClick={handleLogout}
-                className="rounded-md px-3 py-2 text-left text-sm font-medium text-muted-foreground transition-colors hover:bg-accent/50 hover:text-foreground"
-              >
-                Logout
-              </button>
             </div>
           </div>
         ) : null}
@@ -209,7 +174,7 @@ export function NavClient({
   );
 }
 
-function getNavRoutes(role?: UserRole, pathname?: string) {
+function getNavRoutes(role?: string, pathname?: string) {
   if (!role) {
     return [];
   }

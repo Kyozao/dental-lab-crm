@@ -20,6 +20,15 @@ This file is the **human-readable companion** to `openapi.yaml`, which is the ma
 }
 ```
 
+## Current mock runtime
+
+The app currently runs in API-only demo mode:
+
+- auth is bypassed; `GET /api/me` returns a fixed mock user
+- Prisma, Supabase storage, push delivery, and `packages/backend` are not used at runtime
+- mutations are in-memory and reset when the server restarts
+- all routes return the standard `{ data, error, meta }` envelope
+
 ## Swagger / OpenAPI viewer
 
 - in the app: `/swagger`
@@ -88,6 +97,10 @@ Short description of what the route does.
 
 - `GET /api/me`
 
+### Dashboard
+
+- `GET /api/dashboard`
+
 ### Cases
 
 - `GET /api/cases`
@@ -112,10 +125,15 @@ Short description of what the route does.
 
 ### Registry
 
+- `GET /api/registry`
 - `GET /api/registry/bootstrap`
 - `POST /api/registry/:entity`
 - `PATCH /api/registry/:entity/:id`
 - `DELETE /api/registry/:entity/:id`
+
+### Reports
+
+- `GET /api/reports/cad-designer-cases` returns a disabled mock response
 
 ### Notifications
 

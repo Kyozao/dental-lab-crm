@@ -1,6 +1,3 @@
-import { redirect } from "next/navigation";
-import { prisma } from "@/lib/prisma";
-import { getAuthenticatedAppUser } from "@/lib/auth/get-app-user";
 import { EmptyState } from "@/components/app/empty-state";
 import { PageHeader } from "@/components/app/page-header";
 import { PageShell } from "@/components/app/page-shell";
@@ -15,69 +12,47 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { AlertTriangle, CheckCircle2 } from "lucide-react";
-import { MillingDialog } from "./components/milling-dialog";
-import { DeleteMillingButton } from "./components/delete-milling-button";
+import { MillingDialog } from "@/features/production/components/milling-dialog";
+import { DeleteMillingButton } from "@/features/production/components/delete-milling-button";
+import { serverApiGet } from "@/lib/api/server";
 
 export default async function ProductionPage() {
-  const appUser = await getAuthenticatedAppUser();
-
-  if (!appUser) {
-    redirect("/login");
-  }
-
-  if (appUser.role === "CAD_DESIGNER") {
-    redirect("/kanban");
-  }
-
-  const [millings, blockTypes, millingDrills, readyCases] = await Promise.all([
-    // Optimized: Only fetch recent millings, not all historical data
-    prisma.caseMilling.findMany({
-      take: 500, // Limit to last 500 records
-      orderBy: { milledAt: "desc" },
-      include: {
-        case: {
-          select: {
-            id: true,
-            code: true,
-            patientName: true,
-            clinic: { select: { name: true } },
-          },
-        },
-        blockType: { select: { id: true, name: true, shade: true } },
-        millingDrill: { select: { id: true, name: true } },
-        fineMillingDrill: { select: { id: true, name: true, type: true } },
-        coarseMillingDrill: { select: { id: true, name: true, type: true } },
-      },
-    }),
-    prisma.blockType.findMany({
-      where: { isActive: true },
-      orderBy: { name: "asc" },
-      select: {
-        id: true,
-        name: true,
-        shade: true,
-      },
-    }),
-    prisma.millingDrill.findMany({
-      where: { isActive: true },
-      orderBy: { name: "asc" },
-      select: {
-        id: true,
-        name: true,
-        brand: true,
-        maxTeethRecommended: true,
-      },
-    }),
-    prisma.case.findMany({
-      where: { currentStatus: { in: ["DESIGN_READY", "MILLING_PRINTING"] } },
-      orderBy: { code: "asc" },
-      select: {
-        id: true,
-        code: true,
-        patientName: true,
-      },
-    }),
-  ]);
+  const productionEnvelope = await serverApiGet<{
+    millings: Array<{
+      id: string;
+      caseId: string;
+      blockTypeId: string;
+      millingDrillId: string | null;
+      fineMillingDrillId: string | null;
+      coarseMillingDrillId: string | null;
+      teethMilledQty: number;
+      status: "SUCCESS" | "FAILED";
+      failureReason: string | null;
+      notes: string | null;
+      milledAt: string;
+      case: {
+        id: string;
+        code: string;
+        patientName: string;
+        clinic: { name: string };
+      } | null;
+      blockType: { id: string; name: string; shade?: string | null } | null;
+      millingDrill: { id: string; name: string } | null;
+      fineMillingDrill: { id: string; name: string; type?: string | null } | null;
+      coarseMillingDrill: { id: string; name: string; type?: string | null } | null;
+    }>;
+    blockTypes: Array<{ id: string; name: string; shade: string | null }>;
+    millingDrills: Array<{
+      id: string;
+      name: string;
+      brand: string | null;
+      type?: string | null;
+      maxTeethRecommended: number | null;
+    }>;
+    readyCases: Array<{ id: string; code: string; patientName: string }>;
+  }>("/api/production");
+  const { millings, blockTypes, millingDrills, readyCases } =
+    productionEnvelope.data;
 
   const drillStats = millingDrills
     .map((drill) => {
@@ -88,7 +63,7 @@ export default async function ProductionPage() {
           m.millingDrill?.id === drill.id,
       );
       const totalTeeth = usages.reduce((sum, m) => sum + m.teethMilledQty, 0);
-      const lastUsedAt = usages.length > 0 ? usages[0].milledAt : null;
+      const lastUsedAt = usages.length > 0 ? new Date(usages[0].milledAt) : null;
       const wearPercent = drill.maxTeethRecommended
         ? Math.min(
             100,

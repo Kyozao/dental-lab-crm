@@ -29,13 +29,28 @@ Internal dental lab CRM for managing case intake, kanban flow, production, regis
 
 This project should move toward an **API-first** structure so the same backend can serve both the web app and a future phone app.
 
+Current runtime:
+
+- `app/api/*` route handlers are the deployed API on Vercel/Next.js.
+- Route handlers should be thin adapters: translate Next `Request`/params/auth into backend calls and serialize backend response objects.
+- Do not put Prisma queries, workflow rules, or mutation business logic directly in `app/api/*` route handlers.
+
+Target backend ownership:
+
+- backend implementation belongs in `packages/backend/src`
+- shared request/response contracts and Zod schemas belong in `packages/contracts/src`
+- feature backend code should be shaped as controllers, services, and repositories
+- future extraction should be able to mount the same controllers/services in a Fastify API without rewriting business logic
+
 Rules for new work:
 
 - business logic should not live only inside UI components or server actions
 - prefer shared domain logic + `app/api/*` endpoints for data the mobile app will need
 - server actions may remain as thin wrappers for the web UI during migration, but the long-term source of truth should be the API layer
-- validate request payloads with the same Zod schemas from `lib/validators/*`
+- validate request payloads with the same Zod schemas from `packages/contracts/src/*` or `lib/validators/*` while older features are being migrated
 - keep response shapes predictable for mobile clients (for example: `data`, `error`, `meta`)
+- keep frontend feature folders frontend-only: UI components, browser API clients, frontend-only types/helpers
+- do not add Prisma, auth mutation logic, or backend services to frontend feature folders
 
 Priority API areas:
 
@@ -74,6 +89,8 @@ Agents should use `AGENTS.md` for direction, `docs/api-contracts.md` for notes, 
 - `app/production/*` — production views and status tracking
 - `app/registry/*` — admin/reference data management
 - `app/notifications/*` — notification actions; treat as experimental and verify carefully
+- `packages/backend/src/features/*` — backend controllers, services, repositories, and future route registrations
+- `packages/contracts/src/*` — shared Zod schemas and API contract types
 - `lib/auth/*` — auth/session helpers
 - `lib/prisma.ts` — shared Prisma client
 - `lib/validators/*` — Zod schemas and input validation
@@ -83,7 +100,11 @@ Agents should use `AGENTS.md` for direction, `docs/api-contracts.md` for notes, 
 
 - Use `getAuthenticatedAppUser()` for server-side user checks.
 - Use the shared `prisma` client from `lib/prisma.ts`.
-- Put validation in `lib/validators/*` when adding or changing form inputs.
+- New backend Prisma reads/writes should live in `*.repository.ts`.
+- Business rules and workflow coordination should live in `*.service.ts`.
+- API request validation and response shaping should live in `*.controller.ts` and shared contracts.
+- `*.routes.ts` files are reserved for future Fastify route registration and should not be required by Next route handlers.
+- Put shared validation in `packages/contracts/src/*`; use `lib/validators/*` only for older code that has not moved yet.
 - If the Prisma schema changes, update `prisma/schema.prisma` and verify migrations deliberately.
 
 ## Notification Policy (Important)

@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { getCaseStatusMeta } from "@/lib/case-status";
+import { getCaseStatusMeta } from "@/features/cases/constants";
 
 type CaseStatusBadgeProps = {
   status: string;
