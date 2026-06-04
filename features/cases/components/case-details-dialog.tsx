@@ -11,7 +11,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useRouter } from "next/navigation";
 
 import {
   CASE_STATUS_OPTIONS,
@@ -23,12 +22,6 @@ import {
   type ServiceTypeOption,
 } from "@/features/cases/types";
 import { isCaseOverdue } from "@/features/kanban/shared";
-import {
-  deleteCaseApi,
-  deleteCaseAttachmentApi,
-  updateCaseApi,
-  uploadCaseAttachmentApi,
-} from "@/features/cases/services/cases-client";
 
 type Props = {
   open: boolean;
@@ -129,8 +122,6 @@ export function CaseDetailsDialog({
   components,
   defaultCaseScope = "LAB",
 }: Props) {
-  const router = useRouter();
-
   const isCreateMode = mode === "create";
 
   const defaultCaseItem = React.useMemo<EditableCase>(
@@ -257,7 +248,6 @@ export function CaseDetailsDialog({
 
     try {
       setIsDeleting(true);
-      await deleteCaseApi(caseItem.id);
       onOpenChange(false);
     } catch (error) {
       console.error(error);
@@ -267,17 +257,12 @@ export function CaseDetailsDialog({
     }
   }
 
-  async function handleFileChange(
-    event: React.ChangeEvent<HTMLInputElement>,
-    kind: AttachmentKindValue,
-  ) {
+  async function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
 
     try {
       setIsUploading(true);
-      await uploadCaseAttachmentApi(caseItem.id, kind, file);
-      router.refresh();
     } catch (error) {
       console.error(error);
       alert(error instanceof Error ? error.message : "Upload failed.");
@@ -311,8 +296,6 @@ export function CaseDetailsDialog({
 
     try {
       setDeletingAttachmentId(attachmentId);
-      await deleteCaseAttachmentApi(caseItem.id, attachmentId);
-      router.refresh();
     } catch (error) {
       console.error(error);
       alert(error instanceof Error ? error.message : "Could not delete file.");
@@ -321,84 +304,17 @@ export function CaseDetailsDialog({
     }
   }
 
-  async function handleSubmit(formData: FormData) {
+  async function handleSubmit() {
     try {
       setIsSaving(true);
       setSubmitError(null);
 
       if (isCreateMode) {
-        const componentsPayload = formData.get("componentsPayload");
-        const parsedComponents =
-          typeof componentsPayload === "string" &&
-          componentsPayload.trim().length
-            ? JSON.parse(componentsPayload)
-            : [];
-
-        const response = await fetch("/api/cases", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            code: formData.get("code") || undefined,
-            patientName: formData.get("patientName") || undefined,
-            caseScope: formData.get("caseScope") || "LAB",
-            clinicId: formData.get("clinicId") || undefined,
-            serviceTypeId: formData.get("serviceTypeId") || undefined,
-            dentistId: formData.get("dentistId") || undefined,
-            cadDesignerId: formData.get("cadDesignerId") || undefined,
-            currentStatus: formData.get("currentStatus") || "ENTRY",
-            pendingNote: formData.get("pendingNote") || undefined,
-            observations: formData.get("observations") || undefined,
-            teeth: formData.get("teeth") || undefined,
-            elementsQty: formData.get("elementsQty") || undefined,
-            shade: formData.get("shade") || undefined,
-            dueDate: formData.get("dueDate") || undefined,
-            isUrgent: formData.get("isUrgent") === "on",
-            components: parsedComponents,
-          }),
-        });
-
-        const result = (await response.json().catch(() => null)) as {
-          error?: { message?: string } | null;
-        } | null;
-
-        if (!response.ok) {
-          setSubmitError(result?.error?.message || "Could not create case.");
-          return;
-        }
-
         onOpenChange(false);
-        router.refresh();
         return;
       }
 
-      const componentsPayload = formData.get("componentsPayload");
-      const parsedComponents =
-        typeof componentsPayload === "string" && componentsPayload.trim().length
-          ? JSON.parse(componentsPayload)
-          : [];
-
-      await updateCaseApi(caseItem.id, {
-        code: formData.get("code") || undefined,
-        patientName: formData.get("patientName") || undefined,
-        caseScope: formData.get("caseScope") || undefined,
-        clinicId: formData.get("clinicId") || undefined,
-        serviceTypeId: formData.get("serviceTypeId") || undefined,
-        dentistId: formData.get("dentistId") || undefined,
-        cadDesignerId: formData.get("cadDesignerId") || undefined,
-        currentStatus: formData.get("currentStatus") || undefined,
-        pendingNote: formData.get("pendingNote") || undefined,
-        observations: formData.get("observations") || undefined,
-        teeth: formData.get("teeth") || undefined,
-        elementsQty: formData.get("elementsQty") || undefined,
-        shade: formData.get("shade") || undefined,
-        dueDate: formData.get("dueDate") || undefined,
-        isUrgent: formData.get("isUrgent") === "on",
-        components: parsedComponents,
-      });
       onOpenChange(false);
-      router.refresh();
     } catch (error) {
       console.error(error);
       setSubmitError(
@@ -422,7 +338,7 @@ export function CaseDetailsDialog({
 
   function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    void handleSubmit(new FormData(event.currentTarget));
+    void handleSubmit();
   }
 
   const overdue = isCaseOverdue(caseItem.dueDate);
@@ -996,9 +912,7 @@ export function CaseDetailsDialog({
                           type="file"
                           accept=".zip,.rar,.7z"
                           className="hidden"
-                          onChange={(event) =>
-                            handleFileChange(event, "SCAN_INPUT")
-                          }
+                          onChange={handleFileChange}
                           disabled={isUploading}
                         />
                       </label>
@@ -1032,9 +946,7 @@ export function CaseDetailsDialog({
                           type="file"
                           accept=".zip,.rar,.7z"
                           className="hidden"
-                          onChange={(event) =>
-                            handleFileChange(event, "DESIGN_OUTPUT")
-                          }
+                          onChange={handleFileChange}
                           disabled={isUploading}
                         />
                       </label>

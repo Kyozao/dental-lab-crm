@@ -4,53 +4,18 @@ import { useState } from "react";
 import Link from "next/link";
 import { VelaWordmark } from "@/features/marketing/components/vela-icons";
 import { usePathname } from "next/navigation";
-import { AddCaseDialog } from "@/features/cases/components/add-case-dialog";
 import { Menu, X } from "lucide-react";
-import type {
-  CadDesignerOption,
-  ClinicOption,
-  ComponentOption,
-  SearchCaseItem,
-  ServiceTypeOption,
-} from "@/features/cases/types";
-import { CaseSearch } from "@/features/cases/components/case-search";
-import { NotificationsMenu } from "@/features/notifications/components/notifications-menu";
 
 interface NavClientProps {
   userRole?: string;
-  currentUserRole?: string;
-  currentUserId?: string;
-  cases?: SearchCaseItem[];
-  clinics?: ClinicOption[];
-  serviceTypes?: ServiceTypeOption[];
-  cadDesigners?: CadDesignerOption[];
-  components?: ComponentOption[];
-  notifications?: Array<{
-    id: string;
-    title: string;
-    message: string;
-    createdAt: string;
-    isRead: boolean;
-    caseId: string | null;
-  }>;
 }
 
 export function NavClient({
   userRole,
-  currentUserRole,
-  currentUserId,
-  cases = [],
-  clinics = [],
-  serviceTypes = [],
-  cadDesigners = [],
-  components = [],
-  notifications = [],
 }: NavClientProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
   const routes = getNavRoutes(userRole, pathname);
-  const resolvedUserRole = currentUserRole ?? userRole ?? "";
-  const canAddCase = Boolean(userRole && userRole !== "CAD_DESIGNER");
 
   return (
     <nav className="sticky top-0 z-50 border-b border-border/40 bg-background/95 backdrop-blur  supports-backdrop-filter:bg-background/60">
@@ -61,31 +26,6 @@ export function NavClient({
           </Link>
 
           <div className="hidden md:flex items-center gap-1">
-            {userRole ? (
-              <NotificationsMenu
-                notifications={notifications}
-                currentUserId={currentUserId}
-              />
-            ) : null}
-            {userRole ? (
-              <CaseSearch
-                cases={cases}
-                clinics={clinics}
-                serviceTypes={serviceTypes}
-                cadDesigners={cadDesigners}
-                components={components}
-                currentUserRole={resolvedUserRole}
-              />
-            ) : null}
-            {canAddCase ? (
-              <AddCaseDialog
-                clinics={clinics}
-                serviceTypes={serviceTypes}
-                cadDesigners={cadDesigners}
-                components={components}
-                currentUserRole={resolvedUserRole}
-              />
-            ) : null}
             {routes.map((route) => (
               <Link
                 key={route.href}
@@ -127,29 +67,6 @@ export function NavClient({
 
         {userRole && mobileOpen ? (
           <div className="mt-3 space-y-2 rounded-lg border border-border/60 bg-background p-3 md:hidden">
-            <div className="flex flex-wrap gap-2">
-              <NotificationsMenu
-                notifications={notifications}
-                currentUserId={currentUserId}
-              />
-              <CaseSearch
-                cases={cases}
-                clinics={clinics}
-                serviceTypes={serviceTypes}
-                cadDesigners={cadDesigners}
-                components={components}
-                currentUserRole={resolvedUserRole}
-              />
-              {canAddCase ? (
-                <AddCaseDialog
-                  clinics={clinics}
-                  serviceTypes={serviceTypes}
-                  cadDesigners={cadDesigners}
-                  components={components}
-                  currentUserRole={resolvedUserRole}
-                />
-              ) : null}
-            </div>
             <div className="grid gap-1">
               {routes.map((route) => (
                 <Link

@@ -112,9 +112,21 @@ Short description of what the route does.
 - `DELETE /api/cases/:id/attachments/:attachmentId`
 - `POST /api/cases/downloads`
 
+Current mock behavior:
+
+- `GET /api/cases` supports `q`/`search`, `status`, `urgent`, `clinicId`, `page`, and `pageSize`
+- `POST /api/cases` requires `patientName` and accepts the case form payload, including component rows
+- `PATCH /api/cases/:id` updates editable case fields and replaces component rows when `components` is present
+- attachment uploads create mock attachment records only; no Supabase storage upload occurs
+- downloads return mock signed URLs
+
 ### Kanban
 
 - `PATCH /api/kanban/cases/:id/status`
+
+Current mock behavior:
+
+- updates `currentStatus` and appends mock status history
 
 ### Production
 

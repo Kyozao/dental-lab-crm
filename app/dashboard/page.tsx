@@ -1,13 +1,8 @@
 import { CadStatsDashboard } from "@/features/dashboard/components/cad-stats-dashboard";
-import { serverApiGet } from "@/lib/api/server";
+import { getMockDashboardData } from "@/lib/mock-data/pages";
 
-type DashboardResponse = React.ComponentProps<typeof CadStatsDashboard>;
-
-export default async function DashboardPage() {
-  const envelope = await serverApiGet<
-    Pick<DashboardResponse, "summary" | "designerStats" | "statusData">
-  >("/api/dashboard");
-  const data = envelope.data;
+export default function DashboardPage() {
+  const data = getMockDashboardData();
 
   return (
     <CadStatsDashboard

@@ -2,81 +2,35 @@ import type {
   RegistryActionState,
   RegistryEntity,
 } from "@/features/registry/types";
-import {
-  getApiErrorMessage,
-  getApiFieldErrors,
-  parseApiEnvelope,
-} from "@/lib/api/client";
 
 export async function createRegistryEntity(
-  entity: RegistryEntity,
-  formData: FormData,
+  _entity: RegistryEntity,
+  _formData: FormData,
 ): Promise<RegistryActionState> {
-  const payload = Object.fromEntries(formData.entries());
-  const response = await fetch(`/api/registry/${entity}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
-
-  const result = await parseApiEnvelope<{ id: string }>(response);
-
-  if (!response.ok || !result?.data) {
-    return {
-      success: false,
-      message: getApiErrorMessage(result, `Failed to create ${entity}.`),
-      errors: getApiFieldErrors(result),
-    };
-  }
-
+  void _entity;
+  void _formData;
   return {
     success: true,
-    message: "Created successfully.",
-    data: { id: result.data.id },
+    message: "Mock registry changes are disabled for now.",
   };
 }
 
 export async function updateRegistryEntity(
-  entity: RegistryEntity,
+  _entity: RegistryEntity,
   id: string,
-  formData: FormData,
+  _formData: FormData,
 ): Promise<RegistryActionState> {
-  const payload = Object.fromEntries(formData.entries());
-  const response = await fetch(`/api/registry/${entity}/${id}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
-
-  const result = await parseApiEnvelope<{ id?: string }>(response);
-
-  if (!response.ok) {
-    return {
-      success: false,
-      message: getApiErrorMessage(result, `Failed to update ${entity}.`),
-      errors: getApiFieldErrors(result),
-    };
-  }
-
+  void _entity;
+  void _formData;
   return {
     success: true,
-    message: "Updated successfully.",
-    data: { id: result?.data?.id ?? id },
+    message: "Mock registry changes are disabled for now.",
+    data: { id },
   };
 }
 
-export async function deleteRegistryEntity(entity: RegistryEntity, id: string) {
-  const response = await fetch(`/api/registry/${entity}/${id}`, {
-    method: "DELETE",
-  });
-
-  const result = await parseApiEnvelope<unknown>(response);
-
-  if (!response.ok) {
-    throw new Error(getApiErrorMessage(result, `Failed to delete ${entity}.`));
-  }
+export async function deleteRegistryEntity(_entity: RegistryEntity, _id: string) {
+  void _entity;
+  void _id;
+  return;
 }

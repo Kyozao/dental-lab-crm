@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { SwaggerViewer } from "./swagger-ui";
@@ -29,13 +28,9 @@ export default function SwaggerPage() {
               </p>
             </div>
 
-            <Link
-              href="/api/openapi"
-              target="_blank"
-              className="inline-flex items-center rounded-md border px-3 py-2 text-sm font-medium hover:bg-accent"
-            >
-              Open raw spec
-            </Link>
+            <span className="inline-flex items-center rounded-md border px-3 py-2 text-sm font-medium text-muted-foreground">
+              Mock mode
+            </span>
           </div>
 
           <p className="mt-3 text-sm text-muted-foreground">

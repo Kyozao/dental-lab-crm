@@ -51,10 +51,6 @@ import {
   isCaseOverdue,
 } from "@/features/kanban/shared";
 import { CaseDetailsDialog } from "@/features/cases/components/case-details-dialog";
-import {
-  getColumnDownloadUrlsApi,
-  updateCaseStatusApi,
-} from "@/features/cases/services/cases-client";
 
 type Props = {
   currentUser: CurrentUser;
@@ -226,7 +222,7 @@ export function CadKanbanBoard({
     setActiveId(String(event.active.id));
   }
 
-  async function onDragEnd(event: DragEndEvent) {
+  function onDragEnd(event: DragEndEvent) {
     setActiveId(null);
 
     const draggedId = String(event.active.id);
@@ -244,23 +240,11 @@ export function CadKanbanBoard({
 
     if (!nextStatus || draggedCase.currentStatus === nextStatus) return;
 
-    const previousCases = cases;
-
     setCases((prev) =>
       prev.map((item) =>
         item.id === draggedId ? { ...item, currentStatus: nextStatus } : item,
       ),
     );
-
-    try {
-      await updateCaseStatusApi(draggedId, nextStatus);
-    } catch (error) {
-      console.error(error);
-      setCases(previousCases);
-      alert(
-        error instanceof Error ? error.message : "Could not update status.",
-      );
-    }
   }
 
   return (
@@ -631,47 +615,9 @@ function KanbanColumn({
       return;
     }
 
-    try {
-      setIsDownloading(true);
-      const downloads = await getColumnDownloadUrlsApi(
-        cards.map((card) => card.id),
-        preferredDownloadKind,
-      );
-
-      if (!downloads.length) {
-        alert("Nenhum arquivo disponível nesta coluna ainda.");
-        return;
-      }
-
-      for (const item of downloads) {
-        const response = await fetch(item.signedUrl);
-        if (!response.ok) {
-          throw new Error(`Could not download ${item.fileName}.`);
-        }
-
-        const blob = await response.blob();
-        const objectUrl = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        const safeCaseLabel = (item.caseLabel || item.caseId).replace(
-          /[^a-zA-Z0-9._-]/g,
-          "_",
-        );
-
-        link.href = objectUrl;
-        link.download = `${safeCaseLabel}-${item.fileName}`;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        URL.revokeObjectURL(objectUrl);
-      }
-    } catch (error) {
-      console.error(error);
-      alert(
-        error instanceof Error ? error.message : "Could not download files.",
-      );
-    } finally {
-      setIsDownloading(false);
-    }
+    setIsDownloading(true);
+    window.alert("Downloads are disabled in local mock mode.");
+    setIsDownloading(false);
   }
 
   return (

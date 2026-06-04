@@ -36,7 +36,14 @@ export function SwaggerViewer() {
     initializedRef.current = true;
 
     SwaggerUIBundle({
-      url: "/api/openapi",
+      spec: {
+        openapi: "3.1.0",
+        info: {
+          title: "Mock mode",
+          version: "0.0.0",
+        },
+        paths: {},
+      },
       dom_id: `#${SWAGGER_DOM_ID}`,
       presets: [
         SwaggerUIBundle.presets.apis,

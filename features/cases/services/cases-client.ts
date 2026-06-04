@@ -1,176 +1,70 @@
-import type { CaseStatusValue } from "@/features/cases/types";
-import { getApiErrorMessage, parseApiEnvelope } from "@/lib/api/client";
 import type {
   AttachmentKindValue,
+  CaseStatusValue,
   EditableCase,
 } from "@/features/cases/types";
+import { mockCases } from "@/lib/mock-data/pages";
 
 type DownloadKind = AttachmentKindValue | "ALL" | "FINAL_OUTPUTS";
 
-type DownloadItem = {
-  id: string;
-  caseId: string;
-  caseLabel: string | null;
-  fileName: string;
-  filePath: string;
-  kind: AttachmentKindValue;
-  signedUrl: string;
-};
-
-type CaseDetailsResponse = {
-  id: string;
-  code: string;
-  patientName: string;
-  currentStatus: CaseStatusValue;
-  teeth: string;
-  elementsQty: number | null;
-  shade: string;
-  dueDate: string | null;
-  observations: string;
-  pendingNote: string;
-  isUrgent: boolean;
-  createdAt: string;
-  updatedAt: string;
-  clinic: { id: string; name: string } | null;
-  dentist: { id: string; name: string } | null;
-  serviceType: { id: string; name: string } | null;
-  cadDesigner: { id: string; name: string | null } | null;
-  components: EditableCase["components"];
-  attachments: EditableCase["attachments"];
-  millings: EditableCase["millings"];
-};
-
-export async function updateCaseStatusApi(caseId: string, status: CaseStatusValue) {
-  const response = await fetch(`/api/kanban/cases/${caseId}/status`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ status }),
-  });
-
-  const body = await parseApiEnvelope<unknown>(response);
-
-  if (!response.ok) {
-    throw new Error(getApiErrorMessage(body, "Could not update status."));
-  }
+export async function updateCaseStatusApi(
+  _caseId: string,
+  _status: CaseStatusValue,
+) {
+  void _caseId;
+  void _status;
+  return;
 }
 
-export async function updateCaseApi(caseId: string, payload: Record<string, unknown>) {
-  const response = await fetch(`/api/cases/${caseId}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
-
-  const body = await parseApiEnvelope<unknown>(response);
-
-  if (!response.ok) {
-    throw new Error(getApiErrorMessage(body, "Could not save case."));
-  }
+export async function updateCaseApi(
+  _caseId: string,
+  _payload: Record<string, unknown>,
+) {
+  void _caseId;
+  void _payload;
+  return;
 }
 
 export async function getCaseDetailsApi(caseId: string): Promise<EditableCase> {
-  const response = await fetch(`/api/cases/${caseId}`);
+  const item = mockCases.find((caseItem) => caseItem.id === caseId);
 
-  const body = await parseApiEnvelope<CaseDetailsResponse>(response);
-
-  if (!response.ok || !body?.data) {
-    throw new Error(getApiErrorMessage(body, "Could not load case details."));
+  if (!item) {
+    throw new Error("Could not load mock case details.");
   }
 
-  const data = body.data;
-
-  return {
-    id: data.id,
-    code: data.code,
-    patientName: data.patientName,
-    currentStatus: data.currentStatus,
-    teeth: data.teeth,
-    elementsQty: data.elementsQty,
-    shade: data.shade,
-    dueDate: data.dueDate,
-    observations: data.observations,
-    pendingNote: data.pendingNote,
-    isUrgent: data.isUrgent,
-    createdAt: data.createdAt,
-    updatedAt: data.updatedAt,
-    clinicName: data.clinic?.name ?? "",
-    clinicId: data.clinic?.id ?? null,
-    dentistName: data.dentist?.name ?? "",
-    dentistId: data.dentist?.id ?? null,
-    serviceTypeId: data.serviceType?.id ?? null,
-    serviceTypeName: data.serviceType?.name ?? "",
-    cadDesignerId: data.cadDesigner?.id ?? null,
-    cadDesignerName: data.cadDesigner?.name ?? "",
-    components: data.components,
-    attachments: data.attachments,
-    millings: data.millings,
-  };
+  return item;
 }
 
-export async function deleteCaseApi(caseId: string) {
-  const response = await fetch(`/api/cases/${caseId}`, {
-    method: "DELETE",
-  });
-
-  const body = await parseApiEnvelope<unknown>(response);
-
-  if (!response.ok) {
-    throw new Error(getApiErrorMessage(body, "Could not delete case."));
-  }
+export async function deleteCaseApi(_caseId: string) {
+  void _caseId;
+  return;
 }
 
 export async function uploadCaseAttachmentApi(
-  caseId: string,
-  kind: AttachmentKindValue,
-  file: File,
+  _caseId: string,
+  _kind: AttachmentKindValue,
+  _file: File,
 ) {
-  const formData = new FormData();
-  formData.append("kind", kind);
-  formData.append("file", file);
-
-  const response = await fetch(`/api/cases/${caseId}/attachments`, {
-    method: "POST",
-    body: formData,
-  });
-
-  const body = await parseApiEnvelope<unknown>(response);
-
-  if (!response.ok) {
-    throw new Error(getApiErrorMessage(body, "Upload failed."));
-  }
+  void _caseId;
+  void _kind;
+  void _file;
+  return;
 }
 
-export async function deleteCaseAttachmentApi(caseId: string, attachmentId: string) {
-  const response = await fetch(
-    `/api/cases/${caseId}/attachments/${attachmentId}`,
-    { method: "DELETE" },
-  );
-
-  const body = await parseApiEnvelope<unknown>(response);
-
-  if (!response.ok) {
-    throw new Error(getApiErrorMessage(body, "Could not delete file."));
-  }
+export async function deleteCaseAttachmentApi(
+  _caseId: string,
+  _attachmentId: string,
+) {
+  void _caseId;
+  void _attachmentId;
+  return;
 }
 
-export async function getColumnDownloadUrlsApi(caseIds: string[], kind: DownloadKind) {
-  const response = await fetch("/api/cases/downloads", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ caseIds, kind }),
-  });
-
-  const body = await parseApiEnvelope<DownloadItem[]>(response);
-
-  if (!response.ok) {
-    throw new Error(getApiErrorMessage(body, "Could not get download links."));
-  }
-
-  return body?.data ?? [];
+export async function getColumnDownloadUrlsApi(
+  _caseIds: string[],
+  _kind: DownloadKind,
+) {
+  void _caseIds;
+  void _kind;
+  return [];
 }

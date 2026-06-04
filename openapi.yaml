@@ -65,7 +65,7 @@ paths:
     get:
       tags: [Cases]
       summary: List cases
-      description: Returns paginated case summaries for dashboards and mobile lists.
+      description: Returns paginated case summaries from the in-memory mock store for dashboards and mobile lists.
       operationId: listCases
       parameters:
         - in: query
@@ -100,7 +100,7 @@ paths:
     post:
       tags: [Cases]
       summary: Create case
-      description: Creates a new dental case entry.
+      description: Creates a new dental case entry in the in-memory mock store. Component rows are accepted and persisted for the active server process.
       operationId: createCase
       requestBody:
         required: true
@@ -125,7 +125,7 @@ paths:
     get:
       tags: [Cases]
       summary: Get case details
-      description: Returns the full detail of a single case.
+      description: Returns the full detail of a single case from the in-memory mock store.
       operationId: getCaseById
       parameters:
         - in: path
@@ -149,7 +149,7 @@ paths:
     patch:
       tags: [Cases]
       summary: Update case
-      description: Updates editable case fields.
+      description: Updates editable case fields in the in-memory mock store.
       operationId: updateCase
       parameters:
         - in: path
@@ -179,7 +179,7 @@ paths:
     delete:
       tags: [Cases]
       summary: Delete case
-      description: Deletes a case when no protected attachments are still within retention.
+      description: Deletes a case and related mock production records from the in-memory mock store.
       operationId: deleteCase
       parameters:
         - in: path
@@ -210,7 +210,7 @@ paths:
     post:
       tags: [Cases]
       summary: Upload case attachment
-      description: Uploads a case file and stores metadata with 90-day retention.
+      description: Creates mock file metadata with 90-day retention. No Supabase storage upload occurs in the mock runtime.
       operationId: uploadCaseAttachment
       parameters:
         - in: path
@@ -248,7 +248,7 @@ paths:
     delete:
       tags: [Cases]
       summary: Delete case attachment
-      description: Deletes a file attachment from storage and database.
+      description: Deletes mock file attachment metadata from the in-memory mock store.
       operationId: deleteCaseAttachment
       parameters:
         - in: path
@@ -278,7 +278,7 @@ paths:
     post:
       tags: [Cases]
       summary: Generate signed attachment download URLs
-      description: Returns temporary URLs for case attachments by ids and kind filter.
+      description: Returns mock temporary URLs for case attachments by ids and kind filter.
       operationId: createCaseDownloadUrls
       requestBody:
         required: true
@@ -320,7 +320,7 @@ paths:
     patch:
       tags: [Kanban]
       summary: Update case status
-      description: Moves a case between kanban stages and records an optional note.
+      description: Moves a case between kanban stages in the in-memory mock store and records an optional note.
       operationId: updateKanbanCaseStatus
       parameters:
         - in: path

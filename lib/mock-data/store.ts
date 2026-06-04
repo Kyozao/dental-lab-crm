@@ -293,6 +293,34 @@ function now() {
   return new Date().toISOString();
 }
 
+function normalizeCaseComponents(value: unknown): MockCaseComponent[] {
+  if (!Array.isArray(value)) return [];
+
+  return value
+    .filter(
+      (item): item is Record<string, unknown> =>
+        typeof item === "object" && item !== null,
+    )
+    .filter((item) => typeof item.componentId === "string" && item.componentId)
+    .map((item) => ({
+      id: typeof item.id === "string" && item.id ? item.id : id("usage"),
+      componentId: String(item.componentId),
+      quantity: Math.max(Number(item.quantity || 1), 1),
+      chargeClient:
+        item.chargeClient === undefined ? true : Boolean(item.chargeClient),
+      unitCost:
+        typeof item.unitCost === "string" && item.unitCost
+          ? item.unitCost
+          : null,
+      unitPrice:
+        typeof item.unitPrice === "string" && item.unitPrice
+          ? item.unitPrice
+          : null,
+      notes:
+        typeof item.notes === "string" && item.notes ? item.notes : null,
+    }));
+}
+
 export function getMockUser() {
   return state().users[0];
 }
@@ -498,7 +526,7 @@ export function createCase(payload: Record<string, unknown>) {
     dentistId: typeof payload.dentistId === "string" ? payload.dentistId : null,
     serviceTypeId: typeof payload.serviceTypeId === "string" ? payload.serviceTypeId : null,
     cadDesignerId: typeof payload.cadDesignerId === "string" ? payload.cadDesignerId : null,
-    components: [],
+    components: normalizeCaseComponents(payload.components),
     attachments: [],
     statusHistory: [{ id: id("history"), fromStatus: null, toStatus: CASE_STATUS.ENTRY, note: "Case created", changedAt: createdAt }],
   };
@@ -525,6 +553,7 @@ export function updateCase(idValue: string, payload: Record<string, unknown>) {
   if ("dentistId" in payload) item.dentistId = typeof payload.dentistId === "string" && payload.dentistId ? payload.dentistId : null;
   if ("serviceTypeId" in payload) item.serviceTypeId = typeof payload.serviceTypeId === "string" && payload.serviceTypeId ? payload.serviceTypeId : null;
   if ("cadDesignerId" in payload) item.cadDesignerId = typeof payload.cadDesignerId === "string" && payload.cadDesignerId ? payload.cadDesignerId : null;
+  if ("components" in payload) item.components = normalizeCaseComponents(payload.components);
   item.updatedAt = now();
   if (previousStatus !== item.currentStatus) {
     item.statusHistory.unshift({
@@ -594,7 +623,7 @@ export function getDownloadItems(caseIds: string[], kind: AttachmentKind | "ALL"
           fileName: attachment.fileName,
           filePath: attachment.filePath,
           kind: attachment.kind,
-          signedUrl: `/api/mock-downloads/${attachment.id}`,
+          signedUrl: `mock-downloads/${attachment.id}`,
         })),
     );
 }
