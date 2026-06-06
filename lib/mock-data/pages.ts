@@ -4,32 +4,90 @@ import type {
   CaseStatusValue,
   ClinicOption,
   ComponentOption,
+  CurrentUser,
+  DentalLabOption,
   EditableCase,
+  LabCustomerOption,
   ServiceTypeOption,
 } from "@/features/cases/types";
 
-export const mockUser = {
+export const mockClientCompanies = [
+  {
+    id: "client-company-1",
+    name: "Vela Dental Group",
+  },
+];
+
+export const mockDentalLabs: DentalLabOption[] = [
+  {
+    id: "lab-vela-sao-paulo",
+    clientCompanyId: "client-company-1",
+    name: "Vela Sao Paulo",
+  },
+  {
+    id: "lab-vela-rio",
+    clientCompanyId: "client-company-1",
+    name: "Vela Rio",
+  },
+];
+
+export const mockLabCustomers: LabCustomerOption[] = [
+  {
+    id: "lab-customer-1",
+    dentalLabId: "lab-vela-sao-paulo",
+    name: "Silva Group",
+  },
+  {
+    id: "lab-customer-2",
+    dentalLabId: "lab-vela-sao-paulo",
+    name: "Oral Prime Network",
+  },
+  {
+    id: "lab-customer-3",
+    dentalLabId: "lab-vela-rio",
+    name: "Rio Smile Network",
+  },
+];
+
+export const mockUser: CurrentUser = {
   id: "user-admin",
   name: "Demo Manager",
   role: "ADMIN",
+  clientCompanyId: "client-company-1",
+  activeDentalLabId: "lab-vela-sao-paulo",
+  labs: mockDentalLabs,
 };
 
-export const mockClinics: ClinicOption[] = [
+const activeDentalLabId = mockUser.activeDentalLabId;
+
+const allMockClinics: ClinicOption[] = [
   {
     id: "clinic-1",
+    dentalLabId: "lab-vela-sao-paulo",
+    labCustomerId: "lab-customer-1",
     name: "Silva Dental",
     dentists: [{ id: "dentist-1", name: "Dr. Marcos Silva" }],
   },
   {
     id: "clinic-2",
+    dentalLabId: "lab-vela-sao-paulo",
+    labCustomerId: "lab-customer-2",
     name: "Oral Prime",
     dentists: [{ id: "dentist-2", name: "Dra. Carla Ramos" }],
   },
+  {
+    id: "clinic-3",
+    dentalLabId: "lab-vela-rio",
+    labCustomerId: "lab-customer-3",
+    name: "Rio Smile",
+    dentists: [{ id: "dentist-3", name: "Dr. Felipe Rocha" }],
+  },
 ];
 
-export const mockServiceTypes: ServiceTypeOption[] = [
-  { id: "service-1", name: "Crown" },
-  { id: "service-2", name: "Bridge" },
+const allMockServiceTypes: Array<ServiceTypeOption & { dentalLabId: string }> = [
+  { id: "service-1", dentalLabId: "lab-vela-sao-paulo", name: "Crown" },
+  { id: "service-2", dentalLabId: "lab-vela-sao-paulo", name: "Bridge" },
+  { id: "service-3", dentalLabId: "lab-vela-rio", name: "Crown" },
 ];
 
 export const mockCadDesigners: CadDesignerOption[] = [
@@ -37,9 +95,10 @@ export const mockCadDesigners: CadDesignerOption[] = [
   { id: "user-cad-joao", name: "Joao CAD" },
 ];
 
-export const mockComponents: ComponentOption[] = [
+const allMockComponents: Array<ComponentOption & { dentalLabId: string }> = [
   {
     id: "component-1",
+    dentalLabId: "lab-vela-sao-paulo",
     name: "Ti Base",
     category: "Implant",
     brand: "DemoDent",
@@ -48,17 +107,30 @@ export const mockComponents: ComponentOption[] = [
   },
   {
     id: "component-2",
+    dentalLabId: "lab-vela-sao-paulo",
     name: "Analog",
     category: "Model",
     brand: "DemoDent",
     defaultCost: "12",
     defaultPrice: "30",
   },
+  {
+    id: "component-3",
+    dentalLabId: "lab-vela-rio",
+    name: "Ti Base",
+    category: "Implant",
+    brand: "RioDent",
+    defaultCost: "38",
+    defaultPrice: "96",
+  },
 ];
 
-export const mockCases: EditableCase[] = [
+const allMockCases: EditableCase[] = [
   {
     id: "case-1",
+    dentalLabId: "lab-vela-sao-paulo",
+    labCustomerId: "lab-customer-1",
+    labCustomerName: "Silva Group",
     code: "DL-1001",
     patientName: "Maria Oliveira",
     currentStatus: CASE_STATUS.DESIGNING,
@@ -96,6 +168,9 @@ export const mockCases: EditableCase[] = [
   },
   {
     id: "case-2",
+    dentalLabId: "lab-vela-sao-paulo",
+    labCustomerId: "lab-customer-2",
+    labCustomerName: "Oral Prime Network",
     code: "DL-1002",
     patientName: "Rafael Costa",
     currentStatus: CASE_STATUS.DESIGN_READY,
@@ -122,6 +197,9 @@ export const mockCases: EditableCase[] = [
   },
   {
     id: "case-3",
+    dentalLabId: "lab-vela-sao-paulo",
+    labCustomerId: "lab-customer-1",
+    labCustomerName: "Silva Group",
     code: "DL-1003",
     patientName: "Lucia Martins",
     currentStatus: CASE_STATUS.DONE,
@@ -158,11 +236,41 @@ export const mockCases: EditableCase[] = [
       },
     ],
   },
+  {
+    id: "case-4",
+    dentalLabId: "lab-vela-rio",
+    labCustomerId: "lab-customer-3",
+    labCustomerName: "Rio Smile Network",
+    code: "DL-1001",
+    patientName: "Paula Mendes",
+    currentStatus: CASE_STATUS.DESIGNING,
+    teeth: "14",
+    elementsQty: 1,
+    shade: "A1",
+    dueDate: new Date(Date.now() + 3 * 86400000).toISOString(),
+    observations: "Rio lab scoped case with code reused safely.",
+    pendingNote: "",
+    isUrgent: false,
+    createdAt: new Date(Date.now() - 2 * 86400000).toISOString(),
+    updatedAt: new Date(Date.now() - 1 * 86400000).toISOString(),
+    clinicName: "Rio Smile",
+    clinicId: "clinic-3",
+    dentistName: "Dr. Felipe Rocha",
+    dentistId: "dentist-3",
+    serviceTypeId: "service-3",
+    serviceTypeName: "Crown",
+    cadDesignerId: "user-cad-joao",
+    cadDesignerName: "Joao CAD",
+    attachments: [],
+    components: [],
+    millings: [],
+  },
 ];
 
-export const mockBlockTypes = [
+const allMockBlockTypes = [
   {
     id: "block-1",
+    dentalLabId: "lab-vela-sao-paulo",
     name: "Zirconia A2",
     material: "Zirconia",
     brand: "Vita",
@@ -173,6 +281,7 @@ export const mockBlockTypes = [
   },
   {
     id: "block-2",
+    dentalLabId: "lab-vela-sao-paulo",
     name: "PMMA Clear",
     material: "PMMA",
     brand: "DemoBlock",
@@ -181,11 +290,23 @@ export const mockBlockTypes = [
     defaultCost: "22",
     isActive: true,
   },
+  {
+    id: "block-3",
+    dentalLabId: "lab-vela-rio",
+    name: "Zirconia A2",
+    material: "Zirconia",
+    brand: "RioBlock",
+    size: "98mm",
+    shade: "A2",
+    defaultCost: "51",
+    isActive: true,
+  },
 ];
 
-export const mockMillingDrills = [
+const allMockMillingDrills = [
   {
     id: "drill-1",
+    dentalLabId: "lab-vela-sao-paulo",
     name: "Diamond 1.0mm",
     brand: "Roland",
     type: "1.0mm",
@@ -196,6 +317,7 @@ export const mockMillingDrills = [
   },
   {
     id: "drill-2",
+    dentalLabId: "lab-vela-sao-paulo",
     name: "Diamond 2.5mm",
     brand: "Roland",
     type: "2.5mm",
@@ -204,11 +326,23 @@ export const mockMillingDrills = [
     notes: null,
     isActive: true,
   },
+  {
+    id: "drill-3",
+    dentalLabId: "lab-vela-rio",
+    name: "Diamond 1.0mm",
+    brand: "Roland",
+    type: "1.0mm",
+    serialNumber: "RIO-D10-001",
+    maxTeethRecommended: 120,
+    notes: null,
+    isActive: true,
+  },
 ];
 
-export const mockMillings = [
+const allMockMillings = [
   {
     id: "milling-1",
+    dentalLabId: "lab-vela-sao-paulo",
     caseCode: "DL-1003",
     patientName: "Lucia Martins",
     clinicName: "Silva Dental",
@@ -222,6 +356,28 @@ export const mockMillings = [
     milledAt: new Date(Date.now() - 2 * 86400000).toISOString(),
   },
 ];
+
+export const mockClinics = allMockClinics.filter(
+  (clinic) => clinic.dentalLabId === activeDentalLabId,
+);
+export const mockServiceTypes = allMockServiceTypes.filter(
+  (item) => item.dentalLabId === activeDentalLabId,
+);
+export const mockComponents = allMockComponents.filter(
+  (item) => item.dentalLabId === activeDentalLabId,
+);
+export const mockCases = allMockCases.filter(
+  (caseItem) => caseItem.dentalLabId === activeDentalLabId,
+);
+export const mockBlockTypes = allMockBlockTypes.filter(
+  (item) => item.dentalLabId === activeDentalLabId,
+);
+export const mockMillingDrills = allMockMillingDrills.filter(
+  (item) => item.dentalLabId === activeDentalLabId,
+);
+export const mockMillings = allMockMillings.filter(
+  (item) => item.dentalLabId === activeDentalLabId,
+);
 
 export const mockRegistry = {
   clinics: mockClinics.map((clinic) => ({

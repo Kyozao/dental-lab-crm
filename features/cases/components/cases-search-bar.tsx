@@ -12,7 +12,7 @@ import type { ClinicOption } from "@/features/cases/types";
 
 type Props = {
   clinics: ClinicOption[];
-  totalCases: number;
+  totalCases?: number;
   onSearchChange?: (query: string) => void;
 };
 
@@ -193,11 +193,17 @@ export function CasesSearchBar({ clinics, totalCases, onSearchChange }: Props) {
         </div>
 
         <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
-          <span>
-            Total:{" "}
-            <span className="font-semibold text-foreground">{totalCases}</span>{" "}
-            cases
-          </span>
+          {typeof totalCases === "number" ? (
+            <span>
+              Total:{" "}
+              <span className="font-semibold text-foreground">
+                {totalCases}
+              </span>{" "}
+              cases
+            </span>
+          ) : (
+            <span />
+          )}
           {localQuery && (
             <span className="text-primary">
               Searching for <span className="font-medium">{localQuery}</span>

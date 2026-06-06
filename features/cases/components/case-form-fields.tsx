@@ -74,17 +74,6 @@ export function CaseFormFields({
   return (
     <>
       <div className="space-y-2">
-        <Label htmlFor={`${idPrefix}-code`}>Case code</Label>
-        <Input
-          id={`${idPrefix}-code`}
-          name="code"
-          defaultValue={values?.code ?? ""}
-          placeholder="CASE-0001"
-        />
-        <ErrorText errors={errors} field="code" />
-      </div>
-
-      <div className="space-y-2">
         <Label htmlFor={`${idPrefix}-patientName`}>Patient name</Label>
         <Input
           id={`${idPrefix}-patientName`}

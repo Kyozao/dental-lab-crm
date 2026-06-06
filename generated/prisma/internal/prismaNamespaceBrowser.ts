@@ -51,20 +51,24 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User',
-  ServiceType: 'ServiceType',
-  MillingDrill: 'MillingDrill',
-  CaseMilling: 'CaseMilling',
-  CaseAttachment: 'CaseAttachment',
-  Clinic: 'Clinic',
-  Dentist: 'Dentist',
-  Component: 'Component',
-  CaseComponentUsage: 'CaseComponentUsage',
-  BlockType: 'BlockType',
-  Case: 'Case',
-  CaseStatusHistory: 'CaseStatusHistory',
-  Notification: 'Notification',
-  PushSubscription: 'PushSubscription'
+  users: 'users',
+  client_companies: 'client_companies',
+  dental_labs: 'dental_labs',
+  lab_customers: 'lab_customers',
+  user_lab_memberships: 'user_lab_memberships',
+  service_types: 'service_types',
+  milling_drills: 'milling_drills',
+  case_millings: 'case_millings',
+  case_attachments: 'case_attachments',
+  clinics: 'clinics',
+  dentists: 'dentists',
+  components: 'components',
+  case_component_usages: 'case_component_usages',
+  block_types: 'block_types',
+  cases: 'cases',
+  case_status_histories: 'case_status_histories',
+  notifications: 'notifications',
+  push_subscriptions: 'push_subscriptions'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -83,21 +87,71 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const UserScalarFieldEnum = {
+export const UsersScalarFieldEnum = {
   id: 'id',
+  clientCompanyId: 'clientCompanyId',
   name: 'name',
   email: 'email',
-  role: 'role',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
 
 
-export const ServiceTypeScalarFieldEnum = {
+export const Client_companiesScalarFieldEnum = {
   id: 'id',
+  name: 'name',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type Client_companiesScalarFieldEnum = (typeof Client_companiesScalarFieldEnum)[keyof typeof Client_companiesScalarFieldEnum]
+
+
+export const Dental_labsScalarFieldEnum = {
+  id: 'id',
+  clientCompanyId: 'clientCompanyId',
+  name: 'name',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type Dental_labsScalarFieldEnum = (typeof Dental_labsScalarFieldEnum)[keyof typeof Dental_labsScalarFieldEnum]
+
+
+export const Lab_customersScalarFieldEnum = {
+  id: 'id',
+  dentalLabId: 'dentalLabId',
+  name: 'name',
+  phone: 'phone',
+  email: 'email',
+  notes: 'notes',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type Lab_customersScalarFieldEnum = (typeof Lab_customersScalarFieldEnum)[keyof typeof Lab_customersScalarFieldEnum]
+
+
+export const User_lab_membershipsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  dentalLabId: 'dentalLabId',
+  role: 'role',
+  createdAt: 'createdAt'
+} as const
+
+export type User_lab_membershipsScalarFieldEnum = (typeof User_lab_membershipsScalarFieldEnum)[keyof typeof User_lab_membershipsScalarFieldEnum]
+
+
+export const Service_typesScalarFieldEnum = {
+  id: 'id',
+  dentalLabId: 'dentalLabId',
   name: 'name',
   isActive: 'isActive',
   notes: 'notes',
@@ -105,10 +159,11 @@ export const ServiceTypeScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type ServiceTypeScalarFieldEnum = (typeof ServiceTypeScalarFieldEnum)[keyof typeof ServiceTypeScalarFieldEnum]
+export type Service_typesScalarFieldEnum = (typeof Service_typesScalarFieldEnum)[keyof typeof Service_typesScalarFieldEnum]
 
 
-export const MillingDrillScalarFieldEnum = {
+export const Milling_drillsScalarFieldEnum = {
+  dentalLabId: 'dentalLabId',
   id: 'id',
   name: 'name',
   type: 'type',
@@ -123,11 +178,12 @@ export const MillingDrillScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type MillingDrillScalarFieldEnum = (typeof MillingDrillScalarFieldEnum)[keyof typeof MillingDrillScalarFieldEnum]
+export type Milling_drillsScalarFieldEnum = (typeof Milling_drillsScalarFieldEnum)[keyof typeof Milling_drillsScalarFieldEnum]
 
 
-export const CaseMillingScalarFieldEnum = {
+export const Case_millingsScalarFieldEnum = {
   id: 'id',
+  dentalLabId: 'dentalLabId',
   caseId: 'caseId',
   blockTypeId: 'blockTypeId',
   millingDrillId: 'millingDrillId',
@@ -143,10 +199,10 @@ export const CaseMillingScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type CaseMillingScalarFieldEnum = (typeof CaseMillingScalarFieldEnum)[keyof typeof CaseMillingScalarFieldEnum]
+export type Case_millingsScalarFieldEnum = (typeof Case_millingsScalarFieldEnum)[keyof typeof Case_millingsScalarFieldEnum]
 
 
-export const CaseAttachmentScalarFieldEnum = {
+export const Case_attachmentsScalarFieldEnum = {
   id: 'id',
   caseId: 'caseId',
   fileName: 'fileName',
@@ -160,11 +216,13 @@ export const CaseAttachmentScalarFieldEnum = {
   createdAt: 'createdAt'
 } as const
 
-export type CaseAttachmentScalarFieldEnum = (typeof CaseAttachmentScalarFieldEnum)[keyof typeof CaseAttachmentScalarFieldEnum]
+export type Case_attachmentsScalarFieldEnum = (typeof Case_attachmentsScalarFieldEnum)[keyof typeof Case_attachmentsScalarFieldEnum]
 
 
-export const ClinicScalarFieldEnum = {
+export const ClinicsScalarFieldEnum = {
   id: 'id',
+  dentalLabId: 'dentalLabId',
+  labCustomerId: 'labCustomerId',
   name: 'name',
   phone: 'phone',
   email: 'email',
@@ -173,11 +231,12 @@ export const ClinicScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type ClinicScalarFieldEnum = (typeof ClinicScalarFieldEnum)[keyof typeof ClinicScalarFieldEnum]
+export type ClinicsScalarFieldEnum = (typeof ClinicsScalarFieldEnum)[keyof typeof ClinicsScalarFieldEnum]
 
 
-export const DentistScalarFieldEnum = {
+export const DentistsScalarFieldEnum = {
   id: 'id',
+  dentalLabId: 'dentalLabId',
   clinicId: 'clinicId',
   name: 'name',
   phone: 'phone',
@@ -187,11 +246,12 @@ export const DentistScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type DentistScalarFieldEnum = (typeof DentistScalarFieldEnum)[keyof typeof DentistScalarFieldEnum]
+export type DentistsScalarFieldEnum = (typeof DentistsScalarFieldEnum)[keyof typeof DentistsScalarFieldEnum]
 
 
-export const ComponentScalarFieldEnum = {
+export const ComponentsScalarFieldEnum = {
   id: 'id',
+  dentalLabId: 'dentalLabId',
   name: 'name',
   category: 'category',
   brand: 'brand',
@@ -202,10 +262,10 @@ export const ComponentScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type ComponentScalarFieldEnum = (typeof ComponentScalarFieldEnum)[keyof typeof ComponentScalarFieldEnum]
+export type ComponentsScalarFieldEnum = (typeof ComponentsScalarFieldEnum)[keyof typeof ComponentsScalarFieldEnum]
 
 
-export const CaseComponentUsageScalarFieldEnum = {
+export const Case_component_usagesScalarFieldEnum = {
   id: 'id',
   caseId: 'caseId',
   componentId: 'componentId',
@@ -218,11 +278,12 @@ export const CaseComponentUsageScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type CaseComponentUsageScalarFieldEnum = (typeof CaseComponentUsageScalarFieldEnum)[keyof typeof CaseComponentUsageScalarFieldEnum]
+export type Case_component_usagesScalarFieldEnum = (typeof Case_component_usagesScalarFieldEnum)[keyof typeof Case_component_usagesScalarFieldEnum]
 
 
-export const BlockTypeScalarFieldEnum = {
+export const Block_typesScalarFieldEnum = {
   id: 'id',
+  dentalLabId: 'dentalLabId',
   name: 'name',
   material: 'material',
   brand: 'brand',
@@ -234,11 +295,12 @@ export const BlockTypeScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type BlockTypeScalarFieldEnum = (typeof BlockTypeScalarFieldEnum)[keyof typeof BlockTypeScalarFieldEnum]
+export type Block_typesScalarFieldEnum = (typeof Block_typesScalarFieldEnum)[keyof typeof Block_typesScalarFieldEnum]
 
 
-export const CaseScalarFieldEnum = {
+export const CasesScalarFieldEnum = {
   id: 'id',
+  dentalLabId: 'dentalLabId',
   code: 'code',
   clientCaseCode: 'clientCaseCode',
   patientName: 'patientName',
@@ -259,10 +321,10 @@ export const CaseScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type CaseScalarFieldEnum = (typeof CaseScalarFieldEnum)[keyof typeof CaseScalarFieldEnum]
+export type CasesScalarFieldEnum = (typeof CasesScalarFieldEnum)[keyof typeof CasesScalarFieldEnum]
 
 
-export const CaseStatusHistoryScalarFieldEnum = {
+export const Case_status_historiesScalarFieldEnum = {
   id: 'id',
   caseId: 'caseId',
   fromStatus: 'fromStatus',
@@ -271,10 +333,10 @@ export const CaseStatusHistoryScalarFieldEnum = {
   changedAt: 'changedAt'
 } as const
 
-export type CaseStatusHistoryScalarFieldEnum = (typeof CaseStatusHistoryScalarFieldEnum)[keyof typeof CaseStatusHistoryScalarFieldEnum]
+export type Case_status_historiesScalarFieldEnum = (typeof Case_status_historiesScalarFieldEnum)[keyof typeof Case_status_historiesScalarFieldEnum]
 
 
-export const NotificationScalarFieldEnum = {
+export const NotificationsScalarFieldEnum = {
   id: 'id',
   recipientUserId: 'recipientUserId',
   caseId: 'caseId',
@@ -287,10 +349,10 @@ export const NotificationScalarFieldEnum = {
   createdAt: 'createdAt'
 } as const
 
-export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+export type NotificationsScalarFieldEnum = (typeof NotificationsScalarFieldEnum)[keyof typeof NotificationsScalarFieldEnum]
 
 
-export const PushSubscriptionScalarFieldEnum = {
+export const Push_subscriptionsScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   endpoint: 'endpoint',
@@ -301,7 +363,7 @@ export const PushSubscriptionScalarFieldEnum = {
   updatedAt: 'updatedAt'
 } as const
 
-export type PushSubscriptionScalarFieldEnum = (typeof PushSubscriptionScalarFieldEnum)[keyof typeof PushSubscriptionScalarFieldEnum]
+export type Push_subscriptionsScalarFieldEnum = (typeof Push_subscriptionsScalarFieldEnum)[keyof typeof Push_subscriptionsScalarFieldEnum]
 
 
 export const SortOrder = {

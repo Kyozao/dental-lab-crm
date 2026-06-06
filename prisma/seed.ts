@@ -7,56 +7,124 @@ const prisma = new PrismaClient({
   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }),
 });
 
+const DEFAULT_CLIENT_COMPANY_ID = "11111111-1111-4111-8111-111111111111";
+const DEFAULT_DENTAL_LAB_ID = "seed-dental-lab";
+const DEFAULT_LAB_CUSTOMER_ID = "seed-lab-customer";
+
 async function main() {
   // Optional for dev-only seeding:
   // wipe transactional/mock tables first so re-running stays clean
-  await prisma.caseMilling.deleteMany();
-  await prisma.caseComponentUsage.deleteMany();
-  await prisma.caseAttachment.deleteMany().catch(() => {});
-  await prisma.case.deleteMany();
-  await prisma.dentist.deleteMany();
-  await prisma.clinic.deleteMany();
+  await prisma.case_millings.deleteMany();
+  await prisma.case_component_usages.deleteMany();
+  await prisma.case_attachments.deleteMany().catch(() => {});
+  await prisma.cases.deleteMany();
+  await prisma.dentists.deleteMany();
+  await prisma.clinics.deleteMany();
+
+  const clientCompany = await prisma.client_companies.upsert({
+    where: { id: DEFAULT_CLIENT_COMPANY_ID },
+    update: {},
+    create: {
+      id: DEFAULT_CLIENT_COMPANY_ID,
+      name: "Seed Client Company",
+      isActive: true,
+    },
+  });
+
+  const dentalLab = await prisma.dental_labs.upsert({
+    where: { id: DEFAULT_DENTAL_LAB_ID },
+    update: {},
+    create: {
+      id: DEFAULT_DENTAL_LAB_ID,
+      clientCompanyId: clientCompany.id,
+      name: "Seed Dental Lab",
+      isActive: true,
+    },
+  });
+
+  const labCustomer = await prisma.lab_customers.upsert({
+    where: { id: DEFAULT_LAB_CUSTOMER_ID },
+    update: {},
+    create: {
+      id: DEFAULT_LAB_CUSTOMER_ID,
+      dentalLabId: dentalLab.id,
+      name: "Seed Lab Customer",
+      isActive: true,
+    },
+  });
 
   // Users
   const designers = await Promise.all([
-    prisma.user.upsert({
+    prisma.users.upsert({
       where: { email: "designer1@example.com" },
       update: {},
       create: {
         id: "d84eba90-270a-406d-af29-d6e9b03a3459",
         name: "Designer 1",
         email: "designer1@example.com",
-        role: "CAD_DESIGNER",
         isActive: true,
+        clientCompanyId: clientCompany.id,
       },
     }),
-    prisma.user.upsert({
+    prisma.users.upsert({
       where: { email: "designer2@example.com" },
       update: {},
       create: {
         id: "b3bc7a1e-4f53-4b6c-8d6b-8fd7d02db111",
         name: "Designer 2",
         email: "designer2@example.com",
-        role: "CAD_DESIGNER",
         isActive: true,
+        clientCompanyId: clientCompany.id,
       },
     }),
-    prisma.user.upsert({
+    prisma.users.upsert({
       where: { email: "admin@example.com" },
       update: {},
       create: {
         id: "c11e3b07-76e1-4f6f-ae3d-0f1f658ff222",
         name: "Admin",
         email: "admin@example.com",
-        role: "ADMIN",
         isActive: true,
+        clientCompanyId: clientCompany.id,
+      },
+    }),
+  ]);
+
+  await Promise.all([
+    prisma.user_lab_memberships.upsert({
+      where: { userId: designers[0].id },
+      update: { dentalLabId: dentalLab.id, role: "CAD_DESIGNER" },
+      create: {
+        userId: designers[0].id,
+        dentalLabId: dentalLab.id,
+        role: "CAD_DESIGNER",
+      },
+    }),
+    prisma.user_lab_memberships.upsert({
+      where: { userId: designers[1].id },
+      update: { dentalLabId: dentalLab.id, role: "CAD_DESIGNER" },
+      create: {
+        userId: designers[1].id,
+        dentalLabId: dentalLab.id,
+        role: "CAD_DESIGNER",
+      },
+    }),
+    prisma.user_lab_memberships.upsert({
+      where: { userId: designers[2].id },
+      update: { dentalLabId: dentalLab.id, role: "ADMIN" },
+      create: {
+        userId: designers[2].id,
+        dentalLabId: dentalLab.id,
+        role: "ADMIN",
       },
     }),
   ]);
 
   // Clinics
-  const clinicA = await prisma.clinic.create({
+  const clinicA = await prisma.clinics.create({
     data: {
+      dentalLabId: dentalLab.id,
+      labCustomerId: labCustomer.id,
       name: "Clínica Sorriso Prime",
       phone: "11999990001",
       email: "contato@sorrisoprime.com",
@@ -64,8 +132,10 @@ async function main() {
     },
   });
 
-  const clinicB = await prisma.clinic.create({
+  const clinicB = await prisma.clinics.create({
     data: {
+      dentalLabId: dentalLab.id,
+      labCustomerId: labCustomer.id,
       name: "Odonto Centro",
       phone: "11999990002",
       email: "contato@odontocentro.com",
@@ -73,8 +143,10 @@ async function main() {
     },
   });
 
-  const clinicC = await prisma.clinic.create({
+  const clinicC = await prisma.clinics.create({
     data: {
+      dentalLabId: dentalLab.id,
+      labCustomerId: labCustomer.id,
       name: "Estética Oral",
       phone: "11999990003",
       email: "contato@esteticaoral.com",
@@ -84,32 +156,36 @@ async function main() {
 
   // Dentists
   const [dentistA1, dentistA2, dentistB1, dentistC1] = await Promise.all([
-    prisma.dentist.create({
+    prisma.dentists.create({
       data: {
+        dentalLabId: dentalLab.id,
         clinicId: clinicA.id,
         name: "Dr. João",
         phone: "11988880001",
         email: "joao@sorrisoprime.com",
       },
     }),
-    prisma.dentist.create({
+    prisma.dentists.create({
       data: {
+        dentalLabId: dentalLab.id,
         clinicId: clinicA.id,
         name: "Dra. Carla",
         phone: "11988880002",
         email: "carla@sorrisoprime.com",
       },
     }),
-    prisma.dentist.create({
+    prisma.dentists.create({
       data: {
+        dentalLabId: dentalLab.id,
         clinicId: clinicB.id,
         name: "Dr. Rafael",
         phone: "11988880003",
         email: "rafael@odontocentro.com",
       },
     }),
-    prisma.dentist.create({
+    prisma.dentists.create({
       data: {
+        dentalLabId: dentalLab.id,
         clinicId: clinicC.id,
         name: "Dra. Marina",
         phone: "11988880004",
@@ -120,35 +196,35 @@ async function main() {
 
   // Service types
   const [crown, protocol, lens, implant] = await Promise.all([
-    prisma.serviceType.upsert({
-      where: { name: "Coroa" },
+    prisma.service_types.upsert({
+      where: { dentalLabId_name: { dentalLabId: dentalLab.id, name: "Coroa" } },
       update: {},
-      create: { name: "Coroa", isActive: true },
+      create: { dentalLabId: dentalLab.id, name: "Coroa", isActive: true },
     }),
-    prisma.serviceType.upsert({
-      where: { name: "Protocolo" },
+    prisma.service_types.upsert({
+      where: { dentalLabId_name: { dentalLabId: dentalLab.id, name: "Protocolo" } },
       update: {},
-      create: { name: "Protocolo", isActive: true },
+      create: { dentalLabId: dentalLab.id, name: "Protocolo", isActive: true },
     }),
-    prisma.serviceType.upsert({
-      where: { name: "Lente" },
+    prisma.service_types.upsert({
+      where: { dentalLabId_name: { dentalLabId: dentalLab.id, name: "Lente" } },
       update: {},
-      create: { name: "Lente", isActive: true },
+      create: { dentalLabId: dentalLab.id, name: "Lente", isActive: true },
     }),
-    prisma.serviceType.upsert({
-      where: { name: "Implante Unitário" },
+    prisma.service_types.upsert({
+      where: { dentalLabId_name: { dentalLabId: dentalLab.id, name: "Implante Unitario" } },
       update: {},
-      create: { name: "Implante Unitário", isActive: true },
+      create: { dentalLabId: dentalLab.id, name: "Implante Unitario", isActive: true },
     }),
   ]);
-
   // Components
   const [tiBase, analog, ucla, miniPilar] = await Promise.all([
-    prisma.component.upsert({
+    prisma.components.upsert({
       where: { id: "seed-component-tibase" },
       update: {},
       create: {
         id: "seed-component-tibase",
+        dentalLabId: dentalLab.id,
         name: "Ti Base",
         category: "Implante",
         brand: "Genérica",
@@ -156,11 +232,12 @@ async function main() {
         defaultPrice: "60.00",
       },
     }),
-    prisma.component.upsert({
+    prisma.components.upsert({
       where: { id: "seed-component-analog" },
       update: {},
       create: {
         id: "seed-component-analog",
+        dentalLabId: dentalLab.id,
         name: "Análogo",
         category: "Implante",
         brand: "Genérica",
@@ -168,11 +245,12 @@ async function main() {
         defaultPrice: "35.00",
       },
     }),
-    prisma.component.upsert({
+    prisma.components.upsert({
       where: { id: "seed-component-ucla" },
       update: {},
       create: {
         id: "seed-component-ucla",
+        dentalLabId: dentalLab.id,
         name: "UCLA",
         category: "Implante",
         brand: "Genérica",
@@ -180,11 +258,12 @@ async function main() {
         defaultPrice: "75.00",
       },
     }),
-    prisma.component.upsert({
+    prisma.components.upsert({
       where: { id: "seed-component-minipilar" },
       update: {},
       create: {
         id: "seed-component-minipilar",
+        dentalLabId: dentalLab.id,
         name: "Mini Pilar",
         category: "Implante",
         brand: "Genérica",
@@ -196,11 +275,12 @@ async function main() {
 
   // Blocks
   const [zirconiaA2, zirconiaBleach, pmma, wax] = await Promise.all([
-    prisma.blockType.upsert({
+    prisma.block_types.upsert({
       where: { id: "seed-block-zirconia-a2" },
       update: {},
       create: {
         id: "seed-block-zirconia-a2",
+        dentalLabId: dentalLab.id,
         name: "Zircônia A2",
         material: "Zircônia",
         shade: "A2",
@@ -209,11 +289,12 @@ async function main() {
         defaultCost: "120.00",
       },
     }),
-    prisma.blockType.upsert({
+    prisma.block_types.upsert({
       where: { id: "seed-block-zirconia-bleach" },
       update: {},
       create: {
         id: "seed-block-zirconia-bleach",
+        dentalLabId: dentalLab.id,
         name: "Zircônia Bleach",
         material: "Zircônia",
         shade: "BL",
@@ -222,11 +303,12 @@ async function main() {
         defaultCost: "130.00",
       },
     }),
-    prisma.blockType.upsert({
+    prisma.block_types.upsert({
       where: { id: "seed-block-pmma" },
       update: {},
       create: {
         id: "seed-block-pmma",
+        dentalLabId: dentalLab.id,
         name: "PMMA",
         material: "PMMA",
         brand: "Genérica",
@@ -234,11 +316,12 @@ async function main() {
         defaultCost: "45.00",
       },
     }),
-    prisma.blockType.upsert({
+    prisma.block_types.upsert({
       where: { id: "seed-block-wax" },
       update: {},
       create: {
         id: "seed-block-wax",
+        dentalLabId: dentalLab.id,
         name: "Wax Disc",
         material: "Cera",
         brand: "Genérica",
@@ -250,8 +333,9 @@ async function main() {
 
   // Drills
   const [drill1, drill2] = await Promise.all([
-    prisma.millingDrill.create({
+    prisma.milling_drills.create({
       data: {
+        dentalLabId: dentalLab.id,
         name: "Broca 1",
         type: "Standard",
         brand: "Genérica",
@@ -259,8 +343,9 @@ async function main() {
         isActive: true,
       },
     }),
-    prisma.millingDrill.create({
+    prisma.milling_drills.create({
       data: {
+        dentalLabId: dentalLab.id,
         name: "Broca 2",
         type: "Fine",
         brand: "Genérica",
@@ -273,6 +358,7 @@ async function main() {
   const caseSeeds = [
     {
       code: "CASE-0001",
+      dentalLabId: dentalLab.id,
       clientCaseCode: "SP-101",
       patientName: "Maria Silva",
       clinicId: clinicA.id,
@@ -287,6 +373,7 @@ async function main() {
     },
     {
       code: "CASE-0002",
+      dentalLabId: dentalLab.id,
       clientCaseCode: "SP-102",
       patientName: "Pedro Oliveira",
       clinicId: clinicA.id,
@@ -301,6 +388,7 @@ async function main() {
     },
     {
       code: "CASE-0003",
+      dentalLabId: dentalLab.id,
       clientCaseCode: "OC-900",
       patientName: "Ana Costa",
       clinicId: clinicB.id,
@@ -315,6 +403,7 @@ async function main() {
     },
     {
       code: "CASE-0004",
+      dentalLabId: dentalLab.id,
       clientCaseCode: "EO-501",
       patientName: "Lucas Mendes",
       clinicId: clinicC.id,
@@ -329,6 +418,7 @@ async function main() {
     },
     {
       code: "CASE-0005",
+      dentalLabId: dentalLab.id,
       clientCaseCode: "OC-901",
       patientName: "Fernanda Rocha",
       clinicId: clinicB.id,
@@ -343,6 +433,7 @@ async function main() {
     },
     {
       code: "CASE-0006",
+      dentalLabId: dentalLab.id,
       clientCaseCode: "SP-103",
       patientName: "Bruno Lima",
       clinicId: clinicA.id,
@@ -357,6 +448,7 @@ async function main() {
     },
     {
       code: "CASE-0007",
+      dentalLabId: dentalLab.id,
       clientCaseCode: "EO-502",
       patientName: "Juliana Alves",
       clinicId: clinicC.id,
@@ -371,6 +463,7 @@ async function main() {
     },
     {
       code: "CASE-0008",
+      dentalLabId: dentalLab.id,
       clientCaseCode: "OC-902",
       patientName: "Ricardo Souza",
       clinicId: clinicB.id,
@@ -387,14 +480,14 @@ async function main() {
 
   const createdCases = [];
   for (const item of caseSeeds) {
-    const created = await prisma.case.create({
+    const created = await prisma.cases.create({
       data: item,
     });
     createdCases.push(created);
   }
 
   // Component usages
-  await prisma.caseComponentUsage.createMany({
+  await prisma.case_component_usages.createMany({
     data: [
       {
         id: randomUUID(),
@@ -440,10 +533,11 @@ async function main() {
   });
 
   // Milling rows
-  await prisma.caseMilling.createMany({
+  await prisma.case_millings.createMany({
     data: [
       {
         id: randomUUID(),
+        dentalLabId: dentalLab.id,
         caseId: createdCases[0].id,
         blockTypeId: zirconiaA2.id,
         millingDrillId: drill1.id,
@@ -453,24 +547,27 @@ async function main() {
       },
       {
         id: randomUUID(),
+        dentalLabId: dentalLab.id,
         caseId: createdCases[2].id,
         blockTypeId: pmma.id,
         millingDrillId: drill2.id,
         status: "SUCCESS",
         teethMilledQty: 3,
-        notes: "Provisório PMMA",
+        notes: "Provisorio PMMA",
       },
       {
         id: randomUUID(),
+        dentalLabId: dentalLab.id,
         caseId: createdCases[3].id,
         blockTypeId: zirconiaBleach.id,
         millingDrillId: drill1.id,
         status: "SUCCESS",
         teethMilledQty: 4,
-        notes: "Em produção",
+        notes: "Em producao",
       },
       {
         id: randomUUID(),
+        dentalLabId: dentalLab.id,
         caseId: createdCases[4].id,
         blockTypeId: wax.id,
         millingDrillId: drill2.id,
@@ -480,13 +577,12 @@ async function main() {
       },
     ],
   });
-
   console.log("Seed finished");
   console.log({
     users: designers.length,
     clinics: 3,
     dentists: 4,
-    serviceTypes: 4,
+    service_types: 4,
     components: 4,
     blocks: 4,
     drills: 2,
@@ -502,3 +598,9 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
+
+
+
+
+
+

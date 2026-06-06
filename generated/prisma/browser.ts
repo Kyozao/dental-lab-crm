@@ -18,72 +18,92 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
- * Model User
+ * Model users
  * 
  */
-export type User = Prisma.UserModel
+export type users = Prisma.usersModel
 /**
- * Model ServiceType
+ * Model client_companies
  * 
  */
-export type ServiceType = Prisma.ServiceTypeModel
+export type client_companies = Prisma.client_companiesModel
 /**
- * Model MillingDrill
+ * Model dental_labs
  * 
  */
-export type MillingDrill = Prisma.MillingDrillModel
+export type dental_labs = Prisma.dental_labsModel
 /**
- * Model CaseMilling
+ * Model lab_customers
  * 
  */
-export type CaseMilling = Prisma.CaseMillingModel
+export type lab_customers = Prisma.lab_customersModel
 /**
- * Model CaseAttachment
+ * Model user_lab_memberships
  * 
  */
-export type CaseAttachment = Prisma.CaseAttachmentModel
+export type user_lab_memberships = Prisma.user_lab_membershipsModel
 /**
- * Model Clinic
+ * Model service_types
  * 
  */
-export type Clinic = Prisma.ClinicModel
+export type service_types = Prisma.service_typesModel
 /**
- * Model Dentist
+ * Model milling_drills
  * 
  */
-export type Dentist = Prisma.DentistModel
+export type milling_drills = Prisma.milling_drillsModel
 /**
- * Model Component
+ * Model case_millings
  * 
  */
-export type Component = Prisma.ComponentModel
+export type case_millings = Prisma.case_millingsModel
 /**
- * Model CaseComponentUsage
+ * Model case_attachments
  * 
  */
-export type CaseComponentUsage = Prisma.CaseComponentUsageModel
+export type case_attachments = Prisma.case_attachmentsModel
 /**
- * Model BlockType
+ * Model clinics
  * 
  */
-export type BlockType = Prisma.BlockTypeModel
+export type clinics = Prisma.clinicsModel
 /**
- * Model Case
+ * Model dentists
  * 
  */
-export type Case = Prisma.CaseModel
+export type dentists = Prisma.dentistsModel
 /**
- * Model CaseStatusHistory
+ * Model components
  * 
  */
-export type CaseStatusHistory = Prisma.CaseStatusHistoryModel
+export type components = Prisma.componentsModel
 /**
- * Model Notification
+ * Model case_component_usages
  * 
  */
-export type Notification = Prisma.NotificationModel
+export type case_component_usages = Prisma.case_component_usagesModel
 /**
- * Model PushSubscription
+ * Model block_types
  * 
  */
-export type PushSubscription = Prisma.PushSubscriptionModel
+export type block_types = Prisma.block_typesModel
+/**
+ * Model cases
+ * 
+ */
+export type cases = Prisma.casesModel
+/**
+ * Model case_status_histories
+ * 
+ */
+export type case_status_histories = Prisma.case_status_historiesModel
+/**
+ * Model notifications
+ * 
+ */
+export type notifications = Prisma.notificationsModel
+/**
+ * Model push_subscriptions
+ * 
+ */
+export type push_subscriptions = Prisma.push_subscriptionsModel

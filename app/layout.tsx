@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { MainNav } from "@/components/main-nav";
 import { ConditionalMainNavWrapper } from "@/components/conditional-main-nav-wrapper";
 import { Toaster } from "@/components/ui/sonner";
+import { QueryProvider } from "@/components/query-provider";
 
 const geistSans = localFont({
   src: "../public/fonts/geist/Geist-VariableFont_wght.ttf",
@@ -42,11 +43,13 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-screen flex flex-col bg-background">
-        <ConditionalMainNavWrapper>
-          <MainNav />
-        </ConditionalMainNavWrapper>
-        <div className="flex-1">{children}</div>
-        <Toaster richColors position="top-right" />
+        <QueryProvider>
+          <ConditionalMainNavWrapper>
+            <MainNav />
+          </ConditionalMainNavWrapper>
+          <div className="flex-1">{children}</div>
+          <Toaster richColors position="top-right" />
+        </QueryProvider>
       </body>
     </html>
   );

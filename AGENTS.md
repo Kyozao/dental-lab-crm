@@ -32,11 +32,11 @@ Page
 
 Use this structure:
 
-src/
 app/
 api/
 cases/
 route.ts
+services.ts
 [id]/
 route.ts
 
@@ -51,11 +51,6 @@ components/
 hooks/
 cases.types.ts
 
-api/
-cases/
-cases.service.ts
-cases.schemas.ts
-
 lib/
 prisma.ts
 
@@ -64,9 +59,16 @@ schema.prisma
 
 ## Core Rules
 
-1. `app/` is only for routing and page composition.
+1. `app/` is for routing, page composition, and Next.js API route modules.
 
-Do not put Prisma queries, business rules, reusable domain logic, or large helpers inside `app/`.
+Do not put Prisma queries, business rules, reusable domain logic, or large helpers inside page folders.
+
+For API routes, keep the route handler and its small service module together under the resource folder.
+
+Example:
+
+`app/api/cases/route.ts`
+`app/api/cases/services.ts`
 
 2. `features/` is frontend-only.
 
@@ -84,7 +86,7 @@ Feature folders must not import:
 * database logic
 * server-only code
 
-3. `src/api/` is the internal backend.
+3. `app/api/*/services.ts` is the internal backend service layer for now.
 
 This is where backend service code lives.
 
@@ -96,7 +98,7 @@ Do not create controllers, repositories, DTOs, mappers, adapters, factories, or 
 
 Example:
 
-`src/app/api/cases/route.ts`
+`app/api/cases/route.ts`
 
 handles HTTP concerns:
 
@@ -111,7 +113,7 @@ handles HTTP concerns:
 
 Example:
 
-`src/api/cases/cases.service.ts`
+`app/api/cases/services.ts`
 
 This file can use Prisma directly for now.
 
@@ -119,7 +121,7 @@ This file can use Prisma directly for now.
 
 Example:
 
-`src/api/cases/cases.schemas.ts`
+`app/api/cases/schemas.ts`
 
 Use schemas for request validation, especially for create and update operations.
 

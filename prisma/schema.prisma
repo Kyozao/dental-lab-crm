@@ -49,34 +49,112 @@ enum NotificationType {
   CASE_STATUS_CHANGED
 }
 
-model User {
+model users {
+  id              String   @id @default(uuid()) @db.Uuid
+  clientCompanyId String   @db.Uuid
+  name            String
+  email           String   @unique
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  client_companies  client_companies       @relation(fields: [clientCompanyId], references: [id], onDelete: Cascade)
+  labMemberships    user_lab_memberships[]
+  assignedCases     cases[]                @relation("CaseCadDesigner")
+  createdCases      cases[]                @relation("CaseCreatedBy")
+  case_attachments  case_attachments[]
+  notifications     notifications[]        @relation("NotificationRecipient")
+  pushSubscriptions push_subscriptions[]
+
+  @@index([clientCompanyId])
+}
+
+model client_companies {
   id        String   @id @default(uuid()) @db.Uuid
   name      String
-  email     String   @unique
-  role      UserRole
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  assignedCases     Case[]             @relation("CaseCadDesigner")
-  createdCases      Case[]             @relation("CaseCreatedBy")
-  caseAttachments   CaseAttachment[]
-  notifications     Notification[]     @relation("NotificationRecipient")
-  pushSubscriptions PushSubscription[]
+  users      users[]
+  dentalLabs dental_labs[]
 }
 
-model ServiceType {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  isActive  Boolean  @default(true)
-  notes     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model dental_labs {
+  id              String   @id @default(cuid())
+  clientCompanyId String   @db.Uuid
+  name            String
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
-  cases Case[]
+  client_companies client_companies       @relation(fields: [clientCompanyId], references: [id], onDelete: Cascade)
+  memberships      user_lab_memberships[]
+  labCustomers     lab_customers[]
+  clinics          clinics[]
+  dentists         dentists[]
+  service_types    service_types[]
+  components       components[]
+  block_types      block_types[]
+  milling_drills   milling_drills[]
+  cases            cases[]
+  millings         case_millings[]
+
+  @@unique([clientCompanyId, name])
+  @@index([clientCompanyId])
 }
 
-model MillingDrill {
+model lab_customers {
+  id          String   @id @default(cuid())
+  dentalLabId String
+  name        String
+  phone       String?
+  email       String?
+  notes       String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  dental_labs dental_labs @relation(fields: [dentalLabId], references: [id], onDelete: Cascade)
+  clinics     clinics[]
+
+  @@unique([dentalLabId, name])
+  @@index([dentalLabId])
+}
+
+model user_lab_memberships {
+  id          String   @id @default(cuid())
+  userId      String   @db.Uuid
+  dentalLabId String
+  role        UserRole
+  createdAt   DateTime @default(now())
+
+  users       users       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dental_labs dental_labs @relation(fields: [dentalLabId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
+  @@unique([userId, dentalLabId])
+  @@index([dentalLabId])
+}
+
+model service_types {
+  id          String   @id @default(cuid())
+  dentalLabId String
+  name        String
+  isActive    Boolean  @default(true)
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  dental_labs dental_labs @relation(fields: [dentalLabId], references: [id], onDelete: Cascade)
+  cases       cases[]
+
+  @@unique([dentalLabId, name])
+  @@index([dentalLabId])
+}
+
+model milling_drills {
+  dentalLabId         String
   id                  String    @id @default(cuid())
   name                String
   type                String?
@@ -90,13 +168,18 @@ model MillingDrill {
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
 
-  millings       CaseMilling[] @relation("LegacyMillingDrill")
-  fineMillings   CaseMilling[] @relation("FineMillingDrill")
-  coarseMillings CaseMilling[] @relation("CoarseMillingDrill")
+  dental_labs    dental_labs     @relation(fields: [dentalLabId], references: [id], onDelete: Cascade)
+  millings       case_millings[] @relation("LegacyMillingDrill")
+  fineMillings   case_millings[] @relation("FineMillingDrill")
+  coarseMillings case_millings[] @relation("CoarseMillingDrill")
+
+  @@unique([dentalLabId, name])
+  @@index([dentalLabId])
 }
 
-model CaseMilling {
+model case_millings {
   id                   String        @id @default(cuid())
+  dentalLabId          String
   caseId               String
   blockTypeId          String
   millingDrillId       String?
@@ -112,14 +195,16 @@ model CaseMilling {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  case               Case          @relation(fields: [caseId], references: [id], onDelete: Cascade)
-  blockType          BlockType     @relation(fields: [blockTypeId], references: [id], onDelete: Restrict)
-  millingDrill       MillingDrill? @relation("LegacyMillingDrill", fields: [millingDrillId], references: [id], onDelete: SetNull)
-  fineMillingDrill   MillingDrill? @relation("FineMillingDrill", fields: [fineMillingDrillId], references: [id], onDelete: SetNull)
-  coarseMillingDrill MillingDrill? @relation("CoarseMillingDrill", fields: [coarseMillingDrillId], references: [id], onDelete: SetNull)
-  redoneFromMilling  CaseMilling?  @relation("MillingRedo", fields: [redoneFromMillingId], references: [id], onDelete: SetNull)
-  redos              CaseMilling[] @relation("MillingRedo")
+  dental_labs        dental_labs     @relation(fields: [dentalLabId], references: [id], onDelete: Cascade)
+  cases              cases           @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  block_types        block_types     @relation(fields: [blockTypeId], references: [id], onDelete: Restrict)
+  milling_drills     milling_drills? @relation("LegacyMillingDrill", fields: [millingDrillId], references: [id], onDelete: SetNull)
+  fineMillingDrill   milling_drills? @relation("FineMillingDrill", fields: [fineMillingDrillId], references: [id], onDelete: SetNull)
+  coarseMillingDrill milling_drills? @relation("CoarseMillingDrill", fields: [coarseMillingDrillId], references: [id], onDelete: SetNull)
+  redoneFromMilling  case_millings?  @relation("MillingRedo", fields: [redoneFromMillingId], references: [id], onDelete: SetNull)
+  redos              case_millings[] @relation("MillingRedo")
 
+  @@index([dentalLabId])
   @@index([caseId])
   @@index([blockTypeId])
   @@index([millingDrillId])
@@ -129,7 +214,7 @@ model CaseMilling {
   @@index([status])
 }
 
-model CaseAttachment {
+model case_attachments {
   id             String         @id @default(cuid())
   caseId         String
   fileName       String
@@ -141,42 +226,55 @@ model CaseAttachment {
   archivedAt     DateTime?
   uploadedById   String?        @db.Uuid
   createdAt      DateTime       @default(now())
-  case           Case           @relation(fields: [caseId], references: [id], onDelete: Cascade)
-  uploadedBy     User?          @relation(fields: [uploadedById], references: [id])
+  cases          cases          @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  uploadedBy     users?         @relation(fields: [uploadedById], references: [id])
 
   @@index([caseId, kind, createdAt])
 }
 
-model Clinic {
-  id        String   @id @default(cuid())
-  name      String
-  phone     String?
-  email     String?
-  notes     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model clinics {
+  id            String   @id @default(cuid())
+  dentalLabId   String
+  labCustomerId String?
+  name          String
+  phone         String?
+  email         String?
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  dentists Dentist[]
-  cases    Case[]
+  dental_labs   dental_labs    @relation(fields: [dentalLabId], references: [id], onDelete: Cascade)
+  lab_customers lab_customers? @relation(fields: [labCustomerId], references: [id], onDelete: SetNull)
+  dentists      dentists[]
+  cases         cases[]
+
+  @@index([dentalLabId])
+  @@index([labCustomerId])
 }
 
-model Dentist {
-  id        String   @id @default(cuid())
-  clinicId  String
-  name      String
-  phone     String?
-  email     String?
-  notes     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model dentists {
+  id          String   @id @default(cuid())
+  dentalLabId String
+  clinicId    String
+  name        String
+  phone       String?
+  email       String?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  clinic Clinic @relation(fields: [clinicId], references: [id], onDelete: Cascade)
-  cases  Case[]
+  dental_labs dental_labs @relation(fields: [dentalLabId], references: [id], onDelete: Cascade)
+  clinics     clinics     @relation(fields: [clinicId], references: [id], onDelete: Cascade)
+  cases       cases[]
+
+  @@index([dentalLabId])
+  @@index([clinicId])
 }
 
-model Component {
+model components {
   id           String   @id @default(cuid())
-  name         String   @unique
+  dentalLabId  String
+  name         String
   category     String?
   brand        String?
   defaultCost  Decimal? @db.Decimal(10, 2)
@@ -185,10 +283,14 @@ model Component {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  caseUsages CaseComponentUsage[]
+  dental_labs dental_labs             @relation(fields: [dentalLabId], references: [id], onDelete: Cascade)
+  caseUsages  case_component_usages[]
+
+  @@unique([dentalLabId, name])
+  @@index([dentalLabId])
 }
 
-model CaseComponentUsage {
+model case_component_usages {
   id           String   @id @default(cuid())
   caseId       String
   componentId  String
@@ -200,16 +302,17 @@ model CaseComponentUsage {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  case      Case      @relation(fields: [caseId], references: [id], onDelete: Cascade)
-  component Component @relation(fields: [componentId], references: [id], onDelete: Restrict)
+  cases      cases      @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  components components @relation(fields: [componentId], references: [id], onDelete: Restrict)
 
   @@index([caseId])
   @@index([componentId])
 }
 
-model BlockType {
+model block_types {
   id          String   @id @default(cuid())
-  name        String   @unique
+  dentalLabId String
+  name        String
   material    String?
   brand       String?
   size        String?
@@ -219,12 +322,17 @@ model BlockType {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  millings CaseMilling[]
+  dental_labs dental_labs     @relation(fields: [dentalLabId], references: [id], onDelete: Cascade)
+  millings    case_millings[]
+
+  @@unique([dentalLabId, name])
+  @@index([dentalLabId])
 }
 
-model Case {
+model cases {
   id              String     @id @default(cuid())
-  code            String     @unique
+  dentalLabId     String
+  code            String
   clientCaseCode  String?
   patientName     String
   clinicId        String?
@@ -242,21 +350,24 @@ model Case {
   observations String?
   pendingNote  String?
 
-  caseComponentUsages CaseComponentUsage[]
-  statusHistory       CaseStatusHistory[]
-  millings            CaseMilling[]
+  caseComponentUsages case_component_usages[]
+  statusHistory       case_status_histories[]
+  millings            case_millings[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  clinic          Clinic?          @relation(fields: [clinicId], references: [id])
-  dentist         Dentist?         @relation(fields: [dentistId], references: [id])
-  serviceType     ServiceType?     @relation(fields: [serviceTypeId], references: [id], onDelete: SetNull)
-  cadDesigner     User?            @relation("CaseCadDesigner", fields: [cadDesignerId], references: [id], onDelete: SetNull)
-  createdByUser   User?            @relation("CaseCreatedBy", fields: [createdByUserId], references: [id])
-  caseAttachments CaseAttachment[]
-  notifications   Notification[]
+  dental_labs      dental_labs        @relation(fields: [dentalLabId], references: [id], onDelete: Cascade)
+  clinics          clinics?           @relation(fields: [clinicId], references: [id])
+  dentists         dentists?          @relation(fields: [dentistId], references: [id])
+  service_types    service_types?     @relation(fields: [serviceTypeId], references: [id], onDelete: SetNull)
+  cadDesigner      users?             @relation("CaseCadDesigner", fields: [cadDesignerId], references: [id], onDelete: SetNull)
+  createdByUser    users?             @relation("CaseCreatedBy", fields: [createdByUserId], references: [id])
+  case_attachments case_attachments[]
+  notifications    notifications[]
 
+  @@unique([dentalLabId, code])
+  @@index([dentalLabId])
   @@index([clinicId])
   @@index([dentistId])
   @@index([currentStatus])
@@ -265,7 +376,7 @@ model Case {
   @@index([createdByUserId])
 }
 
-model CaseStatusHistory {
+model case_status_histories {
   id         String      @id @default(cuid())
   caseId     String
   fromStatus CaseStatus?
@@ -273,13 +384,13 @@ model CaseStatusHistory {
   note       String?
   changedAt  DateTime    @default(now())
 
-  case Case @relation(fields: [caseId], references: [id], onDelete: Cascade)
+  cases cases @relation(fields: [caseId], references: [id], onDelete: Cascade)
 
   @@index([caseId])
   @@index([toStatus])
 }
 
-model Notification {
+model notifications {
   id              String           @id @default(cuid())
   recipientUserId String           @db.Uuid
   caseId          String?
@@ -291,14 +402,14 @@ model Notification {
   readAt          DateTime?
   createdAt       DateTime         @default(now())
 
-  recipientUser User  @relation("NotificationRecipient", fields: [recipientUserId], references: [id], onDelete: Cascade)
-  case          Case? @relation(fields: [caseId], references: [id], onDelete: SetNull)
+  recipientUser users  @relation("NotificationRecipient", fields: [recipientUserId], references: [id], onDelete: Cascade)
+  cases         cases? @relation(fields: [caseId], references: [id], onDelete: SetNull)
 
   @@index([recipientUserId, isRead, createdAt])
   @@index([caseId])
 }
 
-model PushSubscription {
+model push_subscriptions {
   id        String   @id @default(cuid())
   userId    String   @db.Uuid
   endpoint  String   @unique
@@ -308,7 +419,7 @@ model PushSubscription {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  users users @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, isActive])
 }

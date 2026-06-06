@@ -127,6 +127,9 @@ export function CaseDetailsDialog({
   const defaultCaseItem = React.useMemo<EditableCase>(
     () => ({
       id: "",
+      dentalLabId: clinics[0]?.dentalLabId ?? "",
+      labCustomerId: clinics[0]?.labCustomerId ?? null,
+      labCustomerName: "",
       code: "",
       patientName: "",
       caseScope: defaultCaseScope,
@@ -152,7 +155,7 @@ export function CaseDetailsDialog({
       components: [],
       millings: [],
     }),
-    [defaultCaseScope],
+    [clinics, defaultCaseScope],
   );
 
   const caseItem = item ?? defaultCaseItem;
@@ -502,12 +505,13 @@ export function CaseDetailsDialog({
           ) : null}
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
+            <div className="space-y-2" hidden={isCreateMode}>
               <label className="text-sm font-medium">Código</label>
               <input
-                name="code"
+                aria-label="Case code"
                 defaultValue={caseItem.code}
-                disabled={!canEditAll}
+                readOnly
+                disabled
                 className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:opacity-60"
               />
             </div>

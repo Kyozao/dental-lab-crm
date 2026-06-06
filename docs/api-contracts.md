@@ -115,7 +115,7 @@ Short description of what the route does.
 Current mock behavior:
 
 - `GET /api/cases` supports `q`/`search`, `status`, `urgent`, `clinicId`, `page`, and `pageSize`
-- `POST /api/cases` requires `patientName` and accepts the case form payload, including component rows
+- `POST /api/cases` requires `patientName`; `code` is backend-generated per dental lab and ignored if sent
 - `PATCH /api/cases/:id` updates editable case fields and replaces component rows when `components` is present
 - attachment uploads create mock attachment records only; no Supabase storage upload occurs
 - downloads return mock signed URLs

@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
+import { useSearchParams } from "next/navigation";
 import { AlertCircle } from "lucide-react";
 import { CaseStatusBadge } from "@/components/app/status-badge";
+import { EmptyState } from "@/components/app/empty-state";
 import { CaseDetailsDialog } from "@/features/cases/components/case-details-dialog";
 import {
   Table,
@@ -13,6 +15,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { CaseListItem } from "@/features/cases/cases";
+import { useCases } from "@/features/cases/hooks/useCases";
 import { getCaseDetailsApi } from "@/features/cases/services/cases-client";
 import type {
   CadDesignerOption,
@@ -22,20 +26,7 @@ import type {
   ServiceTypeOption,
 } from "@/features/cases/types";
 
-type CaseListItem = {
-  id: string;
-  code: string | null;
-  patientName: string | null;
-  currentStatus: string;
-  isUrgent: boolean;
-  clinicName: string;
-  dentistName: string;
-  serviceTypeName: string;
-  cadDesignerName: string;
-};
-
 type Props = {
-  cases: CaseListItem[];
   clinics: ClinicOption[];
   serviceTypes: ServiceTypeOption[];
   cadDesigners: CadDesignerOption[];
@@ -44,17 +35,28 @@ type Props = {
 };
 
 export function CasesTable({
-  cases,
   clinics,
   serviceTypes,
   cadDesigners,
   components,
   currentUserRole,
 }: Props) {
+  const searchParams = useSearchParams();
+  const { data: cases = [], isLoading, isError, error } = useCases();
   const [open, setOpen] = useState(false);
   const [selectedCase, setSelectedCase] = useState<EditableCase | null>(null);
   const [loadingCaseId, setLoadingCaseId] = useState<string | null>(null);
   const isOpeningCase = Boolean(loadingCaseId);
+  const tableRows = useMemo(
+    () =>
+      buildCaseRows(cases, {
+        query: searchParams.get("q") ?? "",
+        status: searchParams.get("status") ?? "",
+        urgent: searchParams.get("urgent") ?? "",
+        clinicId: searchParams.get("clinicId") ?? "",
+      }),
+    [cases, searchParams],
+  );
 
   async function handleRowClick(caseId: string) {
     if (loadingCaseId) return;
@@ -84,6 +86,33 @@ export function CasesTable({
 
   return (
     <>
+      {isLoading ? (
+        <div className="flex min-h-64 items-center justify-center text-sm text-muted-foreground">
+          Loading cases...
+        </div>
+      ) : null}
+
+      {isError ? (
+        <EmptyState
+          title="Could not load cases"
+          description={
+            error instanceof Error
+              ? error.message
+              : "The cases API did not return a successful response."
+          }
+          className="py-16"
+        />
+      ) : null}
+
+      {!isLoading && !isError && tableRows.length === 0 ? (
+        <EmptyState
+          title="No cases found"
+          description="Adjust filters to see more cases."
+          className="py-16"
+        />
+      ) : null}
+
+      {!isLoading && !isError && tableRows.length > 0 ? (
       <div className="overflow-x-auto">
         <Table>
           <TableHeader>
@@ -109,7 +138,7 @@ export function CasesTable({
             </TableRow>
           </TableHeader>
           <TableBody>
-            {cases.map((item) => {
+            {tableRows.map((item) => {
               const isLoading = loadingCaseId === item.id;
 
               return (
@@ -168,6 +197,7 @@ export function CasesTable({
           </TableBody>
         </Table>
       </div>
+      ) : null}
 
       <CaseOpeningOverlay open={isOpeningCase} />
 
@@ -183,6 +213,42 @@ export function CasesTable({
       />
     </>
   );
+}
+
+type BuildRowsOptions = {
+  query: string;
+  status: string;
+  urgent: string;
+  clinicId: string;
+};
+
+function buildCaseRows(cases: CaseListItem[], options: BuildRowsOptions) {
+  const query = options.query.trim().toLowerCase();
+
+  return cases
+    .filter((item) => {
+      if (options.status && item.currentStatus !== options.status) return false;
+      if (options.clinicId && item.clinicId !== options.clinicId) return false;
+      if (options.urgent === "urgent" && !item.isUrgent) return false;
+      if (options.urgent === "normal" && item.isUrgent) return false;
+      if (!query) return true;
+
+      return [
+        item.code,
+        item.patientName,
+        item.clinicName ?? "",
+        item.dentistName ?? "",
+        item.serviceTypeName ?? "",
+        item.cadDesignerName ?? "",
+      ].some((value) => value.toLowerCase().includes(query));
+    })
+    .map((item) => ({
+      ...item,
+      clinicName: item.clinicName ?? "-",
+      dentistName: item.dentistName ?? "-",
+      serviceTypeName: item.serviceTypeName ?? "-",
+      cadDesignerName: item.cadDesignerName ?? "-",
+    }));
 }
 
 function CaseOpeningOverlay({ open }: { open: boolean }) {

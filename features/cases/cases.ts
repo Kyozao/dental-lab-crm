@@ -1,31 +1,41 @@
-import { api } from "../../lib/api";
+import { api } from "@/lib/api";
+import type { CaseStatusValue } from "@/features/cases/types";
 
-export const usersApi = {
-  getAll() {
-    return api<User[]>("/users");
-  },
+export type CaseListItem = {
+  id: string;
+  dentalLabId: string;
+  code: string;
+  clientCaseCode: string | null;
+  patientName: string;
+  clinicId: string | null;
+  clinicName: string | null;
+  serviceTypeId: string | null;
+  serviceTypeName: string | null;
+  dentistId: string | null;
+  dentistName: string | null;
+  cadDesignerId: string | null;
+  cadDesignerName: string | null;
+  createdByUserId: string | null;
+  createdByUserName: string | null;
+  currentStatus: CaseStatusValue;
+  teeth: string | null;
+  elementsQty: number | null;
+  shade: string | null;
+  dueDate: string | null;
+  isUrgent: boolean;
+  observations: string | null;
+  pendingNote: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
 
-  getById(id: string) {
-    return api<User>(`/users/${id}`);
-  },
+type CasesResponse = {
+  cases: CaseListItem[];
+};
 
-  create(data: CreateUserDto) {
-    return api<User>("/users", {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
-  },
-
-  update(id: string, data: UpdateUserDto) {
-    return api<User>(`/users/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify(data),
-    });
-  },
-
-  delete(id: string) {
-    return api(`/users/${id}`, {
-      method: "DELETE",
-    });
+export const casesApi = {
+  async getAll() {
+    const response = await api<CasesResponse>("/api/cases");
+    return response.cases;
   },
 };

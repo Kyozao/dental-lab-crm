@@ -6,6 +6,32 @@ import {
 
 export { CASE_STATUS, CASE_STATUS_OPTIONS, type CaseStatusValue };
 
+export type ClientCompanyOption = {
+  id: string;
+  name: string;
+};
+
+export type DentalLabOption = {
+  id: string;
+  clientCompanyId: string;
+  name: string;
+};
+
+export type LabCustomerOption = {
+  id: string;
+  dentalLabId: string;
+  name: string;
+};
+
+export type CurrentUser = {
+  id: string;
+  name: string;
+  role: string;
+  clientCompanyId: string;
+  activeDentalLabId: string;
+  labs: DentalLabOption[];
+};
+
 export type DentistOption = {
   id: string;
   name: string;
@@ -13,6 +39,8 @@ export type DentistOption = {
 
 export type ClinicOption = {
   id: string;
+  dentalLabId: string;
+  labCustomerId: string | null;
   name: string;
   dentists: DentistOption[];
 };
@@ -79,6 +107,9 @@ export type CaseMillingItem = {
 
 export type EditableCase = {
   id: string;
+  dentalLabId: string;
+  labCustomerId?: string | null;
+  labCustomerName?: string;
   code: string;
   patientName: string;
   currentStatus: CaseStatusValue;
@@ -113,7 +144,6 @@ export type SearchCaseItem = {
 };
 
 export type CaseFormValues = {
-  code?: string;
   patientName?: string;
   currentStatus?: CaseStatusValue;
   teeth?: string | null;
