@@ -28,106 +28,106 @@ export type AggregateCase_component_usages = {
 
 export type Case_component_usagesAvgAggregateOutputType = {
   quantity: number | null
-  unitCost: runtime.Decimal | null
-  unitPrice: runtime.Decimal | null
+  unit_cost: runtime.Decimal | null
+  unit_price: runtime.Decimal | null
 }
 
 export type Case_component_usagesSumAggregateOutputType = {
   quantity: number | null
-  unitCost: runtime.Decimal | null
-  unitPrice: runtime.Decimal | null
+  unit_cost: runtime.Decimal | null
+  unit_price: runtime.Decimal | null
 }
 
 export type Case_component_usagesMinAggregateOutputType = {
   id: string | null
-  caseId: string | null
-  componentId: string | null
+  case_id: string | null
+  component_id: string | null
   quantity: number | null
-  chargeClient: boolean | null
-  unitCost: runtime.Decimal | null
-  unitPrice: runtime.Decimal | null
+  charge_client: boolean | null
+  unit_cost: runtime.Decimal | null
+  unit_price: runtime.Decimal | null
   notes: string | null
-  createdAt: Date | null
-  updatedAt: Date | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type Case_component_usagesMaxAggregateOutputType = {
   id: string | null
-  caseId: string | null
-  componentId: string | null
+  case_id: string | null
+  component_id: string | null
   quantity: number | null
-  chargeClient: boolean | null
-  unitCost: runtime.Decimal | null
-  unitPrice: runtime.Decimal | null
+  charge_client: boolean | null
+  unit_cost: runtime.Decimal | null
+  unit_price: runtime.Decimal | null
   notes: string | null
-  createdAt: Date | null
-  updatedAt: Date | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type Case_component_usagesCountAggregateOutputType = {
   id: number
-  caseId: number
-  componentId: number
+  case_id: number
+  component_id: number
   quantity: number
-  chargeClient: number
-  unitCost: number
-  unitPrice: number
+  charge_client: number
+  unit_cost: number
+  unit_price: number
   notes: number
-  createdAt: number
-  updatedAt: number
+  created_at: number
+  updated_at: number
   _all: number
 }
 
 
 export type Case_component_usagesAvgAggregateInputType = {
   quantity?: true
-  unitCost?: true
-  unitPrice?: true
+  unit_cost?: true
+  unit_price?: true
 }
 
 export type Case_component_usagesSumAggregateInputType = {
   quantity?: true
-  unitCost?: true
-  unitPrice?: true
+  unit_cost?: true
+  unit_price?: true
 }
 
 export type Case_component_usagesMinAggregateInputType = {
   id?: true
-  caseId?: true
-  componentId?: true
+  case_id?: true
+  component_id?: true
   quantity?: true
-  chargeClient?: true
-  unitCost?: true
-  unitPrice?: true
+  charge_client?: true
+  unit_cost?: true
+  unit_price?: true
   notes?: true
-  createdAt?: true
-  updatedAt?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type Case_component_usagesMaxAggregateInputType = {
   id?: true
-  caseId?: true
-  componentId?: true
+  case_id?: true
+  component_id?: true
   quantity?: true
-  chargeClient?: true
-  unitCost?: true
-  unitPrice?: true
+  charge_client?: true
+  unit_cost?: true
+  unit_price?: true
   notes?: true
-  createdAt?: true
-  updatedAt?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type Case_component_usagesCountAggregateInputType = {
   id?: true
-  caseId?: true
-  componentId?: true
+  case_id?: true
+  component_id?: true
   quantity?: true
-  chargeClient?: true
-  unitCost?: true
-  unitPrice?: true
+  charge_client?: true
+  unit_cost?: true
+  unit_price?: true
   notes?: true
-  createdAt?: true
-  updatedAt?: true
+  created_at?: true
+  updated_at?: true
   _all?: true
 }
 
@@ -219,15 +219,15 @@ export type case_component_usagesGroupByArgs<ExtArgs extends runtime.Types.Exten
 
 export type Case_component_usagesGroupByOutputType = {
   id: string
-  caseId: string
-  componentId: string
+  case_id: string
+  component_id: string
   quantity: number
-  chargeClient: boolean
-  unitCost: runtime.Decimal | null
-  unitPrice: runtime.Decimal | null
+  charge_client: boolean
+  unit_cost: runtime.Decimal | null
+  unit_price: runtime.Decimal | null
   notes: string | null
-  createdAt: Date
-  updatedAt: Date
+  created_at: Date
+  updated_at: Date
   _count: Case_component_usagesCountAggregateOutputType | null
   _avg: Case_component_usagesAvgAggregateOutputType | null
   _sum: Case_component_usagesSumAggregateOutputType | null
@@ -255,30 +255,30 @@ export type case_component_usagesWhereInput = {
   OR?: Prisma.case_component_usagesWhereInput[]
   NOT?: Prisma.case_component_usagesWhereInput | Prisma.case_component_usagesWhereInput[]
   id?: Prisma.StringFilter<"case_component_usages"> | string
-  caseId?: Prisma.StringFilter<"case_component_usages"> | string
-  componentId?: Prisma.StringFilter<"case_component_usages"> | string
+  case_id?: Prisma.StringFilter<"case_component_usages"> | string
+  component_id?: Prisma.StringFilter<"case_component_usages"> | string
   quantity?: Prisma.IntFilter<"case_component_usages"> | number
-  chargeClient?: Prisma.BoolFilter<"case_component_usages"> | boolean
-  unitCost?: Prisma.DecimalNullableFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: Prisma.DecimalNullableFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: Prisma.BoolFilter<"case_component_usages"> | boolean
+  unit_cost?: Prisma.DecimalNullableFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: Prisma.DecimalNullableFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: Prisma.StringNullableFilter<"case_component_usages"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"case_component_usages"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"case_component_usages"> | Date | string
+  created_at?: Prisma.DateTimeFilter<"case_component_usages"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"case_component_usages"> | Date | string
   cases?: Prisma.XOR<Prisma.CasesScalarRelationFilter, Prisma.casesWhereInput>
   components?: Prisma.XOR<Prisma.ComponentsScalarRelationFilter, Prisma.componentsWhereInput>
 }
 
 export type case_component_usagesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  componentId?: Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  component_id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
-  chargeClient?: Prisma.SortOrder
-  unitCost?: Prisma.SortOrderInput | Prisma.SortOrder
-  unitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  charge_client?: Prisma.SortOrder
+  unit_cost?: Prisma.SortOrderInput | Prisma.SortOrder
+  unit_price?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   cases?: Prisma.casesOrderByWithRelationInput
   components?: Prisma.componentsOrderByWithRelationInput
 }
@@ -288,30 +288,30 @@ export type case_component_usagesWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.case_component_usagesWhereInput | Prisma.case_component_usagesWhereInput[]
   OR?: Prisma.case_component_usagesWhereInput[]
   NOT?: Prisma.case_component_usagesWhereInput | Prisma.case_component_usagesWhereInput[]
-  caseId?: Prisma.StringFilter<"case_component_usages"> | string
-  componentId?: Prisma.StringFilter<"case_component_usages"> | string
+  case_id?: Prisma.StringFilter<"case_component_usages"> | string
+  component_id?: Prisma.StringFilter<"case_component_usages"> | string
   quantity?: Prisma.IntFilter<"case_component_usages"> | number
-  chargeClient?: Prisma.BoolFilter<"case_component_usages"> | boolean
-  unitCost?: Prisma.DecimalNullableFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: Prisma.DecimalNullableFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: Prisma.BoolFilter<"case_component_usages"> | boolean
+  unit_cost?: Prisma.DecimalNullableFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: Prisma.DecimalNullableFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: Prisma.StringNullableFilter<"case_component_usages"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"case_component_usages"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"case_component_usages"> | Date | string
+  created_at?: Prisma.DateTimeFilter<"case_component_usages"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"case_component_usages"> | Date | string
   cases?: Prisma.XOR<Prisma.CasesScalarRelationFilter, Prisma.casesWhereInput>
   components?: Prisma.XOR<Prisma.ComponentsScalarRelationFilter, Prisma.componentsWhereInput>
 }, "id">
 
 export type case_component_usagesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  componentId?: Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  component_id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
-  chargeClient?: Prisma.SortOrder
-  unitCost?: Prisma.SortOrderInput | Prisma.SortOrder
-  unitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  charge_client?: Prisma.SortOrder
+  unit_cost?: Prisma.SortOrderInput | Prisma.SortOrder
+  unit_price?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   _count?: Prisma.case_component_usagesCountOrderByAggregateInput
   _avg?: Prisma.case_component_usagesAvgOrderByAggregateInput
   _max?: Prisma.case_component_usagesMaxOrderByAggregateInput
@@ -324,104 +324,104 @@ export type case_component_usagesScalarWhereWithAggregatesInput = {
   OR?: Prisma.case_component_usagesScalarWhereWithAggregatesInput[]
   NOT?: Prisma.case_component_usagesScalarWhereWithAggregatesInput | Prisma.case_component_usagesScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"case_component_usages"> | string
-  caseId?: Prisma.StringWithAggregatesFilter<"case_component_usages"> | string
-  componentId?: Prisma.StringWithAggregatesFilter<"case_component_usages"> | string
+  case_id?: Prisma.StringWithAggregatesFilter<"case_component_usages"> | string
+  component_id?: Prisma.StringWithAggregatesFilter<"case_component_usages"> | string
   quantity?: Prisma.IntWithAggregatesFilter<"case_component_usages"> | number
-  chargeClient?: Prisma.BoolWithAggregatesFilter<"case_component_usages"> | boolean
-  unitCost?: Prisma.DecimalNullableWithAggregatesFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: Prisma.DecimalNullableWithAggregatesFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: Prisma.BoolWithAggregatesFilter<"case_component_usages"> | boolean
+  unit_cost?: Prisma.DecimalNullableWithAggregatesFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: Prisma.DecimalNullableWithAggregatesFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"case_component_usages"> | string | null
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"case_component_usages"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"case_component_usages"> | Date | string
+  created_at?: Prisma.DateTimeWithAggregatesFilter<"case_component_usages"> | Date | string
+  updated_at?: Prisma.DateTimeWithAggregatesFilter<"case_component_usages"> | Date | string
 }
 
 export type case_component_usagesCreateInput = {
   id?: string
   quantity?: number
-  chargeClient?: boolean
-  unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: boolean
+  unit_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
   cases: Prisma.casesCreateNestedOneWithoutCaseComponentUsagesInput
   components: Prisma.componentsCreateNestedOneWithoutCaseUsagesInput
 }
 
 export type case_component_usagesUncheckedCreateInput = {
   id?: string
-  caseId: string
-  componentId: string
+  case_id: string
+  component_id: string
   quantity?: number
-  chargeClient?: boolean
-  unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: boolean
+  unit_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type case_component_usagesUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeClient?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  unitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unit_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUpdateOneRequiredWithoutCaseComponentUsagesNestedInput
   components?: Prisma.componentsUpdateOneRequiredWithoutCaseUsagesNestedInput
 }
 
 export type case_component_usagesUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  componentId?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  component_id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeClient?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  unitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unit_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_component_usagesCreateManyInput = {
   id?: string
-  caseId: string
-  componentId: string
+  case_id: string
+  component_id: string
   quantity?: number
-  chargeClient?: boolean
-  unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: boolean
+  unit_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type case_component_usagesUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeClient?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  unitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unit_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_component_usagesUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  componentId?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  component_id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeClient?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  unitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unit_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type Case_component_usagesListRelationFilter = {
@@ -436,53 +436,53 @@ export type case_component_usagesOrderByRelationAggregateInput = {
 
 export type case_component_usagesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  componentId?: Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  component_id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
-  chargeClient?: Prisma.SortOrder
-  unitCost?: Prisma.SortOrder
-  unitPrice?: Prisma.SortOrder
+  charge_client?: Prisma.SortOrder
+  unit_cost?: Prisma.SortOrder
+  unit_price?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type case_component_usagesAvgOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
-  unitCost?: Prisma.SortOrder
-  unitPrice?: Prisma.SortOrder
+  unit_cost?: Prisma.SortOrder
+  unit_price?: Prisma.SortOrder
 }
 
 export type case_component_usagesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  componentId?: Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  component_id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
-  chargeClient?: Prisma.SortOrder
-  unitCost?: Prisma.SortOrder
-  unitPrice?: Prisma.SortOrder
+  charge_client?: Prisma.SortOrder
+  unit_cost?: Prisma.SortOrder
+  unit_price?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type case_component_usagesMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  componentId?: Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  component_id?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
-  chargeClient?: Prisma.SortOrder
-  unitCost?: Prisma.SortOrder
-  unitPrice?: Prisma.SortOrder
+  charge_client?: Prisma.SortOrder
+  unit_cost?: Prisma.SortOrder
+  unit_price?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type case_component_usagesSumOrderByAggregateInput = {
   quantity?: Prisma.SortOrder
-  unitCost?: Prisma.SortOrder
-  unitPrice?: Prisma.SortOrder
+  unit_cost?: Prisma.SortOrder
+  unit_price?: Prisma.SortOrder
 }
 
 export type case_component_usagesCreateNestedManyWithoutComponentsInput = {
@@ -572,25 +572,25 @@ export type case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput = {
 export type case_component_usagesCreateWithoutComponentsInput = {
   id?: string
   quantity?: number
-  chargeClient?: boolean
-  unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: boolean
+  unit_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
   cases: Prisma.casesCreateNestedOneWithoutCaseComponentUsagesInput
 }
 
 export type case_component_usagesUncheckedCreateWithoutComponentsInput = {
   id?: string
-  caseId: string
+  case_id: string
   quantity?: number
-  chargeClient?: boolean
-  unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: boolean
+  unit_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type case_component_usagesCreateOrConnectWithoutComponentsInput = {
@@ -624,39 +624,39 @@ export type case_component_usagesScalarWhereInput = {
   OR?: Prisma.case_component_usagesScalarWhereInput[]
   NOT?: Prisma.case_component_usagesScalarWhereInput | Prisma.case_component_usagesScalarWhereInput[]
   id?: Prisma.StringFilter<"case_component_usages"> | string
-  caseId?: Prisma.StringFilter<"case_component_usages"> | string
-  componentId?: Prisma.StringFilter<"case_component_usages"> | string
+  case_id?: Prisma.StringFilter<"case_component_usages"> | string
+  component_id?: Prisma.StringFilter<"case_component_usages"> | string
   quantity?: Prisma.IntFilter<"case_component_usages"> | number
-  chargeClient?: Prisma.BoolFilter<"case_component_usages"> | boolean
-  unitCost?: Prisma.DecimalNullableFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: Prisma.DecimalNullableFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: Prisma.BoolFilter<"case_component_usages"> | boolean
+  unit_cost?: Prisma.DecimalNullableFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: Prisma.DecimalNullableFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: Prisma.StringNullableFilter<"case_component_usages"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"case_component_usages"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"case_component_usages"> | Date | string
+  created_at?: Prisma.DateTimeFilter<"case_component_usages"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"case_component_usages"> | Date | string
 }
 
 export type case_component_usagesCreateWithoutCasesInput = {
   id?: string
   quantity?: number
-  chargeClient?: boolean
-  unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: boolean
+  unit_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
   components: Prisma.componentsCreateNestedOneWithoutCaseUsagesInput
 }
 
 export type case_component_usagesUncheckedCreateWithoutCasesInput = {
   id?: string
-  componentId: string
+  component_id: string
   quantity?: number
-  chargeClient?: boolean
-  unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: boolean
+  unit_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type case_component_usagesCreateOrConnectWithoutCasesInput = {
@@ -687,161 +687,161 @@ export type case_component_usagesUpdateManyWithWhereWithoutCasesInput = {
 
 export type case_component_usagesCreateManyComponentsInput = {
   id?: string
-  caseId: string
+  case_id: string
   quantity?: number
-  chargeClient?: boolean
-  unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: boolean
+  unit_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type case_component_usagesUpdateWithoutComponentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeClient?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  unitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unit_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUpdateOneRequiredWithoutCaseComponentUsagesNestedInput
 }
 
 export type case_component_usagesUncheckedUpdateWithoutComponentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeClient?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  unitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unit_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_component_usagesUncheckedUpdateManyWithoutComponentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeClient?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  unitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unit_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_component_usagesCreateManyCasesInput = {
   id?: string
-  componentId: string
+  component_id: string
   quantity?: number
-  chargeClient?: boolean
-  unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: boolean
+  unit_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type case_component_usagesUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeClient?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  unitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unit_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   components?: Prisma.componentsUpdateOneRequiredWithoutCaseUsagesNestedInput
 }
 
 export type case_component_usagesUncheckedUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  componentId?: Prisma.StringFieldUpdateOperationsInput | string
+  component_id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeClient?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  unitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unit_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_component_usagesUncheckedUpdateManyWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  componentId?: Prisma.StringFieldUpdateOperationsInput | string
+  component_id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
-  chargeClient?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  unitCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  charge_client?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unit_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  unit_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
 
 export type case_component_usagesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  caseId?: boolean
-  componentId?: boolean
+  case_id?: boolean
+  component_id?: boolean
   quantity?: boolean
-  chargeClient?: boolean
-  unitCost?: boolean
-  unitPrice?: boolean
+  charge_client?: boolean
+  unit_cost?: boolean
+  unit_price?: boolean
   notes?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
+  created_at?: boolean
+  updated_at?: boolean
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
   components?: boolean | Prisma.componentsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["case_component_usages"]>
 
 export type case_component_usagesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  caseId?: boolean
-  componentId?: boolean
+  case_id?: boolean
+  component_id?: boolean
   quantity?: boolean
-  chargeClient?: boolean
-  unitCost?: boolean
-  unitPrice?: boolean
+  charge_client?: boolean
+  unit_cost?: boolean
+  unit_price?: boolean
   notes?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
+  created_at?: boolean
+  updated_at?: boolean
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
   components?: boolean | Prisma.componentsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["case_component_usages"]>
 
 export type case_component_usagesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  caseId?: boolean
-  componentId?: boolean
+  case_id?: boolean
+  component_id?: boolean
   quantity?: boolean
-  chargeClient?: boolean
-  unitCost?: boolean
-  unitPrice?: boolean
+  charge_client?: boolean
+  unit_cost?: boolean
+  unit_price?: boolean
   notes?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
+  created_at?: boolean
+  updated_at?: boolean
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
   components?: boolean | Prisma.componentsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["case_component_usages"]>
 
 export type case_component_usagesSelectScalar = {
   id?: boolean
-  caseId?: boolean
-  componentId?: boolean
+  case_id?: boolean
+  component_id?: boolean
   quantity?: boolean
-  chargeClient?: boolean
-  unitCost?: boolean
-  unitPrice?: boolean
+  charge_client?: boolean
+  unit_cost?: boolean
+  unit_price?: boolean
   notes?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }
 
-export type case_component_usagesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "caseId" | "componentId" | "quantity" | "chargeClient" | "unitCost" | "unitPrice" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["case_component_usages"]>
+export type case_component_usagesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "case_id" | "component_id" | "quantity" | "charge_client" | "unit_cost" | "unit_price" | "notes" | "created_at" | "updated_at", ExtArgs["result"]["case_component_usages"]>
 export type case_component_usagesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
   components?: boolean | Prisma.componentsDefaultArgs<ExtArgs>
@@ -863,15 +863,15 @@ export type $case_component_usagesPayload<ExtArgs extends runtime.Types.Extensio
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    caseId: string
-    componentId: string
+    case_id: string
+    component_id: string
     quantity: number
-    chargeClient: boolean
-    unitCost: runtime.Decimal | null
-    unitPrice: runtime.Decimal | null
+    charge_client: boolean
+    unit_cost: runtime.Decimal | null
+    unit_price: runtime.Decimal | null
     notes: string | null
-    createdAt: Date
-    updatedAt: Date
+    created_at: Date
+    updated_at: Date
   }, ExtArgs["result"]["case_component_usages"]>
   composites: {}
 }
@@ -1298,15 +1298,15 @@ export interface Prisma__case_component_usagesClient<T, Null = never, ExtArgs ex
  */
 export interface case_component_usagesFieldRefs {
   readonly id: Prisma.FieldRef<"case_component_usages", 'String'>
-  readonly caseId: Prisma.FieldRef<"case_component_usages", 'String'>
-  readonly componentId: Prisma.FieldRef<"case_component_usages", 'String'>
+  readonly case_id: Prisma.FieldRef<"case_component_usages", 'String'>
+  readonly component_id: Prisma.FieldRef<"case_component_usages", 'String'>
   readonly quantity: Prisma.FieldRef<"case_component_usages", 'Int'>
-  readonly chargeClient: Prisma.FieldRef<"case_component_usages", 'Boolean'>
-  readonly unitCost: Prisma.FieldRef<"case_component_usages", 'Decimal'>
-  readonly unitPrice: Prisma.FieldRef<"case_component_usages", 'Decimal'>
+  readonly charge_client: Prisma.FieldRef<"case_component_usages", 'Boolean'>
+  readonly unit_cost: Prisma.FieldRef<"case_component_usages", 'Decimal'>
+  readonly unit_price: Prisma.FieldRef<"case_component_usages", 'Decimal'>
   readonly notes: Prisma.FieldRef<"case_component_usages", 'String'>
-  readonly createdAt: Prisma.FieldRef<"case_component_usages", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"case_component_usages", 'DateTime'>
+  readonly created_at: Prisma.FieldRef<"case_component_usages", 'DateTime'>
+  readonly updated_at: Prisma.FieldRef<"case_component_usages", 'DateTime'>
 }
     
 

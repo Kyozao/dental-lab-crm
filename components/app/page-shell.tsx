@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 
 type PageShellProps = React.ComponentProps<"main"> & {
   width?: "default" | "wide" | "kanban";
+  contentClassName?: string;
 };
 
 const widthClass = {
@@ -14,6 +15,7 @@ const widthClass = {
 export function PageShell({
   width = "wide",
   className,
+  contentClassName,
   children,
   ...props
 }: PageShellProps) {
@@ -27,6 +29,7 @@ export function PageShell({
           "mx-auto w-full space-y-6 px-4 py-6 sm:px-6 sm:py-8",
           widthClass[width],
           width === "kanban" && "md:px-12",
+          contentClassName,
         )}
       >
         {children}

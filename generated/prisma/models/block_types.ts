@@ -27,105 +27,111 @@ export type AggregateBlock_types = {
 }
 
 export type Block_typesAvgAggregateOutputType = {
-  defaultCost: runtime.Decimal | null
+  default_cost: runtime.Decimal | null
 }
 
 export type Block_typesSumAggregateOutputType = {
-  defaultCost: runtime.Decimal | null
+  default_cost: runtime.Decimal | null
 }
 
 export type Block_typesMinAggregateOutputType = {
   id: string | null
-  dentalLabId: string | null
+  lab_id: string | null
   name: string | null
   material: string | null
   brand: string | null
   size: string | null
   shade: string | null
-  defaultCost: runtime.Decimal | null
-  isActive: boolean | null
-  createdAt: Date | null
-  updatedAt: Date | null
+  default_cost: runtime.Decimal | null
+  is_active: boolean | null
+  deleted_at: Date | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type Block_typesMaxAggregateOutputType = {
   id: string | null
-  dentalLabId: string | null
+  lab_id: string | null
   name: string | null
   material: string | null
   brand: string | null
   size: string | null
   shade: string | null
-  defaultCost: runtime.Decimal | null
-  isActive: boolean | null
-  createdAt: Date | null
-  updatedAt: Date | null
+  default_cost: runtime.Decimal | null
+  is_active: boolean | null
+  deleted_at: Date | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type Block_typesCountAggregateOutputType = {
   id: number
-  dentalLabId: number
+  lab_id: number
   name: number
   material: number
   brand: number
   size: number
   shade: number
-  defaultCost: number
-  isActive: number
-  createdAt: number
-  updatedAt: number
+  default_cost: number
+  is_active: number
+  deleted_at: number
+  created_at: number
+  updated_at: number
   _all: number
 }
 
 
 export type Block_typesAvgAggregateInputType = {
-  defaultCost?: true
+  default_cost?: true
 }
 
 export type Block_typesSumAggregateInputType = {
-  defaultCost?: true
+  default_cost?: true
 }
 
 export type Block_typesMinAggregateInputType = {
   id?: true
-  dentalLabId?: true
+  lab_id?: true
   name?: true
   material?: true
   brand?: true
   size?: true
   shade?: true
-  defaultCost?: true
-  isActive?: true
-  createdAt?: true
-  updatedAt?: true
+  default_cost?: true
+  is_active?: true
+  deleted_at?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type Block_typesMaxAggregateInputType = {
   id?: true
-  dentalLabId?: true
+  lab_id?: true
   name?: true
   material?: true
   brand?: true
   size?: true
   shade?: true
-  defaultCost?: true
-  isActive?: true
-  createdAt?: true
-  updatedAt?: true
+  default_cost?: true
+  is_active?: true
+  deleted_at?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type Block_typesCountAggregateInputType = {
   id?: true
-  dentalLabId?: true
+  lab_id?: true
   name?: true
   material?: true
   brand?: true
   size?: true
   shade?: true
-  defaultCost?: true
-  isActive?: true
-  createdAt?: true
-  updatedAt?: true
+  default_cost?: true
+  is_active?: true
+  deleted_at?: true
+  created_at?: true
+  updated_at?: true
   _all?: true
 }
 
@@ -217,16 +223,17 @@ export type block_typesGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type Block_typesGroupByOutputType = {
   id: string
-  dentalLabId: string
+  lab_id: string
   name: string
   material: string | null
   brand: string | null
   size: string | null
   shade: string | null
-  defaultCost: runtime.Decimal | null
-  isActive: boolean
-  createdAt: Date
-  updatedAt: Date
+  default_cost: runtime.Decimal | null
+  is_active: boolean
+  deleted_at: Date | null
+  created_at: Date
+  updated_at: Date
   _count: Block_typesCountAggregateOutputType | null
   _avg: Block_typesAvgAggregateOutputType | null
   _sum: Block_typesSumAggregateOutputType | null
@@ -254,68 +261,72 @@ export type block_typesWhereInput = {
   OR?: Prisma.block_typesWhereInput[]
   NOT?: Prisma.block_typesWhereInput | Prisma.block_typesWhereInput[]
   id?: Prisma.StringFilter<"block_types"> | string
-  dentalLabId?: Prisma.StringFilter<"block_types"> | string
+  lab_id?: Prisma.StringFilter<"block_types"> | string
   name?: Prisma.StringFilter<"block_types"> | string
   material?: Prisma.StringNullableFilter<"block_types"> | string | null
   brand?: Prisma.StringNullableFilter<"block_types"> | string | null
   size?: Prisma.StringNullableFilter<"block_types"> | string | null
   shade?: Prisma.StringNullableFilter<"block_types"> | string | null
-  defaultCost?: Prisma.DecimalNullableFilter<"block_types"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFilter<"block_types"> | boolean
-  createdAt?: Prisma.DateTimeFilter<"block_types"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"block_types"> | Date | string
-  dental_labs?: Prisma.XOR<Prisma.Dental_labsScalarRelationFilter, Prisma.dental_labsWhereInput>
+  default_cost?: Prisma.DecimalNullableFilter<"block_types"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFilter<"block_types"> | boolean
+  deleted_at?: Prisma.DateTimeNullableFilter<"block_types"> | Date | string | null
+  created_at?: Prisma.DateTimeFilter<"block_types"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"block_types"> | Date | string
+  labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
   millings?: Prisma.Case_millingsListRelationFilter
 }
 
 export type block_typesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   material?: Prisma.SortOrderInput | Prisma.SortOrder
   brand?: Prisma.SortOrderInput | Prisma.SortOrder
   size?: Prisma.SortOrderInput | Prisma.SortOrder
   shade?: Prisma.SortOrderInput | Prisma.SortOrder
-  defaultCost?: Prisma.SortOrderInput | Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  dental_labs?: Prisma.dental_labsOrderByWithRelationInput
+  default_cost?: Prisma.SortOrderInput | Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
+  labs?: Prisma.labsOrderByWithRelationInput
   millings?: Prisma.case_millingsOrderByRelationAggregateInput
 }
 
 export type block_typesWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  dentalLabId_name?: Prisma.block_typesDentalLabIdNameCompoundUniqueInput
+  lab_id_name?: Prisma.block_typesLab_idNameCompoundUniqueInput
   AND?: Prisma.block_typesWhereInput | Prisma.block_typesWhereInput[]
   OR?: Prisma.block_typesWhereInput[]
   NOT?: Prisma.block_typesWhereInput | Prisma.block_typesWhereInput[]
-  dentalLabId?: Prisma.StringFilter<"block_types"> | string
+  lab_id?: Prisma.StringFilter<"block_types"> | string
   name?: Prisma.StringFilter<"block_types"> | string
   material?: Prisma.StringNullableFilter<"block_types"> | string | null
   brand?: Prisma.StringNullableFilter<"block_types"> | string | null
   size?: Prisma.StringNullableFilter<"block_types"> | string | null
   shade?: Prisma.StringNullableFilter<"block_types"> | string | null
-  defaultCost?: Prisma.DecimalNullableFilter<"block_types"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFilter<"block_types"> | boolean
-  createdAt?: Prisma.DateTimeFilter<"block_types"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"block_types"> | Date | string
-  dental_labs?: Prisma.XOR<Prisma.Dental_labsScalarRelationFilter, Prisma.dental_labsWhereInput>
+  default_cost?: Prisma.DecimalNullableFilter<"block_types"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFilter<"block_types"> | boolean
+  deleted_at?: Prisma.DateTimeNullableFilter<"block_types"> | Date | string | null
+  created_at?: Prisma.DateTimeFilter<"block_types"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"block_types"> | Date | string
+  labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
   millings?: Prisma.Case_millingsListRelationFilter
-}, "id" | "dentalLabId_name">
+}, "id" | "lab_id_name">
 
 export type block_typesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   material?: Prisma.SortOrderInput | Prisma.SortOrder
   brand?: Prisma.SortOrderInput | Prisma.SortOrder
   size?: Prisma.SortOrderInput | Prisma.SortOrder
   shade?: Prisma.SortOrderInput | Prisma.SortOrder
-  defaultCost?: Prisma.SortOrderInput | Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  default_cost?: Prisma.SortOrderInput | Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   _count?: Prisma.block_typesCountOrderByAggregateInput
   _avg?: Prisma.block_typesAvgOrderByAggregateInput
   _max?: Prisma.block_typesMaxOrderByAggregateInput
@@ -328,16 +339,17 @@ export type block_typesScalarWhereWithAggregatesInput = {
   OR?: Prisma.block_typesScalarWhereWithAggregatesInput[]
   NOT?: Prisma.block_typesScalarWhereWithAggregatesInput | Prisma.block_typesScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"block_types"> | string
-  dentalLabId?: Prisma.StringWithAggregatesFilter<"block_types"> | string
+  lab_id?: Prisma.StringWithAggregatesFilter<"block_types"> | string
   name?: Prisma.StringWithAggregatesFilter<"block_types"> | string
   material?: Prisma.StringNullableWithAggregatesFilter<"block_types"> | string | null
   brand?: Prisma.StringNullableWithAggregatesFilter<"block_types"> | string | null
   size?: Prisma.StringNullableWithAggregatesFilter<"block_types"> | string | null
   shade?: Prisma.StringNullableWithAggregatesFilter<"block_types"> | string | null
-  defaultCost?: Prisma.DecimalNullableWithAggregatesFilter<"block_types"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolWithAggregatesFilter<"block_types"> | boolean
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"block_types"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"block_types"> | Date | string
+  default_cost?: Prisma.DecimalNullableWithAggregatesFilter<"block_types"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolWithAggregatesFilter<"block_types"> | boolean
+  deleted_at?: Prisma.DateTimeNullableWithAggregatesFilter<"block_types"> | Date | string | null
+  created_at?: Prisma.DateTimeWithAggregatesFilter<"block_types"> | Date | string
+  updated_at?: Prisma.DateTimeWithAggregatesFilter<"block_types"> | Date | string
 }
 
 export type block_typesCreateInput = {
@@ -347,26 +359,28 @@ export type block_typesCreateInput = {
   brand?: string | null
   size?: string | null
   shade?: string | null
-  defaultCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutBlock_typesInput
+  default_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutBlock_typesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutBlock_typesInput
 }
 
 export type block_typesUncheckedCreateInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   name: string
   material?: string | null
   brand?: string | null
   size?: string | null
   shade?: string | null
-  defaultCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  default_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutBlock_typesInput
 }
 
@@ -377,41 +391,44 @@ export type block_typesUpdateInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  defaultCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutBlock_typesNestedInput
+  default_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutBlock_typesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutBlock_typesNestedInput
 }
 
 export type block_typesUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  defaultCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  default_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutBlock_typesNestedInput
 }
 
 export type block_typesCreateManyInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   name: string
   material?: string | null
   brand?: string | null
   size?: string | null
   shade?: string | null
-  defaultCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  default_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type block_typesUpdateManyMutationInput = {
@@ -421,24 +438,26 @@ export type block_typesUpdateManyMutationInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  defaultCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  default_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type block_typesUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  defaultCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  default_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type Block_typesListRelationFilter = {
@@ -456,100 +475,103 @@ export type Block_typesScalarRelationFilter = {
   isNot?: Prisma.block_typesWhereInput
 }
 
-export type block_typesDentalLabIdNameCompoundUniqueInput = {
-  dentalLabId: string
+export type block_typesLab_idNameCompoundUniqueInput = {
+  lab_id: string
   name: string
 }
 
 export type block_typesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   material?: Prisma.SortOrder
   brand?: Prisma.SortOrder
   size?: Prisma.SortOrder
   shade?: Prisma.SortOrder
-  defaultCost?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  default_cost?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type block_typesAvgOrderByAggregateInput = {
-  defaultCost?: Prisma.SortOrder
+  default_cost?: Prisma.SortOrder
 }
 
 export type block_typesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   material?: Prisma.SortOrder
   brand?: Prisma.SortOrder
   size?: Prisma.SortOrder
   shade?: Prisma.SortOrder
-  defaultCost?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  default_cost?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type block_typesMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   material?: Prisma.SortOrder
   brand?: Prisma.SortOrder
   size?: Prisma.SortOrder
   shade?: Prisma.SortOrder
-  defaultCost?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  default_cost?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type block_typesSumOrderByAggregateInput = {
-  defaultCost?: Prisma.SortOrder
+  default_cost?: Prisma.SortOrder
 }
 
-export type block_typesCreateNestedManyWithoutDental_labsInput = {
-  create?: Prisma.XOR<Prisma.block_typesCreateWithoutDental_labsInput, Prisma.block_typesUncheckedCreateWithoutDental_labsInput> | Prisma.block_typesCreateWithoutDental_labsInput[] | Prisma.block_typesUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.block_typesCreateOrConnectWithoutDental_labsInput | Prisma.block_typesCreateOrConnectWithoutDental_labsInput[]
-  createMany?: Prisma.block_typesCreateManyDental_labsInputEnvelope
+export type block_typesCreateNestedManyWithoutLabsInput = {
+  create?: Prisma.XOR<Prisma.block_typesCreateWithoutLabsInput, Prisma.block_typesUncheckedCreateWithoutLabsInput> | Prisma.block_typesCreateWithoutLabsInput[] | Prisma.block_typesUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.block_typesCreateOrConnectWithoutLabsInput | Prisma.block_typesCreateOrConnectWithoutLabsInput[]
+  createMany?: Prisma.block_typesCreateManyLabsInputEnvelope
   connect?: Prisma.block_typesWhereUniqueInput | Prisma.block_typesWhereUniqueInput[]
 }
 
-export type block_typesUncheckedCreateNestedManyWithoutDental_labsInput = {
-  create?: Prisma.XOR<Prisma.block_typesCreateWithoutDental_labsInput, Prisma.block_typesUncheckedCreateWithoutDental_labsInput> | Prisma.block_typesCreateWithoutDental_labsInput[] | Prisma.block_typesUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.block_typesCreateOrConnectWithoutDental_labsInput | Prisma.block_typesCreateOrConnectWithoutDental_labsInput[]
-  createMany?: Prisma.block_typesCreateManyDental_labsInputEnvelope
+export type block_typesUncheckedCreateNestedManyWithoutLabsInput = {
+  create?: Prisma.XOR<Prisma.block_typesCreateWithoutLabsInput, Prisma.block_typesUncheckedCreateWithoutLabsInput> | Prisma.block_typesCreateWithoutLabsInput[] | Prisma.block_typesUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.block_typesCreateOrConnectWithoutLabsInput | Prisma.block_typesCreateOrConnectWithoutLabsInput[]
+  createMany?: Prisma.block_typesCreateManyLabsInputEnvelope
   connect?: Prisma.block_typesWhereUniqueInput | Prisma.block_typesWhereUniqueInput[]
 }
 
-export type block_typesUpdateManyWithoutDental_labsNestedInput = {
-  create?: Prisma.XOR<Prisma.block_typesCreateWithoutDental_labsInput, Prisma.block_typesUncheckedCreateWithoutDental_labsInput> | Prisma.block_typesCreateWithoutDental_labsInput[] | Prisma.block_typesUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.block_typesCreateOrConnectWithoutDental_labsInput | Prisma.block_typesCreateOrConnectWithoutDental_labsInput[]
-  upsert?: Prisma.block_typesUpsertWithWhereUniqueWithoutDental_labsInput | Prisma.block_typesUpsertWithWhereUniqueWithoutDental_labsInput[]
-  createMany?: Prisma.block_typesCreateManyDental_labsInputEnvelope
+export type block_typesUpdateManyWithoutLabsNestedInput = {
+  create?: Prisma.XOR<Prisma.block_typesCreateWithoutLabsInput, Prisma.block_typesUncheckedCreateWithoutLabsInput> | Prisma.block_typesCreateWithoutLabsInput[] | Prisma.block_typesUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.block_typesCreateOrConnectWithoutLabsInput | Prisma.block_typesCreateOrConnectWithoutLabsInput[]
+  upsert?: Prisma.block_typesUpsertWithWhereUniqueWithoutLabsInput | Prisma.block_typesUpsertWithWhereUniqueWithoutLabsInput[]
+  createMany?: Prisma.block_typesCreateManyLabsInputEnvelope
   set?: Prisma.block_typesWhereUniqueInput | Prisma.block_typesWhereUniqueInput[]
   disconnect?: Prisma.block_typesWhereUniqueInput | Prisma.block_typesWhereUniqueInput[]
   delete?: Prisma.block_typesWhereUniqueInput | Prisma.block_typesWhereUniqueInput[]
   connect?: Prisma.block_typesWhereUniqueInput | Prisma.block_typesWhereUniqueInput[]
-  update?: Prisma.block_typesUpdateWithWhereUniqueWithoutDental_labsInput | Prisma.block_typesUpdateWithWhereUniqueWithoutDental_labsInput[]
-  updateMany?: Prisma.block_typesUpdateManyWithWhereWithoutDental_labsInput | Prisma.block_typesUpdateManyWithWhereWithoutDental_labsInput[]
+  update?: Prisma.block_typesUpdateWithWhereUniqueWithoutLabsInput | Prisma.block_typesUpdateWithWhereUniqueWithoutLabsInput[]
+  updateMany?: Prisma.block_typesUpdateManyWithWhereWithoutLabsInput | Prisma.block_typesUpdateManyWithWhereWithoutLabsInput[]
   deleteMany?: Prisma.block_typesScalarWhereInput | Prisma.block_typesScalarWhereInput[]
 }
 
-export type block_typesUncheckedUpdateManyWithoutDental_labsNestedInput = {
-  create?: Prisma.XOR<Prisma.block_typesCreateWithoutDental_labsInput, Prisma.block_typesUncheckedCreateWithoutDental_labsInput> | Prisma.block_typesCreateWithoutDental_labsInput[] | Prisma.block_typesUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.block_typesCreateOrConnectWithoutDental_labsInput | Prisma.block_typesCreateOrConnectWithoutDental_labsInput[]
-  upsert?: Prisma.block_typesUpsertWithWhereUniqueWithoutDental_labsInput | Prisma.block_typesUpsertWithWhereUniqueWithoutDental_labsInput[]
-  createMany?: Prisma.block_typesCreateManyDental_labsInputEnvelope
+export type block_typesUncheckedUpdateManyWithoutLabsNestedInput = {
+  create?: Prisma.XOR<Prisma.block_typesCreateWithoutLabsInput, Prisma.block_typesUncheckedCreateWithoutLabsInput> | Prisma.block_typesCreateWithoutLabsInput[] | Prisma.block_typesUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.block_typesCreateOrConnectWithoutLabsInput | Prisma.block_typesCreateOrConnectWithoutLabsInput[]
+  upsert?: Prisma.block_typesUpsertWithWhereUniqueWithoutLabsInput | Prisma.block_typesUpsertWithWhereUniqueWithoutLabsInput[]
+  createMany?: Prisma.block_typesCreateManyLabsInputEnvelope
   set?: Prisma.block_typesWhereUniqueInput | Prisma.block_typesWhereUniqueInput[]
   disconnect?: Prisma.block_typesWhereUniqueInput | Prisma.block_typesWhereUniqueInput[]
   delete?: Prisma.block_typesWhereUniqueInput | Prisma.block_typesWhereUniqueInput[]
   connect?: Prisma.block_typesWhereUniqueInput | Prisma.block_typesWhereUniqueInput[]
-  update?: Prisma.block_typesUpdateWithWhereUniqueWithoutDental_labsInput | Prisma.block_typesUpdateWithWhereUniqueWithoutDental_labsInput[]
-  updateMany?: Prisma.block_typesUpdateManyWithWhereWithoutDental_labsInput | Prisma.block_typesUpdateManyWithWhereWithoutDental_labsInput[]
+  update?: Prisma.block_typesUpdateWithWhereUniqueWithoutLabsInput | Prisma.block_typesUpdateWithWhereUniqueWithoutLabsInput[]
+  updateMany?: Prisma.block_typesUpdateManyWithWhereWithoutLabsInput | Prisma.block_typesUpdateManyWithWhereWithoutLabsInput[]
   deleteMany?: Prisma.block_typesScalarWhereInput | Prisma.block_typesScalarWhereInput[]
 }
 
@@ -567,58 +589,60 @@ export type block_typesUpdateOneRequiredWithoutMillingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.block_typesUpdateToOneWithWhereWithoutMillingsInput, Prisma.block_typesUpdateWithoutMillingsInput>, Prisma.block_typesUncheckedUpdateWithoutMillingsInput>
 }
 
-export type block_typesCreateWithoutDental_labsInput = {
+export type block_typesCreateWithoutLabsInput = {
   id?: string
   name: string
   material?: string | null
   brand?: string | null
   size?: string | null
   shade?: string | null
-  defaultCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  default_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   millings?: Prisma.case_millingsCreateNestedManyWithoutBlock_typesInput
 }
 
-export type block_typesUncheckedCreateWithoutDental_labsInput = {
+export type block_typesUncheckedCreateWithoutLabsInput = {
   id?: string
   name: string
   material?: string | null
   brand?: string | null
   size?: string | null
   shade?: string | null
-  defaultCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  default_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutBlock_typesInput
 }
 
-export type block_typesCreateOrConnectWithoutDental_labsInput = {
+export type block_typesCreateOrConnectWithoutLabsInput = {
   where: Prisma.block_typesWhereUniqueInput
-  create: Prisma.XOR<Prisma.block_typesCreateWithoutDental_labsInput, Prisma.block_typesUncheckedCreateWithoutDental_labsInput>
+  create: Prisma.XOR<Prisma.block_typesCreateWithoutLabsInput, Prisma.block_typesUncheckedCreateWithoutLabsInput>
 }
 
-export type block_typesCreateManyDental_labsInputEnvelope = {
-  data: Prisma.block_typesCreateManyDental_labsInput | Prisma.block_typesCreateManyDental_labsInput[]
+export type block_typesCreateManyLabsInputEnvelope = {
+  data: Prisma.block_typesCreateManyLabsInput | Prisma.block_typesCreateManyLabsInput[]
   skipDuplicates?: boolean
 }
 
-export type block_typesUpsertWithWhereUniqueWithoutDental_labsInput = {
+export type block_typesUpsertWithWhereUniqueWithoutLabsInput = {
   where: Prisma.block_typesWhereUniqueInput
-  update: Prisma.XOR<Prisma.block_typesUpdateWithoutDental_labsInput, Prisma.block_typesUncheckedUpdateWithoutDental_labsInput>
-  create: Prisma.XOR<Prisma.block_typesCreateWithoutDental_labsInput, Prisma.block_typesUncheckedCreateWithoutDental_labsInput>
+  update: Prisma.XOR<Prisma.block_typesUpdateWithoutLabsInput, Prisma.block_typesUncheckedUpdateWithoutLabsInput>
+  create: Prisma.XOR<Prisma.block_typesCreateWithoutLabsInput, Prisma.block_typesUncheckedCreateWithoutLabsInput>
 }
 
-export type block_typesUpdateWithWhereUniqueWithoutDental_labsInput = {
+export type block_typesUpdateWithWhereUniqueWithoutLabsInput = {
   where: Prisma.block_typesWhereUniqueInput
-  data: Prisma.XOR<Prisma.block_typesUpdateWithoutDental_labsInput, Prisma.block_typesUncheckedUpdateWithoutDental_labsInput>
+  data: Prisma.XOR<Prisma.block_typesUpdateWithoutLabsInput, Prisma.block_typesUncheckedUpdateWithoutLabsInput>
 }
 
-export type block_typesUpdateManyWithWhereWithoutDental_labsInput = {
+export type block_typesUpdateManyWithWhereWithoutLabsInput = {
   where: Prisma.block_typesScalarWhereInput
-  data: Prisma.XOR<Prisma.block_typesUpdateManyMutationInput, Prisma.block_typesUncheckedUpdateManyWithoutDental_labsInput>
+  data: Prisma.XOR<Prisma.block_typesUpdateManyMutationInput, Prisma.block_typesUncheckedUpdateManyWithoutLabsInput>
 }
 
 export type block_typesScalarWhereInput = {
@@ -626,16 +650,17 @@ export type block_typesScalarWhereInput = {
   OR?: Prisma.block_typesScalarWhereInput[]
   NOT?: Prisma.block_typesScalarWhereInput | Prisma.block_typesScalarWhereInput[]
   id?: Prisma.StringFilter<"block_types"> | string
-  dentalLabId?: Prisma.StringFilter<"block_types"> | string
+  lab_id?: Prisma.StringFilter<"block_types"> | string
   name?: Prisma.StringFilter<"block_types"> | string
   material?: Prisma.StringNullableFilter<"block_types"> | string | null
   brand?: Prisma.StringNullableFilter<"block_types"> | string | null
   size?: Prisma.StringNullableFilter<"block_types"> | string | null
   shade?: Prisma.StringNullableFilter<"block_types"> | string | null
-  defaultCost?: Prisma.DecimalNullableFilter<"block_types"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFilter<"block_types"> | boolean
-  createdAt?: Prisma.DateTimeFilter<"block_types"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"block_types"> | Date | string
+  default_cost?: Prisma.DecimalNullableFilter<"block_types"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFilter<"block_types"> | boolean
+  deleted_at?: Prisma.DateTimeNullableFilter<"block_types"> | Date | string | null
+  created_at?: Prisma.DateTimeFilter<"block_types"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"block_types"> | Date | string
 }
 
 export type block_typesCreateWithoutMillingsInput = {
@@ -645,25 +670,27 @@ export type block_typesCreateWithoutMillingsInput = {
   brand?: string | null
   size?: string | null
   shade?: string | null
-  defaultCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutBlock_typesInput
+  default_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutBlock_typesInput
 }
 
 export type block_typesUncheckedCreateWithoutMillingsInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   name: string
   material?: string | null
   brand?: string | null
   size?: string | null
   shade?: string | null
-  defaultCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  default_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type block_typesCreateOrConnectWithoutMillingsInput = {
@@ -689,79 +716,85 @@ export type block_typesUpdateWithoutMillingsInput = {
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  defaultCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutBlock_typesNestedInput
+  default_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutBlock_typesNestedInput
 }
 
 export type block_typesUncheckedUpdateWithoutMillingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  defaultCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  default_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type block_typesCreateManyDental_labsInput = {
+export type block_typesCreateManyLabsInput = {
   id?: string
   name: string
   material?: string | null
   brand?: string | null
   size?: string | null
   shade?: string | null
-  defaultCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  default_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
-export type block_typesUpdateWithoutDental_labsInput = {
+export type block_typesUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  defaultCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  default_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   millings?: Prisma.case_millingsUpdateManyWithoutBlock_typesNestedInput
 }
 
-export type block_typesUncheckedUpdateWithoutDental_labsInput = {
+export type block_typesUncheckedUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  defaultCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  default_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutBlock_typesNestedInput
 }
 
-export type block_typesUncheckedUpdateManyWithoutDental_labsInput = {
+export type block_typesUncheckedUpdateManyWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   size?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  defaultCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  default_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -797,96 +830,101 @@ export type Block_typesCountOutputTypeCountMillingsArgs<ExtArgs extends runtime.
 
 export type block_typesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  dentalLabId?: boolean
+  lab_id?: boolean
   name?: boolean
   material?: boolean
   brand?: boolean
   size?: boolean
   shade?: boolean
-  defaultCost?: boolean
-  isActive?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  default_cost?: boolean
+  is_active?: boolean
+  deleted_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   millings?: boolean | Prisma.block_types$millingsArgs<ExtArgs>
   _count?: boolean | Prisma.Block_typesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["block_types"]>
 
 export type block_typesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  dentalLabId?: boolean
+  lab_id?: boolean
   name?: boolean
   material?: boolean
   brand?: boolean
   size?: boolean
   shade?: boolean
-  defaultCost?: boolean
-  isActive?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  default_cost?: boolean
+  is_active?: boolean
+  deleted_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["block_types"]>
 
 export type block_typesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  dentalLabId?: boolean
+  lab_id?: boolean
   name?: boolean
   material?: boolean
   brand?: boolean
   size?: boolean
   shade?: boolean
-  defaultCost?: boolean
-  isActive?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  default_cost?: boolean
+  is_active?: boolean
+  deleted_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["block_types"]>
 
 export type block_typesSelectScalar = {
   id?: boolean
-  dentalLabId?: boolean
+  lab_id?: boolean
   name?: boolean
   material?: boolean
   brand?: boolean
   size?: boolean
   shade?: boolean
-  defaultCost?: boolean
-  isActive?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
+  default_cost?: boolean
+  is_active?: boolean
+  deleted_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }
 
-export type block_typesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dentalLabId" | "name" | "material" | "brand" | "size" | "shade" | "defaultCost" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["block_types"]>
+export type block_typesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "name" | "material" | "brand" | "size" | "shade" | "default_cost" | "is_active" | "deleted_at" | "created_at" | "updated_at", ExtArgs["result"]["block_types"]>
 export type block_typesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   millings?: boolean | Prisma.block_types$millingsArgs<ExtArgs>
   _count?: boolean | Prisma.Block_typesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type block_typesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
 }
 export type block_typesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
 }
 
 export type $block_typesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "block_types"
   objects: {
-    dental_labs: Prisma.$dental_labsPayload<ExtArgs>
+    labs: Prisma.$labsPayload<ExtArgs>
     millings: Prisma.$case_millingsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    dentalLabId: string
+    lab_id: string
     name: string
     material: string | null
     brand: string | null
     size: string | null
     shade: string | null
-    defaultCost: runtime.Decimal | null
-    isActive: boolean
-    createdAt: Date
-    updatedAt: Date
+    default_cost: runtime.Decimal | null
+    is_active: boolean
+    deleted_at: Date | null
+    created_at: Date
+    updated_at: Date
   }, ExtArgs["result"]["block_types"]>
   composites: {}
 }
@@ -1281,7 +1319,7 @@ readonly fields: block_typesFieldRefs;
  */
 export interface Prisma__block_typesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  dental_labs<T extends Prisma.dental_labsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.dental_labsDefaultArgs<ExtArgs>>): Prisma.Prisma__dental_labsClient<runtime.Types.Result.GetResult<Prisma.$dental_labsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  labs<T extends Prisma.labsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labsDefaultArgs<ExtArgs>>): Prisma.Prisma__labsClient<runtime.Types.Result.GetResult<Prisma.$labsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   millings<T extends Prisma.block_types$millingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.block_types$millingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_millingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1313,16 +1351,17 @@ export interface Prisma__block_typesClient<T, Null = never, ExtArgs extends runt
  */
 export interface block_typesFieldRefs {
   readonly id: Prisma.FieldRef<"block_types", 'String'>
-  readonly dentalLabId: Prisma.FieldRef<"block_types", 'String'>
+  readonly lab_id: Prisma.FieldRef<"block_types", 'String'>
   readonly name: Prisma.FieldRef<"block_types", 'String'>
   readonly material: Prisma.FieldRef<"block_types", 'String'>
   readonly brand: Prisma.FieldRef<"block_types", 'String'>
   readonly size: Prisma.FieldRef<"block_types", 'String'>
   readonly shade: Prisma.FieldRef<"block_types", 'String'>
-  readonly defaultCost: Prisma.FieldRef<"block_types", 'Decimal'>
-  readonly isActive: Prisma.FieldRef<"block_types", 'Boolean'>
-  readonly createdAt: Prisma.FieldRef<"block_types", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"block_types", 'DateTime'>
+  readonly default_cost: Prisma.FieldRef<"block_types", 'Decimal'>
+  readonly is_active: Prisma.FieldRef<"block_types", 'Boolean'>
+  readonly deleted_at: Prisma.FieldRef<"block_types", 'DateTime'>
+  readonly created_at: Prisma.FieldRef<"block_types", 'DateTime'>
+  readonly updated_at: Prisma.FieldRef<"block_types", 'DateTime'>
 }
     
 

@@ -42,12 +42,14 @@ export default function RootLayout({
         "font-sans",
       )}
     >
-      <body className="min-h-screen flex flex-col bg-background">
+      <body className="flex h-screen flex-col overflow-hidden bg-background">
         <QueryProvider>
           <ConditionalMainNavWrapper>
             <MainNav />
           </ConditionalMainNavWrapper>
-          <div className="flex-1">{children}</div>
+          <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
+            {children}
+          </div>
           <Toaster richColors position="top-right" />
         </QueryProvider>
       </body>

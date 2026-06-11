@@ -4,14 +4,14 @@ import * as React from "react";
 import { Loader2, Search } from "lucide-react";
 
 import type {
-  CadDesignerOption,
-  ClinicOption,
   ComponentOption,
   EditableCase,
   SearchCaseItem,
-  ServiceTypeOption,
 } from "@/features/cases/types";
 import { CaseDetailsDialog } from "@/features/cases/components/case-details-dialog";
+import { useCadDesigners } from "@/features/cases/hooks/useCadDesigners";
+import { useCustomers } from "@/features/cases/hooks/useCustomers";
+import { useServiceTypes } from "@/features/cases/hooks/useServiceTypes";
 import { mockCases } from "@/lib/mock-data/pages";
 import {
   Command,
@@ -26,18 +26,12 @@ import {
 
 type Props = {
   cases: SearchCaseItem[];
-  clinics: ClinicOption[];
-  serviceTypes: ServiceTypeOption[];
-  cadDesigners: CadDesignerOption[];
   components: ComponentOption[];
   currentUserRole: string;
 };
 
 export function CaseSearch({
   cases,
-  clinics,
-  serviceTypes,
-  cadDesigners,
   components,
   currentUserRole,
 }: Props) {
@@ -47,6 +41,21 @@ export function CaseSearch({
     null,
   );
   const [loadingCaseId, setLoadingCaseId] = React.useState<string | null>(null);
+  const customers = useCustomers(detailsOpen);
+  const serviceTypes = useServiceTypes(detailsOpen);
+  const cadDesigners = useCadDesigners(detailsOpen);
+  const optionQueries = [customers, serviceTypes, cadDesigners];
+  const optionsLoading = optionQueries.some(
+    (query) => query.isLoading || query.isFetching,
+  );
+  const optionsError =
+    optionQueries.find((query) => query.isError)?.error ?? null;
+
+  function retryOptions() {
+    void customers.refetch();
+    void serviceTypes.refetch();
+    void cadDesigners.refetch();
+  }
 
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -115,7 +124,7 @@ export function CaseSearch({
               {cases.map((item) => (
                 <CommandItem
                   key={item.id}
-                  value={`${item.code} ${item.patientName} ${item.clinicName}`}
+                  value={`${item.code} ${item.patientName} ${item.customerName}`}
                   onSelect={() => void handleSelect(item.id)}
                   disabled={loadingCaseId !== null}
                 >
@@ -124,7 +133,7 @@ export function CaseSearch({
                       {item.code || "Sem código"} - {item.patientName}
                     </div>
                     <div className="truncate text-xs text-muted-foreground">
-                      {item.clinicName || "Sem clínica"}
+                      {item.customerName || "Sem clínica"}
                       {item.currentStatus
                         ? ` • ${item.currentStatus.replace(/_/g, " ")}`
                         : ""}
@@ -149,10 +158,19 @@ export function CaseSearch({
         onOpenChange={setDetailsOpen}
         item={selectedCase}
         currentUserRole={currentUserRole}
-        clinics={clinics}
-        serviceTypes={serviceTypes}
-        cadDesigners={cadDesigners}
+        customers={customers.data ?? []}
+        serviceTypes={serviceTypes.data ?? []}
+        cadDesigners={cadDesigners.data ?? []}
         components={components}
+        optionsLoading={optionsLoading}
+        optionsError={
+          optionsError
+            ? optionsError instanceof Error
+              ? optionsError.message
+              : "Could not load case options."
+            : null
+        }
+        onRetryOptions={retryOptions}
       />
     </>
   );

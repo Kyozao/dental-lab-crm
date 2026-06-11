@@ -26,76 +26,88 @@ export type AggregateDentists = {
 
 export type DentistsMinAggregateOutputType = {
   id: string | null
-  dentalLabId: string | null
-  clinicId: string | null
+  lab_id: string | null
+  customer_id: string | null
   name: string | null
   phone: string | null
   email: string | null
   notes: string | null
-  createdAt: Date | null
-  updatedAt: Date | null
+  is_active: boolean | null
+  deleted_at: Date | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type DentistsMaxAggregateOutputType = {
   id: string | null
-  dentalLabId: string | null
-  clinicId: string | null
+  lab_id: string | null
+  customer_id: string | null
   name: string | null
   phone: string | null
   email: string | null
   notes: string | null
-  createdAt: Date | null
-  updatedAt: Date | null
+  is_active: boolean | null
+  deleted_at: Date | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type DentistsCountAggregateOutputType = {
   id: number
-  dentalLabId: number
-  clinicId: number
+  lab_id: number
+  customer_id: number
   name: number
   phone: number
   email: number
   notes: number
-  createdAt: number
-  updatedAt: number
+  is_active: number
+  deleted_at: number
+  created_at: number
+  updated_at: number
   _all: number
 }
 
 
 export type DentistsMinAggregateInputType = {
   id?: true
-  dentalLabId?: true
-  clinicId?: true
+  lab_id?: true
+  customer_id?: true
   name?: true
   phone?: true
   email?: true
   notes?: true
-  createdAt?: true
-  updatedAt?: true
+  is_active?: true
+  deleted_at?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type DentistsMaxAggregateInputType = {
   id?: true
-  dentalLabId?: true
-  clinicId?: true
+  lab_id?: true
+  customer_id?: true
   name?: true
   phone?: true
   email?: true
   notes?: true
-  createdAt?: true
-  updatedAt?: true
+  is_active?: true
+  deleted_at?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type DentistsCountAggregateInputType = {
   id?: true
-  dentalLabId?: true
-  clinicId?: true
+  lab_id?: true
+  customer_id?: true
   name?: true
   phone?: true
   email?: true
   notes?: true
-  createdAt?: true
-  updatedAt?: true
+  is_active?: true
+  deleted_at?: true
+  created_at?: true
+  updated_at?: true
   _all?: true
 }
 
@@ -173,14 +185,16 @@ export type dentistsGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 
 export type DentistsGroupByOutputType = {
   id: string
-  dentalLabId: string
-  clinicId: string
+  lab_id: string
+  customer_id: string
   name: string
   phone: string | null
   email: string | null
   notes: string | null
-  createdAt: Date
-  updatedAt: Date
+  is_active: boolean
+  deleted_at: Date | null
+  created_at: Date
+  updated_at: Date
   _count: DentistsCountAggregateOutputType | null
   _min: DentistsMinAggregateOutputType | null
   _max: DentistsMaxAggregateOutputType | null
@@ -206,31 +220,35 @@ export type dentistsWhereInput = {
   OR?: Prisma.dentistsWhereInput[]
   NOT?: Prisma.dentistsWhereInput | Prisma.dentistsWhereInput[]
   id?: Prisma.StringFilter<"dentists"> | string
-  dentalLabId?: Prisma.StringFilter<"dentists"> | string
-  clinicId?: Prisma.StringFilter<"dentists"> | string
+  lab_id?: Prisma.StringFilter<"dentists"> | string
+  customer_id?: Prisma.StringFilter<"dentists"> | string
   name?: Prisma.StringFilter<"dentists"> | string
   phone?: Prisma.StringNullableFilter<"dentists"> | string | null
   email?: Prisma.StringNullableFilter<"dentists"> | string | null
   notes?: Prisma.StringNullableFilter<"dentists"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"dentists"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"dentists"> | Date | string
-  dental_labs?: Prisma.XOR<Prisma.Dental_labsScalarRelationFilter, Prisma.dental_labsWhereInput>
-  clinics?: Prisma.XOR<Prisma.ClinicsScalarRelationFilter, Prisma.clinicsWhereInput>
+  is_active?: Prisma.BoolFilter<"dentists"> | boolean
+  deleted_at?: Prisma.DateTimeNullableFilter<"dentists"> | Date | string | null
+  created_at?: Prisma.DateTimeFilter<"dentists"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"dentists"> | Date | string
+  labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
+  customers?: Prisma.XOR<Prisma.CustomersScalarRelationFilter, Prisma.customersWhereInput>
   cases?: Prisma.CasesListRelationFilter
 }
 
 export type dentistsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
-  clinicId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
+  customer_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  dental_labs?: Prisma.dental_labsOrderByWithRelationInput
-  clinics?: Prisma.clinicsOrderByWithRelationInput
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
+  labs?: Prisma.labsOrderByWithRelationInput
+  customers?: Prisma.customersOrderByWithRelationInput
   cases?: Prisma.casesOrderByRelationAggregateInput
 }
 
@@ -239,29 +257,33 @@ export type dentistsWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.dentistsWhereInput | Prisma.dentistsWhereInput[]
   OR?: Prisma.dentistsWhereInput[]
   NOT?: Prisma.dentistsWhereInput | Prisma.dentistsWhereInput[]
-  dentalLabId?: Prisma.StringFilter<"dentists"> | string
-  clinicId?: Prisma.StringFilter<"dentists"> | string
+  lab_id?: Prisma.StringFilter<"dentists"> | string
+  customer_id?: Prisma.StringFilter<"dentists"> | string
   name?: Prisma.StringFilter<"dentists"> | string
   phone?: Prisma.StringNullableFilter<"dentists"> | string | null
   email?: Prisma.StringNullableFilter<"dentists"> | string | null
   notes?: Prisma.StringNullableFilter<"dentists"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"dentists"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"dentists"> | Date | string
-  dental_labs?: Prisma.XOR<Prisma.Dental_labsScalarRelationFilter, Prisma.dental_labsWhereInput>
-  clinics?: Prisma.XOR<Prisma.ClinicsScalarRelationFilter, Prisma.clinicsWhereInput>
+  is_active?: Prisma.BoolFilter<"dentists"> | boolean
+  deleted_at?: Prisma.DateTimeNullableFilter<"dentists"> | Date | string | null
+  created_at?: Prisma.DateTimeFilter<"dentists"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"dentists"> | Date | string
+  labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
+  customers?: Prisma.XOR<Prisma.CustomersScalarRelationFilter, Prisma.customersWhereInput>
   cases?: Prisma.CasesListRelationFilter
 }, "id">
 
 export type dentistsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
-  clinicId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
+  customer_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   _count?: Prisma.dentistsCountOrderByAggregateInput
   _max?: Prisma.dentistsMaxOrderByAggregateInput
   _min?: Prisma.dentistsMinOrderByAggregateInput
@@ -272,14 +294,16 @@ export type dentistsScalarWhereWithAggregatesInput = {
   OR?: Prisma.dentistsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.dentistsScalarWhereWithAggregatesInput | Prisma.dentistsScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"dentists"> | string
-  dentalLabId?: Prisma.StringWithAggregatesFilter<"dentists"> | string
-  clinicId?: Prisma.StringWithAggregatesFilter<"dentists"> | string
+  lab_id?: Prisma.StringWithAggregatesFilter<"dentists"> | string
+  customer_id?: Prisma.StringWithAggregatesFilter<"dentists"> | string
   name?: Prisma.StringWithAggregatesFilter<"dentists"> | string
   phone?: Prisma.StringNullableWithAggregatesFilter<"dentists"> | string | null
   email?: Prisma.StringNullableWithAggregatesFilter<"dentists"> | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"dentists"> | string | null
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"dentists"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"dentists"> | Date | string
+  is_active?: Prisma.BoolWithAggregatesFilter<"dentists"> | boolean
+  deleted_at?: Prisma.DateTimeNullableWithAggregatesFilter<"dentists"> | Date | string | null
+  created_at?: Prisma.DateTimeWithAggregatesFilter<"dentists"> | Date | string
+  updated_at?: Prisma.DateTimeWithAggregatesFilter<"dentists"> | Date | string
 }
 
 export type dentistsCreateInput = {
@@ -288,23 +312,27 @@ export type dentistsCreateInput = {
   phone?: string | null
   email?: string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutDentistsInput
-  clinics: Prisma.clinicsCreateNestedOneWithoutDentistsInput
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutDentistsInput
+  customers: Prisma.customersCreateNestedOneWithoutDentistsInput
   cases?: Prisma.casesCreateNestedManyWithoutDentistsInput
 }
 
 export type dentistsUncheckedCreateInput = {
   id?: string
-  dentalLabId: string
-  clinicId: string
+  lab_id: string
+  customer_id: string
   name: string
   phone?: string | null
   email?: string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutDentistsInput
 }
 
@@ -314,36 +342,42 @@ export type dentistsUpdateInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutDentistsNestedInput
-  clinics?: Prisma.clinicsUpdateOneRequiredWithoutDentistsNestedInput
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutDentistsNestedInput
+  customers?: Prisma.customersUpdateOneRequiredWithoutDentistsNestedInput
   cases?: Prisma.casesUpdateManyWithoutDentistsNestedInput
 }
 
 export type dentistsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUncheckedUpdateManyWithoutDentistsNestedInput
 }
 
 export type dentistsCreateManyInput = {
   id?: string
-  dentalLabId: string
-  clinicId: string
+  lab_id: string
+  customer_id: string
   name: string
   phone?: string | null
   email?: string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type dentistsUpdateManyMutationInput = {
@@ -352,20 +386,24 @@ export type dentistsUpdateManyMutationInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type dentistsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DentistsListRelationFilter = {
@@ -380,38 +418,44 @@ export type dentistsOrderByRelationAggregateInput = {
 
 export type dentistsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
-  clinicId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
+  customer_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type dentistsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
-  clinicId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
+  customer_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type dentistsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
-  clinicId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
+  customer_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type DentistsNullableScalarRelationFilter = {
@@ -419,87 +463,87 @@ export type DentistsNullableScalarRelationFilter = {
   isNot?: Prisma.dentistsWhereInput | null
 }
 
-export type dentistsCreateNestedManyWithoutDental_labsInput = {
-  create?: Prisma.XOR<Prisma.dentistsCreateWithoutDental_labsInput, Prisma.dentistsUncheckedCreateWithoutDental_labsInput> | Prisma.dentistsCreateWithoutDental_labsInput[] | Prisma.dentistsUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.dentistsCreateOrConnectWithoutDental_labsInput | Prisma.dentistsCreateOrConnectWithoutDental_labsInput[]
-  createMany?: Prisma.dentistsCreateManyDental_labsInputEnvelope
+export type dentistsCreateNestedManyWithoutLabsInput = {
+  create?: Prisma.XOR<Prisma.dentistsCreateWithoutLabsInput, Prisma.dentistsUncheckedCreateWithoutLabsInput> | Prisma.dentistsCreateWithoutLabsInput[] | Prisma.dentistsUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.dentistsCreateOrConnectWithoutLabsInput | Prisma.dentistsCreateOrConnectWithoutLabsInput[]
+  createMany?: Prisma.dentistsCreateManyLabsInputEnvelope
   connect?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
 }
 
-export type dentistsUncheckedCreateNestedManyWithoutDental_labsInput = {
-  create?: Prisma.XOR<Prisma.dentistsCreateWithoutDental_labsInput, Prisma.dentistsUncheckedCreateWithoutDental_labsInput> | Prisma.dentistsCreateWithoutDental_labsInput[] | Prisma.dentistsUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.dentistsCreateOrConnectWithoutDental_labsInput | Prisma.dentistsCreateOrConnectWithoutDental_labsInput[]
-  createMany?: Prisma.dentistsCreateManyDental_labsInputEnvelope
+export type dentistsUncheckedCreateNestedManyWithoutLabsInput = {
+  create?: Prisma.XOR<Prisma.dentistsCreateWithoutLabsInput, Prisma.dentistsUncheckedCreateWithoutLabsInput> | Prisma.dentistsCreateWithoutLabsInput[] | Prisma.dentistsUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.dentistsCreateOrConnectWithoutLabsInput | Prisma.dentistsCreateOrConnectWithoutLabsInput[]
+  createMany?: Prisma.dentistsCreateManyLabsInputEnvelope
   connect?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
 }
 
-export type dentistsUpdateManyWithoutDental_labsNestedInput = {
-  create?: Prisma.XOR<Prisma.dentistsCreateWithoutDental_labsInput, Prisma.dentistsUncheckedCreateWithoutDental_labsInput> | Prisma.dentistsCreateWithoutDental_labsInput[] | Prisma.dentistsUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.dentistsCreateOrConnectWithoutDental_labsInput | Prisma.dentistsCreateOrConnectWithoutDental_labsInput[]
-  upsert?: Prisma.dentistsUpsertWithWhereUniqueWithoutDental_labsInput | Prisma.dentistsUpsertWithWhereUniqueWithoutDental_labsInput[]
-  createMany?: Prisma.dentistsCreateManyDental_labsInputEnvelope
+export type dentistsUpdateManyWithoutLabsNestedInput = {
+  create?: Prisma.XOR<Prisma.dentistsCreateWithoutLabsInput, Prisma.dentistsUncheckedCreateWithoutLabsInput> | Prisma.dentistsCreateWithoutLabsInput[] | Prisma.dentistsUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.dentistsCreateOrConnectWithoutLabsInput | Prisma.dentistsCreateOrConnectWithoutLabsInput[]
+  upsert?: Prisma.dentistsUpsertWithWhereUniqueWithoutLabsInput | Prisma.dentistsUpsertWithWhereUniqueWithoutLabsInput[]
+  createMany?: Prisma.dentistsCreateManyLabsInputEnvelope
   set?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
   disconnect?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
   delete?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
   connect?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
-  update?: Prisma.dentistsUpdateWithWhereUniqueWithoutDental_labsInput | Prisma.dentistsUpdateWithWhereUniqueWithoutDental_labsInput[]
-  updateMany?: Prisma.dentistsUpdateManyWithWhereWithoutDental_labsInput | Prisma.dentistsUpdateManyWithWhereWithoutDental_labsInput[]
+  update?: Prisma.dentistsUpdateWithWhereUniqueWithoutLabsInput | Prisma.dentistsUpdateWithWhereUniqueWithoutLabsInput[]
+  updateMany?: Prisma.dentistsUpdateManyWithWhereWithoutLabsInput | Prisma.dentistsUpdateManyWithWhereWithoutLabsInput[]
   deleteMany?: Prisma.dentistsScalarWhereInput | Prisma.dentistsScalarWhereInput[]
 }
 
-export type dentistsUncheckedUpdateManyWithoutDental_labsNestedInput = {
-  create?: Prisma.XOR<Prisma.dentistsCreateWithoutDental_labsInput, Prisma.dentistsUncheckedCreateWithoutDental_labsInput> | Prisma.dentistsCreateWithoutDental_labsInput[] | Prisma.dentistsUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.dentistsCreateOrConnectWithoutDental_labsInput | Prisma.dentistsCreateOrConnectWithoutDental_labsInput[]
-  upsert?: Prisma.dentistsUpsertWithWhereUniqueWithoutDental_labsInput | Prisma.dentistsUpsertWithWhereUniqueWithoutDental_labsInput[]
-  createMany?: Prisma.dentistsCreateManyDental_labsInputEnvelope
+export type dentistsUncheckedUpdateManyWithoutLabsNestedInput = {
+  create?: Prisma.XOR<Prisma.dentistsCreateWithoutLabsInput, Prisma.dentistsUncheckedCreateWithoutLabsInput> | Prisma.dentistsCreateWithoutLabsInput[] | Prisma.dentistsUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.dentistsCreateOrConnectWithoutLabsInput | Prisma.dentistsCreateOrConnectWithoutLabsInput[]
+  upsert?: Prisma.dentistsUpsertWithWhereUniqueWithoutLabsInput | Prisma.dentistsUpsertWithWhereUniqueWithoutLabsInput[]
+  createMany?: Prisma.dentistsCreateManyLabsInputEnvelope
   set?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
   disconnect?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
   delete?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
   connect?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
-  update?: Prisma.dentistsUpdateWithWhereUniqueWithoutDental_labsInput | Prisma.dentistsUpdateWithWhereUniqueWithoutDental_labsInput[]
-  updateMany?: Prisma.dentistsUpdateManyWithWhereWithoutDental_labsInput | Prisma.dentistsUpdateManyWithWhereWithoutDental_labsInput[]
+  update?: Prisma.dentistsUpdateWithWhereUniqueWithoutLabsInput | Prisma.dentistsUpdateWithWhereUniqueWithoutLabsInput[]
+  updateMany?: Prisma.dentistsUpdateManyWithWhereWithoutLabsInput | Prisma.dentistsUpdateManyWithWhereWithoutLabsInput[]
   deleteMany?: Prisma.dentistsScalarWhereInput | Prisma.dentistsScalarWhereInput[]
 }
 
-export type dentistsCreateNestedManyWithoutClinicsInput = {
-  create?: Prisma.XOR<Prisma.dentistsCreateWithoutClinicsInput, Prisma.dentistsUncheckedCreateWithoutClinicsInput> | Prisma.dentistsCreateWithoutClinicsInput[] | Prisma.dentistsUncheckedCreateWithoutClinicsInput[]
-  connectOrCreate?: Prisma.dentistsCreateOrConnectWithoutClinicsInput | Prisma.dentistsCreateOrConnectWithoutClinicsInput[]
-  createMany?: Prisma.dentistsCreateManyClinicsInputEnvelope
+export type dentistsCreateNestedManyWithoutCustomersInput = {
+  create?: Prisma.XOR<Prisma.dentistsCreateWithoutCustomersInput, Prisma.dentistsUncheckedCreateWithoutCustomersInput> | Prisma.dentistsCreateWithoutCustomersInput[] | Prisma.dentistsUncheckedCreateWithoutCustomersInput[]
+  connectOrCreate?: Prisma.dentistsCreateOrConnectWithoutCustomersInput | Prisma.dentistsCreateOrConnectWithoutCustomersInput[]
+  createMany?: Prisma.dentistsCreateManyCustomersInputEnvelope
   connect?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
 }
 
-export type dentistsUncheckedCreateNestedManyWithoutClinicsInput = {
-  create?: Prisma.XOR<Prisma.dentistsCreateWithoutClinicsInput, Prisma.dentistsUncheckedCreateWithoutClinicsInput> | Prisma.dentistsCreateWithoutClinicsInput[] | Prisma.dentistsUncheckedCreateWithoutClinicsInput[]
-  connectOrCreate?: Prisma.dentistsCreateOrConnectWithoutClinicsInput | Prisma.dentistsCreateOrConnectWithoutClinicsInput[]
-  createMany?: Prisma.dentistsCreateManyClinicsInputEnvelope
+export type dentistsUncheckedCreateNestedManyWithoutCustomersInput = {
+  create?: Prisma.XOR<Prisma.dentistsCreateWithoutCustomersInput, Prisma.dentistsUncheckedCreateWithoutCustomersInput> | Prisma.dentistsCreateWithoutCustomersInput[] | Prisma.dentistsUncheckedCreateWithoutCustomersInput[]
+  connectOrCreate?: Prisma.dentistsCreateOrConnectWithoutCustomersInput | Prisma.dentistsCreateOrConnectWithoutCustomersInput[]
+  createMany?: Prisma.dentistsCreateManyCustomersInputEnvelope
   connect?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
 }
 
-export type dentistsUpdateManyWithoutClinicsNestedInput = {
-  create?: Prisma.XOR<Prisma.dentistsCreateWithoutClinicsInput, Prisma.dentistsUncheckedCreateWithoutClinicsInput> | Prisma.dentistsCreateWithoutClinicsInput[] | Prisma.dentistsUncheckedCreateWithoutClinicsInput[]
-  connectOrCreate?: Prisma.dentistsCreateOrConnectWithoutClinicsInput | Prisma.dentistsCreateOrConnectWithoutClinicsInput[]
-  upsert?: Prisma.dentistsUpsertWithWhereUniqueWithoutClinicsInput | Prisma.dentistsUpsertWithWhereUniqueWithoutClinicsInput[]
-  createMany?: Prisma.dentistsCreateManyClinicsInputEnvelope
+export type dentistsUpdateManyWithoutCustomersNestedInput = {
+  create?: Prisma.XOR<Prisma.dentistsCreateWithoutCustomersInput, Prisma.dentistsUncheckedCreateWithoutCustomersInput> | Prisma.dentistsCreateWithoutCustomersInput[] | Prisma.dentistsUncheckedCreateWithoutCustomersInput[]
+  connectOrCreate?: Prisma.dentistsCreateOrConnectWithoutCustomersInput | Prisma.dentistsCreateOrConnectWithoutCustomersInput[]
+  upsert?: Prisma.dentistsUpsertWithWhereUniqueWithoutCustomersInput | Prisma.dentistsUpsertWithWhereUniqueWithoutCustomersInput[]
+  createMany?: Prisma.dentistsCreateManyCustomersInputEnvelope
   set?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
   disconnect?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
   delete?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
   connect?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
-  update?: Prisma.dentistsUpdateWithWhereUniqueWithoutClinicsInput | Prisma.dentistsUpdateWithWhereUniqueWithoutClinicsInput[]
-  updateMany?: Prisma.dentistsUpdateManyWithWhereWithoutClinicsInput | Prisma.dentistsUpdateManyWithWhereWithoutClinicsInput[]
+  update?: Prisma.dentistsUpdateWithWhereUniqueWithoutCustomersInput | Prisma.dentistsUpdateWithWhereUniqueWithoutCustomersInput[]
+  updateMany?: Prisma.dentistsUpdateManyWithWhereWithoutCustomersInput | Prisma.dentistsUpdateManyWithWhereWithoutCustomersInput[]
   deleteMany?: Prisma.dentistsScalarWhereInput | Prisma.dentistsScalarWhereInput[]
 }
 
-export type dentistsUncheckedUpdateManyWithoutClinicsNestedInput = {
-  create?: Prisma.XOR<Prisma.dentistsCreateWithoutClinicsInput, Prisma.dentistsUncheckedCreateWithoutClinicsInput> | Prisma.dentistsCreateWithoutClinicsInput[] | Prisma.dentistsUncheckedCreateWithoutClinicsInput[]
-  connectOrCreate?: Prisma.dentistsCreateOrConnectWithoutClinicsInput | Prisma.dentistsCreateOrConnectWithoutClinicsInput[]
-  upsert?: Prisma.dentistsUpsertWithWhereUniqueWithoutClinicsInput | Prisma.dentistsUpsertWithWhereUniqueWithoutClinicsInput[]
-  createMany?: Prisma.dentistsCreateManyClinicsInputEnvelope
+export type dentistsUncheckedUpdateManyWithoutCustomersNestedInput = {
+  create?: Prisma.XOR<Prisma.dentistsCreateWithoutCustomersInput, Prisma.dentistsUncheckedCreateWithoutCustomersInput> | Prisma.dentistsCreateWithoutCustomersInput[] | Prisma.dentistsUncheckedCreateWithoutCustomersInput[]
+  connectOrCreate?: Prisma.dentistsCreateOrConnectWithoutCustomersInput | Prisma.dentistsCreateOrConnectWithoutCustomersInput[]
+  upsert?: Prisma.dentistsUpsertWithWhereUniqueWithoutCustomersInput | Prisma.dentistsUpsertWithWhereUniqueWithoutCustomersInput[]
+  createMany?: Prisma.dentistsCreateManyCustomersInputEnvelope
   set?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
   disconnect?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
   delete?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
   connect?: Prisma.dentistsWhereUniqueInput | Prisma.dentistsWhereUniqueInput[]
-  update?: Prisma.dentistsUpdateWithWhereUniqueWithoutClinicsInput | Prisma.dentistsUpdateWithWhereUniqueWithoutClinicsInput[]
-  updateMany?: Prisma.dentistsUpdateManyWithWhereWithoutClinicsInput | Prisma.dentistsUpdateManyWithWhereWithoutClinicsInput[]
+  update?: Prisma.dentistsUpdateWithWhereUniqueWithoutCustomersInput | Prisma.dentistsUpdateWithWhereUniqueWithoutCustomersInput[]
+  updateMany?: Prisma.dentistsUpdateManyWithWhereWithoutCustomersInput | Prisma.dentistsUpdateManyWithWhereWithoutCustomersInput[]
   deleteMany?: Prisma.dentistsScalarWhereInput | Prisma.dentistsScalarWhereInput[]
 }
 
@@ -519,54 +563,58 @@ export type dentistsUpdateOneWithoutCasesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.dentistsUpdateToOneWithWhereWithoutCasesInput, Prisma.dentistsUpdateWithoutCasesInput>, Prisma.dentistsUncheckedUpdateWithoutCasesInput>
 }
 
-export type dentistsCreateWithoutDental_labsInput = {
+export type dentistsCreateWithoutLabsInput = {
   id?: string
   name: string
   phone?: string | null
   email?: string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  clinics: Prisma.clinicsCreateNestedOneWithoutDentistsInput
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  customers: Prisma.customersCreateNestedOneWithoutDentistsInput
   cases?: Prisma.casesCreateNestedManyWithoutDentistsInput
 }
 
-export type dentistsUncheckedCreateWithoutDental_labsInput = {
+export type dentistsUncheckedCreateWithoutLabsInput = {
   id?: string
-  clinicId: string
+  customer_id: string
   name: string
   phone?: string | null
   email?: string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutDentistsInput
 }
 
-export type dentistsCreateOrConnectWithoutDental_labsInput = {
+export type dentistsCreateOrConnectWithoutLabsInput = {
   where: Prisma.dentistsWhereUniqueInput
-  create: Prisma.XOR<Prisma.dentistsCreateWithoutDental_labsInput, Prisma.dentistsUncheckedCreateWithoutDental_labsInput>
+  create: Prisma.XOR<Prisma.dentistsCreateWithoutLabsInput, Prisma.dentistsUncheckedCreateWithoutLabsInput>
 }
 
-export type dentistsCreateManyDental_labsInputEnvelope = {
-  data: Prisma.dentistsCreateManyDental_labsInput | Prisma.dentistsCreateManyDental_labsInput[]
+export type dentistsCreateManyLabsInputEnvelope = {
+  data: Prisma.dentistsCreateManyLabsInput | Prisma.dentistsCreateManyLabsInput[]
   skipDuplicates?: boolean
 }
 
-export type dentistsUpsertWithWhereUniqueWithoutDental_labsInput = {
+export type dentistsUpsertWithWhereUniqueWithoutLabsInput = {
   where: Prisma.dentistsWhereUniqueInput
-  update: Prisma.XOR<Prisma.dentistsUpdateWithoutDental_labsInput, Prisma.dentistsUncheckedUpdateWithoutDental_labsInput>
-  create: Prisma.XOR<Prisma.dentistsCreateWithoutDental_labsInput, Prisma.dentistsUncheckedCreateWithoutDental_labsInput>
+  update: Prisma.XOR<Prisma.dentistsUpdateWithoutLabsInput, Prisma.dentistsUncheckedUpdateWithoutLabsInput>
+  create: Prisma.XOR<Prisma.dentistsCreateWithoutLabsInput, Prisma.dentistsUncheckedCreateWithoutLabsInput>
 }
 
-export type dentistsUpdateWithWhereUniqueWithoutDental_labsInput = {
+export type dentistsUpdateWithWhereUniqueWithoutLabsInput = {
   where: Prisma.dentistsWhereUniqueInput
-  data: Prisma.XOR<Prisma.dentistsUpdateWithoutDental_labsInput, Prisma.dentistsUncheckedUpdateWithoutDental_labsInput>
+  data: Prisma.XOR<Prisma.dentistsUpdateWithoutLabsInput, Prisma.dentistsUncheckedUpdateWithoutLabsInput>
 }
 
-export type dentistsUpdateManyWithWhereWithoutDental_labsInput = {
+export type dentistsUpdateManyWithWhereWithoutLabsInput = {
   where: Prisma.dentistsScalarWhereInput
-  data: Prisma.XOR<Prisma.dentistsUpdateManyMutationInput, Prisma.dentistsUncheckedUpdateManyWithoutDental_labsInput>
+  data: Prisma.XOR<Prisma.dentistsUpdateManyMutationInput, Prisma.dentistsUncheckedUpdateManyWithoutLabsInput>
 }
 
 export type dentistsScalarWhereInput = {
@@ -574,64 +622,70 @@ export type dentistsScalarWhereInput = {
   OR?: Prisma.dentistsScalarWhereInput[]
   NOT?: Prisma.dentistsScalarWhereInput | Prisma.dentistsScalarWhereInput[]
   id?: Prisma.StringFilter<"dentists"> | string
-  dentalLabId?: Prisma.StringFilter<"dentists"> | string
-  clinicId?: Prisma.StringFilter<"dentists"> | string
+  lab_id?: Prisma.StringFilter<"dentists"> | string
+  customer_id?: Prisma.StringFilter<"dentists"> | string
   name?: Prisma.StringFilter<"dentists"> | string
   phone?: Prisma.StringNullableFilter<"dentists"> | string | null
   email?: Prisma.StringNullableFilter<"dentists"> | string | null
   notes?: Prisma.StringNullableFilter<"dentists"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"dentists"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"dentists"> | Date | string
+  is_active?: Prisma.BoolFilter<"dentists"> | boolean
+  deleted_at?: Prisma.DateTimeNullableFilter<"dentists"> | Date | string | null
+  created_at?: Prisma.DateTimeFilter<"dentists"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"dentists"> | Date | string
 }
 
-export type dentistsCreateWithoutClinicsInput = {
+export type dentistsCreateWithoutCustomersInput = {
   id?: string
   name: string
   phone?: string | null
   email?: string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutDentistsInput
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutDentistsInput
   cases?: Prisma.casesCreateNestedManyWithoutDentistsInput
 }
 
-export type dentistsUncheckedCreateWithoutClinicsInput = {
+export type dentistsUncheckedCreateWithoutCustomersInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   name: string
   phone?: string | null
   email?: string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutDentistsInput
 }
 
-export type dentistsCreateOrConnectWithoutClinicsInput = {
+export type dentistsCreateOrConnectWithoutCustomersInput = {
   where: Prisma.dentistsWhereUniqueInput
-  create: Prisma.XOR<Prisma.dentistsCreateWithoutClinicsInput, Prisma.dentistsUncheckedCreateWithoutClinicsInput>
+  create: Prisma.XOR<Prisma.dentistsCreateWithoutCustomersInput, Prisma.dentistsUncheckedCreateWithoutCustomersInput>
 }
 
-export type dentistsCreateManyClinicsInputEnvelope = {
-  data: Prisma.dentistsCreateManyClinicsInput | Prisma.dentistsCreateManyClinicsInput[]
+export type dentistsCreateManyCustomersInputEnvelope = {
+  data: Prisma.dentistsCreateManyCustomersInput | Prisma.dentistsCreateManyCustomersInput[]
   skipDuplicates?: boolean
 }
 
-export type dentistsUpsertWithWhereUniqueWithoutClinicsInput = {
+export type dentistsUpsertWithWhereUniqueWithoutCustomersInput = {
   where: Prisma.dentistsWhereUniqueInput
-  update: Prisma.XOR<Prisma.dentistsUpdateWithoutClinicsInput, Prisma.dentistsUncheckedUpdateWithoutClinicsInput>
-  create: Prisma.XOR<Prisma.dentistsCreateWithoutClinicsInput, Prisma.dentistsUncheckedCreateWithoutClinicsInput>
+  update: Prisma.XOR<Prisma.dentistsUpdateWithoutCustomersInput, Prisma.dentistsUncheckedUpdateWithoutCustomersInput>
+  create: Prisma.XOR<Prisma.dentistsCreateWithoutCustomersInput, Prisma.dentistsUncheckedCreateWithoutCustomersInput>
 }
 
-export type dentistsUpdateWithWhereUniqueWithoutClinicsInput = {
+export type dentistsUpdateWithWhereUniqueWithoutCustomersInput = {
   where: Prisma.dentistsWhereUniqueInput
-  data: Prisma.XOR<Prisma.dentistsUpdateWithoutClinicsInput, Prisma.dentistsUncheckedUpdateWithoutClinicsInput>
+  data: Prisma.XOR<Prisma.dentistsUpdateWithoutCustomersInput, Prisma.dentistsUncheckedUpdateWithoutCustomersInput>
 }
 
-export type dentistsUpdateManyWithWhereWithoutClinicsInput = {
+export type dentistsUpdateManyWithWhereWithoutCustomersInput = {
   where: Prisma.dentistsScalarWhereInput
-  data: Prisma.XOR<Prisma.dentistsUpdateManyMutationInput, Prisma.dentistsUncheckedUpdateManyWithoutClinicsInput>
+  data: Prisma.XOR<Prisma.dentistsUpdateManyMutationInput, Prisma.dentistsUncheckedUpdateManyWithoutCustomersInput>
 }
 
 export type dentistsCreateWithoutCasesInput = {
@@ -640,22 +694,26 @@ export type dentistsCreateWithoutCasesInput = {
   phone?: string | null
   email?: string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutDentistsInput
-  clinics: Prisma.clinicsCreateNestedOneWithoutDentistsInput
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutDentistsInput
+  customers: Prisma.customersCreateNestedOneWithoutDentistsInput
 }
 
 export type dentistsUncheckedCreateWithoutCasesInput = {
   id?: string
-  dentalLabId: string
-  clinicId: string
+  lab_id: string
+  customer_id: string
   name: string
   phone?: string | null
   email?: string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type dentistsCreateOrConnectWithoutCasesInput = {
@@ -680,114 +738,134 @@ export type dentistsUpdateWithoutCasesInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutDentistsNestedInput
-  clinics?: Prisma.clinicsUpdateOneRequiredWithoutDentistsNestedInput
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutDentistsNestedInput
+  customers?: Prisma.customersUpdateOneRequiredWithoutDentistsNestedInput
 }
 
 export type dentistsUncheckedUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type dentistsCreateManyDental_labsInput = {
+export type dentistsCreateManyLabsInput = {
   id?: string
-  clinicId: string
+  customer_id: string
   name: string
   phone?: string | null
   email?: string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
-export type dentistsUpdateWithoutDental_labsInput = {
+export type dentistsUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  clinics?: Prisma.clinicsUpdateOneRequiredWithoutDentistsNestedInput
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customers?: Prisma.customersUpdateOneRequiredWithoutDentistsNestedInput
   cases?: Prisma.casesUpdateManyWithoutDentistsNestedInput
 }
 
-export type dentistsUncheckedUpdateWithoutDental_labsInput = {
+export type dentistsUncheckedUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUncheckedUpdateManyWithoutDentistsNestedInput
 }
 
-export type dentistsUncheckedUpdateManyWithoutDental_labsInput = {
+export type dentistsUncheckedUpdateManyWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type dentistsCreateManyClinicsInput = {
+export type dentistsCreateManyCustomersInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   name: string
   phone?: string | null
   email?: string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
-export type dentistsUpdateWithoutClinicsInput = {
+export type dentistsUpdateWithoutCustomersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutDentistsNestedInput
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutDentistsNestedInput
   cases?: Prisma.casesUpdateManyWithoutDentistsNestedInput
 }
 
-export type dentistsUncheckedUpdateWithoutClinicsInput = {
+export type dentistsUncheckedUpdateWithoutCustomersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUncheckedUpdateManyWithoutDentistsNestedInput
 }
 
-export type dentistsUncheckedUpdateManyWithoutClinicsInput = {
+export type dentistsUncheckedUpdateManyWithoutCustomersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -823,93 +901,103 @@ export type DentistsCountOutputTypeCountCasesArgs<ExtArgs extends runtime.Types.
 
 export type dentistsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  dentalLabId?: boolean
-  clinicId?: boolean
+  lab_id?: boolean
+  customer_id?: boolean
   name?: boolean
   phone?: boolean
   email?: boolean
   notes?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
-  clinics?: boolean | Prisma.clinicsDefaultArgs<ExtArgs>
+  is_active?: boolean
+  deleted_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  customers?: boolean | Prisma.customersDefaultArgs<ExtArgs>
   cases?: boolean | Prisma.dentists$casesArgs<ExtArgs>
   _count?: boolean | Prisma.DentistsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["dentists"]>
 
 export type dentistsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  dentalLabId?: boolean
-  clinicId?: boolean
+  lab_id?: boolean
+  customer_id?: boolean
   name?: boolean
   phone?: boolean
   email?: boolean
   notes?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
-  clinics?: boolean | Prisma.clinicsDefaultArgs<ExtArgs>
+  is_active?: boolean
+  deleted_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  customers?: boolean | Prisma.customersDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["dentists"]>
 
 export type dentistsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  dentalLabId?: boolean
-  clinicId?: boolean
+  lab_id?: boolean
+  customer_id?: boolean
   name?: boolean
   phone?: boolean
   email?: boolean
   notes?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
-  clinics?: boolean | Prisma.clinicsDefaultArgs<ExtArgs>
+  is_active?: boolean
+  deleted_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  customers?: boolean | Prisma.customersDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["dentists"]>
 
 export type dentistsSelectScalar = {
   id?: boolean
-  dentalLabId?: boolean
-  clinicId?: boolean
+  lab_id?: boolean
+  customer_id?: boolean
   name?: boolean
   phone?: boolean
   email?: boolean
   notes?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
+  is_active?: boolean
+  deleted_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }
 
-export type dentistsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dentalLabId" | "clinicId" | "name" | "phone" | "email" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["dentists"]>
+export type dentistsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "customer_id" | "name" | "phone" | "email" | "notes" | "is_active" | "deleted_at" | "created_at" | "updated_at", ExtArgs["result"]["dentists"]>
 export type dentistsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
-  clinics?: boolean | Prisma.clinicsDefaultArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  customers?: boolean | Prisma.customersDefaultArgs<ExtArgs>
   cases?: boolean | Prisma.dentists$casesArgs<ExtArgs>
   _count?: boolean | Prisma.DentistsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type dentistsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
-  clinics?: boolean | Prisma.clinicsDefaultArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  customers?: boolean | Prisma.customersDefaultArgs<ExtArgs>
 }
 export type dentistsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
-  clinics?: boolean | Prisma.clinicsDefaultArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  customers?: boolean | Prisma.customersDefaultArgs<ExtArgs>
 }
 
 export type $dentistsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "dentists"
   objects: {
-    dental_labs: Prisma.$dental_labsPayload<ExtArgs>
-    clinics: Prisma.$clinicsPayload<ExtArgs>
+    labs: Prisma.$labsPayload<ExtArgs>
+    customers: Prisma.$customersPayload<ExtArgs>
     cases: Prisma.$casesPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    dentalLabId: string
-    clinicId: string
+    lab_id: string
+    customer_id: string
     name: string
     phone: string | null
     email: string | null
     notes: string | null
-    createdAt: Date
-    updatedAt: Date
+    is_active: boolean
+    deleted_at: Date | null
+    created_at: Date
+    updated_at: Date
   }, ExtArgs["result"]["dentists"]>
   composites: {}
 }
@@ -1304,8 +1392,8 @@ readonly fields: dentistsFieldRefs;
  */
 export interface Prisma__dentistsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  dental_labs<T extends Prisma.dental_labsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.dental_labsDefaultArgs<ExtArgs>>): Prisma.Prisma__dental_labsClient<runtime.Types.Result.GetResult<Prisma.$dental_labsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  clinics<T extends Prisma.clinicsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.clinicsDefaultArgs<ExtArgs>>): Prisma.Prisma__clinicsClient<runtime.Types.Result.GetResult<Prisma.$clinicsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  labs<T extends Prisma.labsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labsDefaultArgs<ExtArgs>>): Prisma.Prisma__labsClient<runtime.Types.Result.GetResult<Prisma.$labsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  customers<T extends Prisma.customersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.customersDefaultArgs<ExtArgs>>): Prisma.Prisma__customersClient<runtime.Types.Result.GetResult<Prisma.$customersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   cases<T extends Prisma.dentists$casesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.dentists$casesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$casesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1337,14 +1425,16 @@ export interface Prisma__dentistsClient<T, Null = never, ExtArgs extends runtime
  */
 export interface dentistsFieldRefs {
   readonly id: Prisma.FieldRef<"dentists", 'String'>
-  readonly dentalLabId: Prisma.FieldRef<"dentists", 'String'>
-  readonly clinicId: Prisma.FieldRef<"dentists", 'String'>
+  readonly lab_id: Prisma.FieldRef<"dentists", 'String'>
+  readonly customer_id: Prisma.FieldRef<"dentists", 'String'>
   readonly name: Prisma.FieldRef<"dentists", 'String'>
   readonly phone: Prisma.FieldRef<"dentists", 'String'>
   readonly email: Prisma.FieldRef<"dentists", 'String'>
   readonly notes: Prisma.FieldRef<"dentists", 'String'>
-  readonly createdAt: Prisma.FieldRef<"dentists", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"dentists", 'DateTime'>
+  readonly is_active: Prisma.FieldRef<"dentists", 'Boolean'>
+  readonly deleted_at: Prisma.FieldRef<"dentists", 'DateTime'>
+  readonly created_at: Prisma.FieldRef<"dentists", 'DateTime'>
+  readonly updated_at: Prisma.FieldRef<"dentists", 'DateTime'>
 }
     
 

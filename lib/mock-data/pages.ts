@@ -2,7 +2,7 @@ import { CASE_STATUS, CASE_STATUS_META } from "@/features/cases/constants";
 import type {
   CadDesignerOption,
   CaseStatusValue,
-  ClinicOption,
+  CustomerOption,
   ComponentOption,
   CurrentUser,
   DentalLabOption,
@@ -60,23 +60,23 @@ export const mockUser: CurrentUser = {
 
 const activeDentalLabId = mockUser.activeDentalLabId;
 
-const allMockClinics: ClinicOption[] = [
+const allMockCustomers: CustomerOption[] = [
   {
-    id: "clinic-1",
+    id: "customer-1",
     dentalLabId: "lab-vela-sao-paulo",
     labCustomerId: "lab-customer-1",
     name: "Silva Dental",
     dentists: [{ id: "dentist-1", name: "Dr. Marcos Silva" }],
   },
   {
-    id: "clinic-2",
+    id: "customer-2",
     dentalLabId: "lab-vela-sao-paulo",
     labCustomerId: "lab-customer-2",
     name: "Oral Prime",
     dentists: [{ id: "dentist-2", name: "Dra. Carla Ramos" }],
   },
   {
-    id: "clinic-3",
+    id: "customer-3",
     dentalLabId: "lab-vela-rio",
     labCustomerId: "lab-customer-3",
     name: "Rio Smile",
@@ -143,8 +143,8 @@ const allMockCases: EditableCase[] = [
     isUrgent: true,
     createdAt: new Date(Date.now() - 4 * 86400000).toISOString(),
     updatedAt: new Date(Date.now() - 1 * 86400000).toISOString(),
-    clinicName: "Silva Dental",
-    clinicId: "clinic-1",
+    customerName: "Silva Dental",
+    customerId: "customer-1",
     dentistName: "Dr. Marcos Silva",
     dentistId: "dentist-1",
     serviceTypeId: "service-2",
@@ -183,8 +183,8 @@ const allMockCases: EditableCase[] = [
     isUrgent: false,
     createdAt: new Date(Date.now() - 3 * 86400000).toISOString(),
     updatedAt: new Date(Date.now() - 1 * 86400000).toISOString(),
-    clinicName: "Oral Prime",
-    clinicId: "clinic-2",
+    customerName: "Oral Prime",
+    customerId: "customer-2",
     dentistName: "Dra. Carla Ramos",
     dentistId: "dentist-2",
     serviceTypeId: "service-1",
@@ -212,8 +212,8 @@ const allMockCases: EditableCase[] = [
     isUrgent: false,
     createdAt: new Date(Date.now() - 10 * 86400000).toISOString(),
     updatedAt: new Date(Date.now() - 2 * 86400000).toISOString(),
-    clinicName: "Silva Dental",
-    clinicId: "clinic-1",
+    customerName: "Silva Dental",
+    customerId: "customer-1",
     dentistName: "Dr. Marcos Silva",
     dentistId: "dentist-1",
     serviceTypeId: "service-1",
@@ -253,8 +253,8 @@ const allMockCases: EditableCase[] = [
     isUrgent: false,
     createdAt: new Date(Date.now() - 2 * 86400000).toISOString(),
     updatedAt: new Date(Date.now() - 1 * 86400000).toISOString(),
-    clinicName: "Rio Smile",
-    clinicId: "clinic-3",
+    customerName: "Rio Smile",
+    customerId: "customer-3",
     dentistName: "Dr. Felipe Rocha",
     dentistId: "dentist-3",
     serviceTypeId: "service-3",
@@ -345,7 +345,7 @@ const allMockMillings = [
     dentalLabId: "lab-vela-sao-paulo",
     caseCode: "DL-1003",
     patientName: "Lucia Martins",
-    clinicName: "Silva Dental",
+    customerName: "Silva Dental",
     blockTypeName: "Zirconia A2",
     blockTypeShade: "A2",
     fineMillingDrillName: "Diamond 1.0mm",
@@ -357,8 +357,8 @@ const allMockMillings = [
   },
 ];
 
-export const mockClinics = allMockClinics.filter(
-  (clinic) => clinic.dentalLabId === activeDentalLabId,
+export const mockCustomers = allMockCustomers.filter(
+  (customer) => customer.dentalLabId === activeDentalLabId,
 );
 export const mockServiceTypes = allMockServiceTypes.filter(
   (item) => item.dentalLabId === activeDentalLabId,
@@ -380,12 +380,12 @@ export const mockMillings = allMockMillings.filter(
 );
 
 export const mockRegistry = {
-  clinics: mockClinics.map((clinic) => ({
-    id: clinic.id,
-    name: clinic.name,
-    phone: clinic.id === "clinic-1" ? "(11) 3456-7890" : "(21) 2222-1000",
+  customers: mockCustomers.map((customer) => ({
+    id: customer.id,
+    name: customer.name,
+    phone: customer.id === "customer-1" ? "(11) 3456-7890" : "(21) 2222-1000",
     email:
-      clinic.id === "clinic-1"
+      customer.id === "customer-1"
         ? "contato@silvadental.local"
         : "ops@oralprime.local",
     notes: null,
@@ -393,17 +393,17 @@ export const mockRegistry = {
   dentists: [
     {
       id: "dentist-1",
-      clinicId: "clinic-1",
+      customerId: "customer-1",
       name: "Dr. Marcos Silva",
-      clinicName: "Silva Dental",
+      customerName: "Silva Dental",
       phone: "(11) 98888-1111",
       email: "marcos@silvadental.local",
     },
     {
       id: "dentist-2",
-      clinicId: "clinic-2",
+      customerId: "customer-2",
       name: "Dra. Carla Ramos",
-      clinicName: "Oral Prime",
+      customerName: "Oral Prime",
       phone: "(21) 97777-2222",
       email: "carla@oralprime.local",
     },

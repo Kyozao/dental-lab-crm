@@ -3,6 +3,7 @@ import type {
   CaseStatusValue,
   EditableCase,
 } from "@/features/cases/types";
+import { casesApi, type CaseListItem, type CaseMutationPayload } from "@/features/cases/cases";
 import { mockCases } from "@/lib/mock-data/pages";
 
 type DownloadKind = AttachmentKindValue | "ALL" | "FINAL_OUTPUTS";
@@ -17,22 +18,14 @@ export async function updateCaseStatusApi(
 }
 
 export async function updateCaseApi(
-  _caseId: string,
-  _payload: Record<string, unknown>,
+  caseId: string,
+  payload: CaseMutationPayload,
 ) {
-  void _caseId;
-  void _payload;
-  return;
+  return mapApiCaseToEditableCase(await casesApi.update(caseId, payload));
 }
 
 export async function getCaseDetailsApi(caseId: string): Promise<EditableCase> {
-  const item = mockCases.find((caseItem) => caseItem.id === caseId);
-
-  if (!item) {
-    throw new Error("Could not load mock case details.");
-  }
-
-  return item;
+  return mapApiCaseToEditableCase(await casesApi.getById(caseId));
 }
 
 export async function deleteCaseApi(_caseId: string) {
@@ -67,4 +60,36 @@ export async function getColumnDownloadUrlsApi(
   void _caseIds;
   void _kind;
   return [];
+}
+
+export function mapApiCaseToEditableCase(item: CaseListItem): EditableCase {
+  const mockCase = mockCases.find((caseItem) => caseItem.id === item.id);
+
+  return {
+    id: item.id,
+    dentalLabId: item.dentalLabId,
+    code: item.code,
+    patientName: item.patientName,
+    currentStatus: item.currentStatus,
+    teeth: item.teeth ?? "",
+    elementsQty: item.elementsQty,
+    shade: item.shade ?? "",
+    dueDate: item.dueDate,
+    observations: item.observations ?? "",
+    pendingNote: item.pendingNote ?? "",
+    isUrgent: item.isUrgent,
+    createdAt: item.createdAt,
+    updatedAt: item.updatedAt,
+    customerName: item.customerName ?? "",
+    customerId: item.customerId,
+    dentistName: item.dentistName ?? "",
+    dentistId: item.dentistId,
+    serviceTypeId: item.serviceTypeId,
+    serviceTypeName: item.serviceTypeName ?? "",
+    cadDesignerId: item.cadDesignerId,
+    cadDesignerName: item.cadDesignerName ?? "",
+    attachments: mockCase?.attachments ?? [],
+    components: mockCase?.components ?? [],
+    millings: mockCase?.millings ?? [],
+  };
 }

@@ -1,31 +1,40 @@
 "use client";
 
 import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import { CaseDetailsDialog } from "@/features/cases/components/case-details-dialog";
-import type {
-  CadDesignerOption,
-  ClinicOption,
-  ComponentOption,
-  ServiceTypeOption,
-} from "@/features/cases/types";
+import { useCadDesigners } from "@/features/cases/hooks/useCadDesigners";
+import { useCustomers } from "@/features/cases/hooks/useCustomers";
+import { useServiceTypes } from "@/features/cases/hooks/useServiceTypes";
+import type { ComponentOption } from "@/features/cases/types";
 
 type Props = {
-  clinics: ClinicOption[];
-  serviceTypes: ServiceTypeOption[];
-  cadDesigners: CadDesignerOption[];
   components: ComponentOption[];
   currentUserRole: string;
 };
 
 export function AddCaseDialog({
-  clinics,
-  serviceTypes,
-  cadDesigners,
   components,
   currentUserRole,
 }: Props) {
   const [open, setOpen] = useState(false);
+  const customers = useCustomers(open);
+  const serviceTypes = useServiceTypes(open);
+  const cadDesigners = useCadDesigners(open);
+
+  const optionQueries = [customers, serviceTypes, cadDesigners];
+  const optionsLoading = optionQueries.some(
+    (query) => query.isLoading || query.isFetching,
+  );
+  const optionsError =
+    optionQueries.find((query) => query.isError)?.error ?? null;
+
+  function retryOptions() {
+    void customers.refetch();
+    void serviceTypes.refetch();
+    void cadDesigners.refetch();
+  }
 
   return (
     <>
@@ -38,10 +47,19 @@ export function AddCaseDialog({
         onOpenChange={setOpen}
         mode="create"
         currentUserRole={currentUserRole}
-        clinics={clinics}
-        serviceTypes={serviceTypes}
-        cadDesigners={cadDesigners}
+        customers={customers.data ?? []}
+        serviceTypes={serviceTypes.data ?? []}
+        cadDesigners={cadDesigners.data ?? []}
         components={components}
+        optionsLoading={optionsLoading}
+        optionsError={
+          optionsError
+            ? optionsError instanceof Error
+              ? optionsError.message
+              : "Could not load case options."
+            : null
+        }
+        onRetryOptions={retryOptions}
       />
     </>
   );

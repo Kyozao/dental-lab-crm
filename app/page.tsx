@@ -11,7 +11,7 @@ const spaceGrotesk = localFont({
 export const metadata: Metadata = {
   title: "Vela Dental Design — Designs that labs produce. Perfectly.",
   description:
-    "Precision digital prosthetic design for dental labs and clinics. Zero rework. Every time.",
+    "Precision digital prosthetic design for dental labs and customers. Zero rework. Every time.",
 };
 
 export default function HomePage() {

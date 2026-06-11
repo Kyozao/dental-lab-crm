@@ -26,64 +26,64 @@ export type AggregateUsers = {
 
 export type UsersMinAggregateOutputType = {
   id: string | null
-  clientCompanyId: string | null
   name: string | null
   email: string | null
-  isActive: boolean | null
-  createdAt: Date | null
-  updatedAt: Date | null
+  is_active: boolean | null
+  deleted_at: Date | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type UsersMaxAggregateOutputType = {
   id: string | null
-  clientCompanyId: string | null
   name: string | null
   email: string | null
-  isActive: boolean | null
-  createdAt: Date | null
-  updatedAt: Date | null
+  is_active: boolean | null
+  deleted_at: Date | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type UsersCountAggregateOutputType = {
   id: number
-  clientCompanyId: number
   name: number
   email: number
-  isActive: number
-  createdAt: number
-  updatedAt: number
+  is_active: number
+  deleted_at: number
+  created_at: number
+  updated_at: number
   _all: number
 }
 
 
 export type UsersMinAggregateInputType = {
   id?: true
-  clientCompanyId?: true
   name?: true
   email?: true
-  isActive?: true
-  createdAt?: true
-  updatedAt?: true
+  is_active?: true
+  deleted_at?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type UsersMaxAggregateInputType = {
   id?: true
-  clientCompanyId?: true
   name?: true
   email?: true
-  isActive?: true
-  createdAt?: true
-  updatedAt?: true
+  is_active?: true
+  deleted_at?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type UsersCountAggregateInputType = {
   id?: true
-  clientCompanyId?: true
   name?: true
   email?: true
-  isActive?: true
-  createdAt?: true
-  updatedAt?: true
+  is_active?: true
+  deleted_at?: true
+  created_at?: true
+  updated_at?: true
   _all?: true
 }
 
@@ -161,12 +161,12 @@ export type usersGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 
 export type UsersGroupByOutputType = {
   id: string
-  clientCompanyId: string
   name: string
   email: string
-  isActive: boolean
-  createdAt: Date
-  updatedAt: Date
+  is_active: boolean
+  deleted_at: Date | null
+  created_at: Date
+  updated_at: Date
   _count: UsersCountAggregateOutputType | null
   _min: UsersMinAggregateOutputType | null
   _max: UsersMaxAggregateOutputType | null
@@ -192,16 +192,16 @@ export type usersWhereInput = {
   OR?: Prisma.usersWhereInput[]
   NOT?: Prisma.usersWhereInput | Prisma.usersWhereInput[]
   id?: Prisma.UuidFilter<"users"> | string
-  clientCompanyId?: Prisma.UuidFilter<"users"> | string
   name?: Prisma.StringFilter<"users"> | string
   email?: Prisma.StringFilter<"users"> | string
-  isActive?: Prisma.BoolFilter<"users"> | boolean
-  createdAt?: Prisma.DateTimeFilter<"users"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"users"> | Date | string
-  client_companies?: Prisma.XOR<Prisma.Client_companiesScalarRelationFilter, Prisma.client_companiesWhereInput>
-  labMemberships?: Prisma.User_lab_membershipsListRelationFilter
+  is_active?: Prisma.BoolFilter<"users"> | boolean
+  deleted_at?: Prisma.DateTimeNullableFilter<"users"> | Date | string | null
+  created_at?: Prisma.DateTimeFilter<"users"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"users"> | Date | string
+  memberships?: Prisma.Lab_membersListRelationFilter
   assignedCases?: Prisma.CasesListRelationFilter
   createdCases?: Prisma.CasesListRelationFilter
+  assignedProcesses?: Prisma.Case_processesListRelationFilter
   case_attachments?: Prisma.Case_attachmentsListRelationFilter
   notifications?: Prisma.NotificationsListRelationFilter
   pushSubscriptions?: Prisma.Push_subscriptionsListRelationFilter
@@ -209,16 +209,16 @@ export type usersWhereInput = {
 
 export type usersOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  clientCompanyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  client_companies?: Prisma.client_companiesOrderByWithRelationInput
-  labMemberships?: Prisma.user_lab_membershipsOrderByRelationAggregateInput
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
+  memberships?: Prisma.lab_membersOrderByRelationAggregateInput
   assignedCases?: Prisma.casesOrderByRelationAggregateInput
   createdCases?: Prisma.casesOrderByRelationAggregateInput
+  assignedProcesses?: Prisma.case_processesOrderByRelationAggregateInput
   case_attachments?: Prisma.case_attachmentsOrderByRelationAggregateInput
   notifications?: Prisma.notificationsOrderByRelationAggregateInput
   pushSubscriptions?: Prisma.push_subscriptionsOrderByRelationAggregateInput
@@ -230,15 +230,15 @@ export type usersWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.usersWhereInput | Prisma.usersWhereInput[]
   OR?: Prisma.usersWhereInput[]
   NOT?: Prisma.usersWhereInput | Prisma.usersWhereInput[]
-  clientCompanyId?: Prisma.UuidFilter<"users"> | string
   name?: Prisma.StringFilter<"users"> | string
-  isActive?: Prisma.BoolFilter<"users"> | boolean
-  createdAt?: Prisma.DateTimeFilter<"users"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"users"> | Date | string
-  client_companies?: Prisma.XOR<Prisma.Client_companiesScalarRelationFilter, Prisma.client_companiesWhereInput>
-  labMemberships?: Prisma.User_lab_membershipsListRelationFilter
+  is_active?: Prisma.BoolFilter<"users"> | boolean
+  deleted_at?: Prisma.DateTimeNullableFilter<"users"> | Date | string | null
+  created_at?: Prisma.DateTimeFilter<"users"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"users"> | Date | string
+  memberships?: Prisma.Lab_membersListRelationFilter
   assignedCases?: Prisma.CasesListRelationFilter
   createdCases?: Prisma.CasesListRelationFilter
+  assignedProcesses?: Prisma.Case_processesListRelationFilter
   case_attachments?: Prisma.Case_attachmentsListRelationFilter
   notifications?: Prisma.NotificationsListRelationFilter
   pushSubscriptions?: Prisma.Push_subscriptionsListRelationFilter
@@ -246,12 +246,12 @@ export type usersWhereUniqueInput = Prisma.AtLeast<{
 
 export type usersOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  clientCompanyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   _count?: Prisma.usersCountOrderByAggregateInput
   _max?: Prisma.usersMaxOrderByAggregateInput
   _min?: Prisma.usersMinOrderByAggregateInput
@@ -262,25 +262,26 @@ export type usersScalarWhereWithAggregatesInput = {
   OR?: Prisma.usersScalarWhereWithAggregatesInput[]
   NOT?: Prisma.usersScalarWhereWithAggregatesInput | Prisma.usersScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"users"> | string
-  clientCompanyId?: Prisma.UuidWithAggregatesFilter<"users"> | string
   name?: Prisma.StringWithAggregatesFilter<"users"> | string
   email?: Prisma.StringWithAggregatesFilter<"users"> | string
-  isActive?: Prisma.BoolWithAggregatesFilter<"users"> | boolean
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"users"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"users"> | Date | string
+  is_active?: Prisma.BoolWithAggregatesFilter<"users"> | boolean
+  deleted_at?: Prisma.DateTimeNullableWithAggregatesFilter<"users"> | Date | string | null
+  created_at?: Prisma.DateTimeWithAggregatesFilter<"users"> | Date | string
+  updated_at?: Prisma.DateTimeWithAggregatesFilter<"users"> | Date | string
 }
 
 export type usersCreateInput = {
   id?: string
   name: string
   email: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  client_companies: Prisma.client_companiesCreateNestedOneWithoutUsersInput
-  labMemberships?: Prisma.user_lab_membershipsCreateNestedManyWithoutUsersInput
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
   assignedCases?: Prisma.casesCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
+  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
@@ -288,15 +289,16 @@ export type usersCreateInput = {
 
 export type usersUncheckedCreateInput = {
   id?: string
-  clientCompanyId: string
   name: string
   email: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  labMemberships?: Prisma.user_lab_membershipsUncheckedCreateNestedManyWithoutUsersInput
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
   assignedCases?: Prisma.casesUncheckedCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
+  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
@@ -306,13 +308,14 @@ export type usersUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  client_companies?: Prisma.client_companiesUpdateOneRequiredWithoutUsersNestedInput
-  labMemberships?: Prisma.user_lab_membershipsUpdateManyWithoutUsersNestedInput
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
   assignedCases?: Prisma.casesUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
+  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
@@ -320,15 +323,16 @@ export type usersUpdateInput = {
 
 export type usersUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCompanyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  labMemberships?: Prisma.user_lab_membershipsUncheckedUpdateManyWithoutUsersNestedInput
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
   assignedCases?: Prisma.casesUncheckedUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
@@ -336,71 +340,62 @@ export type usersUncheckedUpdateInput = {
 
 export type usersCreateManyInput = {
   id?: string
-  clientCompanyId: string
   name: string
   email: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type usersUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type usersUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCompanyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type usersCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  clientCompanyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type usersMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  clientCompanyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type usersMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  clientCompanyId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-}
-
-export type UsersListRelationFilter = {
-  every?: Prisma.usersWhereInput
-  some?: Prisma.usersWhereInput
-  none?: Prisma.usersWhereInput
-}
-
-export type usersOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type UsersScalarRelationFilter = {
@@ -421,64 +416,26 @@ export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
-export type usersCreateNestedManyWithoutClient_companiesInput = {
-  create?: Prisma.XOR<Prisma.usersCreateWithoutClient_companiesInput, Prisma.usersUncheckedCreateWithoutClient_companiesInput> | Prisma.usersCreateWithoutClient_companiesInput[] | Prisma.usersUncheckedCreateWithoutClient_companiesInput[]
-  connectOrCreate?: Prisma.usersCreateOrConnectWithoutClient_companiesInput | Prisma.usersCreateOrConnectWithoutClient_companiesInput[]
-  createMany?: Prisma.usersCreateManyClient_companiesInputEnvelope
-  connect?: Prisma.usersWhereUniqueInput | Prisma.usersWhereUniqueInput[]
-}
-
-export type usersUncheckedCreateNestedManyWithoutClient_companiesInput = {
-  create?: Prisma.XOR<Prisma.usersCreateWithoutClient_companiesInput, Prisma.usersUncheckedCreateWithoutClient_companiesInput> | Prisma.usersCreateWithoutClient_companiesInput[] | Prisma.usersUncheckedCreateWithoutClient_companiesInput[]
-  connectOrCreate?: Prisma.usersCreateOrConnectWithoutClient_companiesInput | Prisma.usersCreateOrConnectWithoutClient_companiesInput[]
-  createMany?: Prisma.usersCreateManyClient_companiesInputEnvelope
-  connect?: Prisma.usersWhereUniqueInput | Prisma.usersWhereUniqueInput[]
-}
-
-export type usersUpdateManyWithoutClient_companiesNestedInput = {
-  create?: Prisma.XOR<Prisma.usersCreateWithoutClient_companiesInput, Prisma.usersUncheckedCreateWithoutClient_companiesInput> | Prisma.usersCreateWithoutClient_companiesInput[] | Prisma.usersUncheckedCreateWithoutClient_companiesInput[]
-  connectOrCreate?: Prisma.usersCreateOrConnectWithoutClient_companiesInput | Prisma.usersCreateOrConnectWithoutClient_companiesInput[]
-  upsert?: Prisma.usersUpsertWithWhereUniqueWithoutClient_companiesInput | Prisma.usersUpsertWithWhereUniqueWithoutClient_companiesInput[]
-  createMany?: Prisma.usersCreateManyClient_companiesInputEnvelope
-  set?: Prisma.usersWhereUniqueInput | Prisma.usersWhereUniqueInput[]
-  disconnect?: Prisma.usersWhereUniqueInput | Prisma.usersWhereUniqueInput[]
-  delete?: Prisma.usersWhereUniqueInput | Prisma.usersWhereUniqueInput[]
-  connect?: Prisma.usersWhereUniqueInput | Prisma.usersWhereUniqueInput[]
-  update?: Prisma.usersUpdateWithWhereUniqueWithoutClient_companiesInput | Prisma.usersUpdateWithWhereUniqueWithoutClient_companiesInput[]
-  updateMany?: Prisma.usersUpdateManyWithWhereWithoutClient_companiesInput | Prisma.usersUpdateManyWithWhereWithoutClient_companiesInput[]
-  deleteMany?: Prisma.usersScalarWhereInput | Prisma.usersScalarWhereInput[]
-}
-
-export type usersUncheckedUpdateManyWithoutClient_companiesNestedInput = {
-  create?: Prisma.XOR<Prisma.usersCreateWithoutClient_companiesInput, Prisma.usersUncheckedCreateWithoutClient_companiesInput> | Prisma.usersCreateWithoutClient_companiesInput[] | Prisma.usersUncheckedCreateWithoutClient_companiesInput[]
-  connectOrCreate?: Prisma.usersCreateOrConnectWithoutClient_companiesInput | Prisma.usersCreateOrConnectWithoutClient_companiesInput[]
-  upsert?: Prisma.usersUpsertWithWhereUniqueWithoutClient_companiesInput | Prisma.usersUpsertWithWhereUniqueWithoutClient_companiesInput[]
-  createMany?: Prisma.usersCreateManyClient_companiesInputEnvelope
-  set?: Prisma.usersWhereUniqueInput | Prisma.usersWhereUniqueInput[]
-  disconnect?: Prisma.usersWhereUniqueInput | Prisma.usersWhereUniqueInput[]
-  delete?: Prisma.usersWhereUniqueInput | Prisma.usersWhereUniqueInput[]
-  connect?: Prisma.usersWhereUniqueInput | Prisma.usersWhereUniqueInput[]
-  update?: Prisma.usersUpdateWithWhereUniqueWithoutClient_companiesInput | Prisma.usersUpdateWithWhereUniqueWithoutClient_companiesInput[]
-  updateMany?: Prisma.usersUpdateManyWithWhereWithoutClient_companiesInput | Prisma.usersUpdateManyWithWhereWithoutClient_companiesInput[]
-  deleteMany?: Prisma.usersScalarWhereInput | Prisma.usersScalarWhereInput[]
-}
-
-export type usersCreateNestedOneWithoutLabMembershipsInput = {
-  create?: Prisma.XOR<Prisma.usersCreateWithoutLabMembershipsInput, Prisma.usersUncheckedCreateWithoutLabMembershipsInput>
-  connectOrCreate?: Prisma.usersCreateOrConnectWithoutLabMembershipsInput
+export type usersCreateNestedOneWithoutMembershipsInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutMembershipsInput, Prisma.usersUncheckedCreateWithoutMembershipsInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutMembershipsInput
   connect?: Prisma.usersWhereUniqueInput
 }
 
-export type usersUpdateOneRequiredWithoutLabMembershipsNestedInput = {
-  create?: Prisma.XOR<Prisma.usersCreateWithoutLabMembershipsInput, Prisma.usersUncheckedCreateWithoutLabMembershipsInput>
-  connectOrCreate?: Prisma.usersCreateOrConnectWithoutLabMembershipsInput
-  upsert?: Prisma.usersUpsertWithoutLabMembershipsInput
+export type usersUpdateOneRequiredWithoutMembershipsNestedInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutMembershipsInput, Prisma.usersUncheckedCreateWithoutMembershipsInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutMembershipsInput
+  upsert?: Prisma.usersUpsertWithoutMembershipsInput
   connect?: Prisma.usersWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutLabMembershipsInput, Prisma.usersUpdateWithoutLabMembershipsInput>, Prisma.usersUncheckedUpdateWithoutLabMembershipsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutMembershipsInput, Prisma.usersUpdateWithoutMembershipsInput>, Prisma.usersUncheckedUpdateWithoutMembershipsInput>
 }
 
 export type usersCreateNestedOneWithoutCase_attachmentsInput = {
@@ -529,6 +486,22 @@ export type usersUpdateOneWithoutCreatedCasesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutCreatedCasesInput, Prisma.usersUpdateWithoutCreatedCasesInput>, Prisma.usersUncheckedUpdateWithoutCreatedCasesInput>
 }
 
+export type usersCreateNestedOneWithoutAssignedProcessesInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutAssignedProcessesInput, Prisma.usersUncheckedCreateWithoutAssignedProcessesInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutAssignedProcessesInput
+  connect?: Prisma.usersWhereUniqueInput
+}
+
+export type usersUpdateOneWithoutAssignedProcessesNestedInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutAssignedProcessesInput, Prisma.usersUncheckedCreateWithoutAssignedProcessesInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutAssignedProcessesInput
+  upsert?: Prisma.usersUpsertWithoutAssignedProcessesInput
+  disconnect?: Prisma.usersWhereInput | boolean
+  delete?: Prisma.usersWhereInput | boolean
+  connect?: Prisma.usersWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutAssignedProcessesInput, Prisma.usersUpdateWithoutAssignedProcessesInput>, Prisma.usersUncheckedUpdateWithoutAssignedProcessesInput>
+}
+
 export type usersCreateNestedOneWithoutNotificationsInput = {
   create?: Prisma.XOR<Prisma.usersCreateWithoutNotificationsInput, Prisma.usersUncheckedCreateWithoutNotificationsInput>
   connectOrCreate?: Prisma.usersCreateOrConnectWithoutNotificationsInput
@@ -557,146 +530,81 @@ export type usersUpdateOneRequiredWithoutPushSubscriptionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutPushSubscriptionsInput, Prisma.usersUpdateWithoutPushSubscriptionsInput>, Prisma.usersUncheckedUpdateWithoutPushSubscriptionsInput>
 }
 
-export type usersCreateWithoutClient_companiesInput = {
+export type usersCreateWithoutMembershipsInput = {
   id?: string
   name: string
   email: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  labMemberships?: Prisma.user_lab_membershipsCreateNestedManyWithoutUsersInput
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   assignedCases?: Prisma.casesCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
+  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
 }
 
-export type usersUncheckedCreateWithoutClient_companiesInput = {
+export type usersUncheckedCreateWithoutMembershipsInput = {
   id?: string
   name: string
   email: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  labMemberships?: Prisma.user_lab_membershipsUncheckedCreateNestedManyWithoutUsersInput
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   assignedCases?: Prisma.casesUncheckedCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
+  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
 }
 
-export type usersCreateOrConnectWithoutClient_companiesInput = {
+export type usersCreateOrConnectWithoutMembershipsInput = {
   where: Prisma.usersWhereUniqueInput
-  create: Prisma.XOR<Prisma.usersCreateWithoutClient_companiesInput, Prisma.usersUncheckedCreateWithoutClient_companiesInput>
+  create: Prisma.XOR<Prisma.usersCreateWithoutMembershipsInput, Prisma.usersUncheckedCreateWithoutMembershipsInput>
 }
 
-export type usersCreateManyClient_companiesInputEnvelope = {
-  data: Prisma.usersCreateManyClient_companiesInput | Prisma.usersCreateManyClient_companiesInput[]
-  skipDuplicates?: boolean
-}
-
-export type usersUpsertWithWhereUniqueWithoutClient_companiesInput = {
-  where: Prisma.usersWhereUniqueInput
-  update: Prisma.XOR<Prisma.usersUpdateWithoutClient_companiesInput, Prisma.usersUncheckedUpdateWithoutClient_companiesInput>
-  create: Prisma.XOR<Prisma.usersCreateWithoutClient_companiesInput, Prisma.usersUncheckedCreateWithoutClient_companiesInput>
-}
-
-export type usersUpdateWithWhereUniqueWithoutClient_companiesInput = {
-  where: Prisma.usersWhereUniqueInput
-  data: Prisma.XOR<Prisma.usersUpdateWithoutClient_companiesInput, Prisma.usersUncheckedUpdateWithoutClient_companiesInput>
-}
-
-export type usersUpdateManyWithWhereWithoutClient_companiesInput = {
-  where: Prisma.usersScalarWhereInput
-  data: Prisma.XOR<Prisma.usersUpdateManyMutationInput, Prisma.usersUncheckedUpdateManyWithoutClient_companiesInput>
-}
-
-export type usersScalarWhereInput = {
-  AND?: Prisma.usersScalarWhereInput | Prisma.usersScalarWhereInput[]
-  OR?: Prisma.usersScalarWhereInput[]
-  NOT?: Prisma.usersScalarWhereInput | Prisma.usersScalarWhereInput[]
-  id?: Prisma.UuidFilter<"users"> | string
-  clientCompanyId?: Prisma.UuidFilter<"users"> | string
-  name?: Prisma.StringFilter<"users"> | string
-  email?: Prisma.StringFilter<"users"> | string
-  isActive?: Prisma.BoolFilter<"users"> | boolean
-  createdAt?: Prisma.DateTimeFilter<"users"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"users"> | Date | string
-}
-
-export type usersCreateWithoutLabMembershipsInput = {
-  id?: string
-  name: string
-  email: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  client_companies: Prisma.client_companiesCreateNestedOneWithoutUsersInput
-  assignedCases?: Prisma.casesCreateNestedManyWithoutCadDesignerInput
-  createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
-  case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
-  notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
-  pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
-}
-
-export type usersUncheckedCreateWithoutLabMembershipsInput = {
-  id?: string
-  clientCompanyId: string
-  name: string
-  email: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  assignedCases?: Prisma.casesUncheckedCreateNestedManyWithoutCadDesignerInput
-  createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
-  case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
-  notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
-  pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
-}
-
-export type usersCreateOrConnectWithoutLabMembershipsInput = {
-  where: Prisma.usersWhereUniqueInput
-  create: Prisma.XOR<Prisma.usersCreateWithoutLabMembershipsInput, Prisma.usersUncheckedCreateWithoutLabMembershipsInput>
-}
-
-export type usersUpsertWithoutLabMembershipsInput = {
-  update: Prisma.XOR<Prisma.usersUpdateWithoutLabMembershipsInput, Prisma.usersUncheckedUpdateWithoutLabMembershipsInput>
-  create: Prisma.XOR<Prisma.usersCreateWithoutLabMembershipsInput, Prisma.usersUncheckedCreateWithoutLabMembershipsInput>
+export type usersUpsertWithoutMembershipsInput = {
+  update: Prisma.XOR<Prisma.usersUpdateWithoutMembershipsInput, Prisma.usersUncheckedUpdateWithoutMembershipsInput>
+  create: Prisma.XOR<Prisma.usersCreateWithoutMembershipsInput, Prisma.usersUncheckedCreateWithoutMembershipsInput>
   where?: Prisma.usersWhereInput
 }
 
-export type usersUpdateToOneWithWhereWithoutLabMembershipsInput = {
+export type usersUpdateToOneWithWhereWithoutMembershipsInput = {
   where?: Prisma.usersWhereInput
-  data: Prisma.XOR<Prisma.usersUpdateWithoutLabMembershipsInput, Prisma.usersUncheckedUpdateWithoutLabMembershipsInput>
+  data: Prisma.XOR<Prisma.usersUpdateWithoutMembershipsInput, Prisma.usersUncheckedUpdateWithoutMembershipsInput>
 }
 
-export type usersUpdateWithoutLabMembershipsInput = {
+export type usersUpdateWithoutMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  client_companies?: Prisma.client_companiesUpdateOneRequiredWithoutUsersNestedInput
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedCases?: Prisma.casesUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
+  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
 }
 
-export type usersUncheckedUpdateWithoutLabMembershipsInput = {
+export type usersUncheckedUpdateWithoutMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCompanyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedCases?: Prisma.casesUncheckedUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
@@ -706,28 +614,30 @@ export type usersCreateWithoutCase_attachmentsInput = {
   id?: string
   name: string
   email: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  client_companies: Prisma.client_companiesCreateNestedOneWithoutUsersInput
-  labMemberships?: Prisma.user_lab_membershipsCreateNestedManyWithoutUsersInput
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
   assignedCases?: Prisma.casesCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
+  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedToInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
 }
 
 export type usersUncheckedCreateWithoutCase_attachmentsInput = {
   id?: string
-  clientCompanyId: string
   name: string
   email: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  labMemberships?: Prisma.user_lab_membershipsUncheckedCreateNestedManyWithoutUsersInput
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
   assignedCases?: Prisma.casesUncheckedCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
+  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedToInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
 }
@@ -752,28 +662,30 @@ export type usersUpdateWithoutCase_attachmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  client_companies?: Prisma.client_companiesUpdateOneRequiredWithoutUsersNestedInput
-  labMemberships?: Prisma.user_lab_membershipsUpdateManyWithoutUsersNestedInput
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
   assignedCases?: Prisma.casesUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
+  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedToNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
 }
 
 export type usersUncheckedUpdateWithoutCase_attachmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCompanyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  labMemberships?: Prisma.user_lab_membershipsUncheckedUpdateManyWithoutUsersNestedInput
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
   assignedCases?: Prisma.casesUncheckedUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedToNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
 }
@@ -782,12 +694,13 @@ export type usersCreateWithoutAssignedCasesInput = {
   id?: string
   name: string
   email: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  client_companies: Prisma.client_companiesCreateNestedOneWithoutUsersInput
-  labMemberships?: Prisma.user_lab_membershipsCreateNestedManyWithoutUsersInput
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
   createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
+  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
@@ -795,14 +708,15 @@ export type usersCreateWithoutAssignedCasesInput = {
 
 export type usersUncheckedCreateWithoutAssignedCasesInput = {
   id?: string
-  clientCompanyId: string
   name: string
   email: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  labMemberships?: Prisma.user_lab_membershipsUncheckedCreateNestedManyWithoutUsersInput
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
   createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
+  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
@@ -817,12 +731,13 @@ export type usersCreateWithoutCreatedCasesInput = {
   id?: string
   name: string
   email: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  client_companies: Prisma.client_companiesCreateNestedOneWithoutUsersInput
-  labMemberships?: Prisma.user_lab_membershipsCreateNestedManyWithoutUsersInput
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
   assignedCases?: Prisma.casesCreateNestedManyWithoutCadDesignerInput
+  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
@@ -830,14 +745,15 @@ export type usersCreateWithoutCreatedCasesInput = {
 
 export type usersUncheckedCreateWithoutCreatedCasesInput = {
   id?: string
-  clientCompanyId: string
   name: string
   email: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  labMemberships?: Prisma.user_lab_membershipsUncheckedCreateNestedManyWithoutUsersInput
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
   assignedCases?: Prisma.casesUncheckedCreateNestedManyWithoutCadDesignerInput
+  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
@@ -863,12 +779,13 @@ export type usersUpdateWithoutAssignedCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  client_companies?: Prisma.client_companiesUpdateOneRequiredWithoutUsersNestedInput
-  labMemberships?: Prisma.user_lab_membershipsUpdateManyWithoutUsersNestedInput
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
   createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
+  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
@@ -876,14 +793,15 @@ export type usersUpdateWithoutAssignedCasesInput = {
 
 export type usersUncheckedUpdateWithoutAssignedCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCompanyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  labMemberships?: Prisma.user_lab_membershipsUncheckedUpdateManyWithoutUsersNestedInput
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
   createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
@@ -904,12 +822,13 @@ export type usersUpdateWithoutCreatedCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  client_companies?: Prisma.client_companiesUpdateOneRequiredWithoutUsersNestedInput
-  labMemberships?: Prisma.user_lab_membershipsUpdateManyWithoutUsersNestedInput
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
   assignedCases?: Prisma.casesUpdateManyWithoutCadDesignerNestedInput
+  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
@@ -917,14 +836,95 @@ export type usersUpdateWithoutCreatedCasesInput = {
 
 export type usersUncheckedUpdateWithoutCreatedCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCompanyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  labMemberships?: Prisma.user_lab_membershipsUncheckedUpdateManyWithoutUsersNestedInput
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
   assignedCases?: Prisma.casesUncheckedUpdateManyWithoutCadDesignerNestedInput
+  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedToNestedInput
+  case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
+  notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
+  pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+}
+
+export type usersCreateWithoutAssignedProcessesInput = {
+  id?: string
+  name: string
+  email: string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
+  assignedCases?: Prisma.casesCreateNestedManyWithoutCadDesignerInput
+  createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
+  case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
+  notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
+  pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
+}
+
+export type usersUncheckedCreateWithoutAssignedProcessesInput = {
+  id?: string
+  name: string
+  email: string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
+  assignedCases?: Prisma.casesUncheckedCreateNestedManyWithoutCadDesignerInput
+  createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
+  case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
+  notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
+  pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+}
+
+export type usersCreateOrConnectWithoutAssignedProcessesInput = {
+  where: Prisma.usersWhereUniqueInput
+  create: Prisma.XOR<Prisma.usersCreateWithoutAssignedProcessesInput, Prisma.usersUncheckedCreateWithoutAssignedProcessesInput>
+}
+
+export type usersUpsertWithoutAssignedProcessesInput = {
+  update: Prisma.XOR<Prisma.usersUpdateWithoutAssignedProcessesInput, Prisma.usersUncheckedUpdateWithoutAssignedProcessesInput>
+  create: Prisma.XOR<Prisma.usersCreateWithoutAssignedProcessesInput, Prisma.usersUncheckedCreateWithoutAssignedProcessesInput>
+  where?: Prisma.usersWhereInput
+}
+
+export type usersUpdateToOneWithWhereWithoutAssignedProcessesInput = {
+  where?: Prisma.usersWhereInput
+  data: Prisma.XOR<Prisma.usersUpdateWithoutAssignedProcessesInput, Prisma.usersUncheckedUpdateWithoutAssignedProcessesInput>
+}
+
+export type usersUpdateWithoutAssignedProcessesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
+  assignedCases?: Prisma.casesUpdateManyWithoutCadDesignerNestedInput
+  createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
+  case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
+  notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
+  pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
+}
+
+export type usersUncheckedUpdateWithoutAssignedProcessesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
+  assignedCases?: Prisma.casesUncheckedUpdateManyWithoutCadDesignerNestedInput
+  createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
@@ -934,28 +934,30 @@ export type usersCreateWithoutNotificationsInput = {
   id?: string
   name: string
   email: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  client_companies: Prisma.client_companiesCreateNestedOneWithoutUsersInput
-  labMemberships?: Prisma.user_lab_membershipsCreateNestedManyWithoutUsersInput
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
   assignedCases?: Prisma.casesCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
+  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
 }
 
 export type usersUncheckedCreateWithoutNotificationsInput = {
   id?: string
-  clientCompanyId: string
   name: string
   email: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  labMemberships?: Prisma.user_lab_membershipsUncheckedCreateNestedManyWithoutUsersInput
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
   assignedCases?: Prisma.casesUncheckedCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
+  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
 }
@@ -980,28 +982,30 @@ export type usersUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  client_companies?: Prisma.client_companiesUpdateOneRequiredWithoutUsersNestedInput
-  labMemberships?: Prisma.user_lab_membershipsUpdateManyWithoutUsersNestedInput
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
   assignedCases?: Prisma.casesUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
+  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
 }
 
 export type usersUncheckedUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCompanyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  labMemberships?: Prisma.user_lab_membershipsUncheckedUpdateManyWithoutUsersNestedInput
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
   assignedCases?: Prisma.casesUncheckedUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
 }
@@ -1010,28 +1014,30 @@ export type usersCreateWithoutPushSubscriptionsInput = {
   id?: string
   name: string
   email: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  client_companies: Prisma.client_companiesCreateNestedOneWithoutUsersInput
-  labMemberships?: Prisma.user_lab_membershipsCreateNestedManyWithoutUsersInput
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
   assignedCases?: Prisma.casesCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
+  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
 }
 
 export type usersUncheckedCreateWithoutPushSubscriptionsInput = {
   id?: string
-  clientCompanyId: string
   name: string
   email: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  labMemberships?: Prisma.user_lab_membershipsUncheckedCreateNestedManyWithoutUsersInput
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
   assignedCases?: Prisma.casesUncheckedCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
+  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
 }
@@ -1056,78 +1062,32 @@ export type usersUpdateWithoutPushSubscriptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  client_companies?: Prisma.client_companiesUpdateOneRequiredWithoutUsersNestedInput
-  labMemberships?: Prisma.user_lab_membershipsUpdateManyWithoutUsersNestedInput
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
   assignedCases?: Prisma.casesUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
+  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
 }
 
 export type usersUncheckedUpdateWithoutPushSubscriptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCompanyId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  labMemberships?: Prisma.user_lab_membershipsUncheckedUpdateManyWithoutUsersNestedInput
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
   assignedCases?: Prisma.casesUncheckedUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
-}
-
-export type usersCreateManyClient_companiesInput = {
-  id?: string
-  name: string
-  email: string
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type usersUpdateWithoutClient_companiesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  labMemberships?: Prisma.user_lab_membershipsUpdateManyWithoutUsersNestedInput
-  assignedCases?: Prisma.casesUpdateManyWithoutCadDesignerNestedInput
-  createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
-  case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
-  notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
-  pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
-}
-
-export type usersUncheckedUpdateWithoutClient_companiesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  labMemberships?: Prisma.user_lab_membershipsUncheckedUpdateManyWithoutUsersNestedInput
-  assignedCases?: Prisma.casesUncheckedUpdateManyWithoutCadDesignerNestedInput
-  createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
-  case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
-  notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
-  pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
-}
-
-export type usersUncheckedUpdateManyWithoutClient_companiesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -1136,18 +1096,20 @@ export type usersUncheckedUpdateManyWithoutClient_companiesInput = {
  */
 
 export type UsersCountOutputType = {
-  labMemberships: number
+  memberships: number
   assignedCases: number
   createdCases: number
+  assignedProcesses: number
   case_attachments: number
   notifications: number
   pushSubscriptions: number
 }
 
 export type UsersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  labMemberships?: boolean | UsersCountOutputTypeCountLabMembershipsArgs
+  memberships?: boolean | UsersCountOutputTypeCountMembershipsArgs
   assignedCases?: boolean | UsersCountOutputTypeCountAssignedCasesArgs
   createdCases?: boolean | UsersCountOutputTypeCountCreatedCasesArgs
+  assignedProcesses?: boolean | UsersCountOutputTypeCountAssignedProcessesArgs
   case_attachments?: boolean | UsersCountOutputTypeCountCase_attachmentsArgs
   notifications?: boolean | UsersCountOutputTypeCountNotificationsArgs
   pushSubscriptions?: boolean | UsersCountOutputTypeCountPushSubscriptionsArgs
@@ -1166,8 +1128,8 @@ export type UsersCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
 /**
  * UsersCountOutputType without action
  */
-export type UsersCountOutputTypeCountLabMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.user_lab_membershipsWhereInput
+export type UsersCountOutputTypeCountMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.lab_membersWhereInput
 }
 
 /**
@@ -1182,6 +1144,13 @@ export type UsersCountOutputTypeCountAssignedCasesArgs<ExtArgs extends runtime.T
  */
 export type UsersCountOutputTypeCountCreatedCasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.casesWhereInput
+}
+
+/**
+ * UsersCountOutputType without action
+ */
+export type UsersCountOutputTypeCountAssignedProcessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.case_processesWhereInput
 }
 
 /**
@@ -1208,16 +1177,16 @@ export type UsersCountOutputTypeCountPushSubscriptionsArgs<ExtArgs extends runti
 
 export type usersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  clientCompanyId?: boolean
   name?: boolean
   email?: boolean
-  isActive?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  client_companies?: boolean | Prisma.client_companiesDefaultArgs<ExtArgs>
-  labMemberships?: boolean | Prisma.users$labMembershipsArgs<ExtArgs>
+  is_active?: boolean
+  deleted_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
+  memberships?: boolean | Prisma.users$membershipsArgs<ExtArgs>
   assignedCases?: boolean | Prisma.users$assignedCasesArgs<ExtArgs>
   createdCases?: boolean | Prisma.users$createdCasesArgs<ExtArgs>
+  assignedProcesses?: boolean | Prisma.users$assignedProcessesArgs<ExtArgs>
   case_attachments?: boolean | Prisma.users$case_attachmentsArgs<ExtArgs>
   notifications?: boolean | Prisma.users$notificationsArgs<ExtArgs>
   pushSubscriptions?: boolean | Prisma.users$pushSubscriptionsArgs<ExtArgs>
@@ -1226,73 +1195,67 @@ export type usersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 
 export type usersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  clientCompanyId?: boolean
   name?: boolean
   email?: boolean
-  isActive?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  client_companies?: boolean | Prisma.client_companiesDefaultArgs<ExtArgs>
+  is_active?: boolean
+  deleted_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }, ExtArgs["result"]["users"]>
 
 export type usersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  clientCompanyId?: boolean
   name?: boolean
   email?: boolean
-  isActive?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  client_companies?: boolean | Prisma.client_companiesDefaultArgs<ExtArgs>
+  is_active?: boolean
+  deleted_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }, ExtArgs["result"]["users"]>
 
 export type usersSelectScalar = {
   id?: boolean
-  clientCompanyId?: boolean
   name?: boolean
   email?: boolean
-  isActive?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
+  is_active?: boolean
+  deleted_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }
 
-export type usersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clientCompanyId" | "name" | "email" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["users"]>
+export type usersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "is_active" | "deleted_at" | "created_at" | "updated_at", ExtArgs["result"]["users"]>
 export type usersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  client_companies?: boolean | Prisma.client_companiesDefaultArgs<ExtArgs>
-  labMemberships?: boolean | Prisma.users$labMembershipsArgs<ExtArgs>
+  memberships?: boolean | Prisma.users$membershipsArgs<ExtArgs>
   assignedCases?: boolean | Prisma.users$assignedCasesArgs<ExtArgs>
   createdCases?: boolean | Prisma.users$createdCasesArgs<ExtArgs>
+  assignedProcesses?: boolean | Prisma.users$assignedProcessesArgs<ExtArgs>
   case_attachments?: boolean | Prisma.users$case_attachmentsArgs<ExtArgs>
   notifications?: boolean | Prisma.users$notificationsArgs<ExtArgs>
   pushSubscriptions?: boolean | Prisma.users$pushSubscriptionsArgs<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type usersIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  client_companies?: boolean | Prisma.client_companiesDefaultArgs<ExtArgs>
-}
-export type usersIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  client_companies?: boolean | Prisma.client_companiesDefaultArgs<ExtArgs>
-}
+export type usersIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type usersIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $usersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "users"
   objects: {
-    client_companies: Prisma.$client_companiesPayload<ExtArgs>
-    labMemberships: Prisma.$user_lab_membershipsPayload<ExtArgs>[]
+    memberships: Prisma.$lab_membersPayload<ExtArgs>[]
     assignedCases: Prisma.$casesPayload<ExtArgs>[]
     createdCases: Prisma.$casesPayload<ExtArgs>[]
+    assignedProcesses: Prisma.$case_processesPayload<ExtArgs>[]
     case_attachments: Prisma.$case_attachmentsPayload<ExtArgs>[]
     notifications: Prisma.$notificationsPayload<ExtArgs>[]
     pushSubscriptions: Prisma.$push_subscriptionsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    clientCompanyId: string
     name: string
     email: string
-    isActive: boolean
-    createdAt: Date
-    updatedAt: Date
+    is_active: boolean
+    deleted_at: Date | null
+    created_at: Date
+    updated_at: Date
   }, ExtArgs["result"]["users"]>
   composites: {}
 }
@@ -1687,10 +1650,10 @@ readonly fields: usersFieldRefs;
  */
 export interface Prisma__usersClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  client_companies<T extends Prisma.client_companiesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.client_companiesDefaultArgs<ExtArgs>>): Prisma.Prisma__client_companiesClient<runtime.Types.Result.GetResult<Prisma.$client_companiesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  labMemberships<T extends Prisma.users$labMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$labMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$user_lab_membershipsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  memberships<T extends Prisma.users$membershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$lab_membersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assignedCases<T extends Prisma.users$assignedCasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$assignedCasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$casesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdCases<T extends Prisma.users$createdCasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$createdCasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$casesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assignedProcesses<T extends Prisma.users$assignedProcessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$assignedProcessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_processesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   case_attachments<T extends Prisma.users$case_attachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$case_attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_attachmentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.users$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$notificationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pushSubscriptions<T extends Prisma.users$pushSubscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$pushSubscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$push_subscriptionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1724,12 +1687,12 @@ export interface Prisma__usersClient<T, Null = never, ExtArgs extends runtime.Ty
  */
 export interface usersFieldRefs {
   readonly id: Prisma.FieldRef<"users", 'String'>
-  readonly clientCompanyId: Prisma.FieldRef<"users", 'String'>
   readonly name: Prisma.FieldRef<"users", 'String'>
   readonly email: Prisma.FieldRef<"users", 'String'>
-  readonly isActive: Prisma.FieldRef<"users", 'Boolean'>
-  readonly createdAt: Prisma.FieldRef<"users", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"users", 'DateTime'>
+  readonly is_active: Prisma.FieldRef<"users", 'Boolean'>
+  readonly deleted_at: Prisma.FieldRef<"users", 'DateTime'>
+  readonly created_at: Prisma.FieldRef<"users", 'DateTime'>
+  readonly updated_at: Prisma.FieldRef<"users", 'DateTime'>
 }
     
 
@@ -1984,10 +1947,6 @@ export type usersCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extension
    */
   data: Prisma.usersCreateManyInput | Prisma.usersCreateManyInput[]
   skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.usersIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -2058,10 +2017,6 @@ export type usersUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many users to update.
    */
   limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.usersIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -2131,27 +2086,27 @@ export type usersDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
- * users.labMemberships
+ * users.memberships
  */
-export type users$labMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type users$membershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the user_lab_memberships
+   * Select specific fields to fetch from the lab_members
    */
-  select?: Prisma.user_lab_membershipsSelect<ExtArgs> | null
+  select?: Prisma.lab_membersSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the user_lab_memberships
+   * Omit specific fields from the lab_members
    */
-  omit?: Prisma.user_lab_membershipsOmit<ExtArgs> | null
+  omit?: Prisma.lab_membersOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.user_lab_membershipsInclude<ExtArgs> | null
-  where?: Prisma.user_lab_membershipsWhereInput
-  orderBy?: Prisma.user_lab_membershipsOrderByWithRelationInput | Prisma.user_lab_membershipsOrderByWithRelationInput[]
-  cursor?: Prisma.user_lab_membershipsWhereUniqueInput
+  include?: Prisma.lab_membersInclude<ExtArgs> | null
+  where?: Prisma.lab_membersWhereInput
+  orderBy?: Prisma.lab_membersOrderByWithRelationInput | Prisma.lab_membersOrderByWithRelationInput[]
+  cursor?: Prisma.lab_membersWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.User_lab_membershipsScalarFieldEnum | Prisma.User_lab_membershipsScalarFieldEnum[]
+  distinct?: Prisma.Lab_membersScalarFieldEnum | Prisma.Lab_membersScalarFieldEnum[]
 }
 
 /**
@@ -2200,6 +2155,30 @@ export type users$createdCasesArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.CasesScalarFieldEnum | Prisma.CasesScalarFieldEnum[]
+}
+
+/**
+ * users.assignedProcesses
+ */
+export type users$assignedProcessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the case_processes
+   */
+  select?: Prisma.case_processesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the case_processes
+   */
+  omit?: Prisma.case_processesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.case_processesInclude<ExtArgs> | null
+  where?: Prisma.case_processesWhereInput
+  orderBy?: Prisma.case_processesOrderByWithRelationInput | Prisma.case_processesOrderByWithRelationInput[]
+  cursor?: Prisma.case_processesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Case_processesScalarFieldEnum | Prisma.Case_processesScalarFieldEnum[]
 }
 
 /**

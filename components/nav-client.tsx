@@ -103,11 +103,6 @@ function getNavRoutes(role?: string, pathname?: string) {
         label: "My Stats",
         active: pathname === "/dashboard",
       },
-      {
-        href: "/kanban",
-        label: "Kanban",
-        active: pathname?.startsWith("/kanban") ?? false,
-      },
     ];
   }
 
@@ -123,14 +118,14 @@ function getNavRoutes(role?: string, pathname?: string) {
       active: pathname?.startsWith("/cases") ?? false,
     },
     {
-      href: "/kanban",
-      label: "Kanban",
-      active: pathname?.startsWith("/kanban") ?? false,
-    },
-    {
       href: "/production",
       label: "Production",
       active: pathname?.startsWith("/production") ?? false,
+    },
+    {
+      href: "/milling",
+      label: "Milling",
+      active: pathname?.startsWith("/milling") ?? false,
     },
     {
       href: "/registry",

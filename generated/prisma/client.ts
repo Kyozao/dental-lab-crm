@@ -47,30 +47,25 @@ export { Prisma }
  */
 export type users = Prisma.usersModel
 /**
- * Model client_companies
+ * Model labs
  * 
  */
-export type client_companies = Prisma.client_companiesModel
+export type labs = Prisma.labsModel
 /**
- * Model dental_labs
+ * Model lab_members
  * 
  */
-export type dental_labs = Prisma.dental_labsModel
-/**
- * Model lab_customers
- * 
- */
-export type lab_customers = Prisma.lab_customersModel
-/**
- * Model user_lab_memberships
- * 
- */
-export type user_lab_memberships = Prisma.user_lab_membershipsModel
+export type lab_members = Prisma.lab_membersModel
 /**
  * Model service_types
  * 
  */
 export type service_types = Prisma.service_typesModel
+/**
+ * Model processes
+ * 
+ */
+export type processes = Prisma.processesModel
 /**
  * Model milling_drills
  * 
@@ -87,10 +82,10 @@ export type case_millings = Prisma.case_millingsModel
  */
 export type case_attachments = Prisma.case_attachmentsModel
 /**
- * Model clinics
+ * Model customers
  * 
  */
-export type clinics = Prisma.clinicsModel
+export type customers = Prisma.customersModel
 /**
  * Model dentists
  * 
@@ -116,6 +111,16 @@ export type block_types = Prisma.block_typesModel
  * 
  */
 export type cases = Prisma.casesModel
+/**
+ * Model case_processes
+ * 
+ */
+export type case_processes = Prisma.case_processesModel
+/**
+ * Model case_process_dependencies
+ * 
+ */
+export type case_process_dependencies = Prisma.case_process_dependenciesModel
 /**
  * Model case_status_histories
  * 

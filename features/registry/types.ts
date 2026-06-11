@@ -6,14 +6,14 @@ export type RegistryActionState = {
 };
 
 export type RegistryEntity =
-  | "clinics"
+  | "customers"
   | "dentists"
   | "components"
   | "block-types"
   | "service-types"
   | "milling-drills";
 
-export type RegistryClinicOption = {
+export type RegistryCustomerOption = {
   id: string;
   name: string;
 };

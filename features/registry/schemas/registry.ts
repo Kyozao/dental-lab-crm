@@ -1,14 +1,14 @@
 import { z } from "zod";
 
-export const createClinicSchema = z.object({
-  name: z.string().trim().min(1, "Clinic name is required"),
+export const createCustomerSchema = z.object({
+  name: z.string().trim().min(1, "customer name is required"),
   phone: z.string().trim().optional(),
   email: z.string().email("Invalid email").optional().or(z.literal("")),
   notes: z.string().trim().optional(),
 });
 
 export const createDentistSchema = z.object({
-  clinicId: z.string().min(1, "Clinic is required"),
+  customerId: z.string().min(1, "customer is required"),
   name: z.string().trim().min(1, "Dentist name is required"),
   phone: z.string().trim().optional(),
   email: z.string().email("Invalid email").optional().or(z.literal("")),
@@ -76,7 +76,7 @@ export const createMillingDrillSchema = z.object({
     .default(true),
 });
 
-export const updateClinicSchema = createClinicSchema.extend({
+export const updateCustomerSchema = createCustomerSchema.extend({
   id: z.string().min(1, "ID is required"),
 });
 
@@ -100,7 +100,7 @@ export const updateMillingDrillSchema = createMillingDrillSchema.extend({
   id: z.string().min(1, "ID is required"),
 });
 
-export type CreateClinicInput = z.infer<typeof createClinicSchema>;
+export type CreateCustomerInput = z.infer<typeof createCustomerSchema>;
 export type CreateDentistInput = z.infer<typeof createDentistSchema>;
 export type CreateComponentInput = z.infer<typeof createComponentSchema>;
 export type CreateBlockTypeInput = z.infer<typeof createBlockTypeSchema>;

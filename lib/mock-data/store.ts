@@ -13,6 +13,7 @@ export type MockUser = {
   email: string;
   role: Role;
   isActive: boolean;
+  deletedAt?: string | null;
 };
 
 export type MockRegistryItem = {
@@ -23,7 +24,7 @@ export type MockRegistryItem = {
   phone?: string | null;
   email?: string | null;
   notes?: string | null;
-  clinicId?: string;
+  customerId?: string;
   category?: string | null;
   brand?: string | null;
   material?: string | null;
@@ -35,6 +36,7 @@ export type MockRegistryItem = {
   defaultPrice?: string | null;
   maxTeethRecommended?: number | null;
   isActive?: boolean;
+  deletedAt?: string | null;
 };
 
 export type MockCaseComponent = {
@@ -92,7 +94,7 @@ export type MockCase = {
   isUrgent: boolean;
   createdAt: string;
   updatedAt: string;
-  clinicId: string | null;
+  customerId: string | null;
   dentistId: string | null;
   serviceTypeId: string | null;
   cadDesignerId: string | null;
@@ -112,7 +114,7 @@ type MockState = {
   dentalLabs: Array<{ id: string; clientCompanyId: string; name: string }>;
   labCustomers: MockRegistryItem[];
   users: MockUser[];
-  clinics: MockRegistryItem[];
+  customers: MockRegistryItem[];
   dentists: MockRegistryItem[];
   serviceTypes: MockRegistryItem[];
   components: MockRegistryItem[];
@@ -175,16 +177,16 @@ function createInitialState(): MockState {
     },
   ];
 
-  const clinics: MockRegistryItem[] = [
-    { id: "clinic-1", dentalLabId: "lab-vela-sao-paulo", labCustomerId: "lab-customer-1", name: "Silva Dental", phone: "(11) 3456-7890", email: "contato@silvadental.local", notes: "Main demo clinic" },
-    { id: "clinic-2", dentalLabId: "lab-vela-sao-paulo", labCustomerId: "lab-customer-2", name: "Oral Prime", phone: "(21) 2222-1000", email: "ops@oralprime.local", notes: null },
-    { id: "clinic-3", dentalLabId: "lab-vela-rio", labCustomerId: "lab-customer-3", name: "Rio Smile", phone: "(21) 3333-3000", email: "ops@riosmile.local", notes: null },
+  const customers: MockRegistryItem[] = [
+    { id: "customer-1", dentalLabId: "lab-vela-sao-paulo", labCustomerId: "lab-customer-1", name: "Silva Dental", phone: "(11) 3456-7890", email: "contato@silvadental.local", notes: "Main demo customer", isActive: true },
+    { id: "customer-2", dentalLabId: "lab-vela-sao-paulo", labCustomerId: "lab-customer-2", name: "Oral Prime", phone: "(21) 2222-1000", email: "ops@oralprime.local", notes: null, isActive: true },
+    { id: "customer-3", dentalLabId: "lab-vela-rio", labCustomerId: "lab-customer-3", name: "Rio Smile", phone: "(21) 3333-3000", email: "ops@riosmile.local", notes: null, isActive: true },
   ];
 
   const dentists: MockRegistryItem[] = [
-    { id: "dentist-1", dentalLabId: "lab-vela-sao-paulo", clinicId: "clinic-1", name: "Dr. Marcos Silva", phone: "(11) 98888-1111", email: "marcos@silvadental.local", notes: null },
-    { id: "dentist-2", dentalLabId: "lab-vela-sao-paulo", clinicId: "clinic-2", name: "Dra. Carla Ramos", phone: "(21) 97777-2222", email: "carla@oralprime.local", notes: null },
-    { id: "dentist-3", dentalLabId: "lab-vela-rio", clinicId: "clinic-3", name: "Dr. Felipe Rocha", phone: "(21) 96666-3333", email: "felipe@riosmile.local", notes: null },
+    { id: "dentist-1", dentalLabId: "lab-vela-sao-paulo", customerId: "customer-1", name: "Dr. Marcos Silva", phone: "(11) 98888-1111", email: "marcos@silvadental.local", notes: null, isActive: true },
+    { id: "dentist-2", dentalLabId: "lab-vela-sao-paulo", customerId: "customer-2", name: "Dra. Carla Ramos", phone: "(21) 97777-2222", email: "carla@oralprime.local", notes: null, isActive: true },
+    { id: "dentist-3", dentalLabId: "lab-vela-rio", customerId: "customer-3", name: "Dr. Felipe Rocha", phone: "(21) 96666-3333", email: "felipe@riosmile.local", notes: null, isActive: true },
   ];
 
   const serviceTypes: MockRegistryItem[] = [
@@ -229,7 +231,7 @@ function createInitialState(): MockState {
       isUrgent: true,
       createdAt: daysFromNow(-4),
       updatedAt: daysFromNow(-1),
-      clinicId: "clinic-1",
+      customerId: "customer-1",
       dentistId: "dentist-1",
       serviceTypeId: "service-2",
       cadDesignerId: "user-cad-ana",
@@ -254,7 +256,7 @@ function createInitialState(): MockState {
       isUrgent: false,
       createdAt: daysFromNow(-3),
       updatedAt: daysFromNow(-1),
-      clinicId: "clinic-2",
+      customerId: "customer-2",
       dentistId: "dentist-2",
       serviceTypeId: "service-1",
       cadDesignerId: "user-cad-joao",
@@ -279,7 +281,7 @@ function createInitialState(): MockState {
       isUrgent: false,
       createdAt: daysFromNow(-10),
       updatedAt: daysFromNow(-2),
-      clinicId: "clinic-1",
+      customerId: "customer-1",
       dentistId: "dentist-1",
       serviceTypeId: "service-1",
       cadDesignerId: "user-cad-ana",
@@ -304,7 +306,7 @@ function createInitialState(): MockState {
       isUrgent: false,
       createdAt: daysFromNow(-2),
       updatedAt: daysFromNow(-1),
-      clinicId: "clinic-3",
+      customerId: "customer-3",
       dentistId: "dentist-3",
       serviceTypeId: "service-3",
       cadDesignerId: "user-cad-joao",
@@ -336,7 +338,7 @@ function createInitialState(): MockState {
     dentalLabs,
     labCustomers,
     users,
-    clinics,
+    customers,
     dentists,
     serviceTypes,
     components,
@@ -370,6 +372,10 @@ function activeDentalLabId() {
 
 function isActiveLabItem(item: { dentalLabId: string }) {
   return item.dentalLabId === activeDentalLabId();
+}
+
+function isActiveReference(item: { isActive?: boolean; deletedAt?: string | null }) {
+  return item.isActive !== false && !item.deletedAt;
 }
 
 function normalizeCaseComponents(value: unknown): MockCaseComponent[] {
@@ -408,23 +414,23 @@ export function getCaseFormOptions() {
   const store = state();
   const dentalLabId = activeDentalLabId();
   return {
-    clinics: store.clinics.filter((clinic) => clinic.dentalLabId === dentalLabId).map((clinic) => ({
-      id: clinic.id,
-      dentalLabId: clinic.dentalLabId,
-      labCustomerId: clinic.labCustomerId ?? null,
-      name: clinic.name,
+    customers: store.customers.filter((customer) => customer.dentalLabId === dentalLabId && isActiveReference(customer)).map((customer) => ({
+      id: customer.id,
+      dentalLabId: customer.dentalLabId,
+      labCustomerId: customer.labCustomerId ?? null,
+      name: customer.name,
       dentists: store.dentists
-        .filter((dentist) => dentist.dentalLabId === dentalLabId && dentist.clinicId === clinic.id)
+        .filter((dentist) => dentist.dentalLabId === dentalLabId && dentist.customerId === customer.id && isActiveReference(dentist))
         .map((dentist) => ({ id: dentist.id, name: dentist.name })),
     })),
     serviceTypes: store.serviceTypes
-      .filter((item) => item.dentalLabId === dentalLabId && item.isActive !== false)
+      .filter((item) => item.dentalLabId === dentalLabId && isActiveReference(item))
       .map((item) => ({ id: item.id, name: item.name })),
     cadDesigners: store.users
-      .filter((user) => user.role === "CAD_DESIGNER" && user.isActive)
+      .filter((user) => user.role === "CAD_DESIGNER" && user.isActive && !user.deletedAt)
       .map((user) => ({ id: user.id, name: user.name })),
     components: store.components
-      .filter((item) => item.dentalLabId === dentalLabId && item.isActive !== false)
+      .filter((item) => item.dentalLabId === dentalLabId && isActiveReference(item))
       .map((item) => ({
         id: item.id,
         name: item.name,
@@ -441,13 +447,13 @@ export function getRegistryBootstrap() {
   const dentalLabId = activeDentalLabId();
   return {
     ...getCaseFormOptions(),
-    blockTypes: store.blockTypes.filter((item) => item.dentalLabId === dentalLabId && item.isActive !== false),
-    millingDrills: store.millingDrills.filter((item) => item.dentalLabId === dentalLabId && item.isActive !== false),
+    blockTypes: store.blockTypes.filter((item) => item.dentalLabId === dentalLabId && isActiveReference(item)),
+    millingDrills: store.millingDrills.filter((item) => item.dentalLabId === dentalLabId && isActiveReference(item)),
   };
 }
 
-function clinic(id: string | null) {
-  return state().clinics.find((item) => item.id === id) ?? null;
+function findCustomer(id: string | null) {
+  return state().customers.find((item) => item.id === id) ?? null;
 }
 
 function dentist(id: string | null) {
@@ -478,9 +484,41 @@ function drill(id: string | null) {
   return state().millingDrills.find((item) => item.id === id) ?? null;
 }
 
+function activeCustomer(id: string | null) {
+  const item = findCustomer(id);
+  return item && item.dentalLabId === activeDentalLabId() && isActiveReference(item) ? item : null;
+}
+
+function validateActiveCaseReferences(payload: Record<string, unknown>) {
+  const dentalLabId = activeDentalLabId();
+  const customerId = typeof payload.customerId === "string" && payload.customerId ? payload.customerId : null;
+  const dentistId = typeof payload.dentistId === "string" && payload.dentistId ? payload.dentistId : null;
+  const serviceTypeId = typeof payload.serviceTypeId === "string" && payload.serviceTypeId ? payload.serviceTypeId : null;
+  const cadDesignerId = typeof payload.cadDesignerId === "string" && payload.cadDesignerId ? payload.cadDesignerId : null;
+
+  const selectedCustomer = activeCustomer(customerId);
+  const selectedDentist = dentist(dentistId);
+  const selectedServiceType = serviceType(serviceTypeId);
+  const selectedDesigner = designer(cadDesignerId);
+
+  if (customerId && !selectedCustomer) throw new Error("customer is inactive, archived, or not in this lab.");
+  if (dentistId && (!selectedDentist || selectedDentist.dentalLabId !== dentalLabId || !isActiveReference(selectedDentist))) {
+    throw new Error("Dentist is inactive, archived, or not in this lab.");
+  }
+  if (customerId && selectedDentist && selectedDentist.customerId !== customerId) {
+    throw new Error("Dentist does not belong to the selected customer.");
+  }
+  if (serviceTypeId && (!selectedServiceType || selectedServiceType.dentalLabId !== dentalLabId || !isActiveReference(selectedServiceType))) {
+    throw new Error("Service type is inactive, archived, or not in this lab.");
+  }
+  if (cadDesignerId && (!selectedDesigner || selectedDesigner.role !== "CAD_DESIGNER" || !selectedDesigner.isActive || selectedDesigner.deletedAt)) {
+    throw new Error("CAD designer is inactive, archived, or not assigned to this lab.");
+  }
+}
+
 export function serializeCase(item: MockCase, detailed = false) {
   const store = state();
-  const c = clinic(item.clinicId);
+  const c = findCustomer(item.customerId);
   const d = dentist(item.dentistId);
   const s = serviceType(item.serviceTypeId);
   const cad = designer(item.cadDesignerId);
@@ -504,15 +542,15 @@ export function serializeCase(item: MockCase, detailed = false) {
     isUrgent: item.isUrgent,
     createdAt: item.createdAt,
     updatedAt: item.updatedAt,
-    clinicId: item.clinicId,
+    customerId: item.customerId,
     dentistId: item.dentistId,
     serviceTypeId: item.serviceTypeId,
     cadDesignerId: item.cadDesignerId,
-    clinicName: c?.name ?? "",
+    customerName: c?.name ?? "",
     dentistName: d?.name ?? "",
     serviceTypeName: s?.name ?? "",
     cadDesignerName: cad?.name ?? "",
-    clinic: c ? { id: c.id, name: c.name } : null,
+    customer: c ? { id: c.id, name: c.name } : null,
     dentist: d ? { id: d.id, name: d.name } : null,
     serviceType: s ? { id: s.id, name: s.name } : null,
     cadDesigner: cad ? { id: cad.id, name: cad.name } : null,
@@ -561,11 +599,11 @@ export function listCases(filters: URLSearchParams) {
   const q = (filters.get("q") ?? filters.get("search") ?? "").trim().toLowerCase();
   const status = filters.get("status") as CaseStatusValue | null;
   const urgent = filters.get("urgent");
-  const clinicId = filters.get("clinicId");
+  const customerId = filters.get("customerId");
 
   let items = state().cases.filter(isActiveLabItem);
   if (status) items = items.filter((item) => item.currentStatus === status);
-  if (clinicId) items = items.filter((item) => item.clinicId === clinicId);
+  if (customerId) items = items.filter((item) => item.customerId === customerId);
   if (urgent === "urgent") items = items.filter((item) => item.isUrgent);
   if (urgent === "normal") items = items.filter((item) => !item.isUrgent);
   if (q) {
@@ -573,7 +611,7 @@ export function listCases(filters: URLSearchParams) {
       const values = [
         item.code,
         item.patientName,
-        clinic(item.clinicId)?.name,
+        findCustomer(item.customerId)?.name,
         dentist(item.dentistId)?.name,
       ];
       return values.some((value) => value?.toLowerCase().includes(q));
@@ -599,11 +637,12 @@ export function getCase(idValue: string) {
 export function createCase(payload: Record<string, unknown>) {
   const createdAt = now();
   const dentalLabId = activeDentalLabId();
-  const selectedClinic = clinic(typeof payload.clinicId === "string" ? payload.clinicId : null);
+  validateActiveCaseReferences(payload);
+  const selectedCustomer = activeCustomer(typeof payload.customerId === "string" ? payload.customerId : null);
   const item: MockCase = {
     id: id("case"),
     dentalLabId,
-    labCustomerId: selectedClinic?.labCustomerId ?? null,
+    labCustomerId: selectedCustomer?.labCustomerId ?? null,
     code: String(payload.code || `DL-${state().nextId}`),
     clientCaseCode: null,
     patientName: String(payload.patientName || "New Patient"),
@@ -617,7 +656,7 @@ export function createCase(payload: Record<string, unknown>) {
     isUrgent: Boolean(payload.isUrgent),
     createdAt,
     updatedAt: createdAt,
-    clinicId: selectedClinic?.dentalLabId === dentalLabId ? selectedClinic.id : null,
+    customerId: selectedCustomer?.dentalLabId === dentalLabId ? selectedCustomer.id : null,
     dentistId: typeof payload.dentistId === "string" ? payload.dentistId : null,
     serviceTypeId: typeof payload.serviceTypeId === "string" ? payload.serviceTypeId : null,
     cadDesignerId: typeof payload.cadDesignerId === "string" ? payload.cadDesignerId : null,
@@ -632,6 +671,7 @@ export function createCase(payload: Record<string, unknown>) {
 export function updateCase(idValue: string, payload: Record<string, unknown>) {
   const item = state().cases.find((caseItem) => caseItem.id === idValue && isActiveLabItem(caseItem));
   if (!item) return null;
+  validateActiveCaseReferences(payload);
   const previousStatus = item.currentStatus;
   if (typeof payload.code === "string") item.code = payload.code;
   if (typeof payload.patientName === "string") item.patientName = payload.patientName;
@@ -644,10 +684,10 @@ export function updateCase(idValue: string, payload: Record<string, unknown>) {
   if (typeof payload.observations === "string") item.observations = payload.observations;
   if (typeof payload.pendingNote === "string") item.pendingNote = payload.pendingNote;
   if ("isUrgent" in payload) item.isUrgent = Boolean(payload.isUrgent);
-  if ("clinicId" in payload) {
-    const selectedClinic = clinic(typeof payload.clinicId === "string" ? payload.clinicId : null);
-    item.clinicId = selectedClinic?.dentalLabId === item.dentalLabId ? selectedClinic.id : null;
-    item.labCustomerId = selectedClinic?.labCustomerId ?? null;
+  if ("customerId" in payload) {
+    const selectedCustomer = activeCustomer(typeof payload.customerId === "string" ? payload.customerId : null);
+    item.customerId = selectedCustomer?.dentalLabId === item.dentalLabId ? selectedCustomer.id : null;
+    item.labCustomerId = selectedCustomer?.labCustomerId ?? null;
   }
   if ("dentistId" in payload) item.dentistId = typeof payload.dentistId === "string" && payload.dentistId ? payload.dentistId : null;
   if ("serviceTypeId" in payload) item.serviceTypeId = typeof payload.serviceTypeId === "string" && payload.serviceTypeId ? payload.serviceTypeId : null;
@@ -786,15 +826,16 @@ export function getRegistryData() {
   const store = state();
   const dentalLabId = activeDentalLabId();
   return {
-    clinics: store.clinics.filter((item) => item.dentalLabId === dentalLabId),
+    labCustomers: store.labCustomers.filter((item) => item.dentalLabId === dentalLabId && isActiveReference(item)),
+    customers: store.customers.filter((item) => item.dentalLabId === dentalLabId && isActiveReference(item)),
     dentists: store.dentists
-      .filter((item) => item.dentalLabId === dentalLabId)
-      .map((item) => ({ ...item, clinic: { name: clinic(item.clinicId ?? null)?.name ?? "" } })),
-    components: store.components.filter((item) => item.dentalLabId === dentalLabId),
-    blockTypes: store.blockTypes.filter((item) => item.dentalLabId === dentalLabId),
-    serviceTypes: store.serviceTypes.filter((item) => item.dentalLabId === dentalLabId),
+      .filter((item) => item.dentalLabId === dentalLabId && isActiveReference(item))
+      .map((item) => ({ ...item, customer: { name: findCustomer(item.customerId ?? null)?.name ?? "" } })),
+    components: store.components.filter((item) => item.dentalLabId === dentalLabId && isActiveReference(item)),
+    blockTypes: store.blockTypes.filter((item) => item.dentalLabId === dentalLabId && isActiveReference(item)),
+    serviceTypes: store.serviceTypes.filter((item) => item.dentalLabId === dentalLabId && isActiveReference(item)),
     drills: store.millingDrills
-      .filter((item) => item.dentalLabId === dentalLabId)
+      .filter((item) => item.dentalLabId === dentalLabId && isActiveReference(item))
       .map((item) => ({ ...item, fineMillings: [], coarseMillings: [] })),
   };
 }
@@ -815,22 +856,17 @@ export function updateRegistryEntity(entity: string, itemId: string, payload: Re
 }
 
 export function deleteRegistryEntity(entity: string, itemId: string) {
-  const store = state();
-  const array = getRegistryArray(store, entity);
-  if (!array) return false;
-  const before = array.length;
-  const next = array.filter((entry) => entry.id !== itemId || !isActiveLabItem(entry));
-  if (entity === "clinics") store.clinics = next;
-  if (entity === "dentists") store.dentists = next;
-  if (entity === "components") store.components = next;
-  if (entity === "block-types") store.blockTypes = next;
-  if (entity === "service-types") store.serviceTypes = next;
-  if (entity === "milling-drills") store.millingDrills = next;
-  return next.length !== before;
+  const array = getRegistryArray(state(), entity);
+  const item = array?.find((entry) => entry.id === itemId && isActiveLabItem(entry) && isActiveReference(entry));
+  if (!item) return null;
+  item.isActive = false;
+  item.deletedAt = now();
+  return item;
 }
 
 function getRegistryArray(store: MockState, entity: string) {
-  if (entity === "clinics") return store.clinics;
+  if (entity === "lab-customers") return store.labCustomers;
+  if (entity === "customers") return store.customers;
   if (entity === "dentists") return store.dentists;
   if (entity === "components") return store.components;
   if (entity === "block-types") return store.blockTypes;
@@ -847,13 +883,15 @@ function normalizeRegistryPayload(entity: string, itemId: string, payload: Recor
     dentalLabId,
     name: String(payload.name || "Untitled"),
     notes: typeof payload.notes === "string" ? payload.notes : null,
+    isActive: boolValue,
+    deletedAt: boolValue ? null : now(),
   };
-  if (entity === "clinics") return { ...base, labCustomerId: typeof payload.labCustomerId === "string" && payload.labCustomerId ? payload.labCustomerId : null, phone: String(payload.phone || ""), email: String(payload.email || "") };
-  if (entity === "dentists") return { ...base, clinicId: String(payload.clinicId || state().clinics.find((item) => item.dentalLabId === dentalLabId)?.id || ""), phone: String(payload.phone || ""), email: String(payload.email || "") };
-  if (entity === "components") return { ...base, category: String(payload.category || ""), brand: String(payload.brand || ""), defaultCost: String(payload.defaultCost || "0"), defaultPrice: String(payload.defaultPrice || "0"), isActive: boolValue };
-  if (entity === "block-types") return { ...base, material: String(payload.material || ""), brand: String(payload.brand || ""), size: String(payload.size || ""), shade: String(payload.shade || ""), defaultCost: String(payload.defaultCost || "0"), isActive: boolValue };
-  if (entity === "service-types") return { ...base, isActive: boolValue };
-  return { ...base, type: String(payload.type || ""), brand: String(payload.brand || ""), serialNumber: String(payload.serialNumber || ""), maxTeethRecommended: Number(payload.maxTeethRecommended || 0) || null, isActive: boolValue };
+  if (entity === "customers") return { ...base, labCustomerId: typeof payload.labCustomerId === "string" && payload.labCustomerId ? payload.labCustomerId : null, phone: String(payload.phone || ""), email: String(payload.email || "") };
+  if (entity === "dentists") return { ...base, customerId: String(payload.customerId || state().customers.find((item) => item.dentalLabId === dentalLabId)?.id || ""), phone: String(payload.phone || ""), email: String(payload.email || "") };
+  if (entity === "components") return { ...base, category: String(payload.category || ""), brand: String(payload.brand || ""), defaultCost: String(payload.defaultCost || "0"), defaultPrice: String(payload.defaultPrice || "0") };
+  if (entity === "block-types") return { ...base, material: String(payload.material || ""), brand: String(payload.brand || ""), size: String(payload.size || ""), shade: String(payload.shade || ""), defaultCost: String(payload.defaultCost || "0") };
+  if (entity === "service-types" || entity === "lab-customers") return base;
+  return { ...base, type: String(payload.type || ""), brand: String(payload.brand || ""), serialNumber: String(payload.serialNumber || ""), maxTeethRecommended: Number(payload.maxTeethRecommended || 0) || null };
 }
 
 export function getProductionData() {
@@ -878,7 +916,7 @@ export function getProductionData() {
               id: caseItem.id,
               code: caseItem.code,
               patientName: caseItem.patientName,
-              clinic: { name: clinic(caseItem.clinicId)?.name ?? "" },
+              customer: { name: findCustomer(caseItem.customerId)?.name ?? "" },
             }
           : null,
         blockType: blockType(milling.blockTypeId),
@@ -891,8 +929,8 @@ export function getProductionData() {
 
   return {
     millings,
-    blockTypes: store.blockTypes.filter((item) => item.dentalLabId === activeDentalLabId() && item.isActive !== false).map((item) => ({ id: item.id, name: item.name, shade: item.shade ?? null })),
-    millingDrills: store.millingDrills.filter((item) => item.dentalLabId === activeDentalLabId() && item.isActive !== false).map((item) => ({ id: item.id, name: item.name, brand: item.brand ?? null, type: item.type ?? null, maxTeethRecommended: item.maxTeethRecommended ?? null })),
+    blockTypes: store.blockTypes.filter((item) => item.dentalLabId === activeDentalLabId() && isActiveReference(item)).map((item) => ({ id: item.id, name: item.name, shade: item.shade ?? null })),
+    millingDrills: store.millingDrills.filter((item) => item.dentalLabId === activeDentalLabId() && isActiveReference(item)).map((item) => ({ id: item.id, name: item.name, brand: item.brand ?? null, type: item.type ?? null, maxTeethRecommended: item.maxTeethRecommended ?? null })),
     readyCases,
   };
 }

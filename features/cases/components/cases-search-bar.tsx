@@ -8,17 +8,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/native-select";
 import { CASE_STATUS_OPTIONS } from "@/features/cases/types";
-import type { ClinicOption } from "@/features/cases/types";
+import type { CustomerOption } from "@/features/cases/types";
 
 type Props = {
-  clinics: ClinicOption[];
+  customers: CustomerOption[];
   totalCases?: number;
   onSearchChange?: (query: string) => void;
 };
 
-const PAGE_SIZE_OPTIONS = [25, 50, 100] as const;
+const LIMIT_OPTIONS = [25, 50, 100, 200] as const;
 
-export function CasesSearchBar({ clinics, totalCases, onSearchChange }: Props) {
+export function CasesSearchBar({ customers, totalCases, onSearchChange }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -27,14 +27,12 @@ export function CasesSearchBar({ clinics, totalCases, onSearchChange }: Props) {
   const [localQuery, setLocalQuery] = useState(searchParams.get("q") || "");
   const [status, setStatus] = useState(searchParams.get("status") || "");
   const [urgent, setUrgent] = useState(searchParams.get("urgent") || "");
-  const [clinicId, setClinicId] = useState(searchParams.get("clinicId") || "");
-  const [pageSize, setPageSize] = useState(
-    searchParams.get("pageSize") || "25",
-  );
+  const [customerId, setCustomerId] = useState(searchParams.get("customerId") || "");
+  const [limit, setLimit] = useState(searchParams.get("limit") || "100");
 
   // Debounced search handler
   const debouncedSearch = useCallback(
-    (query: string, st: string, urg: string, cid: string, ps: string) => {
+    (query: string, st: string, urg: string, cid: string, rowLimit: string) => {
       if (debounceTimeoutRef.current) {
         clearTimeout(debounceTimeoutRef.current);
       }
@@ -48,9 +46,8 @@ export function CasesSearchBar({ clinics, totalCases, onSearchChange }: Props) {
         if (query) params.set("q", query);
         if (st) params.set("status", st);
         if (urg) params.set("urgent", urg);
-        if (cid) params.set("clinicId", cid);
-        params.set("page", "1"); // Reset to page 1 on search
-        params.set("pageSize", ps);
+        if (cid) params.set("customerId", cid);
+        params.set("limit", rowLimit);
 
         router.push(`/cases?${params.toString()}`);
       }, 300);
@@ -61,35 +58,35 @@ export function CasesSearchBar({ clinics, totalCases, onSearchChange }: Props) {
   // Handle query changes
   const handleQueryChange = (value: string) => {
     setLocalQuery(value);
-    debouncedSearch(value, status, urgent, clinicId, pageSize);
+    debouncedSearch(value, status, urgent, customerId, limit);
   };
 
   const handleStatusChange = (value: string) => {
     setStatus(value);
-    debouncedSearch(localQuery, value, urgent, clinicId, pageSize);
+    debouncedSearch(localQuery, value, urgent, customerId, limit);
   };
 
   const handleUrgentChange = (value: string) => {
     setUrgent(value);
-    debouncedSearch(localQuery, status, value, clinicId, pageSize);
+    debouncedSearch(localQuery, status, value, customerId, limit);
   };
 
-  const handleClinicChange = (value: string) => {
-    setClinicId(value);
-    debouncedSearch(localQuery, status, urgent, value, pageSize);
+  const handleCustomerChange = (value: string) => {
+    setCustomerId(value);
+    debouncedSearch(localQuery, status, urgent, value, limit);
   };
 
-  const handlePageSizeChange = (value: string) => {
-    setPageSize(value);
-    debouncedSearch(localQuery, status, urgent, clinicId, value);
+  const handleLimitChange = (value: string) => {
+    setLimit(value);
+    debouncedSearch(localQuery, status, urgent, customerId, value);
   };
 
   const handleClear = () => {
     setLocalQuery("");
     setStatus("");
     setUrgent("");
-    setClinicId("");
-    setPageSize("25");
+    setCustomerId("");
+    setLimit("100");
 
     if (debounceTimeoutRef.current) {
       clearTimeout(debounceTimeoutRef.current);
@@ -115,7 +112,7 @@ export function CasesSearchBar({ clinics, totalCases, onSearchChange }: Props) {
             type="text"
             value={localQuery}
             onChange={(e) => handleQueryChange(e.target.value)}
-            placeholder="Search by code, patient, clinic, dentist..."
+            placeholder="Search by code, patient, customer, dentist..."
             className="h-10 border-0 bg-transparent px-0 shadow-none focus-visible:ring-0"
           />
           {localQuery && (
@@ -157,25 +154,25 @@ export function CasesSearchBar({ clinics, totalCases, onSearchChange }: Props) {
 
           <NativeSelect
             className="w-full"
-              value={clinicId}
-              onChange={(e) => handleClinicChange(e.target.value)}
+              value={customerId}
+              onChange={(e) => handleCustomerChange(e.target.value)}
             >
-              <option value="">All clinics</option>
-              {clinics.map((clinic) => (
-                <option key={clinic.id} value={clinic.id}>
-                  {clinic.name}
+              <option value="">All customers</option>
+              {customers.map((customer) => (
+                <option key={customer.id} value={customer.id}>
+                  {customer.name}
                 </option>
               ))}
           </NativeSelect>
 
           <NativeSelect
             className="w-full"
-              value={pageSize}
-              onChange={(e) => handlePageSizeChange(e.target.value)}
+              value={limit}
+              onChange={(e) => handleLimitChange(e.target.value)}
             >
-              {PAGE_SIZE_OPTIONS.map((size) => (
+              {LIMIT_OPTIONS.map((size) => (
                 <option key={size} value={size}>
-                  {size} per page
+                  {size} recent cases
                 </option>
               ))}
           </NativeSelect>

@@ -27,159 +27,153 @@ export type AggregateCases = {
 }
 
 export type CasesAvgAggregateOutputType = {
-  elementsQty: number | null
+  elements_qty: number | null
 }
 
 export type CasesSumAggregateOutputType = {
-  elementsQty: number | null
+  elements_qty: number | null
 }
 
 export type CasesMinAggregateOutputType = {
   id: string | null
-  dentalLabId: string | null
+  lab_id: string | null
   code: string | null
-  clientCaseCode: string | null
-  patientName: string | null
-  clinicId: string | null
-  serviceTypeId: string | null
-  dentistId: string | null
-  cadDesignerId: string | null
-  createdByUserId: string | null
-  currentStatus: $Enums.CaseStatus | null
+  patient_name: string | null
+  customer_id: string | null
+  service_type_id: string | null
+  dentist_id: string | null
+  cad_designer_id: string | null
+  created_by_user_id: string | null
+  current_status: $Enums.CaseStatus | null
   teeth: string | null
-  elementsQty: number | null
+  elements_qty: number | null
   shade: string | null
-  dueDate: Date | null
-  isUrgent: boolean | null
+  due_date: Date | null
+  is_urgent: boolean | null
   observations: string | null
-  pendingNote: string | null
-  createdAt: Date | null
-  updatedAt: Date | null
+  pending_note: string | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type CasesMaxAggregateOutputType = {
   id: string | null
-  dentalLabId: string | null
+  lab_id: string | null
   code: string | null
-  clientCaseCode: string | null
-  patientName: string | null
-  clinicId: string | null
-  serviceTypeId: string | null
-  dentistId: string | null
-  cadDesignerId: string | null
-  createdByUserId: string | null
-  currentStatus: $Enums.CaseStatus | null
+  patient_name: string | null
+  customer_id: string | null
+  service_type_id: string | null
+  dentist_id: string | null
+  cad_designer_id: string | null
+  created_by_user_id: string | null
+  current_status: $Enums.CaseStatus | null
   teeth: string | null
-  elementsQty: number | null
+  elements_qty: number | null
   shade: string | null
-  dueDate: Date | null
-  isUrgent: boolean | null
+  due_date: Date | null
+  is_urgent: boolean | null
   observations: string | null
-  pendingNote: string | null
-  createdAt: Date | null
-  updatedAt: Date | null
+  pending_note: string | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type CasesCountAggregateOutputType = {
   id: number
-  dentalLabId: number
+  lab_id: number
   code: number
-  clientCaseCode: number
-  patientName: number
-  clinicId: number
-  serviceTypeId: number
-  dentistId: number
-  cadDesignerId: number
-  createdByUserId: number
-  currentStatus: number
+  patient_name: number
+  customer_id: number
+  service_type_id: number
+  dentist_id: number
+  cad_designer_id: number
+  created_by_user_id: number
+  current_status: number
   teeth: number
-  elementsQty: number
+  elements_qty: number
   shade: number
-  dueDate: number
-  isUrgent: number
+  due_date: number
+  is_urgent: number
   observations: number
-  pendingNote: number
-  createdAt: number
-  updatedAt: number
+  pending_note: number
+  created_at: number
+  updated_at: number
   _all: number
 }
 
 
 export type CasesAvgAggregateInputType = {
-  elementsQty?: true
+  elements_qty?: true
 }
 
 export type CasesSumAggregateInputType = {
-  elementsQty?: true
+  elements_qty?: true
 }
 
 export type CasesMinAggregateInputType = {
   id?: true
-  dentalLabId?: true
+  lab_id?: true
   code?: true
-  clientCaseCode?: true
-  patientName?: true
-  clinicId?: true
-  serviceTypeId?: true
-  dentistId?: true
-  cadDesignerId?: true
-  createdByUserId?: true
-  currentStatus?: true
+  patient_name?: true
+  customer_id?: true
+  service_type_id?: true
+  dentist_id?: true
+  cad_designer_id?: true
+  created_by_user_id?: true
+  current_status?: true
   teeth?: true
-  elementsQty?: true
+  elements_qty?: true
   shade?: true
-  dueDate?: true
-  isUrgent?: true
+  due_date?: true
+  is_urgent?: true
   observations?: true
-  pendingNote?: true
-  createdAt?: true
-  updatedAt?: true
+  pending_note?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type CasesMaxAggregateInputType = {
   id?: true
-  dentalLabId?: true
+  lab_id?: true
   code?: true
-  clientCaseCode?: true
-  patientName?: true
-  clinicId?: true
-  serviceTypeId?: true
-  dentistId?: true
-  cadDesignerId?: true
-  createdByUserId?: true
-  currentStatus?: true
+  patient_name?: true
+  customer_id?: true
+  service_type_id?: true
+  dentist_id?: true
+  cad_designer_id?: true
+  created_by_user_id?: true
+  current_status?: true
   teeth?: true
-  elementsQty?: true
+  elements_qty?: true
   shade?: true
-  dueDate?: true
-  isUrgent?: true
+  due_date?: true
+  is_urgent?: true
   observations?: true
-  pendingNote?: true
-  createdAt?: true
-  updatedAt?: true
+  pending_note?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type CasesCountAggregateInputType = {
   id?: true
-  dentalLabId?: true
+  lab_id?: true
   code?: true
-  clientCaseCode?: true
-  patientName?: true
-  clinicId?: true
-  serviceTypeId?: true
-  dentistId?: true
-  cadDesignerId?: true
-  createdByUserId?: true
-  currentStatus?: true
+  patient_name?: true
+  customer_id?: true
+  service_type_id?: true
+  dentist_id?: true
+  cad_designer_id?: true
+  created_by_user_id?: true
+  current_status?: true
   teeth?: true
-  elementsQty?: true
+  elements_qty?: true
   shade?: true
-  dueDate?: true
-  isUrgent?: true
+  due_date?: true
+  is_urgent?: true
   observations?: true
-  pendingNote?: true
-  createdAt?: true
-  updatedAt?: true
+  pending_note?: true
+  created_at?: true
+  updated_at?: true
   _all?: true
 }
 
@@ -271,25 +265,24 @@ export type casesGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 
 export type CasesGroupByOutputType = {
   id: string
-  dentalLabId: string
+  lab_id: string
   code: string
-  clientCaseCode: string | null
-  patientName: string
-  clinicId: string | null
-  serviceTypeId: string | null
-  dentistId: string | null
-  cadDesignerId: string | null
-  createdByUserId: string | null
-  currentStatus: $Enums.CaseStatus
+  patient_name: string
+  customer_id: string | null
+  service_type_id: string | null
+  dentist_id: string | null
+  cad_designer_id: string | null
+  created_by_user_id: string | null
+  current_status: $Enums.CaseStatus
   teeth: string | null
-  elementsQty: number | null
+  elements_qty: number | null
   shade: string | null
-  dueDate: Date | null
-  isUrgent: boolean
+  due_date: Date | null
+  is_urgent: boolean
   observations: string | null
-  pendingNote: string | null
-  createdAt: Date
-  updatedAt: Date
+  pending_note: string | null
+  created_at: Date
+  updated_at: Date
   _count: CasesCountAggregateOutputType | null
   _avg: CasesAvgAggregateOutputType | null
   _sum: CasesSumAggregateOutputType | null
@@ -317,30 +310,30 @@ export type casesWhereInput = {
   OR?: Prisma.casesWhereInput[]
   NOT?: Prisma.casesWhereInput | Prisma.casesWhereInput[]
   id?: Prisma.StringFilter<"cases"> | string
-  dentalLabId?: Prisma.StringFilter<"cases"> | string
+  lab_id?: Prisma.StringFilter<"cases"> | string
   code?: Prisma.StringFilter<"cases"> | string
-  clientCaseCode?: Prisma.StringNullableFilter<"cases"> | string | null
-  patientName?: Prisma.StringFilter<"cases"> | string
-  clinicId?: Prisma.StringNullableFilter<"cases"> | string | null
-  serviceTypeId?: Prisma.StringNullableFilter<"cases"> | string | null
-  dentistId?: Prisma.StringNullableFilter<"cases"> | string | null
-  cadDesignerId?: Prisma.UuidNullableFilter<"cases"> | string | null
-  createdByUserId?: Prisma.UuidNullableFilter<"cases"> | string | null
-  currentStatus?: Prisma.EnumCaseStatusFilter<"cases"> | $Enums.CaseStatus
+  patient_name?: Prisma.StringFilter<"cases"> | string
+  customer_id?: Prisma.StringNullableFilter<"cases"> | string | null
+  service_type_id?: Prisma.StringNullableFilter<"cases"> | string | null
+  dentist_id?: Prisma.StringNullableFilter<"cases"> | string | null
+  cad_designer_id?: Prisma.UuidNullableFilter<"cases"> | string | null
+  created_by_user_id?: Prisma.UuidNullableFilter<"cases"> | string | null
+  current_status?: Prisma.EnumCaseStatusFilter<"cases"> | $Enums.CaseStatus
   teeth?: Prisma.StringNullableFilter<"cases"> | string | null
-  elementsQty?: Prisma.IntNullableFilter<"cases"> | number | null
+  elements_qty?: Prisma.IntNullableFilter<"cases"> | number | null
   shade?: Prisma.StringNullableFilter<"cases"> | string | null
-  dueDate?: Prisma.DateTimeNullableFilter<"cases"> | Date | string | null
-  isUrgent?: Prisma.BoolFilter<"cases"> | boolean
+  due_date?: Prisma.DateTimeNullableFilter<"cases"> | Date | string | null
+  is_urgent?: Prisma.BoolFilter<"cases"> | boolean
   observations?: Prisma.StringNullableFilter<"cases"> | string | null
-  pendingNote?: Prisma.StringNullableFilter<"cases"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"cases"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"cases"> | Date | string
+  pending_note?: Prisma.StringNullableFilter<"cases"> | string | null
+  created_at?: Prisma.DateTimeFilter<"cases"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"cases"> | Date | string
   caseComponentUsages?: Prisma.Case_component_usagesListRelationFilter
   statusHistory?: Prisma.Case_status_historiesListRelationFilter
   millings?: Prisma.Case_millingsListRelationFilter
-  dental_labs?: Prisma.XOR<Prisma.Dental_labsScalarRelationFilter, Prisma.dental_labsWhereInput>
-  clinics?: Prisma.XOR<Prisma.ClinicsNullableScalarRelationFilter, Prisma.clinicsWhereInput> | null
+  case_processes?: Prisma.Case_processesListRelationFilter
+  labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
+  customers?: Prisma.XOR<Prisma.CustomersNullableScalarRelationFilter, Prisma.customersWhereInput> | null
   dentists?: Prisma.XOR<Prisma.DentistsNullableScalarRelationFilter, Prisma.dentistsWhereInput> | null
   service_types?: Prisma.XOR<Prisma.Service_typesNullableScalarRelationFilter, Prisma.service_typesWhereInput> | null
   cadDesigner?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.usersWhereInput> | null
@@ -351,30 +344,30 @@ export type casesWhereInput = {
 
 export type casesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   code?: Prisma.SortOrder
-  clientCaseCode?: Prisma.SortOrderInput | Prisma.SortOrder
-  patientName?: Prisma.SortOrder
-  clinicId?: Prisma.SortOrderInput | Prisma.SortOrder
-  serviceTypeId?: Prisma.SortOrderInput | Prisma.SortOrder
-  dentistId?: Prisma.SortOrderInput | Prisma.SortOrder
-  cadDesignerId?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
-  currentStatus?: Prisma.SortOrder
+  patient_name?: Prisma.SortOrder
+  customer_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  service_type_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  dentist_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  cad_designer_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  created_by_user_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  current_status?: Prisma.SortOrder
   teeth?: Prisma.SortOrderInput | Prisma.SortOrder
-  elementsQty?: Prisma.SortOrderInput | Prisma.SortOrder
+  elements_qty?: Prisma.SortOrderInput | Prisma.SortOrder
   shade?: Prisma.SortOrderInput | Prisma.SortOrder
-  dueDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  isUrgent?: Prisma.SortOrder
+  due_date?: Prisma.SortOrderInput | Prisma.SortOrder
+  is_urgent?: Prisma.SortOrder
   observations?: Prisma.SortOrderInput | Prisma.SortOrder
-  pendingNote?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  pending_note?: Prisma.SortOrderInput | Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   caseComponentUsages?: Prisma.case_component_usagesOrderByRelationAggregateInput
   statusHistory?: Prisma.case_status_historiesOrderByRelationAggregateInput
   millings?: Prisma.case_millingsOrderByRelationAggregateInput
-  dental_labs?: Prisma.dental_labsOrderByWithRelationInput
-  clinics?: Prisma.clinicsOrderByWithRelationInput
+  case_processes?: Prisma.case_processesOrderByRelationAggregateInput
+  labs?: Prisma.labsOrderByWithRelationInput
+  customers?: Prisma.customersOrderByWithRelationInput
   dentists?: Prisma.dentistsOrderByWithRelationInput
   service_types?: Prisma.service_typesOrderByWithRelationInput
   cadDesigner?: Prisma.usersOrderByWithRelationInput
@@ -385,63 +378,62 @@ export type casesOrderByWithRelationInput = {
 
 export type casesWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  dentalLabId_code?: Prisma.casesDentalLabIdCodeCompoundUniqueInput
+  lab_id_code?: Prisma.casesLab_idCodeCompoundUniqueInput
   AND?: Prisma.casesWhereInput | Prisma.casesWhereInput[]
   OR?: Prisma.casesWhereInput[]
   NOT?: Prisma.casesWhereInput | Prisma.casesWhereInput[]
-  dentalLabId?: Prisma.StringFilter<"cases"> | string
+  lab_id?: Prisma.StringFilter<"cases"> | string
   code?: Prisma.StringFilter<"cases"> | string
-  clientCaseCode?: Prisma.StringNullableFilter<"cases"> | string | null
-  patientName?: Prisma.StringFilter<"cases"> | string
-  clinicId?: Prisma.StringNullableFilter<"cases"> | string | null
-  serviceTypeId?: Prisma.StringNullableFilter<"cases"> | string | null
-  dentistId?: Prisma.StringNullableFilter<"cases"> | string | null
-  cadDesignerId?: Prisma.UuidNullableFilter<"cases"> | string | null
-  createdByUserId?: Prisma.UuidNullableFilter<"cases"> | string | null
-  currentStatus?: Prisma.EnumCaseStatusFilter<"cases"> | $Enums.CaseStatus
+  patient_name?: Prisma.StringFilter<"cases"> | string
+  customer_id?: Prisma.StringNullableFilter<"cases"> | string | null
+  service_type_id?: Prisma.StringNullableFilter<"cases"> | string | null
+  dentist_id?: Prisma.StringNullableFilter<"cases"> | string | null
+  cad_designer_id?: Prisma.UuidNullableFilter<"cases"> | string | null
+  created_by_user_id?: Prisma.UuidNullableFilter<"cases"> | string | null
+  current_status?: Prisma.EnumCaseStatusFilter<"cases"> | $Enums.CaseStatus
   teeth?: Prisma.StringNullableFilter<"cases"> | string | null
-  elementsQty?: Prisma.IntNullableFilter<"cases"> | number | null
+  elements_qty?: Prisma.IntNullableFilter<"cases"> | number | null
   shade?: Prisma.StringNullableFilter<"cases"> | string | null
-  dueDate?: Prisma.DateTimeNullableFilter<"cases"> | Date | string | null
-  isUrgent?: Prisma.BoolFilter<"cases"> | boolean
+  due_date?: Prisma.DateTimeNullableFilter<"cases"> | Date | string | null
+  is_urgent?: Prisma.BoolFilter<"cases"> | boolean
   observations?: Prisma.StringNullableFilter<"cases"> | string | null
-  pendingNote?: Prisma.StringNullableFilter<"cases"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"cases"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"cases"> | Date | string
+  pending_note?: Prisma.StringNullableFilter<"cases"> | string | null
+  created_at?: Prisma.DateTimeFilter<"cases"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"cases"> | Date | string
   caseComponentUsages?: Prisma.Case_component_usagesListRelationFilter
   statusHistory?: Prisma.Case_status_historiesListRelationFilter
   millings?: Prisma.Case_millingsListRelationFilter
-  dental_labs?: Prisma.XOR<Prisma.Dental_labsScalarRelationFilter, Prisma.dental_labsWhereInput>
-  clinics?: Prisma.XOR<Prisma.ClinicsNullableScalarRelationFilter, Prisma.clinicsWhereInput> | null
+  case_processes?: Prisma.Case_processesListRelationFilter
+  labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
+  customers?: Prisma.XOR<Prisma.CustomersNullableScalarRelationFilter, Prisma.customersWhereInput> | null
   dentists?: Prisma.XOR<Prisma.DentistsNullableScalarRelationFilter, Prisma.dentistsWhereInput> | null
   service_types?: Prisma.XOR<Prisma.Service_typesNullableScalarRelationFilter, Prisma.service_typesWhereInput> | null
   cadDesigner?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.usersWhereInput> | null
   createdByUser?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.usersWhereInput> | null
   case_attachments?: Prisma.Case_attachmentsListRelationFilter
   notifications?: Prisma.NotificationsListRelationFilter
-}, "id" | "dentalLabId_code">
+}, "id" | "lab_id_code">
 
 export type casesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   code?: Prisma.SortOrder
-  clientCaseCode?: Prisma.SortOrderInput | Prisma.SortOrder
-  patientName?: Prisma.SortOrder
-  clinicId?: Prisma.SortOrderInput | Prisma.SortOrder
-  serviceTypeId?: Prisma.SortOrderInput | Prisma.SortOrder
-  dentistId?: Prisma.SortOrderInput | Prisma.SortOrder
-  cadDesignerId?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdByUserId?: Prisma.SortOrderInput | Prisma.SortOrder
-  currentStatus?: Prisma.SortOrder
+  patient_name?: Prisma.SortOrder
+  customer_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  service_type_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  dentist_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  cad_designer_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  created_by_user_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  current_status?: Prisma.SortOrder
   teeth?: Prisma.SortOrderInput | Prisma.SortOrder
-  elementsQty?: Prisma.SortOrderInput | Prisma.SortOrder
+  elements_qty?: Prisma.SortOrderInput | Prisma.SortOrder
   shade?: Prisma.SortOrderInput | Prisma.SortOrder
-  dueDate?: Prisma.SortOrderInput | Prisma.SortOrder
-  isUrgent?: Prisma.SortOrder
+  due_date?: Prisma.SortOrderInput | Prisma.SortOrder
+  is_urgent?: Prisma.SortOrder
   observations?: Prisma.SortOrderInput | Prisma.SortOrder
-  pendingNote?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  pending_note?: Prisma.SortOrderInput | Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   _count?: Prisma.casesCountOrderByAggregateInput
   _avg?: Prisma.casesAvgOrderByAggregateInput
   _max?: Prisma.casesMaxOrderByAggregateInput
@@ -454,47 +446,46 @@ export type casesScalarWhereWithAggregatesInput = {
   OR?: Prisma.casesScalarWhereWithAggregatesInput[]
   NOT?: Prisma.casesScalarWhereWithAggregatesInput | Prisma.casesScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"cases"> | string
-  dentalLabId?: Prisma.StringWithAggregatesFilter<"cases"> | string
+  lab_id?: Prisma.StringWithAggregatesFilter<"cases"> | string
   code?: Prisma.StringWithAggregatesFilter<"cases"> | string
-  clientCaseCode?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
-  patientName?: Prisma.StringWithAggregatesFilter<"cases"> | string
-  clinicId?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
-  serviceTypeId?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
-  dentistId?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
-  cadDesignerId?: Prisma.UuidNullableWithAggregatesFilter<"cases"> | string | null
-  createdByUserId?: Prisma.UuidNullableWithAggregatesFilter<"cases"> | string | null
-  currentStatus?: Prisma.EnumCaseStatusWithAggregatesFilter<"cases"> | $Enums.CaseStatus
+  patient_name?: Prisma.StringWithAggregatesFilter<"cases"> | string
+  customer_id?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
+  service_type_id?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
+  dentist_id?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
+  cad_designer_id?: Prisma.UuidNullableWithAggregatesFilter<"cases"> | string | null
+  created_by_user_id?: Prisma.UuidNullableWithAggregatesFilter<"cases"> | string | null
+  current_status?: Prisma.EnumCaseStatusWithAggregatesFilter<"cases"> | $Enums.CaseStatus
   teeth?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
-  elementsQty?: Prisma.IntNullableWithAggregatesFilter<"cases"> | number | null
+  elements_qty?: Prisma.IntNullableWithAggregatesFilter<"cases"> | number | null
   shade?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
-  dueDate?: Prisma.DateTimeNullableWithAggregatesFilter<"cases"> | Date | string | null
-  isUrgent?: Prisma.BoolWithAggregatesFilter<"cases"> | boolean
+  due_date?: Prisma.DateTimeNullableWithAggregatesFilter<"cases"> | Date | string | null
+  is_urgent?: Prisma.BoolWithAggregatesFilter<"cases"> | boolean
   observations?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
-  pendingNote?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"cases"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"cases"> | Date | string
+  pending_note?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
+  created_at?: Prisma.DateTimeWithAggregatesFilter<"cases"> | Date | string
+  updated_at?: Prisma.DateTimeWithAggregatesFilter<"cases"> | Date | string
 }
 
 export type casesCreateInput = {
   id?: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutCasesInput
-  clinics?: Prisma.clinicsCreateNestedOneWithoutCasesInput
+  case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  labs: Prisma.labsCreateNestedOneWithoutCasesInput
+  customers?: Prisma.customersCreateNestedOneWithoutCasesInput
   dentists?: Prisma.dentistsCreateNestedOneWithoutCasesInput
   service_types?: Prisma.service_typesCreateNestedOneWithoutCasesInput
   cadDesigner?: Prisma.usersCreateNestedOneWithoutAssignedCasesInput
@@ -505,28 +496,28 @@ export type casesCreateInput = {
 
 export type casesUncheckedCreateInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  clinicId?: string | null
-  serviceTypeId?: string | null
-  dentistId?: string | null
-  cadDesignerId?: string | null
-  createdByUserId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  customer_id?: string | null
+  service_type_id?: string | null
+  dentist_id?: string | null
+  cad_designer_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
+  case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutCasesInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutCasesInput
 }
@@ -534,23 +525,23 @@ export type casesUncheckedCreateInput = {
 export type casesUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutCasesNestedInput
-  clinics?: Prisma.clinicsUpdateOneWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  labs?: Prisma.labsUpdateOneRequiredWithoutCasesNestedInput
+  customers?: Prisma.customersUpdateOneWithoutCasesNestedInput
   dentists?: Prisma.dentistsUpdateOneWithoutCasesNestedInput
   service_types?: Prisma.service_typesUpdateOneWithoutCasesNestedInput
   cadDesigner?: Prisma.usersUpdateOneWithoutAssignedCasesNestedInput
@@ -561,93 +552,90 @@ export type casesUpdateInput = {
 
 export type casesUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serviceTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dentistId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cadDesignerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cad_designer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutCasesNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutCasesNestedInput
 }
 
 export type casesCreateManyInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  clinicId?: string | null
-  serviceTypeId?: string | null
-  dentistId?: string | null
-  cadDesignerId?: string | null
-  createdByUserId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  customer_id?: string | null
+  service_type_id?: string | null
+  dentist_id?: string | null
+  cad_designer_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type casesUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type casesUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serviceTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dentistId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cadDesignerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cad_designer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type CasesListRelationFilter = {
@@ -665,86 +653,83 @@ export type CasesScalarRelationFilter = {
   isNot?: Prisma.casesWhereInput
 }
 
-export type casesDentalLabIdCodeCompoundUniqueInput = {
-  dentalLabId: string
+export type casesLab_idCodeCompoundUniqueInput = {
+  lab_id: string
   code: string
 }
 
 export type casesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   code?: Prisma.SortOrder
-  clientCaseCode?: Prisma.SortOrder
-  patientName?: Prisma.SortOrder
-  clinicId?: Prisma.SortOrder
-  serviceTypeId?: Prisma.SortOrder
-  dentistId?: Prisma.SortOrder
-  cadDesignerId?: Prisma.SortOrder
-  createdByUserId?: Prisma.SortOrder
-  currentStatus?: Prisma.SortOrder
+  patient_name?: Prisma.SortOrder
+  customer_id?: Prisma.SortOrder
+  service_type_id?: Prisma.SortOrder
+  dentist_id?: Prisma.SortOrder
+  cad_designer_id?: Prisma.SortOrder
+  created_by_user_id?: Prisma.SortOrder
+  current_status?: Prisma.SortOrder
   teeth?: Prisma.SortOrder
-  elementsQty?: Prisma.SortOrder
+  elements_qty?: Prisma.SortOrder
   shade?: Prisma.SortOrder
-  dueDate?: Prisma.SortOrder
-  isUrgent?: Prisma.SortOrder
+  due_date?: Prisma.SortOrder
+  is_urgent?: Prisma.SortOrder
   observations?: Prisma.SortOrder
-  pendingNote?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  pending_note?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type casesAvgOrderByAggregateInput = {
-  elementsQty?: Prisma.SortOrder
+  elements_qty?: Prisma.SortOrder
 }
 
 export type casesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   code?: Prisma.SortOrder
-  clientCaseCode?: Prisma.SortOrder
-  patientName?: Prisma.SortOrder
-  clinicId?: Prisma.SortOrder
-  serviceTypeId?: Prisma.SortOrder
-  dentistId?: Prisma.SortOrder
-  cadDesignerId?: Prisma.SortOrder
-  createdByUserId?: Prisma.SortOrder
-  currentStatus?: Prisma.SortOrder
+  patient_name?: Prisma.SortOrder
+  customer_id?: Prisma.SortOrder
+  service_type_id?: Prisma.SortOrder
+  dentist_id?: Prisma.SortOrder
+  cad_designer_id?: Prisma.SortOrder
+  created_by_user_id?: Prisma.SortOrder
+  current_status?: Prisma.SortOrder
   teeth?: Prisma.SortOrder
-  elementsQty?: Prisma.SortOrder
+  elements_qty?: Prisma.SortOrder
   shade?: Prisma.SortOrder
-  dueDate?: Prisma.SortOrder
-  isUrgent?: Prisma.SortOrder
+  due_date?: Prisma.SortOrder
+  is_urgent?: Prisma.SortOrder
   observations?: Prisma.SortOrder
-  pendingNote?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  pending_note?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type casesMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   code?: Prisma.SortOrder
-  clientCaseCode?: Prisma.SortOrder
-  patientName?: Prisma.SortOrder
-  clinicId?: Prisma.SortOrder
-  serviceTypeId?: Prisma.SortOrder
-  dentistId?: Prisma.SortOrder
-  cadDesignerId?: Prisma.SortOrder
-  createdByUserId?: Prisma.SortOrder
-  currentStatus?: Prisma.SortOrder
+  patient_name?: Prisma.SortOrder
+  customer_id?: Prisma.SortOrder
+  service_type_id?: Prisma.SortOrder
+  dentist_id?: Prisma.SortOrder
+  cad_designer_id?: Prisma.SortOrder
+  created_by_user_id?: Prisma.SortOrder
+  current_status?: Prisma.SortOrder
   teeth?: Prisma.SortOrder
-  elementsQty?: Prisma.SortOrder
+  elements_qty?: Prisma.SortOrder
   shade?: Prisma.SortOrder
-  dueDate?: Prisma.SortOrder
-  isUrgent?: Prisma.SortOrder
+  due_date?: Prisma.SortOrder
+  is_urgent?: Prisma.SortOrder
   observations?: Prisma.SortOrder
-  pendingNote?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  pending_note?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type casesSumOrderByAggregateInput = {
-  elementsQty?: Prisma.SortOrder
+  elements_qty?: Prisma.SortOrder
 }
 
 export type CasesNullableScalarRelationFilter = {
@@ -836,45 +821,45 @@ export type casesUncheckedUpdateManyWithoutCreatedByUserNestedInput = {
   deleteMany?: Prisma.casesScalarWhereInput | Prisma.casesScalarWhereInput[]
 }
 
-export type casesCreateNestedManyWithoutDental_labsInput = {
-  create?: Prisma.XOR<Prisma.casesCreateWithoutDental_labsInput, Prisma.casesUncheckedCreateWithoutDental_labsInput> | Prisma.casesCreateWithoutDental_labsInput[] | Prisma.casesUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.casesCreateOrConnectWithoutDental_labsInput | Prisma.casesCreateOrConnectWithoutDental_labsInput[]
-  createMany?: Prisma.casesCreateManyDental_labsInputEnvelope
+export type casesCreateNestedManyWithoutLabsInput = {
+  create?: Prisma.XOR<Prisma.casesCreateWithoutLabsInput, Prisma.casesUncheckedCreateWithoutLabsInput> | Prisma.casesCreateWithoutLabsInput[] | Prisma.casesUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.casesCreateOrConnectWithoutLabsInput | Prisma.casesCreateOrConnectWithoutLabsInput[]
+  createMany?: Prisma.casesCreateManyLabsInputEnvelope
   connect?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
 }
 
-export type casesUncheckedCreateNestedManyWithoutDental_labsInput = {
-  create?: Prisma.XOR<Prisma.casesCreateWithoutDental_labsInput, Prisma.casesUncheckedCreateWithoutDental_labsInput> | Prisma.casesCreateWithoutDental_labsInput[] | Prisma.casesUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.casesCreateOrConnectWithoutDental_labsInput | Prisma.casesCreateOrConnectWithoutDental_labsInput[]
-  createMany?: Prisma.casesCreateManyDental_labsInputEnvelope
+export type casesUncheckedCreateNestedManyWithoutLabsInput = {
+  create?: Prisma.XOR<Prisma.casesCreateWithoutLabsInput, Prisma.casesUncheckedCreateWithoutLabsInput> | Prisma.casesCreateWithoutLabsInput[] | Prisma.casesUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.casesCreateOrConnectWithoutLabsInput | Prisma.casesCreateOrConnectWithoutLabsInput[]
+  createMany?: Prisma.casesCreateManyLabsInputEnvelope
   connect?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
 }
 
-export type casesUpdateManyWithoutDental_labsNestedInput = {
-  create?: Prisma.XOR<Prisma.casesCreateWithoutDental_labsInput, Prisma.casesUncheckedCreateWithoutDental_labsInput> | Prisma.casesCreateWithoutDental_labsInput[] | Prisma.casesUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.casesCreateOrConnectWithoutDental_labsInput | Prisma.casesCreateOrConnectWithoutDental_labsInput[]
-  upsert?: Prisma.casesUpsertWithWhereUniqueWithoutDental_labsInput | Prisma.casesUpsertWithWhereUniqueWithoutDental_labsInput[]
-  createMany?: Prisma.casesCreateManyDental_labsInputEnvelope
+export type casesUpdateManyWithoutLabsNestedInput = {
+  create?: Prisma.XOR<Prisma.casesCreateWithoutLabsInput, Prisma.casesUncheckedCreateWithoutLabsInput> | Prisma.casesCreateWithoutLabsInput[] | Prisma.casesUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.casesCreateOrConnectWithoutLabsInput | Prisma.casesCreateOrConnectWithoutLabsInput[]
+  upsert?: Prisma.casesUpsertWithWhereUniqueWithoutLabsInput | Prisma.casesUpsertWithWhereUniqueWithoutLabsInput[]
+  createMany?: Prisma.casesCreateManyLabsInputEnvelope
   set?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
   disconnect?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
   delete?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
   connect?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
-  update?: Prisma.casesUpdateWithWhereUniqueWithoutDental_labsInput | Prisma.casesUpdateWithWhereUniqueWithoutDental_labsInput[]
-  updateMany?: Prisma.casesUpdateManyWithWhereWithoutDental_labsInput | Prisma.casesUpdateManyWithWhereWithoutDental_labsInput[]
+  update?: Prisma.casesUpdateWithWhereUniqueWithoutLabsInput | Prisma.casesUpdateWithWhereUniqueWithoutLabsInput[]
+  updateMany?: Prisma.casesUpdateManyWithWhereWithoutLabsInput | Prisma.casesUpdateManyWithWhereWithoutLabsInput[]
   deleteMany?: Prisma.casesScalarWhereInput | Prisma.casesScalarWhereInput[]
 }
 
-export type casesUncheckedUpdateManyWithoutDental_labsNestedInput = {
-  create?: Prisma.XOR<Prisma.casesCreateWithoutDental_labsInput, Prisma.casesUncheckedCreateWithoutDental_labsInput> | Prisma.casesCreateWithoutDental_labsInput[] | Prisma.casesUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.casesCreateOrConnectWithoutDental_labsInput | Prisma.casesCreateOrConnectWithoutDental_labsInput[]
-  upsert?: Prisma.casesUpsertWithWhereUniqueWithoutDental_labsInput | Prisma.casesUpsertWithWhereUniqueWithoutDental_labsInput[]
-  createMany?: Prisma.casesCreateManyDental_labsInputEnvelope
+export type casesUncheckedUpdateManyWithoutLabsNestedInput = {
+  create?: Prisma.XOR<Prisma.casesCreateWithoutLabsInput, Prisma.casesUncheckedCreateWithoutLabsInput> | Prisma.casesCreateWithoutLabsInput[] | Prisma.casesUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.casesCreateOrConnectWithoutLabsInput | Prisma.casesCreateOrConnectWithoutLabsInput[]
+  upsert?: Prisma.casesUpsertWithWhereUniqueWithoutLabsInput | Prisma.casesUpsertWithWhereUniqueWithoutLabsInput[]
+  createMany?: Prisma.casesCreateManyLabsInputEnvelope
   set?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
   disconnect?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
   delete?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
   connect?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
-  update?: Prisma.casesUpdateWithWhereUniqueWithoutDental_labsInput | Prisma.casesUpdateWithWhereUniqueWithoutDental_labsInput[]
-  updateMany?: Prisma.casesUpdateManyWithWhereWithoutDental_labsInput | Prisma.casesUpdateManyWithWhereWithoutDental_labsInput[]
+  update?: Prisma.casesUpdateWithWhereUniqueWithoutLabsInput | Prisma.casesUpdateWithWhereUniqueWithoutLabsInput[]
+  updateMany?: Prisma.casesUpdateManyWithWhereWithoutLabsInput | Prisma.casesUpdateManyWithWhereWithoutLabsInput[]
   deleteMany?: Prisma.casesScalarWhereInput | Prisma.casesScalarWhereInput[]
 }
 
@@ -948,45 +933,45 @@ export type casesUpdateOneRequiredWithoutCase_attachmentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.casesUpdateToOneWithWhereWithoutCase_attachmentsInput, Prisma.casesUpdateWithoutCase_attachmentsInput>, Prisma.casesUncheckedUpdateWithoutCase_attachmentsInput>
 }
 
-export type casesCreateNestedManyWithoutClinicsInput = {
-  create?: Prisma.XOR<Prisma.casesCreateWithoutClinicsInput, Prisma.casesUncheckedCreateWithoutClinicsInput> | Prisma.casesCreateWithoutClinicsInput[] | Prisma.casesUncheckedCreateWithoutClinicsInput[]
-  connectOrCreate?: Prisma.casesCreateOrConnectWithoutClinicsInput | Prisma.casesCreateOrConnectWithoutClinicsInput[]
-  createMany?: Prisma.casesCreateManyClinicsInputEnvelope
+export type casesCreateNestedManyWithoutCustomersInput = {
+  create?: Prisma.XOR<Prisma.casesCreateWithoutCustomersInput, Prisma.casesUncheckedCreateWithoutCustomersInput> | Prisma.casesCreateWithoutCustomersInput[] | Prisma.casesUncheckedCreateWithoutCustomersInput[]
+  connectOrCreate?: Prisma.casesCreateOrConnectWithoutCustomersInput | Prisma.casesCreateOrConnectWithoutCustomersInput[]
+  createMany?: Prisma.casesCreateManyCustomersInputEnvelope
   connect?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
 }
 
-export type casesUncheckedCreateNestedManyWithoutClinicsInput = {
-  create?: Prisma.XOR<Prisma.casesCreateWithoutClinicsInput, Prisma.casesUncheckedCreateWithoutClinicsInput> | Prisma.casesCreateWithoutClinicsInput[] | Prisma.casesUncheckedCreateWithoutClinicsInput[]
-  connectOrCreate?: Prisma.casesCreateOrConnectWithoutClinicsInput | Prisma.casesCreateOrConnectWithoutClinicsInput[]
-  createMany?: Prisma.casesCreateManyClinicsInputEnvelope
+export type casesUncheckedCreateNestedManyWithoutCustomersInput = {
+  create?: Prisma.XOR<Prisma.casesCreateWithoutCustomersInput, Prisma.casesUncheckedCreateWithoutCustomersInput> | Prisma.casesCreateWithoutCustomersInput[] | Prisma.casesUncheckedCreateWithoutCustomersInput[]
+  connectOrCreate?: Prisma.casesCreateOrConnectWithoutCustomersInput | Prisma.casesCreateOrConnectWithoutCustomersInput[]
+  createMany?: Prisma.casesCreateManyCustomersInputEnvelope
   connect?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
 }
 
-export type casesUpdateManyWithoutClinicsNestedInput = {
-  create?: Prisma.XOR<Prisma.casesCreateWithoutClinicsInput, Prisma.casesUncheckedCreateWithoutClinicsInput> | Prisma.casesCreateWithoutClinicsInput[] | Prisma.casesUncheckedCreateWithoutClinicsInput[]
-  connectOrCreate?: Prisma.casesCreateOrConnectWithoutClinicsInput | Prisma.casesCreateOrConnectWithoutClinicsInput[]
-  upsert?: Prisma.casesUpsertWithWhereUniqueWithoutClinicsInput | Prisma.casesUpsertWithWhereUniqueWithoutClinicsInput[]
-  createMany?: Prisma.casesCreateManyClinicsInputEnvelope
+export type casesUpdateManyWithoutCustomersNestedInput = {
+  create?: Prisma.XOR<Prisma.casesCreateWithoutCustomersInput, Prisma.casesUncheckedCreateWithoutCustomersInput> | Prisma.casesCreateWithoutCustomersInput[] | Prisma.casesUncheckedCreateWithoutCustomersInput[]
+  connectOrCreate?: Prisma.casesCreateOrConnectWithoutCustomersInput | Prisma.casesCreateOrConnectWithoutCustomersInput[]
+  upsert?: Prisma.casesUpsertWithWhereUniqueWithoutCustomersInput | Prisma.casesUpsertWithWhereUniqueWithoutCustomersInput[]
+  createMany?: Prisma.casesCreateManyCustomersInputEnvelope
   set?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
   disconnect?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
   delete?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
   connect?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
-  update?: Prisma.casesUpdateWithWhereUniqueWithoutClinicsInput | Prisma.casesUpdateWithWhereUniqueWithoutClinicsInput[]
-  updateMany?: Prisma.casesUpdateManyWithWhereWithoutClinicsInput | Prisma.casesUpdateManyWithWhereWithoutClinicsInput[]
+  update?: Prisma.casesUpdateWithWhereUniqueWithoutCustomersInput | Prisma.casesUpdateWithWhereUniqueWithoutCustomersInput[]
+  updateMany?: Prisma.casesUpdateManyWithWhereWithoutCustomersInput | Prisma.casesUpdateManyWithWhereWithoutCustomersInput[]
   deleteMany?: Prisma.casesScalarWhereInput | Prisma.casesScalarWhereInput[]
 }
 
-export type casesUncheckedUpdateManyWithoutClinicsNestedInput = {
-  create?: Prisma.XOR<Prisma.casesCreateWithoutClinicsInput, Prisma.casesUncheckedCreateWithoutClinicsInput> | Prisma.casesCreateWithoutClinicsInput[] | Prisma.casesUncheckedCreateWithoutClinicsInput[]
-  connectOrCreate?: Prisma.casesCreateOrConnectWithoutClinicsInput | Prisma.casesCreateOrConnectWithoutClinicsInput[]
-  upsert?: Prisma.casesUpsertWithWhereUniqueWithoutClinicsInput | Prisma.casesUpsertWithWhereUniqueWithoutClinicsInput[]
-  createMany?: Prisma.casesCreateManyClinicsInputEnvelope
+export type casesUncheckedUpdateManyWithoutCustomersNestedInput = {
+  create?: Prisma.XOR<Prisma.casesCreateWithoutCustomersInput, Prisma.casesUncheckedCreateWithoutCustomersInput> | Prisma.casesCreateWithoutCustomersInput[] | Prisma.casesUncheckedCreateWithoutCustomersInput[]
+  connectOrCreate?: Prisma.casesCreateOrConnectWithoutCustomersInput | Prisma.casesCreateOrConnectWithoutCustomersInput[]
+  upsert?: Prisma.casesUpsertWithWhereUniqueWithoutCustomersInput | Prisma.casesUpsertWithWhereUniqueWithoutCustomersInput[]
+  createMany?: Prisma.casesCreateManyCustomersInputEnvelope
   set?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
   disconnect?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
   delete?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
   connect?: Prisma.casesWhereUniqueInput | Prisma.casesWhereUniqueInput[]
-  update?: Prisma.casesUpdateWithWhereUniqueWithoutClinicsInput | Prisma.casesUpdateWithWhereUniqueWithoutClinicsInput[]
-  updateMany?: Prisma.casesUpdateManyWithWhereWithoutClinicsInput | Prisma.casesUpdateManyWithWhereWithoutClinicsInput[]
+  update?: Prisma.casesUpdateWithWhereUniqueWithoutCustomersInput | Prisma.casesUpdateWithWhereUniqueWithoutCustomersInput[]
+  updateMany?: Prisma.casesUpdateManyWithWhereWithoutCustomersInput | Prisma.casesUpdateManyWithWhereWithoutCustomersInput[]
   deleteMany?: Prisma.casesScalarWhereInput | Prisma.casesScalarWhereInput[]
 }
 
@@ -1050,6 +1035,20 @@ export type EnumCaseStatusFieldUpdateOperationsInput = {
   set?: $Enums.CaseStatus
 }
 
+export type casesCreateNestedOneWithoutCase_processesInput = {
+  create?: Prisma.XOR<Prisma.casesCreateWithoutCase_processesInput, Prisma.casesUncheckedCreateWithoutCase_processesInput>
+  connectOrCreate?: Prisma.casesCreateOrConnectWithoutCase_processesInput
+  connect?: Prisma.casesWhereUniqueInput
+}
+
+export type casesUpdateOneRequiredWithoutCase_processesNestedInput = {
+  create?: Prisma.XOR<Prisma.casesCreateWithoutCase_processesInput, Prisma.casesUncheckedCreateWithoutCase_processesInput>
+  connectOrCreate?: Prisma.casesCreateOrConnectWithoutCase_processesInput
+  upsert?: Prisma.casesUpsertWithoutCase_processesInput
+  connect?: Prisma.casesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.casesUpdateToOneWithWhereWithoutCase_processesInput, Prisma.casesUpdateWithoutCase_processesInput>, Prisma.casesUncheckedUpdateWithoutCase_processesInput>
+}
+
 export type casesCreateNestedOneWithoutStatusHistoryInput = {
   create?: Prisma.XOR<Prisma.casesCreateWithoutStatusHistoryInput, Prisma.casesUncheckedCreateWithoutStatusHistoryInput>
   connectOrCreate?: Prisma.casesCreateOrConnectWithoutStatusHistoryInput
@@ -1083,23 +1082,23 @@ export type casesUpdateOneWithoutNotificationsNestedInput = {
 export type casesCreateWithoutCadDesignerInput = {
   id?: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutCasesInput
-  clinics?: Prisma.clinicsCreateNestedOneWithoutCasesInput
+  case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  labs: Prisma.labsCreateNestedOneWithoutCasesInput
+  customers?: Prisma.customersCreateNestedOneWithoutCasesInput
   dentists?: Prisma.dentistsCreateNestedOneWithoutCasesInput
   service_types?: Prisma.service_typesCreateNestedOneWithoutCasesInput
   createdByUser?: Prisma.usersCreateNestedOneWithoutCreatedCasesInput
@@ -1109,27 +1108,27 @@ export type casesCreateWithoutCadDesignerInput = {
 
 export type casesUncheckedCreateWithoutCadDesignerInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  clinicId?: string | null
-  serviceTypeId?: string | null
-  dentistId?: string | null
-  createdByUserId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  customer_id?: string | null
+  service_type_id?: string | null
+  dentist_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
+  case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutCasesInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutCasesInput
 }
@@ -1147,23 +1146,23 @@ export type casesCreateManyCadDesignerInputEnvelope = {
 export type casesCreateWithoutCreatedByUserInput = {
   id?: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutCasesInput
-  clinics?: Prisma.clinicsCreateNestedOneWithoutCasesInput
+  case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  labs: Prisma.labsCreateNestedOneWithoutCasesInput
+  customers?: Prisma.customersCreateNestedOneWithoutCasesInput
   dentists?: Prisma.dentistsCreateNestedOneWithoutCasesInput
   service_types?: Prisma.service_typesCreateNestedOneWithoutCasesInput
   cadDesigner?: Prisma.usersCreateNestedOneWithoutAssignedCasesInput
@@ -1173,27 +1172,27 @@ export type casesCreateWithoutCreatedByUserInput = {
 
 export type casesUncheckedCreateWithoutCreatedByUserInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  clinicId?: string | null
-  serviceTypeId?: string | null
-  dentistId?: string | null
-  cadDesignerId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  customer_id?: string | null
+  service_type_id?: string | null
+  dentist_id?: string | null
+  cad_designer_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
+  case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutCasesInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutCasesInput
 }
@@ -1229,25 +1228,24 @@ export type casesScalarWhereInput = {
   OR?: Prisma.casesScalarWhereInput[]
   NOT?: Prisma.casesScalarWhereInput | Prisma.casesScalarWhereInput[]
   id?: Prisma.StringFilter<"cases"> | string
-  dentalLabId?: Prisma.StringFilter<"cases"> | string
+  lab_id?: Prisma.StringFilter<"cases"> | string
   code?: Prisma.StringFilter<"cases"> | string
-  clientCaseCode?: Prisma.StringNullableFilter<"cases"> | string | null
-  patientName?: Prisma.StringFilter<"cases"> | string
-  clinicId?: Prisma.StringNullableFilter<"cases"> | string | null
-  serviceTypeId?: Prisma.StringNullableFilter<"cases"> | string | null
-  dentistId?: Prisma.StringNullableFilter<"cases"> | string | null
-  cadDesignerId?: Prisma.UuidNullableFilter<"cases"> | string | null
-  createdByUserId?: Prisma.UuidNullableFilter<"cases"> | string | null
-  currentStatus?: Prisma.EnumCaseStatusFilter<"cases"> | $Enums.CaseStatus
+  patient_name?: Prisma.StringFilter<"cases"> | string
+  customer_id?: Prisma.StringNullableFilter<"cases"> | string | null
+  service_type_id?: Prisma.StringNullableFilter<"cases"> | string | null
+  dentist_id?: Prisma.StringNullableFilter<"cases"> | string | null
+  cad_designer_id?: Prisma.UuidNullableFilter<"cases"> | string | null
+  created_by_user_id?: Prisma.UuidNullableFilter<"cases"> | string | null
+  current_status?: Prisma.EnumCaseStatusFilter<"cases"> | $Enums.CaseStatus
   teeth?: Prisma.StringNullableFilter<"cases"> | string | null
-  elementsQty?: Prisma.IntNullableFilter<"cases"> | number | null
+  elements_qty?: Prisma.IntNullableFilter<"cases"> | number | null
   shade?: Prisma.StringNullableFilter<"cases"> | string | null
-  dueDate?: Prisma.DateTimeNullableFilter<"cases"> | Date | string | null
-  isUrgent?: Prisma.BoolFilter<"cases"> | boolean
+  due_date?: Prisma.DateTimeNullableFilter<"cases"> | Date | string | null
+  is_urgent?: Prisma.BoolFilter<"cases"> | boolean
   observations?: Prisma.StringNullableFilter<"cases"> | string | null
-  pendingNote?: Prisma.StringNullableFilter<"cases"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"cases"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"cases"> | Date | string
+  pending_note?: Prisma.StringNullableFilter<"cases"> | string | null
+  created_at?: Prisma.DateTimeFilter<"cases"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"cases"> | Date | string
 }
 
 export type casesUpsertWithWhereUniqueWithoutCreatedByUserInput = {
@@ -1266,25 +1264,25 @@ export type casesUpdateManyWithWhereWithoutCreatedByUserInput = {
   data: Prisma.XOR<Prisma.casesUpdateManyMutationInput, Prisma.casesUncheckedUpdateManyWithoutCreatedByUserInput>
 }
 
-export type casesCreateWithoutDental_labsInput = {
+export type casesCreateWithoutLabsInput = {
   id?: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
-  clinics?: Prisma.clinicsCreateNestedOneWithoutCasesInput
+  case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  customers?: Prisma.customersCreateNestedOneWithoutCasesInput
   dentists?: Prisma.dentistsCreateNestedOneWithoutCasesInput
   service_types?: Prisma.service_typesCreateNestedOneWithoutCasesInput
   cadDesigner?: Prisma.usersCreateNestedOneWithoutAssignedCasesInput
@@ -1293,79 +1291,79 @@ export type casesCreateWithoutDental_labsInput = {
   notifications?: Prisma.notificationsCreateNestedManyWithoutCasesInput
 }
 
-export type casesUncheckedCreateWithoutDental_labsInput = {
+export type casesUncheckedCreateWithoutLabsInput = {
   id?: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  clinicId?: string | null
-  serviceTypeId?: string | null
-  dentistId?: string | null
-  cadDesignerId?: string | null
-  createdByUserId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  customer_id?: string | null
+  service_type_id?: string | null
+  dentist_id?: string | null
+  cad_designer_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
+  case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutCasesInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutCasesInput
 }
 
-export type casesCreateOrConnectWithoutDental_labsInput = {
+export type casesCreateOrConnectWithoutLabsInput = {
   where: Prisma.casesWhereUniqueInput
-  create: Prisma.XOR<Prisma.casesCreateWithoutDental_labsInput, Prisma.casesUncheckedCreateWithoutDental_labsInput>
+  create: Prisma.XOR<Prisma.casesCreateWithoutLabsInput, Prisma.casesUncheckedCreateWithoutLabsInput>
 }
 
-export type casesCreateManyDental_labsInputEnvelope = {
-  data: Prisma.casesCreateManyDental_labsInput | Prisma.casesCreateManyDental_labsInput[]
+export type casesCreateManyLabsInputEnvelope = {
+  data: Prisma.casesCreateManyLabsInput | Prisma.casesCreateManyLabsInput[]
   skipDuplicates?: boolean
 }
 
-export type casesUpsertWithWhereUniqueWithoutDental_labsInput = {
+export type casesUpsertWithWhereUniqueWithoutLabsInput = {
   where: Prisma.casesWhereUniqueInput
-  update: Prisma.XOR<Prisma.casesUpdateWithoutDental_labsInput, Prisma.casesUncheckedUpdateWithoutDental_labsInput>
-  create: Prisma.XOR<Prisma.casesCreateWithoutDental_labsInput, Prisma.casesUncheckedCreateWithoutDental_labsInput>
+  update: Prisma.XOR<Prisma.casesUpdateWithoutLabsInput, Prisma.casesUncheckedUpdateWithoutLabsInput>
+  create: Prisma.XOR<Prisma.casesCreateWithoutLabsInput, Prisma.casesUncheckedCreateWithoutLabsInput>
 }
 
-export type casesUpdateWithWhereUniqueWithoutDental_labsInput = {
+export type casesUpdateWithWhereUniqueWithoutLabsInput = {
   where: Prisma.casesWhereUniqueInput
-  data: Prisma.XOR<Prisma.casesUpdateWithoutDental_labsInput, Prisma.casesUncheckedUpdateWithoutDental_labsInput>
+  data: Prisma.XOR<Prisma.casesUpdateWithoutLabsInput, Prisma.casesUncheckedUpdateWithoutLabsInput>
 }
 
-export type casesUpdateManyWithWhereWithoutDental_labsInput = {
+export type casesUpdateManyWithWhereWithoutLabsInput = {
   where: Prisma.casesScalarWhereInput
-  data: Prisma.XOR<Prisma.casesUpdateManyMutationInput, Prisma.casesUncheckedUpdateManyWithoutDental_labsInput>
+  data: Prisma.XOR<Prisma.casesUpdateManyMutationInput, Prisma.casesUncheckedUpdateManyWithoutLabsInput>
 }
 
 export type casesCreateWithoutService_typesInput = {
   id?: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutCasesInput
-  clinics?: Prisma.clinicsCreateNestedOneWithoutCasesInput
+  case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  labs: Prisma.labsCreateNestedOneWithoutCasesInput
+  customers?: Prisma.customersCreateNestedOneWithoutCasesInput
   dentists?: Prisma.dentistsCreateNestedOneWithoutCasesInput
   cadDesigner?: Prisma.usersCreateNestedOneWithoutAssignedCasesInput
   createdByUser?: Prisma.usersCreateNestedOneWithoutCreatedCasesInput
@@ -1375,27 +1373,27 @@ export type casesCreateWithoutService_typesInput = {
 
 export type casesUncheckedCreateWithoutService_typesInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  clinicId?: string | null
-  dentistId?: string | null
-  cadDesignerId?: string | null
-  createdByUserId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  customer_id?: string | null
+  dentist_id?: string | null
+  cad_designer_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
+  case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutCasesInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutCasesInput
 }
@@ -1429,22 +1427,22 @@ export type casesUpdateManyWithWhereWithoutService_typesInput = {
 export type casesCreateWithoutMillingsInput = {
   id?: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutCasesInput
-  clinics?: Prisma.clinicsCreateNestedOneWithoutCasesInput
+  case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  labs: Prisma.labsCreateNestedOneWithoutCasesInput
+  customers?: Prisma.customersCreateNestedOneWithoutCasesInput
   dentists?: Prisma.dentistsCreateNestedOneWithoutCasesInput
   service_types?: Prisma.service_typesCreateNestedOneWithoutCasesInput
   cadDesigner?: Prisma.usersCreateNestedOneWithoutAssignedCasesInput
@@ -1455,27 +1453,27 @@ export type casesCreateWithoutMillingsInput = {
 
 export type casesUncheckedCreateWithoutMillingsInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  clinicId?: string | null
-  serviceTypeId?: string | null
-  dentistId?: string | null
-  cadDesignerId?: string | null
-  createdByUserId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  customer_id?: string | null
+  service_type_id?: string | null
+  dentist_id?: string | null
+  cad_designer_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
+  case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutCasesInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutCasesInput
 }
@@ -1499,22 +1497,22 @@ export type casesUpdateToOneWithWhereWithoutMillingsInput = {
 export type casesUpdateWithoutMillingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutCasesNestedInput
-  clinics?: Prisma.clinicsUpdateOneWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  labs?: Prisma.labsUpdateOneRequiredWithoutCasesNestedInput
+  customers?: Prisma.customersUpdateOneWithoutCasesNestedInput
   dentists?: Prisma.dentistsUpdateOneWithoutCasesNestedInput
   service_types?: Prisma.service_typesUpdateOneWithoutCasesNestedInput
   cadDesigner?: Prisma.usersUpdateOneWithoutAssignedCasesNestedInput
@@ -1525,27 +1523,27 @@ export type casesUpdateWithoutMillingsInput = {
 
 export type casesUncheckedUpdateWithoutMillingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serviceTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dentistId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cadDesignerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cad_designer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutCasesNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutCasesNestedInput
 }
@@ -1553,23 +1551,23 @@ export type casesUncheckedUpdateWithoutMillingsInput = {
 export type casesCreateWithoutCase_attachmentsInput = {
   id?: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutCasesInput
-  clinics?: Prisma.clinicsCreateNestedOneWithoutCasesInput
+  case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  labs: Prisma.labsCreateNestedOneWithoutCasesInput
+  customers?: Prisma.customersCreateNestedOneWithoutCasesInput
   dentists?: Prisma.dentistsCreateNestedOneWithoutCasesInput
   service_types?: Prisma.service_typesCreateNestedOneWithoutCasesInput
   cadDesigner?: Prisma.usersCreateNestedOneWithoutAssignedCasesInput
@@ -1579,28 +1577,28 @@ export type casesCreateWithoutCase_attachmentsInput = {
 
 export type casesUncheckedCreateWithoutCase_attachmentsInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  clinicId?: string | null
-  serviceTypeId?: string | null
-  dentistId?: string | null
-  cadDesignerId?: string | null
-  createdByUserId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  customer_id?: string | null
+  service_type_id?: string | null
+  dentist_id?: string | null
+  cad_designer_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
+  case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutCasesInput
 }
 
@@ -1623,23 +1621,23 @@ export type casesUpdateToOneWithWhereWithoutCase_attachmentsInput = {
 export type casesUpdateWithoutCase_attachmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutCasesNestedInput
-  clinics?: Prisma.clinicsUpdateOneWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  labs?: Prisma.labsUpdateOneRequiredWithoutCasesNestedInput
+  customers?: Prisma.customersUpdateOneWithoutCasesNestedInput
   dentists?: Prisma.dentistsUpdateOneWithoutCasesNestedInput
   service_types?: Prisma.service_typesUpdateOneWithoutCasesNestedInput
   cadDesigner?: Prisma.usersUpdateOneWithoutAssignedCasesNestedInput
@@ -1649,50 +1647,50 @@ export type casesUpdateWithoutCase_attachmentsInput = {
 
 export type casesUncheckedUpdateWithoutCase_attachmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serviceTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dentistId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cadDesignerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cad_designer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutCasesNestedInput
 }
 
-export type casesCreateWithoutClinicsInput = {
+export type casesCreateWithoutCustomersInput = {
   id?: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutCasesInput
+  case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  labs: Prisma.labsCreateNestedOneWithoutCasesInput
   dentists?: Prisma.dentistsCreateNestedOneWithoutCasesInput
   service_types?: Prisma.service_typesCreateNestedOneWithoutCasesInput
   cadDesigner?: Prisma.usersCreateNestedOneWithoutAssignedCasesInput
@@ -1701,79 +1699,79 @@ export type casesCreateWithoutClinicsInput = {
   notifications?: Prisma.notificationsCreateNestedManyWithoutCasesInput
 }
 
-export type casesUncheckedCreateWithoutClinicsInput = {
+export type casesUncheckedCreateWithoutCustomersInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  serviceTypeId?: string | null
-  dentistId?: string | null
-  cadDesignerId?: string | null
-  createdByUserId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  service_type_id?: string | null
+  dentist_id?: string | null
+  cad_designer_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
+  case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutCasesInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutCasesInput
 }
 
-export type casesCreateOrConnectWithoutClinicsInput = {
+export type casesCreateOrConnectWithoutCustomersInput = {
   where: Prisma.casesWhereUniqueInput
-  create: Prisma.XOR<Prisma.casesCreateWithoutClinicsInput, Prisma.casesUncheckedCreateWithoutClinicsInput>
+  create: Prisma.XOR<Prisma.casesCreateWithoutCustomersInput, Prisma.casesUncheckedCreateWithoutCustomersInput>
 }
 
-export type casesCreateManyClinicsInputEnvelope = {
-  data: Prisma.casesCreateManyClinicsInput | Prisma.casesCreateManyClinicsInput[]
+export type casesCreateManyCustomersInputEnvelope = {
+  data: Prisma.casesCreateManyCustomersInput | Prisma.casesCreateManyCustomersInput[]
   skipDuplicates?: boolean
 }
 
-export type casesUpsertWithWhereUniqueWithoutClinicsInput = {
+export type casesUpsertWithWhereUniqueWithoutCustomersInput = {
   where: Prisma.casesWhereUniqueInput
-  update: Prisma.XOR<Prisma.casesUpdateWithoutClinicsInput, Prisma.casesUncheckedUpdateWithoutClinicsInput>
-  create: Prisma.XOR<Prisma.casesCreateWithoutClinicsInput, Prisma.casesUncheckedCreateWithoutClinicsInput>
+  update: Prisma.XOR<Prisma.casesUpdateWithoutCustomersInput, Prisma.casesUncheckedUpdateWithoutCustomersInput>
+  create: Prisma.XOR<Prisma.casesCreateWithoutCustomersInput, Prisma.casesUncheckedCreateWithoutCustomersInput>
 }
 
-export type casesUpdateWithWhereUniqueWithoutClinicsInput = {
+export type casesUpdateWithWhereUniqueWithoutCustomersInput = {
   where: Prisma.casesWhereUniqueInput
-  data: Prisma.XOR<Prisma.casesUpdateWithoutClinicsInput, Prisma.casesUncheckedUpdateWithoutClinicsInput>
+  data: Prisma.XOR<Prisma.casesUpdateWithoutCustomersInput, Prisma.casesUncheckedUpdateWithoutCustomersInput>
 }
 
-export type casesUpdateManyWithWhereWithoutClinicsInput = {
+export type casesUpdateManyWithWhereWithoutCustomersInput = {
   where: Prisma.casesScalarWhereInput
-  data: Prisma.XOR<Prisma.casesUpdateManyMutationInput, Prisma.casesUncheckedUpdateManyWithoutClinicsInput>
+  data: Prisma.XOR<Prisma.casesUpdateManyMutationInput, Prisma.casesUncheckedUpdateManyWithoutCustomersInput>
 }
 
 export type casesCreateWithoutDentistsInput = {
   id?: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutCasesInput
-  clinics?: Prisma.clinicsCreateNestedOneWithoutCasesInput
+  case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  labs: Prisma.labsCreateNestedOneWithoutCasesInput
+  customers?: Prisma.customersCreateNestedOneWithoutCasesInput
   service_types?: Prisma.service_typesCreateNestedOneWithoutCasesInput
   cadDesigner?: Prisma.usersCreateNestedOneWithoutAssignedCasesInput
   createdByUser?: Prisma.usersCreateNestedOneWithoutCreatedCasesInput
@@ -1783,27 +1781,27 @@ export type casesCreateWithoutDentistsInput = {
 
 export type casesUncheckedCreateWithoutDentistsInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  clinicId?: string | null
-  serviceTypeId?: string | null
-  cadDesignerId?: string | null
-  createdByUserId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  customer_id?: string | null
+  service_type_id?: string | null
+  cad_designer_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
+  case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutCasesInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutCasesInput
 }
@@ -1837,22 +1835,22 @@ export type casesUpdateManyWithWhereWithoutDentistsInput = {
 export type casesCreateWithoutCaseComponentUsagesInput = {
   id?: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutCasesInput
-  clinics?: Prisma.clinicsCreateNestedOneWithoutCasesInput
+  case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  labs: Prisma.labsCreateNestedOneWithoutCasesInput
+  customers?: Prisma.customersCreateNestedOneWithoutCasesInput
   dentists?: Prisma.dentistsCreateNestedOneWithoutCasesInput
   service_types?: Prisma.service_typesCreateNestedOneWithoutCasesInput
   cadDesigner?: Prisma.usersCreateNestedOneWithoutAssignedCasesInput
@@ -1863,27 +1861,27 @@ export type casesCreateWithoutCaseComponentUsagesInput = {
 
 export type casesUncheckedCreateWithoutCaseComponentUsagesInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  clinicId?: string | null
-  serviceTypeId?: string | null
-  dentistId?: string | null
-  cadDesignerId?: string | null
-  createdByUserId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  customer_id?: string | null
+  service_type_id?: string | null
+  dentist_id?: string | null
+  cad_designer_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
+  case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutCasesInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutCasesInput
 }
@@ -1907,22 +1905,22 @@ export type casesUpdateToOneWithWhereWithoutCaseComponentUsagesInput = {
 export type casesUpdateWithoutCaseComponentUsagesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutCasesNestedInput
-  clinics?: Prisma.clinicsUpdateOneWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  labs?: Prisma.labsUpdateOneRequiredWithoutCasesNestedInput
+  customers?: Prisma.customersUpdateOneWithoutCasesNestedInput
   dentists?: Prisma.dentistsUpdateOneWithoutCasesNestedInput
   service_types?: Prisma.service_typesUpdateOneWithoutCasesNestedInput
   cadDesigner?: Prisma.usersUpdateOneWithoutAssignedCasesNestedInput
@@ -1933,25 +1931,149 @@ export type casesUpdateWithoutCaseComponentUsagesInput = {
 
 export type casesUncheckedUpdateWithoutCaseComponentUsagesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serviceTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dentistId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cadDesignerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cad_designer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
+  millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
+  case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutCasesNestedInput
+  notifications?: Prisma.notificationsUncheckedUpdateManyWithoutCasesNestedInput
+}
+
+export type casesCreateWithoutCase_processesInput = {
+  id?: string
+  code: string
+  patient_name: string
+  current_status?: $Enums.CaseStatus
+  teeth?: string | null
+  elements_qty?: number | null
+  shade?: string | null
+  due_date?: Date | string | null
+  is_urgent?: boolean
+  observations?: string | null
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
+  statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
+  millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
+  labs: Prisma.labsCreateNestedOneWithoutCasesInput
+  customers?: Prisma.customersCreateNestedOneWithoutCasesInput
+  dentists?: Prisma.dentistsCreateNestedOneWithoutCasesInput
+  service_types?: Prisma.service_typesCreateNestedOneWithoutCasesInput
+  cadDesigner?: Prisma.usersCreateNestedOneWithoutAssignedCasesInput
+  createdByUser?: Prisma.usersCreateNestedOneWithoutCreatedCasesInput
+  case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutCasesInput
+  notifications?: Prisma.notificationsCreateNestedManyWithoutCasesInput
+}
+
+export type casesUncheckedCreateWithoutCase_processesInput = {
+  id?: string
+  lab_id: string
+  code: string
+  patient_name: string
+  customer_id?: string | null
+  service_type_id?: string | null
+  dentist_id?: string | null
+  cad_designer_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
+  teeth?: string | null
+  elements_qty?: number | null
+  shade?: string | null
+  due_date?: Date | string | null
+  is_urgent?: boolean
+  observations?: string | null
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
+  statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
+  millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
+  case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutCasesInput
+  notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutCasesInput
+}
+
+export type casesCreateOrConnectWithoutCase_processesInput = {
+  where: Prisma.casesWhereUniqueInput
+  create: Prisma.XOR<Prisma.casesCreateWithoutCase_processesInput, Prisma.casesUncheckedCreateWithoutCase_processesInput>
+}
+
+export type casesUpsertWithoutCase_processesInput = {
+  update: Prisma.XOR<Prisma.casesUpdateWithoutCase_processesInput, Prisma.casesUncheckedUpdateWithoutCase_processesInput>
+  create: Prisma.XOR<Prisma.casesCreateWithoutCase_processesInput, Prisma.casesUncheckedCreateWithoutCase_processesInput>
+  where?: Prisma.casesWhereInput
+}
+
+export type casesUpdateToOneWithWhereWithoutCase_processesInput = {
+  where?: Prisma.casesWhereInput
+  data: Prisma.XOR<Prisma.casesUpdateWithoutCase_processesInput, Prisma.casesUncheckedUpdateWithoutCase_processesInput>
+}
+
+export type casesUpdateWithoutCase_processesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
+  statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
+  millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
+  labs?: Prisma.labsUpdateOneRequiredWithoutCasesNestedInput
+  customers?: Prisma.customersUpdateOneWithoutCasesNestedInput
+  dentists?: Prisma.dentistsUpdateOneWithoutCasesNestedInput
+  service_types?: Prisma.service_typesUpdateOneWithoutCasesNestedInput
+  cadDesigner?: Prisma.usersUpdateOneWithoutAssignedCasesNestedInput
+  createdByUser?: Prisma.usersUpdateOneWithoutCreatedCasesNestedInput
+  case_attachments?: Prisma.case_attachmentsUpdateManyWithoutCasesNestedInput
+  notifications?: Prisma.notificationsUpdateManyWithoutCasesNestedInput
+}
+
+export type casesUncheckedUpdateWithoutCase_processesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cad_designer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutCasesNestedInput
@@ -1961,22 +2083,22 @@ export type casesUncheckedUpdateWithoutCaseComponentUsagesInput = {
 export type casesCreateWithoutStatusHistoryInput = {
   id?: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutCasesInput
-  clinics?: Prisma.clinicsCreateNestedOneWithoutCasesInput
+  case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  labs: Prisma.labsCreateNestedOneWithoutCasesInput
+  customers?: Prisma.customersCreateNestedOneWithoutCasesInput
   dentists?: Prisma.dentistsCreateNestedOneWithoutCasesInput
   service_types?: Prisma.service_typesCreateNestedOneWithoutCasesInput
   cadDesigner?: Prisma.usersCreateNestedOneWithoutAssignedCasesInput
@@ -1987,27 +2109,27 @@ export type casesCreateWithoutStatusHistoryInput = {
 
 export type casesUncheckedCreateWithoutStatusHistoryInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  clinicId?: string | null
-  serviceTypeId?: string | null
-  dentistId?: string | null
-  cadDesignerId?: string | null
-  createdByUserId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  customer_id?: string | null
+  service_type_id?: string | null
+  dentist_id?: string | null
+  cad_designer_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
+  case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutCasesInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutCasesInput
 }
@@ -2031,22 +2153,22 @@ export type casesUpdateToOneWithWhereWithoutStatusHistoryInput = {
 export type casesUpdateWithoutStatusHistoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutCasesNestedInput
-  clinics?: Prisma.clinicsUpdateOneWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  labs?: Prisma.labsUpdateOneRequiredWithoutCasesNestedInput
+  customers?: Prisma.customersUpdateOneWithoutCasesNestedInput
   dentists?: Prisma.dentistsUpdateOneWithoutCasesNestedInput
   service_types?: Prisma.service_typesUpdateOneWithoutCasesNestedInput
   cadDesigner?: Prisma.usersUpdateOneWithoutAssignedCasesNestedInput
@@ -2057,27 +2179,27 @@ export type casesUpdateWithoutStatusHistoryInput = {
 
 export type casesUncheckedUpdateWithoutStatusHistoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serviceTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dentistId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cadDesignerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cad_designer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutCasesNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutCasesNestedInput
 }
@@ -2085,23 +2207,23 @@ export type casesUncheckedUpdateWithoutStatusHistoryInput = {
 export type casesCreateWithoutNotificationsInput = {
   id?: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutCasesInput
-  clinics?: Prisma.clinicsCreateNestedOneWithoutCasesInput
+  case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  labs: Prisma.labsCreateNestedOneWithoutCasesInput
+  customers?: Prisma.customersCreateNestedOneWithoutCasesInput
   dentists?: Prisma.dentistsCreateNestedOneWithoutCasesInput
   service_types?: Prisma.service_typesCreateNestedOneWithoutCasesInput
   cadDesigner?: Prisma.usersCreateNestedOneWithoutAssignedCasesInput
@@ -2111,28 +2233,28 @@ export type casesCreateWithoutNotificationsInput = {
 
 export type casesUncheckedCreateWithoutNotificationsInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  clinicId?: string | null
-  serviceTypeId?: string | null
-  dentistId?: string | null
-  cadDesignerId?: string | null
-  createdByUserId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  customer_id?: string | null
+  service_type_id?: string | null
+  dentist_id?: string | null
+  cad_designer_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
+  case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutCasesInput
 }
 
@@ -2155,23 +2277,23 @@ export type casesUpdateToOneWithWhereWithoutNotificationsInput = {
 export type casesUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutCasesNestedInput
-  clinics?: Prisma.clinicsUpdateOneWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  labs?: Prisma.labsUpdateOneRequiredWithoutCasesNestedInput
+  customers?: Prisma.customersUpdateOneWithoutCasesNestedInput
   dentists?: Prisma.dentistsUpdateOneWithoutCasesNestedInput
   service_types?: Prisma.service_typesUpdateOneWithoutCasesNestedInput
   cadDesigner?: Prisma.usersUpdateOneWithoutAssignedCasesNestedInput
@@ -2181,95 +2303,93 @@ export type casesUpdateWithoutNotificationsInput = {
 
 export type casesUncheckedUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serviceTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dentistId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cadDesignerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cad_designer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutCasesNestedInput
 }
 
 export type casesCreateManyCadDesignerInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  clinicId?: string | null
-  serviceTypeId?: string | null
-  dentistId?: string | null
-  createdByUserId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  customer_id?: string | null
+  service_type_id?: string | null
+  dentist_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type casesCreateManyCreatedByUserInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  clinicId?: string | null
-  serviceTypeId?: string | null
-  dentistId?: string | null
-  cadDesignerId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  customer_id?: string | null
+  service_type_id?: string | null
+  dentist_id?: string | null
+  cad_designer_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type casesUpdateWithoutCadDesignerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutCasesNestedInput
-  clinics?: Prisma.clinicsUpdateOneWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  labs?: Prisma.labsUpdateOneRequiredWithoutCasesNestedInput
+  customers?: Prisma.customersUpdateOneWithoutCasesNestedInput
   dentists?: Prisma.dentistsUpdateOneWithoutCasesNestedInput
   service_types?: Prisma.service_typesUpdateOneWithoutCasesNestedInput
   createdByUser?: Prisma.usersUpdateOneWithoutCreatedCasesNestedInput
@@ -2279,73 +2399,72 @@ export type casesUpdateWithoutCadDesignerInput = {
 
 export type casesUncheckedUpdateWithoutCadDesignerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serviceTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dentistId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutCasesNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutCasesNestedInput
 }
 
 export type casesUncheckedUpdateManyWithoutCadDesignerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serviceTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dentistId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type casesUpdateWithoutCreatedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutCasesNestedInput
-  clinics?: Prisma.clinicsUpdateOneWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  labs?: Prisma.labsUpdateOneRequiredWithoutCasesNestedInput
+  customers?: Prisma.customersUpdateOneWithoutCasesNestedInput
   dentists?: Prisma.dentistsUpdateOneWithoutCasesNestedInput
   service_types?: Prisma.service_typesUpdateOneWithoutCasesNestedInput
   cadDesigner?: Prisma.usersUpdateOneWithoutAssignedCasesNestedInput
@@ -2355,94 +2474,92 @@ export type casesUpdateWithoutCreatedByUserInput = {
 
 export type casesUncheckedUpdateWithoutCreatedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serviceTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dentistId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cadDesignerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cad_designer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutCasesNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutCasesNestedInput
 }
 
 export type casesUncheckedUpdateManyWithoutCreatedByUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serviceTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dentistId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cadDesignerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cad_designer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type casesCreateManyDental_labsInput = {
+export type casesCreateManyLabsInput = {
   id?: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  clinicId?: string | null
-  serviceTypeId?: string | null
-  dentistId?: string | null
-  cadDesignerId?: string | null
-  createdByUserId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  customer_id?: string | null
+  service_type_id?: string | null
+  dentist_id?: string | null
+  cad_designer_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
-export type casesUpdateWithoutDental_labsInput = {
+export type casesUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
-  clinics?: Prisma.clinicsUpdateOneWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  customers?: Prisma.customersUpdateOneWithoutCasesNestedInput
   dentists?: Prisma.dentistsUpdateOneWithoutCasesNestedInput
   service_types?: Prisma.service_typesUpdateOneWithoutCasesNestedInput
   cadDesigner?: Prisma.usersUpdateOneWithoutAssignedCasesNestedInput
@@ -2451,97 +2568,95 @@ export type casesUpdateWithoutDental_labsInput = {
   notifications?: Prisma.notificationsUpdateManyWithoutCasesNestedInput
 }
 
-export type casesUncheckedUpdateWithoutDental_labsInput = {
+export type casesUncheckedUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serviceTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dentistId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cadDesignerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cad_designer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutCasesNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutCasesNestedInput
 }
 
-export type casesUncheckedUpdateManyWithoutDental_labsInput = {
+export type casesUncheckedUpdateManyWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serviceTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dentistId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cadDesignerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cad_designer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type casesCreateManyService_typesInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  clinicId?: string | null
-  dentistId?: string | null
-  cadDesignerId?: string | null
-  createdByUserId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  customer_id?: string | null
+  dentist_id?: string | null
+  cad_designer_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type casesUpdateWithoutService_typesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutCasesNestedInput
-  clinics?: Prisma.clinicsUpdateOneWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  labs?: Prisma.labsUpdateOneRequiredWithoutCasesNestedInput
+  customers?: Prisma.customersUpdateOneWithoutCasesNestedInput
   dentists?: Prisma.dentistsUpdateOneWithoutCasesNestedInput
   cadDesigner?: Prisma.usersUpdateOneWithoutAssignedCasesNestedInput
   createdByUser?: Prisma.usersUpdateOneWithoutCreatedCasesNestedInput
@@ -2551,94 +2666,92 @@ export type casesUpdateWithoutService_typesInput = {
 
 export type casesUncheckedUpdateWithoutService_typesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dentistId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cadDesignerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cad_designer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutCasesNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutCasesNestedInput
 }
 
 export type casesUncheckedUpdateManyWithoutService_typesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dentistId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cadDesignerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cad_designer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type casesCreateManyClinicsInput = {
+export type casesCreateManyCustomersInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  serviceTypeId?: string | null
-  dentistId?: string | null
-  cadDesignerId?: string | null
-  createdByUserId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  service_type_id?: string | null
+  dentist_id?: string | null
+  cad_designer_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
-export type casesUpdateWithoutClinicsInput = {
+export type casesUpdateWithoutCustomersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  labs?: Prisma.labsUpdateOneRequiredWithoutCasesNestedInput
   dentists?: Prisma.dentistsUpdateOneWithoutCasesNestedInput
   service_types?: Prisma.service_typesUpdateOneWithoutCasesNestedInput
   cadDesigner?: Prisma.usersUpdateOneWithoutAssignedCasesNestedInput
@@ -2647,97 +2760,95 @@ export type casesUpdateWithoutClinicsInput = {
   notifications?: Prisma.notificationsUpdateManyWithoutCasesNestedInput
 }
 
-export type casesUncheckedUpdateWithoutClinicsInput = {
+export type casesUncheckedUpdateWithoutCustomersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  serviceTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dentistId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cadDesignerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cad_designer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutCasesNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutCasesNestedInput
 }
 
-export type casesUncheckedUpdateManyWithoutClinicsInput = {
+export type casesUncheckedUpdateManyWithoutCustomersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  serviceTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dentistId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cadDesignerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cad_designer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type casesCreateManyDentistsInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   code: string
-  clientCaseCode?: string | null
-  patientName: string
-  clinicId?: string | null
-  serviceTypeId?: string | null
-  cadDesignerId?: string | null
-  createdByUserId?: string | null
-  currentStatus?: $Enums.CaseStatus
+  patient_name: string
+  customer_id?: string | null
+  service_type_id?: string | null
+  cad_designer_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
   teeth?: string | null
-  elementsQty?: number | null
+  elements_qty?: number | null
   shade?: string | null
-  dueDate?: Date | string | null
-  isUrgent?: boolean
+  due_date?: Date | string | null
+  is_urgent?: boolean
   observations?: string | null
-  pendingNote?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  pending_note?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type casesUpdateWithoutDentistsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutCasesNestedInput
-  clinics?: Prisma.clinicsUpdateOneWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  labs?: Prisma.labsUpdateOneRequiredWithoutCasesNestedInput
+  customers?: Prisma.customersUpdateOneWithoutCasesNestedInput
   service_types?: Prisma.service_typesUpdateOneWithoutCasesNestedInput
   cadDesigner?: Prisma.usersUpdateOneWithoutAssignedCasesNestedInput
   createdByUser?: Prisma.usersUpdateOneWithoutCreatedCasesNestedInput
@@ -2747,51 +2858,50 @@ export type casesUpdateWithoutDentistsInput = {
 
 export type casesUncheckedUpdateWithoutDentistsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serviceTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cadDesignerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cad_designer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutCasesNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutCasesNestedInput
 }
 
 export type casesUncheckedUpdateManyWithoutDentistsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
-  clientCaseCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  patientName?: Prisma.StringFieldUpdateOperationsInput | string
-  clinicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serviceTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  cadDesignerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdByUserId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  currentStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cad_designer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  elementsQty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dueDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isUrgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pendingNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -2803,6 +2913,7 @@ export type CasesCountOutputType = {
   caseComponentUsages: number
   statusHistory: number
   millings: number
+  case_processes: number
   case_attachments: number
   notifications: number
 }
@@ -2811,6 +2922,7 @@ export type CasesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   caseComponentUsages?: boolean | CasesCountOutputTypeCountCaseComponentUsagesArgs
   statusHistory?: boolean | CasesCountOutputTypeCountStatusHistoryArgs
   millings?: boolean | CasesCountOutputTypeCountMillingsArgs
+  case_processes?: boolean | CasesCountOutputTypeCountCase_processesArgs
   case_attachments?: boolean | CasesCountOutputTypeCountCase_attachmentsArgs
   notifications?: boolean | CasesCountOutputTypeCountNotificationsArgs
 }
@@ -2849,6 +2961,13 @@ export type CasesCountOutputTypeCountMillingsArgs<ExtArgs extends runtime.Types.
 /**
  * CasesCountOutputType without action
  */
+export type CasesCountOutputTypeCountCase_processesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.case_processesWhereInput
+}
+
+/**
+ * CasesCountOutputType without action
+ */
 export type CasesCountOutputTypeCountCase_attachmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.case_attachmentsWhereInput
 }
@@ -2863,30 +2982,30 @@ export type CasesCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.T
 
 export type casesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  dentalLabId?: boolean
+  lab_id?: boolean
   code?: boolean
-  clientCaseCode?: boolean
-  patientName?: boolean
-  clinicId?: boolean
-  serviceTypeId?: boolean
-  dentistId?: boolean
-  cadDesignerId?: boolean
-  createdByUserId?: boolean
-  currentStatus?: boolean
+  patient_name?: boolean
+  customer_id?: boolean
+  service_type_id?: boolean
+  dentist_id?: boolean
+  cad_designer_id?: boolean
+  created_by_user_id?: boolean
+  current_status?: boolean
   teeth?: boolean
-  elementsQty?: boolean
+  elements_qty?: boolean
   shade?: boolean
-  dueDate?: boolean
-  isUrgent?: boolean
+  due_date?: boolean
+  is_urgent?: boolean
   observations?: boolean
-  pendingNote?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
+  pending_note?: boolean
+  created_at?: boolean
+  updated_at?: boolean
   caseComponentUsages?: boolean | Prisma.cases$caseComponentUsagesArgs<ExtArgs>
   statusHistory?: boolean | Prisma.cases$statusHistoryArgs<ExtArgs>
   millings?: boolean | Prisma.cases$millingsArgs<ExtArgs>
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
-  clinics?: boolean | Prisma.cases$clinicsArgs<ExtArgs>
+  case_processes?: boolean | Prisma.cases$case_processesArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  customers?: boolean | Prisma.cases$customersArgs<ExtArgs>
   dentists?: boolean | Prisma.cases$dentistsArgs<ExtArgs>
   service_types?: boolean | Prisma.cases$service_typesArgs<ExtArgs>
   cadDesigner?: boolean | Prisma.cases$cadDesignerArgs<ExtArgs>
@@ -2898,27 +3017,26 @@ export type casesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 
 export type casesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  dentalLabId?: boolean
+  lab_id?: boolean
   code?: boolean
-  clientCaseCode?: boolean
-  patientName?: boolean
-  clinicId?: boolean
-  serviceTypeId?: boolean
-  dentistId?: boolean
-  cadDesignerId?: boolean
-  createdByUserId?: boolean
-  currentStatus?: boolean
+  patient_name?: boolean
+  customer_id?: boolean
+  service_type_id?: boolean
+  dentist_id?: boolean
+  cad_designer_id?: boolean
+  created_by_user_id?: boolean
+  current_status?: boolean
   teeth?: boolean
-  elementsQty?: boolean
+  elements_qty?: boolean
   shade?: boolean
-  dueDate?: boolean
-  isUrgent?: boolean
+  due_date?: boolean
+  is_urgent?: boolean
   observations?: boolean
-  pendingNote?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
-  clinics?: boolean | Prisma.cases$clinicsArgs<ExtArgs>
+  pending_note?: boolean
+  created_at?: boolean
+  updated_at?: boolean
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  customers?: boolean | Prisma.cases$customersArgs<ExtArgs>
   dentists?: boolean | Prisma.cases$dentistsArgs<ExtArgs>
   service_types?: boolean | Prisma.cases$service_typesArgs<ExtArgs>
   cadDesigner?: boolean | Prisma.cases$cadDesignerArgs<ExtArgs>
@@ -2927,27 +3045,26 @@ export type casesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 
 export type casesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  dentalLabId?: boolean
+  lab_id?: boolean
   code?: boolean
-  clientCaseCode?: boolean
-  patientName?: boolean
-  clinicId?: boolean
-  serviceTypeId?: boolean
-  dentistId?: boolean
-  cadDesignerId?: boolean
-  createdByUserId?: boolean
-  currentStatus?: boolean
+  patient_name?: boolean
+  customer_id?: boolean
+  service_type_id?: boolean
+  dentist_id?: boolean
+  cad_designer_id?: boolean
+  created_by_user_id?: boolean
+  current_status?: boolean
   teeth?: boolean
-  elementsQty?: boolean
+  elements_qty?: boolean
   shade?: boolean
-  dueDate?: boolean
-  isUrgent?: boolean
+  due_date?: boolean
+  is_urgent?: boolean
   observations?: boolean
-  pendingNote?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
-  clinics?: boolean | Prisma.cases$clinicsArgs<ExtArgs>
+  pending_note?: boolean
+  created_at?: boolean
+  updated_at?: boolean
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  customers?: boolean | Prisma.cases$customersArgs<ExtArgs>
   dentists?: boolean | Prisma.cases$dentistsArgs<ExtArgs>
   service_types?: boolean | Prisma.cases$service_typesArgs<ExtArgs>
   cadDesigner?: boolean | Prisma.cases$cadDesignerArgs<ExtArgs>
@@ -2956,34 +3073,34 @@ export type casesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 
 export type casesSelectScalar = {
   id?: boolean
-  dentalLabId?: boolean
+  lab_id?: boolean
   code?: boolean
-  clientCaseCode?: boolean
-  patientName?: boolean
-  clinicId?: boolean
-  serviceTypeId?: boolean
-  dentistId?: boolean
-  cadDesignerId?: boolean
-  createdByUserId?: boolean
-  currentStatus?: boolean
+  patient_name?: boolean
+  customer_id?: boolean
+  service_type_id?: boolean
+  dentist_id?: boolean
+  cad_designer_id?: boolean
+  created_by_user_id?: boolean
+  current_status?: boolean
   teeth?: boolean
-  elementsQty?: boolean
+  elements_qty?: boolean
   shade?: boolean
-  dueDate?: boolean
-  isUrgent?: boolean
+  due_date?: boolean
+  is_urgent?: boolean
   observations?: boolean
-  pendingNote?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
+  pending_note?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }
 
-export type casesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dentalLabId" | "code" | "clientCaseCode" | "patientName" | "clinicId" | "serviceTypeId" | "dentistId" | "cadDesignerId" | "createdByUserId" | "currentStatus" | "teeth" | "elementsQty" | "shade" | "dueDate" | "isUrgent" | "observations" | "pendingNote" | "createdAt" | "updatedAt", ExtArgs["result"]["cases"]>
+export type casesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "code" | "patient_name" | "customer_id" | "service_type_id" | "dentist_id" | "cad_designer_id" | "created_by_user_id" | "current_status" | "teeth" | "elements_qty" | "shade" | "due_date" | "is_urgent" | "observations" | "pending_note" | "created_at" | "updated_at", ExtArgs["result"]["cases"]>
 export type casesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   caseComponentUsages?: boolean | Prisma.cases$caseComponentUsagesArgs<ExtArgs>
   statusHistory?: boolean | Prisma.cases$statusHistoryArgs<ExtArgs>
   millings?: boolean | Prisma.cases$millingsArgs<ExtArgs>
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
-  clinics?: boolean | Prisma.cases$clinicsArgs<ExtArgs>
+  case_processes?: boolean | Prisma.cases$case_processesArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  customers?: boolean | Prisma.cases$customersArgs<ExtArgs>
   dentists?: boolean | Prisma.cases$dentistsArgs<ExtArgs>
   service_types?: boolean | Prisma.cases$service_typesArgs<ExtArgs>
   cadDesigner?: boolean | Prisma.cases$cadDesignerArgs<ExtArgs>
@@ -2993,16 +3110,16 @@ export type casesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   _count?: boolean | Prisma.CasesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type casesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
-  clinics?: boolean | Prisma.cases$clinicsArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  customers?: boolean | Prisma.cases$customersArgs<ExtArgs>
   dentists?: boolean | Prisma.cases$dentistsArgs<ExtArgs>
   service_types?: boolean | Prisma.cases$service_typesArgs<ExtArgs>
   cadDesigner?: boolean | Prisma.cases$cadDesignerArgs<ExtArgs>
   createdByUser?: boolean | Prisma.cases$createdByUserArgs<ExtArgs>
 }
 export type casesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
-  clinics?: boolean | Prisma.cases$clinicsArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  customers?: boolean | Prisma.cases$customersArgs<ExtArgs>
   dentists?: boolean | Prisma.cases$dentistsArgs<ExtArgs>
   service_types?: boolean | Prisma.cases$service_typesArgs<ExtArgs>
   cadDesigner?: boolean | Prisma.cases$cadDesignerArgs<ExtArgs>
@@ -3015,8 +3132,9 @@ export type $casesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     caseComponentUsages: Prisma.$case_component_usagesPayload<ExtArgs>[]
     statusHistory: Prisma.$case_status_historiesPayload<ExtArgs>[]
     millings: Prisma.$case_millingsPayload<ExtArgs>[]
-    dental_labs: Prisma.$dental_labsPayload<ExtArgs>
-    clinics: Prisma.$clinicsPayload<ExtArgs> | null
+    case_processes: Prisma.$case_processesPayload<ExtArgs>[]
+    labs: Prisma.$labsPayload<ExtArgs>
+    customers: Prisma.$customersPayload<ExtArgs> | null
     dentists: Prisma.$dentistsPayload<ExtArgs> | null
     service_types: Prisma.$service_typesPayload<ExtArgs> | null
     cadDesigner: Prisma.$usersPayload<ExtArgs> | null
@@ -3026,25 +3144,24 @@ export type $casesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    dentalLabId: string
+    lab_id: string
     code: string
-    clientCaseCode: string | null
-    patientName: string
-    clinicId: string | null
-    serviceTypeId: string | null
-    dentistId: string | null
-    cadDesignerId: string | null
-    createdByUserId: string | null
-    currentStatus: $Enums.CaseStatus
+    patient_name: string
+    customer_id: string | null
+    service_type_id: string | null
+    dentist_id: string | null
+    cad_designer_id: string | null
+    created_by_user_id: string | null
+    current_status: $Enums.CaseStatus
     teeth: string | null
-    elementsQty: number | null
+    elements_qty: number | null
     shade: string | null
-    dueDate: Date | null
-    isUrgent: boolean
+    due_date: Date | null
+    is_urgent: boolean
     observations: string | null
-    pendingNote: string | null
-    createdAt: Date
-    updatedAt: Date
+    pending_note: string | null
+    created_at: Date
+    updated_at: Date
   }, ExtArgs["result"]["cases"]>
   composites: {}
 }
@@ -3442,8 +3559,9 @@ export interface Prisma__casesClient<T, Null = never, ExtArgs extends runtime.Ty
   caseComponentUsages<T extends Prisma.cases$caseComponentUsagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cases$caseComponentUsagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_component_usagesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   statusHistory<T extends Prisma.cases$statusHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cases$statusHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_status_historiesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   millings<T extends Prisma.cases$millingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cases$millingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_millingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  dental_labs<T extends Prisma.dental_labsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.dental_labsDefaultArgs<ExtArgs>>): Prisma.Prisma__dental_labsClient<runtime.Types.Result.GetResult<Prisma.$dental_labsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  clinics<T extends Prisma.cases$clinicsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cases$clinicsArgs<ExtArgs>>): Prisma.Prisma__clinicsClient<runtime.Types.Result.GetResult<Prisma.$clinicsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  case_processes<T extends Prisma.cases$case_processesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cases$case_processesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_processesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  labs<T extends Prisma.labsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labsDefaultArgs<ExtArgs>>): Prisma.Prisma__labsClient<runtime.Types.Result.GetResult<Prisma.$labsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  customers<T extends Prisma.cases$customersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cases$customersArgs<ExtArgs>>): Prisma.Prisma__customersClient<runtime.Types.Result.GetResult<Prisma.$customersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   dentists<T extends Prisma.cases$dentistsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cases$dentistsArgs<ExtArgs>>): Prisma.Prisma__dentistsClient<runtime.Types.Result.GetResult<Prisma.$dentistsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   service_types<T extends Prisma.cases$service_typesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cases$service_typesArgs<ExtArgs>>): Prisma.Prisma__service_typesClient<runtime.Types.Result.GetResult<Prisma.$service_typesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   cadDesigner<T extends Prisma.cases$cadDesignerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cases$cadDesignerArgs<ExtArgs>>): Prisma.Prisma__usersClient<runtime.Types.Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -3480,25 +3598,24 @@ export interface Prisma__casesClient<T, Null = never, ExtArgs extends runtime.Ty
  */
 export interface casesFieldRefs {
   readonly id: Prisma.FieldRef<"cases", 'String'>
-  readonly dentalLabId: Prisma.FieldRef<"cases", 'String'>
+  readonly lab_id: Prisma.FieldRef<"cases", 'String'>
   readonly code: Prisma.FieldRef<"cases", 'String'>
-  readonly clientCaseCode: Prisma.FieldRef<"cases", 'String'>
-  readonly patientName: Prisma.FieldRef<"cases", 'String'>
-  readonly clinicId: Prisma.FieldRef<"cases", 'String'>
-  readonly serviceTypeId: Prisma.FieldRef<"cases", 'String'>
-  readonly dentistId: Prisma.FieldRef<"cases", 'String'>
-  readonly cadDesignerId: Prisma.FieldRef<"cases", 'String'>
-  readonly createdByUserId: Prisma.FieldRef<"cases", 'String'>
-  readonly currentStatus: Prisma.FieldRef<"cases", 'CaseStatus'>
+  readonly patient_name: Prisma.FieldRef<"cases", 'String'>
+  readonly customer_id: Prisma.FieldRef<"cases", 'String'>
+  readonly service_type_id: Prisma.FieldRef<"cases", 'String'>
+  readonly dentist_id: Prisma.FieldRef<"cases", 'String'>
+  readonly cad_designer_id: Prisma.FieldRef<"cases", 'String'>
+  readonly created_by_user_id: Prisma.FieldRef<"cases", 'String'>
+  readonly current_status: Prisma.FieldRef<"cases", 'CaseStatus'>
   readonly teeth: Prisma.FieldRef<"cases", 'String'>
-  readonly elementsQty: Prisma.FieldRef<"cases", 'Int'>
+  readonly elements_qty: Prisma.FieldRef<"cases", 'Int'>
   readonly shade: Prisma.FieldRef<"cases", 'String'>
-  readonly dueDate: Prisma.FieldRef<"cases", 'DateTime'>
-  readonly isUrgent: Prisma.FieldRef<"cases", 'Boolean'>
+  readonly due_date: Prisma.FieldRef<"cases", 'DateTime'>
+  readonly is_urgent: Prisma.FieldRef<"cases", 'Boolean'>
   readonly observations: Prisma.FieldRef<"cases", 'String'>
-  readonly pendingNote: Prisma.FieldRef<"cases", 'String'>
-  readonly createdAt: Prisma.FieldRef<"cases", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"cases", 'DateTime'>
+  readonly pending_note: Prisma.FieldRef<"cases", 'String'>
+  readonly created_at: Prisma.FieldRef<"cases", 'DateTime'>
+  readonly updated_at: Prisma.FieldRef<"cases", 'DateTime'>
 }
     
 
@@ -3972,22 +4089,46 @@ export type cases$millingsArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * cases.clinics
+ * cases.case_processes
  */
-export type cases$clinicsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type cases$case_processesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the clinics
+   * Select specific fields to fetch from the case_processes
    */
-  select?: Prisma.clinicsSelect<ExtArgs> | null
+  select?: Prisma.case_processesSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the clinics
+   * Omit specific fields from the case_processes
    */
-  omit?: Prisma.clinicsOmit<ExtArgs> | null
+  omit?: Prisma.case_processesOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.clinicsInclude<ExtArgs> | null
-  where?: Prisma.clinicsWhereInput
+  include?: Prisma.case_processesInclude<ExtArgs> | null
+  where?: Prisma.case_processesWhereInput
+  orderBy?: Prisma.case_processesOrderByWithRelationInput | Prisma.case_processesOrderByWithRelationInput[]
+  cursor?: Prisma.case_processesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Case_processesScalarFieldEnum | Prisma.Case_processesScalarFieldEnum[]
+}
+
+/**
+ * cases.customers
+ */
+export type cases$customersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the customers
+   */
+  select?: Prisma.customersSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the customers
+   */
+  omit?: Prisma.customersOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.customersInclude<ExtArgs> | null
+  where?: Prisma.customersWhereInput
 }
 
 /**

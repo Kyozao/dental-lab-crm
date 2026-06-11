@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "seed:catalog": "tsx prisma/seed-default-catalog.ts",
     "postinstall": "prisma generate"
   },
   "prisma": {

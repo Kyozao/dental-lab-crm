@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import { AddCaseDialog } from "@/features/cases/components/add-case-dialog";
 import { PageHeader } from "@/components/app/page-header";
 import { PageShell } from "@/components/app/page-shell";
@@ -5,10 +7,8 @@ import { Panel } from "@/components/app/panel";
 import { CasesSearchBar } from "@/features/cases/components/cases-search-bar";
 import { CasesTable } from "@/features/cases/components/cases-table";
 import {
-  mockCadDesigners,
-  mockClinics,
+  mockCustomers,
   mockComponents,
-  mockServiceTypes,
   mockUser,
 } from "@/lib/mock-data/pages";
 
@@ -20,25 +20,23 @@ export default function CasesPage() {
         description="Manage and track mock cases locally while API calls are disabled."
         actions={
           <AddCaseDialog
-            clinics={mockClinics}
-            serviceTypes={mockServiceTypes}
-            cadDesigners={mockCadDesigners}
             components={mockComponents}
             currentUserRole={mockUser.role}
           />
         }
       />
 
-      <CasesSearchBar clinics={mockClinics} />
+      <Suspense fallback={null}>
+        <CasesSearchBar customers={mockCustomers} />
+      </Suspense>
 
       <Panel>
-        <CasesTable
-          clinics={mockClinics}
-          serviceTypes={mockServiceTypes}
-          cadDesigners={mockCadDesigners}
-          components={mockComponents}
-          currentUserRole={mockUser.role}
-        />
+        <Suspense fallback={null}>
+          <CasesTable
+            components={mockComponents}
+            currentUserRole={mockUser.role}
+          />
+        </Suspense>
       </Panel>
     </PageShell>
   );

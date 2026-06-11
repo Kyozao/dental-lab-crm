@@ -10,7 +10,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { createRegistryEntity } from "@/features/registry/services/registry-api";
 import type {
   RegistryActionState,
-  RegistryClinicOption,
+  RegistryCustomerOption,
 } from "@/features/registry/types";
 
 type FormErrors = Record<string, string[]> | undefined;
@@ -31,10 +31,10 @@ function ErrorText({ errors, field }: { errors?: FormErrors; field: string }) {
 }
 
 type Props = {
-  clinics: RegistryClinicOption[];
+  customers: RegistryCustomerOption[];
 };
 
-export function CreateDentistForm({ clinics }: Props) {
+export function CreateDentistForm({ customers }: Props) {
   const [state, setState] = useState<RegistryActionState>({
     success: false,
     message: "",
@@ -82,21 +82,21 @@ export function CreateDentistForm({ clinics }: Props) {
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="clinicId">Clinic</Label>
+            <Label htmlFor="customerId">customer</Label>
             <select
-              id="clinicId"
-              name="clinicId"
+              id="customerId"
+              name="customerId"
               required
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
             >
-              <option value="">Select a clinic...</option>
-              {clinics.map((clinic) => (
-                <option key={clinic.id} value={clinic.id}>
-                  {clinic.name}
+              <option value="">Select a customer...</option>
+              {customers.map((customer) => (
+                <option key={customer.id} value={customer.id}>
+                  {customer.name}
                 </option>
               ))}
             </select>
-            <ErrorText errors={state.errors} field="clinicId" />
+            <ErrorText errors={state.errors} field="customerId" />
           </div>
 
           <div className="space-y-2">
@@ -131,7 +131,7 @@ export function CreateDentistForm({ clinics }: Props) {
               id="email"
               name="email"
               type="email"
-              placeholder="dentist@clinic.com"
+              placeholder="dentist@customer.com"
             />
             <ErrorText errors={state.errors} field="email" />
           </div>

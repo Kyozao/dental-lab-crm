@@ -2,13 +2,13 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { casesApi } from "@/features/cases/cases";
+import { casesApi, type CaseListQuery } from "@/features/cases/cases";
 
 export const casesQueryKey = ["cases"] as const;
 
-export function useCases() {
+export function useCases(query: CaseListQuery) {
   return useQuery({
-    queryKey: casesQueryKey,
-    queryFn: casesApi.getAll,
+    queryKey: [...casesQueryKey, query],
+    queryFn: () => casesApi.getAll(query),
   });
 }

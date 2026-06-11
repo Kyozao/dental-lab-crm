@@ -26,64 +26,72 @@ export type AggregateService_types = {
 
 export type Service_typesMinAggregateOutputType = {
   id: string | null
-  dentalLabId: string | null
+  lab_id: string | null
   name: string | null
-  isActive: boolean | null
+  is_active: boolean | null
+  deleted_at: Date | null
   notes: string | null
-  createdAt: Date | null
-  updatedAt: Date | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type Service_typesMaxAggregateOutputType = {
   id: string | null
-  dentalLabId: string | null
+  lab_id: string | null
   name: string | null
-  isActive: boolean | null
+  is_active: boolean | null
+  deleted_at: Date | null
   notes: string | null
-  createdAt: Date | null
-  updatedAt: Date | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type Service_typesCountAggregateOutputType = {
   id: number
-  dentalLabId: number
+  lab_id: number
   name: number
-  isActive: number
+  is_active: number
+  deleted_at: number
   notes: number
-  createdAt: number
-  updatedAt: number
+  workflow_json: number
+  created_at: number
+  updated_at: number
   _all: number
 }
 
 
 export type Service_typesMinAggregateInputType = {
   id?: true
-  dentalLabId?: true
+  lab_id?: true
   name?: true
-  isActive?: true
+  is_active?: true
+  deleted_at?: true
   notes?: true
-  createdAt?: true
-  updatedAt?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type Service_typesMaxAggregateInputType = {
   id?: true
-  dentalLabId?: true
+  lab_id?: true
   name?: true
-  isActive?: true
+  is_active?: true
+  deleted_at?: true
   notes?: true
-  createdAt?: true
-  updatedAt?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type Service_typesCountAggregateInputType = {
   id?: true
-  dentalLabId?: true
+  lab_id?: true
   name?: true
-  isActive?: true
+  is_active?: true
+  deleted_at?: true
   notes?: true
-  createdAt?: true
-  updatedAt?: true
+  workflow_json?: true
+  created_at?: true
+  updated_at?: true
   _all?: true
 }
 
@@ -161,12 +169,14 @@ export type service_typesGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 
 export type Service_typesGroupByOutputType = {
   id: string
-  dentalLabId: string
+  lab_id: string
   name: string
-  isActive: boolean
+  is_active: boolean
+  deleted_at: Date | null
   notes: string | null
-  createdAt: Date
-  updatedAt: Date
+  workflow_json: runtime.JsonValue
+  created_at: Date
+  updated_at: Date
   _count: Service_typesCountAggregateOutputType | null
   _min: Service_typesMinAggregateOutputType | null
   _max: Service_typesMaxAggregateOutputType | null
@@ -192,52 +202,60 @@ export type service_typesWhereInput = {
   OR?: Prisma.service_typesWhereInput[]
   NOT?: Prisma.service_typesWhereInput | Prisma.service_typesWhereInput[]
   id?: Prisma.StringFilter<"service_types"> | string
-  dentalLabId?: Prisma.StringFilter<"service_types"> | string
+  lab_id?: Prisma.StringFilter<"service_types"> | string
   name?: Prisma.StringFilter<"service_types"> | string
-  isActive?: Prisma.BoolFilter<"service_types"> | boolean
+  is_active?: Prisma.BoolFilter<"service_types"> | boolean
+  deleted_at?: Prisma.DateTimeNullableFilter<"service_types"> | Date | string | null
   notes?: Prisma.StringNullableFilter<"service_types"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"service_types"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"service_types"> | Date | string
-  dental_labs?: Prisma.XOR<Prisma.Dental_labsScalarRelationFilter, Prisma.dental_labsWhereInput>
+  workflow_json?: Prisma.JsonFilter<"service_types">
+  created_at?: Prisma.DateTimeFilter<"service_types"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"service_types"> | Date | string
+  labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
   cases?: Prisma.CasesListRelationFilter
 }
 
 export type service_typesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  dental_labs?: Prisma.dental_labsOrderByWithRelationInput
+  workflow_json?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
+  labs?: Prisma.labsOrderByWithRelationInput
   cases?: Prisma.casesOrderByRelationAggregateInput
 }
 
 export type service_typesWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  dentalLabId_name?: Prisma.service_typesDentalLabIdNameCompoundUniqueInput
+  lab_id_name?: Prisma.service_typesLab_idNameCompoundUniqueInput
   AND?: Prisma.service_typesWhereInput | Prisma.service_typesWhereInput[]
   OR?: Prisma.service_typesWhereInput[]
   NOT?: Prisma.service_typesWhereInput | Prisma.service_typesWhereInput[]
-  dentalLabId?: Prisma.StringFilter<"service_types"> | string
+  lab_id?: Prisma.StringFilter<"service_types"> | string
   name?: Prisma.StringFilter<"service_types"> | string
-  isActive?: Prisma.BoolFilter<"service_types"> | boolean
+  is_active?: Prisma.BoolFilter<"service_types"> | boolean
+  deleted_at?: Prisma.DateTimeNullableFilter<"service_types"> | Date | string | null
   notes?: Prisma.StringNullableFilter<"service_types"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"service_types"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"service_types"> | Date | string
-  dental_labs?: Prisma.XOR<Prisma.Dental_labsScalarRelationFilter, Prisma.dental_labsWhereInput>
+  workflow_json?: Prisma.JsonFilter<"service_types">
+  created_at?: Prisma.DateTimeFilter<"service_types"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"service_types"> | Date | string
+  labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
   cases?: Prisma.CasesListRelationFilter
-}, "id" | "dentalLabId_name">
+}, "id" | "lab_id_name">
 
 export type service_typesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  workflow_json?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   _count?: Prisma.service_typesCountOrderByAggregateInput
   _max?: Prisma.service_typesMaxOrderByAggregateInput
   _min?: Prisma.service_typesMinOrderByAggregateInput
@@ -248,85 +266,101 @@ export type service_typesScalarWhereWithAggregatesInput = {
   OR?: Prisma.service_typesScalarWhereWithAggregatesInput[]
   NOT?: Prisma.service_typesScalarWhereWithAggregatesInput | Prisma.service_typesScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"service_types"> | string
-  dentalLabId?: Prisma.StringWithAggregatesFilter<"service_types"> | string
+  lab_id?: Prisma.StringWithAggregatesFilter<"service_types"> | string
   name?: Prisma.StringWithAggregatesFilter<"service_types"> | string
-  isActive?: Prisma.BoolWithAggregatesFilter<"service_types"> | boolean
+  is_active?: Prisma.BoolWithAggregatesFilter<"service_types"> | boolean
+  deleted_at?: Prisma.DateTimeNullableWithAggregatesFilter<"service_types"> | Date | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"service_types"> | string | null
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"service_types"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"service_types"> | Date | string
+  workflow_json?: Prisma.JsonWithAggregatesFilter<"service_types">
+  created_at?: Prisma.DateTimeWithAggregatesFilter<"service_types"> | Date | string
+  updated_at?: Prisma.DateTimeWithAggregatesFilter<"service_types"> | Date | string
 }
 
 export type service_typesCreateInput = {
   id?: string
   name: string
-  isActive?: boolean
+  is_active?: boolean
+  deleted_at?: Date | string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutService_typesInput
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutService_typesInput
   cases?: Prisma.casesCreateNestedManyWithoutService_typesInput
 }
 
 export type service_typesUncheckedCreateInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   name: string
-  isActive?: boolean
+  is_active?: boolean
+  deleted_at?: Date | string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  updated_at?: Date | string
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutService_typesInput
 }
 
 export type service_typesUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutService_typesNestedInput
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutService_typesNestedInput
   cases?: Prisma.casesUpdateManyWithoutService_typesNestedInput
 }
 
 export type service_typesUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUncheckedUpdateManyWithoutService_typesNestedInput
 }
 
 export type service_typesCreateManyInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   name: string
-  isActive?: boolean
+  is_active?: boolean
+  deleted_at?: Date | string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type service_typesUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type service_typesUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type Service_typesListRelationFilter = {
@@ -339,39 +373,43 @@ export type service_typesOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type service_typesDentalLabIdNameCompoundUniqueInput = {
-  dentalLabId: string
+export type service_typesLab_idNameCompoundUniqueInput = {
+  lab_id: string
   name: string
 }
 
 export type service_typesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  workflow_json?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type service_typesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type service_typesMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type Service_typesNullableScalarRelationFilter = {
@@ -379,46 +417,50 @@ export type Service_typesNullableScalarRelationFilter = {
   isNot?: Prisma.service_typesWhereInput | null
 }
 
-export type service_typesCreateNestedManyWithoutDental_labsInput = {
-  create?: Prisma.XOR<Prisma.service_typesCreateWithoutDental_labsInput, Prisma.service_typesUncheckedCreateWithoutDental_labsInput> | Prisma.service_typesCreateWithoutDental_labsInput[] | Prisma.service_typesUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.service_typesCreateOrConnectWithoutDental_labsInput | Prisma.service_typesCreateOrConnectWithoutDental_labsInput[]
-  createMany?: Prisma.service_typesCreateManyDental_labsInputEnvelope
+export type service_typesCreateNestedManyWithoutLabsInput = {
+  create?: Prisma.XOR<Prisma.service_typesCreateWithoutLabsInput, Prisma.service_typesUncheckedCreateWithoutLabsInput> | Prisma.service_typesCreateWithoutLabsInput[] | Prisma.service_typesUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.service_typesCreateOrConnectWithoutLabsInput | Prisma.service_typesCreateOrConnectWithoutLabsInput[]
+  createMany?: Prisma.service_typesCreateManyLabsInputEnvelope
   connect?: Prisma.service_typesWhereUniqueInput | Prisma.service_typesWhereUniqueInput[]
 }
 
-export type service_typesUncheckedCreateNestedManyWithoutDental_labsInput = {
-  create?: Prisma.XOR<Prisma.service_typesCreateWithoutDental_labsInput, Prisma.service_typesUncheckedCreateWithoutDental_labsInput> | Prisma.service_typesCreateWithoutDental_labsInput[] | Prisma.service_typesUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.service_typesCreateOrConnectWithoutDental_labsInput | Prisma.service_typesCreateOrConnectWithoutDental_labsInput[]
-  createMany?: Prisma.service_typesCreateManyDental_labsInputEnvelope
+export type service_typesUncheckedCreateNestedManyWithoutLabsInput = {
+  create?: Prisma.XOR<Prisma.service_typesCreateWithoutLabsInput, Prisma.service_typesUncheckedCreateWithoutLabsInput> | Prisma.service_typesCreateWithoutLabsInput[] | Prisma.service_typesUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.service_typesCreateOrConnectWithoutLabsInput | Prisma.service_typesCreateOrConnectWithoutLabsInput[]
+  createMany?: Prisma.service_typesCreateManyLabsInputEnvelope
   connect?: Prisma.service_typesWhereUniqueInput | Prisma.service_typesWhereUniqueInput[]
 }
 
-export type service_typesUpdateManyWithoutDental_labsNestedInput = {
-  create?: Prisma.XOR<Prisma.service_typesCreateWithoutDental_labsInput, Prisma.service_typesUncheckedCreateWithoutDental_labsInput> | Prisma.service_typesCreateWithoutDental_labsInput[] | Prisma.service_typesUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.service_typesCreateOrConnectWithoutDental_labsInput | Prisma.service_typesCreateOrConnectWithoutDental_labsInput[]
-  upsert?: Prisma.service_typesUpsertWithWhereUniqueWithoutDental_labsInput | Prisma.service_typesUpsertWithWhereUniqueWithoutDental_labsInput[]
-  createMany?: Prisma.service_typesCreateManyDental_labsInputEnvelope
+export type service_typesUpdateManyWithoutLabsNestedInput = {
+  create?: Prisma.XOR<Prisma.service_typesCreateWithoutLabsInput, Prisma.service_typesUncheckedCreateWithoutLabsInput> | Prisma.service_typesCreateWithoutLabsInput[] | Prisma.service_typesUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.service_typesCreateOrConnectWithoutLabsInput | Prisma.service_typesCreateOrConnectWithoutLabsInput[]
+  upsert?: Prisma.service_typesUpsertWithWhereUniqueWithoutLabsInput | Prisma.service_typesUpsertWithWhereUniqueWithoutLabsInput[]
+  createMany?: Prisma.service_typesCreateManyLabsInputEnvelope
   set?: Prisma.service_typesWhereUniqueInput | Prisma.service_typesWhereUniqueInput[]
   disconnect?: Prisma.service_typesWhereUniqueInput | Prisma.service_typesWhereUniqueInput[]
   delete?: Prisma.service_typesWhereUniqueInput | Prisma.service_typesWhereUniqueInput[]
   connect?: Prisma.service_typesWhereUniqueInput | Prisma.service_typesWhereUniqueInput[]
-  update?: Prisma.service_typesUpdateWithWhereUniqueWithoutDental_labsInput | Prisma.service_typesUpdateWithWhereUniqueWithoutDental_labsInput[]
-  updateMany?: Prisma.service_typesUpdateManyWithWhereWithoutDental_labsInput | Prisma.service_typesUpdateManyWithWhereWithoutDental_labsInput[]
+  update?: Prisma.service_typesUpdateWithWhereUniqueWithoutLabsInput | Prisma.service_typesUpdateWithWhereUniqueWithoutLabsInput[]
+  updateMany?: Prisma.service_typesUpdateManyWithWhereWithoutLabsInput | Prisma.service_typesUpdateManyWithWhereWithoutLabsInput[]
   deleteMany?: Prisma.service_typesScalarWhereInput | Prisma.service_typesScalarWhereInput[]
 }
 
-export type service_typesUncheckedUpdateManyWithoutDental_labsNestedInput = {
-  create?: Prisma.XOR<Prisma.service_typesCreateWithoutDental_labsInput, Prisma.service_typesUncheckedCreateWithoutDental_labsInput> | Prisma.service_typesCreateWithoutDental_labsInput[] | Prisma.service_typesUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.service_typesCreateOrConnectWithoutDental_labsInput | Prisma.service_typesCreateOrConnectWithoutDental_labsInput[]
-  upsert?: Prisma.service_typesUpsertWithWhereUniqueWithoutDental_labsInput | Prisma.service_typesUpsertWithWhereUniqueWithoutDental_labsInput[]
-  createMany?: Prisma.service_typesCreateManyDental_labsInputEnvelope
+export type service_typesUncheckedUpdateManyWithoutLabsNestedInput = {
+  create?: Prisma.XOR<Prisma.service_typesCreateWithoutLabsInput, Prisma.service_typesUncheckedCreateWithoutLabsInput> | Prisma.service_typesCreateWithoutLabsInput[] | Prisma.service_typesUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.service_typesCreateOrConnectWithoutLabsInput | Prisma.service_typesCreateOrConnectWithoutLabsInput[]
+  upsert?: Prisma.service_typesUpsertWithWhereUniqueWithoutLabsInput | Prisma.service_typesUpsertWithWhereUniqueWithoutLabsInput[]
+  createMany?: Prisma.service_typesCreateManyLabsInputEnvelope
   set?: Prisma.service_typesWhereUniqueInput | Prisma.service_typesWhereUniqueInput[]
   disconnect?: Prisma.service_typesWhereUniqueInput | Prisma.service_typesWhereUniqueInput[]
   delete?: Prisma.service_typesWhereUniqueInput | Prisma.service_typesWhereUniqueInput[]
   connect?: Prisma.service_typesWhereUniqueInput | Prisma.service_typesWhereUniqueInput[]
-  update?: Prisma.service_typesUpdateWithWhereUniqueWithoutDental_labsInput | Prisma.service_typesUpdateWithWhereUniqueWithoutDental_labsInput[]
-  updateMany?: Prisma.service_typesUpdateManyWithWhereWithoutDental_labsInput | Prisma.service_typesUpdateManyWithWhereWithoutDental_labsInput[]
+  update?: Prisma.service_typesUpdateWithWhereUniqueWithoutLabsInput | Prisma.service_typesUpdateWithWhereUniqueWithoutLabsInput[]
+  updateMany?: Prisma.service_typesUpdateManyWithWhereWithoutLabsInput | Prisma.service_typesUpdateManyWithWhereWithoutLabsInput[]
   deleteMany?: Prisma.service_typesScalarWhereInput | Prisma.service_typesScalarWhereInput[]
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type service_typesCreateNestedOneWithoutCasesInput = {
@@ -437,50 +479,54 @@ export type service_typesUpdateOneWithoutCasesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.service_typesUpdateToOneWithWhereWithoutCasesInput, Prisma.service_typesUpdateWithoutCasesInput>, Prisma.service_typesUncheckedUpdateWithoutCasesInput>
 }
 
-export type service_typesCreateWithoutDental_labsInput = {
+export type service_typesCreateWithoutLabsInput = {
   id?: string
   name: string
-  isActive?: boolean
+  is_active?: boolean
+  deleted_at?: Date | string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  updated_at?: Date | string
   cases?: Prisma.casesCreateNestedManyWithoutService_typesInput
 }
 
-export type service_typesUncheckedCreateWithoutDental_labsInput = {
+export type service_typesUncheckedCreateWithoutLabsInput = {
   id?: string
   name: string
-  isActive?: boolean
+  is_active?: boolean
+  deleted_at?: Date | string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  updated_at?: Date | string
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutService_typesInput
 }
 
-export type service_typesCreateOrConnectWithoutDental_labsInput = {
+export type service_typesCreateOrConnectWithoutLabsInput = {
   where: Prisma.service_typesWhereUniqueInput
-  create: Prisma.XOR<Prisma.service_typesCreateWithoutDental_labsInput, Prisma.service_typesUncheckedCreateWithoutDental_labsInput>
+  create: Prisma.XOR<Prisma.service_typesCreateWithoutLabsInput, Prisma.service_typesUncheckedCreateWithoutLabsInput>
 }
 
-export type service_typesCreateManyDental_labsInputEnvelope = {
-  data: Prisma.service_typesCreateManyDental_labsInput | Prisma.service_typesCreateManyDental_labsInput[]
+export type service_typesCreateManyLabsInputEnvelope = {
+  data: Prisma.service_typesCreateManyLabsInput | Prisma.service_typesCreateManyLabsInput[]
   skipDuplicates?: boolean
 }
 
-export type service_typesUpsertWithWhereUniqueWithoutDental_labsInput = {
+export type service_typesUpsertWithWhereUniqueWithoutLabsInput = {
   where: Prisma.service_typesWhereUniqueInput
-  update: Prisma.XOR<Prisma.service_typesUpdateWithoutDental_labsInput, Prisma.service_typesUncheckedUpdateWithoutDental_labsInput>
-  create: Prisma.XOR<Prisma.service_typesCreateWithoutDental_labsInput, Prisma.service_typesUncheckedCreateWithoutDental_labsInput>
+  update: Prisma.XOR<Prisma.service_typesUpdateWithoutLabsInput, Prisma.service_typesUncheckedUpdateWithoutLabsInput>
+  create: Prisma.XOR<Prisma.service_typesCreateWithoutLabsInput, Prisma.service_typesUncheckedCreateWithoutLabsInput>
 }
 
-export type service_typesUpdateWithWhereUniqueWithoutDental_labsInput = {
+export type service_typesUpdateWithWhereUniqueWithoutLabsInput = {
   where: Prisma.service_typesWhereUniqueInput
-  data: Prisma.XOR<Prisma.service_typesUpdateWithoutDental_labsInput, Prisma.service_typesUncheckedUpdateWithoutDental_labsInput>
+  data: Prisma.XOR<Prisma.service_typesUpdateWithoutLabsInput, Prisma.service_typesUncheckedUpdateWithoutLabsInput>
 }
 
-export type service_typesUpdateManyWithWhereWithoutDental_labsInput = {
+export type service_typesUpdateManyWithWhereWithoutLabsInput = {
   where: Prisma.service_typesScalarWhereInput
-  data: Prisma.XOR<Prisma.service_typesUpdateManyMutationInput, Prisma.service_typesUncheckedUpdateManyWithoutDental_labsInput>
+  data: Prisma.XOR<Prisma.service_typesUpdateManyMutationInput, Prisma.service_typesUncheckedUpdateManyWithoutLabsInput>
 }
 
 export type service_typesScalarWhereInput = {
@@ -488,32 +534,38 @@ export type service_typesScalarWhereInput = {
   OR?: Prisma.service_typesScalarWhereInput[]
   NOT?: Prisma.service_typesScalarWhereInput | Prisma.service_typesScalarWhereInput[]
   id?: Prisma.StringFilter<"service_types"> | string
-  dentalLabId?: Prisma.StringFilter<"service_types"> | string
+  lab_id?: Prisma.StringFilter<"service_types"> | string
   name?: Prisma.StringFilter<"service_types"> | string
-  isActive?: Prisma.BoolFilter<"service_types"> | boolean
+  is_active?: Prisma.BoolFilter<"service_types"> | boolean
+  deleted_at?: Prisma.DateTimeNullableFilter<"service_types"> | Date | string | null
   notes?: Prisma.StringNullableFilter<"service_types"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"service_types"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"service_types"> | Date | string
+  workflow_json?: Prisma.JsonFilter<"service_types">
+  created_at?: Prisma.DateTimeFilter<"service_types"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"service_types"> | Date | string
 }
 
 export type service_typesCreateWithoutCasesInput = {
   id?: string
   name: string
-  isActive?: boolean
+  is_active?: boolean
+  deleted_at?: Date | string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutService_typesInput
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutService_typesInput
 }
 
 export type service_typesUncheckedCreateWithoutCasesInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   name: string
-  isActive?: boolean
+  is_active?: boolean
+  deleted_at?: Date | string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type service_typesCreateOrConnectWithoutCasesInput = {
@@ -535,59 +587,71 @@ export type service_typesUpdateToOneWithWhereWithoutCasesInput = {
 export type service_typesUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutService_typesNestedInput
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutService_typesNestedInput
 }
 
 export type service_typesUncheckedUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type service_typesCreateManyDental_labsInput = {
+export type service_typesCreateManyLabsInput = {
   id?: string
   name: string
-  isActive?: boolean
+  is_active?: boolean
+  deleted_at?: Date | string | null
   notes?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
-export type service_typesUpdateWithoutDental_labsInput = {
+export type service_typesUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUpdateManyWithoutService_typesNestedInput
 }
 
-export type service_typesUncheckedUpdateWithoutDental_labsInput = {
+export type service_typesUncheckedUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUncheckedUpdateManyWithoutService_typesNestedInput
 }
 
-export type service_typesUncheckedUpdateManyWithoutDental_labsInput = {
+export type service_typesUncheckedUpdateManyWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -623,76 +687,86 @@ export type Service_typesCountOutputTypeCountCasesArgs<ExtArgs extends runtime.T
 
 export type service_typesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  dentalLabId?: boolean
+  lab_id?: boolean
   name?: boolean
-  isActive?: boolean
+  is_active?: boolean
+  deleted_at?: boolean
   notes?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  workflow_json?: boolean
+  created_at?: boolean
+  updated_at?: boolean
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   cases?: boolean | Prisma.service_types$casesArgs<ExtArgs>
   _count?: boolean | Prisma.Service_typesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["service_types"]>
 
 export type service_typesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  dentalLabId?: boolean
+  lab_id?: boolean
   name?: boolean
-  isActive?: boolean
+  is_active?: boolean
+  deleted_at?: boolean
   notes?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  workflow_json?: boolean
+  created_at?: boolean
+  updated_at?: boolean
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["service_types"]>
 
 export type service_typesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  dentalLabId?: boolean
+  lab_id?: boolean
   name?: boolean
-  isActive?: boolean
+  is_active?: boolean
+  deleted_at?: boolean
   notes?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  workflow_json?: boolean
+  created_at?: boolean
+  updated_at?: boolean
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["service_types"]>
 
 export type service_typesSelectScalar = {
   id?: boolean
-  dentalLabId?: boolean
+  lab_id?: boolean
   name?: boolean
-  isActive?: boolean
+  is_active?: boolean
+  deleted_at?: boolean
   notes?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
+  workflow_json?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }
 
-export type service_typesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dentalLabId" | "name" | "isActive" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["service_types"]>
+export type service_typesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "name" | "is_active" | "deleted_at" | "notes" | "workflow_json" | "created_at" | "updated_at", ExtArgs["result"]["service_types"]>
 export type service_typesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   cases?: boolean | Prisma.service_types$casesArgs<ExtArgs>
   _count?: boolean | Prisma.Service_typesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type service_typesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
 }
 export type service_typesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
 }
 
 export type $service_typesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "service_types"
   objects: {
-    dental_labs: Prisma.$dental_labsPayload<ExtArgs>
+    labs: Prisma.$labsPayload<ExtArgs>
     cases: Prisma.$casesPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    dentalLabId: string
+    lab_id: string
     name: string
-    isActive: boolean
+    is_active: boolean
+    deleted_at: Date | null
     notes: string | null
-    createdAt: Date
-    updatedAt: Date
+    workflow_json: runtime.JsonValue
+    created_at: Date
+    updated_at: Date
   }, ExtArgs["result"]["service_types"]>
   composites: {}
 }
@@ -1087,7 +1161,7 @@ readonly fields: service_typesFieldRefs;
  */
 export interface Prisma__service_typesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  dental_labs<T extends Prisma.dental_labsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.dental_labsDefaultArgs<ExtArgs>>): Prisma.Prisma__dental_labsClient<runtime.Types.Result.GetResult<Prisma.$dental_labsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  labs<T extends Prisma.labsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labsDefaultArgs<ExtArgs>>): Prisma.Prisma__labsClient<runtime.Types.Result.GetResult<Prisma.$labsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   cases<T extends Prisma.service_types$casesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.service_types$casesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$casesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1119,12 +1193,14 @@ export interface Prisma__service_typesClient<T, Null = never, ExtArgs extends ru
  */
 export interface service_typesFieldRefs {
   readonly id: Prisma.FieldRef<"service_types", 'String'>
-  readonly dentalLabId: Prisma.FieldRef<"service_types", 'String'>
+  readonly lab_id: Prisma.FieldRef<"service_types", 'String'>
   readonly name: Prisma.FieldRef<"service_types", 'String'>
-  readonly isActive: Prisma.FieldRef<"service_types", 'Boolean'>
+  readonly is_active: Prisma.FieldRef<"service_types", 'Boolean'>
+  readonly deleted_at: Prisma.FieldRef<"service_types", 'DateTime'>
   readonly notes: Prisma.FieldRef<"service_types", 'String'>
-  readonly createdAt: Prisma.FieldRef<"service_types", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"service_types", 'DateTime'>
+  readonly workflow_json: Prisma.FieldRef<"service_types", 'Json'>
+  readonly created_at: Prisma.FieldRef<"service_types", 'DateTime'>
+  readonly updated_at: Prisma.FieldRef<"service_types", 'DateTime'>
 }
     
 

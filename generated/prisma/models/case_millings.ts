@@ -27,129 +27,129 @@ export type AggregateCase_millings = {
 }
 
 export type Case_millingsAvgAggregateOutputType = {
-  teethMilledQty: number | null
+  teeth_milled_qty: number | null
 }
 
 export type Case_millingsSumAggregateOutputType = {
-  teethMilledQty: number | null
+  teeth_milled_qty: number | null
 }
 
 export type Case_millingsMinAggregateOutputType = {
   id: string | null
-  dentalLabId: string | null
-  caseId: string | null
-  blockTypeId: string | null
-  millingDrillId: string | null
-  fineMillingDrillId: string | null
-  coarseMillingDrillId: string | null
-  redoneFromMillingId: string | null
+  lab_id: string | null
+  case_id: string | null
+  block_type_id: string | null
+  milling_drill_id: string | null
+  fine_milling_drill_id: string | null
+  coarse_milling_drill_id: string | null
+  redone_from_milling_id: string | null
   status: $Enums.MillingStatus | null
-  teethMilledQty: number | null
-  failureReason: string | null
+  teeth_milled_qty: number | null
+  failure_reason: string | null
   notes: string | null
-  milledAt: Date | null
-  createdAt: Date | null
-  updatedAt: Date | null
+  milled_at: Date | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type Case_millingsMaxAggregateOutputType = {
   id: string | null
-  dentalLabId: string | null
-  caseId: string | null
-  blockTypeId: string | null
-  millingDrillId: string | null
-  fineMillingDrillId: string | null
-  coarseMillingDrillId: string | null
-  redoneFromMillingId: string | null
+  lab_id: string | null
+  case_id: string | null
+  block_type_id: string | null
+  milling_drill_id: string | null
+  fine_milling_drill_id: string | null
+  coarse_milling_drill_id: string | null
+  redone_from_milling_id: string | null
   status: $Enums.MillingStatus | null
-  teethMilledQty: number | null
-  failureReason: string | null
+  teeth_milled_qty: number | null
+  failure_reason: string | null
   notes: string | null
-  milledAt: Date | null
-  createdAt: Date | null
-  updatedAt: Date | null
+  milled_at: Date | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type Case_millingsCountAggregateOutputType = {
   id: number
-  dentalLabId: number
-  caseId: number
-  blockTypeId: number
-  millingDrillId: number
-  fineMillingDrillId: number
-  coarseMillingDrillId: number
-  redoneFromMillingId: number
+  lab_id: number
+  case_id: number
+  block_type_id: number
+  milling_drill_id: number
+  fine_milling_drill_id: number
+  coarse_milling_drill_id: number
+  redone_from_milling_id: number
   status: number
-  teethMilledQty: number
-  failureReason: number
+  teeth_milled_qty: number
+  failure_reason: number
   notes: number
-  milledAt: number
-  createdAt: number
-  updatedAt: number
+  milled_at: number
+  created_at: number
+  updated_at: number
   _all: number
 }
 
 
 export type Case_millingsAvgAggregateInputType = {
-  teethMilledQty?: true
+  teeth_milled_qty?: true
 }
 
 export type Case_millingsSumAggregateInputType = {
-  teethMilledQty?: true
+  teeth_milled_qty?: true
 }
 
 export type Case_millingsMinAggregateInputType = {
   id?: true
-  dentalLabId?: true
-  caseId?: true
-  blockTypeId?: true
-  millingDrillId?: true
-  fineMillingDrillId?: true
-  coarseMillingDrillId?: true
-  redoneFromMillingId?: true
+  lab_id?: true
+  case_id?: true
+  block_type_id?: true
+  milling_drill_id?: true
+  fine_milling_drill_id?: true
+  coarse_milling_drill_id?: true
+  redone_from_milling_id?: true
   status?: true
-  teethMilledQty?: true
-  failureReason?: true
+  teeth_milled_qty?: true
+  failure_reason?: true
   notes?: true
-  milledAt?: true
-  createdAt?: true
-  updatedAt?: true
+  milled_at?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type Case_millingsMaxAggregateInputType = {
   id?: true
-  dentalLabId?: true
-  caseId?: true
-  blockTypeId?: true
-  millingDrillId?: true
-  fineMillingDrillId?: true
-  coarseMillingDrillId?: true
-  redoneFromMillingId?: true
+  lab_id?: true
+  case_id?: true
+  block_type_id?: true
+  milling_drill_id?: true
+  fine_milling_drill_id?: true
+  coarse_milling_drill_id?: true
+  redone_from_milling_id?: true
   status?: true
-  teethMilledQty?: true
-  failureReason?: true
+  teeth_milled_qty?: true
+  failure_reason?: true
   notes?: true
-  milledAt?: true
-  createdAt?: true
-  updatedAt?: true
+  milled_at?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type Case_millingsCountAggregateInputType = {
   id?: true
-  dentalLabId?: true
-  caseId?: true
-  blockTypeId?: true
-  millingDrillId?: true
-  fineMillingDrillId?: true
-  coarseMillingDrillId?: true
-  redoneFromMillingId?: true
+  lab_id?: true
+  case_id?: true
+  block_type_id?: true
+  milling_drill_id?: true
+  fine_milling_drill_id?: true
+  coarse_milling_drill_id?: true
+  redone_from_milling_id?: true
   status?: true
-  teethMilledQty?: true
-  failureReason?: true
+  teeth_milled_qty?: true
+  failure_reason?: true
   notes?: true
-  milledAt?: true
-  createdAt?: true
-  updatedAt?: true
+  milled_at?: true
+  created_at?: true
+  updated_at?: true
   _all?: true
 }
 
@@ -241,20 +241,20 @@ export type case_millingsGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
 
 export type Case_millingsGroupByOutputType = {
   id: string
-  dentalLabId: string
-  caseId: string
-  blockTypeId: string
-  millingDrillId: string | null
-  fineMillingDrillId: string | null
-  coarseMillingDrillId: string | null
-  redoneFromMillingId: string | null
+  lab_id: string
+  case_id: string
+  block_type_id: string
+  milling_drill_id: string | null
+  fine_milling_drill_id: string | null
+  coarse_milling_drill_id: string | null
+  redone_from_milling_id: string | null
   status: $Enums.MillingStatus
-  teethMilledQty: number
-  failureReason: string | null
+  teeth_milled_qty: number
+  failure_reason: string | null
   notes: string | null
-  milledAt: Date
-  createdAt: Date
-  updatedAt: Date
+  milled_at: Date
+  created_at: Date
+  updated_at: Date
   _count: Case_millingsCountAggregateOutputType | null
   _avg: Case_millingsAvgAggregateOutputType | null
   _sum: Case_millingsSumAggregateOutputType | null
@@ -282,21 +282,21 @@ export type case_millingsWhereInput = {
   OR?: Prisma.case_millingsWhereInput[]
   NOT?: Prisma.case_millingsWhereInput | Prisma.case_millingsWhereInput[]
   id?: Prisma.StringFilter<"case_millings"> | string
-  dentalLabId?: Prisma.StringFilter<"case_millings"> | string
-  caseId?: Prisma.StringFilter<"case_millings"> | string
-  blockTypeId?: Prisma.StringFilter<"case_millings"> | string
-  millingDrillId?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  fineMillingDrillId?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  coarseMillingDrillId?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  redoneFromMillingId?: Prisma.StringNullableFilter<"case_millings"> | string | null
+  lab_id?: Prisma.StringFilter<"case_millings"> | string
+  case_id?: Prisma.StringFilter<"case_millings"> | string
+  block_type_id?: Prisma.StringFilter<"case_millings"> | string
+  milling_drill_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
+  fine_milling_drill_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
+  coarse_milling_drill_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
+  redone_from_milling_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
   status?: Prisma.EnumMillingStatusFilter<"case_millings"> | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFilter<"case_millings"> | number
-  failureReason?: Prisma.StringNullableFilter<"case_millings"> | string | null
+  teeth_milled_qty?: Prisma.IntFilter<"case_millings"> | number
+  failure_reason?: Prisma.StringNullableFilter<"case_millings"> | string | null
   notes?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  milledAt?: Prisma.DateTimeFilter<"case_millings"> | Date | string
-  createdAt?: Prisma.DateTimeFilter<"case_millings"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"case_millings"> | Date | string
-  dental_labs?: Prisma.XOR<Prisma.Dental_labsScalarRelationFilter, Prisma.dental_labsWhereInput>
+  milled_at?: Prisma.DateTimeFilter<"case_millings"> | Date | string
+  created_at?: Prisma.DateTimeFilter<"case_millings"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"case_millings"> | Date | string
+  labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
   cases?: Prisma.XOR<Prisma.CasesScalarRelationFilter, Prisma.casesWhereInput>
   block_types?: Prisma.XOR<Prisma.Block_typesScalarRelationFilter, Prisma.block_typesWhereInput>
   milling_drills?: Prisma.XOR<Prisma.Milling_drillsNullableScalarRelationFilter, Prisma.milling_drillsWhereInput> | null
@@ -308,21 +308,21 @@ export type case_millingsWhereInput = {
 
 export type case_millingsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  blockTypeId?: Prisma.SortOrder
-  millingDrillId?: Prisma.SortOrderInput | Prisma.SortOrder
-  fineMillingDrillId?: Prisma.SortOrderInput | Prisma.SortOrder
-  coarseMillingDrillId?: Prisma.SortOrderInput | Prisma.SortOrder
-  redoneFromMillingId?: Prisma.SortOrderInput | Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  block_type_id?: Prisma.SortOrder
+  milling_drill_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  fine_milling_drill_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  coarse_milling_drill_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  redone_from_milling_id?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  teethMilledQty?: Prisma.SortOrder
-  failureReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  teeth_milled_qty?: Prisma.SortOrder
+  failure_reason?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
-  milledAt?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  dental_labs?: Prisma.dental_labsOrderByWithRelationInput
+  milled_at?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
+  labs?: Prisma.labsOrderByWithRelationInput
   cases?: Prisma.casesOrderByWithRelationInput
   block_types?: Prisma.block_typesOrderByWithRelationInput
   milling_drills?: Prisma.milling_drillsOrderByWithRelationInput
@@ -337,21 +337,21 @@ export type case_millingsWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.case_millingsWhereInput | Prisma.case_millingsWhereInput[]
   OR?: Prisma.case_millingsWhereInput[]
   NOT?: Prisma.case_millingsWhereInput | Prisma.case_millingsWhereInput[]
-  dentalLabId?: Prisma.StringFilter<"case_millings"> | string
-  caseId?: Prisma.StringFilter<"case_millings"> | string
-  blockTypeId?: Prisma.StringFilter<"case_millings"> | string
-  millingDrillId?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  fineMillingDrillId?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  coarseMillingDrillId?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  redoneFromMillingId?: Prisma.StringNullableFilter<"case_millings"> | string | null
+  lab_id?: Prisma.StringFilter<"case_millings"> | string
+  case_id?: Prisma.StringFilter<"case_millings"> | string
+  block_type_id?: Prisma.StringFilter<"case_millings"> | string
+  milling_drill_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
+  fine_milling_drill_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
+  coarse_milling_drill_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
+  redone_from_milling_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
   status?: Prisma.EnumMillingStatusFilter<"case_millings"> | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFilter<"case_millings"> | number
-  failureReason?: Prisma.StringNullableFilter<"case_millings"> | string | null
+  teeth_milled_qty?: Prisma.IntFilter<"case_millings"> | number
+  failure_reason?: Prisma.StringNullableFilter<"case_millings"> | string | null
   notes?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  milledAt?: Prisma.DateTimeFilter<"case_millings"> | Date | string
-  createdAt?: Prisma.DateTimeFilter<"case_millings"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"case_millings"> | Date | string
-  dental_labs?: Prisma.XOR<Prisma.Dental_labsScalarRelationFilter, Prisma.dental_labsWhereInput>
+  milled_at?: Prisma.DateTimeFilter<"case_millings"> | Date | string
+  created_at?: Prisma.DateTimeFilter<"case_millings"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"case_millings"> | Date | string
+  labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
   cases?: Prisma.XOR<Prisma.CasesScalarRelationFilter, Prisma.casesWhereInput>
   block_types?: Prisma.XOR<Prisma.Block_typesScalarRelationFilter, Prisma.block_typesWhereInput>
   milling_drills?: Prisma.XOR<Prisma.Milling_drillsNullableScalarRelationFilter, Prisma.milling_drillsWhereInput> | null
@@ -363,20 +363,20 @@ export type case_millingsWhereUniqueInput = Prisma.AtLeast<{
 
 export type case_millingsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  blockTypeId?: Prisma.SortOrder
-  millingDrillId?: Prisma.SortOrderInput | Prisma.SortOrder
-  fineMillingDrillId?: Prisma.SortOrderInput | Prisma.SortOrder
-  coarseMillingDrillId?: Prisma.SortOrderInput | Prisma.SortOrder
-  redoneFromMillingId?: Prisma.SortOrderInput | Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  block_type_id?: Prisma.SortOrder
+  milling_drill_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  fine_milling_drill_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  coarse_milling_drill_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  redone_from_milling_id?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  teethMilledQty?: Prisma.SortOrder
-  failureReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  teeth_milled_qty?: Prisma.SortOrder
+  failure_reason?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
-  milledAt?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  milled_at?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   _count?: Prisma.case_millingsCountOrderByAggregateInput
   _avg?: Prisma.case_millingsAvgOrderByAggregateInput
   _max?: Prisma.case_millingsMaxOrderByAggregateInput
@@ -389,32 +389,32 @@ export type case_millingsScalarWhereWithAggregatesInput = {
   OR?: Prisma.case_millingsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.case_millingsScalarWhereWithAggregatesInput | Prisma.case_millingsScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"case_millings"> | string
-  dentalLabId?: Prisma.StringWithAggregatesFilter<"case_millings"> | string
-  caseId?: Prisma.StringWithAggregatesFilter<"case_millings"> | string
-  blockTypeId?: Prisma.StringWithAggregatesFilter<"case_millings"> | string
-  millingDrillId?: Prisma.StringNullableWithAggregatesFilter<"case_millings"> | string | null
-  fineMillingDrillId?: Prisma.StringNullableWithAggregatesFilter<"case_millings"> | string | null
-  coarseMillingDrillId?: Prisma.StringNullableWithAggregatesFilter<"case_millings"> | string | null
-  redoneFromMillingId?: Prisma.StringNullableWithAggregatesFilter<"case_millings"> | string | null
+  lab_id?: Prisma.StringWithAggregatesFilter<"case_millings"> | string
+  case_id?: Prisma.StringWithAggregatesFilter<"case_millings"> | string
+  block_type_id?: Prisma.StringWithAggregatesFilter<"case_millings"> | string
+  milling_drill_id?: Prisma.StringNullableWithAggregatesFilter<"case_millings"> | string | null
+  fine_milling_drill_id?: Prisma.StringNullableWithAggregatesFilter<"case_millings"> | string | null
+  coarse_milling_drill_id?: Prisma.StringNullableWithAggregatesFilter<"case_millings"> | string | null
+  redone_from_milling_id?: Prisma.StringNullableWithAggregatesFilter<"case_millings"> | string | null
   status?: Prisma.EnumMillingStatusWithAggregatesFilter<"case_millings"> | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntWithAggregatesFilter<"case_millings"> | number
-  failureReason?: Prisma.StringNullableWithAggregatesFilter<"case_millings"> | string | null
+  teeth_milled_qty?: Prisma.IntWithAggregatesFilter<"case_millings"> | number
+  failure_reason?: Prisma.StringNullableWithAggregatesFilter<"case_millings"> | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"case_millings"> | string | null
-  milledAt?: Prisma.DateTimeWithAggregatesFilter<"case_millings"> | Date | string
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"case_millings"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"case_millings"> | Date | string
+  milled_at?: Prisma.DateTimeWithAggregatesFilter<"case_millings"> | Date | string
+  created_at?: Prisma.DateTimeWithAggregatesFilter<"case_millings"> | Date | string
+  updated_at?: Prisma.DateTimeWithAggregatesFilter<"case_millings"> | Date | string
 }
 
 export type case_millingsCreateInput = {
   id?: string
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutMillingsInput
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutMillingsInput
   cases: Prisma.casesCreateNestedOneWithoutMillingsInput
   block_types: Prisma.block_typesCreateNestedOneWithoutMillingsInput
   milling_drills?: Prisma.milling_drillsCreateNestedOneWithoutMillingsInput
@@ -426,33 +426,33 @@ export type case_millingsCreateInput = {
 
 export type case_millingsUncheckedCreateInput = {
   id?: string
-  dentalLabId: string
-  caseId: string
-  blockTypeId: string
-  millingDrillId?: string | null
-  fineMillingDrillId?: string | null
-  coarseMillingDrillId?: string | null
-  redoneFromMillingId?: string | null
+  lab_id: string
+  case_id: string
+  block_type_id: string
+  milling_drill_id?: string | null
+  fine_milling_drill_id?: string | null
+  coarse_milling_drill_id?: string | null
+  redone_from_milling_id?: string | null
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
   redos?: Prisma.case_millingsUncheckedCreateNestedManyWithoutRedoneFromMillingInput
 }
 
 export type case_millingsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutMillingsNestedInput
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutMillingsNestedInput
   cases?: Prisma.casesUpdateOneRequiredWithoutMillingsNestedInput
   block_types?: Prisma.block_typesUpdateOneRequiredWithoutMillingsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateOneWithoutMillingsNestedInput
@@ -464,68 +464,68 @@ export type case_millingsUpdateInput = {
 
 export type case_millingsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  blockTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  millingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fineMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  coarseMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  redoneFromMillingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  block_type_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fine_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coarse_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redone_from_milling_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   redos?: Prisma.case_millingsUncheckedUpdateManyWithoutRedoneFromMillingNestedInput
 }
 
 export type case_millingsCreateManyInput = {
   id?: string
-  dentalLabId: string
-  caseId: string
-  blockTypeId: string
-  millingDrillId?: string | null
-  fineMillingDrillId?: string | null
-  coarseMillingDrillId?: string | null
-  redoneFromMillingId?: string | null
+  lab_id: string
+  case_id: string
+  block_type_id: string
+  milling_drill_id?: string | null
+  fine_milling_drill_id?: string | null
+  coarse_milling_drill_id?: string | null
+  redone_from_milling_id?: string | null
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type case_millingsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_millingsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  blockTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  millingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fineMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  coarseMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  redoneFromMillingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  block_type_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fine_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coarse_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redone_from_milling_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type Case_millingsListRelationFilter = {
@@ -545,105 +545,105 @@ export type Case_millingsNullableScalarRelationFilter = {
 
 export type case_millingsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  blockTypeId?: Prisma.SortOrder
-  millingDrillId?: Prisma.SortOrder
-  fineMillingDrillId?: Prisma.SortOrder
-  coarseMillingDrillId?: Prisma.SortOrder
-  redoneFromMillingId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  block_type_id?: Prisma.SortOrder
+  milling_drill_id?: Prisma.SortOrder
+  fine_milling_drill_id?: Prisma.SortOrder
+  coarse_milling_drill_id?: Prisma.SortOrder
+  redone_from_milling_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  teethMilledQty?: Prisma.SortOrder
-  failureReason?: Prisma.SortOrder
+  teeth_milled_qty?: Prisma.SortOrder
+  failure_reason?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  milledAt?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  milled_at?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type case_millingsAvgOrderByAggregateInput = {
-  teethMilledQty?: Prisma.SortOrder
+  teeth_milled_qty?: Prisma.SortOrder
 }
 
 export type case_millingsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  blockTypeId?: Prisma.SortOrder
-  millingDrillId?: Prisma.SortOrder
-  fineMillingDrillId?: Prisma.SortOrder
-  coarseMillingDrillId?: Prisma.SortOrder
-  redoneFromMillingId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  block_type_id?: Prisma.SortOrder
+  milling_drill_id?: Prisma.SortOrder
+  fine_milling_drill_id?: Prisma.SortOrder
+  coarse_milling_drill_id?: Prisma.SortOrder
+  redone_from_milling_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  teethMilledQty?: Prisma.SortOrder
-  failureReason?: Prisma.SortOrder
+  teeth_milled_qty?: Prisma.SortOrder
+  failure_reason?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  milledAt?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  milled_at?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type case_millingsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  blockTypeId?: Prisma.SortOrder
-  millingDrillId?: Prisma.SortOrder
-  fineMillingDrillId?: Prisma.SortOrder
-  coarseMillingDrillId?: Prisma.SortOrder
-  redoneFromMillingId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  block_type_id?: Prisma.SortOrder
+  milling_drill_id?: Prisma.SortOrder
+  fine_milling_drill_id?: Prisma.SortOrder
+  coarse_milling_drill_id?: Prisma.SortOrder
+  redone_from_milling_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  teethMilledQty?: Prisma.SortOrder
-  failureReason?: Prisma.SortOrder
+  teeth_milled_qty?: Prisma.SortOrder
+  failure_reason?: Prisma.SortOrder
   notes?: Prisma.SortOrder
-  milledAt?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  milled_at?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type case_millingsSumOrderByAggregateInput = {
-  teethMilledQty?: Prisma.SortOrder
+  teeth_milled_qty?: Prisma.SortOrder
 }
 
-export type case_millingsCreateNestedManyWithoutDental_labsInput = {
-  create?: Prisma.XOR<Prisma.case_millingsCreateWithoutDental_labsInput, Prisma.case_millingsUncheckedCreateWithoutDental_labsInput> | Prisma.case_millingsCreateWithoutDental_labsInput[] | Prisma.case_millingsUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.case_millingsCreateOrConnectWithoutDental_labsInput | Prisma.case_millingsCreateOrConnectWithoutDental_labsInput[]
-  createMany?: Prisma.case_millingsCreateManyDental_labsInputEnvelope
+export type case_millingsCreateNestedManyWithoutLabsInput = {
+  create?: Prisma.XOR<Prisma.case_millingsCreateWithoutLabsInput, Prisma.case_millingsUncheckedCreateWithoutLabsInput> | Prisma.case_millingsCreateWithoutLabsInput[] | Prisma.case_millingsUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.case_millingsCreateOrConnectWithoutLabsInput | Prisma.case_millingsCreateOrConnectWithoutLabsInput[]
+  createMany?: Prisma.case_millingsCreateManyLabsInputEnvelope
   connect?: Prisma.case_millingsWhereUniqueInput | Prisma.case_millingsWhereUniqueInput[]
 }
 
-export type case_millingsUncheckedCreateNestedManyWithoutDental_labsInput = {
-  create?: Prisma.XOR<Prisma.case_millingsCreateWithoutDental_labsInput, Prisma.case_millingsUncheckedCreateWithoutDental_labsInput> | Prisma.case_millingsCreateWithoutDental_labsInput[] | Prisma.case_millingsUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.case_millingsCreateOrConnectWithoutDental_labsInput | Prisma.case_millingsCreateOrConnectWithoutDental_labsInput[]
-  createMany?: Prisma.case_millingsCreateManyDental_labsInputEnvelope
+export type case_millingsUncheckedCreateNestedManyWithoutLabsInput = {
+  create?: Prisma.XOR<Prisma.case_millingsCreateWithoutLabsInput, Prisma.case_millingsUncheckedCreateWithoutLabsInput> | Prisma.case_millingsCreateWithoutLabsInput[] | Prisma.case_millingsUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.case_millingsCreateOrConnectWithoutLabsInput | Prisma.case_millingsCreateOrConnectWithoutLabsInput[]
+  createMany?: Prisma.case_millingsCreateManyLabsInputEnvelope
   connect?: Prisma.case_millingsWhereUniqueInput | Prisma.case_millingsWhereUniqueInput[]
 }
 
-export type case_millingsUpdateManyWithoutDental_labsNestedInput = {
-  create?: Prisma.XOR<Prisma.case_millingsCreateWithoutDental_labsInput, Prisma.case_millingsUncheckedCreateWithoutDental_labsInput> | Prisma.case_millingsCreateWithoutDental_labsInput[] | Prisma.case_millingsUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.case_millingsCreateOrConnectWithoutDental_labsInput | Prisma.case_millingsCreateOrConnectWithoutDental_labsInput[]
-  upsert?: Prisma.case_millingsUpsertWithWhereUniqueWithoutDental_labsInput | Prisma.case_millingsUpsertWithWhereUniqueWithoutDental_labsInput[]
-  createMany?: Prisma.case_millingsCreateManyDental_labsInputEnvelope
+export type case_millingsUpdateManyWithoutLabsNestedInput = {
+  create?: Prisma.XOR<Prisma.case_millingsCreateWithoutLabsInput, Prisma.case_millingsUncheckedCreateWithoutLabsInput> | Prisma.case_millingsCreateWithoutLabsInput[] | Prisma.case_millingsUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.case_millingsCreateOrConnectWithoutLabsInput | Prisma.case_millingsCreateOrConnectWithoutLabsInput[]
+  upsert?: Prisma.case_millingsUpsertWithWhereUniqueWithoutLabsInput | Prisma.case_millingsUpsertWithWhereUniqueWithoutLabsInput[]
+  createMany?: Prisma.case_millingsCreateManyLabsInputEnvelope
   set?: Prisma.case_millingsWhereUniqueInput | Prisma.case_millingsWhereUniqueInput[]
   disconnect?: Prisma.case_millingsWhereUniqueInput | Prisma.case_millingsWhereUniqueInput[]
   delete?: Prisma.case_millingsWhereUniqueInput | Prisma.case_millingsWhereUniqueInput[]
   connect?: Prisma.case_millingsWhereUniqueInput | Prisma.case_millingsWhereUniqueInput[]
-  update?: Prisma.case_millingsUpdateWithWhereUniqueWithoutDental_labsInput | Prisma.case_millingsUpdateWithWhereUniqueWithoutDental_labsInput[]
-  updateMany?: Prisma.case_millingsUpdateManyWithWhereWithoutDental_labsInput | Prisma.case_millingsUpdateManyWithWhereWithoutDental_labsInput[]
+  update?: Prisma.case_millingsUpdateWithWhereUniqueWithoutLabsInput | Prisma.case_millingsUpdateWithWhereUniqueWithoutLabsInput[]
+  updateMany?: Prisma.case_millingsUpdateManyWithWhereWithoutLabsInput | Prisma.case_millingsUpdateManyWithWhereWithoutLabsInput[]
   deleteMany?: Prisma.case_millingsScalarWhereInput | Prisma.case_millingsScalarWhereInput[]
 }
 
-export type case_millingsUncheckedUpdateManyWithoutDental_labsNestedInput = {
-  create?: Prisma.XOR<Prisma.case_millingsCreateWithoutDental_labsInput, Prisma.case_millingsUncheckedCreateWithoutDental_labsInput> | Prisma.case_millingsCreateWithoutDental_labsInput[] | Prisma.case_millingsUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.case_millingsCreateOrConnectWithoutDental_labsInput | Prisma.case_millingsCreateOrConnectWithoutDental_labsInput[]
-  upsert?: Prisma.case_millingsUpsertWithWhereUniqueWithoutDental_labsInput | Prisma.case_millingsUpsertWithWhereUniqueWithoutDental_labsInput[]
-  createMany?: Prisma.case_millingsCreateManyDental_labsInputEnvelope
+export type case_millingsUncheckedUpdateManyWithoutLabsNestedInput = {
+  create?: Prisma.XOR<Prisma.case_millingsCreateWithoutLabsInput, Prisma.case_millingsUncheckedCreateWithoutLabsInput> | Prisma.case_millingsCreateWithoutLabsInput[] | Prisma.case_millingsUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.case_millingsCreateOrConnectWithoutLabsInput | Prisma.case_millingsCreateOrConnectWithoutLabsInput[]
+  upsert?: Prisma.case_millingsUpsertWithWhereUniqueWithoutLabsInput | Prisma.case_millingsUpsertWithWhereUniqueWithoutLabsInput[]
+  createMany?: Prisma.case_millingsCreateManyLabsInputEnvelope
   set?: Prisma.case_millingsWhereUniqueInput | Prisma.case_millingsWhereUniqueInput[]
   disconnect?: Prisma.case_millingsWhereUniqueInput | Prisma.case_millingsWhereUniqueInput[]
   delete?: Prisma.case_millingsWhereUniqueInput | Prisma.case_millingsWhereUniqueInput[]
   connect?: Prisma.case_millingsWhereUniqueInput | Prisma.case_millingsWhereUniqueInput[]
-  update?: Prisma.case_millingsUpdateWithWhereUniqueWithoutDental_labsInput | Prisma.case_millingsUpdateWithWhereUniqueWithoutDental_labsInput[]
-  updateMany?: Prisma.case_millingsUpdateManyWithWhereWithoutDental_labsInput | Prisma.case_millingsUpdateManyWithWhereWithoutDental_labsInput[]
+  update?: Prisma.case_millingsUpdateWithWhereUniqueWithoutLabsInput | Prisma.case_millingsUpdateWithWhereUniqueWithoutLabsInput[]
+  updateMany?: Prisma.case_millingsUpdateManyWithWhereWithoutLabsInput | Prisma.case_millingsUpdateManyWithWhereWithoutLabsInput[]
   deleteMany?: Prisma.case_millingsScalarWhereInput | Prisma.case_millingsScalarWhereInput[]
 }
 
@@ -927,15 +927,15 @@ export type case_millingsUncheckedUpdateManyWithoutCasesNestedInput = {
   deleteMany?: Prisma.case_millingsScalarWhereInput | Prisma.case_millingsScalarWhereInput[]
 }
 
-export type case_millingsCreateWithoutDental_labsInput = {
+export type case_millingsCreateWithoutLabsInput = {
   id?: string
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
   cases: Prisma.casesCreateNestedOneWithoutMillingsInput
   block_types: Prisma.block_typesCreateNestedOneWithoutMillingsInput
   milling_drills?: Prisma.milling_drillsCreateNestedOneWithoutMillingsInput
@@ -945,48 +945,48 @@ export type case_millingsCreateWithoutDental_labsInput = {
   redos?: Prisma.case_millingsCreateNestedManyWithoutRedoneFromMillingInput
 }
 
-export type case_millingsUncheckedCreateWithoutDental_labsInput = {
+export type case_millingsUncheckedCreateWithoutLabsInput = {
   id?: string
-  caseId: string
-  blockTypeId: string
-  millingDrillId?: string | null
-  fineMillingDrillId?: string | null
-  coarseMillingDrillId?: string | null
-  redoneFromMillingId?: string | null
+  case_id: string
+  block_type_id: string
+  milling_drill_id?: string | null
+  fine_milling_drill_id?: string | null
+  coarse_milling_drill_id?: string | null
+  redone_from_milling_id?: string | null
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
   redos?: Prisma.case_millingsUncheckedCreateNestedManyWithoutRedoneFromMillingInput
 }
 
-export type case_millingsCreateOrConnectWithoutDental_labsInput = {
+export type case_millingsCreateOrConnectWithoutLabsInput = {
   where: Prisma.case_millingsWhereUniqueInput
-  create: Prisma.XOR<Prisma.case_millingsCreateWithoutDental_labsInput, Prisma.case_millingsUncheckedCreateWithoutDental_labsInput>
+  create: Prisma.XOR<Prisma.case_millingsCreateWithoutLabsInput, Prisma.case_millingsUncheckedCreateWithoutLabsInput>
 }
 
-export type case_millingsCreateManyDental_labsInputEnvelope = {
-  data: Prisma.case_millingsCreateManyDental_labsInput | Prisma.case_millingsCreateManyDental_labsInput[]
+export type case_millingsCreateManyLabsInputEnvelope = {
+  data: Prisma.case_millingsCreateManyLabsInput | Prisma.case_millingsCreateManyLabsInput[]
   skipDuplicates?: boolean
 }
 
-export type case_millingsUpsertWithWhereUniqueWithoutDental_labsInput = {
+export type case_millingsUpsertWithWhereUniqueWithoutLabsInput = {
   where: Prisma.case_millingsWhereUniqueInput
-  update: Prisma.XOR<Prisma.case_millingsUpdateWithoutDental_labsInput, Prisma.case_millingsUncheckedUpdateWithoutDental_labsInput>
-  create: Prisma.XOR<Prisma.case_millingsCreateWithoutDental_labsInput, Prisma.case_millingsUncheckedCreateWithoutDental_labsInput>
+  update: Prisma.XOR<Prisma.case_millingsUpdateWithoutLabsInput, Prisma.case_millingsUncheckedUpdateWithoutLabsInput>
+  create: Prisma.XOR<Prisma.case_millingsCreateWithoutLabsInput, Prisma.case_millingsUncheckedCreateWithoutLabsInput>
 }
 
-export type case_millingsUpdateWithWhereUniqueWithoutDental_labsInput = {
+export type case_millingsUpdateWithWhereUniqueWithoutLabsInput = {
   where: Prisma.case_millingsWhereUniqueInput
-  data: Prisma.XOR<Prisma.case_millingsUpdateWithoutDental_labsInput, Prisma.case_millingsUncheckedUpdateWithoutDental_labsInput>
+  data: Prisma.XOR<Prisma.case_millingsUpdateWithoutLabsInput, Prisma.case_millingsUncheckedUpdateWithoutLabsInput>
 }
 
-export type case_millingsUpdateManyWithWhereWithoutDental_labsInput = {
+export type case_millingsUpdateManyWithWhereWithoutLabsInput = {
   where: Prisma.case_millingsScalarWhereInput
-  data: Prisma.XOR<Prisma.case_millingsUpdateManyMutationInput, Prisma.case_millingsUncheckedUpdateManyWithoutDental_labsInput>
+  data: Prisma.XOR<Prisma.case_millingsUpdateManyMutationInput, Prisma.case_millingsUncheckedUpdateManyWithoutLabsInput>
 }
 
 export type case_millingsScalarWhereInput = {
@@ -994,32 +994,32 @@ export type case_millingsScalarWhereInput = {
   OR?: Prisma.case_millingsScalarWhereInput[]
   NOT?: Prisma.case_millingsScalarWhereInput | Prisma.case_millingsScalarWhereInput[]
   id?: Prisma.StringFilter<"case_millings"> | string
-  dentalLabId?: Prisma.StringFilter<"case_millings"> | string
-  caseId?: Prisma.StringFilter<"case_millings"> | string
-  blockTypeId?: Prisma.StringFilter<"case_millings"> | string
-  millingDrillId?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  fineMillingDrillId?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  coarseMillingDrillId?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  redoneFromMillingId?: Prisma.StringNullableFilter<"case_millings"> | string | null
+  lab_id?: Prisma.StringFilter<"case_millings"> | string
+  case_id?: Prisma.StringFilter<"case_millings"> | string
+  block_type_id?: Prisma.StringFilter<"case_millings"> | string
+  milling_drill_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
+  fine_milling_drill_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
+  coarse_milling_drill_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
+  redone_from_milling_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
   status?: Prisma.EnumMillingStatusFilter<"case_millings"> | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFilter<"case_millings"> | number
-  failureReason?: Prisma.StringNullableFilter<"case_millings"> | string | null
+  teeth_milled_qty?: Prisma.IntFilter<"case_millings"> | number
+  failure_reason?: Prisma.StringNullableFilter<"case_millings"> | string | null
   notes?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  milledAt?: Prisma.DateTimeFilter<"case_millings"> | Date | string
-  createdAt?: Prisma.DateTimeFilter<"case_millings"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"case_millings"> | Date | string
+  milled_at?: Prisma.DateTimeFilter<"case_millings"> | Date | string
+  created_at?: Prisma.DateTimeFilter<"case_millings"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"case_millings"> | Date | string
 }
 
 export type case_millingsCreateWithoutMilling_drillsInput = {
   id?: string
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutMillingsInput
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutMillingsInput
   cases: Prisma.casesCreateNestedOneWithoutMillingsInput
   block_types: Prisma.block_typesCreateNestedOneWithoutMillingsInput
   fineMillingDrill?: Prisma.milling_drillsCreateNestedOneWithoutFineMillingsInput
@@ -1030,19 +1030,19 @@ export type case_millingsCreateWithoutMilling_drillsInput = {
 
 export type case_millingsUncheckedCreateWithoutMilling_drillsInput = {
   id?: string
-  dentalLabId: string
-  caseId: string
-  blockTypeId: string
-  fineMillingDrillId?: string | null
-  coarseMillingDrillId?: string | null
-  redoneFromMillingId?: string | null
+  lab_id: string
+  case_id: string
+  block_type_id: string
+  fine_milling_drill_id?: string | null
+  coarse_milling_drill_id?: string | null
+  redone_from_milling_id?: string | null
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
   redos?: Prisma.case_millingsUncheckedCreateNestedManyWithoutRedoneFromMillingInput
 }
 
@@ -1059,13 +1059,13 @@ export type case_millingsCreateManyMilling_drillsInputEnvelope = {
 export type case_millingsCreateWithoutFineMillingDrillInput = {
   id?: string
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutMillingsInput
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutMillingsInput
   cases: Prisma.casesCreateNestedOneWithoutMillingsInput
   block_types: Prisma.block_typesCreateNestedOneWithoutMillingsInput
   milling_drills?: Prisma.milling_drillsCreateNestedOneWithoutMillingsInput
@@ -1076,19 +1076,19 @@ export type case_millingsCreateWithoutFineMillingDrillInput = {
 
 export type case_millingsUncheckedCreateWithoutFineMillingDrillInput = {
   id?: string
-  dentalLabId: string
-  caseId: string
-  blockTypeId: string
-  millingDrillId?: string | null
-  coarseMillingDrillId?: string | null
-  redoneFromMillingId?: string | null
+  lab_id: string
+  case_id: string
+  block_type_id: string
+  milling_drill_id?: string | null
+  coarse_milling_drill_id?: string | null
+  redone_from_milling_id?: string | null
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
   redos?: Prisma.case_millingsUncheckedCreateNestedManyWithoutRedoneFromMillingInput
 }
 
@@ -1105,13 +1105,13 @@ export type case_millingsCreateManyFineMillingDrillInputEnvelope = {
 export type case_millingsCreateWithoutCoarseMillingDrillInput = {
   id?: string
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutMillingsInput
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutMillingsInput
   cases: Prisma.casesCreateNestedOneWithoutMillingsInput
   block_types: Prisma.block_typesCreateNestedOneWithoutMillingsInput
   milling_drills?: Prisma.milling_drillsCreateNestedOneWithoutMillingsInput
@@ -1122,19 +1122,19 @@ export type case_millingsCreateWithoutCoarseMillingDrillInput = {
 
 export type case_millingsUncheckedCreateWithoutCoarseMillingDrillInput = {
   id?: string
-  dentalLabId: string
-  caseId: string
-  blockTypeId: string
-  millingDrillId?: string | null
-  fineMillingDrillId?: string | null
-  redoneFromMillingId?: string | null
+  lab_id: string
+  case_id: string
+  block_type_id: string
+  milling_drill_id?: string | null
+  fine_milling_drill_id?: string | null
+  redone_from_milling_id?: string | null
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
   redos?: Prisma.case_millingsUncheckedCreateNestedManyWithoutRedoneFromMillingInput
 }
 
@@ -1199,13 +1199,13 @@ export type case_millingsUpdateManyWithWhereWithoutCoarseMillingDrillInput = {
 export type case_millingsCreateWithoutRedosInput = {
   id?: string
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutMillingsInput
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutMillingsInput
   cases: Prisma.casesCreateNestedOneWithoutMillingsInput
   block_types: Prisma.block_typesCreateNestedOneWithoutMillingsInput
   milling_drills?: Prisma.milling_drillsCreateNestedOneWithoutMillingsInput
@@ -1216,20 +1216,20 @@ export type case_millingsCreateWithoutRedosInput = {
 
 export type case_millingsUncheckedCreateWithoutRedosInput = {
   id?: string
-  dentalLabId: string
-  caseId: string
-  blockTypeId: string
-  millingDrillId?: string | null
-  fineMillingDrillId?: string | null
-  coarseMillingDrillId?: string | null
-  redoneFromMillingId?: string | null
+  lab_id: string
+  case_id: string
+  block_type_id: string
+  milling_drill_id?: string | null
+  fine_milling_drill_id?: string | null
+  coarse_milling_drill_id?: string | null
+  redone_from_milling_id?: string | null
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type case_millingsCreateOrConnectWithoutRedosInput = {
@@ -1240,13 +1240,13 @@ export type case_millingsCreateOrConnectWithoutRedosInput = {
 export type case_millingsCreateWithoutRedoneFromMillingInput = {
   id?: string
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutMillingsInput
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutMillingsInput
   cases: Prisma.casesCreateNestedOneWithoutMillingsInput
   block_types: Prisma.block_typesCreateNestedOneWithoutMillingsInput
   milling_drills?: Prisma.milling_drillsCreateNestedOneWithoutMillingsInput
@@ -1257,19 +1257,19 @@ export type case_millingsCreateWithoutRedoneFromMillingInput = {
 
 export type case_millingsUncheckedCreateWithoutRedoneFromMillingInput = {
   id?: string
-  dentalLabId: string
-  caseId: string
-  blockTypeId: string
-  millingDrillId?: string | null
-  fineMillingDrillId?: string | null
-  coarseMillingDrillId?: string | null
+  lab_id: string
+  case_id: string
+  block_type_id: string
+  milling_drill_id?: string | null
+  fine_milling_drill_id?: string | null
+  coarse_milling_drill_id?: string | null
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
   redos?: Prisma.case_millingsUncheckedCreateNestedManyWithoutRedoneFromMillingInput
 }
 
@@ -1297,13 +1297,13 @@ export type case_millingsUpdateToOneWithWhereWithoutRedosInput = {
 export type case_millingsUpdateWithoutRedosInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutMillingsNestedInput
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutMillingsNestedInput
   cases?: Prisma.casesUpdateOneRequiredWithoutMillingsNestedInput
   block_types?: Prisma.block_typesUpdateOneRequiredWithoutMillingsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateOneWithoutMillingsNestedInput
@@ -1314,20 +1314,20 @@ export type case_millingsUpdateWithoutRedosInput = {
 
 export type case_millingsUncheckedUpdateWithoutRedosInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  blockTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  millingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fineMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  coarseMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  redoneFromMillingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  block_type_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fine_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coarse_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redone_from_milling_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_millingsUpsertWithWhereUniqueWithoutRedoneFromMillingInput = {
@@ -1349,13 +1349,13 @@ export type case_millingsUpdateManyWithWhereWithoutRedoneFromMillingInput = {
 export type case_millingsCreateWithoutBlock_typesInput = {
   id?: string
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutMillingsInput
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutMillingsInput
   cases: Prisma.casesCreateNestedOneWithoutMillingsInput
   milling_drills?: Prisma.milling_drillsCreateNestedOneWithoutMillingsInput
   fineMillingDrill?: Prisma.milling_drillsCreateNestedOneWithoutFineMillingsInput
@@ -1366,19 +1366,19 @@ export type case_millingsCreateWithoutBlock_typesInput = {
 
 export type case_millingsUncheckedCreateWithoutBlock_typesInput = {
   id?: string
-  dentalLabId: string
-  caseId: string
-  millingDrillId?: string | null
-  fineMillingDrillId?: string | null
-  coarseMillingDrillId?: string | null
-  redoneFromMillingId?: string | null
+  lab_id: string
+  case_id: string
+  milling_drill_id?: string | null
+  fine_milling_drill_id?: string | null
+  coarse_milling_drill_id?: string | null
+  redone_from_milling_id?: string | null
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
   redos?: Prisma.case_millingsUncheckedCreateNestedManyWithoutRedoneFromMillingInput
 }
 
@@ -1411,13 +1411,13 @@ export type case_millingsUpdateManyWithWhereWithoutBlock_typesInput = {
 export type case_millingsCreateWithoutCasesInput = {
   id?: string
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutMillingsInput
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutMillingsInput
   block_types: Prisma.block_typesCreateNestedOneWithoutMillingsInput
   milling_drills?: Prisma.milling_drillsCreateNestedOneWithoutMillingsInput
   fineMillingDrill?: Prisma.milling_drillsCreateNestedOneWithoutFineMillingsInput
@@ -1428,19 +1428,19 @@ export type case_millingsCreateWithoutCasesInput = {
 
 export type case_millingsUncheckedCreateWithoutCasesInput = {
   id?: string
-  dentalLabId: string
-  blockTypeId: string
-  millingDrillId?: string | null
-  fineMillingDrillId?: string | null
-  coarseMillingDrillId?: string | null
-  redoneFromMillingId?: string | null
+  lab_id: string
+  block_type_id: string
+  milling_drill_id?: string | null
+  fine_milling_drill_id?: string | null
+  coarse_milling_drill_id?: string | null
+  redone_from_milling_id?: string | null
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
   redos?: Prisma.case_millingsUncheckedCreateNestedManyWithoutRedoneFromMillingInput
 }
 
@@ -1470,32 +1470,32 @@ export type case_millingsUpdateManyWithWhereWithoutCasesInput = {
   data: Prisma.XOR<Prisma.case_millingsUpdateManyMutationInput, Prisma.case_millingsUncheckedUpdateManyWithoutCasesInput>
 }
 
-export type case_millingsCreateManyDental_labsInput = {
+export type case_millingsCreateManyLabsInput = {
   id?: string
-  caseId: string
-  blockTypeId: string
-  millingDrillId?: string | null
-  fineMillingDrillId?: string | null
-  coarseMillingDrillId?: string | null
-  redoneFromMillingId?: string | null
+  case_id: string
+  block_type_id: string
+  milling_drill_id?: string | null
+  fine_milling_drill_id?: string | null
+  coarse_milling_drill_id?: string | null
+  redone_from_milling_id?: string | null
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
-export type case_millingsUpdateWithoutDental_labsInput = {
+export type case_millingsUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUpdateOneRequiredWithoutMillingsNestedInput
   block_types?: Prisma.block_typesUpdateOneRequiredWithoutMillingsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateOneWithoutMillingsNestedInput
@@ -1505,102 +1505,102 @@ export type case_millingsUpdateWithoutDental_labsInput = {
   redos?: Prisma.case_millingsUpdateManyWithoutRedoneFromMillingNestedInput
 }
 
-export type case_millingsUncheckedUpdateWithoutDental_labsInput = {
+export type case_millingsUncheckedUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  blockTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  millingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fineMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  coarseMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  redoneFromMillingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  block_type_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fine_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coarse_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redone_from_milling_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   redos?: Prisma.case_millingsUncheckedUpdateManyWithoutRedoneFromMillingNestedInput
 }
 
-export type case_millingsUncheckedUpdateManyWithoutDental_labsInput = {
+export type case_millingsUncheckedUpdateManyWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  blockTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  millingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fineMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  coarseMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  redoneFromMillingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  block_type_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fine_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coarse_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redone_from_milling_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_millingsCreateManyMilling_drillsInput = {
   id?: string
-  dentalLabId: string
-  caseId: string
-  blockTypeId: string
-  fineMillingDrillId?: string | null
-  coarseMillingDrillId?: string | null
-  redoneFromMillingId?: string | null
+  lab_id: string
+  case_id: string
+  block_type_id: string
+  fine_milling_drill_id?: string | null
+  coarse_milling_drill_id?: string | null
+  redone_from_milling_id?: string | null
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type case_millingsCreateManyFineMillingDrillInput = {
   id?: string
-  dentalLabId: string
-  caseId: string
-  blockTypeId: string
-  millingDrillId?: string | null
-  coarseMillingDrillId?: string | null
-  redoneFromMillingId?: string | null
+  lab_id: string
+  case_id: string
+  block_type_id: string
+  milling_drill_id?: string | null
+  coarse_milling_drill_id?: string | null
+  redone_from_milling_id?: string | null
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type case_millingsCreateManyCoarseMillingDrillInput = {
   id?: string
-  dentalLabId: string
-  caseId: string
-  blockTypeId: string
-  millingDrillId?: string | null
-  fineMillingDrillId?: string | null
-  redoneFromMillingId?: string | null
+  lab_id: string
+  case_id: string
+  block_type_id: string
+  milling_drill_id?: string | null
+  fine_milling_drill_id?: string | null
+  redone_from_milling_id?: string | null
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type case_millingsUpdateWithoutMilling_drillsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutMillingsNestedInput
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutMillingsNestedInput
   cases?: Prisma.casesUpdateOneRequiredWithoutMillingsNestedInput
   block_types?: Prisma.block_typesUpdateOneRequiredWithoutMillingsNestedInput
   fineMillingDrill?: Prisma.milling_drillsUpdateOneWithoutFineMillingsNestedInput
@@ -1611,49 +1611,49 @@ export type case_millingsUpdateWithoutMilling_drillsInput = {
 
 export type case_millingsUncheckedUpdateWithoutMilling_drillsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  blockTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  fineMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  coarseMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  redoneFromMillingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  block_type_id?: Prisma.StringFieldUpdateOperationsInput | string
+  fine_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coarse_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redone_from_milling_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   redos?: Prisma.case_millingsUncheckedUpdateManyWithoutRedoneFromMillingNestedInput
 }
 
 export type case_millingsUncheckedUpdateManyWithoutMilling_drillsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  blockTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  fineMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  coarseMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  redoneFromMillingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  block_type_id?: Prisma.StringFieldUpdateOperationsInput | string
+  fine_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coarse_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redone_from_milling_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_millingsUpdateWithoutFineMillingDrillInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutMillingsNestedInput
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutMillingsNestedInput
   cases?: Prisma.casesUpdateOneRequiredWithoutMillingsNestedInput
   block_types?: Prisma.block_typesUpdateOneRequiredWithoutMillingsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateOneWithoutMillingsNestedInput
@@ -1664,49 +1664,49 @@ export type case_millingsUpdateWithoutFineMillingDrillInput = {
 
 export type case_millingsUncheckedUpdateWithoutFineMillingDrillInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  blockTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  millingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  coarseMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  redoneFromMillingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  block_type_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coarse_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redone_from_milling_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   redos?: Prisma.case_millingsUncheckedUpdateManyWithoutRedoneFromMillingNestedInput
 }
 
 export type case_millingsUncheckedUpdateManyWithoutFineMillingDrillInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  blockTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  millingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  coarseMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  redoneFromMillingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  block_type_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coarse_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redone_from_milling_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_millingsUpdateWithoutCoarseMillingDrillInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutMillingsNestedInput
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutMillingsNestedInput
   cases?: Prisma.casesUpdateOneRequiredWithoutMillingsNestedInput
   block_types?: Prisma.block_typesUpdateOneRequiredWithoutMillingsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateOneWithoutMillingsNestedInput
@@ -1717,66 +1717,66 @@ export type case_millingsUpdateWithoutCoarseMillingDrillInput = {
 
 export type case_millingsUncheckedUpdateWithoutCoarseMillingDrillInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  blockTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  millingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fineMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  redoneFromMillingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  block_type_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fine_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redone_from_milling_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   redos?: Prisma.case_millingsUncheckedUpdateManyWithoutRedoneFromMillingNestedInput
 }
 
 export type case_millingsUncheckedUpdateManyWithoutCoarseMillingDrillInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  blockTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  millingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fineMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  redoneFromMillingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  block_type_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fine_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redone_from_milling_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_millingsCreateManyRedoneFromMillingInput = {
   id?: string
-  dentalLabId: string
-  caseId: string
-  blockTypeId: string
-  millingDrillId?: string | null
-  fineMillingDrillId?: string | null
-  coarseMillingDrillId?: string | null
+  lab_id: string
+  case_id: string
+  block_type_id: string
+  milling_drill_id?: string | null
+  fine_milling_drill_id?: string | null
+  coarse_milling_drill_id?: string | null
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type case_millingsUpdateWithoutRedoneFromMillingInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutMillingsNestedInput
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutMillingsNestedInput
   cases?: Prisma.casesUpdateOneRequiredWithoutMillingsNestedInput
   block_types?: Prisma.block_typesUpdateOneRequiredWithoutMillingsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateOneWithoutMillingsNestedInput
@@ -1787,66 +1787,66 @@ export type case_millingsUpdateWithoutRedoneFromMillingInput = {
 
 export type case_millingsUncheckedUpdateWithoutRedoneFromMillingInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  blockTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  millingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fineMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  coarseMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  block_type_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fine_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coarse_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   redos?: Prisma.case_millingsUncheckedUpdateManyWithoutRedoneFromMillingNestedInput
 }
 
 export type case_millingsUncheckedUpdateManyWithoutRedoneFromMillingInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  blockTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  millingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fineMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  coarseMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  block_type_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fine_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coarse_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_millingsCreateManyBlock_typesInput = {
   id?: string
-  dentalLabId: string
-  caseId: string
-  millingDrillId?: string | null
-  fineMillingDrillId?: string | null
-  coarseMillingDrillId?: string | null
-  redoneFromMillingId?: string | null
+  lab_id: string
+  case_id: string
+  milling_drill_id?: string | null
+  fine_milling_drill_id?: string | null
+  coarse_milling_drill_id?: string | null
+  redone_from_milling_id?: string | null
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type case_millingsUpdateWithoutBlock_typesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutMillingsNestedInput
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutMillingsNestedInput
   cases?: Prisma.casesUpdateOneRequiredWithoutMillingsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateOneWithoutMillingsNestedInput
   fineMillingDrill?: Prisma.milling_drillsUpdateOneWithoutFineMillingsNestedInput
@@ -1857,66 +1857,66 @@ export type case_millingsUpdateWithoutBlock_typesInput = {
 
 export type case_millingsUncheckedUpdateWithoutBlock_typesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  millingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fineMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  coarseMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  redoneFromMillingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fine_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coarse_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redone_from_milling_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   redos?: Prisma.case_millingsUncheckedUpdateManyWithoutRedoneFromMillingNestedInput
 }
 
 export type case_millingsUncheckedUpdateManyWithoutBlock_typesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  millingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fineMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  coarseMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  redoneFromMillingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fine_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coarse_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redone_from_milling_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_millingsCreateManyCasesInput = {
   id?: string
-  dentalLabId: string
-  blockTypeId: string
-  millingDrillId?: string | null
-  fineMillingDrillId?: string | null
-  coarseMillingDrillId?: string | null
-  redoneFromMillingId?: string | null
+  lab_id: string
+  block_type_id: string
+  milling_drill_id?: string | null
+  fine_milling_drill_id?: string | null
+  coarse_milling_drill_id?: string | null
+  redone_from_milling_id?: string | null
   status?: $Enums.MillingStatus
-  teethMilledQty?: number
-  failureReason?: string | null
+  teeth_milled_qty?: number
+  failure_reason?: string | null
   notes?: string | null
-  milledAt?: Date | string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  milled_at?: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type case_millingsUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutMillingsNestedInput
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutMillingsNestedInput
   block_types?: Prisma.block_typesUpdateOneRequiredWithoutMillingsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateOneWithoutMillingsNestedInput
   fineMillingDrill?: Prisma.milling_drillsUpdateOneWithoutFineMillingsNestedInput
@@ -1927,37 +1927,37 @@ export type case_millingsUpdateWithoutCasesInput = {
 
 export type case_millingsUncheckedUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
-  blockTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  millingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fineMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  coarseMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  redoneFromMillingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  block_type_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fine_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coarse_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redone_from_milling_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   redos?: Prisma.case_millingsUncheckedUpdateManyWithoutRedoneFromMillingNestedInput
 }
 
 export type case_millingsUncheckedUpdateManyWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
-  blockTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  millingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fineMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  coarseMillingDrillId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  redoneFromMillingId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  block_type_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fine_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coarse_milling_drill_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  redone_from_milling_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingStatusFieldUpdateOperationsInput | $Enums.MillingStatus
-  teethMilledQty?: Prisma.IntFieldUpdateOperationsInput | number
-  failureReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  teeth_milled_qty?: Prisma.IntFieldUpdateOperationsInput | number
+  failure_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  milledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milled_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -1993,21 +1993,21 @@ export type Case_millingsCountOutputTypeCountRedosArgs<ExtArgs extends runtime.T
 
 export type case_millingsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  dentalLabId?: boolean
-  caseId?: boolean
-  blockTypeId?: boolean
-  millingDrillId?: boolean
-  fineMillingDrillId?: boolean
-  coarseMillingDrillId?: boolean
-  redoneFromMillingId?: boolean
+  lab_id?: boolean
+  case_id?: boolean
+  block_type_id?: boolean
+  milling_drill_id?: boolean
+  fine_milling_drill_id?: boolean
+  coarse_milling_drill_id?: boolean
+  redone_from_milling_id?: boolean
   status?: boolean
-  teethMilledQty?: boolean
-  failureReason?: boolean
+  teeth_milled_qty?: boolean
+  failure_reason?: boolean
   notes?: boolean
-  milledAt?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  milled_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
   block_types?: boolean | Prisma.block_typesDefaultArgs<ExtArgs>
   milling_drills?: boolean | Prisma.case_millings$milling_drillsArgs<ExtArgs>
@@ -2020,21 +2020,21 @@ export type case_millingsSelect<ExtArgs extends runtime.Types.Extensions.Interna
 
 export type case_millingsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  dentalLabId?: boolean
-  caseId?: boolean
-  blockTypeId?: boolean
-  millingDrillId?: boolean
-  fineMillingDrillId?: boolean
-  coarseMillingDrillId?: boolean
-  redoneFromMillingId?: boolean
+  lab_id?: boolean
+  case_id?: boolean
+  block_type_id?: boolean
+  milling_drill_id?: boolean
+  fine_milling_drill_id?: boolean
+  coarse_milling_drill_id?: boolean
+  redone_from_milling_id?: boolean
   status?: boolean
-  teethMilledQty?: boolean
-  failureReason?: boolean
+  teeth_milled_qty?: boolean
+  failure_reason?: boolean
   notes?: boolean
-  milledAt?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  milled_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
   block_types?: boolean | Prisma.block_typesDefaultArgs<ExtArgs>
   milling_drills?: boolean | Prisma.case_millings$milling_drillsArgs<ExtArgs>
@@ -2045,21 +2045,21 @@ export type case_millingsSelectCreateManyAndReturn<ExtArgs extends runtime.Types
 
 export type case_millingsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  dentalLabId?: boolean
-  caseId?: boolean
-  blockTypeId?: boolean
-  millingDrillId?: boolean
-  fineMillingDrillId?: boolean
-  coarseMillingDrillId?: boolean
-  redoneFromMillingId?: boolean
+  lab_id?: boolean
+  case_id?: boolean
+  block_type_id?: boolean
+  milling_drill_id?: boolean
+  fine_milling_drill_id?: boolean
+  coarse_milling_drill_id?: boolean
+  redone_from_milling_id?: boolean
   status?: boolean
-  teethMilledQty?: boolean
-  failureReason?: boolean
+  teeth_milled_qty?: boolean
+  failure_reason?: boolean
   notes?: boolean
-  milledAt?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  milled_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
   block_types?: boolean | Prisma.block_typesDefaultArgs<ExtArgs>
   milling_drills?: boolean | Prisma.case_millings$milling_drillsArgs<ExtArgs>
@@ -2070,25 +2070,25 @@ export type case_millingsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
 
 export type case_millingsSelectScalar = {
   id?: boolean
-  dentalLabId?: boolean
-  caseId?: boolean
-  blockTypeId?: boolean
-  millingDrillId?: boolean
-  fineMillingDrillId?: boolean
-  coarseMillingDrillId?: boolean
-  redoneFromMillingId?: boolean
+  lab_id?: boolean
+  case_id?: boolean
+  block_type_id?: boolean
+  milling_drill_id?: boolean
+  fine_milling_drill_id?: boolean
+  coarse_milling_drill_id?: boolean
+  redone_from_milling_id?: boolean
   status?: boolean
-  teethMilledQty?: boolean
-  failureReason?: boolean
+  teeth_milled_qty?: boolean
+  failure_reason?: boolean
   notes?: boolean
-  milledAt?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
+  milled_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }
 
-export type case_millingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dentalLabId" | "caseId" | "blockTypeId" | "millingDrillId" | "fineMillingDrillId" | "coarseMillingDrillId" | "redoneFromMillingId" | "status" | "teethMilledQty" | "failureReason" | "notes" | "milledAt" | "createdAt" | "updatedAt", ExtArgs["result"]["case_millings"]>
+export type case_millingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "case_id" | "block_type_id" | "milling_drill_id" | "fine_milling_drill_id" | "coarse_milling_drill_id" | "redone_from_milling_id" | "status" | "teeth_milled_qty" | "failure_reason" | "notes" | "milled_at" | "created_at" | "updated_at", ExtArgs["result"]["case_millings"]>
 export type case_millingsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
   block_types?: boolean | Prisma.block_typesDefaultArgs<ExtArgs>
   milling_drills?: boolean | Prisma.case_millings$milling_drillsArgs<ExtArgs>
@@ -2099,7 +2099,7 @@ export type case_millingsInclude<ExtArgs extends runtime.Types.Extensions.Intern
   _count?: boolean | Prisma.Case_millingsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type case_millingsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
   block_types?: boolean | Prisma.block_typesDefaultArgs<ExtArgs>
   milling_drills?: boolean | Prisma.case_millings$milling_drillsArgs<ExtArgs>
@@ -2108,7 +2108,7 @@ export type case_millingsIncludeCreateManyAndReturn<ExtArgs extends runtime.Type
   redoneFromMilling?: boolean | Prisma.case_millings$redoneFromMillingArgs<ExtArgs>
 }
 export type case_millingsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
   block_types?: boolean | Prisma.block_typesDefaultArgs<ExtArgs>
   milling_drills?: boolean | Prisma.case_millings$milling_drillsArgs<ExtArgs>
@@ -2120,7 +2120,7 @@ export type case_millingsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Type
 export type $case_millingsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "case_millings"
   objects: {
-    dental_labs: Prisma.$dental_labsPayload<ExtArgs>
+    labs: Prisma.$labsPayload<ExtArgs>
     cases: Prisma.$casesPayload<ExtArgs>
     block_types: Prisma.$block_typesPayload<ExtArgs>
     milling_drills: Prisma.$milling_drillsPayload<ExtArgs> | null
@@ -2131,20 +2131,20 @@ export type $case_millingsPayload<ExtArgs extends runtime.Types.Extensions.Inter
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    dentalLabId: string
-    caseId: string
-    blockTypeId: string
-    millingDrillId: string | null
-    fineMillingDrillId: string | null
-    coarseMillingDrillId: string | null
-    redoneFromMillingId: string | null
+    lab_id: string
+    case_id: string
+    block_type_id: string
+    milling_drill_id: string | null
+    fine_milling_drill_id: string | null
+    coarse_milling_drill_id: string | null
+    redone_from_milling_id: string | null
     status: $Enums.MillingStatus
-    teethMilledQty: number
-    failureReason: string | null
+    teeth_milled_qty: number
+    failure_reason: string | null
     notes: string | null
-    milledAt: Date
-    createdAt: Date
-    updatedAt: Date
+    milled_at: Date
+    created_at: Date
+    updated_at: Date
   }, ExtArgs["result"]["case_millings"]>
   composites: {}
 }
@@ -2539,7 +2539,7 @@ readonly fields: case_millingsFieldRefs;
  */
 export interface Prisma__case_millingsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  dental_labs<T extends Prisma.dental_labsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.dental_labsDefaultArgs<ExtArgs>>): Prisma.Prisma__dental_labsClient<runtime.Types.Result.GetResult<Prisma.$dental_labsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  labs<T extends Prisma.labsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labsDefaultArgs<ExtArgs>>): Prisma.Prisma__labsClient<runtime.Types.Result.GetResult<Prisma.$labsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   cases<T extends Prisma.casesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.casesDefaultArgs<ExtArgs>>): Prisma.Prisma__casesClient<runtime.Types.Result.GetResult<Prisma.$casesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   block_types<T extends Prisma.block_typesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.block_typesDefaultArgs<ExtArgs>>): Prisma.Prisma__block_typesClient<runtime.Types.Result.GetResult<Prisma.$block_typesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   milling_drills<T extends Prisma.case_millings$milling_drillsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.case_millings$milling_drillsArgs<ExtArgs>>): Prisma.Prisma__milling_drillsClient<runtime.Types.Result.GetResult<Prisma.$milling_drillsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -2577,20 +2577,20 @@ export interface Prisma__case_millingsClient<T, Null = never, ExtArgs extends ru
  */
 export interface case_millingsFieldRefs {
   readonly id: Prisma.FieldRef<"case_millings", 'String'>
-  readonly dentalLabId: Prisma.FieldRef<"case_millings", 'String'>
-  readonly caseId: Prisma.FieldRef<"case_millings", 'String'>
-  readonly blockTypeId: Prisma.FieldRef<"case_millings", 'String'>
-  readonly millingDrillId: Prisma.FieldRef<"case_millings", 'String'>
-  readonly fineMillingDrillId: Prisma.FieldRef<"case_millings", 'String'>
-  readonly coarseMillingDrillId: Prisma.FieldRef<"case_millings", 'String'>
-  readonly redoneFromMillingId: Prisma.FieldRef<"case_millings", 'String'>
+  readonly lab_id: Prisma.FieldRef<"case_millings", 'String'>
+  readonly case_id: Prisma.FieldRef<"case_millings", 'String'>
+  readonly block_type_id: Prisma.FieldRef<"case_millings", 'String'>
+  readonly milling_drill_id: Prisma.FieldRef<"case_millings", 'String'>
+  readonly fine_milling_drill_id: Prisma.FieldRef<"case_millings", 'String'>
+  readonly coarse_milling_drill_id: Prisma.FieldRef<"case_millings", 'String'>
+  readonly redone_from_milling_id: Prisma.FieldRef<"case_millings", 'String'>
   readonly status: Prisma.FieldRef<"case_millings", 'MillingStatus'>
-  readonly teethMilledQty: Prisma.FieldRef<"case_millings", 'Int'>
-  readonly failureReason: Prisma.FieldRef<"case_millings", 'String'>
+  readonly teeth_milled_qty: Prisma.FieldRef<"case_millings", 'Int'>
+  readonly failure_reason: Prisma.FieldRef<"case_millings", 'String'>
   readonly notes: Prisma.FieldRef<"case_millings", 'String'>
-  readonly milledAt: Prisma.FieldRef<"case_millings", 'DateTime'>
-  readonly createdAt: Prisma.FieldRef<"case_millings", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"case_millings", 'DateTime'>
+  readonly milled_at: Prisma.FieldRef<"case_millings", 'DateTime'>
+  readonly created_at: Prisma.FieldRef<"case_millings", 'DateTime'>
+  readonly updated_at: Prisma.FieldRef<"case_millings", 'DateTime'>
 }
     
 

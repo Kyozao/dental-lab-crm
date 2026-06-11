@@ -385,20 +385,21 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   users: 'users',
-  client_companies: 'client_companies',
-  dental_labs: 'dental_labs',
-  lab_customers: 'lab_customers',
-  user_lab_memberships: 'user_lab_memberships',
+  labs: 'labs',
+  lab_members: 'lab_members',
   service_types: 'service_types',
+  processes: 'processes',
   milling_drills: 'milling_drills',
   case_millings: 'case_millings',
   case_attachments: 'case_attachments',
-  clinics: 'clinics',
+  customers: 'customers',
   dentists: 'dentists',
   components: 'components',
   case_component_usages: 'case_component_usages',
   block_types: 'block_types',
   cases: 'cases',
+  case_processes: 'case_processes',
+  case_process_dependencies: 'case_process_dependencies',
   case_status_histories: 'case_status_histories',
   notifications: 'notifications',
   push_subscriptions: 'push_subscriptions'
@@ -417,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "users" | "client_companies" | "dental_labs" | "lab_customers" | "user_lab_memberships" | "service_types" | "milling_drills" | "case_millings" | "case_attachments" | "clinics" | "dentists" | "components" | "case_component_usages" | "block_types" | "cases" | "case_status_histories" | "notifications" | "push_subscriptions"
+    modelProps: "users" | "labs" | "lab_members" | "service_types" | "processes" | "milling_drills" | "case_millings" | "case_attachments" | "customers" | "dentists" | "components" | "case_component_usages" | "block_types" | "cases" | "case_processes" | "case_process_dependencies" | "case_status_histories" | "notifications" | "push_subscriptions"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -495,299 +496,151 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    client_companies: {
-      payload: Prisma.$client_companiesPayload<ExtArgs>
-      fields: Prisma.client_companiesFieldRefs
+    labs: {
+      payload: Prisma.$labsPayload<ExtArgs>
+      fields: Prisma.labsFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.client_companiesFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$client_companiesPayload> | null
+          args: Prisma.labsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$labsPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.client_companiesFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$client_companiesPayload>
+          args: Prisma.labsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$labsPayload>
         }
         findFirst: {
-          args: Prisma.client_companiesFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$client_companiesPayload> | null
+          args: Prisma.labsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$labsPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.client_companiesFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$client_companiesPayload>
+          args: Prisma.labsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$labsPayload>
         }
         findMany: {
-          args: Prisma.client_companiesFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$client_companiesPayload>[]
+          args: Prisma.labsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$labsPayload>[]
         }
         create: {
-          args: Prisma.client_companiesCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$client_companiesPayload>
+          args: Prisma.labsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$labsPayload>
         }
         createMany: {
-          args: Prisma.client_companiesCreateManyArgs<ExtArgs>
+          args: Prisma.labsCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.client_companiesCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$client_companiesPayload>[]
+          args: Prisma.labsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$labsPayload>[]
         }
         delete: {
-          args: Prisma.client_companiesDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$client_companiesPayload>
+          args: Prisma.labsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$labsPayload>
         }
         update: {
-          args: Prisma.client_companiesUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$client_companiesPayload>
+          args: Prisma.labsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$labsPayload>
         }
         deleteMany: {
-          args: Prisma.client_companiesDeleteManyArgs<ExtArgs>
+          args: Prisma.labsDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.client_companiesUpdateManyArgs<ExtArgs>
+          args: Prisma.labsUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.client_companiesUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$client_companiesPayload>[]
+          args: Prisma.labsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$labsPayload>[]
         }
         upsert: {
-          args: Prisma.client_companiesUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$client_companiesPayload>
+          args: Prisma.labsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$labsPayload>
         }
         aggregate: {
-          args: Prisma.Client_companiesAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateClient_companies>
+          args: Prisma.LabsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLabs>
         }
         groupBy: {
-          args: Prisma.client_companiesGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.Client_companiesGroupByOutputType>[]
+          args: Prisma.labsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LabsGroupByOutputType>[]
         }
         count: {
-          args: Prisma.client_companiesCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.Client_companiesCountAggregateOutputType> | number
+          args: Prisma.labsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LabsCountAggregateOutputType> | number
         }
       }
     }
-    dental_labs: {
-      payload: Prisma.$dental_labsPayload<ExtArgs>
-      fields: Prisma.dental_labsFieldRefs
+    lab_members: {
+      payload: Prisma.$lab_membersPayload<ExtArgs>
+      fields: Prisma.lab_membersFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.dental_labsFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dental_labsPayload> | null
+          args: Prisma.lab_membersFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_membersPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.dental_labsFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dental_labsPayload>
+          args: Prisma.lab_membersFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_membersPayload>
         }
         findFirst: {
-          args: Prisma.dental_labsFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dental_labsPayload> | null
+          args: Prisma.lab_membersFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_membersPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.dental_labsFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dental_labsPayload>
+          args: Prisma.lab_membersFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_membersPayload>
         }
         findMany: {
-          args: Prisma.dental_labsFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dental_labsPayload>[]
+          args: Prisma.lab_membersFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_membersPayload>[]
         }
         create: {
-          args: Prisma.dental_labsCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dental_labsPayload>
+          args: Prisma.lab_membersCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_membersPayload>
         }
         createMany: {
-          args: Prisma.dental_labsCreateManyArgs<ExtArgs>
+          args: Prisma.lab_membersCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.dental_labsCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dental_labsPayload>[]
+          args: Prisma.lab_membersCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_membersPayload>[]
         }
         delete: {
-          args: Prisma.dental_labsDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dental_labsPayload>
+          args: Prisma.lab_membersDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_membersPayload>
         }
         update: {
-          args: Prisma.dental_labsUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dental_labsPayload>
+          args: Prisma.lab_membersUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_membersPayload>
         }
         deleteMany: {
-          args: Prisma.dental_labsDeleteManyArgs<ExtArgs>
+          args: Prisma.lab_membersDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.dental_labsUpdateManyArgs<ExtArgs>
+          args: Prisma.lab_membersUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.dental_labsUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dental_labsPayload>[]
+          args: Prisma.lab_membersUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_membersPayload>[]
         }
         upsert: {
-          args: Prisma.dental_labsUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$dental_labsPayload>
+          args: Prisma.lab_membersUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_membersPayload>
         }
         aggregate: {
-          args: Prisma.Dental_labsAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateDental_labs>
+          args: Prisma.Lab_membersAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLab_members>
         }
         groupBy: {
-          args: Prisma.dental_labsGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.Dental_labsGroupByOutputType>[]
+          args: Prisma.lab_membersGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Lab_membersGroupByOutputType>[]
         }
         count: {
-          args: Prisma.dental_labsCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.Dental_labsCountAggregateOutputType> | number
-        }
-      }
-    }
-    lab_customers: {
-      payload: Prisma.$lab_customersPayload<ExtArgs>
-      fields: Prisma.lab_customersFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.lab_customersFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_customersPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.lab_customersFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_customersPayload>
-        }
-        findFirst: {
-          args: Prisma.lab_customersFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_customersPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.lab_customersFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_customersPayload>
-        }
-        findMany: {
-          args: Prisma.lab_customersFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_customersPayload>[]
-        }
-        create: {
-          args: Prisma.lab_customersCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_customersPayload>
-        }
-        createMany: {
-          args: Prisma.lab_customersCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.lab_customersCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_customersPayload>[]
-        }
-        delete: {
-          args: Prisma.lab_customersDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_customersPayload>
-        }
-        update: {
-          args: Prisma.lab_customersUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_customersPayload>
-        }
-        deleteMany: {
-          args: Prisma.lab_customersDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.lab_customersUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.lab_customersUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_customersPayload>[]
-        }
-        upsert: {
-          args: Prisma.lab_customersUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$lab_customersPayload>
-        }
-        aggregate: {
-          args: Prisma.Lab_customersAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateLab_customers>
-        }
-        groupBy: {
-          args: Prisma.lab_customersGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.Lab_customersGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.lab_customersCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.Lab_customersCountAggregateOutputType> | number
-        }
-      }
-    }
-    user_lab_memberships: {
-      payload: Prisma.$user_lab_membershipsPayload<ExtArgs>
-      fields: Prisma.user_lab_membershipsFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.user_lab_membershipsFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$user_lab_membershipsPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.user_lab_membershipsFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$user_lab_membershipsPayload>
-        }
-        findFirst: {
-          args: Prisma.user_lab_membershipsFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$user_lab_membershipsPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.user_lab_membershipsFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$user_lab_membershipsPayload>
-        }
-        findMany: {
-          args: Prisma.user_lab_membershipsFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$user_lab_membershipsPayload>[]
-        }
-        create: {
-          args: Prisma.user_lab_membershipsCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$user_lab_membershipsPayload>
-        }
-        createMany: {
-          args: Prisma.user_lab_membershipsCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.user_lab_membershipsCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$user_lab_membershipsPayload>[]
-        }
-        delete: {
-          args: Prisma.user_lab_membershipsDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$user_lab_membershipsPayload>
-        }
-        update: {
-          args: Prisma.user_lab_membershipsUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$user_lab_membershipsPayload>
-        }
-        deleteMany: {
-          args: Prisma.user_lab_membershipsDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.user_lab_membershipsUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.user_lab_membershipsUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$user_lab_membershipsPayload>[]
-        }
-        upsert: {
-          args: Prisma.user_lab_membershipsUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$user_lab_membershipsPayload>
-        }
-        aggregate: {
-          args: Prisma.User_lab_membershipsAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateUser_lab_memberships>
-        }
-        groupBy: {
-          args: Prisma.user_lab_membershipsGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.User_lab_membershipsGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.user_lab_membershipsCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.User_lab_membershipsCountAggregateOutputType> | number
+          args: Prisma.lab_membersCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Lab_membersCountAggregateOutputType> | number
         }
       }
     }
@@ -862,6 +715,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.service_typesCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.Service_typesCountAggregateOutputType> | number
+        }
+      }
+    }
+    processes: {
+      payload: Prisma.$processesPayload<ExtArgs>
+      fields: Prisma.processesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.processesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$processesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.processesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$processesPayload>
+        }
+        findFirst: {
+          args: Prisma.processesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$processesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.processesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$processesPayload>
+        }
+        findMany: {
+          args: Prisma.processesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$processesPayload>[]
+        }
+        create: {
+          args: Prisma.processesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$processesPayload>
+        }
+        createMany: {
+          args: Prisma.processesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.processesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$processesPayload>[]
+        }
+        delete: {
+          args: Prisma.processesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$processesPayload>
+        }
+        update: {
+          args: Prisma.processesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$processesPayload>
+        }
+        deleteMany: {
+          args: Prisma.processesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.processesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.processesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$processesPayload>[]
+        }
+        upsert: {
+          args: Prisma.processesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$processesPayload>
+        }
+        aggregate: {
+          args: Prisma.ProcessesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProcesses>
+        }
+        groupBy: {
+          args: Prisma.processesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProcessesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.processesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProcessesCountAggregateOutputType> | number
         }
       }
     }
@@ -1087,77 +1014,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    clinics: {
-      payload: Prisma.$clinicsPayload<ExtArgs>
-      fields: Prisma.clinicsFieldRefs
+    customers: {
+      payload: Prisma.$customersPayload<ExtArgs>
+      fields: Prisma.customersFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.clinicsFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinicsPayload> | null
+          args: Prisma.customersFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$customersPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.clinicsFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinicsPayload>
+          args: Prisma.customersFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$customersPayload>
         }
         findFirst: {
-          args: Prisma.clinicsFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinicsPayload> | null
+          args: Prisma.customersFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$customersPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.clinicsFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinicsPayload>
+          args: Prisma.customersFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$customersPayload>
         }
         findMany: {
-          args: Prisma.clinicsFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinicsPayload>[]
+          args: Prisma.customersFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$customersPayload>[]
         }
         create: {
-          args: Prisma.clinicsCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinicsPayload>
+          args: Prisma.customersCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$customersPayload>
         }
         createMany: {
-          args: Prisma.clinicsCreateManyArgs<ExtArgs>
+          args: Prisma.customersCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.clinicsCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinicsPayload>[]
+          args: Prisma.customersCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$customersPayload>[]
         }
         delete: {
-          args: Prisma.clinicsDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinicsPayload>
+          args: Prisma.customersDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$customersPayload>
         }
         update: {
-          args: Prisma.clinicsUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinicsPayload>
+          args: Prisma.customersUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$customersPayload>
         }
         deleteMany: {
-          args: Prisma.clinicsDeleteManyArgs<ExtArgs>
+          args: Prisma.customersDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.clinicsUpdateManyArgs<ExtArgs>
+          args: Prisma.customersUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.clinicsUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinicsPayload>[]
+          args: Prisma.customersUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$customersPayload>[]
         }
         upsert: {
-          args: Prisma.clinicsUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$clinicsPayload>
+          args: Prisma.customersUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$customersPayload>
         }
         aggregate: {
-          args: Prisma.ClinicsAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateClinics>
+          args: Prisma.CustomersAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCustomers>
         }
         groupBy: {
-          args: Prisma.clinicsGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ClinicsGroupByOutputType>[]
+          args: Prisma.customersGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomersGroupByOutputType>[]
         }
         count: {
-          args: Prisma.clinicsCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ClinicsCountAggregateOutputType> | number
+          args: Prisma.customersCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomersCountAggregateOutputType> | number
         }
       }
     }
@@ -1531,6 +1458,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    case_processes: {
+      payload: Prisma.$case_processesPayload<ExtArgs>
+      fields: Prisma.case_processesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.case_processesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_processesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.case_processesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_processesPayload>
+        }
+        findFirst: {
+          args: Prisma.case_processesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_processesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.case_processesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_processesPayload>
+        }
+        findMany: {
+          args: Prisma.case_processesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_processesPayload>[]
+        }
+        create: {
+          args: Prisma.case_processesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_processesPayload>
+        }
+        createMany: {
+          args: Prisma.case_processesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.case_processesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_processesPayload>[]
+        }
+        delete: {
+          args: Prisma.case_processesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_processesPayload>
+        }
+        update: {
+          args: Prisma.case_processesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_processesPayload>
+        }
+        deleteMany: {
+          args: Prisma.case_processesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.case_processesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.case_processesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_processesPayload>[]
+        }
+        upsert: {
+          args: Prisma.case_processesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_processesPayload>
+        }
+        aggregate: {
+          args: Prisma.Case_processesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCase_processes>
+        }
+        groupBy: {
+          args: Prisma.case_processesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Case_processesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.case_processesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Case_processesCountAggregateOutputType> | number
+        }
+      }
+    }
+    case_process_dependencies: {
+      payload: Prisma.$case_process_dependenciesPayload<ExtArgs>
+      fields: Prisma.case_process_dependenciesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.case_process_dependenciesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_dependenciesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.case_process_dependenciesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_dependenciesPayload>
+        }
+        findFirst: {
+          args: Prisma.case_process_dependenciesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_dependenciesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.case_process_dependenciesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_dependenciesPayload>
+        }
+        findMany: {
+          args: Prisma.case_process_dependenciesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_dependenciesPayload>[]
+        }
+        create: {
+          args: Prisma.case_process_dependenciesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_dependenciesPayload>
+        }
+        createMany: {
+          args: Prisma.case_process_dependenciesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.case_process_dependenciesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_dependenciesPayload>[]
+        }
+        delete: {
+          args: Prisma.case_process_dependenciesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_dependenciesPayload>
+        }
+        update: {
+          args: Prisma.case_process_dependenciesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_dependenciesPayload>
+        }
+        deleteMany: {
+          args: Prisma.case_process_dependenciesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.case_process_dependenciesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.case_process_dependenciesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_dependenciesPayload>[]
+        }
+        upsert: {
+          args: Prisma.case_process_dependenciesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_dependenciesPayload>
+        }
+        aggregate: {
+          args: Prisma.Case_process_dependenciesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCase_process_dependencies>
+        }
+        groupBy: {
+          args: Prisma.case_process_dependenciesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Case_process_dependenciesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.case_process_dependenciesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Case_process_dependenciesCountAggregateOutputType> | number
+        }
+      }
+    }
     case_status_histories: {
       payload: Prisma.$case_status_historiesPayload<ExtArgs>
       fields: Prisma.case_status_historiesFieldRefs
@@ -1794,93 +1869,83 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const UsersScalarFieldEnum = {
   id: 'id',
-  clientCompanyId: 'clientCompanyId',
   name: 'name',
   email: 'email',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  is_active: 'is_active',
+  deleted_at: 'deleted_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
 
 
-export const Client_companiesScalarFieldEnum = {
+export const LabsScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
-export type Client_companiesScalarFieldEnum = (typeof Client_companiesScalarFieldEnum)[keyof typeof Client_companiesScalarFieldEnum]
+export type LabsScalarFieldEnum = (typeof LabsScalarFieldEnum)[keyof typeof LabsScalarFieldEnum]
 
 
-export const Dental_labsScalarFieldEnum = {
+export const Lab_membersScalarFieldEnum = {
   id: 'id',
-  clientCompanyId: 'clientCompanyId',
-  name: 'name',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type Dental_labsScalarFieldEnum = (typeof Dental_labsScalarFieldEnum)[keyof typeof Dental_labsScalarFieldEnum]
-
-
-export const Lab_customersScalarFieldEnum = {
-  id: 'id',
-  dentalLabId: 'dentalLabId',
-  name: 'name',
-  phone: 'phone',
-  email: 'email',
-  notes: 'notes',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type Lab_customersScalarFieldEnum = (typeof Lab_customersScalarFieldEnum)[keyof typeof Lab_customersScalarFieldEnum]
-
-
-export const User_lab_membershipsScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  dentalLabId: 'dentalLabId',
+  user_id: 'user_id',
+  lab_id: 'lab_id',
   role: 'role',
-  createdAt: 'createdAt'
+  created_at: 'created_at'
 } as const
 
-export type User_lab_membershipsScalarFieldEnum = (typeof User_lab_membershipsScalarFieldEnum)[keyof typeof User_lab_membershipsScalarFieldEnum]
+export type Lab_membersScalarFieldEnum = (typeof Lab_membersScalarFieldEnum)[keyof typeof Lab_membersScalarFieldEnum]
 
 
 export const Service_typesScalarFieldEnum = {
   id: 'id',
-  dentalLabId: 'dentalLabId',
+  lab_id: 'lab_id',
   name: 'name',
-  isActive: 'isActive',
+  is_active: 'is_active',
+  deleted_at: 'deleted_at',
   notes: 'notes',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  workflow_json: 'workflow_json',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type Service_typesScalarFieldEnum = (typeof Service_typesScalarFieldEnum)[keyof typeof Service_typesScalarFieldEnum]
 
 
+export const ProcessesScalarFieldEnum = {
+  id: 'id',
+  lab_id: 'lab_id',
+  name: 'name',
+  description: 'description',
+  is_active: 'is_active',
+  deleted_at: 'deleted_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type ProcessesScalarFieldEnum = (typeof ProcessesScalarFieldEnum)[keyof typeof ProcessesScalarFieldEnum]
+
+
 export const Milling_drillsScalarFieldEnum = {
-  dentalLabId: 'dentalLabId',
+  lab_id: 'lab_id',
   id: 'id',
   name: 'name',
   type: 'type',
   brand: 'brand',
-  serialNumber: 'serialNumber',
-  maxTeethRecommended: 'maxTeethRecommended',
-  installedAt: 'installedAt',
-  changedAt: 'changedAt',
-  isActive: 'isActive',
+  serial_number: 'serial_number',
+  max_teeth_recommended: 'max_teeth_recommended',
+  installed_at: 'installed_at',
+  changed_at: 'changed_at',
+  is_active: 'is_active',
+  deleted_at: 'deleted_at',
   notes: 'notes',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type Milling_drillsScalarFieldEnum = (typeof Milling_drillsScalarFieldEnum)[keyof typeof Milling_drillsScalarFieldEnum]
@@ -1888,20 +1953,20 @@ export type Milling_drillsScalarFieldEnum = (typeof Milling_drillsScalarFieldEnu
 
 export const Case_millingsScalarFieldEnum = {
   id: 'id',
-  dentalLabId: 'dentalLabId',
-  caseId: 'caseId',
-  blockTypeId: 'blockTypeId',
-  millingDrillId: 'millingDrillId',
-  fineMillingDrillId: 'fineMillingDrillId',
-  coarseMillingDrillId: 'coarseMillingDrillId',
-  redoneFromMillingId: 'redoneFromMillingId',
+  lab_id: 'lab_id',
+  case_id: 'case_id',
+  block_type_id: 'block_type_id',
+  milling_drill_id: 'milling_drill_id',
+  fine_milling_drill_id: 'fine_milling_drill_id',
+  coarse_milling_drill_id: 'coarse_milling_drill_id',
+  redone_from_milling_id: 'redone_from_milling_id',
   status: 'status',
-  teethMilledQty: 'teethMilledQty',
-  failureReason: 'failureReason',
+  teeth_milled_qty: 'teeth_milled_qty',
+  failure_reason: 'failure_reason',
   notes: 'notes',
-  milledAt: 'milledAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  milled_at: 'milled_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type Case_millingsScalarFieldEnum = (typeof Case_millingsScalarFieldEnum)[keyof typeof Case_millingsScalarFieldEnum]
@@ -1909,46 +1974,49 @@ export type Case_millingsScalarFieldEnum = (typeof Case_millingsScalarFieldEnum)
 
 export const Case_attachmentsScalarFieldEnum = {
   id: 'id',
-  caseId: 'caseId',
-  fileName: 'fileName',
-  filePath: 'filePath',
-  fileType: 'fileType',
-  fileSize: 'fileSize',
+  case_id: 'case_id',
+  file_name: 'file_name',
+  file_path: 'file_path',
+  file_type: 'file_type',
+  file_size: 'file_size',
   kind: 'kind',
-  retentionUntil: 'retentionUntil',
-  archivedAt: 'archivedAt',
-  uploadedById: 'uploadedById',
-  createdAt: 'createdAt'
+  retention_until: 'retention_until',
+  archived_at: 'archived_at',
+  uploaded_by_id: 'uploaded_by_id',
+  created_at: 'created_at'
 } as const
 
 export type Case_attachmentsScalarFieldEnum = (typeof Case_attachmentsScalarFieldEnum)[keyof typeof Case_attachmentsScalarFieldEnum]
 
 
-export const ClinicsScalarFieldEnum = {
+export const CustomersScalarFieldEnum = {
   id: 'id',
-  dentalLabId: 'dentalLabId',
-  labCustomerId: 'labCustomerId',
+  lab_id: 'lab_id',
   name: 'name',
   phone: 'phone',
   email: 'email',
   notes: 'notes',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  is_active: 'is_active',
+  deleted_at: 'deleted_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
-export type ClinicsScalarFieldEnum = (typeof ClinicsScalarFieldEnum)[keyof typeof ClinicsScalarFieldEnum]
+export type CustomersScalarFieldEnum = (typeof CustomersScalarFieldEnum)[keyof typeof CustomersScalarFieldEnum]
 
 
 export const DentistsScalarFieldEnum = {
   id: 'id',
-  dentalLabId: 'dentalLabId',
-  clinicId: 'clinicId',
+  lab_id: 'lab_id',
+  customer_id: 'customer_id',
   name: 'name',
   phone: 'phone',
   email: 'email',
   notes: 'notes',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  is_active: 'is_active',
+  deleted_at: 'deleted_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type DentistsScalarFieldEnum = (typeof DentistsScalarFieldEnum)[keyof typeof DentistsScalarFieldEnum]
@@ -1956,15 +2024,16 @@ export type DentistsScalarFieldEnum = (typeof DentistsScalarFieldEnum)[keyof typ
 
 export const ComponentsScalarFieldEnum = {
   id: 'id',
-  dentalLabId: 'dentalLabId',
+  lab_id: 'lab_id',
   name: 'name',
   category: 'category',
   brand: 'brand',
-  defaultCost: 'defaultCost',
-  defaultPrice: 'defaultPrice',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  default_cost: 'default_cost',
+  default_price: 'default_price',
+  is_active: 'is_active',
+  deleted_at: 'deleted_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type ComponentsScalarFieldEnum = (typeof ComponentsScalarFieldEnum)[keyof typeof ComponentsScalarFieldEnum]
@@ -1972,15 +2041,15 @@ export type ComponentsScalarFieldEnum = (typeof ComponentsScalarFieldEnum)[keyof
 
 export const Case_component_usagesScalarFieldEnum = {
   id: 'id',
-  caseId: 'caseId',
-  componentId: 'componentId',
+  case_id: 'case_id',
+  component_id: 'component_id',
   quantity: 'quantity',
-  chargeClient: 'chargeClient',
-  unitCost: 'unitCost',
-  unitPrice: 'unitPrice',
+  charge_client: 'charge_client',
+  unit_cost: 'unit_cost',
+  unit_price: 'unit_price',
   notes: 'notes',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type Case_component_usagesScalarFieldEnum = (typeof Case_component_usagesScalarFieldEnum)[keyof typeof Case_component_usagesScalarFieldEnum]
@@ -1988,16 +2057,17 @@ export type Case_component_usagesScalarFieldEnum = (typeof Case_component_usages
 
 export const Block_typesScalarFieldEnum = {
   id: 'id',
-  dentalLabId: 'dentalLabId',
+  lab_id: 'lab_id',
   name: 'name',
   material: 'material',
   brand: 'brand',
   size: 'size',
   shade: 'shade',
-  defaultCost: 'defaultCost',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  default_cost: 'default_cost',
+  is_active: 'is_active',
+  deleted_at: 'deleted_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type Block_typesScalarFieldEnum = (typeof Block_typesScalarFieldEnum)[keyof typeof Block_typesScalarFieldEnum]
@@ -2005,37 +2075,61 @@ export type Block_typesScalarFieldEnum = (typeof Block_typesScalarFieldEnum)[key
 
 export const CasesScalarFieldEnum = {
   id: 'id',
-  dentalLabId: 'dentalLabId',
+  lab_id: 'lab_id',
   code: 'code',
-  clientCaseCode: 'clientCaseCode',
-  patientName: 'patientName',
-  clinicId: 'clinicId',
-  serviceTypeId: 'serviceTypeId',
-  dentistId: 'dentistId',
-  cadDesignerId: 'cadDesignerId',
-  createdByUserId: 'createdByUserId',
-  currentStatus: 'currentStatus',
+  patient_name: 'patient_name',
+  customer_id: 'customer_id',
+  service_type_id: 'service_type_id',
+  dentist_id: 'dentist_id',
+  cad_designer_id: 'cad_designer_id',
+  created_by_user_id: 'created_by_user_id',
+  current_status: 'current_status',
   teeth: 'teeth',
-  elementsQty: 'elementsQty',
+  elements_qty: 'elements_qty',
   shade: 'shade',
-  dueDate: 'dueDate',
-  isUrgent: 'isUrgent',
+  due_date: 'due_date',
+  is_urgent: 'is_urgent',
   observations: 'observations',
-  pendingNote: 'pendingNote',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  pending_note: 'pending_note',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type CasesScalarFieldEnum = (typeof CasesScalarFieldEnum)[keyof typeof CasesScalarFieldEnum]
 
 
+export const Case_processesScalarFieldEnum = {
+  id: 'id',
+  case_id: 'case_id',
+  process_id: 'process_id',
+  workflow_step_id: 'workflow_step_id',
+  status: 'status',
+  assigned_to_id: 'assigned_to_id',
+  started_at: 'started_at',
+  completed_at: 'completed_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Case_processesScalarFieldEnum = (typeof Case_processesScalarFieldEnum)[keyof typeof Case_processesScalarFieldEnum]
+
+
+export const Case_process_dependenciesScalarFieldEnum = {
+  id: 'id',
+  case_process_id: 'case_process_id',
+  depends_on_case_process_id: 'depends_on_case_process_id'
+} as const
+
+export type Case_process_dependenciesScalarFieldEnum = (typeof Case_process_dependenciesScalarFieldEnum)[keyof typeof Case_process_dependenciesScalarFieldEnum]
+
+
 export const Case_status_historiesScalarFieldEnum = {
   id: 'id',
-  caseId: 'caseId',
-  fromStatus: 'fromStatus',
-  toStatus: 'toStatus',
+  case_id: 'case_id',
+  from_status: 'from_status',
+  to_status: 'to_status',
   note: 'note',
-  changedAt: 'changedAt'
+  changed_at: 'changed_at'
 } as const
 
 export type Case_status_historiesScalarFieldEnum = (typeof Case_status_historiesScalarFieldEnum)[keyof typeof Case_status_historiesScalarFieldEnum]
@@ -2043,15 +2137,15 @@ export type Case_status_historiesScalarFieldEnum = (typeof Case_status_histories
 
 export const NotificationsScalarFieldEnum = {
   id: 'id',
-  recipientUserId: 'recipientUserId',
-  caseId: 'caseId',
+  recipient_user_id: 'recipient_user_id',
+  case_id: 'case_id',
   type: 'type',
   title: 'title',
   message: 'message',
   payload: 'payload',
-  isRead: 'isRead',
-  readAt: 'readAt',
-  createdAt: 'createdAt'
+  is_read: 'is_read',
+  read_at: 'read_at',
+  created_at: 'created_at'
 } as const
 
 export type NotificationsScalarFieldEnum = (typeof NotificationsScalarFieldEnum)[keyof typeof NotificationsScalarFieldEnum]
@@ -2059,13 +2153,13 @@ export type NotificationsScalarFieldEnum = (typeof NotificationsScalarFieldEnum)
 
 export const Push_subscriptionsScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
+  user_id: 'user_id',
   endpoint: 'endpoint',
   p256dh: 'p256dh',
   auth: 'auth',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type Push_subscriptionsScalarFieldEnum = (typeof Push_subscriptionsScalarFieldEnum)[keyof typeof Push_subscriptionsScalarFieldEnum]
@@ -2077,6 +2171,13 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const NullableJsonNullValueInput = {
@@ -2168,6 +2269,20 @@ export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -2238,6 +2353,20 @@ export type ListEnumCaseStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
+ * Reference to a field of type 'CaseProcessStatus'
+ */
+export type EnumCaseProcessStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CaseProcessStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'CaseProcessStatus[]'
+ */
+export type ListEnumCaseProcessStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CaseProcessStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'NotificationType'
  */
 export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType'>
@@ -2248,20 +2377,6 @@ export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'NotificationType[]'
  */
 export type ListEnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType[]'>
-    
-
-
-/**
- * Reference to a field of type 'Json'
- */
-export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-/**
- * Reference to a field of type 'QueryMode'
- */
-export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -2374,20 +2489,21 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   users?: Prisma.usersOmit
-  client_companies?: Prisma.client_companiesOmit
-  dental_labs?: Prisma.dental_labsOmit
-  lab_customers?: Prisma.lab_customersOmit
-  user_lab_memberships?: Prisma.user_lab_membershipsOmit
+  labs?: Prisma.labsOmit
+  lab_members?: Prisma.lab_membersOmit
   service_types?: Prisma.service_typesOmit
+  processes?: Prisma.processesOmit
   milling_drills?: Prisma.milling_drillsOmit
   case_millings?: Prisma.case_millingsOmit
   case_attachments?: Prisma.case_attachmentsOmit
-  clinics?: Prisma.clinicsOmit
+  customers?: Prisma.customersOmit
   dentists?: Prisma.dentistsOmit
   components?: Prisma.componentsOmit
   case_component_usages?: Prisma.case_component_usagesOmit
   block_types?: Prisma.block_typesOmit
   cases?: Prisma.casesOmit
+  case_processes?: Prisma.case_processesOmit
+  case_process_dependencies?: Prisma.case_process_dependenciesOmit
   case_status_histories?: Prisma.case_status_historiesOmit
   notifications?: Prisma.notificationsOmit
   push_subscriptions?: Prisma.push_subscriptionsOmit

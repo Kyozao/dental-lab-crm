@@ -1,31 +1,38 @@
 import { NextResponse } from "next/server";
 
 import {
-  createCaseForLoggedLab,
-  getCasesForLoggedLab,
+  createCase,
+  InactiveReferenceError,
+  listCases,
   MissingLabMembershipError,
-} from "./services";
-import { parseCreateCaseInput } from "./schemas";
-import { createClient } from "@/lib/supabase/server";
+} from "./cases.service";
+import { parseCreateCaseInput, parseListCasesInput } from "./cases.schemas";
+import { getAuthenticatedUserId, parseJsonObject } from "../_shared/request";
 
-export async function GET() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
+export async function GET(request: Request) {
+  const user_id = await getAuthenticatedUserId();
 
-  if (error || !user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!user_id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const parsed = parseListCasesInput(new URL(request.url).searchParams);
+  if (!parsed.success) {
+    return NextResponse.json(
+      { error: "Validation failed.", fields: parsed.errors },
+      { status: 400 },
+    );
   }
 
   try {
-    const cases = await getCasesForLoggedLab(user.id);
-    return NextResponse.json({ cases });
+    const cases = await listCases(user_id, parsed.data);
+    return NextResponse.json({
+      data: cases,
+      error: null,
+      meta: { limit: parsed.data.limit },
+    });
   } catch (error) {
     if (error instanceof MissingLabMembershipError) {
       return NextResponse.json(
-        { error: "No dental lab membership found for this user." },
+        { error: "No lab membership found for this user." },
         { status: 403 },
       );
     }
@@ -39,28 +46,13 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
+  const user_id = await getAuthenticatedUserId();
+  if (!user_id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  if (error || !user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const payload = await parseJsonObject(request);
+  if (payload.data === null) return NextResponse.json({ error: payload.error }, { status: 400 });
 
-  let payload: unknown;
-
-  try {
-    payload = await request.json();
-  } catch {
-    return NextResponse.json(
-      { error: "Request body must be valid JSON." },
-      { status: 400 },
-    );
-  }
-
-  const parsed = parseCreateCaseInput(payload);
+  const parsed = parseCreateCaseInput(payload.data);
 
   if (!parsed.success) {
     return NextResponse.json(
@@ -70,13 +62,23 @@ export async function POST(request: Request) {
   }
 
   try {
-    const createdCase = await createCaseForLoggedLab(user.id, parsed.data);
-    return NextResponse.json({ case: createdCase }, { status: 201 });
+    const createdCase = await createCase(user_id, parsed.data);
+    return NextResponse.json(
+      { data: createdCase, error: null, meta: {} },
+      { status: 201 },
+    );
   } catch (error) {
     if (error instanceof MissingLabMembershipError) {
       return NextResponse.json(
-        { error: "No dental lab membership found for this user." },
+        { error: "No lab membership found for this user." },
         { status: 403 },
+      );
+    }
+
+    if (error instanceof InactiveReferenceError) {
+      return NextResponse.json(
+        { error: "Validation failed.", fields: error.fields },
+        { status: 400 },
       );
     }
 

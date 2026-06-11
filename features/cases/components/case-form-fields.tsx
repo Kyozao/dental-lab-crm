@@ -9,14 +9,14 @@ import {
   CASE_STATUS_OPTIONS,
   CadDesignerOption,
   CaseFormValues,
-  ClinicOption,
+  CustomerOption,
   ServiceTypeOption,
 } from "@/features/cases/types";
 
 type FormErrors = Partial<Record<string, string[]>>;
 
 type Props = {
-  clinics: ClinicOption[];
+  customers: CustomerOption[];
   serviceTypes: ServiceTypeOption[];
   cadDesigners: CadDesignerOption[];
   values?: CaseFormValues;
@@ -53,23 +53,23 @@ function ErrorText({ errors, field }: { errors?: FormErrors; field: string }) {
 }
 
 export function CaseFormFields({
-  clinics,
+  customers,
   serviceTypes,
   cadDesigners,
   values,
   errors,
   idPrefix,
 }: Props) {
-  const [selectedClinicId, setSelectedClinicId] = useState(
-    values?.clinicId ?? "",
+  const [selectedCustomerId, setSelectedCustomerId] = useState(
+    values?.customerId ?? "",
   );
 
-  const selectedClinic = useMemo(
-    () => clinics.find((clinic) => clinic.id === selectedClinicId),
-    [clinics, selectedClinicId],
+  const selectedCustomer = useMemo(
+    () => customers.find((customer) => customer.id === selectedCustomerId),
+    [customers, selectedCustomerId],
   );
 
-  const availableDentists = selectedClinic?.dentists ?? [];
+  const availableDentists = selectedCustomer?.dentists ?? [];
 
   return (
     <>
@@ -85,24 +85,24 @@ export function CaseFormFields({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor={`${idPrefix}-clinicId`}>Clinic</Label>
+        <Label htmlFor={`${idPrefix}-customerId`}>customer</Label>
         <select
-          id={`${idPrefix}-clinicId`}
-          name="clinicId"
-          value={selectedClinicId}
-          onChange={(e) => setSelectedClinicId(e.target.value)}
+          id={`${idPrefix}-customerId`}
+          name="customerId"
+          value={selectedCustomerId}
+          onChange={(e) => setSelectedCustomerId(e.target.value)}
           className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm"
         >
           <option value="" disabled>
-            Select clinic
+            Select customer
           </option>
-          {clinics.map((clinic) => (
-            <option key={clinic.id} value={clinic.id}>
-              {clinic.name}
+          {customers.map((customer) => (
+            <option key={customer.id} value={customer.id}>
+              {customer.name}
             </option>
           ))}
         </select>
-        <ErrorText errors={errors} field="clinicId" />
+        <ErrorText errors={errors} field="customerId" />
       </div>
 
       <div className="space-y-2">
@@ -111,11 +111,11 @@ export function CaseFormFields({
           id={`${idPrefix}-dentistId`}
           name="dentistId"
           defaultValue={values?.dentistId ?? ""}
-          disabled={!selectedClinicId}
+          disabled={!selectedCustomerId}
           className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-60"
         >
           <option value="">
-            {selectedClinicId ? "Select dentist" : "Select a clinic first"}
+            {selectedCustomerId ? "Select dentist" : "Select a customer first"}
           </option>
           {availableDentists.map((dentist) => (
             <option key={dentist.id} value={dentist.id}>

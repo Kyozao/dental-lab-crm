@@ -27,103 +27,109 @@ export type AggregateComponents = {
 }
 
 export type ComponentsAvgAggregateOutputType = {
-  defaultCost: runtime.Decimal | null
-  defaultPrice: runtime.Decimal | null
+  default_cost: runtime.Decimal | null
+  default_price: runtime.Decimal | null
 }
 
 export type ComponentsSumAggregateOutputType = {
-  defaultCost: runtime.Decimal | null
-  defaultPrice: runtime.Decimal | null
+  default_cost: runtime.Decimal | null
+  default_price: runtime.Decimal | null
 }
 
 export type ComponentsMinAggregateOutputType = {
   id: string | null
-  dentalLabId: string | null
+  lab_id: string | null
   name: string | null
   category: string | null
   brand: string | null
-  defaultCost: runtime.Decimal | null
-  defaultPrice: runtime.Decimal | null
-  isActive: boolean | null
-  createdAt: Date | null
-  updatedAt: Date | null
+  default_cost: runtime.Decimal | null
+  default_price: runtime.Decimal | null
+  is_active: boolean | null
+  deleted_at: Date | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type ComponentsMaxAggregateOutputType = {
   id: string | null
-  dentalLabId: string | null
+  lab_id: string | null
   name: string | null
   category: string | null
   brand: string | null
-  defaultCost: runtime.Decimal | null
-  defaultPrice: runtime.Decimal | null
-  isActive: boolean | null
-  createdAt: Date | null
-  updatedAt: Date | null
+  default_cost: runtime.Decimal | null
+  default_price: runtime.Decimal | null
+  is_active: boolean | null
+  deleted_at: Date | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type ComponentsCountAggregateOutputType = {
   id: number
-  dentalLabId: number
+  lab_id: number
   name: number
   category: number
   brand: number
-  defaultCost: number
-  defaultPrice: number
-  isActive: number
-  createdAt: number
-  updatedAt: number
+  default_cost: number
+  default_price: number
+  is_active: number
+  deleted_at: number
+  created_at: number
+  updated_at: number
   _all: number
 }
 
 
 export type ComponentsAvgAggregateInputType = {
-  defaultCost?: true
-  defaultPrice?: true
+  default_cost?: true
+  default_price?: true
 }
 
 export type ComponentsSumAggregateInputType = {
-  defaultCost?: true
-  defaultPrice?: true
+  default_cost?: true
+  default_price?: true
 }
 
 export type ComponentsMinAggregateInputType = {
   id?: true
-  dentalLabId?: true
+  lab_id?: true
   name?: true
   category?: true
   brand?: true
-  defaultCost?: true
-  defaultPrice?: true
-  isActive?: true
-  createdAt?: true
-  updatedAt?: true
+  default_cost?: true
+  default_price?: true
+  is_active?: true
+  deleted_at?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type ComponentsMaxAggregateInputType = {
   id?: true
-  dentalLabId?: true
+  lab_id?: true
   name?: true
   category?: true
   brand?: true
-  defaultCost?: true
-  defaultPrice?: true
-  isActive?: true
-  createdAt?: true
-  updatedAt?: true
+  default_cost?: true
+  default_price?: true
+  is_active?: true
+  deleted_at?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type ComponentsCountAggregateInputType = {
   id?: true
-  dentalLabId?: true
+  lab_id?: true
   name?: true
   category?: true
   brand?: true
-  defaultCost?: true
-  defaultPrice?: true
-  isActive?: true
-  createdAt?: true
-  updatedAt?: true
+  default_cost?: true
+  default_price?: true
+  is_active?: true
+  deleted_at?: true
+  created_at?: true
+  updated_at?: true
   _all?: true
 }
 
@@ -215,15 +221,16 @@ export type componentsGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 
 export type ComponentsGroupByOutputType = {
   id: string
-  dentalLabId: string
+  lab_id: string
   name: string
   category: string | null
   brand: string | null
-  defaultCost: runtime.Decimal | null
-  defaultPrice: runtime.Decimal | null
-  isActive: boolean
-  createdAt: Date
-  updatedAt: Date
+  default_cost: runtime.Decimal | null
+  default_price: runtime.Decimal | null
+  is_active: boolean
+  deleted_at: Date | null
+  created_at: Date
+  updated_at: Date
   _count: ComponentsCountAggregateOutputType | null
   _avg: ComponentsAvgAggregateOutputType | null
   _sum: ComponentsSumAggregateOutputType | null
@@ -251,64 +258,68 @@ export type componentsWhereInput = {
   OR?: Prisma.componentsWhereInput[]
   NOT?: Prisma.componentsWhereInput | Prisma.componentsWhereInput[]
   id?: Prisma.StringFilter<"components"> | string
-  dentalLabId?: Prisma.StringFilter<"components"> | string
+  lab_id?: Prisma.StringFilter<"components"> | string
   name?: Prisma.StringFilter<"components"> | string
   category?: Prisma.StringNullableFilter<"components"> | string | null
   brand?: Prisma.StringNullableFilter<"components"> | string | null
-  defaultCost?: Prisma.DecimalNullableFilter<"components"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: Prisma.DecimalNullableFilter<"components"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFilter<"components"> | boolean
-  createdAt?: Prisma.DateTimeFilter<"components"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"components"> | Date | string
-  dental_labs?: Prisma.XOR<Prisma.Dental_labsScalarRelationFilter, Prisma.dental_labsWhereInput>
+  default_cost?: Prisma.DecimalNullableFilter<"components"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: Prisma.DecimalNullableFilter<"components"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFilter<"components"> | boolean
+  deleted_at?: Prisma.DateTimeNullableFilter<"components"> | Date | string | null
+  created_at?: Prisma.DateTimeFilter<"components"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"components"> | Date | string
+  labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
   caseUsages?: Prisma.Case_component_usagesListRelationFilter
 }
 
 export type componentsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   category?: Prisma.SortOrderInput | Prisma.SortOrder
   brand?: Prisma.SortOrderInput | Prisma.SortOrder
-  defaultCost?: Prisma.SortOrderInput | Prisma.SortOrder
-  defaultPrice?: Prisma.SortOrderInput | Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  dental_labs?: Prisma.dental_labsOrderByWithRelationInput
+  default_cost?: Prisma.SortOrderInput | Prisma.SortOrder
+  default_price?: Prisma.SortOrderInput | Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
+  labs?: Prisma.labsOrderByWithRelationInput
   caseUsages?: Prisma.case_component_usagesOrderByRelationAggregateInput
 }
 
 export type componentsWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  dentalLabId_name?: Prisma.componentsDentalLabIdNameCompoundUniqueInput
+  lab_id_name?: Prisma.componentsLab_idNameCompoundUniqueInput
   AND?: Prisma.componentsWhereInput | Prisma.componentsWhereInput[]
   OR?: Prisma.componentsWhereInput[]
   NOT?: Prisma.componentsWhereInput | Prisma.componentsWhereInput[]
-  dentalLabId?: Prisma.StringFilter<"components"> | string
+  lab_id?: Prisma.StringFilter<"components"> | string
   name?: Prisma.StringFilter<"components"> | string
   category?: Prisma.StringNullableFilter<"components"> | string | null
   brand?: Prisma.StringNullableFilter<"components"> | string | null
-  defaultCost?: Prisma.DecimalNullableFilter<"components"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: Prisma.DecimalNullableFilter<"components"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFilter<"components"> | boolean
-  createdAt?: Prisma.DateTimeFilter<"components"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"components"> | Date | string
-  dental_labs?: Prisma.XOR<Prisma.Dental_labsScalarRelationFilter, Prisma.dental_labsWhereInput>
+  default_cost?: Prisma.DecimalNullableFilter<"components"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: Prisma.DecimalNullableFilter<"components"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFilter<"components"> | boolean
+  deleted_at?: Prisma.DateTimeNullableFilter<"components"> | Date | string | null
+  created_at?: Prisma.DateTimeFilter<"components"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"components"> | Date | string
+  labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
   caseUsages?: Prisma.Case_component_usagesListRelationFilter
-}, "id" | "dentalLabId_name">
+}, "id" | "lab_id_name">
 
 export type componentsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   category?: Prisma.SortOrderInput | Prisma.SortOrder
   brand?: Prisma.SortOrderInput | Prisma.SortOrder
-  defaultCost?: Prisma.SortOrderInput | Prisma.SortOrder
-  defaultPrice?: Prisma.SortOrderInput | Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  default_cost?: Prisma.SortOrderInput | Prisma.SortOrder
+  default_price?: Prisma.SortOrderInput | Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   _count?: Prisma.componentsCountOrderByAggregateInput
   _avg?: Prisma.componentsAvgOrderByAggregateInput
   _max?: Prisma.componentsMaxOrderByAggregateInput
@@ -321,15 +332,16 @@ export type componentsScalarWhereWithAggregatesInput = {
   OR?: Prisma.componentsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.componentsScalarWhereWithAggregatesInput | Prisma.componentsScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"components"> | string
-  dentalLabId?: Prisma.StringWithAggregatesFilter<"components"> | string
+  lab_id?: Prisma.StringWithAggregatesFilter<"components"> | string
   name?: Prisma.StringWithAggregatesFilter<"components"> | string
   category?: Prisma.StringNullableWithAggregatesFilter<"components"> | string | null
   brand?: Prisma.StringNullableWithAggregatesFilter<"components"> | string | null
-  defaultCost?: Prisma.DecimalNullableWithAggregatesFilter<"components"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: Prisma.DecimalNullableWithAggregatesFilter<"components"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolWithAggregatesFilter<"components"> | boolean
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"components"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"components"> | Date | string
+  default_cost?: Prisma.DecimalNullableWithAggregatesFilter<"components"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: Prisma.DecimalNullableWithAggregatesFilter<"components"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolWithAggregatesFilter<"components"> | boolean
+  deleted_at?: Prisma.DateTimeNullableWithAggregatesFilter<"components"> | Date | string | null
+  created_at?: Prisma.DateTimeWithAggregatesFilter<"components"> | Date | string
+  updated_at?: Prisma.DateTimeWithAggregatesFilter<"components"> | Date | string
 }
 
 export type componentsCreateInput = {
@@ -337,26 +349,28 @@ export type componentsCreateInput = {
   name: string
   category?: string | null
   brand?: string | null
-  defaultCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutComponentsInput
+  default_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutComponentsInput
   caseUsages?: Prisma.case_component_usagesCreateNestedManyWithoutComponentsInput
 }
 
 export type componentsUncheckedCreateInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   name: string
   category?: string | null
   brand?: string | null
-  defaultCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  default_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutComponentsInput
 }
 
@@ -365,40 +379,43 @@ export type componentsUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  defaultCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutComponentsNestedInput
+  default_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutComponentsNestedInput
   caseUsages?: Prisma.case_component_usagesUpdateManyWithoutComponentsNestedInput
 }
 
 export type componentsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  defaultCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  default_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutComponentsNestedInput
 }
 
 export type componentsCreateManyInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   name: string
   category?: string | null
   brand?: string | null
-  defaultCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  default_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type componentsUpdateManyMutationInput = {
@@ -406,24 +423,26 @@ export type componentsUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  defaultCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  default_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type componentsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  defaultCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  default_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ComponentsListRelationFilter = {
@@ -436,58 +455,61 @@ export type componentsOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type componentsDentalLabIdNameCompoundUniqueInput = {
-  dentalLabId: string
+export type componentsLab_idNameCompoundUniqueInput = {
+  lab_id: string
   name: string
 }
 
 export type componentsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   category?: Prisma.SortOrder
   brand?: Prisma.SortOrder
-  defaultCost?: Prisma.SortOrder
-  defaultPrice?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  default_cost?: Prisma.SortOrder
+  default_price?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type componentsAvgOrderByAggregateInput = {
-  defaultCost?: Prisma.SortOrder
-  defaultPrice?: Prisma.SortOrder
+  default_cost?: Prisma.SortOrder
+  default_price?: Prisma.SortOrder
 }
 
 export type componentsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   category?: Prisma.SortOrder
   brand?: Prisma.SortOrder
-  defaultCost?: Prisma.SortOrder
-  defaultPrice?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  default_cost?: Prisma.SortOrder
+  default_price?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type componentsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  dentalLabId?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   category?: Prisma.SortOrder
   brand?: Prisma.SortOrder
-  defaultCost?: Prisma.SortOrder
-  defaultPrice?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  default_cost?: Prisma.SortOrder
+  default_price?: Prisma.SortOrder
+  is_active?: Prisma.SortOrder
+  deleted_at?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type componentsSumOrderByAggregateInput = {
-  defaultCost?: Prisma.SortOrder
-  defaultPrice?: Prisma.SortOrder
+  default_cost?: Prisma.SortOrder
+  default_price?: Prisma.SortOrder
 }
 
 export type ComponentsScalarRelationFilter = {
@@ -495,45 +517,45 @@ export type ComponentsScalarRelationFilter = {
   isNot?: Prisma.componentsWhereInput
 }
 
-export type componentsCreateNestedManyWithoutDental_labsInput = {
-  create?: Prisma.XOR<Prisma.componentsCreateWithoutDental_labsInput, Prisma.componentsUncheckedCreateWithoutDental_labsInput> | Prisma.componentsCreateWithoutDental_labsInput[] | Prisma.componentsUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.componentsCreateOrConnectWithoutDental_labsInput | Prisma.componentsCreateOrConnectWithoutDental_labsInput[]
-  createMany?: Prisma.componentsCreateManyDental_labsInputEnvelope
+export type componentsCreateNestedManyWithoutLabsInput = {
+  create?: Prisma.XOR<Prisma.componentsCreateWithoutLabsInput, Prisma.componentsUncheckedCreateWithoutLabsInput> | Prisma.componentsCreateWithoutLabsInput[] | Prisma.componentsUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.componentsCreateOrConnectWithoutLabsInput | Prisma.componentsCreateOrConnectWithoutLabsInput[]
+  createMany?: Prisma.componentsCreateManyLabsInputEnvelope
   connect?: Prisma.componentsWhereUniqueInput | Prisma.componentsWhereUniqueInput[]
 }
 
-export type componentsUncheckedCreateNestedManyWithoutDental_labsInput = {
-  create?: Prisma.XOR<Prisma.componentsCreateWithoutDental_labsInput, Prisma.componentsUncheckedCreateWithoutDental_labsInput> | Prisma.componentsCreateWithoutDental_labsInput[] | Prisma.componentsUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.componentsCreateOrConnectWithoutDental_labsInput | Prisma.componentsCreateOrConnectWithoutDental_labsInput[]
-  createMany?: Prisma.componentsCreateManyDental_labsInputEnvelope
+export type componentsUncheckedCreateNestedManyWithoutLabsInput = {
+  create?: Prisma.XOR<Prisma.componentsCreateWithoutLabsInput, Prisma.componentsUncheckedCreateWithoutLabsInput> | Prisma.componentsCreateWithoutLabsInput[] | Prisma.componentsUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.componentsCreateOrConnectWithoutLabsInput | Prisma.componentsCreateOrConnectWithoutLabsInput[]
+  createMany?: Prisma.componentsCreateManyLabsInputEnvelope
   connect?: Prisma.componentsWhereUniqueInput | Prisma.componentsWhereUniqueInput[]
 }
 
-export type componentsUpdateManyWithoutDental_labsNestedInput = {
-  create?: Prisma.XOR<Prisma.componentsCreateWithoutDental_labsInput, Prisma.componentsUncheckedCreateWithoutDental_labsInput> | Prisma.componentsCreateWithoutDental_labsInput[] | Prisma.componentsUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.componentsCreateOrConnectWithoutDental_labsInput | Prisma.componentsCreateOrConnectWithoutDental_labsInput[]
-  upsert?: Prisma.componentsUpsertWithWhereUniqueWithoutDental_labsInput | Prisma.componentsUpsertWithWhereUniqueWithoutDental_labsInput[]
-  createMany?: Prisma.componentsCreateManyDental_labsInputEnvelope
+export type componentsUpdateManyWithoutLabsNestedInput = {
+  create?: Prisma.XOR<Prisma.componentsCreateWithoutLabsInput, Prisma.componentsUncheckedCreateWithoutLabsInput> | Prisma.componentsCreateWithoutLabsInput[] | Prisma.componentsUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.componentsCreateOrConnectWithoutLabsInput | Prisma.componentsCreateOrConnectWithoutLabsInput[]
+  upsert?: Prisma.componentsUpsertWithWhereUniqueWithoutLabsInput | Prisma.componentsUpsertWithWhereUniqueWithoutLabsInput[]
+  createMany?: Prisma.componentsCreateManyLabsInputEnvelope
   set?: Prisma.componentsWhereUniqueInput | Prisma.componentsWhereUniqueInput[]
   disconnect?: Prisma.componentsWhereUniqueInput | Prisma.componentsWhereUniqueInput[]
   delete?: Prisma.componentsWhereUniqueInput | Prisma.componentsWhereUniqueInput[]
   connect?: Prisma.componentsWhereUniqueInput | Prisma.componentsWhereUniqueInput[]
-  update?: Prisma.componentsUpdateWithWhereUniqueWithoutDental_labsInput | Prisma.componentsUpdateWithWhereUniqueWithoutDental_labsInput[]
-  updateMany?: Prisma.componentsUpdateManyWithWhereWithoutDental_labsInput | Prisma.componentsUpdateManyWithWhereWithoutDental_labsInput[]
+  update?: Prisma.componentsUpdateWithWhereUniqueWithoutLabsInput | Prisma.componentsUpdateWithWhereUniqueWithoutLabsInput[]
+  updateMany?: Prisma.componentsUpdateManyWithWhereWithoutLabsInput | Prisma.componentsUpdateManyWithWhereWithoutLabsInput[]
   deleteMany?: Prisma.componentsScalarWhereInput | Prisma.componentsScalarWhereInput[]
 }
 
-export type componentsUncheckedUpdateManyWithoutDental_labsNestedInput = {
-  create?: Prisma.XOR<Prisma.componentsCreateWithoutDental_labsInput, Prisma.componentsUncheckedCreateWithoutDental_labsInput> | Prisma.componentsCreateWithoutDental_labsInput[] | Prisma.componentsUncheckedCreateWithoutDental_labsInput[]
-  connectOrCreate?: Prisma.componentsCreateOrConnectWithoutDental_labsInput | Prisma.componentsCreateOrConnectWithoutDental_labsInput[]
-  upsert?: Prisma.componentsUpsertWithWhereUniqueWithoutDental_labsInput | Prisma.componentsUpsertWithWhereUniqueWithoutDental_labsInput[]
-  createMany?: Prisma.componentsCreateManyDental_labsInputEnvelope
+export type componentsUncheckedUpdateManyWithoutLabsNestedInput = {
+  create?: Prisma.XOR<Prisma.componentsCreateWithoutLabsInput, Prisma.componentsUncheckedCreateWithoutLabsInput> | Prisma.componentsCreateWithoutLabsInput[] | Prisma.componentsUncheckedCreateWithoutLabsInput[]
+  connectOrCreate?: Prisma.componentsCreateOrConnectWithoutLabsInput | Prisma.componentsCreateOrConnectWithoutLabsInput[]
+  upsert?: Prisma.componentsUpsertWithWhereUniqueWithoutLabsInput | Prisma.componentsUpsertWithWhereUniqueWithoutLabsInput[]
+  createMany?: Prisma.componentsCreateManyLabsInputEnvelope
   set?: Prisma.componentsWhereUniqueInput | Prisma.componentsWhereUniqueInput[]
   disconnect?: Prisma.componentsWhereUniqueInput | Prisma.componentsWhereUniqueInput[]
   delete?: Prisma.componentsWhereUniqueInput | Prisma.componentsWhereUniqueInput[]
   connect?: Prisma.componentsWhereUniqueInput | Prisma.componentsWhereUniqueInput[]
-  update?: Prisma.componentsUpdateWithWhereUniqueWithoutDental_labsInput | Prisma.componentsUpdateWithWhereUniqueWithoutDental_labsInput[]
-  updateMany?: Prisma.componentsUpdateManyWithWhereWithoutDental_labsInput | Prisma.componentsUpdateManyWithWhereWithoutDental_labsInput[]
+  update?: Prisma.componentsUpdateWithWhereUniqueWithoutLabsInput | Prisma.componentsUpdateWithWhereUniqueWithoutLabsInput[]
+  updateMany?: Prisma.componentsUpdateManyWithWhereWithoutLabsInput | Prisma.componentsUpdateManyWithWhereWithoutLabsInput[]
   deleteMany?: Prisma.componentsScalarWhereInput | Prisma.componentsScalarWhereInput[]
 }
 
@@ -559,56 +581,58 @@ export type componentsUpdateOneRequiredWithoutCaseUsagesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.componentsUpdateToOneWithWhereWithoutCaseUsagesInput, Prisma.componentsUpdateWithoutCaseUsagesInput>, Prisma.componentsUncheckedUpdateWithoutCaseUsagesInput>
 }
 
-export type componentsCreateWithoutDental_labsInput = {
+export type componentsCreateWithoutLabsInput = {
   id?: string
   name: string
   category?: string | null
   brand?: string | null
-  defaultCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  default_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseUsages?: Prisma.case_component_usagesCreateNestedManyWithoutComponentsInput
 }
 
-export type componentsUncheckedCreateWithoutDental_labsInput = {
+export type componentsUncheckedCreateWithoutLabsInput = {
   id?: string
   name: string
   category?: string | null
   brand?: string | null
-  defaultCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  default_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
   caseUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutComponentsInput
 }
 
-export type componentsCreateOrConnectWithoutDental_labsInput = {
+export type componentsCreateOrConnectWithoutLabsInput = {
   where: Prisma.componentsWhereUniqueInput
-  create: Prisma.XOR<Prisma.componentsCreateWithoutDental_labsInput, Prisma.componentsUncheckedCreateWithoutDental_labsInput>
+  create: Prisma.XOR<Prisma.componentsCreateWithoutLabsInput, Prisma.componentsUncheckedCreateWithoutLabsInput>
 }
 
-export type componentsCreateManyDental_labsInputEnvelope = {
-  data: Prisma.componentsCreateManyDental_labsInput | Prisma.componentsCreateManyDental_labsInput[]
+export type componentsCreateManyLabsInputEnvelope = {
+  data: Prisma.componentsCreateManyLabsInput | Prisma.componentsCreateManyLabsInput[]
   skipDuplicates?: boolean
 }
 
-export type componentsUpsertWithWhereUniqueWithoutDental_labsInput = {
+export type componentsUpsertWithWhereUniqueWithoutLabsInput = {
   where: Prisma.componentsWhereUniqueInput
-  update: Prisma.XOR<Prisma.componentsUpdateWithoutDental_labsInput, Prisma.componentsUncheckedUpdateWithoutDental_labsInput>
-  create: Prisma.XOR<Prisma.componentsCreateWithoutDental_labsInput, Prisma.componentsUncheckedCreateWithoutDental_labsInput>
+  update: Prisma.XOR<Prisma.componentsUpdateWithoutLabsInput, Prisma.componentsUncheckedUpdateWithoutLabsInput>
+  create: Prisma.XOR<Prisma.componentsCreateWithoutLabsInput, Prisma.componentsUncheckedCreateWithoutLabsInput>
 }
 
-export type componentsUpdateWithWhereUniqueWithoutDental_labsInput = {
+export type componentsUpdateWithWhereUniqueWithoutLabsInput = {
   where: Prisma.componentsWhereUniqueInput
-  data: Prisma.XOR<Prisma.componentsUpdateWithoutDental_labsInput, Prisma.componentsUncheckedUpdateWithoutDental_labsInput>
+  data: Prisma.XOR<Prisma.componentsUpdateWithoutLabsInput, Prisma.componentsUncheckedUpdateWithoutLabsInput>
 }
 
-export type componentsUpdateManyWithWhereWithoutDental_labsInput = {
+export type componentsUpdateManyWithWhereWithoutLabsInput = {
   where: Prisma.componentsScalarWhereInput
-  data: Prisma.XOR<Prisma.componentsUpdateManyMutationInput, Prisma.componentsUncheckedUpdateManyWithoutDental_labsInput>
+  data: Prisma.XOR<Prisma.componentsUpdateManyMutationInput, Prisma.componentsUncheckedUpdateManyWithoutLabsInput>
 }
 
 export type componentsScalarWhereInput = {
@@ -616,15 +640,16 @@ export type componentsScalarWhereInput = {
   OR?: Prisma.componentsScalarWhereInput[]
   NOT?: Prisma.componentsScalarWhereInput | Prisma.componentsScalarWhereInput[]
   id?: Prisma.StringFilter<"components"> | string
-  dentalLabId?: Prisma.StringFilter<"components"> | string
+  lab_id?: Prisma.StringFilter<"components"> | string
   name?: Prisma.StringFilter<"components"> | string
   category?: Prisma.StringNullableFilter<"components"> | string | null
   brand?: Prisma.StringNullableFilter<"components"> | string | null
-  defaultCost?: Prisma.DecimalNullableFilter<"components"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: Prisma.DecimalNullableFilter<"components"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFilter<"components"> | boolean
-  createdAt?: Prisma.DateTimeFilter<"components"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"components"> | Date | string
+  default_cost?: Prisma.DecimalNullableFilter<"components"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: Prisma.DecimalNullableFilter<"components"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFilter<"components"> | boolean
+  deleted_at?: Prisma.DateTimeNullableFilter<"components"> | Date | string | null
+  created_at?: Prisma.DateTimeFilter<"components"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"components"> | Date | string
 }
 
 export type componentsCreateWithoutCaseUsagesInput = {
@@ -632,25 +657,27 @@ export type componentsCreateWithoutCaseUsagesInput = {
   name: string
   category?: string | null
   brand?: string | null
-  defaultCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  dental_labs: Prisma.dental_labsCreateNestedOneWithoutComponentsInput
+  default_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutComponentsInput
 }
 
 export type componentsUncheckedCreateWithoutCaseUsagesInput = {
   id?: string
-  dentalLabId: string
+  lab_id: string
   name: string
   category?: string | null
   brand?: string | null
-  defaultCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  default_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type componentsCreateOrConnectWithoutCaseUsagesInput = {
@@ -674,75 +701,81 @@ export type componentsUpdateWithoutCaseUsagesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  defaultCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  dental_labs?: Prisma.dental_labsUpdateOneRequiredWithoutComponentsNestedInput
+  default_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutComponentsNestedInput
 }
 
 export type componentsUncheckedUpdateWithoutCaseUsagesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  dentalLabId?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  defaultCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  default_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type componentsCreateManyDental_labsInput = {
+export type componentsCreateManyLabsInput = {
   id?: string
   name: string
   category?: string | null
   brand?: string | null
-  defaultCost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
+  default_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
-export type componentsUpdateWithoutDental_labsInput = {
+export type componentsUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  defaultCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  default_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseUsages?: Prisma.case_component_usagesUpdateManyWithoutComponentsNestedInput
 }
 
-export type componentsUncheckedUpdateWithoutDental_labsInput = {
+export type componentsUncheckedUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  defaultCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  default_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutComponentsNestedInput
 }
 
-export type componentsUncheckedUpdateManyWithoutDental_labsInput = {
+export type componentsUncheckedUpdateManyWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  defaultCost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  defaultPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  default_cost?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  default_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -778,91 +811,96 @@ export type ComponentsCountOutputTypeCountCaseUsagesArgs<ExtArgs extends runtime
 
 export type componentsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  dentalLabId?: boolean
+  lab_id?: boolean
   name?: boolean
   category?: boolean
   brand?: boolean
-  defaultCost?: boolean
-  defaultPrice?: boolean
-  isActive?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  default_cost?: boolean
+  default_price?: boolean
+  is_active?: boolean
+  deleted_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   caseUsages?: boolean | Prisma.components$caseUsagesArgs<ExtArgs>
   _count?: boolean | Prisma.ComponentsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["components"]>
 
 export type componentsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  dentalLabId?: boolean
+  lab_id?: boolean
   name?: boolean
   category?: boolean
   brand?: boolean
-  defaultCost?: boolean
-  defaultPrice?: boolean
-  isActive?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  default_cost?: boolean
+  default_price?: boolean
+  is_active?: boolean
+  deleted_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["components"]>
 
 export type componentsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  dentalLabId?: boolean
+  lab_id?: boolean
   name?: boolean
   category?: boolean
   brand?: boolean
-  defaultCost?: boolean
-  defaultPrice?: boolean
-  isActive?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  default_cost?: boolean
+  default_price?: boolean
+  is_active?: boolean
+  deleted_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["components"]>
 
 export type componentsSelectScalar = {
   id?: boolean
-  dentalLabId?: boolean
+  lab_id?: boolean
   name?: boolean
   category?: boolean
   brand?: boolean
-  defaultCost?: boolean
-  defaultPrice?: boolean
-  isActive?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
+  default_cost?: boolean
+  default_price?: boolean
+  is_active?: boolean
+  deleted_at?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }
 
-export type componentsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "dentalLabId" | "name" | "category" | "brand" | "defaultCost" | "defaultPrice" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["components"]>
+export type componentsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "name" | "category" | "brand" | "default_cost" | "default_price" | "is_active" | "deleted_at" | "created_at" | "updated_at", ExtArgs["result"]["components"]>
 export type componentsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   caseUsages?: boolean | Prisma.components$caseUsagesArgs<ExtArgs>
   _count?: boolean | Prisma.ComponentsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type componentsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
 }
 export type componentsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  dental_labs?: boolean | Prisma.dental_labsDefaultArgs<ExtArgs>
+  labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
 }
 
 export type $componentsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "components"
   objects: {
-    dental_labs: Prisma.$dental_labsPayload<ExtArgs>
+    labs: Prisma.$labsPayload<ExtArgs>
     caseUsages: Prisma.$case_component_usagesPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    dentalLabId: string
+    lab_id: string
     name: string
     category: string | null
     brand: string | null
-    defaultCost: runtime.Decimal | null
-    defaultPrice: runtime.Decimal | null
-    isActive: boolean
-    createdAt: Date
-    updatedAt: Date
+    default_cost: runtime.Decimal | null
+    default_price: runtime.Decimal | null
+    is_active: boolean
+    deleted_at: Date | null
+    created_at: Date
+    updated_at: Date
   }, ExtArgs["result"]["components"]>
   composites: {}
 }
@@ -1257,7 +1295,7 @@ readonly fields: componentsFieldRefs;
  */
 export interface Prisma__componentsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  dental_labs<T extends Prisma.dental_labsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.dental_labsDefaultArgs<ExtArgs>>): Prisma.Prisma__dental_labsClient<runtime.Types.Result.GetResult<Prisma.$dental_labsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  labs<T extends Prisma.labsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labsDefaultArgs<ExtArgs>>): Prisma.Prisma__labsClient<runtime.Types.Result.GetResult<Prisma.$labsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   caseUsages<T extends Prisma.components$caseUsagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.components$caseUsagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_component_usagesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1289,15 +1327,16 @@ export interface Prisma__componentsClient<T, Null = never, ExtArgs extends runti
  */
 export interface componentsFieldRefs {
   readonly id: Prisma.FieldRef<"components", 'String'>
-  readonly dentalLabId: Prisma.FieldRef<"components", 'String'>
+  readonly lab_id: Prisma.FieldRef<"components", 'String'>
   readonly name: Prisma.FieldRef<"components", 'String'>
   readonly category: Prisma.FieldRef<"components", 'String'>
   readonly brand: Prisma.FieldRef<"components", 'String'>
-  readonly defaultCost: Prisma.FieldRef<"components", 'Decimal'>
-  readonly defaultPrice: Prisma.FieldRef<"components", 'Decimal'>
-  readonly isActive: Prisma.FieldRef<"components", 'Boolean'>
-  readonly createdAt: Prisma.FieldRef<"components", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"components", 'DateTime'>
+  readonly default_cost: Prisma.FieldRef<"components", 'Decimal'>
+  readonly default_price: Prisma.FieldRef<"components", 'Decimal'>
+  readonly is_active: Prisma.FieldRef<"components", 'Boolean'>
+  readonly deleted_at: Prisma.FieldRef<"components", 'DateTime'>
+  readonly created_at: Prisma.FieldRef<"components", 'DateTime'>
+  readonly updated_at: Prisma.FieldRef<"components", 'DateTime'>
 }
     
 

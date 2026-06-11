@@ -314,7 +314,7 @@ function ContactForm() {
         >
           <option value="">Select...</option>
           <option value="lab">Dental lab</option>
-          <option value="clinic">Dental clinic</option>
+          <option value="customer">Dental customer</option>
           <option value="other">Other</option>
         </select>
       </div>
@@ -413,7 +413,7 @@ const TESTIMONIALS = [
     quote:
       "Our remakes dropped significantly after we started sending complex cases to Vela. Zero rework on full-arch implant cases.",
     name: "Dr. Sarah C.",
-    role: "Clinic Director — United States",
+    role: "customer Director — United States",
   },
   {
     quote:
@@ -445,7 +445,7 @@ const PROOF_CASES = [
 export function VelaLanding() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [serviceTab, setServiceTab] = useState<"labs" | "clinics">("labs");
+  const [serviceTab, setServiceTab] = useState<"labs" | "customers">("labs");
   const [testimonialIdx, setTestimonialIdx] = useState(0);
 
   useEffect(() => {
@@ -537,7 +537,7 @@ export function VelaLanding() {
             className="hidden md:flex"
             style={{ gap: "4px", alignItems: "center" }}
           >
-            {(["Services", "Work", "Labs", "Clinics", "About"] as const).map(
+            {(["Services", "Work", "Labs", "customers", "About"] as const).map(
               (label) => (
                 <a
                   key={label}
@@ -620,7 +620,7 @@ export function VelaLanding() {
               flexDirection: "column",
             }}
           >
-            {(["Services", "Work", "Labs", "Clinics", "About"] as const).map(
+            {(["Services", "Work", "Labs", "customers", "About"] as const).map(
               (label) => (
                 <a
                   key={label}
@@ -699,7 +699,7 @@ export function VelaLanding() {
                   margin: "0 0 32px",
                 }}
               >
-                Precision digital prosthetic design for dental labs and clinics.
+                Precision digital prosthetic design for dental labs and customers.
                 Zero rework. Every time.
               </p>
             </FadeUp>
@@ -903,7 +903,7 @@ export function VelaLanding() {
             Services
           </div>
           <h2 style={{ ...h2Style, marginBottom: "24px" }}>
-            Everything your lab or clinic needs
+            Everything your lab or customer needs
           </h2>
 
           {/* Audience toggle */}
@@ -917,7 +917,7 @@ export function VelaLanding() {
               marginBottom: "40px",
             }}
           >
-            {(["labs", "clinics"] as const).map((tab) => (
+            {(["labs", "customers"] as const).map((tab) => (
               <button
                 key={tab}
                 type="button"
@@ -935,7 +935,7 @@ export function VelaLanding() {
                   color: serviceTab === tab ? "#fff" : C.text3,
                 }}
               >
-                For {tab === "labs" ? "Labs" : "Clinics"}
+                For {tab === "labs" ? "Labs" : "customers"}
               </button>
             ))}
           </div>
@@ -1382,7 +1382,7 @@ export function VelaLanding() {
                   maxWidth: "210px",
                 }}
               >
-                Precision digital prosthetic design for dental labs and clinics.
+                Precision digital prosthetic design for dental labs and customers.
               </p>
             </div>
 
@@ -1444,7 +1444,7 @@ export function VelaLanding() {
                 { label: "About", href: "#about" },
                 { label: "Work", href: "#work" },
                 { label: "Labs", href: "#labs" },
-                { label: "Clinics", href: "#clinics" },
+                { label: "customers", href: "#customers" },
               ].map((item) => (
                 <a
                   key={item.label}

@@ -26,58 +26,58 @@ export type AggregateCase_status_histories = {
 
 export type Case_status_historiesMinAggregateOutputType = {
   id: string | null
-  caseId: string | null
-  fromStatus: $Enums.CaseStatus | null
-  toStatus: $Enums.CaseStatus | null
+  case_id: string | null
+  from_status: $Enums.CaseStatus | null
+  to_status: $Enums.CaseStatus | null
   note: string | null
-  changedAt: Date | null
+  changed_at: Date | null
 }
 
 export type Case_status_historiesMaxAggregateOutputType = {
   id: string | null
-  caseId: string | null
-  fromStatus: $Enums.CaseStatus | null
-  toStatus: $Enums.CaseStatus | null
+  case_id: string | null
+  from_status: $Enums.CaseStatus | null
+  to_status: $Enums.CaseStatus | null
   note: string | null
-  changedAt: Date | null
+  changed_at: Date | null
 }
 
 export type Case_status_historiesCountAggregateOutputType = {
   id: number
-  caseId: number
-  fromStatus: number
-  toStatus: number
+  case_id: number
+  from_status: number
+  to_status: number
   note: number
-  changedAt: number
+  changed_at: number
   _all: number
 }
 
 
 export type Case_status_historiesMinAggregateInputType = {
   id?: true
-  caseId?: true
-  fromStatus?: true
-  toStatus?: true
+  case_id?: true
+  from_status?: true
+  to_status?: true
   note?: true
-  changedAt?: true
+  changed_at?: true
 }
 
 export type Case_status_historiesMaxAggregateInputType = {
   id?: true
-  caseId?: true
-  fromStatus?: true
-  toStatus?: true
+  case_id?: true
+  from_status?: true
+  to_status?: true
   note?: true
-  changedAt?: true
+  changed_at?: true
 }
 
 export type Case_status_historiesCountAggregateInputType = {
   id?: true
-  caseId?: true
-  fromStatus?: true
-  toStatus?: true
+  case_id?: true
+  from_status?: true
+  to_status?: true
   note?: true
-  changedAt?: true
+  changed_at?: true
   _all?: true
 }
 
@@ -155,11 +155,11 @@ export type case_status_historiesGroupByArgs<ExtArgs extends runtime.Types.Exten
 
 export type Case_status_historiesGroupByOutputType = {
   id: string
-  caseId: string
-  fromStatus: $Enums.CaseStatus | null
-  toStatus: $Enums.CaseStatus
+  case_id: string
+  from_status: $Enums.CaseStatus | null
+  to_status: $Enums.CaseStatus
   note: string | null
-  changedAt: Date
+  changed_at: Date
   _count: Case_status_historiesCountAggregateOutputType | null
   _min: Case_status_historiesMinAggregateOutputType | null
   _max: Case_status_historiesMaxAggregateOutputType | null
@@ -185,21 +185,21 @@ export type case_status_historiesWhereInput = {
   OR?: Prisma.case_status_historiesWhereInput[]
   NOT?: Prisma.case_status_historiesWhereInput | Prisma.case_status_historiesWhereInput[]
   id?: Prisma.StringFilter<"case_status_histories"> | string
-  caseId?: Prisma.StringFilter<"case_status_histories"> | string
-  fromStatus?: Prisma.EnumCaseStatusNullableFilter<"case_status_histories"> | $Enums.CaseStatus | null
-  toStatus?: Prisma.EnumCaseStatusFilter<"case_status_histories"> | $Enums.CaseStatus
+  case_id?: Prisma.StringFilter<"case_status_histories"> | string
+  from_status?: Prisma.EnumCaseStatusNullableFilter<"case_status_histories"> | $Enums.CaseStatus | null
+  to_status?: Prisma.EnumCaseStatusFilter<"case_status_histories"> | $Enums.CaseStatus
   note?: Prisma.StringNullableFilter<"case_status_histories"> | string | null
-  changedAt?: Prisma.DateTimeFilter<"case_status_histories"> | Date | string
+  changed_at?: Prisma.DateTimeFilter<"case_status_histories"> | Date | string
   cases?: Prisma.XOR<Prisma.CasesScalarRelationFilter, Prisma.casesWhereInput>
 }
 
 export type case_status_historiesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  fromStatus?: Prisma.SortOrderInput | Prisma.SortOrder
-  toStatus?: Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  from_status?: Prisma.SortOrderInput | Prisma.SortOrder
+  to_status?: Prisma.SortOrder
   note?: Prisma.SortOrderInput | Prisma.SortOrder
-  changedAt?: Prisma.SortOrder
+  changed_at?: Prisma.SortOrder
   cases?: Prisma.casesOrderByWithRelationInput
 }
 
@@ -208,21 +208,21 @@ export type case_status_historiesWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.case_status_historiesWhereInput | Prisma.case_status_historiesWhereInput[]
   OR?: Prisma.case_status_historiesWhereInput[]
   NOT?: Prisma.case_status_historiesWhereInput | Prisma.case_status_historiesWhereInput[]
-  caseId?: Prisma.StringFilter<"case_status_histories"> | string
-  fromStatus?: Prisma.EnumCaseStatusNullableFilter<"case_status_histories"> | $Enums.CaseStatus | null
-  toStatus?: Prisma.EnumCaseStatusFilter<"case_status_histories"> | $Enums.CaseStatus
+  case_id?: Prisma.StringFilter<"case_status_histories"> | string
+  from_status?: Prisma.EnumCaseStatusNullableFilter<"case_status_histories"> | $Enums.CaseStatus | null
+  to_status?: Prisma.EnumCaseStatusFilter<"case_status_histories"> | $Enums.CaseStatus
   note?: Prisma.StringNullableFilter<"case_status_histories"> | string | null
-  changedAt?: Prisma.DateTimeFilter<"case_status_histories"> | Date | string
+  changed_at?: Prisma.DateTimeFilter<"case_status_histories"> | Date | string
   cases?: Prisma.XOR<Prisma.CasesScalarRelationFilter, Prisma.casesWhereInput>
 }, "id">
 
 export type case_status_historiesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  fromStatus?: Prisma.SortOrderInput | Prisma.SortOrder
-  toStatus?: Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  from_status?: Prisma.SortOrderInput | Prisma.SortOrder
+  to_status?: Prisma.SortOrder
   note?: Prisma.SortOrderInput | Prisma.SortOrder
-  changedAt?: Prisma.SortOrder
+  changed_at?: Prisma.SortOrder
   _count?: Prisma.case_status_historiesCountOrderByAggregateInput
   _max?: Prisma.case_status_historiesMaxOrderByAggregateInput
   _min?: Prisma.case_status_historiesMinOrderByAggregateInput
@@ -233,73 +233,73 @@ export type case_status_historiesScalarWhereWithAggregatesInput = {
   OR?: Prisma.case_status_historiesScalarWhereWithAggregatesInput[]
   NOT?: Prisma.case_status_historiesScalarWhereWithAggregatesInput | Prisma.case_status_historiesScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"case_status_histories"> | string
-  caseId?: Prisma.StringWithAggregatesFilter<"case_status_histories"> | string
-  fromStatus?: Prisma.EnumCaseStatusNullableWithAggregatesFilter<"case_status_histories"> | $Enums.CaseStatus | null
-  toStatus?: Prisma.EnumCaseStatusWithAggregatesFilter<"case_status_histories"> | $Enums.CaseStatus
+  case_id?: Prisma.StringWithAggregatesFilter<"case_status_histories"> | string
+  from_status?: Prisma.EnumCaseStatusNullableWithAggregatesFilter<"case_status_histories"> | $Enums.CaseStatus | null
+  to_status?: Prisma.EnumCaseStatusWithAggregatesFilter<"case_status_histories"> | $Enums.CaseStatus
   note?: Prisma.StringNullableWithAggregatesFilter<"case_status_histories"> | string | null
-  changedAt?: Prisma.DateTimeWithAggregatesFilter<"case_status_histories"> | Date | string
+  changed_at?: Prisma.DateTimeWithAggregatesFilter<"case_status_histories"> | Date | string
 }
 
 export type case_status_historiesCreateInput = {
   id?: string
-  fromStatus?: $Enums.CaseStatus | null
-  toStatus: $Enums.CaseStatus
+  from_status?: $Enums.CaseStatus | null
+  to_status: $Enums.CaseStatus
   note?: string | null
-  changedAt?: Date | string
+  changed_at?: Date | string
   cases: Prisma.casesCreateNestedOneWithoutStatusHistoryInput
 }
 
 export type case_status_historiesUncheckedCreateInput = {
   id?: string
-  caseId: string
-  fromStatus?: $Enums.CaseStatus | null
-  toStatus: $Enums.CaseStatus
+  case_id: string
+  from_status?: $Enums.CaseStatus | null
+  to_status: $Enums.CaseStatus
   note?: string | null
-  changedAt?: Date | string
+  changed_at?: Date | string
 }
 
 export type case_status_historiesUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  fromStatus?: Prisma.NullableEnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus | null
-  toStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  from_status?: Prisma.NullableEnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus | null
+  to_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  changedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  changed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUpdateOneRequiredWithoutStatusHistoryNestedInput
 }
 
 export type case_status_historiesUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  fromStatus?: Prisma.NullableEnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus | null
-  toStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  from_status?: Prisma.NullableEnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus | null
+  to_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  changedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  changed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_status_historiesCreateManyInput = {
   id?: string
-  caseId: string
-  fromStatus?: $Enums.CaseStatus | null
-  toStatus: $Enums.CaseStatus
+  case_id: string
+  from_status?: $Enums.CaseStatus | null
+  to_status: $Enums.CaseStatus
   note?: string | null
-  changedAt?: Date | string
+  changed_at?: Date | string
 }
 
 export type case_status_historiesUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  fromStatus?: Prisma.NullableEnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus | null
-  toStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  from_status?: Prisma.NullableEnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus | null
+  to_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  changedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  changed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_status_historiesUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  fromStatus?: Prisma.NullableEnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus | null
-  toStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  from_status?: Prisma.NullableEnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus | null
+  to_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  changedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  changed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type Case_status_historiesListRelationFilter = {
@@ -314,29 +314,29 @@ export type case_status_historiesOrderByRelationAggregateInput = {
 
 export type case_status_historiesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  fromStatus?: Prisma.SortOrder
-  toStatus?: Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  from_status?: Prisma.SortOrder
+  to_status?: Prisma.SortOrder
   note?: Prisma.SortOrder
-  changedAt?: Prisma.SortOrder
+  changed_at?: Prisma.SortOrder
 }
 
 export type case_status_historiesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  fromStatus?: Prisma.SortOrder
-  toStatus?: Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  from_status?: Prisma.SortOrder
+  to_status?: Prisma.SortOrder
   note?: Prisma.SortOrder
-  changedAt?: Prisma.SortOrder
+  changed_at?: Prisma.SortOrder
 }
 
 export type case_status_historiesMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  fromStatus?: Prisma.SortOrder
-  toStatus?: Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  from_status?: Prisma.SortOrder
+  to_status?: Prisma.SortOrder
   note?: Prisma.SortOrder
-  changedAt?: Prisma.SortOrder
+  changed_at?: Prisma.SortOrder
 }
 
 export type case_status_historiesCreateNestedManyWithoutCasesInput = {
@@ -387,18 +387,18 @@ export type NullableEnumCaseStatusFieldUpdateOperationsInput = {
 
 export type case_status_historiesCreateWithoutCasesInput = {
   id?: string
-  fromStatus?: $Enums.CaseStatus | null
-  toStatus: $Enums.CaseStatus
+  from_status?: $Enums.CaseStatus | null
+  to_status: $Enums.CaseStatus
   note?: string | null
-  changedAt?: Date | string
+  changed_at?: Date | string
 }
 
 export type case_status_historiesUncheckedCreateWithoutCasesInput = {
   id?: string
-  fromStatus?: $Enums.CaseStatus | null
-  toStatus: $Enums.CaseStatus
+  from_status?: $Enums.CaseStatus | null
+  to_status: $Enums.CaseStatus
   note?: string | null
-  changedAt?: Date | string
+  changed_at?: Date | string
 }
 
 export type case_status_historiesCreateOrConnectWithoutCasesInput = {
@@ -432,87 +432,87 @@ export type case_status_historiesScalarWhereInput = {
   OR?: Prisma.case_status_historiesScalarWhereInput[]
   NOT?: Prisma.case_status_historiesScalarWhereInput | Prisma.case_status_historiesScalarWhereInput[]
   id?: Prisma.StringFilter<"case_status_histories"> | string
-  caseId?: Prisma.StringFilter<"case_status_histories"> | string
-  fromStatus?: Prisma.EnumCaseStatusNullableFilter<"case_status_histories"> | $Enums.CaseStatus | null
-  toStatus?: Prisma.EnumCaseStatusFilter<"case_status_histories"> | $Enums.CaseStatus
+  case_id?: Prisma.StringFilter<"case_status_histories"> | string
+  from_status?: Prisma.EnumCaseStatusNullableFilter<"case_status_histories"> | $Enums.CaseStatus | null
+  to_status?: Prisma.EnumCaseStatusFilter<"case_status_histories"> | $Enums.CaseStatus
   note?: Prisma.StringNullableFilter<"case_status_histories"> | string | null
-  changedAt?: Prisma.DateTimeFilter<"case_status_histories"> | Date | string
+  changed_at?: Prisma.DateTimeFilter<"case_status_histories"> | Date | string
 }
 
 export type case_status_historiesCreateManyCasesInput = {
   id?: string
-  fromStatus?: $Enums.CaseStatus | null
-  toStatus: $Enums.CaseStatus
+  from_status?: $Enums.CaseStatus | null
+  to_status: $Enums.CaseStatus
   note?: string | null
-  changedAt?: Date | string
+  changed_at?: Date | string
 }
 
 export type case_status_historiesUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  fromStatus?: Prisma.NullableEnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus | null
-  toStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  from_status?: Prisma.NullableEnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus | null
+  to_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  changedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  changed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_status_historiesUncheckedUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  fromStatus?: Prisma.NullableEnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus | null
-  toStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  from_status?: Prisma.NullableEnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus | null
+  to_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  changedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  changed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_status_historiesUncheckedUpdateManyWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  fromStatus?: Prisma.NullableEnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus | null
-  toStatus?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  from_status?: Prisma.NullableEnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus | null
+  to_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  changedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  changed_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
 
 export type case_status_historiesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  caseId?: boolean
-  fromStatus?: boolean
-  toStatus?: boolean
+  case_id?: boolean
+  from_status?: boolean
+  to_status?: boolean
   note?: boolean
-  changedAt?: boolean
+  changed_at?: boolean
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["case_status_histories"]>
 
 export type case_status_historiesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  caseId?: boolean
-  fromStatus?: boolean
-  toStatus?: boolean
+  case_id?: boolean
+  from_status?: boolean
+  to_status?: boolean
   note?: boolean
-  changedAt?: boolean
+  changed_at?: boolean
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["case_status_histories"]>
 
 export type case_status_historiesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  caseId?: boolean
-  fromStatus?: boolean
-  toStatus?: boolean
+  case_id?: boolean
+  from_status?: boolean
+  to_status?: boolean
   note?: boolean
-  changedAt?: boolean
+  changed_at?: boolean
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["case_status_histories"]>
 
 export type case_status_historiesSelectScalar = {
   id?: boolean
-  caseId?: boolean
-  fromStatus?: boolean
-  toStatus?: boolean
+  case_id?: boolean
+  from_status?: boolean
+  to_status?: boolean
   note?: boolean
-  changedAt?: boolean
+  changed_at?: boolean
 }
 
-export type case_status_historiesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "caseId" | "fromStatus" | "toStatus" | "note" | "changedAt", ExtArgs["result"]["case_status_histories"]>
+export type case_status_historiesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "case_id" | "from_status" | "to_status" | "note" | "changed_at", ExtArgs["result"]["case_status_histories"]>
 export type case_status_historiesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
 }
@@ -530,11 +530,11 @@ export type $case_status_historiesPayload<ExtArgs extends runtime.Types.Extensio
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    caseId: string
-    fromStatus: $Enums.CaseStatus | null
-    toStatus: $Enums.CaseStatus
+    case_id: string
+    from_status: $Enums.CaseStatus | null
+    to_status: $Enums.CaseStatus
     note: string | null
-    changedAt: Date
+    changed_at: Date
   }, ExtArgs["result"]["case_status_histories"]>
   composites: {}
 }
@@ -960,11 +960,11 @@ export interface Prisma__case_status_historiesClient<T, Null = never, ExtArgs ex
  */
 export interface case_status_historiesFieldRefs {
   readonly id: Prisma.FieldRef<"case_status_histories", 'String'>
-  readonly caseId: Prisma.FieldRef<"case_status_histories", 'String'>
-  readonly fromStatus: Prisma.FieldRef<"case_status_histories", 'CaseStatus'>
-  readonly toStatus: Prisma.FieldRef<"case_status_histories", 'CaseStatus'>
+  readonly case_id: Prisma.FieldRef<"case_status_histories", 'String'>
+  readonly from_status: Prisma.FieldRef<"case_status_histories", 'CaseStatus'>
+  readonly to_status: Prisma.FieldRef<"case_status_histories", 'CaseStatus'>
   readonly note: Prisma.FieldRef<"case_status_histories", 'String'>
-  readonly changedAt: Prisma.FieldRef<"case_status_histories", 'DateTime'>
+  readonly changed_at: Prisma.FieldRef<"case_status_histories", 'DateTime'>
 }
     
 

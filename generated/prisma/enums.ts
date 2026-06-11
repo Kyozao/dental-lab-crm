@@ -30,6 +30,18 @@ export const MillingStatus = {
 export type MillingStatus = (typeof MillingStatus)[keyof typeof MillingStatus]
 
 
+export const CaseProcessStatus = {
+  LOCKED: 'LOCKED',
+  READY: 'READY',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  SKIPPED: 'SKIPPED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type CaseProcessStatus = (typeof CaseProcessStatus)[keyof typeof CaseProcessStatus]
+
+
 export const UserRole = {
   ADMIN: 'ADMIN',
   MANAGER: 'MANAGER',

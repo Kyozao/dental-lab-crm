@@ -21,9 +21,9 @@ export default function RegistryPage() {
         description="Read-only mock registry data. API-backed create/edit/delete is disabled for now."
       />
 
-      <Tabs defaultValue="clinics" className="w-full">
+      <Tabs defaultValue="customers" className="w-full">
         <TabsList className="grid h-auto w-full grid-cols-2 gap-1 sm:grid-cols-3 lg:grid-cols-6">
-          <TabsTrigger value="clinics">Clinics</TabsTrigger>
+          <TabsTrigger value="customers">customers</TabsTrigger>
           <TabsTrigger value="dentists">Dentists</TabsTrigger>
           <TabsTrigger value="components">Components</TabsTrigger>
           <TabsTrigger value="block-types">Block Types</TabsTrigger>
@@ -31,17 +31,17 @@ export default function RegistryPage() {
           <TabsTrigger value="milling-drills">Drills</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="clinics">
+        <TabsContent value="customers">
           <Panel>
             <PanelHeader>
-              <h2 className="text-xl font-semibold">Clinics</h2>
+              <h2 className="text-xl font-semibold">customers</h2>
             </PanelHeader>
             <SimpleTable
               headers={["Name", "Phone", "Email"]}
-              rows={mockRegistry.clinics.map((clinic) => [
-                clinic.name,
-                clinic.phone ?? "-",
-                clinic.email ?? "-",
+              rows={mockRegistry.customers.map((customer) => [
+                customer.name,
+                customer.phone ?? "-",
+                customer.email ?? "-",
               ])}
             />
           </Panel>
@@ -53,10 +53,10 @@ export default function RegistryPage() {
               <h2 className="text-xl font-semibold">Dentists</h2>
             </PanelHeader>
             <SimpleTable
-              headers={["Name", "Clinic", "Phone", "Email"]}
+              headers={["Name", "customer", "Phone", "Email"]}
               rows={mockRegistry.dentists.map((dentist) => [
                 dentist.name,
-                dentist.clinicName,
+                dentist.customerName,
                 dentist.phone ?? "-",
                 dentist.email ?? "-",
               ])}

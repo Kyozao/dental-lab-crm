@@ -37,7 +37,7 @@ export type DentistOption = {
   name: string;
 };
 
-export type ClinicOption = {
+export type CustomerOption = {
   id: string;
   dentalLabId: string;
   labCustomerId: string | null;
@@ -122,8 +122,8 @@ export type EditableCase = {
   isUrgent: boolean;
   createdAt: string;
   updatedAt: string;
-  clinicName: string;
-  clinicId: string | null;
+  customerName: string;
+  customerId: string | null;
   dentistName: string;
   dentistId: string | null;
   serviceTypeId: string | null;
@@ -140,7 +140,7 @@ export type SearchCaseItem = {
   code: string;
   patientName: string;
   currentStatus: CaseStatusValue;
-  clinicName: string;
+  customerName: string;
 };
 
 export type CaseFormValues = {
@@ -153,7 +153,7 @@ export type CaseFormValues = {
   observations?: string | null;
   pendingNote?: string | null;
   isUrgent?: boolean;
-  clinicId?: string | null;
+  customerId?: string | null;
   dentistId?: string | null;
   serviceTypeId?: string | null;
   cadDesignerId?: string | null;

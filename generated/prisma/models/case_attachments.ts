@@ -27,105 +27,105 @@ export type AggregateCase_attachments = {
 }
 
 export type Case_attachmentsAvgAggregateOutputType = {
-  fileSize: number | null
+  file_size: number | null
 }
 
 export type Case_attachmentsSumAggregateOutputType = {
-  fileSize: number | null
+  file_size: number | null
 }
 
 export type Case_attachmentsMinAggregateOutputType = {
   id: string | null
-  caseId: string | null
-  fileName: string | null
-  filePath: string | null
-  fileType: string | null
-  fileSize: number | null
+  case_id: string | null
+  file_name: string | null
+  file_path: string | null
+  file_type: string | null
+  file_size: number | null
   kind: $Enums.AttachmentKind | null
-  retentionUntil: Date | null
-  archivedAt: Date | null
-  uploadedById: string | null
-  createdAt: Date | null
+  retention_until: Date | null
+  archived_at: Date | null
+  uploaded_by_id: string | null
+  created_at: Date | null
 }
 
 export type Case_attachmentsMaxAggregateOutputType = {
   id: string | null
-  caseId: string | null
-  fileName: string | null
-  filePath: string | null
-  fileType: string | null
-  fileSize: number | null
+  case_id: string | null
+  file_name: string | null
+  file_path: string | null
+  file_type: string | null
+  file_size: number | null
   kind: $Enums.AttachmentKind | null
-  retentionUntil: Date | null
-  archivedAt: Date | null
-  uploadedById: string | null
-  createdAt: Date | null
+  retention_until: Date | null
+  archived_at: Date | null
+  uploaded_by_id: string | null
+  created_at: Date | null
 }
 
 export type Case_attachmentsCountAggregateOutputType = {
   id: number
-  caseId: number
-  fileName: number
-  filePath: number
-  fileType: number
-  fileSize: number
+  case_id: number
+  file_name: number
+  file_path: number
+  file_type: number
+  file_size: number
   kind: number
-  retentionUntil: number
-  archivedAt: number
-  uploadedById: number
-  createdAt: number
+  retention_until: number
+  archived_at: number
+  uploaded_by_id: number
+  created_at: number
   _all: number
 }
 
 
 export type Case_attachmentsAvgAggregateInputType = {
-  fileSize?: true
+  file_size?: true
 }
 
 export type Case_attachmentsSumAggregateInputType = {
-  fileSize?: true
+  file_size?: true
 }
 
 export type Case_attachmentsMinAggregateInputType = {
   id?: true
-  caseId?: true
-  fileName?: true
-  filePath?: true
-  fileType?: true
-  fileSize?: true
+  case_id?: true
+  file_name?: true
+  file_path?: true
+  file_type?: true
+  file_size?: true
   kind?: true
-  retentionUntil?: true
-  archivedAt?: true
-  uploadedById?: true
-  createdAt?: true
+  retention_until?: true
+  archived_at?: true
+  uploaded_by_id?: true
+  created_at?: true
 }
 
 export type Case_attachmentsMaxAggregateInputType = {
   id?: true
-  caseId?: true
-  fileName?: true
-  filePath?: true
-  fileType?: true
-  fileSize?: true
+  case_id?: true
+  file_name?: true
+  file_path?: true
+  file_type?: true
+  file_size?: true
   kind?: true
-  retentionUntil?: true
-  archivedAt?: true
-  uploadedById?: true
-  createdAt?: true
+  retention_until?: true
+  archived_at?: true
+  uploaded_by_id?: true
+  created_at?: true
 }
 
 export type Case_attachmentsCountAggregateInputType = {
   id?: true
-  caseId?: true
-  fileName?: true
-  filePath?: true
-  fileType?: true
-  fileSize?: true
+  case_id?: true
+  file_name?: true
+  file_path?: true
+  file_type?: true
+  file_size?: true
   kind?: true
-  retentionUntil?: true
-  archivedAt?: true
-  uploadedById?: true
-  createdAt?: true
+  retention_until?: true
+  archived_at?: true
+  uploaded_by_id?: true
+  created_at?: true
   _all?: true
 }
 
@@ -217,16 +217,16 @@ export type case_attachmentsGroupByArgs<ExtArgs extends runtime.Types.Extensions
 
 export type Case_attachmentsGroupByOutputType = {
   id: string
-  caseId: string
-  fileName: string
-  filePath: string
-  fileType: string | null
-  fileSize: number | null
+  case_id: string
+  file_name: string
+  file_path: string
+  file_type: string | null
+  file_size: number | null
   kind: $Enums.AttachmentKind
-  retentionUntil: Date | null
-  archivedAt: Date | null
-  uploadedById: string | null
-  createdAt: Date
+  retention_until: Date | null
+  archived_at: Date | null
+  uploaded_by_id: string | null
+  created_at: Date
   _count: Case_attachmentsCountAggregateOutputType | null
   _avg: Case_attachmentsAvgAggregateOutputType | null
   _sum: Case_attachmentsSumAggregateOutputType | null
@@ -254,32 +254,32 @@ export type case_attachmentsWhereInput = {
   OR?: Prisma.case_attachmentsWhereInput[]
   NOT?: Prisma.case_attachmentsWhereInput | Prisma.case_attachmentsWhereInput[]
   id?: Prisma.StringFilter<"case_attachments"> | string
-  caseId?: Prisma.StringFilter<"case_attachments"> | string
-  fileName?: Prisma.StringFilter<"case_attachments"> | string
-  filePath?: Prisma.StringFilter<"case_attachments"> | string
-  fileType?: Prisma.StringNullableFilter<"case_attachments"> | string | null
-  fileSize?: Prisma.IntNullableFilter<"case_attachments"> | number | null
+  case_id?: Prisma.StringFilter<"case_attachments"> | string
+  file_name?: Prisma.StringFilter<"case_attachments"> | string
+  file_path?: Prisma.StringFilter<"case_attachments"> | string
+  file_type?: Prisma.StringNullableFilter<"case_attachments"> | string | null
+  file_size?: Prisma.IntNullableFilter<"case_attachments"> | number | null
   kind?: Prisma.EnumAttachmentKindFilter<"case_attachments"> | $Enums.AttachmentKind
-  retentionUntil?: Prisma.DateTimeNullableFilter<"case_attachments"> | Date | string | null
-  archivedAt?: Prisma.DateTimeNullableFilter<"case_attachments"> | Date | string | null
-  uploadedById?: Prisma.UuidNullableFilter<"case_attachments"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"case_attachments"> | Date | string
+  retention_until?: Prisma.DateTimeNullableFilter<"case_attachments"> | Date | string | null
+  archived_at?: Prisma.DateTimeNullableFilter<"case_attachments"> | Date | string | null
+  uploaded_by_id?: Prisma.UuidNullableFilter<"case_attachments"> | string | null
+  created_at?: Prisma.DateTimeFilter<"case_attachments"> | Date | string
   cases?: Prisma.XOR<Prisma.CasesScalarRelationFilter, Prisma.casesWhereInput>
   uploadedBy?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.usersWhereInput> | null
 }
 
 export type case_attachmentsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  fileName?: Prisma.SortOrder
-  filePath?: Prisma.SortOrder
-  fileType?: Prisma.SortOrderInput | Prisma.SortOrder
-  fileSize?: Prisma.SortOrderInput | Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  file_name?: Prisma.SortOrder
+  file_path?: Prisma.SortOrder
+  file_type?: Prisma.SortOrderInput | Prisma.SortOrder
+  file_size?: Prisma.SortOrderInput | Prisma.SortOrder
   kind?: Prisma.SortOrder
-  retentionUntil?: Prisma.SortOrderInput | Prisma.SortOrder
-  archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  uploadedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  retention_until?: Prisma.SortOrderInput | Prisma.SortOrder
+  archived_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  uploaded_by_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  created_at?: Prisma.SortOrder
   cases?: Prisma.casesOrderByWithRelationInput
   uploadedBy?: Prisma.usersOrderByWithRelationInput
 }
@@ -289,32 +289,32 @@ export type case_attachmentsWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.case_attachmentsWhereInput | Prisma.case_attachmentsWhereInput[]
   OR?: Prisma.case_attachmentsWhereInput[]
   NOT?: Prisma.case_attachmentsWhereInput | Prisma.case_attachmentsWhereInput[]
-  caseId?: Prisma.StringFilter<"case_attachments"> | string
-  fileName?: Prisma.StringFilter<"case_attachments"> | string
-  filePath?: Prisma.StringFilter<"case_attachments"> | string
-  fileType?: Prisma.StringNullableFilter<"case_attachments"> | string | null
-  fileSize?: Prisma.IntNullableFilter<"case_attachments"> | number | null
+  case_id?: Prisma.StringFilter<"case_attachments"> | string
+  file_name?: Prisma.StringFilter<"case_attachments"> | string
+  file_path?: Prisma.StringFilter<"case_attachments"> | string
+  file_type?: Prisma.StringNullableFilter<"case_attachments"> | string | null
+  file_size?: Prisma.IntNullableFilter<"case_attachments"> | number | null
   kind?: Prisma.EnumAttachmentKindFilter<"case_attachments"> | $Enums.AttachmentKind
-  retentionUntil?: Prisma.DateTimeNullableFilter<"case_attachments"> | Date | string | null
-  archivedAt?: Prisma.DateTimeNullableFilter<"case_attachments"> | Date | string | null
-  uploadedById?: Prisma.UuidNullableFilter<"case_attachments"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"case_attachments"> | Date | string
+  retention_until?: Prisma.DateTimeNullableFilter<"case_attachments"> | Date | string | null
+  archived_at?: Prisma.DateTimeNullableFilter<"case_attachments"> | Date | string | null
+  uploaded_by_id?: Prisma.UuidNullableFilter<"case_attachments"> | string | null
+  created_at?: Prisma.DateTimeFilter<"case_attachments"> | Date | string
   cases?: Prisma.XOR<Prisma.CasesScalarRelationFilter, Prisma.casesWhereInput>
   uploadedBy?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.usersWhereInput> | null
 }, "id">
 
 export type case_attachmentsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  fileName?: Prisma.SortOrder
-  filePath?: Prisma.SortOrder
-  fileType?: Prisma.SortOrderInput | Prisma.SortOrder
-  fileSize?: Prisma.SortOrderInput | Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  file_name?: Prisma.SortOrder
+  file_path?: Prisma.SortOrder
+  file_type?: Prisma.SortOrderInput | Prisma.SortOrder
+  file_size?: Prisma.SortOrderInput | Prisma.SortOrder
   kind?: Prisma.SortOrder
-  retentionUntil?: Prisma.SortOrderInput | Prisma.SortOrder
-  archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  uploadedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  retention_until?: Prisma.SortOrderInput | Prisma.SortOrder
+  archived_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  uploaded_by_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  created_at?: Prisma.SortOrder
   _count?: Prisma.case_attachmentsCountOrderByAggregateInput
   _avg?: Prisma.case_attachmentsAvgOrderByAggregateInput
   _max?: Prisma.case_attachmentsMaxOrderByAggregateInput
@@ -327,112 +327,112 @@ export type case_attachmentsScalarWhereWithAggregatesInput = {
   OR?: Prisma.case_attachmentsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.case_attachmentsScalarWhereWithAggregatesInput | Prisma.case_attachmentsScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"case_attachments"> | string
-  caseId?: Prisma.StringWithAggregatesFilter<"case_attachments"> | string
-  fileName?: Prisma.StringWithAggregatesFilter<"case_attachments"> | string
-  filePath?: Prisma.StringWithAggregatesFilter<"case_attachments"> | string
-  fileType?: Prisma.StringNullableWithAggregatesFilter<"case_attachments"> | string | null
-  fileSize?: Prisma.IntNullableWithAggregatesFilter<"case_attachments"> | number | null
+  case_id?: Prisma.StringWithAggregatesFilter<"case_attachments"> | string
+  file_name?: Prisma.StringWithAggregatesFilter<"case_attachments"> | string
+  file_path?: Prisma.StringWithAggregatesFilter<"case_attachments"> | string
+  file_type?: Prisma.StringNullableWithAggregatesFilter<"case_attachments"> | string | null
+  file_size?: Prisma.IntNullableWithAggregatesFilter<"case_attachments"> | number | null
   kind?: Prisma.EnumAttachmentKindWithAggregatesFilter<"case_attachments"> | $Enums.AttachmentKind
-  retentionUntil?: Prisma.DateTimeNullableWithAggregatesFilter<"case_attachments"> | Date | string | null
-  archivedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"case_attachments"> | Date | string | null
-  uploadedById?: Prisma.UuidNullableWithAggregatesFilter<"case_attachments"> | string | null
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"case_attachments"> | Date | string
+  retention_until?: Prisma.DateTimeNullableWithAggregatesFilter<"case_attachments"> | Date | string | null
+  archived_at?: Prisma.DateTimeNullableWithAggregatesFilter<"case_attachments"> | Date | string | null
+  uploaded_by_id?: Prisma.UuidNullableWithAggregatesFilter<"case_attachments"> | string | null
+  created_at?: Prisma.DateTimeWithAggregatesFilter<"case_attachments"> | Date | string
 }
 
 export type case_attachmentsCreateInput = {
   id?: string
-  fileName: string
-  filePath: string
-  fileType?: string | null
-  fileSize?: number | null
+  file_name: string
+  file_path: string
+  file_type?: string | null
+  file_size?: number | null
   kind?: $Enums.AttachmentKind
-  retentionUntil?: Date | string | null
-  archivedAt?: Date | string | null
-  createdAt?: Date | string
+  retention_until?: Date | string | null
+  archived_at?: Date | string | null
+  created_at?: Date | string
   cases: Prisma.casesCreateNestedOneWithoutCase_attachmentsInput
   uploadedBy?: Prisma.usersCreateNestedOneWithoutCase_attachmentsInput
 }
 
 export type case_attachmentsUncheckedCreateInput = {
   id?: string
-  caseId: string
-  fileName: string
-  filePath: string
-  fileType?: string | null
-  fileSize?: number | null
+  case_id: string
+  file_name: string
+  file_path: string
+  file_type?: string | null
+  file_size?: number | null
   kind?: $Enums.AttachmentKind
-  retentionUntil?: Date | string | null
-  archivedAt?: Date | string | null
-  uploadedById?: string | null
-  createdAt?: Date | string
+  retention_until?: Date | string | null
+  archived_at?: Date | string | null
+  uploaded_by_id?: string | null
+  created_at?: Date | string
 }
 
 export type case_attachmentsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  filePath?: Prisma.StringFieldUpdateOperationsInput | string
-  fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  file_name?: Prisma.StringFieldUpdateOperationsInput | string
+  file_path?: Prisma.StringFieldUpdateOperationsInput | string
+  file_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  file_size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   kind?: Prisma.EnumAttachmentKindFieldUpdateOperationsInput | $Enums.AttachmentKind
-  retentionUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  retention_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archived_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUpdateOneRequiredWithoutCase_attachmentsNestedInput
   uploadedBy?: Prisma.usersUpdateOneWithoutCase_attachmentsNestedInput
 }
 
 export type case_attachmentsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  filePath?: Prisma.StringFieldUpdateOperationsInput | string
-  fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  file_name?: Prisma.StringFieldUpdateOperationsInput | string
+  file_path?: Prisma.StringFieldUpdateOperationsInput | string
+  file_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  file_size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   kind?: Prisma.EnumAttachmentKindFieldUpdateOperationsInput | $Enums.AttachmentKind
-  retentionUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  uploadedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  retention_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archived_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploaded_by_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_attachmentsCreateManyInput = {
   id?: string
-  caseId: string
-  fileName: string
-  filePath: string
-  fileType?: string | null
-  fileSize?: number | null
+  case_id: string
+  file_name: string
+  file_path: string
+  file_type?: string | null
+  file_size?: number | null
   kind?: $Enums.AttachmentKind
-  retentionUntil?: Date | string | null
-  archivedAt?: Date | string | null
-  uploadedById?: string | null
-  createdAt?: Date | string
+  retention_until?: Date | string | null
+  archived_at?: Date | string | null
+  uploaded_by_id?: string | null
+  created_at?: Date | string
 }
 
 export type case_attachmentsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  filePath?: Prisma.StringFieldUpdateOperationsInput | string
-  fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  file_name?: Prisma.StringFieldUpdateOperationsInput | string
+  file_path?: Prisma.StringFieldUpdateOperationsInput | string
+  file_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  file_size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   kind?: Prisma.EnumAttachmentKindFieldUpdateOperationsInput | $Enums.AttachmentKind
-  retentionUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  retention_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archived_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_attachmentsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  filePath?: Prisma.StringFieldUpdateOperationsInput | string
-  fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  file_name?: Prisma.StringFieldUpdateOperationsInput | string
+  file_path?: Prisma.StringFieldUpdateOperationsInput | string
+  file_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  file_size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   kind?: Prisma.EnumAttachmentKindFieldUpdateOperationsInput | $Enums.AttachmentKind
-  retentionUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  uploadedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  retention_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archived_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploaded_by_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type Case_attachmentsListRelationFilter = {
@@ -447,52 +447,52 @@ export type case_attachmentsOrderByRelationAggregateInput = {
 
 export type case_attachmentsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  fileName?: Prisma.SortOrder
-  filePath?: Prisma.SortOrder
-  fileType?: Prisma.SortOrder
-  fileSize?: Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  file_name?: Prisma.SortOrder
+  file_path?: Prisma.SortOrder
+  file_type?: Prisma.SortOrder
+  file_size?: Prisma.SortOrder
   kind?: Prisma.SortOrder
-  retentionUntil?: Prisma.SortOrder
-  archivedAt?: Prisma.SortOrder
-  uploadedById?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  retention_until?: Prisma.SortOrder
+  archived_at?: Prisma.SortOrder
+  uploaded_by_id?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
 }
 
 export type case_attachmentsAvgOrderByAggregateInput = {
-  fileSize?: Prisma.SortOrder
+  file_size?: Prisma.SortOrder
 }
 
 export type case_attachmentsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  fileName?: Prisma.SortOrder
-  filePath?: Prisma.SortOrder
-  fileType?: Prisma.SortOrder
-  fileSize?: Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  file_name?: Prisma.SortOrder
+  file_path?: Prisma.SortOrder
+  file_type?: Prisma.SortOrder
+  file_size?: Prisma.SortOrder
   kind?: Prisma.SortOrder
-  retentionUntil?: Prisma.SortOrder
-  archivedAt?: Prisma.SortOrder
-  uploadedById?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  retention_until?: Prisma.SortOrder
+  archived_at?: Prisma.SortOrder
+  uploaded_by_id?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
 }
 
 export type case_attachmentsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  caseId?: Prisma.SortOrder
-  fileName?: Prisma.SortOrder
-  filePath?: Prisma.SortOrder
-  fileType?: Prisma.SortOrder
-  fileSize?: Prisma.SortOrder
+  case_id?: Prisma.SortOrder
+  file_name?: Prisma.SortOrder
+  file_path?: Prisma.SortOrder
+  file_type?: Prisma.SortOrder
+  file_size?: Prisma.SortOrder
   kind?: Prisma.SortOrder
-  retentionUntil?: Prisma.SortOrder
-  archivedAt?: Prisma.SortOrder
-  uploadedById?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  retention_until?: Prisma.SortOrder
+  archived_at?: Prisma.SortOrder
+  uploaded_by_id?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
 }
 
 export type case_attachmentsSumOrderByAggregateInput = {
-  fileSize?: Prisma.SortOrder
+  file_size?: Prisma.SortOrder
 }
 
 export type case_attachmentsCreateNestedManyWithoutUploadedByInput = {
@@ -585,28 +585,28 @@ export type case_attachmentsUncheckedUpdateManyWithoutCasesNestedInput = {
 
 export type case_attachmentsCreateWithoutUploadedByInput = {
   id?: string
-  fileName: string
-  filePath: string
-  fileType?: string | null
-  fileSize?: number | null
+  file_name: string
+  file_path: string
+  file_type?: string | null
+  file_size?: number | null
   kind?: $Enums.AttachmentKind
-  retentionUntil?: Date | string | null
-  archivedAt?: Date | string | null
-  createdAt?: Date | string
+  retention_until?: Date | string | null
+  archived_at?: Date | string | null
+  created_at?: Date | string
   cases: Prisma.casesCreateNestedOneWithoutCase_attachmentsInput
 }
 
 export type case_attachmentsUncheckedCreateWithoutUploadedByInput = {
   id?: string
-  caseId: string
-  fileName: string
-  filePath: string
-  fileType?: string | null
-  fileSize?: number | null
+  case_id: string
+  file_name: string
+  file_path: string
+  file_type?: string | null
+  file_size?: number | null
   kind?: $Enums.AttachmentKind
-  retentionUntil?: Date | string | null
-  archivedAt?: Date | string | null
-  createdAt?: Date | string
+  retention_until?: Date | string | null
+  archived_at?: Date | string | null
+  created_at?: Date | string
 }
 
 export type case_attachmentsCreateOrConnectWithoutUploadedByInput = {
@@ -640,42 +640,42 @@ export type case_attachmentsScalarWhereInput = {
   OR?: Prisma.case_attachmentsScalarWhereInput[]
   NOT?: Prisma.case_attachmentsScalarWhereInput | Prisma.case_attachmentsScalarWhereInput[]
   id?: Prisma.StringFilter<"case_attachments"> | string
-  caseId?: Prisma.StringFilter<"case_attachments"> | string
-  fileName?: Prisma.StringFilter<"case_attachments"> | string
-  filePath?: Prisma.StringFilter<"case_attachments"> | string
-  fileType?: Prisma.StringNullableFilter<"case_attachments"> | string | null
-  fileSize?: Prisma.IntNullableFilter<"case_attachments"> | number | null
+  case_id?: Prisma.StringFilter<"case_attachments"> | string
+  file_name?: Prisma.StringFilter<"case_attachments"> | string
+  file_path?: Prisma.StringFilter<"case_attachments"> | string
+  file_type?: Prisma.StringNullableFilter<"case_attachments"> | string | null
+  file_size?: Prisma.IntNullableFilter<"case_attachments"> | number | null
   kind?: Prisma.EnumAttachmentKindFilter<"case_attachments"> | $Enums.AttachmentKind
-  retentionUntil?: Prisma.DateTimeNullableFilter<"case_attachments"> | Date | string | null
-  archivedAt?: Prisma.DateTimeNullableFilter<"case_attachments"> | Date | string | null
-  uploadedById?: Prisma.UuidNullableFilter<"case_attachments"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"case_attachments"> | Date | string
+  retention_until?: Prisma.DateTimeNullableFilter<"case_attachments"> | Date | string | null
+  archived_at?: Prisma.DateTimeNullableFilter<"case_attachments"> | Date | string | null
+  uploaded_by_id?: Prisma.UuidNullableFilter<"case_attachments"> | string | null
+  created_at?: Prisma.DateTimeFilter<"case_attachments"> | Date | string
 }
 
 export type case_attachmentsCreateWithoutCasesInput = {
   id?: string
-  fileName: string
-  filePath: string
-  fileType?: string | null
-  fileSize?: number | null
+  file_name: string
+  file_path: string
+  file_type?: string | null
+  file_size?: number | null
   kind?: $Enums.AttachmentKind
-  retentionUntil?: Date | string | null
-  archivedAt?: Date | string | null
-  createdAt?: Date | string
+  retention_until?: Date | string | null
+  archived_at?: Date | string | null
+  created_at?: Date | string
   uploadedBy?: Prisma.usersCreateNestedOneWithoutCase_attachmentsInput
 }
 
 export type case_attachmentsUncheckedCreateWithoutCasesInput = {
   id?: string
-  fileName: string
-  filePath: string
-  fileType?: string | null
-  fileSize?: number | null
+  file_name: string
+  file_path: string
+  file_type?: string | null
+  file_size?: number | null
   kind?: $Enums.AttachmentKind
-  retentionUntil?: Date | string | null
-  archivedAt?: Date | string | null
-  uploadedById?: string | null
-  createdAt?: Date | string
+  retention_until?: Date | string | null
+  archived_at?: Date | string | null
+  uploaded_by_id?: string | null
+  created_at?: Date | string
 }
 
 export type case_attachmentsCreateOrConnectWithoutCasesInput = {
@@ -706,173 +706,173 @@ export type case_attachmentsUpdateManyWithWhereWithoutCasesInput = {
 
 export type case_attachmentsCreateManyUploadedByInput = {
   id?: string
-  caseId: string
-  fileName: string
-  filePath: string
-  fileType?: string | null
-  fileSize?: number | null
+  case_id: string
+  file_name: string
+  file_path: string
+  file_type?: string | null
+  file_size?: number | null
   kind?: $Enums.AttachmentKind
-  retentionUntil?: Date | string | null
-  archivedAt?: Date | string | null
-  createdAt?: Date | string
+  retention_until?: Date | string | null
+  archived_at?: Date | string | null
+  created_at?: Date | string
 }
 
 export type case_attachmentsUpdateWithoutUploadedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  filePath?: Prisma.StringFieldUpdateOperationsInput | string
-  fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  file_name?: Prisma.StringFieldUpdateOperationsInput | string
+  file_path?: Prisma.StringFieldUpdateOperationsInput | string
+  file_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  file_size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   kind?: Prisma.EnumAttachmentKindFieldUpdateOperationsInput | $Enums.AttachmentKind
-  retentionUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  retention_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archived_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUpdateOneRequiredWithoutCase_attachmentsNestedInput
 }
 
 export type case_attachmentsUncheckedUpdateWithoutUploadedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  filePath?: Prisma.StringFieldUpdateOperationsInput | string
-  fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  file_name?: Prisma.StringFieldUpdateOperationsInput | string
+  file_path?: Prisma.StringFieldUpdateOperationsInput | string
+  file_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  file_size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   kind?: Prisma.EnumAttachmentKindFieldUpdateOperationsInput | $Enums.AttachmentKind
-  retentionUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  retention_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archived_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_attachmentsUncheckedUpdateManyWithoutUploadedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  caseId?: Prisma.StringFieldUpdateOperationsInput | string
-  fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  filePath?: Prisma.StringFieldUpdateOperationsInput | string
-  fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  file_name?: Prisma.StringFieldUpdateOperationsInput | string
+  file_path?: Prisma.StringFieldUpdateOperationsInput | string
+  file_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  file_size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   kind?: Prisma.EnumAttachmentKindFieldUpdateOperationsInput | $Enums.AttachmentKind
-  retentionUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  retention_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archived_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_attachmentsCreateManyCasesInput = {
   id?: string
-  fileName: string
-  filePath: string
-  fileType?: string | null
-  fileSize?: number | null
+  file_name: string
+  file_path: string
+  file_type?: string | null
+  file_size?: number | null
   kind?: $Enums.AttachmentKind
-  retentionUntil?: Date | string | null
-  archivedAt?: Date | string | null
-  uploadedById?: string | null
-  createdAt?: Date | string
+  retention_until?: Date | string | null
+  archived_at?: Date | string | null
+  uploaded_by_id?: string | null
+  created_at?: Date | string
 }
 
 export type case_attachmentsUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  filePath?: Prisma.StringFieldUpdateOperationsInput | string
-  fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  file_name?: Prisma.StringFieldUpdateOperationsInput | string
+  file_path?: Prisma.StringFieldUpdateOperationsInput | string
+  file_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  file_size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   kind?: Prisma.EnumAttachmentKindFieldUpdateOperationsInput | $Enums.AttachmentKind
-  retentionUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  retention_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archived_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   uploadedBy?: Prisma.usersUpdateOneWithoutCase_attachmentsNestedInput
 }
 
 export type case_attachmentsUncheckedUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  filePath?: Prisma.StringFieldUpdateOperationsInput | string
-  fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  file_name?: Prisma.StringFieldUpdateOperationsInput | string
+  file_path?: Prisma.StringFieldUpdateOperationsInput | string
+  file_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  file_size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   kind?: Prisma.EnumAttachmentKindFieldUpdateOperationsInput | $Enums.AttachmentKind
-  retentionUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  uploadedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  retention_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archived_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploaded_by_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type case_attachmentsUncheckedUpdateManyWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  fileName?: Prisma.StringFieldUpdateOperationsInput | string
-  filePath?: Prisma.StringFieldUpdateOperationsInput | string
-  fileType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  file_name?: Prisma.StringFieldUpdateOperationsInput | string
+  file_path?: Prisma.StringFieldUpdateOperationsInput | string
+  file_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  file_size?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   kind?: Prisma.EnumAttachmentKindFieldUpdateOperationsInput | $Enums.AttachmentKind
-  retentionUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  uploadedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  retention_until?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  archived_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  uploaded_by_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
 
 export type case_attachmentsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  caseId?: boolean
-  fileName?: boolean
-  filePath?: boolean
-  fileType?: boolean
-  fileSize?: boolean
+  case_id?: boolean
+  file_name?: boolean
+  file_path?: boolean
+  file_type?: boolean
+  file_size?: boolean
   kind?: boolean
-  retentionUntil?: boolean
-  archivedAt?: boolean
-  uploadedById?: boolean
-  createdAt?: boolean
+  retention_until?: boolean
+  archived_at?: boolean
+  uploaded_by_id?: boolean
+  created_at?: boolean
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
   uploadedBy?: boolean | Prisma.case_attachments$uploadedByArgs<ExtArgs>
 }, ExtArgs["result"]["case_attachments"]>
 
 export type case_attachmentsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  caseId?: boolean
-  fileName?: boolean
-  filePath?: boolean
-  fileType?: boolean
-  fileSize?: boolean
+  case_id?: boolean
+  file_name?: boolean
+  file_path?: boolean
+  file_type?: boolean
+  file_size?: boolean
   kind?: boolean
-  retentionUntil?: boolean
-  archivedAt?: boolean
-  uploadedById?: boolean
-  createdAt?: boolean
+  retention_until?: boolean
+  archived_at?: boolean
+  uploaded_by_id?: boolean
+  created_at?: boolean
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
   uploadedBy?: boolean | Prisma.case_attachments$uploadedByArgs<ExtArgs>
 }, ExtArgs["result"]["case_attachments"]>
 
 export type case_attachmentsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  caseId?: boolean
-  fileName?: boolean
-  filePath?: boolean
-  fileType?: boolean
-  fileSize?: boolean
+  case_id?: boolean
+  file_name?: boolean
+  file_path?: boolean
+  file_type?: boolean
+  file_size?: boolean
   kind?: boolean
-  retentionUntil?: boolean
-  archivedAt?: boolean
-  uploadedById?: boolean
-  createdAt?: boolean
+  retention_until?: boolean
+  archived_at?: boolean
+  uploaded_by_id?: boolean
+  created_at?: boolean
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
   uploadedBy?: boolean | Prisma.case_attachments$uploadedByArgs<ExtArgs>
 }, ExtArgs["result"]["case_attachments"]>
 
 export type case_attachmentsSelectScalar = {
   id?: boolean
-  caseId?: boolean
-  fileName?: boolean
-  filePath?: boolean
-  fileType?: boolean
-  fileSize?: boolean
+  case_id?: boolean
+  file_name?: boolean
+  file_path?: boolean
+  file_type?: boolean
+  file_size?: boolean
   kind?: boolean
-  retentionUntil?: boolean
-  archivedAt?: boolean
-  uploadedById?: boolean
-  createdAt?: boolean
+  retention_until?: boolean
+  archived_at?: boolean
+  uploaded_by_id?: boolean
+  created_at?: boolean
 }
 
-export type case_attachmentsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "caseId" | "fileName" | "filePath" | "fileType" | "fileSize" | "kind" | "retentionUntil" | "archivedAt" | "uploadedById" | "createdAt", ExtArgs["result"]["case_attachments"]>
+export type case_attachmentsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "case_id" | "file_name" | "file_path" | "file_type" | "file_size" | "kind" | "retention_until" | "archived_at" | "uploaded_by_id" | "created_at", ExtArgs["result"]["case_attachments"]>
 export type case_attachmentsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
   uploadedBy?: boolean | Prisma.case_attachments$uploadedByArgs<ExtArgs>
@@ -894,16 +894,16 @@ export type $case_attachmentsPayload<ExtArgs extends runtime.Types.Extensions.In
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    caseId: string
-    fileName: string
-    filePath: string
-    fileType: string | null
-    fileSize: number | null
+    case_id: string
+    file_name: string
+    file_path: string
+    file_type: string | null
+    file_size: number | null
     kind: $Enums.AttachmentKind
-    retentionUntil: Date | null
-    archivedAt: Date | null
-    uploadedById: string | null
-    createdAt: Date
+    retention_until: Date | null
+    archived_at: Date | null
+    uploaded_by_id: string | null
+    created_at: Date
   }, ExtArgs["result"]["case_attachments"]>
   composites: {}
 }
@@ -1330,16 +1330,16 @@ export interface Prisma__case_attachmentsClient<T, Null = never, ExtArgs extends
  */
 export interface case_attachmentsFieldRefs {
   readonly id: Prisma.FieldRef<"case_attachments", 'String'>
-  readonly caseId: Prisma.FieldRef<"case_attachments", 'String'>
-  readonly fileName: Prisma.FieldRef<"case_attachments", 'String'>
-  readonly filePath: Prisma.FieldRef<"case_attachments", 'String'>
-  readonly fileType: Prisma.FieldRef<"case_attachments", 'String'>
-  readonly fileSize: Prisma.FieldRef<"case_attachments", 'Int'>
+  readonly case_id: Prisma.FieldRef<"case_attachments", 'String'>
+  readonly file_name: Prisma.FieldRef<"case_attachments", 'String'>
+  readonly file_path: Prisma.FieldRef<"case_attachments", 'String'>
+  readonly file_type: Prisma.FieldRef<"case_attachments", 'String'>
+  readonly file_size: Prisma.FieldRef<"case_attachments", 'Int'>
   readonly kind: Prisma.FieldRef<"case_attachments", 'AttachmentKind'>
-  readonly retentionUntil: Prisma.FieldRef<"case_attachments", 'DateTime'>
-  readonly archivedAt: Prisma.FieldRef<"case_attachments", 'DateTime'>
-  readonly uploadedById: Prisma.FieldRef<"case_attachments", 'String'>
-  readonly createdAt: Prisma.FieldRef<"case_attachments", 'DateTime'>
+  readonly retention_until: Prisma.FieldRef<"case_attachments", 'DateTime'>
+  readonly archived_at: Prisma.FieldRef<"case_attachments", 'DateTime'>
+  readonly uploaded_by_id: Prisma.FieldRef<"case_attachments", 'String'>
+  readonly created_at: Prisma.FieldRef<"case_attachments", 'DateTime'>
 }
     
 
