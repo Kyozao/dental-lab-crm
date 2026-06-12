@@ -1,13 +1,9 @@
-import { randomUUID } from "node:crypto";
-
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@/generated/prisma/client";
-import { CaseProcessStatus } from "@/generated/prisma/enums";
 import {
   getLabMember,
   MissingLabMembershipError,
 } from "../_shared/membership";
-import { activeReferenceWhere } from "../_shared/archive";
 
 import {
   caseInclude,
@@ -21,10 +17,10 @@ import {
   validateActiveCaseReferences,
 } from "./cases.utils";
 import type { CreateCaseInput, ListCasesInput, UpdateCaseInput } from "./cases.schemas";
-import type {
-  ServiceTypeWorkflow,
-  ServiceTypeWorkflowStep,
-} from "../service-types/service-types.schemas";
+import {
+  createCaseWithWorkflow,
+  getWorkflowForCaseCreate,
+} from "./cases.workflow";
 
 export { InactiveReferenceError, MissingLabMembershipError };
 
@@ -102,73 +98,6 @@ export async function getCaseById(user_id: string, case_id: string) {
   return mapCase(caseItem);
 }
 
-function isWorkflowStep(value: unknown): value is ServiceTypeWorkflowStep {
-  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
-
-  const step = value as Record<string, unknown>;
-  return (
-    typeof step.id === "string" &&
-    typeof step.process_id === "string" &&
-    Array.isArray(step.dependsOn) &&
-    step.dependsOn.every((dependency) => typeof dependency === "string")
-  );
-}
-
-function normalizeWorkflowJson(value: unknown): ServiceTypeWorkflow {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    return { steps: [] };
-  }
-
-  const steps = (value as Record<string, unknown>).steps;
-  if (!Array.isArray(steps)) return { steps: [] };
-
-  return {
-    steps: steps.filter(isWorkflowStep),
-  };
-}
-
-async function getWorkflowForCaseCreate(
-  lab_id: string,
-  service_type_id?: string | null,
-) {
-  if (!service_type_id) return { steps: [] };
-
-  const serviceType = await prisma.service_types.findFirst({
-    where: {
-      id: service_type_id,
-      lab_id,
-      ...activeReferenceWhere,
-    },
-    select: {
-      workflow_json: true,
-    },
-  });
-
-  const workflow = normalizeWorkflowJson(serviceType?.workflow_json);
-  if (workflow.steps.length === 0) return workflow;
-
-  const processIds = [...new Set(workflow.steps.map((step) => step.process_id))];
-  const activeProcesses = await prisma.processes.findMany({
-    where: {
-      id: { in: processIds },
-      lab_id,
-      ...activeReferenceWhere,
-    },
-    select: { id: true },
-  });
-  const activeProcessIds = new Set(activeProcesses.map((process) => process.id));
-
-  if (workflow.steps.some((step) => !activeProcessIds.has(step.process_id))) {
-    throw new InactiveReferenceError({
-      service_type_id: [
-        "Service type workflow references an inactive, archived, or cross-lab process.",
-      ],
-    });
-  }
-
-  return workflow;
-}
-
 export async function createCase(
   user_id: string,
   input: CreateCaseInput,
@@ -179,73 +108,20 @@ export async function createCase(
     membership.lab_id,
     input.service_type_id,
   );
-  const caseProcessRows = workflow.steps.map((step) => ({
-    id: randomUUID(),
-    process_id: step.process_id,
-    workflow_step_id: step.id,
-    status:
-      step.dependsOn.length === 0
-        ? CaseProcessStatus.READY
-        : CaseProcessStatus.LOCKED,
-  }));
-  const caseProcessIdByStepId = new Map(
-    workflow.steps.map((step, index) => [step.id, caseProcessRows[index].id]),
-  );
-  const dependencyRows = workflow.steps.flatMap((step) => {
-    const case_process_id = caseProcessIdByStepId.get(step.id);
-    if (!case_process_id) return [];
-
-    return step.dependsOn.flatMap((dependencyStepId) => {
-      const depends_on_case_process_id = caseProcessIdByStepId.get(dependencyStepId);
-      if (!depends_on_case_process_id) return [];
-
-      return {
-        case_process_id,
-        depends_on_case_process_id,
-      };
-    });
-  });
 
   for (let attempt = 1; attempt <= CREATE_CASE_MAX_RETRIES; attempt += 1) {
     const code = await generateNextCaseCode(membership.lab_id);
 
     try {
       const createdCase = await prisma.$transaction(async (tx) => {
-        const item = await tx.cases.create({
-          data: {
-            lab_id: membership.lab_id,
-            code,
-            patient_name: input.patient_name,
-            customer_id: input.customer_id,
-            service_type_id: input.service_type_id,
-            dentist_id: input.dentist_id,
-            cad_designer_id: input.cad_designer_id,
-            created_by_user_id: user_id,
-            current_status: input.current_status,
-            teeth: input.teeth,
-            elements_qty: input.elements_qty,
-            shade: input.shade,
-            due_date: input.due_date,
-            is_urgent: input.is_urgent,
-            observations: input.observations,
-            pending_note: input.pending_note,
-            case_processes:
-              caseProcessRows.length > 0
-                ? { create: caseProcessRows }
-                : undefined,
-          },
-        });
-
-        if (dependencyRows.length > 0) {
-          await tx.case_process_dependencies.createMany({
-            data: dependencyRows,
-          });
-        }
-
-        return tx.cases.findUniqueOrThrow({
-          where: { id: item.id },
-          include: caseInclude,
-        });
+        return createCaseWithWorkflow(
+          tx,
+          user_id,
+          membership.lab_id,
+          input,
+          code,
+          workflow,
+        );
       });
 
       return mapCase(createdCase);

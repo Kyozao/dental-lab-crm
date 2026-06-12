@@ -198,7 +198,7 @@ export type push_subscriptionsWhereInput = {
   AND?: Prisma.push_subscriptionsWhereInput | Prisma.push_subscriptionsWhereInput[]
   OR?: Prisma.push_subscriptionsWhereInput[]
   NOT?: Prisma.push_subscriptionsWhereInput | Prisma.push_subscriptionsWhereInput[]
-  id?: Prisma.StringFilter<"push_subscriptions"> | string
+  id?: Prisma.UuidFilter<"push_subscriptions"> | string
   user_id?: Prisma.UuidFilter<"push_subscriptions"> | string
   endpoint?: Prisma.StringFilter<"push_subscriptions"> | string
   p256dh?: Prisma.StringFilter<"push_subscriptions"> | string
@@ -254,7 +254,7 @@ export type push_subscriptionsScalarWhereWithAggregatesInput = {
   AND?: Prisma.push_subscriptionsScalarWhereWithAggregatesInput | Prisma.push_subscriptionsScalarWhereWithAggregatesInput[]
   OR?: Prisma.push_subscriptionsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.push_subscriptionsScalarWhereWithAggregatesInput | Prisma.push_subscriptionsScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"push_subscriptions"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"push_subscriptions"> | string
   user_id?: Prisma.UuidWithAggregatesFilter<"push_subscriptions"> | string
   endpoint?: Prisma.StringWithAggregatesFilter<"push_subscriptions"> | string
   p256dh?: Prisma.StringWithAggregatesFilter<"push_subscriptions"> | string
@@ -475,7 +475,7 @@ export type push_subscriptionsScalarWhereInput = {
   AND?: Prisma.push_subscriptionsScalarWhereInput | Prisma.push_subscriptionsScalarWhereInput[]
   OR?: Prisma.push_subscriptionsScalarWhereInput[]
   NOT?: Prisma.push_subscriptionsScalarWhereInput | Prisma.push_subscriptionsScalarWhereInput[]
-  id?: Prisma.StringFilter<"push_subscriptions"> | string
+  id?: Prisma.UuidFilter<"push_subscriptions"> | string
   user_id?: Prisma.UuidFilter<"push_subscriptions"> | string
   endpoint?: Prisma.StringFilter<"push_subscriptions"> | string
   p256dh?: Prisma.StringFilter<"push_subscriptions"> | string

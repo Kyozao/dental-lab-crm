@@ -24,7 +24,6 @@ import {
   buildDefaultComponentDraft,
   buildDraftFromCaseItem,
   buildSubmitError,
-  isCaseOverdue,
   type CaseComponentDraft,
 } from "@/features/cases/components/case-details-dialog.utils";
 import { CaseOptionsFallback } from "@/features/cases/components/case-details-options";
@@ -410,4 +409,17 @@ export function CaseDetailsDialog({
       </DialogContent>
     </Dialog>
   );
+}
+
+function isCaseOverdue(dueDate: string | null) {
+  if (!dueDate) return false;
+
+  const due = new Date(dueDate);
+  if (Number.isNaN(due.getTime())) return false;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  due.setHours(0, 0, 0, 0);
+
+  return due < today;
 }

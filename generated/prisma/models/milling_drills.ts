@@ -274,8 +274,8 @@ export type milling_drillsWhereInput = {
   AND?: Prisma.milling_drillsWhereInput | Prisma.milling_drillsWhereInput[]
   OR?: Prisma.milling_drillsWhereInput[]
   NOT?: Prisma.milling_drillsWhereInput | Prisma.milling_drillsWhereInput[]
-  lab_id?: Prisma.StringFilter<"milling_drills"> | string
-  id?: Prisma.StringFilter<"milling_drills"> | string
+  lab_id?: Prisma.UuidFilter<"milling_drills"> | string
+  id?: Prisma.UuidFilter<"milling_drills"> | string
   name?: Prisma.StringFilter<"milling_drills"> | string
   type?: Prisma.StringNullableFilter<"milling_drills"> | string | null
   brand?: Prisma.StringNullableFilter<"milling_drills"> | string | null
@@ -322,7 +322,7 @@ export type milling_drillsWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.milling_drillsWhereInput | Prisma.milling_drillsWhereInput[]
   OR?: Prisma.milling_drillsWhereInput[]
   NOT?: Prisma.milling_drillsWhereInput | Prisma.milling_drillsWhereInput[]
-  lab_id?: Prisma.StringFilter<"milling_drills"> | string
+  lab_id?: Prisma.UuidFilter<"milling_drills"> | string
   name?: Prisma.StringFilter<"milling_drills"> | string
   type?: Prisma.StringNullableFilter<"milling_drills"> | string | null
   brand?: Prisma.StringNullableFilter<"milling_drills"> | string | null
@@ -366,8 +366,8 @@ export type milling_drillsScalarWhereWithAggregatesInput = {
   AND?: Prisma.milling_drillsScalarWhereWithAggregatesInput | Prisma.milling_drillsScalarWhereWithAggregatesInput[]
   OR?: Prisma.milling_drillsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.milling_drillsScalarWhereWithAggregatesInput | Prisma.milling_drillsScalarWhereWithAggregatesInput[]
-  lab_id?: Prisma.StringWithAggregatesFilter<"milling_drills"> | string
-  id?: Prisma.StringWithAggregatesFilter<"milling_drills"> | string
+  lab_id?: Prisma.UuidWithAggregatesFilter<"milling_drills"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"milling_drills"> | string
   name?: Prisma.StringWithAggregatesFilter<"milling_drills"> | string
   type?: Prisma.StringNullableWithAggregatesFilter<"milling_drills"> | string | null
   brand?: Prisma.StringNullableWithAggregatesFilter<"milling_drills"> | string | null
@@ -757,8 +757,8 @@ export type milling_drillsScalarWhereInput = {
   AND?: Prisma.milling_drillsScalarWhereInput | Prisma.milling_drillsScalarWhereInput[]
   OR?: Prisma.milling_drillsScalarWhereInput[]
   NOT?: Prisma.milling_drillsScalarWhereInput | Prisma.milling_drillsScalarWhereInput[]
-  lab_id?: Prisma.StringFilter<"milling_drills"> | string
-  id?: Prisma.StringFilter<"milling_drills"> | string
+  lab_id?: Prisma.UuidFilter<"milling_drills"> | string
+  id?: Prisma.UuidFilter<"milling_drills"> | string
   name?: Prisma.StringFilter<"milling_drills"> | string
   type?: Prisma.StringNullableFilter<"milling_drills"> | string | null
   brand?: Prisma.StringNullableFilter<"milling_drills"> | string | null

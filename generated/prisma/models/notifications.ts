@@ -208,9 +208,9 @@ export type notificationsWhereInput = {
   AND?: Prisma.notificationsWhereInput | Prisma.notificationsWhereInput[]
   OR?: Prisma.notificationsWhereInput[]
   NOT?: Prisma.notificationsWhereInput | Prisma.notificationsWhereInput[]
-  id?: Prisma.StringFilter<"notifications"> | string
+  id?: Prisma.UuidFilter<"notifications"> | string
   recipient_user_id?: Prisma.UuidFilter<"notifications"> | string
-  case_id?: Prisma.StringNullableFilter<"notifications"> | string | null
+  case_id?: Prisma.UuidNullableFilter<"notifications"> | string | null
   type?: Prisma.EnumNotificationTypeFilter<"notifications"> | $Enums.NotificationType
   title?: Prisma.StringFilter<"notifications"> | string
   message?: Prisma.StringFilter<"notifications"> | string
@@ -243,7 +243,7 @@ export type notificationsWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.notificationsWhereInput[]
   NOT?: Prisma.notificationsWhereInput | Prisma.notificationsWhereInput[]
   recipient_user_id?: Prisma.UuidFilter<"notifications"> | string
-  case_id?: Prisma.StringNullableFilter<"notifications"> | string | null
+  case_id?: Prisma.UuidNullableFilter<"notifications"> | string | null
   type?: Prisma.EnumNotificationTypeFilter<"notifications"> | $Enums.NotificationType
   title?: Prisma.StringFilter<"notifications"> | string
   message?: Prisma.StringFilter<"notifications"> | string
@@ -275,9 +275,9 @@ export type notificationsScalarWhereWithAggregatesInput = {
   AND?: Prisma.notificationsScalarWhereWithAggregatesInput | Prisma.notificationsScalarWhereWithAggregatesInput[]
   OR?: Prisma.notificationsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.notificationsScalarWhereWithAggregatesInput | Prisma.notificationsScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"notifications"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"notifications"> | string
   recipient_user_id?: Prisma.UuidWithAggregatesFilter<"notifications"> | string
-  case_id?: Prisma.StringNullableWithAggregatesFilter<"notifications"> | string | null
+  case_id?: Prisma.UuidNullableWithAggregatesFilter<"notifications"> | string | null
   type?: Prisma.EnumNotificationTypeWithAggregatesFilter<"notifications"> | $Enums.NotificationType
   title?: Prisma.StringWithAggregatesFilter<"notifications"> | string
   message?: Prisma.StringWithAggregatesFilter<"notifications"> | string
@@ -565,9 +565,9 @@ export type notificationsScalarWhereInput = {
   AND?: Prisma.notificationsScalarWhereInput | Prisma.notificationsScalarWhereInput[]
   OR?: Prisma.notificationsScalarWhereInput[]
   NOT?: Prisma.notificationsScalarWhereInput | Prisma.notificationsScalarWhereInput[]
-  id?: Prisma.StringFilter<"notifications"> | string
+  id?: Prisma.UuidFilter<"notifications"> | string
   recipient_user_id?: Prisma.UuidFilter<"notifications"> | string
-  case_id?: Prisma.StringNullableFilter<"notifications"> | string | null
+  case_id?: Prisma.UuidNullableFilter<"notifications"> | string | null
   type?: Prisma.EnumNotificationTypeFilter<"notifications"> | $Enums.NotificationType
   title?: Prisma.StringFilter<"notifications"> | string
   message?: Prisma.StringFilter<"notifications"> | string

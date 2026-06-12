@@ -281,14 +281,14 @@ export type case_millingsWhereInput = {
   AND?: Prisma.case_millingsWhereInput | Prisma.case_millingsWhereInput[]
   OR?: Prisma.case_millingsWhereInput[]
   NOT?: Prisma.case_millingsWhereInput | Prisma.case_millingsWhereInput[]
-  id?: Prisma.StringFilter<"case_millings"> | string
-  lab_id?: Prisma.StringFilter<"case_millings"> | string
-  case_id?: Prisma.StringFilter<"case_millings"> | string
-  block_type_id?: Prisma.StringFilter<"case_millings"> | string
-  milling_drill_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  fine_milling_drill_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  coarse_milling_drill_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  redone_from_milling_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
+  id?: Prisma.UuidFilter<"case_millings"> | string
+  lab_id?: Prisma.UuidFilter<"case_millings"> | string
+  case_id?: Prisma.UuidFilter<"case_millings"> | string
+  block_type_id?: Prisma.UuidFilter<"case_millings"> | string
+  milling_drill_id?: Prisma.UuidNullableFilter<"case_millings"> | string | null
+  fine_milling_drill_id?: Prisma.UuidNullableFilter<"case_millings"> | string | null
+  coarse_milling_drill_id?: Prisma.UuidNullableFilter<"case_millings"> | string | null
+  redone_from_milling_id?: Prisma.UuidNullableFilter<"case_millings"> | string | null
   status?: Prisma.EnumMillingStatusFilter<"case_millings"> | $Enums.MillingStatus
   teeth_milled_qty?: Prisma.IntFilter<"case_millings"> | number
   failure_reason?: Prisma.StringNullableFilter<"case_millings"> | string | null
@@ -337,13 +337,13 @@ export type case_millingsWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.case_millingsWhereInput | Prisma.case_millingsWhereInput[]
   OR?: Prisma.case_millingsWhereInput[]
   NOT?: Prisma.case_millingsWhereInput | Prisma.case_millingsWhereInput[]
-  lab_id?: Prisma.StringFilter<"case_millings"> | string
-  case_id?: Prisma.StringFilter<"case_millings"> | string
-  block_type_id?: Prisma.StringFilter<"case_millings"> | string
-  milling_drill_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  fine_milling_drill_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  coarse_milling_drill_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  redone_from_milling_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
+  lab_id?: Prisma.UuidFilter<"case_millings"> | string
+  case_id?: Prisma.UuidFilter<"case_millings"> | string
+  block_type_id?: Prisma.UuidFilter<"case_millings"> | string
+  milling_drill_id?: Prisma.UuidNullableFilter<"case_millings"> | string | null
+  fine_milling_drill_id?: Prisma.UuidNullableFilter<"case_millings"> | string | null
+  coarse_milling_drill_id?: Prisma.UuidNullableFilter<"case_millings"> | string | null
+  redone_from_milling_id?: Prisma.UuidNullableFilter<"case_millings"> | string | null
   status?: Prisma.EnumMillingStatusFilter<"case_millings"> | $Enums.MillingStatus
   teeth_milled_qty?: Prisma.IntFilter<"case_millings"> | number
   failure_reason?: Prisma.StringNullableFilter<"case_millings"> | string | null
@@ -388,14 +388,14 @@ export type case_millingsScalarWhereWithAggregatesInput = {
   AND?: Prisma.case_millingsScalarWhereWithAggregatesInput | Prisma.case_millingsScalarWhereWithAggregatesInput[]
   OR?: Prisma.case_millingsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.case_millingsScalarWhereWithAggregatesInput | Prisma.case_millingsScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"case_millings"> | string
-  lab_id?: Prisma.StringWithAggregatesFilter<"case_millings"> | string
-  case_id?: Prisma.StringWithAggregatesFilter<"case_millings"> | string
-  block_type_id?: Prisma.StringWithAggregatesFilter<"case_millings"> | string
-  milling_drill_id?: Prisma.StringNullableWithAggregatesFilter<"case_millings"> | string | null
-  fine_milling_drill_id?: Prisma.StringNullableWithAggregatesFilter<"case_millings"> | string | null
-  coarse_milling_drill_id?: Prisma.StringNullableWithAggregatesFilter<"case_millings"> | string | null
-  redone_from_milling_id?: Prisma.StringNullableWithAggregatesFilter<"case_millings"> | string | null
+  id?: Prisma.UuidWithAggregatesFilter<"case_millings"> | string
+  lab_id?: Prisma.UuidWithAggregatesFilter<"case_millings"> | string
+  case_id?: Prisma.UuidWithAggregatesFilter<"case_millings"> | string
+  block_type_id?: Prisma.UuidWithAggregatesFilter<"case_millings"> | string
+  milling_drill_id?: Prisma.UuidNullableWithAggregatesFilter<"case_millings"> | string | null
+  fine_milling_drill_id?: Prisma.UuidNullableWithAggregatesFilter<"case_millings"> | string | null
+  coarse_milling_drill_id?: Prisma.UuidNullableWithAggregatesFilter<"case_millings"> | string | null
+  redone_from_milling_id?: Prisma.UuidNullableWithAggregatesFilter<"case_millings"> | string | null
   status?: Prisma.EnumMillingStatusWithAggregatesFilter<"case_millings"> | $Enums.MillingStatus
   teeth_milled_qty?: Prisma.IntWithAggregatesFilter<"case_millings"> | number
   failure_reason?: Prisma.StringNullableWithAggregatesFilter<"case_millings"> | string | null
@@ -993,14 +993,14 @@ export type case_millingsScalarWhereInput = {
   AND?: Prisma.case_millingsScalarWhereInput | Prisma.case_millingsScalarWhereInput[]
   OR?: Prisma.case_millingsScalarWhereInput[]
   NOT?: Prisma.case_millingsScalarWhereInput | Prisma.case_millingsScalarWhereInput[]
-  id?: Prisma.StringFilter<"case_millings"> | string
-  lab_id?: Prisma.StringFilter<"case_millings"> | string
-  case_id?: Prisma.StringFilter<"case_millings"> | string
-  block_type_id?: Prisma.StringFilter<"case_millings"> | string
-  milling_drill_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  fine_milling_drill_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  coarse_milling_drill_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
-  redone_from_milling_id?: Prisma.StringNullableFilter<"case_millings"> | string | null
+  id?: Prisma.UuidFilter<"case_millings"> | string
+  lab_id?: Prisma.UuidFilter<"case_millings"> | string
+  case_id?: Prisma.UuidFilter<"case_millings"> | string
+  block_type_id?: Prisma.UuidFilter<"case_millings"> | string
+  milling_drill_id?: Prisma.UuidNullableFilter<"case_millings"> | string | null
+  fine_milling_drill_id?: Prisma.UuidNullableFilter<"case_millings"> | string | null
+  coarse_milling_drill_id?: Prisma.UuidNullableFilter<"case_millings"> | string | null
+  redone_from_milling_id?: Prisma.UuidNullableFilter<"case_millings"> | string | null
   status?: Prisma.EnumMillingStatusFilter<"case_millings"> | $Enums.MillingStatus
   teeth_milled_qty?: Prisma.IntFilter<"case_millings"> | number
   failure_reason?: Prisma.StringNullableFilter<"case_millings"> | string | null

@@ -13,8 +13,8 @@ export function OptionFieldFallback({
       <Skeleton
         className={
           variant === "textarea"
-            ? "min-h-25 w-full rounded-md !bg-muted-foreground/15"
-            : "h-10 w-full rounded-md !bg-muted-foreground/15"
+            ? "min-h-25 w-full rounded-md bg-muted-foreground/15"
+            : "h-10 w-full rounded-md bg-muted-foreground/15"
         }
       />
     </div>

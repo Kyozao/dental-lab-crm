@@ -2,12 +2,8 @@ import { Download, Trash2 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import type { AttachmentKindValue } from "@/features/cases/types";
 import type { EditableCase } from "@/features/cases/types";
-
-import {
-  formatBytes,
-  getAttachmentKindLabel,
-} from "./case-details-dialog.utils";
 
 export function AttachmentList({
   attachments,
@@ -89,4 +85,23 @@ export function AttachmentList({
       ))}
     </div>
   );
+}
+
+function formatBytes(bytes: number | null) {
+  if (!bytes) return "-";
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function getAttachmentKindLabel(kind: AttachmentKindValue) {
+  switch (kind) {
+    case "SCAN_INPUT":
+      return "Scan";
+    case "DESIGN_OUTPUT":
+    case "MODEL_OUTPUT":
+      return "Final";
+    default:
+      return "Arquivo";
+  }
 }

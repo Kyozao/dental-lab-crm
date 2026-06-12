@@ -198,8 +198,8 @@ export type processesWhereInput = {
   AND?: Prisma.processesWhereInput | Prisma.processesWhereInput[]
   OR?: Prisma.processesWhereInput[]
   NOT?: Prisma.processesWhereInput | Prisma.processesWhereInput[]
-  id?: Prisma.StringFilter<"processes"> | string
-  lab_id?: Prisma.StringFilter<"processes"> | string
+  id?: Prisma.UuidFilter<"processes"> | string
+  lab_id?: Prisma.UuidFilter<"processes"> | string
   name?: Prisma.StringFilter<"processes"> | string
   description?: Prisma.StringNullableFilter<"processes"> | string | null
   is_active?: Prisma.BoolFilter<"processes"> | boolean
@@ -229,7 +229,7 @@ export type processesWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.processesWhereInput | Prisma.processesWhereInput[]
   OR?: Prisma.processesWhereInput[]
   NOT?: Prisma.processesWhereInput | Prisma.processesWhereInput[]
-  lab_id?: Prisma.StringFilter<"processes"> | string
+  lab_id?: Prisma.UuidFilter<"processes"> | string
   name?: Prisma.StringFilter<"processes"> | string
   description?: Prisma.StringNullableFilter<"processes"> | string | null
   is_active?: Prisma.BoolFilter<"processes"> | boolean
@@ -258,8 +258,8 @@ export type processesScalarWhereWithAggregatesInput = {
   AND?: Prisma.processesScalarWhereWithAggregatesInput | Prisma.processesScalarWhereWithAggregatesInput[]
   OR?: Prisma.processesScalarWhereWithAggregatesInput[]
   NOT?: Prisma.processesScalarWhereWithAggregatesInput | Prisma.processesScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"processes"> | string
-  lab_id?: Prisma.StringWithAggregatesFilter<"processes"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"processes"> | string
+  lab_id?: Prisma.UuidWithAggregatesFilter<"processes"> | string
   name?: Prisma.StringWithAggregatesFilter<"processes"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"processes"> | string | null
   is_active?: Prisma.BoolWithAggregatesFilter<"processes"> | boolean
@@ -509,8 +509,8 @@ export type processesScalarWhereInput = {
   AND?: Prisma.processesScalarWhereInput | Prisma.processesScalarWhereInput[]
   OR?: Prisma.processesScalarWhereInput[]
   NOT?: Prisma.processesScalarWhereInput | Prisma.processesScalarWhereInput[]
-  id?: Prisma.StringFilter<"processes"> | string
-  lab_id?: Prisma.StringFilter<"processes"> | string
+  id?: Prisma.UuidFilter<"processes"> | string
+  lab_id?: Prisma.UuidFilter<"processes"> | string
   name?: Prisma.StringFilter<"processes"> | string
   description?: Prisma.StringNullableFilter<"processes"> | string | null
   is_active?: Prisma.BoolFilter<"processes"> | boolean

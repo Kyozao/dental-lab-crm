@@ -212,9 +212,9 @@ export type case_processesWhereInput = {
   AND?: Prisma.case_processesWhereInput | Prisma.case_processesWhereInput[]
   OR?: Prisma.case_processesWhereInput[]
   NOT?: Prisma.case_processesWhereInput | Prisma.case_processesWhereInput[]
-  id?: Prisma.StringFilter<"case_processes"> | string
-  case_id?: Prisma.StringFilter<"case_processes"> | string
-  process_id?: Prisma.StringFilter<"case_processes"> | string
+  id?: Prisma.UuidFilter<"case_processes"> | string
+  case_id?: Prisma.UuidFilter<"case_processes"> | string
+  process_id?: Prisma.UuidFilter<"case_processes"> | string
   workflow_step_id?: Prisma.StringFilter<"case_processes"> | string
   status?: Prisma.EnumCaseProcessStatusFilter<"case_processes"> | $Enums.CaseProcessStatus
   assigned_to_id?: Prisma.UuidNullableFilter<"case_processes"> | string | null
@@ -253,8 +253,8 @@ export type case_processesWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.case_processesWhereInput | Prisma.case_processesWhereInput[]
   OR?: Prisma.case_processesWhereInput[]
   NOT?: Prisma.case_processesWhereInput | Prisma.case_processesWhereInput[]
-  case_id?: Prisma.StringFilter<"case_processes"> | string
-  process_id?: Prisma.StringFilter<"case_processes"> | string
+  case_id?: Prisma.UuidFilter<"case_processes"> | string
+  process_id?: Prisma.UuidFilter<"case_processes"> | string
   workflow_step_id?: Prisma.StringFilter<"case_processes"> | string
   status?: Prisma.EnumCaseProcessStatusFilter<"case_processes"> | $Enums.CaseProcessStatus
   assigned_to_id?: Prisma.UuidNullableFilter<"case_processes"> | string | null
@@ -289,9 +289,9 @@ export type case_processesScalarWhereWithAggregatesInput = {
   AND?: Prisma.case_processesScalarWhereWithAggregatesInput | Prisma.case_processesScalarWhereWithAggregatesInput[]
   OR?: Prisma.case_processesScalarWhereWithAggregatesInput[]
   NOT?: Prisma.case_processesScalarWhereWithAggregatesInput | Prisma.case_processesScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"case_processes"> | string
-  case_id?: Prisma.StringWithAggregatesFilter<"case_processes"> | string
-  process_id?: Prisma.StringWithAggregatesFilter<"case_processes"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"case_processes"> | string
+  case_id?: Prisma.UuidWithAggregatesFilter<"case_processes"> | string
+  process_id?: Prisma.UuidWithAggregatesFilter<"case_processes"> | string
   workflow_step_id?: Prisma.StringWithAggregatesFilter<"case_processes"> | string
   status?: Prisma.EnumCaseProcessStatusWithAggregatesFilter<"case_processes"> | $Enums.CaseProcessStatus
   assigned_to_id?: Prisma.UuidNullableWithAggregatesFilter<"case_processes"> | string | null
@@ -672,9 +672,9 @@ export type case_processesScalarWhereInput = {
   AND?: Prisma.case_processesScalarWhereInput | Prisma.case_processesScalarWhereInput[]
   OR?: Prisma.case_processesScalarWhereInput[]
   NOT?: Prisma.case_processesScalarWhereInput | Prisma.case_processesScalarWhereInput[]
-  id?: Prisma.StringFilter<"case_processes"> | string
-  case_id?: Prisma.StringFilter<"case_processes"> | string
-  process_id?: Prisma.StringFilter<"case_processes"> | string
+  id?: Prisma.UuidFilter<"case_processes"> | string
+  case_id?: Prisma.UuidFilter<"case_processes"> | string
+  process_id?: Prisma.UuidFilter<"case_processes"> | string
   workflow_step_id?: Prisma.StringFilter<"case_processes"> | string
   status?: Prisma.EnumCaseProcessStatusFilter<"case_processes"> | $Enums.CaseProcessStatus
   assigned_to_id?: Prisma.UuidNullableFilter<"case_processes"> | string | null

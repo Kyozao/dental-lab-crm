@@ -201,8 +201,8 @@ export type service_typesWhereInput = {
   AND?: Prisma.service_typesWhereInput | Prisma.service_typesWhereInput[]
   OR?: Prisma.service_typesWhereInput[]
   NOT?: Prisma.service_typesWhereInput | Prisma.service_typesWhereInput[]
-  id?: Prisma.StringFilter<"service_types"> | string
-  lab_id?: Prisma.StringFilter<"service_types"> | string
+  id?: Prisma.UuidFilter<"service_types"> | string
+  lab_id?: Prisma.UuidFilter<"service_types"> | string
   name?: Prisma.StringFilter<"service_types"> | string
   is_active?: Prisma.BoolFilter<"service_types"> | boolean
   deleted_at?: Prisma.DateTimeNullableFilter<"service_types"> | Date | string | null
@@ -234,7 +234,7 @@ export type service_typesWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.service_typesWhereInput | Prisma.service_typesWhereInput[]
   OR?: Prisma.service_typesWhereInput[]
   NOT?: Prisma.service_typesWhereInput | Prisma.service_typesWhereInput[]
-  lab_id?: Prisma.StringFilter<"service_types"> | string
+  lab_id?: Prisma.UuidFilter<"service_types"> | string
   name?: Prisma.StringFilter<"service_types"> | string
   is_active?: Prisma.BoolFilter<"service_types"> | boolean
   deleted_at?: Prisma.DateTimeNullableFilter<"service_types"> | Date | string | null
@@ -265,8 +265,8 @@ export type service_typesScalarWhereWithAggregatesInput = {
   AND?: Prisma.service_typesScalarWhereWithAggregatesInput | Prisma.service_typesScalarWhereWithAggregatesInput[]
   OR?: Prisma.service_typesScalarWhereWithAggregatesInput[]
   NOT?: Prisma.service_typesScalarWhereWithAggregatesInput | Prisma.service_typesScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"service_types"> | string
-  lab_id?: Prisma.StringWithAggregatesFilter<"service_types"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"service_types"> | string
+  lab_id?: Prisma.UuidWithAggregatesFilter<"service_types"> | string
   name?: Prisma.StringWithAggregatesFilter<"service_types"> | string
   is_active?: Prisma.BoolWithAggregatesFilter<"service_types"> | boolean
   deleted_at?: Prisma.DateTimeNullableWithAggregatesFilter<"service_types"> | Date | string | null
@@ -533,8 +533,8 @@ export type service_typesScalarWhereInput = {
   AND?: Prisma.service_typesScalarWhereInput | Prisma.service_typesScalarWhereInput[]
   OR?: Prisma.service_typesScalarWhereInput[]
   NOT?: Prisma.service_typesScalarWhereInput | Prisma.service_typesScalarWhereInput[]
-  id?: Prisma.StringFilter<"service_types"> | string
-  lab_id?: Prisma.StringFilter<"service_types"> | string
+  id?: Prisma.UuidFilter<"service_types"> | string
+  lab_id?: Prisma.UuidFilter<"service_types"> | string
   name?: Prisma.StringFilter<"service_types"> | string
   is_active?: Prisma.BoolFilter<"service_types"> | boolean
   deleted_at?: Prisma.DateTimeNullableFilter<"service_types"> | Date | string | null

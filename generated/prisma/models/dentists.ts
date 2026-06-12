@@ -219,9 +219,9 @@ export type dentistsWhereInput = {
   AND?: Prisma.dentistsWhereInput | Prisma.dentistsWhereInput[]
   OR?: Prisma.dentistsWhereInput[]
   NOT?: Prisma.dentistsWhereInput | Prisma.dentistsWhereInput[]
-  id?: Prisma.StringFilter<"dentists"> | string
-  lab_id?: Prisma.StringFilter<"dentists"> | string
-  customer_id?: Prisma.StringFilter<"dentists"> | string
+  id?: Prisma.UuidFilter<"dentists"> | string
+  lab_id?: Prisma.UuidFilter<"dentists"> | string
+  customer_id?: Prisma.UuidFilter<"dentists"> | string
   name?: Prisma.StringFilter<"dentists"> | string
   phone?: Prisma.StringNullableFilter<"dentists"> | string | null
   email?: Prisma.StringNullableFilter<"dentists"> | string | null
@@ -257,8 +257,8 @@ export type dentistsWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.dentistsWhereInput | Prisma.dentistsWhereInput[]
   OR?: Prisma.dentistsWhereInput[]
   NOT?: Prisma.dentistsWhereInput | Prisma.dentistsWhereInput[]
-  lab_id?: Prisma.StringFilter<"dentists"> | string
-  customer_id?: Prisma.StringFilter<"dentists"> | string
+  lab_id?: Prisma.UuidFilter<"dentists"> | string
+  customer_id?: Prisma.UuidFilter<"dentists"> | string
   name?: Prisma.StringFilter<"dentists"> | string
   phone?: Prisma.StringNullableFilter<"dentists"> | string | null
   email?: Prisma.StringNullableFilter<"dentists"> | string | null
@@ -293,9 +293,9 @@ export type dentistsScalarWhereWithAggregatesInput = {
   AND?: Prisma.dentistsScalarWhereWithAggregatesInput | Prisma.dentistsScalarWhereWithAggregatesInput[]
   OR?: Prisma.dentistsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.dentistsScalarWhereWithAggregatesInput | Prisma.dentistsScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"dentists"> | string
-  lab_id?: Prisma.StringWithAggregatesFilter<"dentists"> | string
-  customer_id?: Prisma.StringWithAggregatesFilter<"dentists"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"dentists"> | string
+  lab_id?: Prisma.UuidWithAggregatesFilter<"dentists"> | string
+  customer_id?: Prisma.UuidWithAggregatesFilter<"dentists"> | string
   name?: Prisma.StringWithAggregatesFilter<"dentists"> | string
   phone?: Prisma.StringNullableWithAggregatesFilter<"dentists"> | string | null
   email?: Prisma.StringNullableWithAggregatesFilter<"dentists"> | string | null
@@ -621,9 +621,9 @@ export type dentistsScalarWhereInput = {
   AND?: Prisma.dentistsScalarWhereInput | Prisma.dentistsScalarWhereInput[]
   OR?: Prisma.dentistsScalarWhereInput[]
   NOT?: Prisma.dentistsScalarWhereInput | Prisma.dentistsScalarWhereInput[]
-  id?: Prisma.StringFilter<"dentists"> | string
-  lab_id?: Prisma.StringFilter<"dentists"> | string
-  customer_id?: Prisma.StringFilter<"dentists"> | string
+  id?: Prisma.UuidFilter<"dentists"> | string
+  lab_id?: Prisma.UuidFilter<"dentists"> | string
+  customer_id?: Prisma.UuidFilter<"dentists"> | string
   name?: Prisma.StringFilter<"dentists"> | string
   phone?: Prisma.StringNullableFilter<"dentists"> | string | null
   email?: Prisma.StringNullableFilter<"dentists"> | string | null

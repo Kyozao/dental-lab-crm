@@ -254,9 +254,9 @@ export type case_component_usagesWhereInput = {
   AND?: Prisma.case_component_usagesWhereInput | Prisma.case_component_usagesWhereInput[]
   OR?: Prisma.case_component_usagesWhereInput[]
   NOT?: Prisma.case_component_usagesWhereInput | Prisma.case_component_usagesWhereInput[]
-  id?: Prisma.StringFilter<"case_component_usages"> | string
-  case_id?: Prisma.StringFilter<"case_component_usages"> | string
-  component_id?: Prisma.StringFilter<"case_component_usages"> | string
+  id?: Prisma.UuidFilter<"case_component_usages"> | string
+  case_id?: Prisma.UuidFilter<"case_component_usages"> | string
+  component_id?: Prisma.UuidFilter<"case_component_usages"> | string
   quantity?: Prisma.IntFilter<"case_component_usages"> | number
   charge_client?: Prisma.BoolFilter<"case_component_usages"> | boolean
   unit_cost?: Prisma.DecimalNullableFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -288,8 +288,8 @@ export type case_component_usagesWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.case_component_usagesWhereInput | Prisma.case_component_usagesWhereInput[]
   OR?: Prisma.case_component_usagesWhereInput[]
   NOT?: Prisma.case_component_usagesWhereInput | Prisma.case_component_usagesWhereInput[]
-  case_id?: Prisma.StringFilter<"case_component_usages"> | string
-  component_id?: Prisma.StringFilter<"case_component_usages"> | string
+  case_id?: Prisma.UuidFilter<"case_component_usages"> | string
+  component_id?: Prisma.UuidFilter<"case_component_usages"> | string
   quantity?: Prisma.IntFilter<"case_component_usages"> | number
   charge_client?: Prisma.BoolFilter<"case_component_usages"> | boolean
   unit_cost?: Prisma.DecimalNullableFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -323,9 +323,9 @@ export type case_component_usagesScalarWhereWithAggregatesInput = {
   AND?: Prisma.case_component_usagesScalarWhereWithAggregatesInput | Prisma.case_component_usagesScalarWhereWithAggregatesInput[]
   OR?: Prisma.case_component_usagesScalarWhereWithAggregatesInput[]
   NOT?: Prisma.case_component_usagesScalarWhereWithAggregatesInput | Prisma.case_component_usagesScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"case_component_usages"> | string
-  case_id?: Prisma.StringWithAggregatesFilter<"case_component_usages"> | string
-  component_id?: Prisma.StringWithAggregatesFilter<"case_component_usages"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"case_component_usages"> | string
+  case_id?: Prisma.UuidWithAggregatesFilter<"case_component_usages"> | string
+  component_id?: Prisma.UuidWithAggregatesFilter<"case_component_usages"> | string
   quantity?: Prisma.IntWithAggregatesFilter<"case_component_usages"> | number
   charge_client?: Prisma.BoolWithAggregatesFilter<"case_component_usages"> | boolean
   unit_cost?: Prisma.DecimalNullableWithAggregatesFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -623,9 +623,9 @@ export type case_component_usagesScalarWhereInput = {
   AND?: Prisma.case_component_usagesScalarWhereInput | Prisma.case_component_usagesScalarWhereInput[]
   OR?: Prisma.case_component_usagesScalarWhereInput[]
   NOT?: Prisma.case_component_usagesScalarWhereInput | Prisma.case_component_usagesScalarWhereInput[]
-  id?: Prisma.StringFilter<"case_component_usages"> | string
-  case_id?: Prisma.StringFilter<"case_component_usages"> | string
-  component_id?: Prisma.StringFilter<"case_component_usages"> | string
+  id?: Prisma.UuidFilter<"case_component_usages"> | string
+  case_id?: Prisma.UuidFilter<"case_component_usages"> | string
+  component_id?: Prisma.UuidFilter<"case_component_usages"> | string
   quantity?: Prisma.IntFilter<"case_component_usages"> | number
   charge_client?: Prisma.BoolFilter<"case_component_usages"> | boolean
   unit_cost?: Prisma.DecimalNullableFilter<"case_component_usages"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null

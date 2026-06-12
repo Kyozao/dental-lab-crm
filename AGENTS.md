@@ -2,128 +2,157 @@
 
 ## Purpose
 
-Internal dental lab CRM for managing cases, dentists, patients, production flow, kanban, registry data, and operational visibility.
+Dental lab CRM for managing cases, dentists, patients, production flow, registry data, and operational visibility.
 
 ## Stack
 
 * Next.js App Router
 * React
 * TypeScript
-* Prisma with Supabase/Postgres
+* Prisma
+* Supabase/Postgres
 * Tailwind CSS
 * shadcn/ui
 
-## Main Architecture Goal
+## Architecture Goal
 
-Build the app as a normal Next.js app, but keep the backend code shaped like a real API so it can be extracted later if needed.
+Build a normal Next.js app, but keep backend code shaped like a real API so it can be extracted later if needed.
 
 Do not overengineer.
 
-Current backend flow:
-
-Page
-→ Feature component/hook
-→ Next.js API route
-→ Service
-→ Prisma
-→ Supabase/Postgres
-
 ## Folder Structure
 
-Use this structure:
-
+```txt
 app/
-api/
-cases/
-route.ts
-services.ts
-[id]/
-route.ts
+  api/
+    cases/
+      route.ts
+      cases.services.ts
+      cases.schemas.ts
+      [id]/
+        route.ts
 
-```
-cases/
-  page.tsx
-```
+  cases/
+    page.tsx
 
 features/
-cases/
-components/
-hooks/
-cases.types.ts
+  cases/
+    components/
+    hooks/
+    cases.types.ts
 
 lib/
-prisma.ts
+  prisma.ts
 
 prisma/
-schema.prisma
+  schema.prisma
+```
 
-## Core Rules
+## Dependency Direction
 
-1. `app/` is for routing, page composition, and Next.js API route modules.
+Allowed direction:
+
+```txt
+app → features
+app/api → services → prisma
+```
+
+Rules:
+
+* Pages compose UI and call feature hooks/components.
+* Feature code is frontend-only.
+* API routes call services.
+* Services may use Prisma.
+* Never import Prisma into `features/`.
+* Never import API services into `features/`.
+* Never import from a higher layer.
+
+## App Layer Rules
+
+`app/` is for:
+
+* routing
+* page composition
+* layouts
+* Next.js API route modules
 
 Do not put Prisma queries, business rules, reusable domain logic, or large helpers inside page folders.
 
-For API routes, keep the route handler and its small service module together under the resource folder.
+## Feature Layer Rules
 
-Example:
+`features/` is frontend-only.
 
-`app/api/cases/route.ts`
-`app/api/cases/services.ts`
-
-2. `features/` is frontend-only.
-
-Feature folders can contain:
+Feature folders may contain:
 
 * components
 * hooks
 * frontend types
 * frontend helpers
+* API client functions used by hooks
 
-Feature folders must not import:
+Feature folders must not contain:
 
-* Prisma
+* Prisma code
 * backend services
 * database logic
-* server-only code
+* server-only logic
 
-3. `app/api/*/services.ts` is the internal backend service layer for now.
+## API Layer Rules
 
-This is where backend service code lives.
+Route handlers act as the controller layer.
 
-For now, use services directly.
-
-Do not create controllers, repositories, DTOs, mappers, adapters, factories, or extra abstraction layers unless the code clearly needs them later.
-
-4. Route handlers act as the controller layer for now.
-
-Example:
-
-`app/api/cases/route.ts`
-
-handles HTTP concerns:
+Route handlers handle:
 
 * request parsing
 * route params
 * query params
+* validation
 * status codes
 * JSON responses
-* calling the service
+* calling services
 
-5. Services handle business logic and database access.
+Services handle:
 
-Example:
+* business logic
+* authorization checks
+* Prisma queries
+* database writes
 
-`app/api/cases/services.ts`
+Use Prisma directly inside services for now.
 
-This file can use Prisma directly for now.
+Do not create controllers, repositories, DTOs, mappers, adapters, factories, or extra abstraction layers unless there is a real repeated problem.
 
-6. Schemas handle validation.
-
-Example:
-
-`app/api/cases/schemas.ts`
+## Validation Rules
 
 Use schemas for request validation, especially for create and update operations.
+
+Example:
+
+```txt
+app/api/cases/cases.schemas.ts
+```
+
+Validate external input before using it in services.
+
+## Auth and Authorization Rules
+
+Protected API routes must identify the user and resolve what the user is allowed to access before querying data.
+
+Do not assume a user can access a resource just because they are logged in.
+
+Every protected query must be scoped by the user’s authorization context.
+
+Examples of authorization context:
+
+* the user’s lab
+* the user’s memberships
+* the user’s role
+* the user’s permissions
+* the resource owner
+
+For now, keep this flexible. Do not hardcode the assumption that each user has only one lab or many labs unless the product decision is already made.
+
+Services should receive or resolve the authorization context before accessing protected data.
 
 ## API Design Rules
 
@@ -131,44 +160,42 @@ Build APIs around resources, not pages.
 
 Do not create routes like:
 
-* `/api/getCases`
-* `/api/getKanbanCases`
-* `/api/getDashboardCases`
+```txt
+/api/getCases
+/api/getKanbanCases
+/api/getDashboardCases
+```
 
 Use REST-style resource routes:
 
-GET `/api/cases`
-List cases.
+```txt
+GET    /api/cases
+POST   /api/cases
+GET    /api/cases/[id]
+PUT    /api/cases/[id]
+DELETE /api/cases/[id]
+```
 
-POST `/api/cases`
-Create a case.
+Pages consume resources, not page-specific endpoints.
 
-GET `/api/cases/[id]`
-Get one case.
+Use query params for filtering:
 
-PUT `/api/cases/[id]`
-Update one case.
-
-DELETE `/api/cases/[id]`
-Delete one case.
-
-Kanban, dashboard, production, and cases pages should all consume the same `/api/cases` resource.
-
-If filtering is needed, use query params:
-
-GET `/api/cases?status=production`
-GET `/api/cases?limit=20`
-GET `/api/cases?search=patientName`
+```txt
+GET /api/cases?status=production
+GET /api/cases?limit=20
+GET /api/cases?search=patientName
+```
 
 ## Working Rules
 
 * Keep changes small and scoped.
 * Fix root causes instead of stacking patches.
 * Do not edit generated files.
-* Never hardcode secrets or tokens.
-* Do not add folders just because they sound clean.
 * Only add abstraction when there is a real repeated problem.
 * Prefer simple, readable code over enterprise patterns.
+* Never use `any`.
+* Remove old duplicated code when replacing it.
+* Do not introduce unrelated churn.
 
 ## Verification
 
@@ -181,6 +208,6 @@ Use the smallest relevant check:
 A task is complete only when:
 
 * the feature works end-to-end
-* old duplicated code was removed if replaced
+* replaced duplicated code was removed
 * no unrelated churn was introduced
 * risky or unfinished work is clearly called out

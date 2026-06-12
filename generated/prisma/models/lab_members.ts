@@ -177,9 +177,9 @@ export type lab_membersWhereInput = {
   AND?: Prisma.lab_membersWhereInput | Prisma.lab_membersWhereInput[]
   OR?: Prisma.lab_membersWhereInput[]
   NOT?: Prisma.lab_membersWhereInput | Prisma.lab_membersWhereInput[]
-  id?: Prisma.StringFilter<"lab_members"> | string
+  id?: Prisma.UuidFilter<"lab_members"> | string
   user_id?: Prisma.UuidFilter<"lab_members"> | string
-  lab_id?: Prisma.StringFilter<"lab_members"> | string
+  lab_id?: Prisma.UuidFilter<"lab_members"> | string
   role?: Prisma.EnumUserRoleFilter<"lab_members"> | $Enums.UserRole
   created_at?: Prisma.DateTimeFilter<"lab_members"> | Date | string
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
@@ -203,7 +203,7 @@ export type lab_membersWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.lab_membersWhereInput | Prisma.lab_membersWhereInput[]
   OR?: Prisma.lab_membersWhereInput[]
   NOT?: Prisma.lab_membersWhereInput | Prisma.lab_membersWhereInput[]
-  lab_id?: Prisma.StringFilter<"lab_members"> | string
+  lab_id?: Prisma.UuidFilter<"lab_members"> | string
   role?: Prisma.EnumUserRoleFilter<"lab_members"> | $Enums.UserRole
   created_at?: Prisma.DateTimeFilter<"lab_members"> | Date | string
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
@@ -225,9 +225,9 @@ export type lab_membersScalarWhereWithAggregatesInput = {
   AND?: Prisma.lab_membersScalarWhereWithAggregatesInput | Prisma.lab_membersScalarWhereWithAggregatesInput[]
   OR?: Prisma.lab_membersScalarWhereWithAggregatesInput[]
   NOT?: Prisma.lab_membersScalarWhereWithAggregatesInput | Prisma.lab_membersScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"lab_members"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"lab_members"> | string
   user_id?: Prisma.UuidWithAggregatesFilter<"lab_members"> | string
-  lab_id?: Prisma.StringWithAggregatesFilter<"lab_members"> | string
+  lab_id?: Prisma.UuidWithAggregatesFilter<"lab_members"> | string
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"lab_members"> | $Enums.UserRole
   created_at?: Prisma.DateTimeWithAggregatesFilter<"lab_members"> | Date | string
 }
@@ -457,9 +457,9 @@ export type lab_membersScalarWhereInput = {
   AND?: Prisma.lab_membersScalarWhereInput | Prisma.lab_membersScalarWhereInput[]
   OR?: Prisma.lab_membersScalarWhereInput[]
   NOT?: Prisma.lab_membersScalarWhereInput | Prisma.lab_membersScalarWhereInput[]
-  id?: Prisma.StringFilter<"lab_members"> | string
+  id?: Prisma.UuidFilter<"lab_members"> | string
   user_id?: Prisma.UuidFilter<"lab_members"> | string
-  lab_id?: Prisma.StringFilter<"lab_members"> | string
+  lab_id?: Prisma.UuidFilter<"lab_members"> | string
   role?: Prisma.EnumUserRoleFilter<"lab_members"> | $Enums.UserRole
   created_at?: Prisma.DateTimeFilter<"lab_members"> | Date | string
 }

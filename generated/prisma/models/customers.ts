@@ -212,8 +212,8 @@ export type customersWhereInput = {
   AND?: Prisma.customersWhereInput | Prisma.customersWhereInput[]
   OR?: Prisma.customersWhereInput[]
   NOT?: Prisma.customersWhereInput | Prisma.customersWhereInput[]
-  id?: Prisma.StringFilter<"customers"> | string
-  lab_id?: Prisma.StringFilter<"customers"> | string
+  id?: Prisma.UuidFilter<"customers"> | string
+  lab_id?: Prisma.UuidFilter<"customers"> | string
   name?: Prisma.StringFilter<"customers"> | string
   phone?: Prisma.StringNullableFilter<"customers"> | string | null
   email?: Prisma.StringNullableFilter<"customers"> | string | null
@@ -248,7 +248,7 @@ export type customersWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.customersWhereInput | Prisma.customersWhereInput[]
   OR?: Prisma.customersWhereInput[]
   NOT?: Prisma.customersWhereInput | Prisma.customersWhereInput[]
-  lab_id?: Prisma.StringFilter<"customers"> | string
+  lab_id?: Prisma.UuidFilter<"customers"> | string
   name?: Prisma.StringFilter<"customers"> | string
   phone?: Prisma.StringNullableFilter<"customers"> | string | null
   email?: Prisma.StringNullableFilter<"customers"> | string | null
@@ -282,8 +282,8 @@ export type customersScalarWhereWithAggregatesInput = {
   AND?: Prisma.customersScalarWhereWithAggregatesInput | Prisma.customersScalarWhereWithAggregatesInput[]
   OR?: Prisma.customersScalarWhereWithAggregatesInput[]
   NOT?: Prisma.customersScalarWhereWithAggregatesInput | Prisma.customersScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"customers"> | string
-  lab_id?: Prisma.StringWithAggregatesFilter<"customers"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"customers"> | string
+  lab_id?: Prisma.UuidWithAggregatesFilter<"customers"> | string
   name?: Prisma.StringWithAggregatesFilter<"customers"> | string
   phone?: Prisma.StringNullableWithAggregatesFilter<"customers"> | string | null
   email?: Prisma.StringNullableWithAggregatesFilter<"customers"> | string | null
@@ -581,8 +581,8 @@ export type customersScalarWhereInput = {
   AND?: Prisma.customersScalarWhereInput | Prisma.customersScalarWhereInput[]
   OR?: Prisma.customersScalarWhereInput[]
   NOT?: Prisma.customersScalarWhereInput | Prisma.customersScalarWhereInput[]
-  id?: Prisma.StringFilter<"customers"> | string
-  lab_id?: Prisma.StringFilter<"customers"> | string
+  id?: Prisma.UuidFilter<"customers"> | string
+  lab_id?: Prisma.UuidFilter<"customers"> | string
   name?: Prisma.StringFilter<"customers"> | string
   phone?: Prisma.StringNullableFilter<"customers"> | string | null
   email?: Prisma.StringNullableFilter<"customers"> | string | null

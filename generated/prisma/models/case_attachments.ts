@@ -253,8 +253,8 @@ export type case_attachmentsWhereInput = {
   AND?: Prisma.case_attachmentsWhereInput | Prisma.case_attachmentsWhereInput[]
   OR?: Prisma.case_attachmentsWhereInput[]
   NOT?: Prisma.case_attachmentsWhereInput | Prisma.case_attachmentsWhereInput[]
-  id?: Prisma.StringFilter<"case_attachments"> | string
-  case_id?: Prisma.StringFilter<"case_attachments"> | string
+  id?: Prisma.UuidFilter<"case_attachments"> | string
+  case_id?: Prisma.UuidFilter<"case_attachments"> | string
   file_name?: Prisma.StringFilter<"case_attachments"> | string
   file_path?: Prisma.StringFilter<"case_attachments"> | string
   file_type?: Prisma.StringNullableFilter<"case_attachments"> | string | null
@@ -289,7 +289,7 @@ export type case_attachmentsWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.case_attachmentsWhereInput | Prisma.case_attachmentsWhereInput[]
   OR?: Prisma.case_attachmentsWhereInput[]
   NOT?: Prisma.case_attachmentsWhereInput | Prisma.case_attachmentsWhereInput[]
-  case_id?: Prisma.StringFilter<"case_attachments"> | string
+  case_id?: Prisma.UuidFilter<"case_attachments"> | string
   file_name?: Prisma.StringFilter<"case_attachments"> | string
   file_path?: Prisma.StringFilter<"case_attachments"> | string
   file_type?: Prisma.StringNullableFilter<"case_attachments"> | string | null
@@ -326,8 +326,8 @@ export type case_attachmentsScalarWhereWithAggregatesInput = {
   AND?: Prisma.case_attachmentsScalarWhereWithAggregatesInput | Prisma.case_attachmentsScalarWhereWithAggregatesInput[]
   OR?: Prisma.case_attachmentsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.case_attachmentsScalarWhereWithAggregatesInput | Prisma.case_attachmentsScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"case_attachments"> | string
-  case_id?: Prisma.StringWithAggregatesFilter<"case_attachments"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"case_attachments"> | string
+  case_id?: Prisma.UuidWithAggregatesFilter<"case_attachments"> | string
   file_name?: Prisma.StringWithAggregatesFilter<"case_attachments"> | string
   file_path?: Prisma.StringWithAggregatesFilter<"case_attachments"> | string
   file_type?: Prisma.StringNullableWithAggregatesFilter<"case_attachments"> | string | null
@@ -639,8 +639,8 @@ export type case_attachmentsScalarWhereInput = {
   AND?: Prisma.case_attachmentsScalarWhereInput | Prisma.case_attachmentsScalarWhereInput[]
   OR?: Prisma.case_attachmentsScalarWhereInput[]
   NOT?: Prisma.case_attachmentsScalarWhereInput | Prisma.case_attachmentsScalarWhereInput[]
-  id?: Prisma.StringFilter<"case_attachments"> | string
-  case_id?: Prisma.StringFilter<"case_attachments"> | string
+  id?: Prisma.UuidFilter<"case_attachments"> | string
+  case_id?: Prisma.UuidFilter<"case_attachments"> | string
   file_name?: Prisma.StringFilter<"case_attachments"> | string
   file_path?: Prisma.StringFilter<"case_attachments"> | string
   file_type?: Prisma.StringNullableFilter<"case_attachments"> | string | null

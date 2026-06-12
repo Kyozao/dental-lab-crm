@@ -59,7 +59,7 @@ enum NotificationType {
 }
 
 model users {
-  id         String    @id @default(uuid()) @db.Uuid
+  id         String    @id @default(uuid(7)) @db.Uuid
   name       String
   email      String    @unique
   is_active  Boolean   @default(true)
@@ -77,7 +77,7 @@ model users {
 }
 
 model labs {
-  id         String   @id @default(cuid())
+  id         String   @id @default(uuid(7)) @db.Uuid
   name       String
   is_active  Boolean  @default(true)
   created_at DateTime @default(now())
@@ -98,9 +98,9 @@ model labs {
 }
 
 model lab_members {
-  id         String   @id @default(cuid())
+  id         String   @id @default(uuid(7)) @db.Uuid
   user_id    String   @db.Uuid
-  lab_id     String
+  lab_id     String   @db.Uuid
   role       UserRole
   created_at DateTime @default(now())
 
@@ -113,8 +113,8 @@ model lab_members {
 }
 
 model service_types {
-  id            String    @id @default(cuid())
-  lab_id        String
+  id            String    @id @default(uuid(7)) @db.Uuid
+  lab_id        String    @db.Uuid
   name          String
   is_active     Boolean   @default(true)
   deleted_at    DateTime?
@@ -131,8 +131,8 @@ model service_types {
 }
 
 model processes {
-  id          String    @id @default(cuid())
-  lab_id      String
+  id          String    @id @default(uuid(7)) @db.Uuid
+  lab_id      String    @db.Uuid
   name        String
   description String?
   is_active   Boolean   @default(true)
@@ -148,8 +148,8 @@ model processes {
 }
 
 model milling_drills {
-  lab_id                String
-  id                    String    @id @default(cuid())
+  lab_id                String    @db.Uuid
+  id                    String    @id @default(uuid(7)) @db.Uuid
   name                  String
   type                  String?
   brand                 String?
@@ -173,14 +173,14 @@ model milling_drills {
 }
 
 model case_millings {
-  id                      String        @id @default(cuid())
-  lab_id                  String
-  case_id                 String
-  block_type_id           String
-  milling_drill_id        String?
-  fine_milling_drill_id   String?
-  coarse_milling_drill_id String?
-  redone_from_milling_id  String?
+  id                      String        @id @default(uuid(7)) @db.Uuid
+  lab_id                  String        @db.Uuid
+  case_id                 String        @db.Uuid
+  block_type_id           String        @db.Uuid
+  milling_drill_id        String?       @db.Uuid
+  fine_milling_drill_id   String?       @db.Uuid
+  coarse_milling_drill_id String?       @db.Uuid
+  redone_from_milling_id  String?       @db.Uuid
   status                  MillingStatus @default(SUCCESS)
 
   teeth_milled_qty Int      @default(0)
@@ -210,8 +210,8 @@ model case_millings {
 }
 
 model case_attachments {
-  id              String         @id @default(cuid())
-  case_id         String
+  id              String         @id @default(uuid(7)) @db.Uuid
+  case_id         String         @db.Uuid
   file_name       String
   file_path       String
   file_type       String?
@@ -228,8 +228,8 @@ model case_attachments {
 }
 
 model customers {
-  id         String    @id @default(cuid())
-  lab_id     String
+  id         String    @id @default(uuid(7)) @db.Uuid
+  lab_id     String    @db.Uuid
   name       String
   phone      String?
   email      String?
@@ -247,9 +247,9 @@ model customers {
 }
 
 model dentists {
-  id          String    @id @default(cuid())
-  lab_id      String
-  customer_id String
+  id          String    @id @default(uuid(7)) @db.Uuid
+  lab_id      String    @db.Uuid
+  customer_id String    @db.Uuid
   name        String
   phone       String?
   email       String?
@@ -268,8 +268,8 @@ model dentists {
 }
 
 model components {
-  id            String    @id @default(cuid())
-  lab_id        String
+  id            String    @id @default(uuid(7)) @db.Uuid
+  lab_id        String    @db.Uuid
   name          String
   category      String?
   brand         String?
@@ -288,9 +288,9 @@ model components {
 }
 
 model case_component_usages {
-  id            String   @id @default(cuid())
-  case_id       String
-  component_id  String
+  id            String   @id @default(uuid(7)) @db.Uuid
+  case_id       String   @db.Uuid
+  component_id  String   @db.Uuid
   quantity      Int      @default(1)
   charge_client Boolean  @default(true)
   unit_cost     Decimal? @db.Decimal(10, 2)
@@ -307,8 +307,8 @@ model case_component_usages {
 }
 
 model block_types {
-  id           String    @id @default(cuid())
-  lab_id       String
+  id           String    @id @default(uuid(7)) @db.Uuid
+  lab_id       String    @db.Uuid
   name         String
   material     String?
   brand        String?
@@ -328,13 +328,13 @@ model block_types {
 }
 
 model cases {
-  id                 String     @id @default(cuid())
-  lab_id             String
+  id                 String     @id @default(uuid(7)) @db.Uuid
+  lab_id             String     @db.Uuid
   code               String
   patient_name       String
-  customer_id        String?
-  service_type_id    String?
-  dentist_id         String?
+  customer_id        String?    @db.Uuid
+  service_type_id    String?    @db.Uuid
+  dentist_id         String?    @db.Uuid
   cad_designer_id    String?    @db.Uuid
   created_by_user_id String?    @db.Uuid
   current_status     CaseStatus @default(ENTRY)
@@ -378,9 +378,9 @@ model cases {
 }
 
 model case_processes {
-  id               String            @id @default(cuid())
-  case_id          String
-  process_id       String
+  id               String            @id @default(uuid(7)) @db.Uuid
+  case_id          String            @db.Uuid
+  process_id       String            @db.Uuid
   workflow_step_id String
   status           CaseProcessStatus @default(LOCKED)
   assigned_to_id   String?           @db.Uuid
@@ -403,9 +403,9 @@ model case_processes {
 }
 
 model case_process_dependencies {
-  id                         String @id @default(cuid())
-  case_process_id            String
-  depends_on_case_process_id String
+  id                         String @id @default(uuid(7)) @db.Uuid
+  case_process_id            String @db.Uuid
+  depends_on_case_process_id String @db.Uuid
 
   caseProcess          case_processes @relation("CaseProcessDependencyTarget", fields: [case_process_id], references: [id], onDelete: Cascade)
   dependsOnCaseProcess case_processes @relation("CaseProcessDependencySource", fields: [depends_on_case_process_id], references: [id], onDelete: Cascade)
@@ -416,8 +416,8 @@ model case_process_dependencies {
 }
 
 model case_status_histories {
-  id          String      @id @default(cuid())
-  case_id     String
+  id          String      @id @default(uuid(7)) @db.Uuid
+  case_id     String      @db.Uuid
   from_status CaseStatus?
   to_status   CaseStatus
   note        String?
@@ -430,9 +430,9 @@ model case_status_histories {
 }
 
 model notifications {
-  id                String           @id @default(cuid())
+  id                String           @id @default(uuid(7)) @db.Uuid
   recipient_user_id String           @db.Uuid
-  case_id           String?
+  case_id           String?          @db.Uuid
   type              NotificationType
   title             String
   message           String
@@ -449,7 +449,7 @@ model notifications {
 }
 
 model push_subscriptions {
-  id         String   @id @default(cuid())
+  id         String   @id @default(uuid(7)) @db.Uuid
   user_id    String   @db.Uuid
   endpoint   String   @unique
   p256dh     String

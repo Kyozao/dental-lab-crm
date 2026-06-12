@@ -309,13 +309,13 @@ export type casesWhereInput = {
   AND?: Prisma.casesWhereInput | Prisma.casesWhereInput[]
   OR?: Prisma.casesWhereInput[]
   NOT?: Prisma.casesWhereInput | Prisma.casesWhereInput[]
-  id?: Prisma.StringFilter<"cases"> | string
-  lab_id?: Prisma.StringFilter<"cases"> | string
+  id?: Prisma.UuidFilter<"cases"> | string
+  lab_id?: Prisma.UuidFilter<"cases"> | string
   code?: Prisma.StringFilter<"cases"> | string
   patient_name?: Prisma.StringFilter<"cases"> | string
-  customer_id?: Prisma.StringNullableFilter<"cases"> | string | null
-  service_type_id?: Prisma.StringNullableFilter<"cases"> | string | null
-  dentist_id?: Prisma.StringNullableFilter<"cases"> | string | null
+  customer_id?: Prisma.UuidNullableFilter<"cases"> | string | null
+  service_type_id?: Prisma.UuidNullableFilter<"cases"> | string | null
+  dentist_id?: Prisma.UuidNullableFilter<"cases"> | string | null
   cad_designer_id?: Prisma.UuidNullableFilter<"cases"> | string | null
   created_by_user_id?: Prisma.UuidNullableFilter<"cases"> | string | null
   current_status?: Prisma.EnumCaseStatusFilter<"cases"> | $Enums.CaseStatus
@@ -382,12 +382,12 @@ export type casesWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.casesWhereInput | Prisma.casesWhereInput[]
   OR?: Prisma.casesWhereInput[]
   NOT?: Prisma.casesWhereInput | Prisma.casesWhereInput[]
-  lab_id?: Prisma.StringFilter<"cases"> | string
+  lab_id?: Prisma.UuidFilter<"cases"> | string
   code?: Prisma.StringFilter<"cases"> | string
   patient_name?: Prisma.StringFilter<"cases"> | string
-  customer_id?: Prisma.StringNullableFilter<"cases"> | string | null
-  service_type_id?: Prisma.StringNullableFilter<"cases"> | string | null
-  dentist_id?: Prisma.StringNullableFilter<"cases"> | string | null
+  customer_id?: Prisma.UuidNullableFilter<"cases"> | string | null
+  service_type_id?: Prisma.UuidNullableFilter<"cases"> | string | null
+  dentist_id?: Prisma.UuidNullableFilter<"cases"> | string | null
   cad_designer_id?: Prisma.UuidNullableFilter<"cases"> | string | null
   created_by_user_id?: Prisma.UuidNullableFilter<"cases"> | string | null
   current_status?: Prisma.EnumCaseStatusFilter<"cases"> | $Enums.CaseStatus
@@ -445,13 +445,13 @@ export type casesScalarWhereWithAggregatesInput = {
   AND?: Prisma.casesScalarWhereWithAggregatesInput | Prisma.casesScalarWhereWithAggregatesInput[]
   OR?: Prisma.casesScalarWhereWithAggregatesInput[]
   NOT?: Prisma.casesScalarWhereWithAggregatesInput | Prisma.casesScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"cases"> | string
-  lab_id?: Prisma.StringWithAggregatesFilter<"cases"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"cases"> | string
+  lab_id?: Prisma.UuidWithAggregatesFilter<"cases"> | string
   code?: Prisma.StringWithAggregatesFilter<"cases"> | string
   patient_name?: Prisma.StringWithAggregatesFilter<"cases"> | string
-  customer_id?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
-  service_type_id?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
-  dentist_id?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
+  customer_id?: Prisma.UuidNullableWithAggregatesFilter<"cases"> | string | null
+  service_type_id?: Prisma.UuidNullableWithAggregatesFilter<"cases"> | string | null
+  dentist_id?: Prisma.UuidNullableWithAggregatesFilter<"cases"> | string | null
   cad_designer_id?: Prisma.UuidNullableWithAggregatesFilter<"cases"> | string | null
   created_by_user_id?: Prisma.UuidNullableWithAggregatesFilter<"cases"> | string | null
   current_status?: Prisma.EnumCaseStatusWithAggregatesFilter<"cases"> | $Enums.CaseStatus
@@ -1227,13 +1227,13 @@ export type casesScalarWhereInput = {
   AND?: Prisma.casesScalarWhereInput | Prisma.casesScalarWhereInput[]
   OR?: Prisma.casesScalarWhereInput[]
   NOT?: Prisma.casesScalarWhereInput | Prisma.casesScalarWhereInput[]
-  id?: Prisma.StringFilter<"cases"> | string
-  lab_id?: Prisma.StringFilter<"cases"> | string
+  id?: Prisma.UuidFilter<"cases"> | string
+  lab_id?: Prisma.UuidFilter<"cases"> | string
   code?: Prisma.StringFilter<"cases"> | string
   patient_name?: Prisma.StringFilter<"cases"> | string
-  customer_id?: Prisma.StringNullableFilter<"cases"> | string | null
-  service_type_id?: Prisma.StringNullableFilter<"cases"> | string | null
-  dentist_id?: Prisma.StringNullableFilter<"cases"> | string | null
+  customer_id?: Prisma.UuidNullableFilter<"cases"> | string | null
+  service_type_id?: Prisma.UuidNullableFilter<"cases"> | string | null
+  dentist_id?: Prisma.UuidNullableFilter<"cases"> | string | null
   cad_designer_id?: Prisma.UuidNullableFilter<"cases"> | string | null
   created_by_user_id?: Prisma.UuidNullableFilter<"cases"> | string | null
   current_status?: Prisma.EnumCaseStatusFilter<"cases"> | $Enums.CaseStatus

@@ -184,8 +184,8 @@ export type case_status_historiesWhereInput = {
   AND?: Prisma.case_status_historiesWhereInput | Prisma.case_status_historiesWhereInput[]
   OR?: Prisma.case_status_historiesWhereInput[]
   NOT?: Prisma.case_status_historiesWhereInput | Prisma.case_status_historiesWhereInput[]
-  id?: Prisma.StringFilter<"case_status_histories"> | string
-  case_id?: Prisma.StringFilter<"case_status_histories"> | string
+  id?: Prisma.UuidFilter<"case_status_histories"> | string
+  case_id?: Prisma.UuidFilter<"case_status_histories"> | string
   from_status?: Prisma.EnumCaseStatusNullableFilter<"case_status_histories"> | $Enums.CaseStatus | null
   to_status?: Prisma.EnumCaseStatusFilter<"case_status_histories"> | $Enums.CaseStatus
   note?: Prisma.StringNullableFilter<"case_status_histories"> | string | null
@@ -208,7 +208,7 @@ export type case_status_historiesWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.case_status_historiesWhereInput | Prisma.case_status_historiesWhereInput[]
   OR?: Prisma.case_status_historiesWhereInput[]
   NOT?: Prisma.case_status_historiesWhereInput | Prisma.case_status_historiesWhereInput[]
-  case_id?: Prisma.StringFilter<"case_status_histories"> | string
+  case_id?: Prisma.UuidFilter<"case_status_histories"> | string
   from_status?: Prisma.EnumCaseStatusNullableFilter<"case_status_histories"> | $Enums.CaseStatus | null
   to_status?: Prisma.EnumCaseStatusFilter<"case_status_histories"> | $Enums.CaseStatus
   note?: Prisma.StringNullableFilter<"case_status_histories"> | string | null
@@ -232,8 +232,8 @@ export type case_status_historiesScalarWhereWithAggregatesInput = {
   AND?: Prisma.case_status_historiesScalarWhereWithAggregatesInput | Prisma.case_status_historiesScalarWhereWithAggregatesInput[]
   OR?: Prisma.case_status_historiesScalarWhereWithAggregatesInput[]
   NOT?: Prisma.case_status_historiesScalarWhereWithAggregatesInput | Prisma.case_status_historiesScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"case_status_histories"> | string
-  case_id?: Prisma.StringWithAggregatesFilter<"case_status_histories"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"case_status_histories"> | string
+  case_id?: Prisma.UuidWithAggregatesFilter<"case_status_histories"> | string
   from_status?: Prisma.EnumCaseStatusNullableWithAggregatesFilter<"case_status_histories"> | $Enums.CaseStatus | null
   to_status?: Prisma.EnumCaseStatusWithAggregatesFilter<"case_status_histories"> | $Enums.CaseStatus
   note?: Prisma.StringNullableWithAggregatesFilter<"case_status_histories"> | string | null
@@ -431,8 +431,8 @@ export type case_status_historiesScalarWhereInput = {
   AND?: Prisma.case_status_historiesScalarWhereInput | Prisma.case_status_historiesScalarWhereInput[]
   OR?: Prisma.case_status_historiesScalarWhereInput[]
   NOT?: Prisma.case_status_historiesScalarWhereInput | Prisma.case_status_historiesScalarWhereInput[]
-  id?: Prisma.StringFilter<"case_status_histories"> | string
-  case_id?: Prisma.StringFilter<"case_status_histories"> | string
+  id?: Prisma.UuidFilter<"case_status_histories"> | string
+  case_id?: Prisma.UuidFilter<"case_status_histories"> | string
   from_status?: Prisma.EnumCaseStatusNullableFilter<"case_status_histories"> | $Enums.CaseStatus | null
   to_status?: Prisma.EnumCaseStatusFilter<"case_status_histories"> | $Enums.CaseStatus
   note?: Prisma.StringNullableFilter<"case_status_histories"> | string | null

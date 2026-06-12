@@ -260,8 +260,8 @@ export type block_typesWhereInput = {
   AND?: Prisma.block_typesWhereInput | Prisma.block_typesWhereInput[]
   OR?: Prisma.block_typesWhereInput[]
   NOT?: Prisma.block_typesWhereInput | Prisma.block_typesWhereInput[]
-  id?: Prisma.StringFilter<"block_types"> | string
-  lab_id?: Prisma.StringFilter<"block_types"> | string
+  id?: Prisma.UuidFilter<"block_types"> | string
+  lab_id?: Prisma.UuidFilter<"block_types"> | string
   name?: Prisma.StringFilter<"block_types"> | string
   material?: Prisma.StringNullableFilter<"block_types"> | string | null
   brand?: Prisma.StringNullableFilter<"block_types"> | string | null
@@ -299,7 +299,7 @@ export type block_typesWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.block_typesWhereInput | Prisma.block_typesWhereInput[]
   OR?: Prisma.block_typesWhereInput[]
   NOT?: Prisma.block_typesWhereInput | Prisma.block_typesWhereInput[]
-  lab_id?: Prisma.StringFilter<"block_types"> | string
+  lab_id?: Prisma.UuidFilter<"block_types"> | string
   name?: Prisma.StringFilter<"block_types"> | string
   material?: Prisma.StringNullableFilter<"block_types"> | string | null
   brand?: Prisma.StringNullableFilter<"block_types"> | string | null
@@ -338,8 +338,8 @@ export type block_typesScalarWhereWithAggregatesInput = {
   AND?: Prisma.block_typesScalarWhereWithAggregatesInput | Prisma.block_typesScalarWhereWithAggregatesInput[]
   OR?: Prisma.block_typesScalarWhereWithAggregatesInput[]
   NOT?: Prisma.block_typesScalarWhereWithAggregatesInput | Prisma.block_typesScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"block_types"> | string
-  lab_id?: Prisma.StringWithAggregatesFilter<"block_types"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"block_types"> | string
+  lab_id?: Prisma.UuidWithAggregatesFilter<"block_types"> | string
   name?: Prisma.StringWithAggregatesFilter<"block_types"> | string
   material?: Prisma.StringNullableWithAggregatesFilter<"block_types"> | string | null
   brand?: Prisma.StringNullableWithAggregatesFilter<"block_types"> | string | null
@@ -649,8 +649,8 @@ export type block_typesScalarWhereInput = {
   AND?: Prisma.block_typesScalarWhereInput | Prisma.block_typesScalarWhereInput[]
   OR?: Prisma.block_typesScalarWhereInput[]
   NOT?: Prisma.block_typesScalarWhereInput | Prisma.block_typesScalarWhereInput[]
-  id?: Prisma.StringFilter<"block_types"> | string
-  lab_id?: Prisma.StringFilter<"block_types"> | string
+  id?: Prisma.UuidFilter<"block_types"> | string
+  lab_id?: Prisma.UuidFilter<"block_types"> | string
   name?: Prisma.StringFilter<"block_types"> | string
   material?: Prisma.StringNullableFilter<"block_types"> | string | null
   brand?: Prisma.StringNullableFilter<"block_types"> | string | null

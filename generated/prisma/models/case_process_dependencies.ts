@@ -163,9 +163,9 @@ export type case_process_dependenciesWhereInput = {
   AND?: Prisma.case_process_dependenciesWhereInput | Prisma.case_process_dependenciesWhereInput[]
   OR?: Prisma.case_process_dependenciesWhereInput[]
   NOT?: Prisma.case_process_dependenciesWhereInput | Prisma.case_process_dependenciesWhereInput[]
-  id?: Prisma.StringFilter<"case_process_dependencies"> | string
-  case_process_id?: Prisma.StringFilter<"case_process_dependencies"> | string
-  depends_on_case_process_id?: Prisma.StringFilter<"case_process_dependencies"> | string
+  id?: Prisma.UuidFilter<"case_process_dependencies"> | string
+  case_process_id?: Prisma.UuidFilter<"case_process_dependencies"> | string
+  depends_on_case_process_id?: Prisma.UuidFilter<"case_process_dependencies"> | string
   caseProcess?: Prisma.XOR<Prisma.Case_processesScalarRelationFilter, Prisma.case_processesWhereInput>
   dependsOnCaseProcess?: Prisma.XOR<Prisma.Case_processesScalarRelationFilter, Prisma.case_processesWhereInput>
 }
@@ -184,8 +184,8 @@ export type case_process_dependenciesWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.case_process_dependenciesWhereInput | Prisma.case_process_dependenciesWhereInput[]
   OR?: Prisma.case_process_dependenciesWhereInput[]
   NOT?: Prisma.case_process_dependenciesWhereInput | Prisma.case_process_dependenciesWhereInput[]
-  case_process_id?: Prisma.StringFilter<"case_process_dependencies"> | string
-  depends_on_case_process_id?: Prisma.StringFilter<"case_process_dependencies"> | string
+  case_process_id?: Prisma.UuidFilter<"case_process_dependencies"> | string
+  depends_on_case_process_id?: Prisma.UuidFilter<"case_process_dependencies"> | string
   caseProcess?: Prisma.XOR<Prisma.Case_processesScalarRelationFilter, Prisma.case_processesWhereInput>
   dependsOnCaseProcess?: Prisma.XOR<Prisma.Case_processesScalarRelationFilter, Prisma.case_processesWhereInput>
 }, "id" | "case_process_id_depends_on_case_process_id">
@@ -203,9 +203,9 @@ export type case_process_dependenciesScalarWhereWithAggregatesInput = {
   AND?: Prisma.case_process_dependenciesScalarWhereWithAggregatesInput | Prisma.case_process_dependenciesScalarWhereWithAggregatesInput[]
   OR?: Prisma.case_process_dependenciesScalarWhereWithAggregatesInput[]
   NOT?: Prisma.case_process_dependenciesScalarWhereWithAggregatesInput | Prisma.case_process_dependenciesScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"case_process_dependencies"> | string
-  case_process_id?: Prisma.StringWithAggregatesFilter<"case_process_dependencies"> | string
-  depends_on_case_process_id?: Prisma.StringWithAggregatesFilter<"case_process_dependencies"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"case_process_dependencies"> | string
+  case_process_id?: Prisma.UuidWithAggregatesFilter<"case_process_dependencies"> | string
+  depends_on_case_process_id?: Prisma.UuidWithAggregatesFilter<"case_process_dependencies"> | string
 }
 
 export type case_process_dependenciesCreateInput = {
@@ -425,9 +425,9 @@ export type case_process_dependenciesScalarWhereInput = {
   AND?: Prisma.case_process_dependenciesScalarWhereInput | Prisma.case_process_dependenciesScalarWhereInput[]
   OR?: Prisma.case_process_dependenciesScalarWhereInput[]
   NOT?: Prisma.case_process_dependenciesScalarWhereInput | Prisma.case_process_dependenciesScalarWhereInput[]
-  id?: Prisma.StringFilter<"case_process_dependencies"> | string
-  case_process_id?: Prisma.StringFilter<"case_process_dependencies"> | string
-  depends_on_case_process_id?: Prisma.StringFilter<"case_process_dependencies"> | string
+  id?: Prisma.UuidFilter<"case_process_dependencies"> | string
+  case_process_id?: Prisma.UuidFilter<"case_process_dependencies"> | string
+  depends_on_case_process_id?: Prisma.UuidFilter<"case_process_dependencies"> | string
 }
 
 export type case_process_dependenciesUpsertWithWhereUniqueWithoutDependsOnCaseProcessInput = {

@@ -177,7 +177,7 @@ export type labsWhereInput = {
   AND?: Prisma.labsWhereInput | Prisma.labsWhereInput[]
   OR?: Prisma.labsWhereInput[]
   NOT?: Prisma.labsWhereInput | Prisma.labsWhereInput[]
-  id?: Prisma.StringFilter<"labs"> | string
+  id?: Prisma.UuidFilter<"labs"> | string
   name?: Prisma.StringFilter<"labs"> | string
   is_active?: Prisma.BoolFilter<"labs"> | boolean
   created_at?: Prisma.DateTimeFilter<"labs"> | Date | string
@@ -248,7 +248,7 @@ export type labsScalarWhereWithAggregatesInput = {
   AND?: Prisma.labsScalarWhereWithAggregatesInput | Prisma.labsScalarWhereWithAggregatesInput[]
   OR?: Prisma.labsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.labsScalarWhereWithAggregatesInput | Prisma.labsScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"labs"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"labs"> | string
   name?: Prisma.StringWithAggregatesFilter<"labs"> | string
   is_active?: Prisma.BoolWithAggregatesFilter<"labs"> | boolean
   created_at?: Prisma.DateTimeWithAggregatesFilter<"labs"> | Date | string

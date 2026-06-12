@@ -2,7 +2,6 @@ import type { CaseMutationPayload } from "@/features/cases/cases";
 import { ApiError } from "@/lib/api";
 
 import type {
-  AttachmentKindValue,
   CaseStatusValue,
   EditableCase,
 } from "@/features/cases/types";
@@ -17,13 +16,15 @@ export type CaseComponentDraft = {
   notes: string;
 };
 
-function toDecimalInputValue(value: string | null) {
-  return value ?? "";
+let nextDraftId = 1;
+
+function createDraftId() {
+  return `draft-${nextDraftId++}`;
 }
 
 export function buildDefaultComponentDraft(): CaseComponentDraft {
   return {
-    localId: crypto.randomUUID(),
+    localId: createDraftId(),
     componentId: "",
     quantity: 1,
     chargeClient: true,
@@ -41,58 +42,10 @@ export function buildDraftFromCaseItem(
     componentId: component.componentId,
     quantity: component.quantity,
     chargeClient: component.chargeClient,
-    unitCost: toDecimalInputValue(component.unitCost),
-    unitPrice: toDecimalInputValue(component.unitPrice),
+    unitCost: component.unitCost ?? "",
+    unitPrice: component.unitPrice ?? "",
     notes: component.notes ?? "",
   }));
-}
-
-export function formatBytes(bytes: number | null) {
-  if (!bytes) return "-";
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-}
-
-export function toDateInputValue(date: string | null) {
-  if (!date) return "";
-  const parsed = new Date(date);
-  if (Number.isNaN(parsed.getTime())) return "";
-  const year = parsed.getFullYear();
-  const month = String(parsed.getMonth() + 1).padStart(2, "0");
-  const day = String(parsed.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
-
-export function formatDateTime(value: string) {
-  return new Intl.DateTimeFormat("pt-BR", {
-    dateStyle: "short",
-    timeStyle: "short",
-  }).format(new Date(value));
-}
-
-export function isCaseOverdue(dueDate: string | null) {
-  if (!dueDate) return false;
-  const due = new Date(dueDate);
-  if (Number.isNaN(due.getTime())) return false;
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  due.setHours(0, 0, 0, 0);
-
-  return due < today;
-}
-
-export function getAttachmentKindLabel(kind: AttachmentKindValue) {
-  switch (kind) {
-    case "SCAN_INPUT":
-      return "Scan";
-    case "DESIGN_OUTPUT":
-    case "MODEL_OUTPUT":
-      return "Final";
-    default:
-      return "Arquivo";
-  }
 }
 
 function optionalFormString(formData: FormData, field: string) {

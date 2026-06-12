@@ -1,8 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import type { EditableCase } from "@/features/cases/types";
 
-import { formatDateTime } from "./case-details-dialog.utils";
-
 export function CaseBadges({ caseItem }: { caseItem: EditableCase }) {
   return (
     <div className="flex flex-wrap gap-2">
@@ -108,4 +106,11 @@ function Detail({ label, value }: { label: string; value: React.ReactNode }) {
       <span className="font-medium text-foreground">{label}:</span> {value}
     </div>
   );
+}
+
+function formatDateTime(value: string) {
+  return new Intl.DateTimeFormat("pt-BR", {
+    dateStyle: "short",
+    timeStyle: "short",
+  }).format(new Date(value));
 }

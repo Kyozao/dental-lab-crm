@@ -257,8 +257,8 @@ export type componentsWhereInput = {
   AND?: Prisma.componentsWhereInput | Prisma.componentsWhereInput[]
   OR?: Prisma.componentsWhereInput[]
   NOT?: Prisma.componentsWhereInput | Prisma.componentsWhereInput[]
-  id?: Prisma.StringFilter<"components"> | string
-  lab_id?: Prisma.StringFilter<"components"> | string
+  id?: Prisma.UuidFilter<"components"> | string
+  lab_id?: Prisma.UuidFilter<"components"> | string
   name?: Prisma.StringFilter<"components"> | string
   category?: Prisma.StringNullableFilter<"components"> | string | null
   brand?: Prisma.StringNullableFilter<"components"> | string | null
@@ -294,7 +294,7 @@ export type componentsWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.componentsWhereInput | Prisma.componentsWhereInput[]
   OR?: Prisma.componentsWhereInput[]
   NOT?: Prisma.componentsWhereInput | Prisma.componentsWhereInput[]
-  lab_id?: Prisma.StringFilter<"components"> | string
+  lab_id?: Prisma.UuidFilter<"components"> | string
   name?: Prisma.StringFilter<"components"> | string
   category?: Prisma.StringNullableFilter<"components"> | string | null
   brand?: Prisma.StringNullableFilter<"components"> | string | null
@@ -331,8 +331,8 @@ export type componentsScalarWhereWithAggregatesInput = {
   AND?: Prisma.componentsScalarWhereWithAggregatesInput | Prisma.componentsScalarWhereWithAggregatesInput[]
   OR?: Prisma.componentsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.componentsScalarWhereWithAggregatesInput | Prisma.componentsScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"components"> | string
-  lab_id?: Prisma.StringWithAggregatesFilter<"components"> | string
+  id?: Prisma.UuidWithAggregatesFilter<"components"> | string
+  lab_id?: Prisma.UuidWithAggregatesFilter<"components"> | string
   name?: Prisma.StringWithAggregatesFilter<"components"> | string
   category?: Prisma.StringNullableWithAggregatesFilter<"components"> | string | null
   brand?: Prisma.StringNullableWithAggregatesFilter<"components"> | string | null
@@ -639,8 +639,8 @@ export type componentsScalarWhereInput = {
   AND?: Prisma.componentsScalarWhereInput | Prisma.componentsScalarWhereInput[]
   OR?: Prisma.componentsScalarWhereInput[]
   NOT?: Prisma.componentsScalarWhereInput | Prisma.componentsScalarWhereInput[]
-  id?: Prisma.StringFilter<"components"> | string
-  lab_id?: Prisma.StringFilter<"components"> | string
+  id?: Prisma.UuidFilter<"components"> | string
+  lab_id?: Prisma.UuidFilter<"components"> | string
   name?: Prisma.StringFilter<"components"> | string
   category?: Prisma.StringNullableFilter<"components"> | string | null
   brand?: Prisma.StringNullableFilter<"components"> | string | null
