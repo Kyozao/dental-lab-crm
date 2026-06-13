@@ -86,10 +86,10 @@ export function mapApiCaseToEditableCase(item: CaseListItem): EditableCase {
     dentistId: item.dentistId,
     serviceTypeId: item.serviceTypeId,
     serviceTypeName: item.serviceTypeName ?? "",
-    cadDesignerId: item.cadDesignerId,
-    cadDesignerName: item.cadDesignerName ?? "",
     attachments: mockCase?.attachments ?? [],
     components: mockCase?.components ?? [],
     millings: mockCase?.millings ?? [],
+    processes: item.processes ?? [],
+    availableProcesses: item.availableProcesses ?? [],
   };
 }

@@ -208,6 +208,7 @@ export type processesWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"processes"> | Date | string
   labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
   case_processes?: Prisma.Case_processesListRelationFilter
+  employeeAssignments?: Prisma.Employee_process_assignmentsListRelationFilter
 }
 
 export type processesOrderByWithRelationInput = {
@@ -221,6 +222,7 @@ export type processesOrderByWithRelationInput = {
   updated_at?: Prisma.SortOrder
   labs?: Prisma.labsOrderByWithRelationInput
   case_processes?: Prisma.case_processesOrderByRelationAggregateInput
+  employeeAssignments?: Prisma.employee_process_assignmentsOrderByRelationAggregateInput
 }
 
 export type processesWhereUniqueInput = Prisma.AtLeast<{
@@ -238,6 +240,7 @@ export type processesWhereUniqueInput = Prisma.AtLeast<{
   updated_at?: Prisma.DateTimeFilter<"processes"> | Date | string
   labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
   case_processes?: Prisma.Case_processesListRelationFilter
+  employeeAssignments?: Prisma.Employee_process_assignmentsListRelationFilter
 }, "id" | "lab_id_name">
 
 export type processesOrderByWithAggregationInput = {
@@ -278,6 +281,7 @@ export type processesCreateInput = {
   updated_at?: Date | string
   labs: Prisma.labsCreateNestedOneWithoutProcessesInput
   case_processes?: Prisma.case_processesCreateNestedManyWithoutProcessesInput
+  employeeAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutProcessesInput
 }
 
 export type processesUncheckedCreateInput = {
@@ -290,6 +294,7 @@ export type processesUncheckedCreateInput = {
   created_at?: Date | string
   updated_at?: Date | string
   case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutProcessesInput
+  employeeAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutProcessesInput
 }
 
 export type processesUpdateInput = {
@@ -302,6 +307,7 @@ export type processesUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   labs?: Prisma.labsUpdateOneRequiredWithoutProcessesNestedInput
   case_processes?: Prisma.case_processesUpdateManyWithoutProcessesNestedInput
+  employeeAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutProcessesNestedInput
 }
 
 export type processesUncheckedUpdateInput = {
@@ -314,6 +320,7 @@ export type processesUncheckedUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutProcessesNestedInput
+  employeeAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutProcessesNestedInput
 }
 
 export type processesCreateManyInput = {
@@ -443,6 +450,20 @@ export type processesUncheckedUpdateManyWithoutLabsNestedInput = {
   deleteMany?: Prisma.processesScalarWhereInput | Prisma.processesScalarWhereInput[]
 }
 
+export type processesCreateNestedOneWithoutEmployeeAssignmentsInput = {
+  create?: Prisma.XOR<Prisma.processesCreateWithoutEmployeeAssignmentsInput, Prisma.processesUncheckedCreateWithoutEmployeeAssignmentsInput>
+  connectOrCreate?: Prisma.processesCreateOrConnectWithoutEmployeeAssignmentsInput
+  connect?: Prisma.processesWhereUniqueInput
+}
+
+export type processesUpdateOneRequiredWithoutEmployeeAssignmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.processesCreateWithoutEmployeeAssignmentsInput, Prisma.processesUncheckedCreateWithoutEmployeeAssignmentsInput>
+  connectOrCreate?: Prisma.processesCreateOrConnectWithoutEmployeeAssignmentsInput
+  upsert?: Prisma.processesUpsertWithoutEmployeeAssignmentsInput
+  connect?: Prisma.processesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.processesUpdateToOneWithWhereWithoutEmployeeAssignmentsInput, Prisma.processesUpdateWithoutEmployeeAssignmentsInput>, Prisma.processesUncheckedUpdateWithoutEmployeeAssignmentsInput>
+}
+
 export type processesCreateNestedOneWithoutCase_processesInput = {
   create?: Prisma.XOR<Prisma.processesCreateWithoutCase_processesInput, Prisma.processesUncheckedCreateWithoutCase_processesInput>
   connectOrCreate?: Prisma.processesCreateOrConnectWithoutCase_processesInput
@@ -466,6 +487,7 @@ export type processesCreateWithoutLabsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   case_processes?: Prisma.case_processesCreateNestedManyWithoutProcessesInput
+  employeeAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutProcessesInput
 }
 
 export type processesUncheckedCreateWithoutLabsInput = {
@@ -477,6 +499,7 @@ export type processesUncheckedCreateWithoutLabsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutProcessesInput
+  employeeAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutProcessesInput
 }
 
 export type processesCreateOrConnectWithoutLabsInput = {
@@ -519,6 +542,70 @@ export type processesScalarWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"processes"> | Date | string
 }
 
+export type processesCreateWithoutEmployeeAssignmentsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutProcessesInput
+  case_processes?: Prisma.case_processesCreateNestedManyWithoutProcessesInput
+}
+
+export type processesUncheckedCreateWithoutEmployeeAssignmentsInput = {
+  id?: string
+  lab_id: string
+  name: string
+  description?: string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutProcessesInput
+}
+
+export type processesCreateOrConnectWithoutEmployeeAssignmentsInput = {
+  where: Prisma.processesWhereUniqueInput
+  create: Prisma.XOR<Prisma.processesCreateWithoutEmployeeAssignmentsInput, Prisma.processesUncheckedCreateWithoutEmployeeAssignmentsInput>
+}
+
+export type processesUpsertWithoutEmployeeAssignmentsInput = {
+  update: Prisma.XOR<Prisma.processesUpdateWithoutEmployeeAssignmentsInput, Prisma.processesUncheckedUpdateWithoutEmployeeAssignmentsInput>
+  create: Prisma.XOR<Prisma.processesCreateWithoutEmployeeAssignmentsInput, Prisma.processesUncheckedCreateWithoutEmployeeAssignmentsInput>
+  where?: Prisma.processesWhereInput
+}
+
+export type processesUpdateToOneWithWhereWithoutEmployeeAssignmentsInput = {
+  where?: Prisma.processesWhereInput
+  data: Prisma.XOR<Prisma.processesUpdateWithoutEmployeeAssignmentsInput, Prisma.processesUncheckedUpdateWithoutEmployeeAssignmentsInput>
+}
+
+export type processesUpdateWithoutEmployeeAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutProcessesNestedInput
+  case_processes?: Prisma.case_processesUpdateManyWithoutProcessesNestedInput
+}
+
+export type processesUncheckedUpdateWithoutEmployeeAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutProcessesNestedInput
+}
+
 export type processesCreateWithoutCase_processesInput = {
   id?: string
   name: string
@@ -528,6 +615,7 @@ export type processesCreateWithoutCase_processesInput = {
   created_at?: Date | string
   updated_at?: Date | string
   labs: Prisma.labsCreateNestedOneWithoutProcessesInput
+  employeeAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutProcessesInput
 }
 
 export type processesUncheckedCreateWithoutCase_processesInput = {
@@ -539,6 +627,7 @@ export type processesUncheckedCreateWithoutCase_processesInput = {
   deleted_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  employeeAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutProcessesInput
 }
 
 export type processesCreateOrConnectWithoutCase_processesInput = {
@@ -566,6 +655,7 @@ export type processesUpdateWithoutCase_processesInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   labs?: Prisma.labsUpdateOneRequiredWithoutProcessesNestedInput
+  employeeAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutProcessesNestedInput
 }
 
 export type processesUncheckedUpdateWithoutCase_processesInput = {
@@ -577,6 +667,7 @@ export type processesUncheckedUpdateWithoutCase_processesInput = {
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  employeeAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutProcessesNestedInput
 }
 
 export type processesCreateManyLabsInput = {
@@ -598,6 +689,7 @@ export type processesUpdateWithoutLabsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   case_processes?: Prisma.case_processesUpdateManyWithoutProcessesNestedInput
+  employeeAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutProcessesNestedInput
 }
 
 export type processesUncheckedUpdateWithoutLabsInput = {
@@ -609,6 +701,7 @@ export type processesUncheckedUpdateWithoutLabsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutProcessesNestedInput
+  employeeAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutProcessesNestedInput
 }
 
 export type processesUncheckedUpdateManyWithoutLabsInput = {
@@ -628,10 +721,12 @@ export type processesUncheckedUpdateManyWithoutLabsInput = {
 
 export type ProcessesCountOutputType = {
   case_processes: number
+  employeeAssignments: number
 }
 
 export type ProcessesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   case_processes?: boolean | ProcessesCountOutputTypeCountCase_processesArgs
+  employeeAssignments?: boolean | ProcessesCountOutputTypeCountEmployeeAssignmentsArgs
 }
 
 /**
@@ -651,6 +746,13 @@ export type ProcessesCountOutputTypeCountCase_processesArgs<ExtArgs extends runt
   where?: Prisma.case_processesWhereInput
 }
 
+/**
+ * ProcessesCountOutputType without action
+ */
+export type ProcessesCountOutputTypeCountEmployeeAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.employee_process_assignmentsWhereInput
+}
+
 
 export type processesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -663,6 +765,7 @@ export type processesSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   updated_at?: boolean
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   case_processes?: boolean | Prisma.processes$case_processesArgs<ExtArgs>
+  employeeAssignments?: boolean | Prisma.processes$employeeAssignmentsArgs<ExtArgs>
   _count?: boolean | Prisma.ProcessesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["processes"]>
 
@@ -705,6 +808,7 @@ export type processesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type processesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   case_processes?: boolean | Prisma.processes$case_processesArgs<ExtArgs>
+  employeeAssignments?: boolean | Prisma.processes$employeeAssignmentsArgs<ExtArgs>
   _count?: boolean | Prisma.ProcessesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type processesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -719,6 +823,7 @@ export type $processesPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   objects: {
     labs: Prisma.$labsPayload<ExtArgs>
     case_processes: Prisma.$case_processesPayload<ExtArgs>[]
+    employeeAssignments: Prisma.$employee_process_assignmentsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1125,6 +1230,7 @@ export interface Prisma__processesClient<T, Null = never, ExtArgs extends runtim
   readonly [Symbol.toStringTag]: "PrismaPromise"
   labs<T extends Prisma.labsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labsDefaultArgs<ExtArgs>>): Prisma.Prisma__labsClient<runtime.Types.Result.GetResult<Prisma.$labsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   case_processes<T extends Prisma.processes$case_processesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.processes$case_processesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_processesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  employeeAssignments<T extends Prisma.processes$employeeAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.processes$employeeAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$employee_process_assignmentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1584,6 +1690,30 @@ export type processes$case_processesArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.Case_processesScalarFieldEnum | Prisma.Case_processesScalarFieldEnum[]
+}
+
+/**
+ * processes.employeeAssignments
+ */
+export type processes$employeeAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the employee_process_assignments
+   */
+  select?: Prisma.employee_process_assignmentsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the employee_process_assignments
+   */
+  omit?: Prisma.employee_process_assignmentsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.employee_process_assignmentsInclude<ExtArgs> | null
+  where?: Prisma.employee_process_assignmentsWhereInput
+  orderBy?: Prisma.employee_process_assignmentsOrderByWithRelationInput | Prisma.employee_process_assignmentsOrderByWithRelationInput[]
+  cursor?: Prisma.employee_process_assignmentsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Employee_process_assignmentsScalarFieldEnum | Prisma.Employee_process_assignmentsScalarFieldEnum[]
 }
 
 /**

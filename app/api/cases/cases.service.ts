@@ -20,9 +20,13 @@ import type { CreateCaseInput, ListCasesInput, UpdateCaseInput } from "./cases.s
 import {
   createCaseWithWorkflow,
   getWorkflowForCaseCreate,
+  MissingServiceTypeWorkflowError,
+  replaceWorkflowForExistingCase,
+  validateWorkflowProcesses,
 } from "./cases.workflow";
+import type { ServiceTypeWorkflow } from "../service-types/service-types.schemas";
 
-export { InactiveReferenceError, MissingLabMembershipError };
+export { InactiveReferenceError, MissingLabMembershipError, MissingServiceTypeWorkflowError };
 
 export class CaseNotFoundError extends Error {
   constructor() {
@@ -62,11 +66,6 @@ export async function listCases(
           is: { name: { contains: input.q, mode: "insensitive" } },
         },
       },
-      {
-        cadDesigner: {
-          is: { name: { contains: input.q, mode: "insensitive" } },
-        },
-      },
     ];
   }
 
@@ -95,7 +94,23 @@ export async function getCaseById(user_id: string, case_id: string) {
 
   if (!caseItem) throw new CaseNotFoundError();
 
-  return mapCase(caseItem);
+  const availableProcesses = await prisma.processes.findMany({
+    where: {
+      lab_id: membership.lab_id,
+      is_active: true,
+      deleted_at: null,
+    },
+    select: {
+      id: true,
+      name: true,
+    },
+    orderBy: { name: "asc" },
+  });
+
+  return {
+    ...mapCase(caseItem),
+    availableProcesses,
+  };
 }
 
 export async function createCase(
@@ -104,10 +119,10 @@ export async function createCase(
 ) {
   const membership = await getLabMember(user_id);
   await validateActiveCaseReferences(membership.lab_id, input);
-  const workflow = await getWorkflowForCaseCreate(
-    membership.lab_id,
-    input.service_type_id,
-  );
+  const workflow =
+    input.workflow_json ??
+    (await getWorkflowForCaseCreate(membership.lab_id, input.service_type_id));
+  await validateWorkflowProcesses(membership.lab_id, workflow);
 
   for (let attempt = 1; attempt <= CREATE_CASE_MAX_RETRIES; attempt += 1) {
     const code = await generateNextCaseCode(membership.lab_id);
@@ -153,7 +168,6 @@ export async function updateCase(
       customer_id: true,
       service_type_id: true,
       dentist_id: true,
-      cad_designer_id: true,
     },
   });
 
@@ -167,10 +181,6 @@ export async function updateCase(
         : existing.service_type_id,
     dentist_id:
       input.dentist_id !== undefined ? input.dentist_id : existing.dentist_id,
-    cad_designer_id:
-      input.cad_designer_id !== undefined
-        ? input.cad_designer_id
-        : existing.cad_designer_id,
   });
 
   const updatedCase = await prisma.cases.update({
@@ -180,7 +190,6 @@ export async function updateCase(
       customer_id: input.customer_id,
       service_type_id: input.service_type_id,
       dentist_id: input.dentist_id,
-      cad_designer_id: input.cad_designer_id,
       current_status: input.current_status,
       teeth: input.teeth,
       elements_qty: input.elements_qty,
@@ -191,6 +200,36 @@ export async function updateCase(
       pending_note: input.pending_note,
     },
     include: caseInclude,
+  });
+
+  return mapCase(updatedCase);
+}
+
+export async function replaceCaseWorkflow(
+  user_id: string,
+  case_id: string,
+  workflow: ServiceTypeWorkflow,
+) {
+  const membership = await getLabMember(user_id);
+  const existing = await prisma.cases.findFirst({
+    where: {
+      id: case_id,
+      lab_id: membership.lab_id,
+    },
+    select: { id: true },
+  });
+
+  if (!existing) throw new CaseNotFoundError();
+
+  await validateWorkflowProcesses(membership.lab_id, workflow);
+
+  const updatedCase = await prisma.$transaction(async (tx) => {
+    await replaceWorkflowForExistingCase(tx, existing.id, workflow);
+
+    return tx.cases.findUniqueOrThrow({
+      where: { id: existing.id },
+      include: caseInclude,
+    });
   });
 
   return mapCase(updatedCase);

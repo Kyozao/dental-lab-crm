@@ -48,11 +48,37 @@ export type CustomerOption = {
 export type ServiceTypeOption = {
   id: string;
   name: string;
+  workflow_json?: CaseWorkflow;
 };
 
-export type CadDesignerOption = {
+export type ProcessOption = {
   id: string;
-  name: string | null;
+  name: string;
+};
+
+export type CaseWorkflowStep = {
+  id: string;
+  process_id: string;
+  dependsOn: string[];
+};
+
+export type CaseWorkflow = {
+  steps: CaseWorkflowStep[];
+};
+
+export type CaseProcessItem = {
+  id: string;
+  process_id: string;
+  processName: string;
+  workflow_step_id: string;
+  status: string;
+  assigned_lab_member_id: string | null;
+  assignedToName: string | null;
+  dependsOnCaseProcessIds: string[];
+  started_at: string | null;
+  completed_at: string | null;
+  created_at: string;
+  updated_at: string;
 };
 
 export type ComponentOption = {
@@ -128,11 +154,11 @@ export type EditableCase = {
   dentistId: string | null;
   serviceTypeId: string | null;
   serviceTypeName: string;
-  cadDesignerId: string | null;
-  cadDesignerName: string;
   attachments: CaseAttachmentItem[];
   components: CaseComponentItem[];
   millings: CaseMillingItem[];
+  processes?: CaseProcessItem[];
+  availableProcesses?: ProcessOption[];
 };
 
 export type SearchCaseItem = {
@@ -156,5 +182,4 @@ export type CaseFormValues = {
   customerId?: string | null;
   dentistId?: string | null;
   serviceTypeId?: string | null;
-  cadDesignerId?: string | null;
 };

@@ -1,6 +1,5 @@
 import { CASE_STATUS, CASE_STATUS_META } from "@/features/cases/constants";
 import type {
-  CadDesignerOption,
   CaseStatusValue,
   CustomerOption,
   ComponentOption,
@@ -90,11 +89,6 @@ const allMockServiceTypes: Array<ServiceTypeOption & { dentalLabId: string }> = 
   { id: "service-3", dentalLabId: "lab-vela-rio", name: "Crown" },
 ];
 
-export const mockCadDesigners: CadDesignerOption[] = [
-  { id: "user-cad-ana", name: "Ana CAD" },
-  { id: "user-cad-joao", name: "Joao CAD" },
-];
-
 const allMockComponents: Array<ComponentOption & { dentalLabId: string }> = [
   {
     id: "component-1",
@@ -149,8 +143,6 @@ const allMockCases: EditableCase[] = [
     dentistId: "dentist-1",
     serviceTypeId: "service-2",
     serviceTypeName: "Bridge",
-    cadDesignerId: "user-cad-ana",
-    cadDesignerName: "Ana CAD",
     attachments: [],
     components: [
       {
@@ -189,8 +181,6 @@ const allMockCases: EditableCase[] = [
     dentistId: "dentist-2",
     serviceTypeId: "service-1",
     serviceTypeName: "Crown",
-    cadDesignerId: "user-cad-joao",
-    cadDesignerName: "Joao CAD",
     attachments: [],
     components: [],
     millings: [],
@@ -218,8 +208,6 @@ const allMockCases: EditableCase[] = [
     dentistId: "dentist-1",
     serviceTypeId: "service-1",
     serviceTypeName: "Crown",
-    cadDesignerId: "user-cad-ana",
-    cadDesignerName: "Ana CAD",
     attachments: [],
     components: [],
     millings: [
@@ -259,8 +247,6 @@ const allMockCases: EditableCase[] = [
     dentistId: "dentist-3",
     serviceTypeId: "service-3",
     serviceTypeName: "Crown",
-    cadDesignerId: "user-cad-joao",
-    cadDesignerName: "Joao CAD",
     attachments: [],
     components: [],
     millings: [],
@@ -423,13 +409,35 @@ function getCaseTeethCount(caseItem: EditableCase) {
 }
 
 export function getMockDashboardData() {
-  const designers = mockCadDesigners;
   const openCases = mockCases.filter((caseItem) => caseItem.currentStatus !== CASE_STATUS.DONE);
   const completedCases = mockCases.filter((caseItem) => caseItem.currentStatus === CASE_STATUS.DONE);
+  const statusStats = Object.entries(CASE_STATUS_META).map(([status, meta]) => {
+    const assigned = mockCases.filter((item) => item.currentStatus === status);
+    const active = assigned.filter((item) => item.currentStatus !== CASE_STATUS.DONE);
+    const completed = assigned.filter((item) => item.currentStatus === CASE_STATUS.DONE);
+
+    return {
+      id: status,
+      name: meta.label,
+      totalCases: assigned.length,
+      totalTeethDesigned: assigned.reduce((sum, item) => sum + getCaseTeethCount(item), 0),
+      activeCases: active.length,
+      activeTeeth: active.reduce((sum, item) => sum + getCaseTeethCount(item), 0),
+      completedCases: completed.length,
+      completedTeeth: completed.reduce((sum, item) => sum + getCaseTeethCount(item), 0),
+      completedThisWeek: completed.length,
+      completedThisMonth: completed.length,
+      completedTeethThisMonth: completed.reduce((sum, item) => sum + getCaseTeethCount(item), 0),
+      urgentOpenCases: active.filter((item) => item.isUrgent).length,
+      overdueCases: active.filter((item) => item.dueDate && new Date(item.dueDate) < new Date()).length,
+      avgTurnaroundDays: completed.length ? 6.5 : null,
+      completionRate: assigned.length ? Math.round((completed.length / assigned.length) * 100) : 0,
+    };
+  }).filter((item) => item.totalCases > 0);
 
   return {
     summary: {
-      totalDesigners: designers.length,
+      totalDesigners: statusStats.length,
       totalAssignedCases: mockCases.length,
       totalTeethDesigned: mockCases.reduce((sum, item) => sum + getCaseTeethCount(item), 0),
       openCases: openCases.length,
@@ -438,29 +446,7 @@ export function getMockDashboardData() {
       urgentOpenCases: openCases.filter((item) => item.isUrgent).length,
       avgTurnaroundDays: 6.5,
     },
-    designerStats: designers.map((designer) => {
-      const assigned = mockCases.filter((item) => item.cadDesignerId === designer.id);
-      const active = assigned.filter((item) => item.currentStatus !== CASE_STATUS.DONE);
-      const completed = assigned.filter((item) => item.currentStatus === CASE_STATUS.DONE);
-
-      return {
-        id: designer.id,
-        name: designer.name ?? "Unassigned",
-        totalCases: assigned.length,
-        totalTeethDesigned: assigned.reduce((sum, item) => sum + getCaseTeethCount(item), 0),
-        activeCases: active.length,
-        activeTeeth: active.reduce((sum, item) => sum + getCaseTeethCount(item), 0),
-        completedCases: completed.length,
-        completedTeeth: completed.reduce((sum, item) => sum + getCaseTeethCount(item), 0),
-        completedThisWeek: completed.length,
-        completedThisMonth: completed.length,
-        completedTeethThisMonth: completed.reduce((sum, item) => sum + getCaseTeethCount(item), 0),
-        urgentOpenCases: active.filter((item) => item.isUrgent).length,
-        overdueCases: active.filter((item) => item.dueDate && new Date(item.dueDate) < new Date()).length,
-        avgTurnaroundDays: completed.length ? 6.5 : null,
-        completionRate: assigned.length ? Math.round((completed.length / assigned.length) * 100) : 0,
-      };
-    }),
+    designerStats: statusStats,
     statusData: Object.entries(CASE_STATUS_META)
       .map(([status, meta]) => ({
         status,

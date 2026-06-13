@@ -1,13 +1,16 @@
 import { CadStatsDashboard } from "@/features/dashboard/components/cad-stats-dashboard";
 import { getMockDashboardData } from "@/lib/mock-data/pages";
+import { requireCurrentLab } from "@/lib/onboarding";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  await requireCurrentLab();
+
   const data = getMockDashboardData();
 
   return (
     <CadStatsDashboard
-      title="CAD Designer Statistics"
-      description="Track workload, completions, and bottlenecks across your CAD design team."
+      title="Production Statistics"
+      description="Track workload, completions, and bottlenecks across the lab workflow."
       summary={data.summary}
       designerStats={data.designerStats}
       statusData={data.statusData}

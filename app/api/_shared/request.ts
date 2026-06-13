@@ -1,14 +1,8 @@
-import { createClient } from "@/lib/supabase/server";
+import { ensureCurrentAppUser } from "./current-user";
 
 export async function getAuthenticatedUserId() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
- 
-  if (error || !user) return null;
-  return user.id;
+  const user = await ensureCurrentAppUser();
+  return user?.id ?? null;
 }
 type JsonObjectResult =
   | { data: Record<string, unknown>; error: null }

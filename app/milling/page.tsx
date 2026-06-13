@@ -17,8 +17,11 @@ import {
   mockMillings,
   mockMillingDrills,
 } from "@/lib/mock-data/pages";
+import { requireCurrentLab } from "@/lib/onboarding";
 
-export default function MillingPage() {
+export default async function MillingPage() {
+  await requireCurrentLab();
+
   const readyCases = mockCases.filter((caseItem) =>
     ["DESIGN_READY", "MILLING_PRINTING"].includes(caseItem.currentStatus),
   );

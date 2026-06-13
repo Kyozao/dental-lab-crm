@@ -126,7 +126,7 @@ export function CadStatsDashboard({
     {
       label: "Designers tracked",
       value: summary.totalDesigners.toLocaleString(),
-      hint: isSelfView ? "Your personal CAD view" : "Active CAD designers",
+      hint: isSelfView ? "Your personal workflow view" : "Active workflow groups",
       icon: Users,
     },
     {
@@ -207,9 +207,9 @@ export function CadStatsDashboard({
       <div className="grid gap-6 xl:grid-cols-[2fr_1fr]">
         <Card>
           <CardHeader>
-            <CardTitle>Teeth by designer</CardTitle>
+            <CardTitle>Teeth by workflow group</CardTitle>
             <CardDescription>
-              Open versus completed teeth across the busiest CAD designers.
+              Open versus completed teeth across the busiest workflow groups.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -389,7 +389,7 @@ export function CadStatsDashboard({
               ))}
             </div>
           ) : (
-            <EmptyState title="No CAD designers were found in the system yet" />
+            <EmptyState title="No workflow groups were found yet" />
           )}
         </CardContent>
       </Card>

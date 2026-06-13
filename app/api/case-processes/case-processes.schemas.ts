@@ -2,7 +2,7 @@ import { CaseProcessStatus } from "@/generated/prisma/enums";
 
 export type UpdateCaseProcessInput = {
   status?: CaseProcessStatus;
-  assigned_to_id?: string | null;
+  assigned_lab_member_id?: string | null;
 };
 
 type ValidationResult =
@@ -32,14 +32,21 @@ export function parseUpdateCaseProcessInput(
 ): ValidationResult {
   const errors: Record<string, string[]> = {};
   const status = optionalString(payload.status);
-  const assigned_to_id = optionalString(payload.assigned_to_id);
+  const assigned_lab_member_id = optionalString(payload.assigned_lab_member_id);
 
   if (status !== undefined && status !== null && !statusValues.has(status)) {
     addError(errors, "status", "Status is invalid.");
   }
 
-  if (assigned_to_id === undefined && payload.assigned_to_id !== undefined) {
-    addError(errors, "assigned_to_id", "Assigned user id is invalid.");
+  if (
+    assigned_lab_member_id === undefined &&
+    payload.assigned_lab_member_id !== undefined
+  ) {
+    addError(
+      errors,
+      "assigned_lab_member_id",
+      "Assigned lab member id is invalid.",
+    );
   }
 
   if (Object.keys(errors).length > 0) {
@@ -50,7 +57,7 @@ export function parseUpdateCaseProcessInput(
     success: true,
     data: {
       status: status ? (status as CaseProcessStatus) : undefined,
-      assigned_to_id,
+      assigned_lab_member_id,
     },
   };
 }

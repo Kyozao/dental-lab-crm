@@ -56,6 +56,7 @@ export const ModelName = {
   lab_members: 'lab_members',
   service_types: 'service_types',
   processes: 'processes',
+  employee_process_assignments: 'employee_process_assignments',
   milling_drills: 'milling_drills',
   case_millings: 'case_millings',
   case_attachments: 'case_attachments',
@@ -150,6 +151,17 @@ export const ProcessesScalarFieldEnum = {
 } as const
 
 export type ProcessesScalarFieldEnum = (typeof ProcessesScalarFieldEnum)[keyof typeof ProcessesScalarFieldEnum]
+
+
+export const Employee_process_assignmentsScalarFieldEnum = {
+  id: 'id',
+  lab_id: 'lab_id',
+  lab_member_id: 'lab_member_id',
+  process_id: 'process_id',
+  created_at: 'created_at'
+} as const
+
+export type Employee_process_assignmentsScalarFieldEnum = (typeof Employee_process_assignmentsScalarFieldEnum)[keyof typeof Employee_process_assignmentsScalarFieldEnum]
 
 
 export const Milling_drillsScalarFieldEnum = {
@@ -302,7 +314,6 @@ export const CasesScalarFieldEnum = {
   customer_id: 'customer_id',
   service_type_id: 'service_type_id',
   dentist_id: 'dentist_id',
-  cad_designer_id: 'cad_designer_id',
   created_by_user_id: 'created_by_user_id',
   current_status: 'current_status',
   teeth: 'teeth',
@@ -325,7 +336,7 @@ export const Case_processesScalarFieldEnum = {
   process_id: 'process_id',
   workflow_step_id: 'workflow_step_id',
   status: 'status',
-  assigned_to_id: 'assigned_to_id',
+  assigned_lab_member_id: 'assigned_lab_member_id',
   started_at: 'started_at',
   completed_at: 'completed_at',
   created_at: 'created_at',

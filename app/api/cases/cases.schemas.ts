@@ -1,4 +1,8 @@
 import { CaseStatus, type CaseStatus as CaseStatusValue } from "@/generated/prisma/enums";
+import {
+  parseWorkflowJson,
+  type ServiceTypeWorkflow,
+} from "../service-types/service-types.schemas";
 
 export type CreateCaseInput = {
   patient_name: string;
@@ -6,7 +10,6 @@ export type CreateCaseInput = {
   customer_id?: string | null;
   service_type_id?: string | null;
   dentist_id?: string | null;
-  cad_designer_id?: string | null;
   current_status?: CaseStatusValue;
   teeth?: string | null;
   elements_qty?: number | null;
@@ -15,6 +18,7 @@ export type CreateCaseInput = {
   is_urgent?: boolean;
   observations?: string | null;
   pending_note?: string | null;
+  workflow_json?: ServiceTypeWorkflow;
 };
 
 export type UpdateCaseInput = Partial<CreateCaseInput>;
@@ -33,6 +37,10 @@ type ValidationResult =
 
 type UpdateValidationResult =
   | { success: true; data: UpdateCaseInput }
+  | { success: false; errors: Record<string, string[]> };
+
+type WorkflowValidationResult =
+  | { success: true; data: ServiceTypeWorkflow }
   | { success: false; errors: Record<string, string[]> };
 
 const caseStatusValues = new Set<string>(Object.values(CaseStatus));
@@ -111,6 +119,7 @@ export function parseCreateCaseInput(payload: unknown): ValidationResult {
 
   const due_date = optionalDate(body.due_date, errors);
   const elements_qty = optionalPositiveInteger(body.elements_qty, errors);
+  const workflow_json = parseWorkflowJson(body.workflow_json, errors);
 
   if (Object.keys(errors).length > 0) {
     return { success: false, errors };
@@ -124,7 +133,6 @@ export function parseCreateCaseInput(payload: unknown): ValidationResult {
       customer_id: optionalString(body.customer_id),
       service_type_id: optionalString(body.service_type_id),
       dentist_id: optionalString(body.dentist_id),
-      cad_designer_id: optionalString(body.cad_designer_id),
       current_status: current_status
         ? (current_status as CaseStatusValue)
         : undefined,
@@ -136,8 +144,38 @@ export function parseCreateCaseInput(payload: unknown): ValidationResult {
         typeof body.is_urgent === "boolean" ? body.is_urgent : undefined,
       observations: optionalString(body.observations),
       pending_note: optionalString(body.pending_note),
+      ...(workflow_json ? { workflow_json } : {}),
     },
   };
+}
+
+export function parseReplaceCaseWorkflowInput(
+  payload: unknown,
+): WorkflowValidationResult {
+  const errors: Record<string, string[]> = {};
+
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    return {
+      success: false,
+      errors: { body: ["Request body must be a JSON object."] },
+    };
+  }
+
+  const workflow_json = parseWorkflowJson(
+    (payload as Record<string, unknown>).workflow_json,
+    errors,
+  );
+
+  if (!workflow_json) {
+    addError(errors, "workflow_json", "Workflow is required.");
+    return { success: false, errors };
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return { success: false, errors };
+  }
+
+  return { success: true, data: workflow_json };
 }
 
 export function parseUpdateCaseInput(payload: unknown): UpdateValidationResult {
@@ -195,10 +233,6 @@ export function parseUpdateCaseInput(payload: unknown): UpdateValidationResult {
 
   if ("dentist_id" in body) {
     data.dentist_id = optionalString(body.dentist_id);
-  }
-
-  if ("cad_designer_id" in body) {
-    data.cad_designer_id = optionalString(body.cad_designer_id);
   }
 
   if ("teeth" in body) {

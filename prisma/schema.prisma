@@ -38,6 +38,7 @@ enum CaseProcessStatus {
 }
 
 enum UserRole {
+  OWNER
   ADMIN
   MANAGER
   CAD_DESIGNER
@@ -68,9 +69,7 @@ model users {
   updated_at DateTime  @updatedAt
 
   memberships       lab_members[]
-  assignedCases     cases[]              @relation("CaseCadDesigner")
   createdCases      cases[]              @relation("CaseCreatedBy")
-  assignedProcesses case_processes[]     @relation("CaseProcessAssignee")
   case_attachments  case_attachments[]
   notifications     notifications[]      @relation("NotificationRecipient")
   pushSubscriptions push_subscriptions[]
@@ -91,6 +90,7 @@ model labs {
   block_types    block_types[]
   milling_drills milling_drills[]
   processes      processes[]
+  employeeProcessAssignments employee_process_assignments[]
   cases          cases[]
   millings       case_millings[]
 
@@ -106,6 +106,8 @@ model lab_members {
 
   users users @relation(fields: [user_id], references: [id], onDelete: Cascade)
   labs  labs  @relation(fields: [lab_id], references: [id], onDelete: Cascade)
+  assignedProcesses case_processes[] @relation("CaseProcessAssignee")
+  processOwnerships employee_process_assignments[]
 
   @@unique([user_id])
   @@unique([user_id, lab_id])
@@ -142,9 +144,27 @@ model processes {
 
   labs           labs             @relation(fields: [lab_id], references: [id], onDelete: Cascade)
   case_processes case_processes[]
+  employeeAssignments employee_process_assignments[]
 
   @@unique([lab_id, name])
   @@index([lab_id])
+}
+
+model employee_process_assignments {
+  id            String   @id @default(uuid(7)) @db.Uuid
+  lab_id        String   @db.Uuid
+  lab_member_id String   @db.Uuid
+  process_id    String   @db.Uuid
+  created_at    DateTime @default(now())
+
+  labs        labs        @relation(fields: [lab_id], references: [id], onDelete: Cascade)
+  lab_members lab_members @relation(fields: [lab_member_id], references: [id], onDelete: Cascade)
+  processes   processes   @relation(fields: [process_id], references: [id], onDelete: Cascade)
+
+  @@unique([lab_id, lab_member_id, process_id])
+  @@index([lab_id])
+  @@index([lab_member_id])
+  @@index([process_id])
 }
 
 model milling_drills {
@@ -335,7 +355,6 @@ model cases {
   customer_id        String?    @db.Uuid
   service_type_id    String?    @db.Uuid
   dentist_id         String?    @db.Uuid
-  cad_designer_id    String?    @db.Uuid
   created_by_user_id String?    @db.Uuid
   current_status     CaseStatus @default(ENTRY)
 
@@ -359,7 +378,6 @@ model cases {
   customers        customers?         @relation(fields: [customer_id], references: [id])
   dentists         dentists?          @relation(fields: [dentist_id], references: [id])
   service_types    service_types?     @relation(fields: [service_type_id], references: [id], onDelete: Restrict)
-  cadDesigner      users?             @relation("CaseCadDesigner", fields: [cad_designer_id], references: [id], onDelete: Restrict)
   createdByUser    users?             @relation("CaseCreatedBy", fields: [created_by_user_id], references: [id])
   case_attachments case_attachments[]
   notifications    notifications[]
@@ -373,32 +391,31 @@ model cases {
   @@index([dentist_id])
   @@index([current_status])
   @@index([service_type_id])
-  @@index([cad_designer_id])
   @@index([created_by_user_id])
 }
 
 model case_processes {
-  id               String            @id @default(uuid(7)) @db.Uuid
-  case_id          String            @db.Uuid
-  process_id       String            @db.Uuid
-  workflow_step_id String
-  status           CaseProcessStatus @default(LOCKED)
-  assigned_to_id   String?           @db.Uuid
-  started_at       DateTime?
-  completed_at     DateTime?
-  created_at       DateTime          @default(now())
-  updated_at       DateTime          @updatedAt
+  id                     String            @id @default(uuid(7)) @db.Uuid
+  case_id                String            @db.Uuid
+  process_id             String            @db.Uuid
+  workflow_step_id       String
+  status                 CaseProcessStatus @default(LOCKED)
+  assigned_lab_member_id String?           @db.Uuid
+  started_at             DateTime?
+  completed_at           DateTime?
+  created_at             DateTime          @default(now())
+  updated_at             DateTime          @updatedAt
 
   cases              cases                       @relation(fields: [case_id], references: [id], onDelete: Cascade)
   processes          processes                   @relation(fields: [process_id], references: [id], onDelete: Restrict)
-  assignedTo         users?                      @relation("CaseProcessAssignee", fields: [assigned_to_id], references: [id], onDelete: SetNull)
+  assignedLabMember  lab_members?                @relation("CaseProcessAssignee", fields: [assigned_lab_member_id], references: [id], onDelete: SetNull)
   dependencies       case_process_dependencies[] @relation("CaseProcessDependencyTarget")
   dependentProcesses case_process_dependencies[] @relation("CaseProcessDependencySource")
 
   @@unique([case_id, workflow_step_id])
   @@index([case_id])
   @@index([process_id])
-  @@index([assigned_to_id])
+  @@index([assigned_lab_member_id])
   @@index([status])
 }
 

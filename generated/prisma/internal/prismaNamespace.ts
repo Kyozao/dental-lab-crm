@@ -389,6 +389,7 @@ export const ModelName = {
   lab_members: 'lab_members',
   service_types: 'service_types',
   processes: 'processes',
+  employee_process_assignments: 'employee_process_assignments',
   milling_drills: 'milling_drills',
   case_millings: 'case_millings',
   case_attachments: 'case_attachments',
@@ -418,7 +419,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "users" | "labs" | "lab_members" | "service_types" | "processes" | "milling_drills" | "case_millings" | "case_attachments" | "customers" | "dentists" | "components" | "case_component_usages" | "block_types" | "cases" | "case_processes" | "case_process_dependencies" | "case_status_histories" | "notifications" | "push_subscriptions"
+    modelProps: "users" | "labs" | "lab_members" | "service_types" | "processes" | "employee_process_assignments" | "milling_drills" | "case_millings" | "case_attachments" | "customers" | "dentists" | "components" | "case_component_usages" | "block_types" | "cases" | "case_processes" | "case_process_dependencies" | "case_status_histories" | "notifications" | "push_subscriptions"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -789,6 +790,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.processesCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ProcessesCountAggregateOutputType> | number
+        }
+      }
+    }
+    employee_process_assignments: {
+      payload: Prisma.$employee_process_assignmentsPayload<ExtArgs>
+      fields: Prisma.employee_process_assignmentsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.employee_process_assignmentsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_process_assignmentsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.employee_process_assignmentsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_process_assignmentsPayload>
+        }
+        findFirst: {
+          args: Prisma.employee_process_assignmentsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_process_assignmentsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.employee_process_assignmentsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_process_assignmentsPayload>
+        }
+        findMany: {
+          args: Prisma.employee_process_assignmentsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_process_assignmentsPayload>[]
+        }
+        create: {
+          args: Prisma.employee_process_assignmentsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_process_assignmentsPayload>
+        }
+        createMany: {
+          args: Prisma.employee_process_assignmentsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.employee_process_assignmentsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_process_assignmentsPayload>[]
+        }
+        delete: {
+          args: Prisma.employee_process_assignmentsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_process_assignmentsPayload>
+        }
+        update: {
+          args: Prisma.employee_process_assignmentsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_process_assignmentsPayload>
+        }
+        deleteMany: {
+          args: Prisma.employee_process_assignmentsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.employee_process_assignmentsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.employee_process_assignmentsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_process_assignmentsPayload>[]
+        }
+        upsert: {
+          args: Prisma.employee_process_assignmentsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_process_assignmentsPayload>
+        }
+        aggregate: {
+          args: Prisma.Employee_process_assignmentsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEmployee_process_assignments>
+        }
+        groupBy: {
+          args: Prisma.employee_process_assignmentsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Employee_process_assignmentsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.employee_process_assignmentsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Employee_process_assignmentsCountAggregateOutputType> | number
         }
       }
     }
@@ -1931,6 +2006,17 @@ export const ProcessesScalarFieldEnum = {
 export type ProcessesScalarFieldEnum = (typeof ProcessesScalarFieldEnum)[keyof typeof ProcessesScalarFieldEnum]
 
 
+export const Employee_process_assignmentsScalarFieldEnum = {
+  id: 'id',
+  lab_id: 'lab_id',
+  lab_member_id: 'lab_member_id',
+  process_id: 'process_id',
+  created_at: 'created_at'
+} as const
+
+export type Employee_process_assignmentsScalarFieldEnum = (typeof Employee_process_assignmentsScalarFieldEnum)[keyof typeof Employee_process_assignmentsScalarFieldEnum]
+
+
 export const Milling_drillsScalarFieldEnum = {
   lab_id: 'lab_id',
   id: 'id',
@@ -2081,7 +2167,6 @@ export const CasesScalarFieldEnum = {
   customer_id: 'customer_id',
   service_type_id: 'service_type_id',
   dentist_id: 'dentist_id',
-  cad_designer_id: 'cad_designer_id',
   created_by_user_id: 'created_by_user_id',
   current_status: 'current_status',
   teeth: 'teeth',
@@ -2104,7 +2189,7 @@ export const Case_processesScalarFieldEnum = {
   process_id: 'process_id',
   workflow_step_id: 'workflow_step_id',
   status: 'status',
-  assigned_to_id: 'assigned_to_id',
+  assigned_lab_member_id: 'assigned_lab_member_id',
   started_at: 'started_at',
   completed_at: 'completed_at',
   created_at: 'created_at',
@@ -2493,6 +2578,7 @@ export type GlobalOmitConfig = {
   lab_members?: Prisma.lab_membersOmit
   service_types?: Prisma.service_typesOmit
   processes?: Prisma.processesOmit
+  employee_process_assignments?: Prisma.employee_process_assignmentsOmit
   milling_drills?: Prisma.milling_drillsOmit
   case_millings?: Prisma.case_millingsOmit
   case_attachments?: Prisma.case_attachmentsOmit

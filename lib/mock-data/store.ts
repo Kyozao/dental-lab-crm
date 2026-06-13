@@ -97,7 +97,6 @@ export type MockCase = {
   customerId: string | null;
   dentistId: string | null;
   serviceTypeId: string | null;
-  cadDesignerId: string | null;
   components: MockCaseComponent[];
   attachments: MockAttachment[];
   statusHistory: Array<{
@@ -234,7 +233,6 @@ function createInitialState(): MockState {
       customerId: "customer-1",
       dentistId: "dentist-1",
       serviceTypeId: "service-2",
-      cadDesignerId: "user-cad-ana",
       components: [{ id: "usage-1", componentId: "component-1", quantity: 2, chargeClient: true, unitCost: "35", unitPrice: "90", notes: null }],
       attachments: [{ id: "att-1", caseId: "case-1", fileName: "scan-maria.zip", filePath: "mock/case-1/scan-maria.zip", fileType: "application/zip", fileSize: 2048000, kind: "SCAN_INPUT", retentionUntil: daysFromNow(90), createdAt: daysFromNow(-4), uploadedByName: "Demo Manager" }],
       statusHistory: [{ id: "history-1", fromStatus: null, toStatus: CASE_STATUS.ENTRY, note: "Case created", changedAt: daysFromNow(-4) }],
@@ -259,7 +257,6 @@ function createInitialState(): MockState {
       customerId: "customer-2",
       dentistId: "dentist-2",
       serviceTypeId: "service-1",
-      cadDesignerId: "user-cad-joao",
       components: [],
       attachments: [],
       statusHistory: [{ id: "history-2", fromStatus: CASE_STATUS.DESIGNING, toStatus: CASE_STATUS.DESIGN_READY, note: "Design approved", changedAt: daysFromNow(-1) }],
@@ -284,7 +281,6 @@ function createInitialState(): MockState {
       customerId: "customer-1",
       dentistId: "dentist-1",
       serviceTypeId: "service-1",
-      cadDesignerId: "user-cad-ana",
       components: [],
       attachments: [],
       statusHistory: [{ id: "history-3", fromStatus: CASE_STATUS.MILLING_PRINTING, toStatus: CASE_STATUS.DONE, note: "Completed", changedAt: daysFromNow(-2) }],
@@ -309,7 +305,6 @@ function createInitialState(): MockState {
       customerId: "customer-3",
       dentistId: "dentist-3",
       serviceTypeId: "service-3",
-      cadDesignerId: "user-cad-joao",
       components: [],
       attachments: [],
       statusHistory: [{ id: "history-4", fromStatus: null, toStatus: CASE_STATUS.ENTRY, note: "Case created", changedAt: daysFromNow(-2) }],
@@ -426,9 +421,6 @@ export function getCaseFormOptions() {
     serviceTypes: store.serviceTypes
       .filter((item) => item.dentalLabId === dentalLabId && isActiveReference(item))
       .map((item) => ({ id: item.id, name: item.name })),
-    cadDesigners: store.users
-      .filter((user) => user.role === "CAD_DESIGNER" && user.isActive && !user.deletedAt)
-      .map((user) => ({ id: user.id, name: user.name })),
     components: store.components
       .filter((item) => item.dentalLabId === dentalLabId && isActiveReference(item))
       .map((item) => ({
@@ -464,10 +456,6 @@ function serviceType(id: string | null) {
   return state().serviceTypes.find((item) => item.id === id) ?? null;
 }
 
-function designer(id: string | null) {
-  return state().users.find((item) => item.id === id) ?? null;
-}
-
 function component(id: string) {
   return state().components.find((item) => item.id === id) ?? null;
 }
@@ -494,12 +482,10 @@ function validateActiveCaseReferences(payload: Record<string, unknown>) {
   const customerId = typeof payload.customerId === "string" && payload.customerId ? payload.customerId : null;
   const dentistId = typeof payload.dentistId === "string" && payload.dentistId ? payload.dentistId : null;
   const serviceTypeId = typeof payload.serviceTypeId === "string" && payload.serviceTypeId ? payload.serviceTypeId : null;
-  const cadDesignerId = typeof payload.cadDesignerId === "string" && payload.cadDesignerId ? payload.cadDesignerId : null;
 
   const selectedCustomer = activeCustomer(customerId);
   const selectedDentist = dentist(dentistId);
   const selectedServiceType = serviceType(serviceTypeId);
-  const selectedDesigner = designer(cadDesignerId);
 
   if (customerId && !selectedCustomer) throw new Error("customer is inactive, archived, or not in this lab.");
   if (dentistId && (!selectedDentist || selectedDentist.dentalLabId !== dentalLabId || !isActiveReference(selectedDentist))) {
@@ -511,9 +497,6 @@ function validateActiveCaseReferences(payload: Record<string, unknown>) {
   if (serviceTypeId && (!selectedServiceType || selectedServiceType.dentalLabId !== dentalLabId || !isActiveReference(selectedServiceType))) {
     throw new Error("Service type is inactive, archived, or not in this lab.");
   }
-  if (cadDesignerId && (!selectedDesigner || selectedDesigner.role !== "CAD_DESIGNER" || !selectedDesigner.isActive || selectedDesigner.deletedAt)) {
-    throw new Error("CAD designer is inactive, archived, or not assigned to this lab.");
-  }
 }
 
 export function serializeCase(item: MockCase, detailed = false) {
@@ -521,7 +504,6 @@ export function serializeCase(item: MockCase, detailed = false) {
   const c = findCustomer(item.customerId);
   const d = dentist(item.dentistId);
   const s = serviceType(item.serviceTypeId);
-  const cad = designer(item.cadDesignerId);
   const customer = labCustomer(item.labCustomerId);
   const millings = store.millings.filter((milling) => milling.caseId === item.id);
 
@@ -545,15 +527,12 @@ export function serializeCase(item: MockCase, detailed = false) {
     customerId: item.customerId,
     dentistId: item.dentistId,
     serviceTypeId: item.serviceTypeId,
-    cadDesignerId: item.cadDesignerId,
     customerName: c?.name ?? "",
     dentistName: d?.name ?? "",
     serviceTypeName: s?.name ?? "",
-    cadDesignerName: cad?.name ?? "",
     customer: c ? { id: c.id, name: c.name } : null,
     dentist: d ? { id: d.id, name: d.name } : null,
     serviceType: s ? { id: s.id, name: s.name } : null,
-    cadDesigner: cad ? { id: cad.id, name: cad.name } : null,
     attachments: detailed ? item.attachments : [],
     components: detailed
       ? item.components.map((usage) => {
@@ -659,7 +638,6 @@ export function createCase(payload: Record<string, unknown>) {
     customerId: selectedCustomer?.dentalLabId === dentalLabId ? selectedCustomer.id : null,
     dentistId: typeof payload.dentistId === "string" ? payload.dentistId : null,
     serviceTypeId: typeof payload.serviceTypeId === "string" ? payload.serviceTypeId : null,
-    cadDesignerId: typeof payload.cadDesignerId === "string" ? payload.cadDesignerId : null,
     components: normalizeCaseComponents(payload.components),
     attachments: [],
     statusHistory: [{ id: id("history"), fromStatus: null, toStatus: CASE_STATUS.ENTRY, note: "Case created", changedAt: createdAt }],
@@ -691,7 +669,6 @@ export function updateCase(idValue: string, payload: Record<string, unknown>) {
   }
   if ("dentistId" in payload) item.dentistId = typeof payload.dentistId === "string" && payload.dentistId ? payload.dentistId : null;
   if ("serviceTypeId" in payload) item.serviceTypeId = typeof payload.serviceTypeId === "string" && payload.serviceTypeId ? payload.serviceTypeId : null;
-  if ("cadDesignerId" in payload) item.cadDesignerId = typeof payload.cadDesignerId === "string" && payload.cadDesignerId ? payload.cadDesignerId : null;
   if ("components" in payload) item.components = normalizeCaseComponents(payload.components);
   item.updatedAt = now();
   if (previousStatus !== item.currentStatus) {
@@ -769,7 +746,6 @@ export function getDownloadItems(caseIds: string[], kind: AttachmentKind | "ALL"
 
 export function getDashboardData() {
   const store = state();
-  const designers = store.users.filter((user) => user.role === "CAD_DESIGNER");
   const allCases = store.cases.filter(isActiveLabItem);
   const nowDate = new Date();
   const monthStart = new Date(nowDate.getFullYear(), nowDate.getMonth(), 1);
@@ -778,13 +754,13 @@ export function getDashboardData() {
   weekStart.setHours(0, 0, 0, 0);
   const teethCount = (item: MockCase) => item.elementsQty ?? item.teeth.split(/[\s,;/]+/).filter(Boolean).length;
   const doneDate = (item: MockCase) => new Date(item.statusHistory.find((history) => history.toStatus === CASE_STATUS.DONE)?.changedAt ?? item.updatedAt);
-  const designerStats = designers.map((user) => {
-    const assigned = allCases.filter((item) => item.cadDesignerId === user.id);
+  const designerStats = Object.values(CASE_STATUS).map((status) => {
+    const assigned = allCases.filter((item) => item.currentStatus === status);
     const active = assigned.filter((item) => item.currentStatus !== CASE_STATUS.DONE);
     const completed = assigned.filter((item) => item.currentStatus === CASE_STATUS.DONE);
     return {
-      id: user.id,
-      name: user.name,
+      id: status,
+      name: status.replace(/_/g, " "),
       totalCases: assigned.length,
       totalTeethDesigned: assigned.reduce((sum, item) => sum + teethCount(item), 0),
       activeCases: active.length,
@@ -801,12 +777,12 @@ export function getDashboardData() {
         : null,
       completionRate: assigned.length ? Math.round((completed.length / assigned.length) * 100) : 0,
     };
-  });
+  }).filter((item) => item.totalCases > 0);
   const completed = allCases.filter((item) => item.currentStatus === CASE_STATUS.DONE);
 
   return {
     summary: {
-      totalDesigners: designers.length,
+      totalDesigners: designerStats.length,
       totalAssignedCases: allCases.length,
       totalTeethDesigned: allCases.reduce((sum, item) => sum + teethCount(item), 0),
       openCases: allCases.length - completed.length,

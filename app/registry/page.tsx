@@ -12,8 +12,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { mockRegistry } from "@/lib/mock-data/pages";
+import { requireCurrentLab } from "@/lib/onboarding";
 
-export default function RegistryPage() {
+export default async function RegistryPage() {
+  await requireCurrentLab();
+
   return (
     <PageShell width="default">
       <PageHeader

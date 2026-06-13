@@ -82,6 +82,54 @@ export async function getWorkflowForCaseCreate(
   return workflow;
 }
 
+export async function validateWorkflowProcesses(
+  lab_id: string,
+  workflow: ServiceTypeWorkflow,
+) {
+  if (workflow.steps.length === 0) return;
+
+  const processIds = [...new Set(workflow.steps.map((step) => step.process_id))];
+  const activeProcesses = await prisma.processes.findMany({
+    where: {
+      id: { in: processIds },
+      lab_id,
+      ...activeReferenceWhere,
+    },
+    select: { id: true },
+  });
+  const activeProcessIds = new Set(activeProcesses.map((process) => process.id));
+  const invalidEntries = workflow.steps
+    .map((step, index) => ({ step, index }))
+    .filter(({ step }) => !activeProcessIds.has(step.process_id));
+
+  if (invalidEntries.length > 0) {
+    throw new InactiveReferenceError(
+      Object.fromEntries(
+        invalidEntries.map(({ index }) => [
+          `workflow_json.steps.${index}.process_id`,
+          ["Process is inactive, archived, or not in this lab."],
+        ]),
+      ),
+    );
+  }
+}
+
+export class MissingServiceTypeWorkflowError extends Error {
+  constructor() {
+    super("Selected service type does not have a workflow.");
+    this.name = "MissingServiceTypeWorkflowError";
+  }
+}
+
+export function requireWorkflowForSelectedServiceType(
+  service_type_id: string | null | undefined,
+  workflow: ServiceTypeWorkflow,
+) {
+  if (service_type_id && workflow.steps.length === 0) {
+    throw new MissingServiceTypeWorkflowError();
+  }
+}
+
 function buildCaseProcessRows(workflow: ServiceTypeWorkflow) {
   return workflow.steps.map((step) => ({
     process_id: step.process_id,
@@ -91,6 +139,50 @@ function buildCaseProcessRows(workflow: ServiceTypeWorkflow) {
         ? CaseProcessStatus.READY
         : CaseProcessStatus.LOCKED,
   }));
+}
+
+async function createWorkflowRowsForCase(
+  tx: Prisma.TransactionClient,
+  case_id: string,
+  workflow: ServiceTypeWorkflow,
+) {
+  const caseProcessRows = buildCaseProcessRows(workflow);
+
+  if (caseProcessRows.length === 0) return;
+
+  await tx.case_processes.createMany({
+    data: caseProcessRows.map((row) => ({
+      case_id,
+      ...row,
+    })),
+  });
+
+  await createCaseProcessDependencies(tx, case_id, workflow);
+}
+
+function isIncompleteStatus(status: CaseProcessStatus) {
+  return (
+    status === CaseProcessStatus.LOCKED ||
+    status === CaseProcessStatus.READY ||
+    status === CaseProcessStatus.IN_PROGRESS
+  );
+}
+
+function statusForEditedStep(
+  step: ServiceTypeWorkflowStep,
+  statusByStepId: Map<string, CaseProcessStatus>,
+) {
+  const existingStatus = statusByStepId.get(step.id);
+  if (existingStatus && !isIncompleteStatus(existingStatus)) {
+    return existingStatus;
+  }
+
+  const dependenciesComplete = step.dependsOn.every(
+    (dependencyStepId) =>
+      statusByStepId.get(dependencyStepId) === CaseProcessStatus.COMPLETED,
+  );
+
+  return dependenciesComplete ? CaseProcessStatus.READY : CaseProcessStatus.LOCKED;
 }
 
 function buildCaseProcessDependencyRows(
@@ -168,7 +260,6 @@ function buildCaseCreateData(
     customer_id: input.customer_id,
     service_type_id: input.service_type_id,
     dentist_id: input.dentist_id,
-    cad_designer_id: input.cad_designer_id,
     created_by_user_id: user_id,
     current_status: input.current_status,
     teeth: input.teeth,
@@ -191,6 +282,8 @@ export async function createCaseWithWorkflow(
   code: string,
   workflow: ServiceTypeWorkflow,
 ) {
+  requireWorkflowForSelectedServiceType(input.service_type_id, workflow);
+
   const caseProcessRows = buildCaseProcessRows(workflow);
   const item = await tx.cases.create({
     data: buildCaseCreateData(
@@ -208,4 +301,92 @@ export async function createCaseWithWorkflow(
     where: { id: item.id },
     include: caseInclude,
   });
+}
+
+export async function createWorkflowForExistingCase(
+  tx: Prisma.TransactionClient,
+  case_id: string,
+  service_type_id: string,
+  workflow: ServiceTypeWorkflow,
+) {
+  requireWorkflowForSelectedServiceType(service_type_id, workflow);
+  const existingProcess = await tx.case_processes.findFirst({
+    where: { case_id },
+    select: { id: true },
+  });
+
+  if (existingProcess) return false;
+
+  await createWorkflowRowsForCase(tx, case_id, workflow);
+  return true;
+}
+
+export async function replaceWorkflowForExistingCase(
+  tx: Prisma.TransactionClient,
+  case_id: string,
+  workflow: ServiceTypeWorkflow,
+) {
+  const existingProcesses = await tx.case_processes.findMany({
+    where: { case_id },
+    select: {
+      id: true,
+      workflow_step_id: true,
+      status: true,
+    },
+  });
+
+  const workflowStepIds = new Set(workflow.steps.map((step) => step.id));
+  const existingByStepId = new Map(
+    existingProcesses.map((process) => [process.workflow_step_id, process]),
+  );
+  const statusByStepId = new Map(
+    existingProcesses.map((process) => [
+      process.workflow_step_id,
+      process.status,
+    ]),
+  );
+  const removedProcessIds = existingProcesses
+    .filter((process) => !workflowStepIds.has(process.workflow_step_id))
+    .map((process) => process.id);
+
+  if (removedProcessIds.length > 0) {
+    await tx.case_processes.deleteMany({
+      where: { id: { in: removedProcessIds } },
+    });
+  }
+
+  for (const step of workflow.steps) {
+    const existing = existingByStepId.get(step.id);
+    const status = statusForEditedStep(step, statusByStepId);
+
+    if (existing) {
+      await tx.case_processes.update({
+        where: { id: existing.id },
+        data: {
+          process_id: step.process_id,
+          status,
+        },
+      });
+      continue;
+    }
+
+    await tx.case_processes.create({
+      data: {
+        case_id,
+        process_id: step.process_id,
+        workflow_step_id: step.id,
+        status,
+      },
+    });
+  }
+
+  await tx.case_process_dependencies.deleteMany({
+    where: {
+      OR: [
+        { caseProcess: { case_id } },
+        { dependsOnCaseProcess: { case_id } },
+      ],
+    },
+  });
+  await createCaseProcessDependencies(tx, case_id, workflow);
 }

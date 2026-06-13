@@ -1,5 +1,10 @@
 import { api } from "@/lib/api";
-import type { CaseStatusValue } from "@/features/cases/types";
+import type {
+  CaseProcessItem,
+  CaseStatusValue,
+  CaseWorkflow,
+  ProcessOption,
+} from "@/features/cases/types";
 
 export type CaseListItem = {
   id: string;
@@ -12,8 +17,6 @@ export type CaseListItem = {
   serviceTypeName: string | null;
   dentistId: string | null;
   dentistName: string | null;
-  cadDesignerId: string | null;
-  cadDesignerName: string | null;
   createdByUserId: string | null;
   createdByUserName: string | null;
   currentStatus: CaseStatusValue;
@@ -26,6 +29,8 @@ export type CaseListItem = {
   pendingNote: string | null;
   createdAt: string;
   updatedAt: string;
+  processes?: CaseProcessItem[];
+  availableProcesses?: ProcessOption[];
 };
 
 export type CaseListQuery = {
@@ -52,13 +57,22 @@ type CaseResponse = {
   meta?: Record<string, never>;
 };
 
+type CaseProcessResponse = {
+  data?: {
+    process: CaseProcessItem;
+    processes: CaseProcessItem[];
+  };
+  error?: string | null;
+  fields?: Record<string, string[]>;
+  meta?: Record<string, never>;
+};
+
 export type CaseMutationPayload = {
   patientName?: string;
   clientCaseCode?: string | null;
   customerId?: string | null;
   serviceTypeId?: string | null;
   dentistId?: string | null;
-  cadDesignerId?: string | null;
   currentStatus?: CaseStatusValue;
   teeth?: string | null;
   elementsQty?: number | null;
@@ -67,6 +81,7 @@ export type CaseMutationPayload = {
   isUrgent?: boolean;
   observations?: string | null;
   pendingNote?: string | null;
+  workflowJson?: CaseWorkflow;
 };
 
 type CaseMutationApiPayload = {
@@ -75,7 +90,6 @@ type CaseMutationApiPayload = {
   customer_id?: string | null;
   service_type_id?: string | null;
   dentist_id?: string | null;
-  cad_designer_id?: string | null;
   current_status?: CaseStatusValue;
   teeth?: string | null;
   elements_qty?: number | null;
@@ -84,6 +98,7 @@ type CaseMutationApiPayload = {
   is_urgent?: boolean;
   observations?: string | null;
   pending_note?: string | null;
+  workflow_json?: CaseWorkflow;
 };
 
 function buildCasesEndpoint(query?: CaseListQuery) {
@@ -122,10 +137,6 @@ function toCaseMutationApiPayload(payload: CaseMutationPayload) {
     apiPayload.dentist_id = payload.dentistId;
   }
 
-  if (payload.cadDesignerId !== undefined) {
-    apiPayload.cad_designer_id = payload.cadDesignerId;
-  }
-
   if (payload.currentStatus !== undefined) {
     apiPayload.current_status = payload.currentStatus;
   }
@@ -156,6 +167,10 @@ function toCaseMutationApiPayload(payload: CaseMutationPayload) {
 
   if (payload.pendingNote !== undefined) {
     apiPayload.pending_note = payload.pendingNote;
+  }
+
+  if (payload.workflowJson !== undefined) {
+    apiPayload.workflow_json = payload.workflowJson;
   }
 
   return apiPayload;
@@ -189,6 +204,42 @@ export const casesApi = {
       body: JSON.stringify(toCaseMutationApiPayload(payload)),
     });
     if (!response.data) throw new Error("Case response was empty.");
+    return response.data;
+  },
+
+  async replaceWorkflow(caseId: string, workflowJson: CaseWorkflow) {
+    const response = await api<CaseResponse>(`/api/cases/${caseId}/workflow`, {
+      method: "PUT",
+      body: JSON.stringify({ workflow_json: workflowJson }),
+    });
+    if (!response.data) throw new Error("Case response was empty.");
+    return response.data;
+  },
+
+  async updateProcessStatus(caseProcessId: string, status: string) {
+    const response = await api<CaseProcessResponse>(
+      `/api/case-processes/${caseProcessId}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify({ status }),
+      },
+    );
+    if (!response.data) throw new Error("Case process response was empty.");
+    return response.data;
+  },
+
+  async updateProcessAssignee(
+    caseProcessId: string,
+    assignedLabMemberId: string | null,
+  ) {
+    const response = await api<CaseProcessResponse>(
+      `/api/case-processes/${caseProcessId}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify({ assigned_lab_member_id: assignedLabMemberId }),
+      },
+    );
+    if (!response.data) throw new Error("Case process response was empty.");
     return response.data;
   },
 };

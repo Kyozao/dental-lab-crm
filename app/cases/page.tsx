@@ -11,8 +11,11 @@ import {
   mockComponents,
   mockUser,
 } from "@/lib/mock-data/pages";
+import { requireCurrentLab } from "@/lib/onboarding";
 
-export default function CasesPage() {
+export default async function CasesPage() {
+  await requireCurrentLab();
+
   return (
     <PageShell width="wide">
       <PageHeader

@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CaseDetailsDialog } from "@/features/cases/components/case-details-dialog";
-import { useCadDesigners } from "@/features/cases/hooks/useCadDesigners";
 import { useCustomers } from "@/features/cases/hooks/useCustomers";
+import { useEmployees } from "@/features/cases/hooks/useEmployees";
+import { useProcesses } from "@/features/cases/hooks/useProcesses";
 import { useServiceTypes } from "@/features/cases/hooks/useServiceTypes";
 import { getCaseDetailsApi } from "@/features/cases/services/cases-client";
 import type {
@@ -28,9 +29,15 @@ export function EditCaseDialog({
   const [isLoading, setIsLoading] = useState(false);
   const customers = useCustomers(open);
   const serviceTypes = useServiceTypes(open);
-  const cadDesigners = useCadDesigners(open);
+  const processes = useProcesses(open);
+  const employees = useEmployees(open);
 
-  const optionQueries = [customers, serviceTypes, cadDesigners];
+  const optionQueries = [
+    customers,
+    serviceTypes,
+    processes,
+    employees,
+  ];
   const optionsLoading = optionQueries.some(
     (query) => query.isLoading || query.isFetching,
   );
@@ -40,7 +47,8 @@ export function EditCaseDialog({
   function retryOptions() {
     void customers.refetch();
     void serviceTypes.refetch();
-    void cadDesigners.refetch();
+    void processes.refetch();
+    void employees.refetch();
   }
 
   async function handleOpenDialog() {
@@ -86,8 +94,9 @@ export function EditCaseDialog({
         currentUserRole={currentUserRole}
         customers={customers.data ?? []}
         serviceTypes={serviceTypes.data ?? []}
-        cadDesigners={cadDesigners.data ?? []}
         components={components}
+        processes={processes.data ?? []}
+        employees={employees.data ?? []}
         optionsLoading={optionsLoading}
         optionsError={
           optionsError

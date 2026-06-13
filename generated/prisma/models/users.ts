@@ -199,9 +199,7 @@ export type usersWhereInput = {
   created_at?: Prisma.DateTimeFilter<"users"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"users"> | Date | string
   memberships?: Prisma.Lab_membersListRelationFilter
-  assignedCases?: Prisma.CasesListRelationFilter
   createdCases?: Prisma.CasesListRelationFilter
-  assignedProcesses?: Prisma.Case_processesListRelationFilter
   case_attachments?: Prisma.Case_attachmentsListRelationFilter
   notifications?: Prisma.NotificationsListRelationFilter
   pushSubscriptions?: Prisma.Push_subscriptionsListRelationFilter
@@ -216,9 +214,7 @@ export type usersOrderByWithRelationInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   memberships?: Prisma.lab_membersOrderByRelationAggregateInput
-  assignedCases?: Prisma.casesOrderByRelationAggregateInput
   createdCases?: Prisma.casesOrderByRelationAggregateInput
-  assignedProcesses?: Prisma.case_processesOrderByRelationAggregateInput
   case_attachments?: Prisma.case_attachmentsOrderByRelationAggregateInput
   notifications?: Prisma.notificationsOrderByRelationAggregateInput
   pushSubscriptions?: Prisma.push_subscriptionsOrderByRelationAggregateInput
@@ -236,9 +232,7 @@ export type usersWhereUniqueInput = Prisma.AtLeast<{
   created_at?: Prisma.DateTimeFilter<"users"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"users"> | Date | string
   memberships?: Prisma.Lab_membersListRelationFilter
-  assignedCases?: Prisma.CasesListRelationFilter
   createdCases?: Prisma.CasesListRelationFilter
-  assignedProcesses?: Prisma.Case_processesListRelationFilter
   case_attachments?: Prisma.Case_attachmentsListRelationFilter
   notifications?: Prisma.NotificationsListRelationFilter
   pushSubscriptions?: Prisma.Push_subscriptionsListRelationFilter
@@ -279,9 +273,7 @@ export type usersCreateInput = {
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
-  assignedCases?: Prisma.casesCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
-  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
@@ -296,9 +288,7 @@ export type usersUncheckedCreateInput = {
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
-  assignedCases?: Prisma.casesUncheckedCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
-  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
@@ -313,9 +303,7 @@ export type usersUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
-  assignedCases?: Prisma.casesUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
-  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
@@ -330,9 +318,7 @@ export type usersUncheckedUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
-  assignedCases?: Prisma.casesUncheckedUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
-  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
@@ -454,26 +440,10 @@ export type usersUpdateOneWithoutCase_attachmentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutCase_attachmentsInput, Prisma.usersUpdateWithoutCase_attachmentsInput>, Prisma.usersUncheckedUpdateWithoutCase_attachmentsInput>
 }
 
-export type usersCreateNestedOneWithoutAssignedCasesInput = {
-  create?: Prisma.XOR<Prisma.usersCreateWithoutAssignedCasesInput, Prisma.usersUncheckedCreateWithoutAssignedCasesInput>
-  connectOrCreate?: Prisma.usersCreateOrConnectWithoutAssignedCasesInput
-  connect?: Prisma.usersWhereUniqueInput
-}
-
 export type usersCreateNestedOneWithoutCreatedCasesInput = {
   create?: Prisma.XOR<Prisma.usersCreateWithoutCreatedCasesInput, Prisma.usersUncheckedCreateWithoutCreatedCasesInput>
   connectOrCreate?: Prisma.usersCreateOrConnectWithoutCreatedCasesInput
   connect?: Prisma.usersWhereUniqueInput
-}
-
-export type usersUpdateOneWithoutAssignedCasesNestedInput = {
-  create?: Prisma.XOR<Prisma.usersCreateWithoutAssignedCasesInput, Prisma.usersUncheckedCreateWithoutAssignedCasesInput>
-  connectOrCreate?: Prisma.usersCreateOrConnectWithoutAssignedCasesInput
-  upsert?: Prisma.usersUpsertWithoutAssignedCasesInput
-  disconnect?: Prisma.usersWhereInput | boolean
-  delete?: Prisma.usersWhereInput | boolean
-  connect?: Prisma.usersWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutAssignedCasesInput, Prisma.usersUpdateWithoutAssignedCasesInput>, Prisma.usersUncheckedUpdateWithoutAssignedCasesInput>
 }
 
 export type usersUpdateOneWithoutCreatedCasesNestedInput = {
@@ -484,22 +454,6 @@ export type usersUpdateOneWithoutCreatedCasesNestedInput = {
   delete?: Prisma.usersWhereInput | boolean
   connect?: Prisma.usersWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutCreatedCasesInput, Prisma.usersUpdateWithoutCreatedCasesInput>, Prisma.usersUncheckedUpdateWithoutCreatedCasesInput>
-}
-
-export type usersCreateNestedOneWithoutAssignedProcessesInput = {
-  create?: Prisma.XOR<Prisma.usersCreateWithoutAssignedProcessesInput, Prisma.usersUncheckedCreateWithoutAssignedProcessesInput>
-  connectOrCreate?: Prisma.usersCreateOrConnectWithoutAssignedProcessesInput
-  connect?: Prisma.usersWhereUniqueInput
-}
-
-export type usersUpdateOneWithoutAssignedProcessesNestedInput = {
-  create?: Prisma.XOR<Prisma.usersCreateWithoutAssignedProcessesInput, Prisma.usersUncheckedCreateWithoutAssignedProcessesInput>
-  connectOrCreate?: Prisma.usersCreateOrConnectWithoutAssignedProcessesInput
-  upsert?: Prisma.usersUpsertWithoutAssignedProcessesInput
-  disconnect?: Prisma.usersWhereInput | boolean
-  delete?: Prisma.usersWhereInput | boolean
-  connect?: Prisma.usersWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutAssignedProcessesInput, Prisma.usersUpdateWithoutAssignedProcessesInput>, Prisma.usersUncheckedUpdateWithoutAssignedProcessesInput>
 }
 
 export type usersCreateNestedOneWithoutNotificationsInput = {
@@ -538,9 +492,7 @@ export type usersCreateWithoutMembershipsInput = {
   deleted_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  assignedCases?: Prisma.casesCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
-  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
@@ -554,9 +506,7 @@ export type usersUncheckedCreateWithoutMembershipsInput = {
   deleted_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  assignedCases?: Prisma.casesUncheckedCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
-  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
@@ -586,9 +536,7 @@ export type usersUpdateWithoutMembershipsInput = {
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  assignedCases?: Prisma.casesUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
-  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
@@ -602,9 +550,7 @@ export type usersUncheckedUpdateWithoutMembershipsInput = {
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  assignedCases?: Prisma.casesUncheckedUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
-  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
@@ -619,9 +565,7 @@ export type usersCreateWithoutCase_attachmentsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
-  assignedCases?: Prisma.casesCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
-  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedToInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
 }
@@ -635,9 +579,7 @@ export type usersUncheckedCreateWithoutCase_attachmentsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
-  assignedCases?: Prisma.casesUncheckedCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
-  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedToInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
 }
@@ -667,9 +609,7 @@ export type usersUpdateWithoutCase_attachmentsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
-  assignedCases?: Prisma.casesUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
-  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedToNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
 }
@@ -683,48 +623,9 @@ export type usersUncheckedUpdateWithoutCase_attachmentsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
-  assignedCases?: Prisma.casesUncheckedUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
-  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedToNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
-}
-
-export type usersCreateWithoutAssignedCasesInput = {
-  id?: string
-  name: string
-  email: string
-  is_active?: boolean
-  deleted_at?: Date | string | null
-  created_at?: Date | string
-  updated_at?: Date | string
-  memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
-  createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
-  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedToInput
-  case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
-  notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
-  pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
-}
-
-export type usersUncheckedCreateWithoutAssignedCasesInput = {
-  id?: string
-  name: string
-  email: string
-  is_active?: boolean
-  deleted_at?: Date | string | null
-  created_at?: Date | string
-  updated_at?: Date | string
-  memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
-  createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
-  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedToInput
-  case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
-  notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
-  pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
-}
-
-export type usersCreateOrConnectWithoutAssignedCasesInput = {
-  where: Prisma.usersWhereUniqueInput
-  create: Prisma.XOR<Prisma.usersCreateWithoutAssignedCasesInput, Prisma.usersUncheckedCreateWithoutAssignedCasesInput>
 }
 
 export type usersCreateWithoutCreatedCasesInput = {
@@ -736,8 +637,6 @@ export type usersCreateWithoutCreatedCasesInput = {
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
-  assignedCases?: Prisma.casesCreateNestedManyWithoutCadDesignerInput
-  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
@@ -752,8 +651,6 @@ export type usersUncheckedCreateWithoutCreatedCasesInput = {
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
-  assignedCases?: Prisma.casesUncheckedCreateNestedManyWithoutCadDesignerInput
-  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
@@ -762,49 +659,6 @@ export type usersUncheckedCreateWithoutCreatedCasesInput = {
 export type usersCreateOrConnectWithoutCreatedCasesInput = {
   where: Prisma.usersWhereUniqueInput
   create: Prisma.XOR<Prisma.usersCreateWithoutCreatedCasesInput, Prisma.usersUncheckedCreateWithoutCreatedCasesInput>
-}
-
-export type usersUpsertWithoutAssignedCasesInput = {
-  update: Prisma.XOR<Prisma.usersUpdateWithoutAssignedCasesInput, Prisma.usersUncheckedUpdateWithoutAssignedCasesInput>
-  create: Prisma.XOR<Prisma.usersCreateWithoutAssignedCasesInput, Prisma.usersUncheckedCreateWithoutAssignedCasesInput>
-  where?: Prisma.usersWhereInput
-}
-
-export type usersUpdateToOneWithWhereWithoutAssignedCasesInput = {
-  where?: Prisma.usersWhereInput
-  data: Prisma.XOR<Prisma.usersUpdateWithoutAssignedCasesInput, Prisma.usersUncheckedUpdateWithoutAssignedCasesInput>
-}
-
-export type usersUpdateWithoutAssignedCasesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
-  createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
-  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedToNestedInput
-  case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
-  notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
-  pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
-}
-
-export type usersUncheckedUpdateWithoutAssignedCasesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
-  createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
-  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedToNestedInput
-  case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
-  notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
-  pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
 }
 
 export type usersUpsertWithoutCreatedCasesInput = {
@@ -827,8 +681,6 @@ export type usersUpdateWithoutCreatedCasesInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
-  assignedCases?: Prisma.casesUpdateManyWithoutCadDesignerNestedInput
-  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
@@ -843,88 +695,6 @@ export type usersUncheckedUpdateWithoutCreatedCasesInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
-  assignedCases?: Prisma.casesUncheckedUpdateManyWithoutCadDesignerNestedInput
-  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedToNestedInput
-  case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
-  notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
-  pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
-}
-
-export type usersCreateWithoutAssignedProcessesInput = {
-  id?: string
-  name: string
-  email: string
-  is_active?: boolean
-  deleted_at?: Date | string | null
-  created_at?: Date | string
-  updated_at?: Date | string
-  memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
-  assignedCases?: Prisma.casesCreateNestedManyWithoutCadDesignerInput
-  createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
-  case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
-  notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
-  pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
-}
-
-export type usersUncheckedCreateWithoutAssignedProcessesInput = {
-  id?: string
-  name: string
-  email: string
-  is_active?: boolean
-  deleted_at?: Date | string | null
-  created_at?: Date | string
-  updated_at?: Date | string
-  memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
-  assignedCases?: Prisma.casesUncheckedCreateNestedManyWithoutCadDesignerInput
-  createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
-  case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
-  notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
-  pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
-}
-
-export type usersCreateOrConnectWithoutAssignedProcessesInput = {
-  where: Prisma.usersWhereUniqueInput
-  create: Prisma.XOR<Prisma.usersCreateWithoutAssignedProcessesInput, Prisma.usersUncheckedCreateWithoutAssignedProcessesInput>
-}
-
-export type usersUpsertWithoutAssignedProcessesInput = {
-  update: Prisma.XOR<Prisma.usersUpdateWithoutAssignedProcessesInput, Prisma.usersUncheckedUpdateWithoutAssignedProcessesInput>
-  create: Prisma.XOR<Prisma.usersCreateWithoutAssignedProcessesInput, Prisma.usersUncheckedCreateWithoutAssignedProcessesInput>
-  where?: Prisma.usersWhereInput
-}
-
-export type usersUpdateToOneWithWhereWithoutAssignedProcessesInput = {
-  where?: Prisma.usersWhereInput
-  data: Prisma.XOR<Prisma.usersUpdateWithoutAssignedProcessesInput, Prisma.usersUncheckedUpdateWithoutAssignedProcessesInput>
-}
-
-export type usersUpdateWithoutAssignedProcessesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
-  assignedCases?: Prisma.casesUpdateManyWithoutCadDesignerNestedInput
-  createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
-  case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
-  notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
-  pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
-}
-
-export type usersUncheckedUpdateWithoutAssignedProcessesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
-  assignedCases?: Prisma.casesUncheckedUpdateManyWithoutCadDesignerNestedInput
-  createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
@@ -939,9 +709,7 @@ export type usersCreateWithoutNotificationsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
-  assignedCases?: Prisma.casesCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
-  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
 }
@@ -955,9 +723,7 @@ export type usersUncheckedCreateWithoutNotificationsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
-  assignedCases?: Prisma.casesUncheckedCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
-  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
 }
@@ -987,9 +753,7 @@ export type usersUpdateWithoutNotificationsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
-  assignedCases?: Prisma.casesUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
-  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
 }
@@ -1003,9 +767,7 @@ export type usersUncheckedUpdateWithoutNotificationsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
-  assignedCases?: Prisma.casesUncheckedUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
-  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
 }
@@ -1019,9 +781,7 @@ export type usersCreateWithoutPushSubscriptionsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
-  assignedCases?: Prisma.casesCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
-  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
 }
@@ -1035,9 +795,7 @@ export type usersUncheckedCreateWithoutPushSubscriptionsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
-  assignedCases?: Prisma.casesUncheckedCreateNestedManyWithoutCadDesignerInput
   createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
-  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedToInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
 }
@@ -1067,9 +825,7 @@ export type usersUpdateWithoutPushSubscriptionsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
-  assignedCases?: Prisma.casesUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
-  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
 }
@@ -1083,9 +839,7 @@ export type usersUncheckedUpdateWithoutPushSubscriptionsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
-  assignedCases?: Prisma.casesUncheckedUpdateManyWithoutCadDesignerNestedInput
   createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
-  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedToNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
 }
@@ -1097,9 +851,7 @@ export type usersUncheckedUpdateWithoutPushSubscriptionsInput = {
 
 export type UsersCountOutputType = {
   memberships: number
-  assignedCases: number
   createdCases: number
-  assignedProcesses: number
   case_attachments: number
   notifications: number
   pushSubscriptions: number
@@ -1107,9 +859,7 @@ export type UsersCountOutputType = {
 
 export type UsersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   memberships?: boolean | UsersCountOutputTypeCountMembershipsArgs
-  assignedCases?: boolean | UsersCountOutputTypeCountAssignedCasesArgs
   createdCases?: boolean | UsersCountOutputTypeCountCreatedCasesArgs
-  assignedProcesses?: boolean | UsersCountOutputTypeCountAssignedProcessesArgs
   case_attachments?: boolean | UsersCountOutputTypeCountCase_attachmentsArgs
   notifications?: boolean | UsersCountOutputTypeCountNotificationsArgs
   pushSubscriptions?: boolean | UsersCountOutputTypeCountPushSubscriptionsArgs
@@ -1135,22 +885,8 @@ export type UsersCountOutputTypeCountMembershipsArgs<ExtArgs extends runtime.Typ
 /**
  * UsersCountOutputType without action
  */
-export type UsersCountOutputTypeCountAssignedCasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.casesWhereInput
-}
-
-/**
- * UsersCountOutputType without action
- */
 export type UsersCountOutputTypeCountCreatedCasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.casesWhereInput
-}
-
-/**
- * UsersCountOutputType without action
- */
-export type UsersCountOutputTypeCountAssignedProcessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.case_processesWhereInput
 }
 
 /**
@@ -1184,9 +920,7 @@ export type usersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   created_at?: boolean
   updated_at?: boolean
   memberships?: boolean | Prisma.users$membershipsArgs<ExtArgs>
-  assignedCases?: boolean | Prisma.users$assignedCasesArgs<ExtArgs>
   createdCases?: boolean | Prisma.users$createdCasesArgs<ExtArgs>
-  assignedProcesses?: boolean | Prisma.users$assignedProcessesArgs<ExtArgs>
   case_attachments?: boolean | Prisma.users$case_attachmentsArgs<ExtArgs>
   notifications?: boolean | Prisma.users$notificationsArgs<ExtArgs>
   pushSubscriptions?: boolean | Prisma.users$pushSubscriptionsArgs<ExtArgs>
@@ -1226,9 +960,7 @@ export type usersSelectScalar = {
 export type usersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "is_active" | "deleted_at" | "created_at" | "updated_at", ExtArgs["result"]["users"]>
 export type usersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   memberships?: boolean | Prisma.users$membershipsArgs<ExtArgs>
-  assignedCases?: boolean | Prisma.users$assignedCasesArgs<ExtArgs>
   createdCases?: boolean | Prisma.users$createdCasesArgs<ExtArgs>
-  assignedProcesses?: boolean | Prisma.users$assignedProcessesArgs<ExtArgs>
   case_attachments?: boolean | Prisma.users$case_attachmentsArgs<ExtArgs>
   notifications?: boolean | Prisma.users$notificationsArgs<ExtArgs>
   pushSubscriptions?: boolean | Prisma.users$pushSubscriptionsArgs<ExtArgs>
@@ -1241,9 +973,7 @@ export type $usersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name: "users"
   objects: {
     memberships: Prisma.$lab_membersPayload<ExtArgs>[]
-    assignedCases: Prisma.$casesPayload<ExtArgs>[]
     createdCases: Prisma.$casesPayload<ExtArgs>[]
-    assignedProcesses: Prisma.$case_processesPayload<ExtArgs>[]
     case_attachments: Prisma.$case_attachmentsPayload<ExtArgs>[]
     notifications: Prisma.$notificationsPayload<ExtArgs>[]
     pushSubscriptions: Prisma.$push_subscriptionsPayload<ExtArgs>[]
@@ -1651,9 +1381,7 @@ readonly fields: usersFieldRefs;
 export interface Prisma__usersClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   memberships<T extends Prisma.users$membershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$lab_membersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  assignedCases<T extends Prisma.users$assignedCasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$assignedCasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$casesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   createdCases<T extends Prisma.users$createdCasesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$createdCasesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$casesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  assignedProcesses<T extends Prisma.users$assignedProcessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$assignedProcessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_processesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   case_attachments<T extends Prisma.users$case_attachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$case_attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_attachmentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.users$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$notificationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pushSubscriptions<T extends Prisma.users$pushSubscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$pushSubscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$push_subscriptionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2110,30 +1838,6 @@ export type users$membershipsArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * users.assignedCases
- */
-export type users$assignedCasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the cases
-   */
-  select?: Prisma.casesSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the cases
-   */
-  omit?: Prisma.casesOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.casesInclude<ExtArgs> | null
-  where?: Prisma.casesWhereInput
-  orderBy?: Prisma.casesOrderByWithRelationInput | Prisma.casesOrderByWithRelationInput[]
-  cursor?: Prisma.casesWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.CasesScalarFieldEnum | Prisma.CasesScalarFieldEnum[]
-}
-
-/**
  * users.createdCases
  */
 export type users$createdCasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2155,30 +1859,6 @@ export type users$createdCasesArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.CasesScalarFieldEnum | Prisma.CasesScalarFieldEnum[]
-}
-
-/**
- * users.assignedProcesses
- */
-export type users$assignedProcessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the case_processes
-   */
-  select?: Prisma.case_processesSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the case_processes
-   */
-  omit?: Prisma.case_processesOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.case_processesInclude<ExtArgs> | null
-  where?: Prisma.case_processesWhereInput
-  orderBy?: Prisma.case_processesOrderByWithRelationInput | Prisma.case_processesOrderByWithRelationInput[]
-  cursor?: Prisma.case_processesWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.Case_processesScalarFieldEnum | Prisma.Case_processesScalarFieldEnum[]
 }
 
 /**

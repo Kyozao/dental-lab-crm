@@ -190,6 +190,7 @@ export type labsWhereInput = {
   block_types?: Prisma.Block_typesListRelationFilter
   milling_drills?: Prisma.Milling_drillsListRelationFilter
   processes?: Prisma.ProcessesListRelationFilter
+  employeeProcessAssignments?: Prisma.Employee_process_assignmentsListRelationFilter
   cases?: Prisma.CasesListRelationFilter
   millings?: Prisma.Case_millingsListRelationFilter
 }
@@ -208,6 +209,7 @@ export type labsOrderByWithRelationInput = {
   block_types?: Prisma.block_typesOrderByRelationAggregateInput
   milling_drills?: Prisma.milling_drillsOrderByRelationAggregateInput
   processes?: Prisma.processesOrderByRelationAggregateInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsOrderByRelationAggregateInput
   cases?: Prisma.casesOrderByRelationAggregateInput
   millings?: Prisma.case_millingsOrderByRelationAggregateInput
 }
@@ -229,6 +231,7 @@ export type labsWhereUniqueInput = Prisma.AtLeast<{
   block_types?: Prisma.Block_typesListRelationFilter
   milling_drills?: Prisma.Milling_drillsListRelationFilter
   processes?: Prisma.ProcessesListRelationFilter
+  employeeProcessAssignments?: Prisma.Employee_process_assignmentsListRelationFilter
   cases?: Prisma.CasesListRelationFilter
   millings?: Prisma.Case_millingsListRelationFilter
 }, "id" | "name">
@@ -269,6 +272,7 @@ export type labsCreateInput = {
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
 }
@@ -287,6 +291,7 @@ export type labsUncheckedCreateInput = {
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
 }
@@ -305,6 +310,7 @@ export type labsUpdateInput = {
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
 }
@@ -323,6 +329,7 @@ export type labsUncheckedUpdateInput = {
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
 }
@@ -420,6 +427,20 @@ export type labsUpdateOneRequiredWithoutProcessesNestedInput = {
   upsert?: Prisma.labsUpsertWithoutProcessesInput
   connect?: Prisma.labsWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.labsUpdateToOneWithWhereWithoutProcessesInput, Prisma.labsUpdateWithoutProcessesInput>, Prisma.labsUncheckedUpdateWithoutProcessesInput>
+}
+
+export type labsCreateNestedOneWithoutEmployeeProcessAssignmentsInput = {
+  create?: Prisma.XOR<Prisma.labsCreateWithoutEmployeeProcessAssignmentsInput, Prisma.labsUncheckedCreateWithoutEmployeeProcessAssignmentsInput>
+  connectOrCreate?: Prisma.labsCreateOrConnectWithoutEmployeeProcessAssignmentsInput
+  connect?: Prisma.labsWhereUniqueInput
+}
+
+export type labsUpdateOneRequiredWithoutEmployeeProcessAssignmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.labsCreateWithoutEmployeeProcessAssignmentsInput, Prisma.labsUncheckedCreateWithoutEmployeeProcessAssignmentsInput>
+  connectOrCreate?: Prisma.labsCreateOrConnectWithoutEmployeeProcessAssignmentsInput
+  upsert?: Prisma.labsUpsertWithoutEmployeeProcessAssignmentsInput
+  connect?: Prisma.labsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.labsUpdateToOneWithWhereWithoutEmployeeProcessAssignmentsInput, Prisma.labsUpdateWithoutEmployeeProcessAssignmentsInput>, Prisma.labsUncheckedUpdateWithoutEmployeeProcessAssignmentsInput>
 }
 
 export type labsCreateNestedOneWithoutMilling_drillsInput = {
@@ -533,6 +554,7 @@ export type labsCreateWithoutMembershipsInput = {
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
 }
@@ -550,6 +572,7 @@ export type labsUncheckedCreateWithoutMembershipsInput = {
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
 }
@@ -583,6 +606,7 @@ export type labsUpdateWithoutMembershipsInput = {
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
 }
@@ -600,6 +624,7 @@ export type labsUncheckedUpdateWithoutMembershipsInput = {
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
 }
@@ -617,6 +642,7 @@ export type labsCreateWithoutService_typesInput = {
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
 }
@@ -634,6 +660,7 @@ export type labsUncheckedCreateWithoutService_typesInput = {
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
 }
@@ -667,6 +694,7 @@ export type labsUpdateWithoutService_typesInput = {
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
 }
@@ -684,6 +712,7 @@ export type labsUncheckedUpdateWithoutService_typesInput = {
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
 }
@@ -701,6 +730,7 @@ export type labsCreateWithoutProcessesInput = {
   components?: Prisma.componentsCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
 }
@@ -718,6 +748,7 @@ export type labsUncheckedCreateWithoutProcessesInput = {
   components?: Prisma.componentsUncheckedCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
 }
@@ -751,6 +782,7 @@ export type labsUpdateWithoutProcessesInput = {
   components?: Prisma.componentsUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
 }
@@ -768,6 +800,95 @@ export type labsUncheckedUpdateWithoutProcessesInput = {
   components?: Prisma.componentsUncheckedUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
+  cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
+  millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
+}
+
+export type labsCreateWithoutEmployeeProcessAssignmentsInput = {
+  id?: string
+  name: string
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
+  customers?: Prisma.customersCreateNestedManyWithoutLabsInput
+  dentists?: Prisma.dentistsCreateNestedManyWithoutLabsInput
+  service_types?: Prisma.service_typesCreateNestedManyWithoutLabsInput
+  components?: Prisma.componentsCreateNestedManyWithoutLabsInput
+  block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
+  milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
+  processes?: Prisma.processesCreateNestedManyWithoutLabsInput
+  cases?: Prisma.casesCreateNestedManyWithoutLabsInput
+  millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
+}
+
+export type labsUncheckedCreateWithoutEmployeeProcessAssignmentsInput = {
+  id?: string
+  name: string
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
+  customers?: Prisma.customersUncheckedCreateNestedManyWithoutLabsInput
+  dentists?: Prisma.dentistsUncheckedCreateNestedManyWithoutLabsInput
+  service_types?: Prisma.service_typesUncheckedCreateNestedManyWithoutLabsInput
+  components?: Prisma.componentsUncheckedCreateNestedManyWithoutLabsInput
+  block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
+  milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
+  processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
+  cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
+  millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
+}
+
+export type labsCreateOrConnectWithoutEmployeeProcessAssignmentsInput = {
+  where: Prisma.labsWhereUniqueInput
+  create: Prisma.XOR<Prisma.labsCreateWithoutEmployeeProcessAssignmentsInput, Prisma.labsUncheckedCreateWithoutEmployeeProcessAssignmentsInput>
+}
+
+export type labsUpsertWithoutEmployeeProcessAssignmentsInput = {
+  update: Prisma.XOR<Prisma.labsUpdateWithoutEmployeeProcessAssignmentsInput, Prisma.labsUncheckedUpdateWithoutEmployeeProcessAssignmentsInput>
+  create: Prisma.XOR<Prisma.labsCreateWithoutEmployeeProcessAssignmentsInput, Prisma.labsUncheckedCreateWithoutEmployeeProcessAssignmentsInput>
+  where?: Prisma.labsWhereInput
+}
+
+export type labsUpdateToOneWithWhereWithoutEmployeeProcessAssignmentsInput = {
+  where?: Prisma.labsWhereInput
+  data: Prisma.XOR<Prisma.labsUpdateWithoutEmployeeProcessAssignmentsInput, Prisma.labsUncheckedUpdateWithoutEmployeeProcessAssignmentsInput>
+}
+
+export type labsUpdateWithoutEmployeeProcessAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
+  customers?: Prisma.customersUpdateManyWithoutLabsNestedInput
+  dentists?: Prisma.dentistsUpdateManyWithoutLabsNestedInput
+  service_types?: Prisma.service_typesUpdateManyWithoutLabsNestedInput
+  components?: Prisma.componentsUpdateManyWithoutLabsNestedInput
+  block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
+  milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
+  processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
+  cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
+  millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
+}
+
+export type labsUncheckedUpdateWithoutEmployeeProcessAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
+  customers?: Prisma.customersUncheckedUpdateManyWithoutLabsNestedInput
+  dentists?: Prisma.dentistsUncheckedUpdateManyWithoutLabsNestedInput
+  service_types?: Prisma.service_typesUncheckedUpdateManyWithoutLabsNestedInput
+  components?: Prisma.componentsUncheckedUpdateManyWithoutLabsNestedInput
+  block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
+  milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
+  processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
 }
@@ -785,6 +906,7 @@ export type labsCreateWithoutMilling_drillsInput = {
   components?: Prisma.componentsCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
 }
@@ -802,6 +924,7 @@ export type labsUncheckedCreateWithoutMilling_drillsInput = {
   components?: Prisma.componentsUncheckedCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
 }
@@ -835,6 +958,7 @@ export type labsUpdateWithoutMilling_drillsInput = {
   components?: Prisma.componentsUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
 }
@@ -852,6 +976,7 @@ export type labsUncheckedUpdateWithoutMilling_drillsInput = {
   components?: Prisma.componentsUncheckedUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
 }
@@ -870,6 +995,7 @@ export type labsCreateWithoutMillingsInput = {
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
 }
 
@@ -887,6 +1013,7 @@ export type labsUncheckedCreateWithoutMillingsInput = {
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
 }
 
@@ -920,6 +1047,7 @@ export type labsUpdateWithoutMillingsInput = {
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
 }
 
@@ -937,6 +1065,7 @@ export type labsUncheckedUpdateWithoutMillingsInput = {
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
 }
 
@@ -953,6 +1082,7 @@ export type labsCreateWithoutCustomersInput = {
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
 }
@@ -970,6 +1100,7 @@ export type labsUncheckedCreateWithoutCustomersInput = {
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
 }
@@ -1003,6 +1134,7 @@ export type labsUpdateWithoutCustomersInput = {
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
 }
@@ -1020,6 +1152,7 @@ export type labsUncheckedUpdateWithoutCustomersInput = {
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
 }
@@ -1037,6 +1170,7 @@ export type labsCreateWithoutDentistsInput = {
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
 }
@@ -1054,6 +1188,7 @@ export type labsUncheckedCreateWithoutDentistsInput = {
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
 }
@@ -1087,6 +1222,7 @@ export type labsUpdateWithoutDentistsInput = {
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
 }
@@ -1104,6 +1240,7 @@ export type labsUncheckedUpdateWithoutDentistsInput = {
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
 }
@@ -1121,6 +1258,7 @@ export type labsCreateWithoutComponentsInput = {
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
 }
@@ -1138,6 +1276,7 @@ export type labsUncheckedCreateWithoutComponentsInput = {
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
 }
@@ -1171,6 +1310,7 @@ export type labsUpdateWithoutComponentsInput = {
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
 }
@@ -1188,6 +1328,7 @@ export type labsUncheckedUpdateWithoutComponentsInput = {
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
 }
@@ -1205,6 +1346,7 @@ export type labsCreateWithoutBlock_typesInput = {
   components?: Prisma.componentsCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
 }
@@ -1222,6 +1364,7 @@ export type labsUncheckedCreateWithoutBlock_typesInput = {
   components?: Prisma.componentsUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
 }
@@ -1255,6 +1398,7 @@ export type labsUpdateWithoutBlock_typesInput = {
   components?: Prisma.componentsUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
 }
@@ -1272,6 +1416,7 @@ export type labsUncheckedUpdateWithoutBlock_typesInput = {
   components?: Prisma.componentsUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
 }
@@ -1290,6 +1435,7 @@ export type labsCreateWithoutCasesInput = {
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
 }
 
@@ -1307,6 +1453,7 @@ export type labsUncheckedCreateWithoutCasesInput = {
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
 }
 
@@ -1340,6 +1487,7 @@ export type labsUpdateWithoutCasesInput = {
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
 }
 
@@ -1357,6 +1505,7 @@ export type labsUncheckedUpdateWithoutCasesInput = {
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
 }
 
@@ -1374,6 +1523,7 @@ export type LabsCountOutputType = {
   block_types: number
   milling_drills: number
   processes: number
+  employeeProcessAssignments: number
   cases: number
   millings: number
 }
@@ -1387,6 +1537,7 @@ export type LabsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   block_types?: boolean | LabsCountOutputTypeCountBlock_typesArgs
   milling_drills?: boolean | LabsCountOutputTypeCountMilling_drillsArgs
   processes?: boolean | LabsCountOutputTypeCountProcessesArgs
+  employeeProcessAssignments?: boolean | LabsCountOutputTypeCountEmployeeProcessAssignmentsArgs
   cases?: boolean | LabsCountOutputTypeCountCasesArgs
   millings?: boolean | LabsCountOutputTypeCountMillingsArgs
 }
@@ -1460,6 +1611,13 @@ export type LabsCountOutputTypeCountProcessesArgs<ExtArgs extends runtime.Types.
 /**
  * LabsCountOutputType without action
  */
+export type LabsCountOutputTypeCountEmployeeProcessAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.employee_process_assignmentsWhereInput
+}
+
+/**
+ * LabsCountOutputType without action
+ */
 export type LabsCountOutputTypeCountCasesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.casesWhereInput
 }
@@ -1486,6 +1644,7 @@ export type labsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   block_types?: boolean | Prisma.labs$block_typesArgs<ExtArgs>
   milling_drills?: boolean | Prisma.labs$milling_drillsArgs<ExtArgs>
   processes?: boolean | Prisma.labs$processesArgs<ExtArgs>
+  employeeProcessAssignments?: boolean | Prisma.labs$employeeProcessAssignmentsArgs<ExtArgs>
   cases?: boolean | Prisma.labs$casesArgs<ExtArgs>
   millings?: boolean | Prisma.labs$millingsArgs<ExtArgs>
   _count?: boolean | Prisma.LabsCountOutputTypeDefaultArgs<ExtArgs>
@@ -1525,6 +1684,7 @@ export type labsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   block_types?: boolean | Prisma.labs$block_typesArgs<ExtArgs>
   milling_drills?: boolean | Prisma.labs$milling_drillsArgs<ExtArgs>
   processes?: boolean | Prisma.labs$processesArgs<ExtArgs>
+  employeeProcessAssignments?: boolean | Prisma.labs$employeeProcessAssignmentsArgs<ExtArgs>
   cases?: boolean | Prisma.labs$casesArgs<ExtArgs>
   millings?: boolean | Prisma.labs$millingsArgs<ExtArgs>
   _count?: boolean | Prisma.LabsCountOutputTypeDefaultArgs<ExtArgs>
@@ -1543,6 +1703,7 @@ export type $labsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     block_types: Prisma.$block_typesPayload<ExtArgs>[]
     milling_drills: Prisma.$milling_drillsPayload<ExtArgs>[]
     processes: Prisma.$processesPayload<ExtArgs>[]
+    employeeProcessAssignments: Prisma.$employee_process_assignmentsPayload<ExtArgs>[]
     cases: Prisma.$casesPayload<ExtArgs>[]
     millings: Prisma.$case_millingsPayload<ExtArgs>[]
   }
@@ -1954,6 +2115,7 @@ export interface Prisma__labsClient<T, Null = never, ExtArgs extends runtime.Typ
   block_types<T extends Prisma.labs$block_typesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$block_typesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$block_typesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   milling_drills<T extends Prisma.labs$milling_drillsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$milling_drillsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$milling_drillsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   processes<T extends Prisma.labs$processesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$processesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$processesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  employeeProcessAssignments<T extends Prisma.labs$employeeProcessAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$employeeProcessAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$employee_process_assignmentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   cases<T extends Prisma.labs$casesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$casesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$casesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   millings<T extends Prisma.labs$millingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$millingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_millingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -2572,6 +2734,30 @@ export type labs$processesArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.ProcessesScalarFieldEnum | Prisma.ProcessesScalarFieldEnum[]
+}
+
+/**
+ * labs.employeeProcessAssignments
+ */
+export type labs$employeeProcessAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the employee_process_assignments
+   */
+  select?: Prisma.employee_process_assignmentsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the employee_process_assignments
+   */
+  omit?: Prisma.employee_process_assignmentsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.employee_process_assignmentsInclude<ExtArgs> | null
+  where?: Prisma.employee_process_assignmentsWhereInput
+  orderBy?: Prisma.employee_process_assignmentsOrderByWithRelationInput | Prisma.employee_process_assignmentsOrderByWithRelationInput[]
+  cursor?: Prisma.employee_process_assignmentsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Employee_process_assignmentsScalarFieldEnum | Prisma.Employee_process_assignmentsScalarFieldEnum[]
 }
 
 /**

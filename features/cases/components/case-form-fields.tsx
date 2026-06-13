@@ -7,7 +7,6 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
   CASE_STATUS_OPTIONS,
-  CadDesignerOption,
   CaseFormValues,
   CustomerOption,
   ServiceTypeOption,
@@ -18,7 +17,6 @@ type FormErrors = Partial<Record<string, string[]>>;
 type Props = {
   customers: CustomerOption[];
   serviceTypes: ServiceTypeOption[];
-  cadDesigners: CadDesignerOption[];
   values?: CaseFormValues;
   errors?: FormErrors;
   idPrefix: string;
@@ -55,7 +53,6 @@ function ErrorText({ errors, field }: { errors?: FormErrors; field: string }) {
 export function CaseFormFields({
   customers,
   serviceTypes,
-  cadDesigners,
   values,
   errors,
   idPrefix,
@@ -142,24 +139,6 @@ export function CaseFormFields({
           ))}
         </select>
         <ErrorText errors={errors} field="serviceTypeId" />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor={`${idPrefix}-cadDesignerId`}>CAD designer</Label>
-        <select
-          id={`${idPrefix}-cadDesignerId`}
-          name="cadDesignerId"
-          defaultValue={values?.cadDesignerId ?? ""}
-          className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm"
-        >
-          <option value="">No CAD designer</option>
-          {cadDesigners.map((designer) => (
-            <option key={designer.id} value={designer.id}>
-              {designer.name}
-            </option>
-          ))}
-        </select>
-        <ErrorText errors={errors} field="cadDesignerId" />
       </div>
 
       <div className="space-y-2">

@@ -132,5 +132,10 @@ function getNavRoutes(role?: string, pathname?: string) {
       label: "Registry",
       active: pathname?.startsWith("/registry") ?? false,
     },
+    {
+      href: "/employees",
+      label: "Employees",
+      active: pathname?.startsWith("/employees") ?? false,
+    },
   ];
 }

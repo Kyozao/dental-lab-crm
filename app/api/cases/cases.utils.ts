@@ -1,5 +1,4 @@
 import { Prisma } from "@/generated/prisma/client";
-import { UserRole } from "@/generated/prisma/enums";
 import { prisma } from "@/lib/prisma";
 
 import { activeReferenceWhere } from "../_shared/archive";
@@ -32,7 +31,7 @@ export const  caseInclude = {
       process_id: true,
       workflow_step_id: true,
       status: true,
-      assigned_to_id: true,
+      assigned_lab_member_id: true,
       started_at: true,
       completed_at: true,
       created_at: true,
@@ -43,10 +42,14 @@ export const  caseInclude = {
           name: true,
         },
       },
-      assignedTo: {
+      assignedLabMember: {
         select: {
           id: true,
-          name: true,
+          users: {
+            select: {
+              name: true,
+            },
+          },
         },
       },
       dependencies: {
@@ -56,12 +59,6 @@ export const  caseInclude = {
       },
     },
     orderBy: { created_at: "asc" },
-  },
-  cadDesigner: {
-    select: {
-      id: true,
-      name: true,
-    },
   },
   createdByUser: {
     select: {
@@ -79,7 +76,6 @@ export const caseSummarySelect = {
   customer_id: true,
   service_type_id: true,
   dentist_id: true,
-  cad_designer_id: true,
   created_by_user_id: true,
   current_status: true,
   teeth: true,
@@ -106,11 +102,6 @@ export const caseSummarySelect = {
       name: true,
     },
   },
-  cadDesigner: {
-    select: {
-      name: true,
-    },
-  },
   createdByUser: {
     select: {
       name: true,
@@ -128,7 +119,7 @@ type CaseSummaryWithRelations = Prisma.casesGetPayload<{
 
 type CaseReferenceInput = Pick<
   CreateCaseInput,
-  "customer_id" | "service_type_id" | "dentist_id" | "cad_designer_id"
+  "customer_id" | "service_type_id" | "dentist_id"
 >;
 
 export class InactiveReferenceError extends Error {
@@ -186,8 +177,8 @@ export function mapCase(caseItem: CaseWithRelations) {
       processName: process.processes.name,
       workflow_step_id: process.workflow_step_id,
       status: process.status,
-      assigned_to_id: process.assigned_to_id,
-      assignedToName: process.assignedTo?.name ?? null,
+      assigned_lab_member_id: process.assigned_lab_member_id,
+      assignedToName: process.assignedLabMember?.users.name ?? null,
       dependsOnCaseProcessIds: process.dependencies.map(
         (dependency) => dependency.depends_on_case_process_id,
       ),
@@ -211,8 +202,6 @@ export function mapCaseSummary(caseItem: CaseSummaryWithRelations) {
     serviceTypeName: caseItem.service_types?.name ?? null,
     dentistId: caseItem.dentist_id,
     dentistName: caseItem.dentists?.name ?? null,
-    cadDesignerId: caseItem.cad_designer_id,
-    cadDesignerName: caseItem.cadDesigner?.name ?? null,
     createdByUserId: caseItem.created_by_user_id,
     createdByUserName: caseItem.createdByUser?.name ?? null,
     currentStatus: caseItem.current_status,
@@ -234,7 +223,7 @@ export async function validateActiveCaseReferences(
 ) {
   const errors: Record<string, string[]> = {};
 
-  const [customer, dentist, serviceType, cadDesigner] = await Promise.all([
+  const [customer, dentist, serviceType] = await Promise.all([
     input.customer_id
       ? prisma.customers.findFirst({
           where: {
@@ -265,21 +254,6 @@ export async function validateActiveCaseReferences(
           select: { id: true },
         })
       : Promise.resolve(null),
-    input.cad_designer_id
-      ? prisma.users.findFirst({
-          where: {
-            id: input.cad_designer_id,
-            ...activeReferenceWhere,
-            memberships: {
-              some: {
-                lab_id,
-                role: UserRole.CAD_DESIGNER,
-              },
-            },
-          },
-          select: { id: true },
-        })
-      : Promise.resolve(null),
   ]);
 
   if (input.customer_id && !customer) {
@@ -300,10 +274,6 @@ export async function validateActiveCaseReferences(
 
   if (input.service_type_id && !serviceType) {
     addReferenceError(errors, "service_type_id", "Service type is inactive, archived, or not in this lab.");
-  }
-
-  if (input.cad_designer_id && !cadDesigner) {
-    addReferenceError(errors, "cad_designer_id", "CAD designer is inactive, archived, or not assigned to this lab.");
   }
 
   if (Object.keys(errors).length > 0) {

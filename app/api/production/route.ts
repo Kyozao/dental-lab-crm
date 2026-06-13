@@ -22,10 +22,14 @@ export async function GET() {
       },
       include: {
         processes: true,
-        assignedTo: {
+        assignedLabMember: {
           select: {
             id: true,
-            name: true,
+            users: {
+              select: {
+                name: true,
+              },
+            },
           },
         },
         cases: {
@@ -100,7 +104,7 @@ export async function GET() {
         customerName: item.cases.customers?.name ?? "No customer",
         due_date: item.cases.due_date?.toISOString() ?? null,
         restoration: item.cases.service_types?.name ?? "No service type",
-        assignee: item.assignedTo?.name ?? "Unassigned",
+        assignee: item.assignedLabMember?.users.name ?? "Unassigned",
         priority: item.cases.is_urgent ? "rush" : "standard",
         notes: item.cases.pending_note ?? item.cases.observations ?? undefined,
       });

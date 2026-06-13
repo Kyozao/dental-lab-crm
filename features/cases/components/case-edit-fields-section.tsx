@@ -1,6 +1,5 @@
 import {
   CASE_STATUS_OPTIONS,
-  type CadDesignerOption,
   type CustomerOption,
   type EditableCase,
   type ServiceTypeOption,
@@ -10,10 +9,11 @@ type Props = {
   caseItem: EditableCase;
   customers: CustomerOption[];
   serviceTypes: ServiceTypeOption[];
-  cadDesigners: CadDesignerOption[];
   availableDentists: CustomerOption["dentists"];
   selectedCustomerId: string;
   onSelectedCustomerChange: (customerId: string) => void;
+  selectedServiceTypeId?: string;
+  onSelectedServiceTypeChange?: (serviceTypeId: string) => void;
   canEditAll: boolean;
   canEditPendingOnly: boolean;
   disableResourceFields: boolean;
@@ -26,10 +26,11 @@ export function CaseEditFieldsSection({
   caseItem,
   customers,
   serviceTypes,
-  cadDesigners,
   availableDentists,
   selectedCustomerId,
   onSelectedCustomerChange,
+  selectedServiceTypeId,
+  onSelectedServiceTypeChange,
   canEditAll,
   canEditPendingOnly,
   disableResourceFields,
@@ -98,24 +99,14 @@ export function CaseEditFieldsSection({
         <SelectField
           label="Tipo de servico"
           name="serviceTypeId"
-          defaultValue={caseItem.serviceTypeId ?? ""}
+          value={selectedServiceTypeId}
+          defaultValue={selectedServiceTypeId ? undefined : (caseItem.serviceTypeId ?? "")}
+          onChange={onSelectedServiceTypeChange}
           disabled={!canEditAll || disableResourceFields}
           emptyLabel="Sem tipo"
           options={serviceTypes.map((serviceType) => ({
             id: serviceType.id,
             name: serviceType.name,
-          }))}
-        />
-
-        <SelectField
-          label="CADista"
-          name="cadDesignerId"
-          defaultValue={caseItem.cadDesignerId ?? ""}
-          disabled={!canEditAll || disableResourceFields}
-          emptyLabel="Nao atribuido"
-          options={cadDesigners.map((designer) => ({
-            id: designer.id,
-            name: designer.name ?? "Sem nome",
           }))}
         />
 

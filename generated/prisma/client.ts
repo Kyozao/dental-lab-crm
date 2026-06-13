@@ -67,6 +67,11 @@ export type service_types = Prisma.service_typesModel
  */
 export type processes = Prisma.processesModel
 /**
+ * Model employee_process_assignments
+ * 
+ */
+export type employee_process_assignments = Prisma.employee_process_assignmentsModel
+/**
  * Model milling_drills
  * 
  */

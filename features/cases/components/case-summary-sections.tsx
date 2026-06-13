@@ -19,10 +19,6 @@ export function CaseReferenceSummary({ caseItem }: { caseItem: EditableCase }) {
       <SummaryItem label="Clinica" value={caseItem.customerName || "Sem clinica"} />
       <SummaryItem label="Dentista" value={caseItem.dentistName || "Sem dentista"} />
       <SummaryItem label="Servico" value={caseItem.serviceTypeName || "Sem tipo"} />
-      <SummaryItem
-        label="CADista"
-        value={caseItem.cadDesignerName || "Nao atribuido"}
-      />
       <SummaryItem label="Criado em" value={formatDateTime(caseItem.createdAt)} />
       <SummaryItem
         label="Atualizado em"

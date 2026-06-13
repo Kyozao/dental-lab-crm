@@ -10,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { casesApi } from "@/features/cases/cases";
 import { CaseComponentsSection } from "@/features/cases/components/case-components-section";
 import { CaseEditFieldsSection } from "@/features/cases/components/case-edit-fields-section";
@@ -29,12 +30,16 @@ import {
 import { CaseOptionsFallback } from "@/features/cases/components/case-details-options";
 import { casesQueryKey } from "@/features/cases/hooks/useCases";
 import { updateCaseApi } from "@/features/cases/services/cases-client";
+import { WorkflowEditor } from "@/features/workflows/components/workflow-editor";
+import type { Employee } from "@/features/employees/types";
 
 import {
-  type CadDesignerOption,
   type CustomerOption,
+  type CaseWorkflow,
+  type CaseProcessItem,
   type ComponentOption,
   type EditableCase,
+  type ProcessOption,
   type ServiceTypeOption,
 } from "@/features/cases/types";
 
@@ -46,9 +51,9 @@ type Props = {
   currentUserRole: string;
   customers: CustomerOption[];
   serviceTypes: ServiceTypeOption[];
-  cadDesigners: CadDesignerOption[];
   components: ComponentOption[];
-  defaultCaseScope?: "LAB" | "AGENCY";
+  processes: ProcessOption[];
+  employees: Employee[];
   optionsLoading?: boolean;
   optionsError?: string | null;
   onRetryOptions?: () => void;
@@ -62,9 +67,9 @@ export function CaseDetailsDialog({
   currentUserRole,
   customers,
   serviceTypes,
-  cadDesigners,
   components,
-  defaultCaseScope = "LAB",
+  processes,
+  employees,
   optionsLoading = false,
   optionsError = null,
   onRetryOptions,
@@ -80,7 +85,6 @@ export function CaseDetailsDialog({
       labCustomerName: "",
       code: "",
       patientName: "",
-      caseScope: defaultCaseScope,
       currentStatus: "ENTRY",
       teeth: "",
       elementsQty: null,
@@ -97,13 +101,13 @@ export function CaseDetailsDialog({
       dentistId: null,
       serviceTypeId: null,
       serviceTypeName: "",
-      cadDesignerId: null,
-      cadDesignerName: "",
       attachments: [],
       components: [],
       millings: [],
+      processes: [],
+      availableProcesses: processes,
     }),
-    [customers, defaultCaseScope],
+    [customers, processes],
   );
 
   const caseItem = item ?? defaultCaseItem;
@@ -118,6 +122,21 @@ export function CaseDetailsDialog({
   const [selectedCustomerId, setSelectedCustomerId] = React.useState(
     caseItem.customerId ?? "",
   );
+  const [selectedServiceTypeId, setSelectedServiceTypeId] = React.useState(
+    caseItem.serviceTypeId ?? "",
+  );
+  const [workflow, setWorkflow] = React.useState<CaseWorkflow>(() =>
+    buildWorkflowFromCaseProcesses(caseItem),
+  );
+  const [caseProcesses, setCaseProcesses] = React.useState<CaseProcessItem[]>(
+    () => caseItem.processes ?? [],
+  );
+  const [updatingProcessId, setUpdatingProcessId] = React.useState<
+    string | null
+  >(null);
+  const [processStatusError, setProcessStatusError] = React.useState<
+    string | null
+  >(null);
   const [componentRows, setComponentRows] = React.useState<
     CaseComponentDraft[]
   >(() => buildDraftFromCaseItem(caseItem));
@@ -125,9 +144,17 @@ export function CaseDetailsDialog({
   React.useEffect(() => {
     if (!open) return;
     setSelectedCustomerId(caseItem.customerId ?? "");
+    setSelectedServiceTypeId(caseItem.serviceTypeId ?? "");
+    setWorkflow(
+      isCreateMode
+        ? getServiceTypeWorkflow(caseItem.serviceTypeId, serviceTypes)
+        : buildWorkflowFromCaseProcesses(caseItem),
+    );
+    setCaseProcesses(caseItem.processes ?? []);
+    setProcessStatusError(null);
     setComponentRows(buildDraftFromCaseItem(caseItem));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, caseItem.id]);
+  }, [open, caseItem.id, isCreateMode]);
 
   const canEditAll = currentUserRole !== "CAD_DESIGNER";
   const canEditPendingOnly = currentUserRole === "CAD_DESIGNER";
@@ -180,6 +207,13 @@ export function CaseDetailsDialog({
     setComponentRows((prev) =>
       prev.map((row) => (row.localId === localId ? updater(row) : row)),
     );
+  }
+
+  function handleServiceTypeChange(serviceTypeId: string) {
+    setSelectedServiceTypeId(serviceTypeId);
+    if (isCreateMode) {
+      setWorkflow(getServiceTypeWorkflow(serviceTypeId, serviceTypes));
+    }
   }
 
   async function handleDelete() {
@@ -258,6 +292,7 @@ export function CaseDetailsDialog({
       const payload = buildCasePayload(form);
 
       if (isCreateMode) {
+        payload.workflowJson = workflow;
         await casesApi.create(payload);
         await queryClient.invalidateQueries({ queryKey: casesQueryKey });
         onOpenChange(false);
@@ -265,6 +300,7 @@ export function CaseDetailsDialog({
       }
 
       await updateCaseApi(caseItem.id, payload);
+      await casesApi.replaceWorkflow(caseItem.id, workflow);
       await queryClient.invalidateQueries({ queryKey: casesQueryKey });
       onOpenChange(false);
     } catch (error) {
@@ -280,6 +316,95 @@ export function CaseDetailsDialog({
     }
   }
 
+  async function handleProcessStatusChange(
+    caseProcessId: string,
+    status: string,
+  ) {
+    if (isCreateMode) return;
+
+    const previousProcesses = caseProcesses;
+
+    try {
+      setUpdatingProcessId(caseProcessId);
+      setProcessStatusError(null);
+      setCaseProcesses((currentProcesses) =>
+        currentProcesses.map((process) =>
+          process.id === caseProcessId
+            ? {
+                ...process,
+                status,
+                completed_at:
+                  status === "COMPLETED" ? new Date().toISOString() : null,
+                started_at:
+                  status === "IN_PROGRESS" && !process.started_at
+                    ? new Date().toISOString()
+                    : process.started_at,
+              }
+            : process,
+        ),
+      );
+      const updatedWorkflow = await casesApi.updateProcessStatus(
+        caseProcessId,
+        status,
+      );
+      setCaseProcesses(updatedWorkflow.processes);
+      void queryClient.invalidateQueries({ queryKey: casesQueryKey });
+    } catch (error) {
+      console.error(error);
+      setCaseProcesses(previousProcesses);
+      setProcessStatusError(
+        buildSubmitError(error, "Could not update task status."),
+      );
+    } finally {
+      setUpdatingProcessId(null);
+    }
+  }
+
+  async function handleProcessAssigneeChange(
+    caseProcessId: string,
+    assignedLabMemberId: string | null,
+  ) {
+    if (isCreateMode) return;
+
+    const previousProcesses = caseProcesses;
+    const employee = assignedLabMemberId
+      ? employees.find(
+          (currentEmployee) =>
+            currentEmployee.lab_member_id === assignedLabMemberId,
+        )
+      : null;
+
+    try {
+      setUpdatingProcessId(caseProcessId);
+      setProcessStatusError(null);
+      setCaseProcesses((currentProcesses) =>
+        currentProcesses.map((process) =>
+          process.id === caseProcessId
+            ? {
+                ...process,
+                assigned_lab_member_id: assignedLabMemberId,
+                assignedToName: employee?.name ?? null,
+              }
+            : process,
+        ),
+      );
+      const updatedWorkflow = await casesApi.updateProcessAssignee(
+        caseProcessId,
+        assignedLabMemberId,
+      );
+      setCaseProcesses(updatedWorkflow.processes);
+      void queryClient.invalidateQueries({ queryKey: casesQueryKey });
+    } catch (error) {
+      console.error(error);
+      setCaseProcesses(previousProcesses);
+      setProcessStatusError(
+        buildSubmitError(error, "Could not update task assignee."),
+      );
+    } finally {
+      setUpdatingProcessId(null);
+    }
+  }
+
   function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     void handleSubmit(event.currentTarget);
@@ -287,14 +412,14 @@ export function CaseDetailsDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-3xl">
-        <DialogHeader>
-          <DialogTitle>
+      <DialogContent className="max-h-[92vh] overflow-y-auto p-0 sm:max-w-[96vw] xl:max-w-[1180px]">
+        <DialogHeader className="border-b px-6 py-5">
+          <DialogTitle className="text-xl">
             {caseItem.patientName} {caseItem.code ? `- ${caseItem.code}` : ""}
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleFormSubmit} className="grid gap-6">
+        <form onSubmit={handleFormSubmit} className="grid gap-6 px-6 pb-6">
           <input type="hidden" name="id" value={caseItem.id} />
           <input
             type="hidden"
@@ -302,11 +427,6 @@ export function CaseDetailsDialog({
             value={componentsPayload}
             readOnly
           />
-
-          <CaseBadges caseItem={caseItem} />
-          <CaseReferenceSummary caseItem={caseItem} />
-
-          {!isCreateMode ? <CaseMillingSection caseItem={caseItem} /> : null}
 
           {optionsError ? (
             <div className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
@@ -324,57 +444,125 @@ export function CaseDetailsDialog({
             </div>
           ) : null}
 
-          {optionsLoading ? <CaseOptionsFallback /> : null}
+          <Tabs defaultValue="overview" className="gap-5">
+            <TabsList className="w-full justify-start overflow-x-auto">
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="workflow">Workflow</TabsTrigger>
+              <TabsTrigger value="components">Components</TabsTrigger>
+              <TabsTrigger value="files" disabled={isCreateMode}>
+                Files
+              </TabsTrigger>
+              <TabsTrigger value="milling" disabled={isCreateMode}>
+                Milling
+              </TabsTrigger>
+            </TabsList>
 
-          <CaseEditFieldsSection
-            caseItem={caseItem}
-            customers={customers}
-            serviceTypes={serviceTypes}
-            cadDesigners={cadDesigners}
-            availableDentists={availableDentists}
-            selectedCustomerId={selectedCustomerId}
-            onSelectedCustomerChange={setSelectedCustomerId}
-            canEditAll={canEditAll}
-            canEditPendingOnly={canEditPendingOnly}
-            disableResourceFields={disableResourceFields}
-            optionsLoading={optionsLoading}
-            overdue={overdue}
-            isCreateMode={isCreateMode}
-          />
+            {optionsLoading ? <CaseOptionsFallback /> : null}
 
-          <CaseComponentsSection
-            rows={componentRows}
-            components={components}
-            canEditAll={canEditAll}
-            canSelectComponents={canSelectComponents}
-            onAddRow={() =>
-              setComponentRows((prev) => [
-                ...prev,
-                buildDefaultComponentDraft(),
-              ])
-            }
-            onRemoveRow={(localId) =>
-              setComponentRows((prev) =>
-                prev.filter((row) => row.localId !== localId),
-              )
-            }
-            onUpdateRow={updateComponentRow}
-          />
+            <TabsContent value="overview" className="grid gap-6">
+              <CaseBadges caseItem={caseItem} />
+              {!isCreateMode ? (
+                <CaseReferenceSummary caseItem={caseItem} />
+              ) : null}
+              <CaseEditFieldsSection
+                caseItem={caseItem}
+                customers={customers}
+                serviceTypes={serviceTypes}
+                availableDentists={availableDentists}
+                selectedCustomerId={selectedCustomerId}
+                onSelectedCustomerChange={setSelectedCustomerId}
+                selectedServiceTypeId={selectedServiceTypeId}
+                onSelectedServiceTypeChange={handleServiceTypeChange}
+                canEditAll={canEditAll}
+                canEditPendingOnly={canEditPendingOnly}
+                disableResourceFields={disableResourceFields}
+                optionsLoading={optionsLoading}
+                overdue={overdue}
+                isCreateMode={isCreateMode}
+              />
+            </TabsContent>
 
-          {!isCreateMode ? (
-            <CaseFilesSection
-              scanAttachments={scanAttachments}
-              finalAttachments={finalAttachments}
-              otherAttachments={otherAttachments}
-              canUploadScan={canUploadScan}
-              canUploadFinal={canUploadFinal}
-              isUploading={isUploading}
-              deletingAttachmentId={deletingAttachmentId}
-              onFileChange={handleFileChange}
-              onDownload={handleDownload}
-              onDeleteAttachment={handleDeleteAttachment}
-            />
-          ) : null}
+            <TabsContent value="workflow">
+              <WorkflowEditor
+                workflow={workflow}
+                processes={
+                  processes.length > 0
+                    ? processes
+                    : (caseItem.availableProcesses ?? [])
+                }
+                taskItems={caseProcesses}
+                assigneeOptions={employees
+                  .filter((employee) => employee.is_active)
+                  .map((employee) => ({
+                    id: employee.lab_member_id,
+                    name: employee.name,
+                    processIds: employee.processes.map((process) => process.id),
+                  }))}
+                disabled={disableResourceFields || !canEditAll}
+                statusDisabled={isCreateMode}
+                assigneeDisabled={
+                  isCreateMode ||
+                  !["OWNER", "ADMIN", "MANAGER"].includes(currentUserRole)
+                }
+                updatingProcessId={updatingProcessId}
+                statusError={processStatusError}
+                onStatusChange={(caseProcessId, status) =>
+                  void handleProcessStatusChange(caseProcessId, status)
+                }
+                onAssigneeChange={(caseProcessId, assignedLabMemberId) =>
+                  void handleProcessAssigneeChange(
+                    caseProcessId,
+                    assignedLabMemberId,
+                  )
+                }
+                onChange={setWorkflow}
+              />
+            </TabsContent>
+
+            <TabsContent value="components">
+              <CaseComponentsSection
+                rows={componentRows}
+                components={components}
+                canEditAll={canEditAll}
+                canSelectComponents={canSelectComponents}
+                onAddRow={() =>
+                  setComponentRows((prev) => [
+                    ...prev,
+                    buildDefaultComponentDraft(),
+                  ])
+                }
+                onRemoveRow={(localId) =>
+                  setComponentRows((prev) =>
+                    prev.filter((row) => row.localId !== localId),
+                  )
+                }
+                onUpdateRow={updateComponentRow}
+              />
+            </TabsContent>
+
+            <TabsContent value="files">
+              {!isCreateMode ? (
+                <CaseFilesSection
+                  scanAttachments={scanAttachments}
+                  finalAttachments={finalAttachments}
+                  otherAttachments={otherAttachments}
+                  canUploadScan={canUploadScan}
+                  canUploadFinal={canUploadFinal}
+                  isUploading={isUploading}
+                  deletingAttachmentId={deletingAttachmentId}
+                  onFileChange={handleFileChange}
+                  onDownload={handleDownload}
+                  onDeleteAttachment={handleDeleteAttachment}
+                />
+              ) : null}
+            </TabsContent>
+
+            <TabsContent value="milling">
+              {!isCreateMode ? (
+                <CaseMillingSection caseItem={caseItem} />
+              ) : null}
+            </TabsContent>
+          </Tabs>
 
           <div className="flex gap-3">
             {!isCreateMode ? (
@@ -422,4 +610,43 @@ function isCaseOverdue(dueDate: string | null) {
   due.setHours(0, 0, 0, 0);
 
   return due < today;
+}
+
+function getServiceTypeWorkflow(
+  serviceTypeId: string | null | undefined,
+  serviceTypes: ServiceTypeOption[],
+): CaseWorkflow {
+  const workflow = serviceTypes.find(
+    (serviceType) => serviceType.id === serviceTypeId,
+  )?.workflow_json;
+
+  return workflow ? cloneWorkflow(workflow) : { steps: [] };
+}
+
+function buildWorkflowFromCaseProcesses(caseItem: EditableCase): CaseWorkflow {
+  const stepIdByCaseProcessId = new Map(
+    (caseItem.processes ?? []).map((process) => [
+      process.id,
+      process.workflow_step_id,
+    ]),
+  );
+
+  return {
+    steps: (caseItem.processes ?? []).map((process) => ({
+      id: process.workflow_step_id,
+      process_id: process.process_id,
+      dependsOn: process.dependsOnCaseProcessIds
+        .map((caseProcessId) => stepIdByCaseProcessId.get(caseProcessId))
+        .filter((stepId): stepId is string => Boolean(stepId)),
+    })),
+  };
+}
+
+function cloneWorkflow(workflow: CaseWorkflow): CaseWorkflow {
+  return {
+    steps: workflow.steps.map((step) => ({
+      ...step,
+      dependsOn: [...step.dependsOn],
+    })),
+  };
 }

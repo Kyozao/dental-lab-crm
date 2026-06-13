@@ -184,6 +184,8 @@ export type lab_membersWhereInput = {
   created_at?: Prisma.DateTimeFilter<"lab_members"> | Date | string
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
   labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
+  assignedProcesses?: Prisma.Case_processesListRelationFilter
+  processOwnerships?: Prisma.Employee_process_assignmentsListRelationFilter
 }
 
 export type lab_membersOrderByWithRelationInput = {
@@ -194,6 +196,8 @@ export type lab_membersOrderByWithRelationInput = {
   created_at?: Prisma.SortOrder
   users?: Prisma.usersOrderByWithRelationInput
   labs?: Prisma.labsOrderByWithRelationInput
+  assignedProcesses?: Prisma.case_processesOrderByRelationAggregateInput
+  processOwnerships?: Prisma.employee_process_assignmentsOrderByRelationAggregateInput
 }
 
 export type lab_membersWhereUniqueInput = Prisma.AtLeast<{
@@ -208,6 +212,8 @@ export type lab_membersWhereUniqueInput = Prisma.AtLeast<{
   created_at?: Prisma.DateTimeFilter<"lab_members"> | Date | string
   users?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.usersWhereInput>
   labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
+  assignedProcesses?: Prisma.Case_processesListRelationFilter
+  processOwnerships?: Prisma.Employee_process_assignmentsListRelationFilter
 }, "id" | "user_id" | "user_id_lab_id">
 
 export type lab_membersOrderByWithAggregationInput = {
@@ -238,6 +244,8 @@ export type lab_membersCreateInput = {
   created_at?: Date | string
   users: Prisma.usersCreateNestedOneWithoutMembershipsInput
   labs: Prisma.labsCreateNestedOneWithoutMembershipsInput
+  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedLabMemberInput
+  processOwnerships?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLab_membersInput
 }
 
 export type lab_membersUncheckedCreateInput = {
@@ -246,6 +254,8 @@ export type lab_membersUncheckedCreateInput = {
   lab_id: string
   role: $Enums.UserRole
   created_at?: Date | string
+  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedLabMemberInput
+  processOwnerships?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLab_membersInput
 }
 
 export type lab_membersUpdateInput = {
@@ -254,6 +264,8 @@ export type lab_membersUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.usersUpdateOneRequiredWithoutMembershipsNestedInput
   labs?: Prisma.labsUpdateOneRequiredWithoutMembershipsNestedInput
+  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedLabMemberNestedInput
+  processOwnerships?: Prisma.employee_process_assignmentsUpdateManyWithoutLab_membersNestedInput
 }
 
 export type lab_membersUncheckedUpdateInput = {
@@ -262,6 +274,8 @@ export type lab_membersUncheckedUpdateInput = {
   lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedLabMemberNestedInput
+  processOwnerships?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLab_membersNestedInput
 }
 
 export type lab_membersCreateManyInput = {
@@ -323,6 +337,16 @@ export type lab_membersMinOrderByAggregateInput = {
   lab_id?: Prisma.SortOrder
   role?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+}
+
+export type Lab_membersScalarRelationFilter = {
+  is?: Prisma.lab_membersWhereInput
+  isNot?: Prisma.lab_membersWhereInput
+}
+
+export type Lab_membersNullableScalarRelationFilter = {
+  is?: Prisma.lab_membersWhereInput | null
+  isNot?: Prisma.lab_membersWhereInput | null
 }
 
 export type lab_membersCreateNestedManyWithoutUsersInput = {
@@ -413,11 +437,43 @@ export type EnumUserRoleFieldUpdateOperationsInput = {
   set?: $Enums.UserRole
 }
 
+export type lab_membersCreateNestedOneWithoutProcessOwnershipsInput = {
+  create?: Prisma.XOR<Prisma.lab_membersCreateWithoutProcessOwnershipsInput, Prisma.lab_membersUncheckedCreateWithoutProcessOwnershipsInput>
+  connectOrCreate?: Prisma.lab_membersCreateOrConnectWithoutProcessOwnershipsInput
+  connect?: Prisma.lab_membersWhereUniqueInput
+}
+
+export type lab_membersUpdateOneRequiredWithoutProcessOwnershipsNestedInput = {
+  create?: Prisma.XOR<Prisma.lab_membersCreateWithoutProcessOwnershipsInput, Prisma.lab_membersUncheckedCreateWithoutProcessOwnershipsInput>
+  connectOrCreate?: Prisma.lab_membersCreateOrConnectWithoutProcessOwnershipsInput
+  upsert?: Prisma.lab_membersUpsertWithoutProcessOwnershipsInput
+  connect?: Prisma.lab_membersWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.lab_membersUpdateToOneWithWhereWithoutProcessOwnershipsInput, Prisma.lab_membersUpdateWithoutProcessOwnershipsInput>, Prisma.lab_membersUncheckedUpdateWithoutProcessOwnershipsInput>
+}
+
+export type lab_membersCreateNestedOneWithoutAssignedProcessesInput = {
+  create?: Prisma.XOR<Prisma.lab_membersCreateWithoutAssignedProcessesInput, Prisma.lab_membersUncheckedCreateWithoutAssignedProcessesInput>
+  connectOrCreate?: Prisma.lab_membersCreateOrConnectWithoutAssignedProcessesInput
+  connect?: Prisma.lab_membersWhereUniqueInput
+}
+
+export type lab_membersUpdateOneWithoutAssignedProcessesNestedInput = {
+  create?: Prisma.XOR<Prisma.lab_membersCreateWithoutAssignedProcessesInput, Prisma.lab_membersUncheckedCreateWithoutAssignedProcessesInput>
+  connectOrCreate?: Prisma.lab_membersCreateOrConnectWithoutAssignedProcessesInput
+  upsert?: Prisma.lab_membersUpsertWithoutAssignedProcessesInput
+  disconnect?: Prisma.lab_membersWhereInput | boolean
+  delete?: Prisma.lab_membersWhereInput | boolean
+  connect?: Prisma.lab_membersWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.lab_membersUpdateToOneWithWhereWithoutAssignedProcessesInput, Prisma.lab_membersUpdateWithoutAssignedProcessesInput>, Prisma.lab_membersUncheckedUpdateWithoutAssignedProcessesInput>
+}
+
 export type lab_membersCreateWithoutUsersInput = {
   id?: string
   role: $Enums.UserRole
   created_at?: Date | string
   labs: Prisma.labsCreateNestedOneWithoutMembershipsInput
+  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedLabMemberInput
+  processOwnerships?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLab_membersInput
 }
 
 export type lab_membersUncheckedCreateWithoutUsersInput = {
@@ -425,6 +481,8 @@ export type lab_membersUncheckedCreateWithoutUsersInput = {
   lab_id: string
   role: $Enums.UserRole
   created_at?: Date | string
+  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedLabMemberInput
+  processOwnerships?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLab_membersInput
 }
 
 export type lab_membersCreateOrConnectWithoutUsersInput = {
@@ -469,6 +527,8 @@ export type lab_membersCreateWithoutLabsInput = {
   role: $Enums.UserRole
   created_at?: Date | string
   users: Prisma.usersCreateNestedOneWithoutMembershipsInput
+  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedLabMemberInput
+  processOwnerships?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLab_membersInput
 }
 
 export type lab_membersUncheckedCreateWithoutLabsInput = {
@@ -476,6 +536,8 @@ export type lab_membersUncheckedCreateWithoutLabsInput = {
   user_id: string
   role: $Enums.UserRole
   created_at?: Date | string
+  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedLabMemberInput
+  processOwnerships?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLab_membersInput
 }
 
 export type lab_membersCreateOrConnectWithoutLabsInput = {
@@ -504,6 +566,110 @@ export type lab_membersUpdateManyWithWhereWithoutLabsInput = {
   data: Prisma.XOR<Prisma.lab_membersUpdateManyMutationInput, Prisma.lab_membersUncheckedUpdateManyWithoutLabsInput>
 }
 
+export type lab_membersCreateWithoutProcessOwnershipsInput = {
+  id?: string
+  role: $Enums.UserRole
+  created_at?: Date | string
+  users: Prisma.usersCreateNestedOneWithoutMembershipsInput
+  labs: Prisma.labsCreateNestedOneWithoutMembershipsInput
+  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedLabMemberInput
+}
+
+export type lab_membersUncheckedCreateWithoutProcessOwnershipsInput = {
+  id?: string
+  user_id: string
+  lab_id: string
+  role: $Enums.UserRole
+  created_at?: Date | string
+  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedLabMemberInput
+}
+
+export type lab_membersCreateOrConnectWithoutProcessOwnershipsInput = {
+  where: Prisma.lab_membersWhereUniqueInput
+  create: Prisma.XOR<Prisma.lab_membersCreateWithoutProcessOwnershipsInput, Prisma.lab_membersUncheckedCreateWithoutProcessOwnershipsInput>
+}
+
+export type lab_membersUpsertWithoutProcessOwnershipsInput = {
+  update: Prisma.XOR<Prisma.lab_membersUpdateWithoutProcessOwnershipsInput, Prisma.lab_membersUncheckedUpdateWithoutProcessOwnershipsInput>
+  create: Prisma.XOR<Prisma.lab_membersCreateWithoutProcessOwnershipsInput, Prisma.lab_membersUncheckedCreateWithoutProcessOwnershipsInput>
+  where?: Prisma.lab_membersWhereInput
+}
+
+export type lab_membersUpdateToOneWithWhereWithoutProcessOwnershipsInput = {
+  where?: Prisma.lab_membersWhereInput
+  data: Prisma.XOR<Prisma.lab_membersUpdateWithoutProcessOwnershipsInput, Prisma.lab_membersUncheckedUpdateWithoutProcessOwnershipsInput>
+}
+
+export type lab_membersUpdateWithoutProcessOwnershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.usersUpdateOneRequiredWithoutMembershipsNestedInput
+  labs?: Prisma.labsUpdateOneRequiredWithoutMembershipsNestedInput
+  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedLabMemberNestedInput
+}
+
+export type lab_membersUncheckedUpdateWithoutProcessOwnershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedLabMemberNestedInput
+}
+
+export type lab_membersCreateWithoutAssignedProcessesInput = {
+  id?: string
+  role: $Enums.UserRole
+  created_at?: Date | string
+  users: Prisma.usersCreateNestedOneWithoutMembershipsInput
+  labs: Prisma.labsCreateNestedOneWithoutMembershipsInput
+  processOwnerships?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLab_membersInput
+}
+
+export type lab_membersUncheckedCreateWithoutAssignedProcessesInput = {
+  id?: string
+  user_id: string
+  lab_id: string
+  role: $Enums.UserRole
+  created_at?: Date | string
+  processOwnerships?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLab_membersInput
+}
+
+export type lab_membersCreateOrConnectWithoutAssignedProcessesInput = {
+  where: Prisma.lab_membersWhereUniqueInput
+  create: Prisma.XOR<Prisma.lab_membersCreateWithoutAssignedProcessesInput, Prisma.lab_membersUncheckedCreateWithoutAssignedProcessesInput>
+}
+
+export type lab_membersUpsertWithoutAssignedProcessesInput = {
+  update: Prisma.XOR<Prisma.lab_membersUpdateWithoutAssignedProcessesInput, Prisma.lab_membersUncheckedUpdateWithoutAssignedProcessesInput>
+  create: Prisma.XOR<Prisma.lab_membersCreateWithoutAssignedProcessesInput, Prisma.lab_membersUncheckedCreateWithoutAssignedProcessesInput>
+  where?: Prisma.lab_membersWhereInput
+}
+
+export type lab_membersUpdateToOneWithWhereWithoutAssignedProcessesInput = {
+  where?: Prisma.lab_membersWhereInput
+  data: Prisma.XOR<Prisma.lab_membersUpdateWithoutAssignedProcessesInput, Prisma.lab_membersUncheckedUpdateWithoutAssignedProcessesInput>
+}
+
+export type lab_membersUpdateWithoutAssignedProcessesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.usersUpdateOneRequiredWithoutMembershipsNestedInput
+  labs?: Prisma.labsUpdateOneRequiredWithoutMembershipsNestedInput
+  processOwnerships?: Prisma.employee_process_assignmentsUpdateManyWithoutLab_membersNestedInput
+}
+
+export type lab_membersUncheckedUpdateWithoutAssignedProcessesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  processOwnerships?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLab_membersNestedInput
+}
+
 export type lab_membersCreateManyUsersInput = {
   id?: string
   lab_id: string
@@ -516,6 +682,8 @@ export type lab_membersUpdateWithoutUsersInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   labs?: Prisma.labsUpdateOneRequiredWithoutMembershipsNestedInput
+  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedLabMemberNestedInput
+  processOwnerships?: Prisma.employee_process_assignmentsUpdateManyWithoutLab_membersNestedInput
 }
 
 export type lab_membersUncheckedUpdateWithoutUsersInput = {
@@ -523,6 +691,8 @@ export type lab_membersUncheckedUpdateWithoutUsersInput = {
   lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedLabMemberNestedInput
+  processOwnerships?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLab_membersNestedInput
 }
 
 export type lab_membersUncheckedUpdateManyWithoutUsersInput = {
@@ -544,6 +714,8 @@ export type lab_membersUpdateWithoutLabsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.usersUpdateOneRequiredWithoutMembershipsNestedInput
+  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedLabMemberNestedInput
+  processOwnerships?: Prisma.employee_process_assignmentsUpdateManyWithoutLab_membersNestedInput
 }
 
 export type lab_membersUncheckedUpdateWithoutLabsInput = {
@@ -551,6 +723,8 @@ export type lab_membersUncheckedUpdateWithoutLabsInput = {
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedLabMemberNestedInput
+  processOwnerships?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLab_membersNestedInput
 }
 
 export type lab_membersUncheckedUpdateManyWithoutLabsInput = {
@@ -561,6 +735,44 @@ export type lab_membersUncheckedUpdateManyWithoutLabsInput = {
 }
 
 
+/**
+ * Count Type Lab_membersCountOutputType
+ */
+
+export type Lab_membersCountOutputType = {
+  assignedProcesses: number
+  processOwnerships: number
+}
+
+export type Lab_membersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  assignedProcesses?: boolean | Lab_membersCountOutputTypeCountAssignedProcessesArgs
+  processOwnerships?: boolean | Lab_membersCountOutputTypeCountProcessOwnershipsArgs
+}
+
+/**
+ * Lab_membersCountOutputType without action
+ */
+export type Lab_membersCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Lab_membersCountOutputType
+   */
+  select?: Prisma.Lab_membersCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * Lab_membersCountOutputType without action
+ */
+export type Lab_membersCountOutputTypeCountAssignedProcessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.case_processesWhereInput
+}
+
+/**
+ * Lab_membersCountOutputType without action
+ */
+export type Lab_membersCountOutputTypeCountProcessOwnershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.employee_process_assignmentsWhereInput
+}
+
 
 export type lab_membersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -570,6 +782,9 @@ export type lab_membersSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   created_at?: boolean
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  assignedProcesses?: boolean | Prisma.lab_members$assignedProcessesArgs<ExtArgs>
+  processOwnerships?: boolean | Prisma.lab_members$processOwnershipsArgs<ExtArgs>
+  _count?: boolean | Prisma.Lab_membersCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lab_members"]>
 
 export type lab_membersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -604,6 +819,9 @@ export type lab_membersOmit<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type lab_membersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  assignedProcesses?: boolean | Prisma.lab_members$assignedProcessesArgs<ExtArgs>
+  processOwnerships?: boolean | Prisma.lab_members$processOwnershipsArgs<ExtArgs>
+  _count?: boolean | Prisma.Lab_membersCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type lab_membersIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.usersDefaultArgs<ExtArgs>
@@ -619,6 +837,8 @@ export type $lab_membersPayload<ExtArgs extends runtime.Types.Extensions.Interna
   objects: {
     users: Prisma.$usersPayload<ExtArgs>
     labs: Prisma.$labsPayload<ExtArgs>
+    assignedProcesses: Prisma.$case_processesPayload<ExtArgs>[]
+    processOwnerships: Prisma.$employee_process_assignmentsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1022,6 +1242,8 @@ export interface Prisma__lab_membersClient<T, Null = never, ExtArgs extends runt
   readonly [Symbol.toStringTag]: "PrismaPromise"
   users<T extends Prisma.usersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.usersDefaultArgs<ExtArgs>>): Prisma.Prisma__usersClient<runtime.Types.Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   labs<T extends Prisma.labsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labsDefaultArgs<ExtArgs>>): Prisma.Prisma__labsClient<runtime.Types.Result.GetResult<Prisma.$labsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  assignedProcesses<T extends Prisma.lab_members$assignedProcessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.lab_members$assignedProcessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_processesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  processOwnerships<T extends Prisma.lab_members$processOwnershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.lab_members$processOwnershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$employee_process_assignmentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1454,6 +1676,54 @@ export type lab_membersDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many lab_members to delete.
    */
   limit?: number
+}
+
+/**
+ * lab_members.assignedProcesses
+ */
+export type lab_members$assignedProcessesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the case_processes
+   */
+  select?: Prisma.case_processesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the case_processes
+   */
+  omit?: Prisma.case_processesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.case_processesInclude<ExtArgs> | null
+  where?: Prisma.case_processesWhereInput
+  orderBy?: Prisma.case_processesOrderByWithRelationInput | Prisma.case_processesOrderByWithRelationInput[]
+  cursor?: Prisma.case_processesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Case_processesScalarFieldEnum | Prisma.Case_processesScalarFieldEnum[]
+}
+
+/**
+ * lab_members.processOwnerships
+ */
+export type lab_members$processOwnershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the employee_process_assignments
+   */
+  select?: Prisma.employee_process_assignmentsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the employee_process_assignments
+   */
+  omit?: Prisma.employee_process_assignmentsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.employee_process_assignmentsInclude<ExtArgs> | null
+  where?: Prisma.employee_process_assignmentsWhereInput
+  orderBy?: Prisma.employee_process_assignmentsOrderByWithRelationInput | Prisma.employee_process_assignmentsOrderByWithRelationInput[]
+  cursor?: Prisma.employee_process_assignmentsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Employee_process_assignmentsScalarFieldEnum | Prisma.Employee_process_assignmentsScalarFieldEnum[]
 }
 
 /**

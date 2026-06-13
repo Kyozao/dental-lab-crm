@@ -1,0 +1,89 @@
+import type {
+  CreateEmployeePayload,
+  Employee,
+  EmployeeListResult,
+} from "@/features/employees/types";
+import type { UserRole } from "@/generated/prisma/enums";
+
+type ApiSuccess<T> = {
+  data: T;
+  error: null;
+  meta: Record<string, unknown>;
+};
+
+type ApiError = {
+  error?: string;
+  fields?: Record<string, string[]>;
+};
+
+async function parseApiError(response: Response) {
+  try {
+    const body = (await response.json()) as ApiError;
+    return body.error ?? "Request failed.";
+  } catch {
+    return "Request failed.";
+  }
+}
+
+export async function listEmployeesApi() {
+  const response = await fetch("/api/employees", {
+    method: "GET",
+    headers: { Accept: "application/json" },
+  });
+
+  if (!response.ok) {
+    throw new Error(await parseApiError(response));
+  }
+
+  const body = (await response.json()) as ApiSuccess<Employee[]> & {
+    meta: {
+      currentUserRole?: UserRole;
+      canInviteEmployees?: boolean;
+    };
+  };
+
+  return {
+    employees: body.data,
+    currentUserRole: body.meta.currentUserRole ?? null,
+    canInviteEmployees: Boolean(body.meta.canInviteEmployees),
+  } satisfies EmployeeListResult;
+}
+
+export async function createEmployeeApi(payload: CreateEmployeePayload) {
+  const response = await fetch("/api/employees", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    throw new Error(await parseApiError(response));
+  }
+
+  const body = (await response.json()) as ApiSuccess<Employee>;
+  return body.data;
+}
+
+export async function updateEmployeeProcessesApi(
+  employeeId: string,
+  processIds: string[],
+) {
+  const response = await fetch(`/api/employees/${employeeId}/processes`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ process_ids: processIds }),
+  });
+
+  if (!response.ok) {
+    throw new Error(await parseApiError(response));
+  }
+
+  const body = (await response.json()) as ApiSuccess<Employee>;
+  return body.data;
+}

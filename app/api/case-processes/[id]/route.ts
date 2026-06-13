@@ -6,6 +6,7 @@ import {
   ReferenceValidationError,
 } from "../../_shared/reference-resource";
 import { getAuthenticatedUserId, parseJsonObject } from "../../_shared/request";
+import { CaseProcessAuthorizationError } from "../case-processes.rules";
 import { updateCaseProcessForLoggedLab } from "../case-processes.service";
 import { parseUpdateCaseProcessInput } from "../case-processes.schemas";
 
@@ -32,6 +33,10 @@ export async function PATCH(
   } catch (error) {
     if (error instanceof MissingLabMembershipError) {
       return NextResponse.json({ error: "No lab membership found for this user." }, { status: 403 });
+    }
+
+    if (error instanceof CaseProcessAuthorizationError) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     if (error instanceof ReferenceNotFoundError) {

@@ -5,6 +5,7 @@ import {
   InactiveReferenceError,
   listCases,
   MissingLabMembershipError,
+  MissingServiceTypeWorkflowError,
 } from "./cases.service";
 import { parseCreateCaseInput, parseListCasesInput } from "./cases.schemas";
 import { getAuthenticatedUserId, parseJsonObject } from "../_shared/request";
@@ -78,6 +79,20 @@ export async function POST(request: Request) {
     if (error instanceof InactiveReferenceError) {
       return NextResponse.json(
         { error: "Validation failed.", fields: error.fields },
+        { status: 400 },
+      );
+    }
+
+    if (error instanceof MissingServiceTypeWorkflowError) {
+      return NextResponse.json(
+        {
+          error: "Validation failed.",
+          fields: {
+            service_type_id: [
+              "Selected service type does not have a workflow. Rerun the default catalog seed or configure the workflow.",
+            ],
+          },
+        },
         { status: 400 },
       );
     }

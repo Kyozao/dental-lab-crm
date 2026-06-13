@@ -9,10 +9,11 @@ import type {
   SearchCaseItem,
 } from "@/features/cases/types";
 import { CaseDetailsDialog } from "@/features/cases/components/case-details-dialog";
-import { useCadDesigners } from "@/features/cases/hooks/useCadDesigners";
 import { useCustomers } from "@/features/cases/hooks/useCustomers";
+import { useEmployees } from "@/features/cases/hooks/useEmployees";
+import { useProcesses } from "@/features/cases/hooks/useProcesses";
 import { useServiceTypes } from "@/features/cases/hooks/useServiceTypes";
-import { mockCases } from "@/lib/mock-data/pages";
+import { getCaseDetailsApi } from "@/features/cases/services/cases-client";
 import {
   Command,
   CommandDialog,
@@ -43,8 +44,14 @@ export function CaseSearch({
   const [loadingCaseId, setLoadingCaseId] = React.useState<string | null>(null);
   const customers = useCustomers(detailsOpen);
   const serviceTypes = useServiceTypes(detailsOpen);
-  const cadDesigners = useCadDesigners(detailsOpen);
-  const optionQueries = [customers, serviceTypes, cadDesigners];
+  const processes = useProcesses(detailsOpen);
+  const employees = useEmployees(detailsOpen);
+  const optionQueries = [
+    customers,
+    serviceTypes,
+    processes,
+    employees,
+  ];
   const optionsLoading = optionQueries.some(
     (query) => query.isLoading || query.isFetching,
   );
@@ -54,7 +61,8 @@ export function CaseSearch({
   function retryOptions() {
     void customers.refetch();
     void serviceTypes.refetch();
-    void cadDesigners.refetch();
+    void processes.refetch();
+    void employees.refetch();
   }
 
   React.useEffect(() => {
@@ -76,11 +84,7 @@ export function CaseSearch({
   async function handleSelect(caseId: string) {
     try {
       setLoadingCaseId(caseId);
-      const caseDetails = mockCases.find((item) => item.id === caseId);
-
-      if (!caseDetails) {
-        throw new Error("Could not load mock case details.");
-      }
+      const caseDetails = await getCaseDetailsApi(caseId);
 
       setSelectedCase(caseDetails);
       setOpen(false);
@@ -160,8 +164,9 @@ export function CaseSearch({
         currentUserRole={currentUserRole}
         customers={customers.data ?? []}
         serviceTypes={serviceTypes.data ?? []}
-        cadDesigners={cadDesigners.data ?? []}
         components={components}
+        processes={processes.data ?? []}
+        employees={employees.data ?? []}
         optionsLoading={optionsLoading}
         optionsError={
           optionsError

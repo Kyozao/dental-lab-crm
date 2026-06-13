@@ -16,9 +16,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { CaseListItem } from "@/features/cases/cases";
-import { useCadDesigners } from "@/features/cases/hooks/useCadDesigners";
 import { useCases } from "@/features/cases/hooks/useCases";
 import { useCustomers } from "@/features/cases/hooks/useCustomers";
+import { useEmployees } from "@/features/cases/hooks/useEmployees";
+import { useProcesses } from "@/features/cases/hooks/useProcesses";
 import { useServiceTypes } from "@/features/cases/hooks/useServiceTypes";
 import { getCaseDetailsApi } from "@/features/cases/services/cases-client";
 import type {
@@ -52,10 +53,16 @@ export function CasesTable({
   const [loadingCaseId, setLoadingCaseId] = useState<string | null>(null);
   const customers = useCustomers(open);
   const serviceTypes = useServiceTypes(open);
-  const cadDesigners = useCadDesigners(open);
+  const processes = useProcesses(open);
+  const employees = useEmployees(open);
   const isOpeningCase = Boolean(loadingCaseId);
   const tableRows = useMemo(() => buildCaseRows(cases), [cases]);
-  const optionQueries = [customers, serviceTypes, cadDesigners];
+  const optionQueries = [
+    customers,
+    serviceTypes,
+    processes,
+    employees,
+  ];
   const optionsLoading = optionQueries.some(
     (query) => query.isLoading || query.isFetching,
   );
@@ -65,7 +72,8 @@ export function CasesTable({
   function retryOptions() {
     void customers.refetch();
     void serviceTypes.refetch();
-    void cadDesigners.refetch();
+    void processes.refetch();
+    void employees.refetch();
   }
 
   async function handleRowClick(caseId: string) {
@@ -141,9 +149,6 @@ export function CasesTable({
                   Service
                 </TableHead>
                 <TableHead className="px-6 py-4 font-semibold">
-                  Designer
-                </TableHead>
-                <TableHead className="px-6 py-4 font-semibold">
                   Status
                 </TableHead>
                 <TableHead className="px-6 py-4 text-center font-semibold">
@@ -190,9 +195,6 @@ export function CasesTable({
                     <TableCell className="px-6 py-4 text-sm text-muted-foreground">
                       {item.serviceTypeName}
                     </TableCell>
-                    <TableCell className="px-6 py-4 text-sm text-muted-foreground">
-                      {item.cadDesignerName}
-                    </TableCell>
                     <TableCell className="px-6 py-4">
                       <CaseStatusBadge status={item.currentStatus} />
                     </TableCell>
@@ -222,8 +224,9 @@ export function CasesTable({
         currentUserRole={currentUserRole}
         customers={customers.data ?? []}
         serviceTypes={serviceTypes.data ?? []}
-        cadDesigners={cadDesigners.data ?? []}
         components={components}
+        processes={processes.data ?? []}
+        employees={employees.data ?? []}
         optionsLoading={optionsLoading}
         optionsError={
           optionsError
@@ -244,7 +247,6 @@ function buildCaseRows(cases: CaseListItem[]) {
     customerName: item.customerName ?? "-",
     dentistName: item.dentistName ?? "-",
     serviceTypeName: item.serviceTypeName ?? "-",
-    cadDesignerName: item.cadDesignerName ?? "-",
   }));
 }
 

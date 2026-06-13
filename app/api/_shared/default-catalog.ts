@@ -2,7 +2,16 @@ import type { PrismaClient } from "@/generated/prisma/client";
 
 import type { ServiceTypeWorkflow } from "../service-types/service-types.schemas";
 
-type PrismaClientLike = Pick<PrismaClient, "processes" | "service_types">;
+type PrismaClientLike = Pick<
+  PrismaClient,
+  | "block_types"
+  | "components"
+  | "customers"
+  | "dentists"
+  | "milling_drills"
+  | "processes"
+  | "service_types"
+>;
 
 type DefaultProcessDefinition = {
   stepId: string;
@@ -18,6 +27,46 @@ type DefaultServiceDefinition = {
     processStepId: string;
     dependsOn: string[];
   }>;
+};
+
+type DefaultCustomerDefinition = {
+  key: string;
+  name: string;
+  phone?: string;
+  email?: string;
+  notes?: string;
+  dentists: Array<{
+    name: string;
+    phone?: string;
+    email?: string;
+    notes?: string;
+  }>;
+};
+
+type DefaultComponentDefinition = {
+  name: string;
+  category: string;
+  brand?: string;
+  default_cost: string;
+  default_price: string;
+};
+
+type DefaultBlockTypeDefinition = {
+  name: string;
+  material: string;
+  brand?: string;
+  size?: string;
+  shade?: string;
+  default_cost: string;
+};
+
+type DefaultMillingDrillDefinition = {
+  name: string;
+  type: string;
+  brand: string;
+  serial_number: string;
+  max_teeth_recommended: number;
+  notes?: string;
 };
 
 const DEFAULT_PROCESSES = [
@@ -268,6 +317,147 @@ const DEFAULT_SERVICES = [
   },
 ] satisfies DefaultServiceDefinition[];
 
+const DEFAULT_CUSTOMERS: DefaultCustomerDefinition[] = [
+  {
+    key: "smile-design",
+    name: "Smile Design Clinic",
+    phone: "(555) 010-1000",
+    email: "frontdesk@smiledesign.example",
+    notes: "Starter customer for crown, veneer, and bridge cases.",
+    dentists: [
+      {
+        name: "Dr. Emma Silva",
+        phone: "(555) 010-1001",
+        email: "emma@smiledesign.example",
+      },
+      {
+        name: "Dr. Lucas Grant",
+        phone: "(555) 010-1002",
+        email: "lucas@smiledesign.example",
+      },
+    ],
+  },
+  {
+    key: "oral-surgery",
+    name: "Oral Surgery Partners",
+    phone: "(555) 020-2000",
+    email: "cases@oralsurgery.example",
+    notes: "Starter customer for implant and surgical guide cases.",
+    dentists: [
+      {
+        name: "Dr. Maya Chen",
+        phone: "(555) 020-2001",
+        email: "maya@oralsurgery.example",
+      },
+    ],
+  },
+  {
+    key: "family-dental",
+    name: "Family Dental Group",
+    phone: "(555) 030-3000",
+    email: "ops@familydental.example",
+    notes: "Starter customer for everyday restorative work.",
+    dentists: [
+      {
+        name: "Dr. Noah Brooks",
+        phone: "(555) 030-3001",
+        email: "noah@familydental.example",
+      },
+    ],
+  },
+] satisfies DefaultCustomerDefinition[];
+
+const DEFAULT_COMPONENTS: DefaultComponentDefinition[] = [
+  {
+    name: "Ti Base",
+    category: "Implant",
+    brand: "DemoDent",
+    default_cost: "35.00",
+    default_price: "90.00",
+  },
+  {
+    name: "Analog",
+    category: "Model",
+    brand: "DemoDent",
+    default_cost: "12.00",
+    default_price: "30.00",
+  },
+  {
+    name: "Screw",
+    category: "Implant",
+    brand: "DemoDent",
+    default_cost: "8.00",
+    default_price: "20.00",
+  },
+  {
+    name: "Printed Model",
+    category: "Model",
+    brand: "In-house",
+    default_cost: "18.00",
+    default_price: "45.00",
+  },
+] satisfies DefaultComponentDefinition[];
+
+const DEFAULT_BLOCK_TYPES: DefaultBlockTypeDefinition[] = [
+  {
+    name: "Zirconia A1",
+    material: "Zirconia",
+    brand: "Vita",
+    size: "98mm",
+    shade: "A1",
+    default_cost: "48.00",
+  },
+  {
+    name: "Zirconia A2",
+    material: "Zirconia",
+    brand: "Vita",
+    size: "98mm",
+    shade: "A2",
+    default_cost: "48.00",
+  },
+  {
+    name: "PMMA Clear",
+    material: "PMMA",
+    brand: "DemoBlock",
+    size: "98mm",
+    shade: "Clear",
+    default_cost: "22.00",
+  },
+  {
+    name: "Lithium Disilicate HT A2",
+    material: "Lithium Disilicate",
+    brand: "Ivoclar",
+    size: "C14",
+    shade: "A2",
+    default_cost: "32.00",
+  },
+] satisfies DefaultBlockTypeDefinition[];
+
+const DEFAULT_MILLING_DRILLS: DefaultMillingDrillDefinition[] = [
+  {
+    name: "Diamond 1.0mm",
+    type: "1.0mm",
+    brand: "Roland",
+    serial_number: "DEFAULT-D10",
+    max_teeth_recommended: 120,
+  },
+  {
+    name: "Diamond 2.5mm",
+    type: "2.5mm",
+    brand: "Roland",
+    serial_number: "DEFAULT-D25",
+    max_teeth_recommended: 100,
+  },
+  {
+    name: "Carbide 0.6mm",
+    type: "0.6mm",
+    brand: "Roland",
+    serial_number: "DEFAULT-C06",
+    max_teeth_recommended: 80,
+    notes: "Detail tool for fine anatomy and margins.",
+  },
+] satisfies DefaultMillingDrillDefinition[];
+
 const OLD_LINEAR_WORKFLOW_STEP_SHAPE = [
   { id: "design", dependsOn: [] },
   { id: "approval", dependsOn: ["design"] },
@@ -357,7 +547,171 @@ function buildWorkflow(
   };
 }
 
-export async function ensureDefaultCatalogForLab(
+async function ensureDefaultCustomers(
+  prisma: PrismaClientLike,
+  lab_id: string,
+) {
+  const customers = [];
+
+  for (const defaultCustomer of DEFAULT_CUSTOMERS) {
+    const existing = await prisma.customers.findFirst({
+      where: { lab_id, name: defaultCustomer.name },
+    });
+
+    const customer = existing
+      ? await prisma.customers.update({
+          where: { id: existing.id },
+          data: {
+            phone: defaultCustomer.phone,
+            email: defaultCustomer.email,
+            notes: defaultCustomer.notes,
+            is_active: true,
+            deleted_at: null,
+          },
+        })
+      : await prisma.customers.create({
+          data: {
+            lab_id,
+            name: defaultCustomer.name,
+            phone: defaultCustomer.phone,
+            email: defaultCustomer.email,
+            notes: defaultCustomer.notes,
+            is_active: true,
+          },
+        });
+
+    customers.push(customer);
+
+    for (const defaultDentist of defaultCustomer.dentists) {
+      const existingDentist = await prisma.dentists.findFirst({
+        where: {
+          lab_id,
+          customer_id: customer.id,
+          name: defaultDentist.name,
+        },
+      });
+
+      if (existingDentist) {
+        await prisma.dentists.update({
+          where: { id: existingDentist.id },
+          data: {
+            phone: defaultDentist.phone,
+            email: defaultDentist.email,
+            notes: defaultDentist.notes,
+            is_active: true,
+            deleted_at: null,
+          },
+        });
+        continue;
+      }
+
+      await prisma.dentists.create({
+        data: {
+          lab_id,
+          customer_id: customer.id,
+          name: defaultDentist.name,
+          phone: defaultDentist.phone,
+          email: defaultDentist.email,
+          notes: defaultDentist.notes,
+          is_active: true,
+        },
+      });
+    }
+  }
+
+  return customers;
+}
+
+function labScopedSerialNumber(lab_id: string, serial_number: string) {
+  return `${serial_number}-${lab_id.slice(0, 8)}`;
+}
+
+async function ensureDefaultProductionReferences(
+  prisma: PrismaClientLike,
+  lab_id: string,
+) {
+  const components = await Promise.all(
+    DEFAULT_COMPONENTS.map((component) =>
+      prisma.components.upsert({
+        where: { lab_id_name: { lab_id, name: component.name } },
+        update: {
+          category: component.category,
+          brand: component.brand,
+          default_cost: component.default_cost,
+          default_price: component.default_price,
+          is_active: true,
+          deleted_at: null,
+        },
+        create: {
+          lab_id,
+          name: component.name,
+          category: component.category,
+          brand: component.brand,
+          default_cost: component.default_cost,
+          default_price: component.default_price,
+          is_active: true,
+        },
+      }),
+    ),
+  );
+
+  const blockTypes = await Promise.all(
+    DEFAULT_BLOCK_TYPES.map((blockType) =>
+      prisma.block_types.upsert({
+        where: { lab_id_name: { lab_id, name: blockType.name } },
+        update: {
+          material: blockType.material,
+          brand: blockType.brand,
+          size: blockType.size,
+          shade: blockType.shade,
+          default_cost: blockType.default_cost,
+          is_active: true,
+          deleted_at: null,
+        },
+        create: {
+          lab_id,
+          name: blockType.name,
+          material: blockType.material,
+          brand: blockType.brand,
+          size: blockType.size,
+          shade: blockType.shade,
+          default_cost: blockType.default_cost,
+          is_active: true,
+        },
+      }),
+    ),
+  );
+
+  const millingDrills = await Promise.all(
+    DEFAULT_MILLING_DRILLS.map((drill) =>
+      prisma.milling_drills.upsert({
+        where: { lab_id_name: { lab_id, name: drill.name } },
+        update: {
+          type: drill.type,
+          brand: drill.brand,
+          max_teeth_recommended: drill.max_teeth_recommended,
+          notes: drill.notes,
+          is_active: true,
+          deleted_at: null,
+        },
+        create: {
+          lab_id,
+          name: drill.name,
+          type: drill.type,
+          brand: drill.brand,
+          serial_number: labScopedSerialNumber(lab_id, drill.serial_number),
+          max_teeth_recommended: drill.max_teeth_recommended,
+          notes: drill.notes,
+          is_active: true,
+        },
+      }),
+    ),
+  );
+
+  return { components, blockTypes, millingDrills };
+}
+
+export async function   ensureDefaultCatalogForLab(
   prisma: PrismaClientLike,
   lab_id: string,
 ) {
@@ -400,7 +754,7 @@ export async function ensureDefaultCatalogForLab(
       services.push(
         await prisma.service_types.update({
           where: { id: existing.id },
-          data: { is_active: true, deleted_at: null },
+          data: { is_active: true, deleted_at: null, workflow_json },
         }),
       );
       continue;
@@ -447,7 +801,15 @@ export async function ensureDefaultCatalogForLab(
     );
   }
 
+  const customers = await ensureDefaultCustomers(prisma, lab_id);
+  const { components, blockTypes, millingDrills } =
+    await ensureDefaultProductionReferences(prisma, lab_id);
+
   return {
+    blockTypes,
+    components,
+    customers,
+    millingDrills,
     processes,
     services,
     serviceByName: new Map(services.map((service) => [service.name, service])),

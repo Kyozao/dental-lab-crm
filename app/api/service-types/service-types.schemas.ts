@@ -92,7 +92,7 @@ function addCycleErrors(
   }
 }
 
-function parseWorkflowJson(
+export function parseWorkflowJson(
   value: unknown,
   errors: Record<string, string[]>,
 ) {

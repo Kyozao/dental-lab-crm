@@ -12,6 +12,7 @@ export async function getLabMember(user_id: string) {
     where: { user_id },
     select: {
       lab_id: true,
+      role: true,
     },
   });
 
@@ -21,6 +22,7 @@ export async function getLabMember(user_id: string) {
 
   return {
     lab_id: membership.lab_id,
+    role: membership.role,
   };
 }
 

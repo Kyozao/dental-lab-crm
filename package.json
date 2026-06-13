@@ -9,6 +9,7 @@
     "test": "node --import tsx --test \"tests/**/*.test.ts\"",
     "lint": "eslint",
     "seed:catalog": "tsx prisma/seed-default-catalog.ts",
+    "backfill:case-workflows": "tsx prisma/backfill-case-workflows.ts",
     "postinstall": "prisma generate"
   },
   "prisma": {

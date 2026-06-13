@@ -80,7 +80,6 @@ export function buildCasePayload(form: HTMLFormElement) {
     "customerId",
     "dentistId",
     "serviceTypeId",
-    "cadDesignerId",
     "teeth",
     "shade",
     "dueDate",
