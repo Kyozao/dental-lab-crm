@@ -14,18 +14,28 @@ datasource db {
 }
 
 enum CaseStatus {
-  ENTRY
-  WAITING_INFO
-  DESIGNING
-  WAITING_APPROVAL
-  DESIGN_READY
-  MILLING_PRINTING
+  IN_PRODUCTION
+  STANDBY
   DONE
+  CANCELLED
 }
 
 enum MillingStatus {
   SUCCESS
   FAILED
+}
+
+enum MillingDrillStatus {
+  ACTIVE
+  STORED
+  RETIRED
+  LOST
+}
+
+enum MillingMachineStatus {
+  ACTIVE
+  INACTIVE
+  MAINTENANCE
 }
 
 enum CaseProcessStatus {
@@ -41,7 +51,6 @@ enum UserRole {
   OWNER
   ADMIN
   MANAGER
-  CAD_DESIGNER
   PRODUCTION
 }
 
@@ -68,31 +77,37 @@ model users {
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
 
-  memberships       lab_members[]
-  createdCases      cases[]              @relation("CaseCreatedBy")
-  case_attachments  case_attachments[]
-  notifications     notifications[]      @relation("NotificationRecipient")
-  pushSubscriptions push_subscriptions[]
+  memberships         lab_members[]
+  createdCases        cases[]              @relation("CaseCreatedBy")
+  caseComments        case_comments[]      @relation("CaseCommentAuthor")
+  deletedCaseComments case_comments[]      @relation("CaseCommentDeletedBy")
+  caseThreadReads     case_thread_reads[]  @relation("CaseThreadReadUser")
+  case_attachments    case_attachments[]
+  notifications       notifications[]      @relation("NotificationRecipient")
+  pushSubscriptions   push_subscriptions[]
 }
 
 model labs {
   id         String   @id @default(uuid(7)) @db.Uuid
   name       String
+  currency   String   @default("BRL")
   is_active  Boolean  @default(true)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  memberships    lab_members[]
-  customers      customers[]
-  dentists       dentists[]
-  service_types  service_types[]
-  components     components[]
-  block_types    block_types[]
-  milling_drills milling_drills[]
-  processes      processes[]
+  memberships                lab_members[]
+  customers                  customers[]
+  dentists                   dentists[]
+  service_types              service_types[]
+  price_tables               price_tables[]
+  components                 components[]
+  block_types                block_types[]
+  milling_machines           milling_machines[]
+  milling_drills             milling_drills[]
+  processes                  processes[]
   employeeProcessAssignments employee_process_assignments[]
-  cases          cases[]
-  millings       case_millings[]
+  cases                      cases[]
+  millings                   case_millings[]
 
   @@unique([name])
 }
@@ -104,10 +119,12 @@ model lab_members {
   role       UserRole
   created_at DateTime @default(now())
 
-  users users @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  labs  labs  @relation(fields: [lab_id], references: [id], onDelete: Cascade)
-  assignedProcesses case_processes[] @relation("CaseProcessAssignee")
+  users             users                          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  labs              labs                           @relation(fields: [lab_id], references: [id], onDelete: Cascade)
+  assignedProcesses case_processes[]               @relation("CaseProcessAssignee")
   processOwnerships employee_process_assignments[]
+  caseComments      case_comments[]                @relation("CaseCommentLabMember")
+  caseThreadReads   case_thread_reads[]            @relation("CaseThreadReadLabMember")
 
   @@unique([user_id])
   @@unique([user_id, lab_id])
@@ -118,6 +135,7 @@ model service_types {
   id            String    @id @default(uuid(7)) @db.Uuid
   lab_id        String    @db.Uuid
   name          String
+  base_price    Decimal   @default(0) @db.Decimal(10, 2)
   is_active     Boolean   @default(true)
   deleted_at    DateTime?
   notes         String?
@@ -125,11 +143,46 @@ model service_types {
   created_at    DateTime  @default(now())
   updated_at    DateTime  @updatedAt
 
-  labs  labs    @relation(fields: [lab_id], references: [id], onDelete: Cascade)
-  cases cases[]
+  labs                       labs                         @relation(fields: [lab_id], references: [id], onDelete: Cascade)
+  cases                      cases[]
+  case_services              case_services[]
+  price_table_service_prices price_table_service_prices[]
 
   @@unique([lab_id, name])
   @@index([lab_id])
+}
+
+model price_tables {
+  id         String    @id @default(uuid(7)) @db.Uuid
+  lab_id     String    @db.Uuid
+  name       String
+  is_active  Boolean   @default(true)
+  deleted_at DateTime?
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+
+  labs                       labs                         @relation(fields: [lab_id], references: [id], onDelete: Cascade)
+  customers                  customers[]
+  price_table_service_prices price_table_service_prices[]
+
+  @@index([lab_id])
+  @@index([lab_id, name])
+}
+
+model price_table_service_prices {
+  id              String   @id @default(uuid(7)) @db.Uuid
+  price_table_id  String   @db.Uuid
+  service_type_id String   @db.Uuid
+  price           Decimal  @db.Decimal(10, 2)
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+
+  price_tables  price_tables  @relation(fields: [price_table_id], references: [id], onDelete: Cascade)
+  service_types service_types @relation(fields: [service_type_id], references: [id], onDelete: Restrict)
+
+  @@unique([price_table_id, service_type_id])
+  @@index([price_table_id])
+  @@index([service_type_id])
 }
 
 model processes {
@@ -142,8 +195,8 @@ model processes {
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt
 
-  labs           labs             @relation(fields: [lab_id], references: [id], onDelete: Cascade)
-  case_processes case_processes[]
+  labs                labs                           @relation(fields: [lab_id], references: [id], onDelete: Cascade)
+  case_processes      case_processes[]
   employeeAssignments employee_process_assignments[]
 
   @@unique([lab_id, name])
@@ -168,28 +221,73 @@ model employee_process_assignments {
 }
 
 model milling_drills {
-  lab_id                String    @db.Uuid
-  id                    String    @id @default(uuid(7)) @db.Uuid
-  name                  String
-  type                  String?
-  brand                 String?
-  serial_number         String?   @unique
-  max_teeth_recommended Int?
-  installed_at          DateTime?
-  changed_at            DateTime?
-  is_active             Boolean   @default(true)
-  deleted_at            DateTime?
-  notes                 String?
-  created_at            DateTime  @default(now())
-  updated_at            DateTime  @updatedAt
+  id                   String             @id @default(uuid(7)) @db.Uuid
+  lab_id               String             @db.Uuid
+  milling_machine_id   String?            @db.Uuid
+  name                 String
+  status               MillingDrillStatus @default(ACTIVE)
+  current_blocks_count Int                @default(0)
+  estimated_max_blocks Int?
+  installed_at         DateTime?
+  removed_at           DateTime?
+  notes                String?
+  created_at           DateTime           @default(now())
+  updated_at           DateTime           @updatedAt
 
-  labs           labs            @relation(fields: [lab_id], references: [id], onDelete: Cascade)
-  millings       case_millings[] @relation("LegacyMillingDrill")
-  fineMillings   case_millings[] @relation("FineMillingDrill")
-  coarseMillings case_millings[] @relation("CoarseMillingDrill")
+  labs             labs                       @relation(fields: [lab_id], references: [id], onDelete: Cascade)
+  milling_machines milling_machines?          @relation(fields: [milling_machine_id], references: [id], onDelete: SetNull)
+  millings         case_millings[]            @relation("LegacyMillingDrill")
+  fineMillings     case_millings[]            @relation("FineMillingDrill")
+  coarseMillings   case_millings[]            @relation("CoarseMillingDrill")
+  selected_slots   case_milling_drill_slots[]
 
   @@unique([lab_id, name])
   @@index([lab_id])
+  @@index([milling_machine_id])
+  @@index([status])
+}
+
+model milling_machines {
+  id                      String               @id @default(uuid(7)) @db.Uuid
+  lab_id                  String               @db.Uuid
+  name                    String
+  serial_number           String?
+  model                   String?
+  status                  MillingMachineStatus @default(ACTIVE)
+  status_reason           String?
+  installed_at            DateTime?
+  removed_at              DateTime?
+  last_maintenance_at     DateTime?
+  next_maintenance_due_at DateTime?
+  notes                   String?
+  created_at              DateTime             @default(now())
+  updated_at              DateTime             @updatedAt
+
+  labs           labs                    @relation(fields: [lab_id], references: [id], onDelete: Cascade)
+  case_millings  case_millings[]
+  milling_drills milling_drills[]
+  machine_slots  milling_machine_slots[]
+
+  @@unique([lab_id, name])
+  @@unique([lab_id, serial_number])
+  @@index([lab_id])
+  @@index([status])
+}
+
+model milling_machine_slots {
+  id                 String   @id @default(uuid(7)) @db.Uuid
+  milling_machine_id String   @db.Uuid
+  label              String
+  sort_order         Int
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+
+  milling_machines       milling_machines           @relation(fields: [milling_machine_id], references: [id], onDelete: Cascade)
+  selected_milling_slots case_milling_drill_slots[]
+
+  @@unique([milling_machine_id, label])
+  @@unique([milling_machine_id, sort_order])
+  @@index([milling_machine_id])
 }
 
 model case_millings {
@@ -197,6 +295,7 @@ model case_millings {
   lab_id                  String        @db.Uuid
   case_id                 String        @db.Uuid
   block_type_id           String        @db.Uuid
+  milling_machine_id      String?       @db.Uuid
   milling_drill_id        String?       @db.Uuid
   fine_milling_drill_id   String?       @db.Uuid
   coarse_milling_drill_id String?       @db.Uuid
@@ -204,29 +303,53 @@ model case_millings {
   status                  MillingStatus @default(SUCCESS)
 
   teeth_milled_qty Int      @default(0)
+  blocks_used_qty  Int      @default(1)
   failure_reason   String?
   notes            String?
   milled_at        DateTime @default(now())
   created_at       DateTime @default(now())
   updated_at       DateTime @updatedAt
 
-  labs               labs            @relation(fields: [lab_id], references: [id], onDelete: Cascade)
-  cases              cases           @relation(fields: [case_id], references: [id], onDelete: Cascade)
-  block_types        block_types     @relation(fields: [block_type_id], references: [id], onDelete: Restrict)
-  milling_drills     milling_drills? @relation("LegacyMillingDrill", fields: [milling_drill_id], references: [id], onDelete: SetNull)
-  fineMillingDrill   milling_drills? @relation("FineMillingDrill", fields: [fine_milling_drill_id], references: [id], onDelete: SetNull)
-  coarseMillingDrill milling_drills? @relation("CoarseMillingDrill", fields: [coarse_milling_drill_id], references: [id], onDelete: SetNull)
-  redoneFromMilling  case_millings?  @relation("MillingRedo", fields: [redone_from_milling_id], references: [id], onDelete: SetNull)
-  redos              case_millings[] @relation("MillingRedo")
+  labs                 labs                       @relation(fields: [lab_id], references: [id], onDelete: Cascade)
+  cases                cases                      @relation(fields: [case_id], references: [id], onDelete: Cascade)
+  block_types          block_types                @relation(fields: [block_type_id], references: [id], onDelete: Restrict)
+  milling_machines     milling_machines?          @relation(fields: [milling_machine_id], references: [id], onDelete: SetNull)
+  milling_drills       milling_drills?            @relation("LegacyMillingDrill", fields: [milling_drill_id], references: [id], onDelete: SetNull)
+  fineMillingDrill     milling_drills?            @relation("FineMillingDrill", fields: [fine_milling_drill_id], references: [id], onDelete: SetNull)
+  coarseMillingDrill   milling_drills?            @relation("CoarseMillingDrill", fields: [coarse_milling_drill_id], references: [id], onDelete: SetNull)
+  selected_drill_slots case_milling_drill_slots[]
+  redoneFromMilling    case_millings?             @relation("MillingRedo", fields: [redone_from_milling_id], references: [id], onDelete: SetNull)
+  redos                case_millings[]            @relation("MillingRedo")
 
   @@index([lab_id])
   @@index([case_id])
   @@index([block_type_id])
+  @@index([milling_machine_id])
   @@index([milling_drill_id])
   @@index([fine_milling_drill_id])
   @@index([coarse_milling_drill_id])
   @@index([redone_from_milling_id])
   @@index([status])
+}
+
+model case_milling_drill_slots {
+  id                      String   @id @default(uuid(7)) @db.Uuid
+  milling_id              String   @db.Uuid
+  milling_machine_slot_id String?  @db.Uuid
+  milling_drill_id        String   @db.Uuid
+  slot_label_snapshot     String
+  slot_order_snapshot     Int
+  created_at              DateTime @default(now())
+  updated_at              DateTime @updatedAt
+
+  case_millings         case_millings          @relation(fields: [milling_id], references: [id], onDelete: Cascade)
+  milling_machine_slots milling_machine_slots? @relation(fields: [milling_machine_slot_id], references: [id], onDelete: SetNull)
+  milling_drills        milling_drills         @relation(fields: [milling_drill_id], references: [id], onDelete: Restrict)
+
+  @@unique([milling_id, slot_order_snapshot])
+  @@index([milling_id])
+  @@index([milling_machine_slot_id])
+  @@index([milling_drill_id])
 }
 
 model case_attachments {
@@ -248,22 +371,25 @@ model case_attachments {
 }
 
 model customers {
-  id         String    @id @default(uuid(7)) @db.Uuid
-  lab_id     String    @db.Uuid
-  name       String
-  phone      String?
-  email      String?
-  notes      String?
-  is_active  Boolean   @default(true)
-  deleted_at DateTime?
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
+  id             String    @id @default(uuid(7)) @db.Uuid
+  lab_id         String    @db.Uuid
+  price_table_id String?   @db.Uuid
+  name           String
+  phone          String?
+  email          String?
+  notes          String?
+  is_active      Boolean   @default(true)
+  deleted_at     DateTime?
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @updatedAt
 
-  labs     labs       @relation(fields: [lab_id], references: [id], onDelete: Cascade)
-  dentists dentists[]
-  cases    cases[]
+  labs         labs          @relation(fields: [lab_id], references: [id], onDelete: Cascade)
+  price_tables price_tables? @relation(fields: [price_table_id], references: [id], onDelete: SetNull)
+  dentists     dentists[]
+  cases        cases[]
 
   @@index([lab_id])
+  @@index([price_table_id])
 }
 
 model dentists {
@@ -348,15 +474,18 @@ model block_types {
 }
 
 model cases {
-  id                 String     @id @default(uuid(7)) @db.Uuid
-  lab_id             String     @db.Uuid
-  code               String
-  patient_name       String
-  customer_id        String?    @db.Uuid
-  service_type_id    String?    @db.Uuid
-  dentist_id         String?    @db.Uuid
-  created_by_user_id String?    @db.Uuid
-  current_status     CaseStatus @default(ENTRY)
+  id                          String     @id @default(uuid(7)) @db.Uuid
+  lab_id                      String     @db.Uuid
+  code                        String
+  patient_name                String
+  customer_id                 String?    @db.Uuid
+  service_type_id             String?    @db.Uuid
+  dentist_id                  String?    @db.Uuid
+  created_by_user_id          String?    @db.Uuid
+  current_status              CaseStatus @default(IN_PRODUCTION)
+  service_base_price_snapshot Decimal?   @db.Decimal(10, 2)
+  case_price                  Decimal?   @db.Decimal(10, 2)
+  is_price_overridden         Boolean    @default(false)
 
   teeth        String?
   elements_qty Int?
@@ -364,12 +493,14 @@ model cases {
   due_date     DateTime?
   is_urgent    Boolean   @default(false)
   observations String?
-  pending_note String?
 
   caseComponentUsages case_component_usages[]
   statusHistory       case_status_histories[]
   millings            case_millings[]
   case_processes      case_processes[]
+  case_services       case_services[]
+  case_comments       case_comments[]
+  case_thread_reads   case_thread_reads[]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -394,9 +525,53 @@ model cases {
   @@index([created_by_user_id])
 }
 
+model case_comments {
+  id                   String    @id @default(uuid(7)) @db.Uuid
+  case_id              String    @db.Uuid
+  author_user_id       String    @db.Uuid
+  author_lab_member_id String    @db.Uuid
+  body                 String
+  created_at           DateTime  @default(now())
+  deleted_at           DateTime?
+  deleted_by_user_id   String?   @db.Uuid
+
+  cases           cases               @relation(fields: [case_id], references: [id], onDelete: Cascade)
+  authorUser      users               @relation("CaseCommentAuthor", fields: [author_user_id], references: [id], onDelete: Restrict)
+  authorLabMember lab_members         @relation("CaseCommentLabMember", fields: [author_lab_member_id], references: [id], onDelete: Restrict)
+  deletedByUser   users?              @relation("CaseCommentDeletedBy", fields: [deleted_by_user_id], references: [id], onDelete: SetNull)
+  readStates      case_thread_reads[] @relation("CaseThreadReadLastComment")
+
+  @@index([case_id, created_at])
+  @@index([author_user_id])
+  @@index([author_lab_member_id])
+  @@index([deleted_by_user_id])
+}
+
+model case_thread_reads {
+  id                   String    @id @default(uuid(7)) @db.Uuid
+  case_id              String    @db.Uuid
+  user_id              String    @db.Uuid
+  lab_member_id        String    @db.Uuid
+  last_read_comment_id String?   @db.Uuid
+  last_read_at         DateTime?
+  created_at           DateTime  @default(now())
+  updated_at           DateTime  @updatedAt
+
+  cases           cases          @relation(fields: [case_id], references: [id], onDelete: Cascade)
+  users           users          @relation("CaseThreadReadUser", fields: [user_id], references: [id], onDelete: Cascade)
+  lab_members     lab_members    @relation("CaseThreadReadLabMember", fields: [lab_member_id], references: [id], onDelete: Cascade)
+  lastReadComment case_comments? @relation("CaseThreadReadLastComment", fields: [last_read_comment_id], references: [id], onDelete: SetNull)
+
+  @@unique([case_id, lab_member_id])
+  @@index([user_id])
+  @@index([lab_member_id])
+  @@index([last_read_comment_id])
+}
+
 model case_processes {
   id                     String            @id @default(uuid(7)) @db.Uuid
   case_id                String            @db.Uuid
+  case_service_id        String            @db.Uuid
   process_id             String            @db.Uuid
   workflow_step_id       String
   status                 CaseProcessStatus @default(LOCKED)
@@ -407,16 +582,38 @@ model case_processes {
   updated_at             DateTime          @updatedAt
 
   cases              cases                       @relation(fields: [case_id], references: [id], onDelete: Cascade)
+  case_services      case_services               @relation(fields: [case_service_id], references: [id], onDelete: Cascade)
   processes          processes                   @relation(fields: [process_id], references: [id], onDelete: Restrict)
   assignedLabMember  lab_members?                @relation("CaseProcessAssignee", fields: [assigned_lab_member_id], references: [id], onDelete: SetNull)
   dependencies       case_process_dependencies[] @relation("CaseProcessDependencyTarget")
   dependentProcesses case_process_dependencies[] @relation("CaseProcessDependencySource")
 
-  @@unique([case_id, workflow_step_id])
+  @@unique([case_service_id, workflow_step_id])
   @@index([case_id])
+  @@index([case_service_id])
   @@index([process_id])
   @@index([assigned_lab_member_id])
   @@index([status])
+}
+
+model case_services {
+  id                          String   @id @default(uuid(7)) @db.Uuid
+  case_id                     String   @db.Uuid
+  service_type_id             String   @db.Uuid
+  service_name_snapshot       String
+  service_base_price_snapshot Decimal  @db.Decimal(10, 2)
+  unit_price                  Decimal  @db.Decimal(10, 2)
+  is_unit_price_overridden    Boolean  @default(false)
+  quantity                    Int
+  created_at                  DateTime @default(now())
+  updated_at                  DateTime @updatedAt
+
+  cases          cases            @relation(fields: [case_id], references: [id], onDelete: Cascade)
+  service_types  service_types    @relation(fields: [service_type_id], references: [id], onDelete: Restrict)
+  case_processes case_processes[]
+
+  @@index([case_id])
+  @@index([service_type_id])
 }
 
 model case_process_dependencies {

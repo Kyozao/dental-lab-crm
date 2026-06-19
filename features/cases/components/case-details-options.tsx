@@ -25,11 +25,11 @@ export function CaseOptionsFallback() {
   return (
     <>
       <div className="grid gap-4 sm:grid-cols-2">
+        <OptionFieldFallback label="Código" />
         <OptionFieldFallback label="Paciente" />
-        <OptionFieldFallback label="Customer" />
+        <OptionFieldFallback label="Cliente" />
         <OptionFieldFallback label="Dentista" />
-        <OptionFieldFallback label="Tipo de servico" />
-        <OptionFieldFallback label="CADista" />
+        <OptionFieldFallback label="Tipo de serviço" />
         <OptionFieldFallback label="Status" />
         <OptionFieldFallback label="Dentes" />
         <OptionFieldFallback label="No. de elementos" />
@@ -37,7 +37,6 @@ export function CaseOptionsFallback() {
         <OptionFieldFallback label="Prazo" />
         <OptionFieldFallback label="Urgente" />
       </div>
-      <OptionFieldFallback label="Pendencia" variant="textarea" />
       <OptionFieldFallback label="Observacoes" variant="textarea" />
     </>
   );

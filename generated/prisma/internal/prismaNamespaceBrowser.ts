@@ -55,10 +55,15 @@ export const ModelName = {
   labs: 'labs',
   lab_members: 'lab_members',
   service_types: 'service_types',
+  price_tables: 'price_tables',
+  price_table_service_prices: 'price_table_service_prices',
   processes: 'processes',
   employee_process_assignments: 'employee_process_assignments',
   milling_drills: 'milling_drills',
+  milling_machines: 'milling_machines',
+  milling_machine_slots: 'milling_machine_slots',
   case_millings: 'case_millings',
+  case_milling_drill_slots: 'case_milling_drill_slots',
   case_attachments: 'case_attachments',
   customers: 'customers',
   dentists: 'dentists',
@@ -66,7 +71,10 @@ export const ModelName = {
   case_component_usages: 'case_component_usages',
   block_types: 'block_types',
   cases: 'cases',
+  case_comments: 'case_comments',
+  case_thread_reads: 'case_thread_reads',
   case_processes: 'case_processes',
+  case_services: 'case_services',
   case_process_dependencies: 'case_process_dependencies',
   case_status_histories: 'case_status_histories',
   notifications: 'notifications',
@@ -105,6 +113,7 @@ export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof Us
 export const LabsScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  currency: 'currency',
   is_active: 'is_active',
   created_at: 'created_at',
   updated_at: 'updated_at'
@@ -128,6 +137,7 @@ export const Service_typesScalarFieldEnum = {
   id: 'id',
   lab_id: 'lab_id',
   name: 'name',
+  base_price: 'base_price',
   is_active: 'is_active',
   deleted_at: 'deleted_at',
   notes: 'notes',
@@ -137,6 +147,31 @@ export const Service_typesScalarFieldEnum = {
 } as const
 
 export type Service_typesScalarFieldEnum = (typeof Service_typesScalarFieldEnum)[keyof typeof Service_typesScalarFieldEnum]
+
+
+export const Price_tablesScalarFieldEnum = {
+  id: 'id',
+  lab_id: 'lab_id',
+  name: 'name',
+  is_active: 'is_active',
+  deleted_at: 'deleted_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Price_tablesScalarFieldEnum = (typeof Price_tablesScalarFieldEnum)[keyof typeof Price_tablesScalarFieldEnum]
+
+
+export const Price_table_service_pricesScalarFieldEnum = {
+  id: 'id',
+  price_table_id: 'price_table_id',
+  service_type_id: 'service_type_id',
+  price: 'price',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Price_table_service_pricesScalarFieldEnum = (typeof Price_table_service_pricesScalarFieldEnum)[keyof typeof Price_table_service_pricesScalarFieldEnum]
 
 
 export const ProcessesScalarFieldEnum = {
@@ -165,17 +200,15 @@ export type Employee_process_assignmentsScalarFieldEnum = (typeof Employee_proce
 
 
 export const Milling_drillsScalarFieldEnum = {
-  lab_id: 'lab_id',
   id: 'id',
+  lab_id: 'lab_id',
+  milling_machine_id: 'milling_machine_id',
   name: 'name',
-  type: 'type',
-  brand: 'brand',
-  serial_number: 'serial_number',
-  max_teeth_recommended: 'max_teeth_recommended',
+  status: 'status',
+  current_blocks_count: 'current_blocks_count',
+  estimated_max_blocks: 'estimated_max_blocks',
   installed_at: 'installed_at',
-  changed_at: 'changed_at',
-  is_active: 'is_active',
-  deleted_at: 'deleted_at',
+  removed_at: 'removed_at',
   notes: 'notes',
   created_at: 'created_at',
   updated_at: 'updated_at'
@@ -184,17 +217,51 @@ export const Milling_drillsScalarFieldEnum = {
 export type Milling_drillsScalarFieldEnum = (typeof Milling_drillsScalarFieldEnum)[keyof typeof Milling_drillsScalarFieldEnum]
 
 
+export const Milling_machinesScalarFieldEnum = {
+  id: 'id',
+  lab_id: 'lab_id',
+  name: 'name',
+  serial_number: 'serial_number',
+  model: 'model',
+  status: 'status',
+  status_reason: 'status_reason',
+  installed_at: 'installed_at',
+  removed_at: 'removed_at',
+  last_maintenance_at: 'last_maintenance_at',
+  next_maintenance_due_at: 'next_maintenance_due_at',
+  notes: 'notes',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Milling_machinesScalarFieldEnum = (typeof Milling_machinesScalarFieldEnum)[keyof typeof Milling_machinesScalarFieldEnum]
+
+
+export const Milling_machine_slotsScalarFieldEnum = {
+  id: 'id',
+  milling_machine_id: 'milling_machine_id',
+  label: 'label',
+  sort_order: 'sort_order',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Milling_machine_slotsScalarFieldEnum = (typeof Milling_machine_slotsScalarFieldEnum)[keyof typeof Milling_machine_slotsScalarFieldEnum]
+
+
 export const Case_millingsScalarFieldEnum = {
   id: 'id',
   lab_id: 'lab_id',
   case_id: 'case_id',
   block_type_id: 'block_type_id',
+  milling_machine_id: 'milling_machine_id',
   milling_drill_id: 'milling_drill_id',
   fine_milling_drill_id: 'fine_milling_drill_id',
   coarse_milling_drill_id: 'coarse_milling_drill_id',
   redone_from_milling_id: 'redone_from_milling_id',
   status: 'status',
   teeth_milled_qty: 'teeth_milled_qty',
+  blocks_used_qty: 'blocks_used_qty',
   failure_reason: 'failure_reason',
   notes: 'notes',
   milled_at: 'milled_at',
@@ -203,6 +270,20 @@ export const Case_millingsScalarFieldEnum = {
 } as const
 
 export type Case_millingsScalarFieldEnum = (typeof Case_millingsScalarFieldEnum)[keyof typeof Case_millingsScalarFieldEnum]
+
+
+export const Case_milling_drill_slotsScalarFieldEnum = {
+  id: 'id',
+  milling_id: 'milling_id',
+  milling_machine_slot_id: 'milling_machine_slot_id',
+  milling_drill_id: 'milling_drill_id',
+  slot_label_snapshot: 'slot_label_snapshot',
+  slot_order_snapshot: 'slot_order_snapshot',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Case_milling_drill_slotsScalarFieldEnum = (typeof Case_milling_drill_slotsScalarFieldEnum)[keyof typeof Case_milling_drill_slotsScalarFieldEnum]
 
 
 export const Case_attachmentsScalarFieldEnum = {
@@ -225,6 +306,7 @@ export type Case_attachmentsScalarFieldEnum = (typeof Case_attachmentsScalarFiel
 export const CustomersScalarFieldEnum = {
   id: 'id',
   lab_id: 'lab_id',
+  price_table_id: 'price_table_id',
   name: 'name',
   phone: 'phone',
   email: 'email',
@@ -316,6 +398,9 @@ export const CasesScalarFieldEnum = {
   dentist_id: 'dentist_id',
   created_by_user_id: 'created_by_user_id',
   current_status: 'current_status',
+  service_base_price_snapshot: 'service_base_price_snapshot',
+  case_price: 'case_price',
+  is_price_overridden: 'is_price_overridden',
   teeth: 'teeth',
   elements_qty: 'elements_qty',
   shade: 'shade',
@@ -330,9 +415,38 @@ export const CasesScalarFieldEnum = {
 export type CasesScalarFieldEnum = (typeof CasesScalarFieldEnum)[keyof typeof CasesScalarFieldEnum]
 
 
+export const Case_commentsScalarFieldEnum = {
+  id: 'id',
+  case_id: 'case_id',
+  author_user_id: 'author_user_id',
+  author_lab_member_id: 'author_lab_member_id',
+  body: 'body',
+  created_at: 'created_at',
+  deleted_at: 'deleted_at',
+  deleted_by_user_id: 'deleted_by_user_id'
+} as const
+
+export type Case_commentsScalarFieldEnum = (typeof Case_commentsScalarFieldEnum)[keyof typeof Case_commentsScalarFieldEnum]
+
+
+export const Case_thread_readsScalarFieldEnum = {
+  id: 'id',
+  case_id: 'case_id',
+  user_id: 'user_id',
+  lab_member_id: 'lab_member_id',
+  last_read_comment_id: 'last_read_comment_id',
+  last_read_at: 'last_read_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Case_thread_readsScalarFieldEnum = (typeof Case_thread_readsScalarFieldEnum)[keyof typeof Case_thread_readsScalarFieldEnum]
+
+
 export const Case_processesScalarFieldEnum = {
   id: 'id',
   case_id: 'case_id',
+  case_service_id: 'case_service_id',
   process_id: 'process_id',
   workflow_step_id: 'workflow_step_id',
   status: 'status',
@@ -344,6 +458,22 @@ export const Case_processesScalarFieldEnum = {
 } as const
 
 export type Case_processesScalarFieldEnum = (typeof Case_processesScalarFieldEnum)[keyof typeof Case_processesScalarFieldEnum]
+
+
+export const Case_servicesScalarFieldEnum = {
+  id: 'id',
+  case_id: 'case_id',
+  service_type_id: 'service_type_id',
+  service_name_snapshot: 'service_name_snapshot',
+  service_base_price_snapshot: 'service_base_price_snapshot',
+  unit_price: 'unit_price',
+  is_unit_price_overridden: 'is_unit_price_overridden',
+  quantity: 'quantity',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Case_servicesScalarFieldEnum = (typeof Case_servicesScalarFieldEnum)[keyof typeof Case_servicesScalarFieldEnum]
 
 
 export const Case_process_dependenciesScalarFieldEnum = {

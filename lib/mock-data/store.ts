@@ -1,6 +1,6 @@
 import { CASE_STATUS, type CaseStatusValue } from "@/features/cases/types";
 
-type Role = "ADMIN" | "MANAGER" | "CAD_DESIGNER";
+type Role = "ADMIN" | "MANAGER" | "PRODUCTION";
 type AttachmentKind = "SCAN_INPUT" | "DESIGN_OUTPUT" | "MODEL_OUTPUT" | "OTHER";
 type MillingStatus = "SUCCESS" | "FAILED";
 
@@ -30,11 +30,20 @@ export type MockRegistryItem = {
   material?: string | null;
   size?: string | null;
   shade?: string | null;
-  type?: string | null;
-  serialNumber?: string | null;
   defaultCost?: string | null;
   defaultPrice?: string | null;
-  maxTeethRecommended?: number | null;
+  millingMachineId?: string | null;
+  status?:
+    | "ACTIVE"
+    | "INACTIVE"
+    | "MAINTENANCE"
+    | "STORED"
+    | "RETIRED"
+    | "LOST";
+  currentBlocksCount?: number | null;
+  estimatedMaxBlocks?: number | null;
+  installedAt?: string | null;
+  removedAt?: string | null;
   isActive?: boolean;
   deletedAt?: string | null;
 };
@@ -67,10 +76,12 @@ export type MockMilling = {
   dentalLabId: string;
   caseId: string;
   blockTypeId: string;
+  millingMachineId: string | null;
   millingDrillId: string | null;
   fineMillingDrillId: string | null;
   coarseMillingDrillId: string | null;
   teethMilledQty: number;
+  blocksUsedQty: number;
   status: MillingStatus;
   failureReason: string | null;
   notes: string | null;
@@ -118,6 +129,7 @@ type MockState = {
   serviceTypes: MockRegistryItem[];
   components: MockRegistryItem[];
   blockTypes: MockRegistryItem[];
+  millingMachines: MockRegistryItem[];
   millingDrills: MockRegistryItem[];
   cases: MockCase[];
   millings: MockMilling[];
@@ -161,7 +173,7 @@ function createInitialState(): MockState {
       labs: dentalLabs,
       name: "Ana CAD",
       email: "ana@demo.local",
-      role: "CAD_DESIGNER",
+      role: "PRODUCTION",
       isActive: true,
     },
     {
@@ -171,7 +183,7 @@ function createInitialState(): MockState {
       labs: dentalLabs,
       name: "Joao CAD",
       email: "joao@demo.local",
-      role: "CAD_DESIGNER",
+      role: "PRODUCTION",
       isActive: true,
     },
   ];
@@ -206,10 +218,15 @@ function createInitialState(): MockState {
     { id: "block-3", dentalLabId: "lab-vela-rio", name: "Zirconia A2", material: "Zirconia", brand: "RioBlock", size: "98mm", shade: "A2", defaultCost: "51", isActive: true },
   ];
 
+  const millingMachines: MockRegistryItem[] = [
+    { id: "machine-1", dentalLabId: "lab-vela-sao-paulo", name: "imes-icore 350i", status: "ACTIVE", installedAt: daysFromNow(-120), notes: "Primary demo machine for Sao Paulo drill assignments.", isActive: true },
+    { id: "machine-2", dentalLabId: "lab-vela-rio", name: "vhf K5+", status: "MAINTENANCE", installedAt: daysFromNow(-240), notes: "Rio demo machine currently under maintenance.", isActive: true },
+  ];
+
   const millingDrills: MockRegistryItem[] = [
-    { id: "drill-1", dentalLabId: "lab-vela-sao-paulo", name: "Diamond 1.0mm", type: "1.0mm", brand: "Roland", serialNumber: "D10-001", maxTeethRecommended: 120, notes: null, isActive: true },
-    { id: "drill-2", dentalLabId: "lab-vela-sao-paulo", name: "Diamond 2.5mm", type: "2.5mm", brand: "Roland", serialNumber: "D25-001", maxTeethRecommended: 100, notes: null, isActive: true },
-    { id: "drill-3", dentalLabId: "lab-vela-rio", name: "Diamond 1.0mm", type: "1.0mm", brand: "Roland", serialNumber: "RIO-D10-001", maxTeethRecommended: 120, notes: null, isActive: true },
+    { id: "drill-1", dentalLabId: "lab-vela-sao-paulo", name: "Diamond 1.0mm", millingMachineId: "machine-1", status: "ACTIVE", currentBlocksCount: 42, estimatedMaxBlocks: 120, installedAt: daysFromNow(-45), removedAt: null, notes: null, isActive: true },
+    { id: "drill-2", dentalLabId: "lab-vela-sao-paulo", name: "Diamond 2.5mm", millingMachineId: "machine-1", status: "ACTIVE", currentBlocksCount: 31, estimatedMaxBlocks: 100, installedAt: daysFromNow(-30), removedAt: null, notes: null, isActive: true },
+    { id: "drill-3", dentalLabId: "lab-vela-rio", name: "Diamond 1.0mm", millingMachineId: null, status: "STORED", currentBlocksCount: 118, estimatedMaxBlocks: 120, installedAt: daysFromNow(-180), removedAt: daysFromNow(-7), notes: "Stored after preventive replacement.", isActive: true },
   ];
 
   const cases: MockCase[] = [
@@ -220,7 +237,7 @@ function createInitialState(): MockState {
       code: "DL-1001",
       clientCaseCode: "SIL-449",
       patientName: "Maria Oliveira",
-      currentStatus: CASE_STATUS.DESIGNING,
+      currentStatus: CASE_STATUS.IN_PRODUCTION,
       teeth: "11, 12, 13",
       elementsQty: 3,
       shade: "A2",
@@ -235,7 +252,7 @@ function createInitialState(): MockState {
       serviceTypeId: "service-2",
       components: [{ id: "usage-1", componentId: "component-1", quantity: 2, chargeClient: true, unitCost: "35", unitPrice: "90", notes: null }],
       attachments: [{ id: "att-1", caseId: "case-1", fileName: "scan-maria.zip", filePath: "mock/case-1/scan-maria.zip", fileType: "application/zip", fileSize: 2048000, kind: "SCAN_INPUT", retentionUntil: daysFromNow(90), createdAt: daysFromNow(-4), uploadedByName: "Demo Manager" }],
-      statusHistory: [{ id: "history-1", fromStatus: null, toStatus: CASE_STATUS.ENTRY, note: "Case created", changedAt: daysFromNow(-4) }],
+      statusHistory: [{ id: "history-1", fromStatus: null, toStatus: CASE_STATUS.IN_PRODUCTION, note: "Case created", changedAt: daysFromNow(-4) }],
     },
     {
       id: "case-2",
@@ -244,7 +261,7 @@ function createInitialState(): MockState {
       code: "DL-1002",
       clientCaseCode: "OP-881",
       patientName: "Rafael Costa",
-      currentStatus: CASE_STATUS.DESIGN_READY,
+      currentStatus: CASE_STATUS.IN_PRODUCTION,
       teeth: "36",
       elementsQty: 1,
       shade: "A3",
@@ -259,7 +276,7 @@ function createInitialState(): MockState {
       serviceTypeId: "service-1",
       components: [],
       attachments: [],
-      statusHistory: [{ id: "history-2", fromStatus: CASE_STATUS.DESIGNING, toStatus: CASE_STATUS.DESIGN_READY, note: "Design approved", changedAt: daysFromNow(-1) }],
+      statusHistory: [{ id: "history-2", fromStatus: null, toStatus: CASE_STATUS.IN_PRODUCTION, note: "Case created", changedAt: daysFromNow(-3) }],
     },
     {
       id: "case-3",
@@ -283,7 +300,7 @@ function createInitialState(): MockState {
       serviceTypeId: "service-1",
       components: [],
       attachments: [],
-      statusHistory: [{ id: "history-3", fromStatus: CASE_STATUS.MILLING_PRINTING, toStatus: CASE_STATUS.DONE, note: "Completed", changedAt: daysFromNow(-2) }],
+      statusHistory: [{ id: "history-3", fromStatus: CASE_STATUS.IN_PRODUCTION, toStatus: CASE_STATUS.DONE, note: "Completed", changedAt: daysFromNow(-2) }],
     },
     {
       id: "case-4",
@@ -292,7 +309,7 @@ function createInitialState(): MockState {
       code: "DL-1001",
       clientCaseCode: "RIO-144",
       patientName: "Paula Mendes",
-      currentStatus: CASE_STATUS.DESIGNING,
+      currentStatus: CASE_STATUS.IN_PRODUCTION,
       teeth: "14",
       elementsQty: 1,
       shade: "A1",
@@ -307,7 +324,7 @@ function createInitialState(): MockState {
       serviceTypeId: "service-3",
       components: [],
       attachments: [],
-      statusHistory: [{ id: "history-4", fromStatus: null, toStatus: CASE_STATUS.ENTRY, note: "Case created", changedAt: daysFromNow(-2) }],
+      statusHistory: [{ id: "history-4", fromStatus: null, toStatus: CASE_STATUS.IN_PRODUCTION, note: "Case created", changedAt: daysFromNow(-2) }],
     },
   ];
 
@@ -317,10 +334,12 @@ function createInitialState(): MockState {
       dentalLabId: "lab-vela-sao-paulo",
       caseId: "case-3",
       blockTypeId: "block-1",
+      millingMachineId: "machine-1",
       millingDrillId: null,
       fineMillingDrillId: "drill-1",
       coarseMillingDrillId: "drill-2",
       teethMilledQty: 2,
+      blocksUsedQty: 1,
       status: "SUCCESS",
       failureReason: null,
       notes: "Clean run.",
@@ -338,6 +357,7 @@ function createInitialState(): MockState {
     serviceTypes,
     components,
     blockTypes,
+    millingMachines,
     millingDrills,
     cases,
     millings,
@@ -472,6 +492,10 @@ function drill(id: string | null) {
   return state().millingDrills.find((item) => item.id === id) ?? null;
 }
 
+function machine(id: string | null) {
+  return state().millingMachines.find((item) => item.id === id) ?? null;
+}
+
 function activeCustomer(id: string | null) {
   const item = findCustomer(id);
   return item && item.dentalLabId === activeDentalLabId() && isActiveReference(item) ? item : null;
@@ -556,6 +580,7 @@ export function serializeCase(item: MockCase, detailed = false) {
             id: milling.id,
             status: milling.status,
             teethMilledQty: milling.teethMilledQty,
+            blocksUsedQty: milling.blocksUsedQty,
             failureReason: milling.failureReason,
             notes: milling.notes,
             milledAt: milling.milledAt,
@@ -625,7 +650,7 @@ export function createCase(payload: Record<string, unknown>) {
     code: String(payload.code || `DL-${state().nextId}`),
     clientCaseCode: null,
     patientName: String(payload.patientName || "New Patient"),
-    currentStatus: (payload.currentStatus as CaseStatusValue) || CASE_STATUS.ENTRY,
+    currentStatus: (payload.currentStatus as CaseStatusValue) || CASE_STATUS.IN_PRODUCTION,
     teeth: String(payload.teeth || ""),
     elementsQty: Number(payload.elementsQty || 0) || null,
     shade: String(payload.shade || ""),
@@ -640,7 +665,7 @@ export function createCase(payload: Record<string, unknown>) {
     serviceTypeId: typeof payload.serviceTypeId === "string" ? payload.serviceTypeId : null,
     components: normalizeCaseComponents(payload.components),
     attachments: [],
-    statusHistory: [{ id: id("history"), fromStatus: null, toStatus: CASE_STATUS.ENTRY, note: "Case created", changedAt: createdAt }],
+    statusHistory: [{ id: id("history"), fromStatus: null, toStatus: (payload.currentStatus as CaseStatusValue) || CASE_STATUS.IN_PRODUCTION, note: typeof payload.statusReason === "string" && payload.statusReason ? payload.statusReason : "Case created", changedAt: createdAt }],
   };
   state().cases.unshift(item);
   return serializeCase(item, true);
@@ -676,7 +701,12 @@ export function updateCase(idValue: string, payload: Record<string, unknown>) {
       id: id("history"),
       fromStatus: previousStatus,
       toStatus: item.currentStatus,
-      note: typeof payload.note === "string" && payload.note ? payload.note : "Status updated via mock API",
+      note:
+        typeof payload.statusReason === "string" && payload.statusReason
+          ? payload.statusReason
+          : typeof payload.note === "string" && payload.note
+            ? payload.note
+            : "Status updated via mock API",
       changedAt: item.updatedAt,
     });
   }
@@ -756,8 +786,16 @@ export function getDashboardData() {
   const doneDate = (item: MockCase) => new Date(item.statusHistory.find((history) => history.toStatus === CASE_STATUS.DONE)?.changedAt ?? item.updatedAt);
   const designerStats = Object.values(CASE_STATUS).map((status) => {
     const assigned = allCases.filter((item) => item.currentStatus === status);
-    const active = assigned.filter((item) => item.currentStatus !== CASE_STATUS.DONE);
-    const completed = assigned.filter((item) => item.currentStatus === CASE_STATUS.DONE);
+    const active = assigned.filter(
+      (item) =>
+        item.currentStatus !== CASE_STATUS.DONE &&
+        item.currentStatus !== CASE_STATUS.CANCELLED,
+    );
+    const completed = assigned.filter(
+      (item) =>
+        item.currentStatus === CASE_STATUS.DONE ||
+        item.currentStatus === CASE_STATUS.CANCELLED,
+    );
     return {
       id: status,
       name: status.replace(/_/g, " "),
@@ -778,7 +816,11 @@ export function getDashboardData() {
       completionRate: assigned.length ? Math.round((completed.length / assigned.length) * 100) : 0,
     };
   }).filter((item) => item.totalCases > 0);
-  const completed = allCases.filter((item) => item.currentStatus === CASE_STATUS.DONE);
+  const completed = allCases.filter(
+    (item) =>
+      item.currentStatus === CASE_STATUS.DONE ||
+      item.currentStatus === CASE_STATUS.CANCELLED,
+  );
 
   return {
     summary: {
@@ -786,9 +828,20 @@ export function getDashboardData() {
       totalAssignedCases: allCases.length,
       totalTeethDesigned: allCases.reduce((sum, item) => sum + teethCount(item), 0),
       openCases: allCases.length - completed.length,
-      openTeeth: allCases.filter((item) => item.currentStatus !== CASE_STATUS.DONE).reduce((sum, item) => sum + teethCount(item), 0),
+      openTeeth: allCases
+        .filter(
+          (item) =>
+            item.currentStatus !== CASE_STATUS.DONE &&
+            item.currentStatus !== CASE_STATUS.CANCELLED,
+        )
+        .reduce((sum, item) => sum + teethCount(item), 0),
       completedThisMonth: completed.filter((item) => doneDate(item) >= monthStart).length,
-      urgentOpenCases: allCases.filter((item) => item.currentStatus !== CASE_STATUS.DONE && item.isUrgent).length,
+      urgentOpenCases: allCases.filter(
+        (item) =>
+          item.currentStatus !== CASE_STATUS.DONE &&
+          item.currentStatus !== CASE_STATUS.CANCELLED &&
+          item.isUrgent,
+      ).length,
       avgTurnaroundDays: completed.length
         ? Number((completed.reduce((sum, item) => sum + (doneDate(item).getTime() - new Date(item.createdAt).getTime()) / 86400000, 0) / completed.length).toFixed(1))
         : null,
@@ -867,15 +920,34 @@ function normalizeRegistryPayload(entity: string, itemId: string, payload: Recor
   if (entity === "components") return { ...base, category: String(payload.category || ""), brand: String(payload.brand || ""), defaultCost: String(payload.defaultCost || "0"), defaultPrice: String(payload.defaultPrice || "0") };
   if (entity === "block-types") return { ...base, material: String(payload.material || ""), brand: String(payload.brand || ""), size: String(payload.size || ""), shade: String(payload.shade || ""), defaultCost: String(payload.defaultCost || "0") };
   if (entity === "service-types" || entity === "lab-customers") return base;
-  return { ...base, type: String(payload.type || ""), brand: String(payload.brand || ""), serialNumber: String(payload.serialNumber || ""), maxTeethRecommended: Number(payload.maxTeethRecommended || 0) || null };
+  return {
+    ...base,
+    millingMachineId:
+      typeof payload.millingMachineId === "string" && payload.millingMachineId
+        ? payload.millingMachineId
+        : null,
+    status:
+      payload.status === "STORED" ||
+      payload.status === "RETIRED" ||
+      payload.status === "LOST"
+        ? payload.status
+        : "ACTIVE",
+    currentBlocksCount: Number(payload.currentBlocksCount || 0),
+    estimatedMaxBlocks: Number(payload.estimatedMaxBlocks || 0) || null,
+    installedAt:
+      typeof payload.installedAt === "string" && payload.installedAt
+        ? new Date(payload.installedAt).toISOString()
+        : null,
+    removedAt:
+      typeof payload.removedAt === "string" && payload.removedAt
+        ? new Date(payload.removedAt).toISOString()
+        : null,
+  };
 }
 
 export function getProductionData() {
   const store = state();
-  const productionStatuses: CaseStatusValue[] = [
-    CASE_STATUS.DESIGN_READY,
-    CASE_STATUS.MILLING_PRINTING,
-  ];
+  const productionStatuses: CaseStatusValue[] = [CASE_STATUS.IN_PRODUCTION];
   const readyCases = store.cases
     .filter((item) => item.dentalLabId === activeDentalLabId() && productionStatuses.includes(item.currentStatus))
     .map((item) => ({ id: item.id, code: item.code, patientName: item.patientName }));
@@ -896,6 +968,7 @@ export function getProductionData() {
             }
           : null,
         blockType: blockType(milling.blockTypeId),
+        millingMachine: machine(milling.millingMachineId),
         millingDrill: drill(milling.millingDrillId),
         fineMillingDrill: drill(milling.fineMillingDrillId),
         coarseMillingDrill: drill(milling.coarseMillingDrillId),
@@ -906,7 +979,14 @@ export function getProductionData() {
   return {
     millings,
     blockTypes: store.blockTypes.filter((item) => item.dentalLabId === activeDentalLabId() && isActiveReference(item)).map((item) => ({ id: item.id, name: item.name, shade: item.shade ?? null })),
-    millingDrills: store.millingDrills.filter((item) => item.dentalLabId === activeDentalLabId() && isActiveReference(item)).map((item) => ({ id: item.id, name: item.name, brand: item.brand ?? null, type: item.type ?? null, maxTeethRecommended: item.maxTeethRecommended ?? null })),
+    millingDrills: store.millingDrills
+      .filter(
+        (item) =>
+          item.dentalLabId === activeDentalLabId() &&
+          isActiveReference(item) &&
+          item.status === "ACTIVE",
+      )
+      .map((item) => ({ id: item.id, name: item.name })),
     readyCases,
   };
 }
@@ -918,17 +998,23 @@ export function createMilling(payload: Record<string, unknown>) {
     dentalLabId,
     caseId: String(payload.caseId || ""),
     blockTypeId: String(payload.blockTypeId || ""),
+    millingMachineId: typeof payload.millingMachineId === "string" && payload.millingMachineId ? payload.millingMachineId : null,
     millingDrillId: typeof payload.millingDrillId === "string" && payload.millingDrillId ? payload.millingDrillId : null,
     fineMillingDrillId: typeof payload.fineMillingDrillId === "string" && payload.fineMillingDrillId ? payload.fineMillingDrillId : null,
     coarseMillingDrillId: typeof payload.coarseMillingDrillId === "string" && payload.coarseMillingDrillId ? payload.coarseMillingDrillId : null,
-    teethMilledQty: Number(payload.teethMilledQty || 0),
+    teethMilledQty: Number(
+      payload.teethMilledQty ||
+        state().cases.find((caseItem) => caseItem.id === String(payload.caseId || ""))?.elementsQty ||
+        0,
+    ),
+    blocksUsedQty: Math.max(1, Number(payload.blocksUsedQty || 1)),
     status: payload.status === "FAILED" ? "FAILED" : "SUCCESS",
     failureReason: typeof payload.failureReason === "string" && payload.failureReason ? payload.failureReason : null,
     notes: typeof payload.notes === "string" && payload.notes ? payload.notes : null,
     milledAt: typeof payload.milledAt === "string" ? new Date(payload.milledAt).toISOString() : now(),
   };
   state().millings.unshift(item);
-  updateCase(item.caseId, { currentStatus: CASE_STATUS.MILLING_PRINTING });
+  updateCase(item.caseId, { currentStatus: CASE_STATUS.IN_PRODUCTION });
   return item;
 }
 
@@ -938,9 +1024,14 @@ export function updateMilling(itemId: string, payload: Record<string, unknown>) 
   Object.assign(item, {
     caseId: String(payload.caseId || item.caseId),
     blockTypeId: String(payload.blockTypeId || item.blockTypeId),
+    millingMachineId:
+      typeof payload.millingMachineId === "string" && payload.millingMachineId
+        ? payload.millingMachineId
+        : null,
     fineMillingDrillId: typeof payload.fineMillingDrillId === "string" && payload.fineMillingDrillId ? payload.fineMillingDrillId : null,
     coarseMillingDrillId: typeof payload.coarseMillingDrillId === "string" && payload.coarseMillingDrillId ? payload.coarseMillingDrillId : null,
     teethMilledQty: Number(payload.teethMilledQty || item.teethMilledQty),
+    blocksUsedQty: Math.max(1, Number(payload.blocksUsedQty || item.blocksUsedQty)),
     status: payload.status === "FAILED" ? "FAILED" : "SUCCESS",
     failureReason: typeof payload.failureReason === "string" && payload.failureReason ? payload.failureReason : null,
     notes: typeof payload.notes === "string" && payload.notes ? payload.notes : null,

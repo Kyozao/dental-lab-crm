@@ -1,6 +1,9 @@
 import { api } from "@/lib/api";
 import type {
+  CaseServiceLineItem,
+  CaseCommentItem,
   CaseProcessItem,
+  CaseStatusHistoryItem,
   CaseStatusValue,
   CaseWorkflow,
   ProcessOption,
@@ -11,26 +14,47 @@ export type CaseListItem = {
   dentalLabId: string;
   code: string;
   patientName: string;
+  patientDetail: string | null;
   customerId: string | null;
   customerName: string | null;
   serviceTypeId: string | null;
   serviceTypeName: string | null;
+  serviceLineCount: number;
   dentistId: string | null;
   dentistName: string | null;
   createdByUserId: string | null;
   createdByUserName: string | null;
   currentStatus: CaseStatusValue;
+  serviceBasePriceSnapshot: string | null;
+  casePrice: string | null;
+  isPriceOverridden: boolean;
+  serviceLabel: string | null;
+  labCurrency: string;
   teeth: string | null;
   elementsQty: number | null;
   shade: string | null;
   dueDate: string | null;
   isUrgent: boolean;
+  priority: "urgent" | "high" | "normal" | "low";
   observations: string | null;
   pendingNote: string | null;
+  currentCaseProcessId: string | null;
+  currentProcessId: string | null;
+  currentWorkflowStepId: string | null;
+  currentProcessName: string | null;
+  currentProcessStatus: string | null;
+  currentProcessAssigneeName: string | null;
+  currentProcessAssigneeId: string | null;
+  progressPercent: number;
+  completedSteps: number;
+  totalSteps: number;
   createdAt: string;
   updatedAt: string;
   processes?: CaseProcessItem[];
+  serviceLines?: CaseServiceLineItem[];
   availableProcesses?: ProcessOption[];
+  comments?: CaseCommentItem[];
+  statusHistory?: CaseStatusHistoryItem[];
 };
 
 export type CaseListQuery = {
@@ -39,6 +63,7 @@ export type CaseListQuery = {
   customerId?: string;
   urgent?: string;
   q?: string;
+  currentProcessIds?: string[];
 };
 
 type CasesResponse = {
@@ -67,11 +92,24 @@ type CaseProcessResponse = {
   meta?: Record<string, never>;
 };
 
+type CaseCommentsResponse = {
+  data?: CaseCommentItem[];
+  error?: string | null;
+  fields?: Record<string, string[]>;
+  meta?: Record<string, never>;
+};
+
+type CaseCommentResponse = {
+  data?: CaseCommentItem;
+  error?: string | null;
+  fields?: Record<string, string[]>;
+  meta?: Record<string, never>;
+};
+
 export type CaseMutationPayload = {
   patientName?: string;
   clientCaseCode?: string | null;
   customerId?: string | null;
-  serviceTypeId?: string | null;
   dentistId?: string | null;
   currentStatus?: CaseStatusValue;
   teeth?: string | null;
@@ -81,14 +119,21 @@ export type CaseMutationPayload = {
   isUrgent?: boolean;
   observations?: string | null;
   pendingNote?: string | null;
-  workflowJson?: CaseWorkflow;
+  statusReason?: string | null;
+  serviceLines?: Array<{
+    id?: string;
+    serviceTypeId: string;
+    quantity: number;
+    unitPrice?: string | null;
+    isUnitPriceOverridden?: boolean;
+    workflowJson?: CaseWorkflow;
+  }>;
 };
 
 type CaseMutationApiPayload = {
   patient_name?: string;
   clientCaseCode?: string | null;
   customer_id?: string | null;
-  service_type_id?: string | null;
   dentist_id?: string | null;
   current_status?: CaseStatusValue;
   teeth?: string | null;
@@ -98,7 +143,15 @@ type CaseMutationApiPayload = {
   is_urgent?: boolean;
   observations?: string | null;
   pending_note?: string | null;
-  workflow_json?: CaseWorkflow;
+  status_reason?: string | null;
+  service_lines?: Array<{
+    id?: string;
+    service_type_id: string;
+    quantity: number;
+    unit_price?: string | null;
+    is_unit_price_overridden?: boolean;
+    workflow_json?: CaseWorkflow;
+  }>;
 };
 
 function buildCasesEndpoint(query?: CaseListQuery) {
@@ -109,6 +162,9 @@ function buildCasesEndpoint(query?: CaseListQuery) {
   if (query?.customerId) params.set("customer_id", query.customerId);
   if (query?.urgent) params.set("urgent", query.urgent);
   if (query?.q) params.set("q", query.q);
+  query?.currentProcessIds?.forEach((processId) =>
+    params.append("currentProcessId", processId),
+  );
 
   const queryString = params.toString();
   return queryString ? `/api/cases?${queryString}` : "/api/cases?limit=25";
@@ -127,10 +183,6 @@ function toCaseMutationApiPayload(payload: CaseMutationPayload) {
 
   if (payload.customerId !== undefined) {
     apiPayload.customer_id = payload.customerId;
-  }
-
-  if (payload.serviceTypeId !== undefined) {
-    apiPayload.service_type_id = payload.serviceTypeId;
   }
 
   if (payload.dentistId !== undefined) {
@@ -169,8 +221,19 @@ function toCaseMutationApiPayload(payload: CaseMutationPayload) {
     apiPayload.pending_note = payload.pendingNote;
   }
 
-  if (payload.workflowJson !== undefined) {
-    apiPayload.workflow_json = payload.workflowJson;
+  if (payload.statusReason !== undefined) {
+    apiPayload.status_reason = payload.statusReason;
+  }
+
+  if (payload.serviceLines !== undefined) {
+    apiPayload.service_lines = payload.serviceLines.map((serviceLine) => ({
+      id: serviceLine.id,
+      service_type_id: serviceLine.serviceTypeId,
+      quantity: serviceLine.quantity,
+      unit_price: serviceLine.unitPrice,
+      is_unit_price_overridden: serviceLine.isUnitPriceOverridden,
+      workflow_json: serviceLine.workflowJson,
+    }));
   }
 
   return apiPayload;
@@ -207,10 +270,17 @@ export const casesApi = {
     return response.data;
   },
 
-  async replaceWorkflow(caseId: string, workflowJson: CaseWorkflow) {
+  async replaceWorkflow(
+    caseId: string,
+    caseServiceId: string,
+    workflowJson: CaseWorkflow,
+  ) {
     const response = await api<CaseResponse>(`/api/cases/${caseId}/workflow`, {
       method: "PUT",
-      body: JSON.stringify({ workflow_json: workflowJson }),
+      body: JSON.stringify({
+        case_service_id: caseServiceId,
+        workflow_json: workflowJson,
+      }),
     });
     if (!response.data) throw new Error("Case response was empty.");
     return response.data;
@@ -241,5 +311,30 @@ export const casesApi = {
     );
     if (!response.data) throw new Error("Case process response was empty.");
     return response.data;
+  },
+
+  async getComments(caseId: string) {
+    const response = await api<CaseCommentsResponse>(
+      `/api/cases/${caseId}/comments`,
+    );
+    return response.data ?? [];
+  },
+
+  async createComment(caseId: string, body: string) {
+    const response = await api<CaseCommentResponse>(
+      `/api/cases/${caseId}/comments`,
+      {
+        method: "POST",
+        body: JSON.stringify({ body }),
+      },
+    );
+    if (!response.data) throw new Error("Case comment response was empty.");
+    return response.data;
+  },
+
+  async deleteComment(caseId: string, commentId: string) {
+    return api(`/api/cases/${caseId}/comments/${commentId}`, {
+      method: "DELETE",
+    });
   },
 };

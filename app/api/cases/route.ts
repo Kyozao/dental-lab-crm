@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import {
+  CaseAuthorizationError,
   createCase,
   InactiveReferenceError,
   listCases,
@@ -81,6 +82,10 @@ export async function POST(request: Request) {
         { error: "Validation failed.", fields: error.fields },
         { status: 400 },
       );
+    }
+
+    if (error instanceof CaseAuthorizationError) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     if (error instanceof MissingServiceTypeWorkflowError) {

@@ -3,7 +3,6 @@ import { UserRole, type UserRole as UserRoleValue } from "@/generated/prisma/enu
 export type EmployeeRole =
   | typeof UserRole.ADMIN
   | typeof UserRole.MANAGER
-  | typeof UserRole.CAD_DESIGNER
   | typeof UserRole.PRODUCTION;
 
 export type Employee = {
@@ -33,4 +32,11 @@ export type EmployeeListResult = {
   employees: Employee[];
   currentUserRole: UserRoleValue | null;
   canInviteEmployees: boolean;
+};
+
+export type EmployeeDetailResult = {
+  employee: Employee;
+  currentUserRole: UserRoleValue | null;
+  canAssignProcesses: boolean;
+  canEditRole: boolean;
 };

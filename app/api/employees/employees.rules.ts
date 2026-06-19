@@ -3,7 +3,6 @@ import { UserRole } from "@/generated/prisma/enums";
 export const assignableEmployeeRoles = [
   UserRole.ADMIN,
   UserRole.MANAGER,
-  UserRole.CAD_DESIGNER,
   UserRole.PRODUCTION,
 ] as const;
 
@@ -36,11 +35,7 @@ export function assertCanManageEmployees(role: UserRole) {
 }
 
 export function assertCanViewEmployees(role: UserRole) {
-  if (
-    role !== UserRole.OWNER &&
-    role !== UserRole.ADMIN &&
-    role !== UserRole.MANAGER
-  ) {
+  if (!canViewEmployees(role)) {
     throw new EmployeeAuthorizationError(
       "Only owners, admins, and managers can view employees.",
     );
@@ -48,15 +43,23 @@ export function assertCanViewEmployees(role: UserRole) {
 }
 
 export function assertCanAssignEmployeeProcesses(role: UserRole) {
-  if (
-    role !== UserRole.OWNER &&
-    role !== UserRole.ADMIN &&
-    role !== UserRole.MANAGER
-  ) {
+  if (!canAssignEmployeeProcesses(role)) {
     throw new EmployeeAuthorizationError(
       "Only owners, admins, and managers can assign employee processes.",
     );
   }
+}
+
+export function canViewEmployees(role: UserRole) {
+  return (
+    role === UserRole.OWNER ||
+    role === UserRole.ADMIN ||
+    role === UserRole.MANAGER
+  );
+}
+
+export function canAssignEmployeeProcesses(role: UserRole) {
+  return canViewEmployees(role);
 }
 
 export function assertUserHasNoLabMembership(membershipCount: number) {

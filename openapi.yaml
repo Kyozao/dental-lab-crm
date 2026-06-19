@@ -805,7 +805,7 @@ components:
               example: 100
     UserRole:
       type: string
-      enum: [ADMIN, MANAGER, CAD_DESIGNER, PRODUCTION]
+      enum: [OWNER, ADMIN, MANAGER, PRODUCTION]
     CaseStatus:
       type: string
       enum:

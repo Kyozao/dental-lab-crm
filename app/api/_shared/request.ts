@@ -1,7 +1,11 @@
-import { ensureCurrentAppUser } from "./current-user";
+import { ensureCurrentAppUser, getCurrentSupabaseUser } from "./current-user";
 
-export async function getAuthenticatedUserId() {
-  const user = await ensureCurrentAppUser();
+export async function getAuthenticatedUserId(options?: {
+  ensureAppUser?: boolean;
+}) {
+  const user = options?.ensureAppUser === false
+    ? await getCurrentSupabaseUser()
+    : await ensureCurrentAppUser();
   return user?.id ?? null;
 }
 type JsonObjectResult =

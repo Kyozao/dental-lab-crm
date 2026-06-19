@@ -5,6 +5,7 @@ export type CustomerInput = {
   phone?: string | null;
   email?: string | null;
   notes?: string | null;
+  price_table_id?: string | null;
   is_active?: unknown;
 };
 
@@ -32,6 +33,10 @@ function parseCustomerInput(
       phone: optionalString(payload.phone),
       email: optionalString(payload.email),
       notes: optionalString(payload.notes),
+      price_table_id:
+        payload.price_table_id === null || payload.price_table_id === ""
+          ? null
+          : optionalString(payload.price_table_id),
       is_active: payload.is_active,
     },
   };

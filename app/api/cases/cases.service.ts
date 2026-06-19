@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@/generated/prisma/client";
+import { CaseStatus, UserRole } from "@/generated/prisma/enums";
 import {
   getLabMember,
   MissingLabMembershipError,
@@ -16,15 +17,23 @@ import {
   mapCaseSummary,
   validateActiveCaseReferences,
 } from "./cases.utils";
-import type { CreateCaseInput, ListCasesInput, UpdateCaseInput } from "./cases.schemas";
+import { selectCurrentCaseProcess } from "./cases.list-utils";
+import type {
+  CreateCaseInput,
+  ListCasesInput,
+  UpdateCaseInput,
+} from "./cases.schemas";
 import {
   createCaseWithWorkflow,
-  getWorkflowForCaseCreate,
+  getWorkflowForServiceType,
   MissingServiceTypeWorkflowError,
   replaceWorkflowForExistingCase,
   validateWorkflowProcesses,
+  type ServiceLineWorkflowPlan,
 } from "./cases.workflow";
 import type { ServiceTypeWorkflow } from "../service-types/service-types.schemas";
+import { resolveEffectiveServiceBasePrice } from "./cases.price-resolution";
+import { getCaseStatusTransitionHistoryEntry } from "./cases.status";
 
 export { InactiveReferenceError, MissingLabMembershipError, MissingServiceTypeWorkflowError };
 
@@ -35,16 +44,350 @@ export class CaseNotFoundError extends Error {
   }
 }
 
+export class CaseAuthorizationError extends Error {
+  constructor(message = "Forbidden") {
+    super(message);
+    this.name = "CaseAuthorizationError";
+  }
+}
+
+export type LabMembershipContext = Awaited<ReturnType<typeof getLabMember>>;
+
+async function createStatusHistoryEntry(
+  tx: Prisma.TransactionClient,
+  input: {
+    case_id: string;
+    from_status: CaseStatus | null;
+    to_status: CaseStatus;
+    note?: string | null;
+  },
+) {
+  await tx.case_status_histories.create({
+    data: {
+      case_id: input.case_id,
+      from_status: input.from_status,
+      to_status: input.to_status,
+      note: input.note ?? null,
+    },
+  });
+}
+
+function productionCaseScope(labMemberId: string): Prisma.casesWhereInput {
+  return {
+    case_processes: {
+      some: {
+        assigned_lab_member_id: labMemberId,
+      },
+    },
+  };
+}
+
+export function buildAccessibleCasesWhere(
+  membership: LabMembershipContext,
+  case_id?: string,
+): Prisma.casesWhereInput {
+  return {
+    ...(case_id ? { id: case_id } : {}),
+    lab_id: membership.lab_id,
+    ...(membership.role === UserRole.PRODUCTION
+      ? productionCaseScope(membership.id)
+      : {}),
+  };
+}
+
+function assertCanManageCases(role: UserRole) {
+  if (
+    role !== UserRole.OWNER &&
+    role !== UserRole.ADMIN &&
+    role !== UserRole.MANAGER
+  ) {
+    throw new CaseAuthorizationError();
+  }
+}
+
+async function buildServiceLinePlans(
+  lab_id: string,
+  customer_id: string | null | undefined,
+  input: CreateCaseInput | { service_lines: NonNullable<UpdateCaseInput["service_lines"]> },
+) {
+  const serviceTypeIds = [
+    ...new Set(input.service_lines.map((serviceLine) => serviceLine.service_type_id)),
+  ];
+  const [serviceTypes, customer] = await Promise.all([
+    prisma.service_types.findMany({
+      where: {
+        lab_id,
+        id: { in: serviceTypeIds },
+      },
+      select: {
+        id: true,
+        name: true,
+        base_price: true,
+      },
+    }),
+    customer_id
+      ? prisma.customers.findFirst({
+          where: {
+            id: customer_id,
+            lab_id,
+          },
+          select: {
+            price_table_id: true,
+            price_tables: {
+              select: {
+                price_table_service_prices: {
+                  where: {
+                    service_type_id: { in: serviceTypeIds },
+                  },
+                  select: {
+                    service_type_id: true,
+                    price: true,
+                  },
+                },
+              },
+            },
+          },
+        })
+      : Promise.resolve(null),
+  ]);
+  const serviceTypeById = new Map(
+    serviceTypes.map((serviceType) => [serviceType.id, serviceType]),
+  );
+  const tablePriceByServiceTypeId = new Map(
+    customer?.price_tables?.price_table_service_prices.map((entry) => [
+      entry.service_type_id,
+      entry.price.toString(),
+    ]) ?? [],
+  );
+
+  return Promise.all(
+    input.service_lines.map(async (serviceLine) => {
+      const serviceType = serviceTypeById.get(serviceLine.service_type_id);
+      if (!serviceType) {
+        throw new InactiveReferenceError({
+          service_lines: ["One or more service types could not be loaded."],
+        });
+      }
+
+      const resolvedBasePrice = resolveEffectiveServiceBasePrice({
+        serviceTypeBasePrice: serviceType.base_price.toString(),
+        customerPriceTablePrice:
+          tablePriceByServiceTypeId.get(serviceLine.service_type_id) ?? null,
+      });
+
+      const workflow =
+        serviceLine.workflow_json ??
+        (await getWorkflowForServiceType(lab_id, serviceLine.service_type_id));
+      await validateWorkflowProcesses(lab_id, workflow);
+
+      return {
+        input: serviceLine,
+        serviceNameSnapshot: serviceType.name,
+        serviceBasePriceSnapshot: resolvedBasePrice,
+        unitPrice:
+          serviceLine.is_unit_price_overridden && serviceLine.unit_price
+            ? serviceLine.unit_price
+            : resolvedBasePrice,
+        isUnitPriceOverridden: Boolean(serviceLine.is_unit_price_overridden),
+        workflow,
+      } satisfies ServiceLineWorkflowPlan;
+    }),
+  );
+}
+
+function getWorkflowFromExistingLine(
+  serviceLine: {
+    case_processes: Array<{
+      id: string;
+      process_id: string;
+      workflow_step_id: string;
+      dependencies: Array<{ depends_on_case_process_id: string }>;
+    }>;
+  },
+): ServiceTypeWorkflow {
+  const stepIdByCaseProcessId = new Map(
+    serviceLine.case_processes.map((process) => [process.id, process.workflow_step_id]),
+  );
+
+  return {
+    steps: serviceLine.case_processes.map((process) => ({
+      id: process.workflow_step_id,
+      process_id: process.process_id,
+      dependsOn: process.dependencies
+        .map((dependency) => stepIdByCaseProcessId.get(dependency.depends_on_case_process_id))
+        .filter((stepId): stepId is string => Boolean(stepId)),
+    })),
+  };
+}
+
+function workflowsMatch(
+  left: ServiceTypeWorkflow,
+  right: ServiceTypeWorkflow,
+) {
+  if (left.steps.length !== right.steps.length) return false;
+
+  return left.steps.every((step, index) => {
+    const otherStep = right.steps[index];
+    if (!otherStep) return false;
+    if (step.id !== otherStep.id) return false;
+    if (step.process_id !== otherStep.process_id) return false;
+    if (step.dependsOn.length !== otherStep.dependsOn.length) return false;
+
+    return step.dependsOn.every(
+      (dependencyStepId, dependencyIndex) =>
+        dependencyStepId === otherStep.dependsOn[dependencyIndex],
+    );
+  });
+}
+
+async function syncCaseServiceLines(
+  tx: Prisma.TransactionClient,
+  case_id: string,
+  existingCase: {
+    case_services: Array<{
+      id: string;
+      service_type_id: string;
+      service_name_snapshot: string;
+      service_base_price_snapshot: { toString(): string };
+      unit_price: { toString(): string };
+      is_unit_price_overridden: boolean;
+      quantity: number;
+          case_processes: Array<{
+            id: string;
+            process_id: string;
+        workflow_step_id: string;
+        dependencies: Array<{ depends_on_case_process_id: string }>;
+      }>;
+    }>;
+  },
+  plans: ServiceLineWorkflowPlan[],
+) {
+  const existingById = new Map(
+    existingCase.case_services.map((serviceLine) => [serviceLine.id, serviceLine]),
+  );
+  const requestedIds = new Set(
+    plans
+      .map((plan) => plan.input.id)
+      .filter((id): id is string => Boolean(id)),
+  );
+  const removedIds = existingCase.case_services
+    .filter((serviceLine) => !requestedIds.has(serviceLine.id))
+    .map((serviceLine) => serviceLine.id);
+
+  if (removedIds.length > 0) {
+    await tx.case_services.deleteMany({
+      where: {
+        id: { in: removedIds },
+        case_id,
+      },
+    });
+  }
+
+  for (const plan of plans) {
+    const existingLine = plan.input.id ? existingById.get(plan.input.id) : undefined;
+
+    if (!existingLine) {
+      const created = await tx.case_services.create({
+        data: {
+          case_id,
+          service_type_id: plan.input.service_type_id,
+          service_name_snapshot: plan.serviceNameSnapshot,
+          service_base_price_snapshot: plan.serviceBasePriceSnapshot,
+          unit_price: plan.unitPrice,
+          is_unit_price_overridden: plan.isUnitPriceOverridden,
+          quantity: plan.input.quantity,
+        },
+        select: { id: true },
+      });
+
+      await replaceWorkflowForExistingCase(tx, case_id, created.id, plan.workflow);
+      continue;
+    }
+
+    const serviceTypeChanged =
+      existingLine.service_type_id !== plan.input.service_type_id;
+    const existingWorkflow = getWorkflowFromExistingLine(existingLine);
+    const workflowChanged = plan.input.workflow_json
+      ? !workflowsMatch(plan.input.workflow_json, existingWorkflow)
+      : false;
+    const nextIsUnitPriceOverridden =
+      plan.input.is_unit_price_overridden ?? existingLine.is_unit_price_overridden;
+    const nextUnitPrice = nextIsUnitPriceOverridden
+      ? plan.input.unit_price ?? existingLine.unit_price.toString()
+      : plan.serviceBasePriceSnapshot;
+
+    await tx.case_services.update({
+      where: { id: existingLine.id },
+      data: {
+        service_type_id: plan.input.service_type_id,
+        service_name_snapshot: plan.serviceNameSnapshot,
+        service_base_price_snapshot: plan.serviceBasePriceSnapshot,
+        unit_price: nextUnitPrice,
+        is_unit_price_overridden: nextIsUnitPriceOverridden,
+        quantity: plan.input.quantity,
+      },
+    });
+
+    if (workflowChanged || serviceTypeChanged) {
+      await replaceWorkflowForExistingCase(
+        tx,
+        case_id,
+        existingLine.id,
+        serviceTypeChanged
+          ? plan.workflow
+          : (plan.input.workflow_json ?? existingWorkflow),
+      );
+    }
+  }
+
+  const primaryServiceLine = await tx.case_services.findFirst({
+    where: { case_id },
+    orderBy: { created_at: "asc" },
+    select: {
+      service_type_id: true,
+      service_base_price_snapshot: true,
+      unit_price: true,
+      is_unit_price_overridden: true,
+    },
+  });
+
+  await tx.cases.update({
+    where: { id: case_id },
+    data: {
+      service_type_id: primaryServiceLine?.service_type_id ?? null,
+      service_base_price_snapshot:
+        primaryServiceLine?.service_base_price_snapshot ?? null,
+      case_price: primaryServiceLine?.unit_price ?? null,
+      is_price_overridden:
+        primaryServiceLine?.is_unit_price_overridden ?? false,
+    },
+  });
+}
+
 export async function listCases(
   user_id: string,
   input: ListCasesInput,
 ) {
   const membership = await getLabMember(user_id);
   const where: Prisma.casesWhereInput = {
-    lab_id: membership.lab_id,
+    ...buildAccessibleCasesWhere(membership),
     current_status: input.status,
     customer_id: input.customer_id,
     is_urgent: input.urgent,
+    ...(input.current_process_ids?.length
+      ? {
+          case_processes: {
+            some: {
+              status: {
+                in: ["READY", "IN_PROGRESS"],
+              },
+              process_id: {
+                in: input.current_process_ids,
+              },
+            },
+          },
+        }
+      : {}),
   };
 
   if (input.q) {
@@ -62,8 +405,10 @@ export async function listCases(
         },
       },
       {
-        service_types: {
-          is: { name: { contains: input.q, mode: "insensitive" } },
+        case_services: {
+          some: {
+            service_name_snapshot: { contains: input.q, mode: "insensitive" },
+          },
         },
       },
     ];
@@ -75,20 +420,26 @@ export async function listCases(
     orderBy: {
       created_at: "desc",
     },
-    take: input.limit,
   });
 
-  return cases.map(mapCaseSummary);
+  const filteredCases = input.current_process_ids?.length
+    ? cases.filter((caseItem) => {
+        const currentProcess = selectCurrentCaseProcess(caseItem);
+        return (
+          currentProcess !== null &&
+          input.current_process_ids?.includes(currentProcess.processId)
+        );
+      })
+    : cases;
+
+  return filteredCases.slice(0, input.limit).map(mapCaseSummary);
 }
 
 export async function getCaseById(user_id: string, case_id: string) {
   const membership = await getLabMember(user_id);
 
   const caseItem = await prisma.cases.findFirst({
-    where: {
-      id: case_id,
-      lab_id: membership.lab_id,
-    },
+    where: buildAccessibleCasesWhere(membership, case_id),
     include: caseInclude,
   });
 
@@ -118,11 +469,13 @@ export async function createCase(
   input: CreateCaseInput,
 ) {
   const membership = await getLabMember(user_id);
+  assertCanManageCases(membership.role);
   await validateActiveCaseReferences(membership.lab_id, input);
-  const workflow =
-    input.workflow_json ??
-    (await getWorkflowForCaseCreate(membership.lab_id, input.service_type_id));
-  await validateWorkflowProcesses(membership.lab_id, workflow);
+  const serviceLinePlans = await buildServiceLinePlans(
+    membership.lab_id,
+    input.customer_id,
+    input,
+  );
 
   for (let attempt = 1; attempt <= CREATE_CASE_MAX_RETRIES; attempt += 1) {
     const code = await generateNextCaseCode(membership.lab_id);
@@ -135,7 +488,7 @@ export async function createCase(
           membership.lab_id,
           input,
           code,
-          workflow,
+          serviceLinePlans,
         );
       });
 
@@ -158,47 +511,157 @@ export async function updateCase(
   input: UpdateCaseInput,
 ) {
   const membership = await getLabMember(user_id);
-  const existing = await prisma.cases.findFirst({
-    where: {
-      id: case_id,
-      lab_id: membership.lab_id,
-    },
-    select: {
-      id: true,
-      customer_id: true,
-      service_type_id: true,
-      dentist_id: true,
-    },
-  });
+  assertCanManageCases(membership.role);
+  const baseCaseUpdate = {
+    patient_name: input.patient_name,
+    customer_id: input.customer_id,
+    dentist_id: input.dentist_id,
+    current_status: input.current_status,
+    teeth: input.teeth,
+    elements_qty: input.elements_qty,
+    shade: input.shade,
+    due_date: input.due_date,
+    is_urgent: input.is_urgent,
+    observations: input.observations,
+    pending_note: input.pending_note,
+  };
 
-  if (!existing) throw new CaseNotFoundError();
+  let updatedCaseId: string;
 
-  await validateActiveCaseReferences(membership.lab_id, {
-    customer_id: input.customer_id !== undefined ? input.customer_id : existing.customer_id,
-    service_type_id:
-      input.service_type_id !== undefined
-        ? input.service_type_id
-        : existing.service_type_id,
-    dentist_id:
-      input.dentist_id !== undefined ? input.dentist_id : existing.dentist_id,
-  });
+  if (input.service_lines) {
+    const existing = await prisma.cases.findFirst({
+      where: {
+        id: case_id,
+        lab_id: membership.lab_id,
+      },
+      select: {
+        id: true,
+        customer_id: true,
+        dentist_id: true,
+        current_status: true,
+        case_services: {
+          select: {
+            id: true,
+            service_type_id: true,
+            service_name_snapshot: true,
+            service_base_price_snapshot: true,
+            unit_price: true,
+            is_unit_price_overridden: true,
+            quantity: true,
+            case_processes: {
+              select: {
+                id: true,
+                process_id: true,
+                workflow_step_id: true,
+                dependencies: {
+                  select: {
+                    depends_on_case_process_id: true,
+                  },
+                },
+              },
+            },
+          },
+          orderBy: { created_at: "asc" },
+        },
+      },
+    });
 
-  const updatedCase = await prisma.cases.update({
-    where: { id: existing.id },
-    data: {
-      patient_name: input.patient_name,
-      customer_id: input.customer_id,
-      service_type_id: input.service_type_id,
-      dentist_id: input.dentist_id,
-      current_status: input.current_status,
-      teeth: input.teeth,
-      elements_qty: input.elements_qty,
-      shade: input.shade,
-      due_date: input.due_date,
-      is_urgent: input.is_urgent,
-      observations: input.observations,
-      pending_note: input.pending_note,
-    },
+    if (!existing) throw new CaseNotFoundError();
+
+    await validateActiveCaseReferences(membership.lab_id, {
+      customer_id:
+        input.customer_id !== undefined ? input.customer_id : existing.customer_id,
+      dentist_id:
+        input.dentist_id !== undefined ? input.dentist_id : existing.dentist_id,
+      service_lines: input.service_lines,
+    });
+
+    const serviceLinePlans = await buildServiceLinePlans(
+      membership.lab_id,
+      input.customer_id !== undefined ? input.customer_id : existing.customer_id,
+      {
+        service_lines: input.service_lines,
+      },
+    );
+
+    await prisma.$transaction(async (tx) => {
+      await tx.cases.update({
+        where: { id: existing.id },
+        data: baseCaseUpdate,
+      });
+
+      const transition = getCaseStatusTransitionHistoryEntry({
+        previousStatus: existing.current_status,
+        nextStatus: input.current_status,
+        statusReason: input.status_reason,
+      });
+      if (transition) {
+        await createStatusHistoryEntry(tx, {
+          case_id: existing.id,
+          from_status: transition.fromStatus,
+          to_status: transition.toStatus,
+          note: transition.note,
+        });
+      }
+
+      await syncCaseServiceLines(
+        tx,
+        existing.id,
+        existing,
+        serviceLinePlans,
+      );
+    });
+
+    updatedCaseId = existing.id;
+  } else {
+    const existing = await prisma.cases.findFirst({
+      where: {
+        id: case_id,
+        lab_id: membership.lab_id,
+      },
+      select: {
+        id: true,
+        customer_id: true,
+        dentist_id: true,
+        current_status: true,
+      },
+    });
+
+    if (!existing) throw new CaseNotFoundError();
+
+    await validateActiveCaseReferences(membership.lab_id, {
+      customer_id:
+        input.customer_id !== undefined ? input.customer_id : existing.customer_id,
+      dentist_id:
+        input.dentist_id !== undefined ? input.dentist_id : existing.dentist_id,
+    });
+
+    await prisma.$transaction(async (tx) => {
+      await tx.cases.update({
+        where: { id: existing.id },
+        data: baseCaseUpdate,
+      });
+
+      const transition = getCaseStatusTransitionHistoryEntry({
+        previousStatus: existing.current_status,
+        nextStatus: input.current_status,
+        statusReason: input.status_reason,
+      });
+      if (transition) {
+        await createStatusHistoryEntry(tx, {
+          case_id: existing.id,
+          from_status: transition.fromStatus,
+          to_status: transition.toStatus,
+          note: transition.note,
+        });
+      }
+    });
+
+    updatedCaseId = existing.id;
+  }
+
+  const updatedCase = await prisma.cases.findUniqueOrThrow({
+    where: { id: updatedCaseId },
     include: caseInclude,
   });
 
@@ -208,13 +671,20 @@ export async function updateCase(
 export async function replaceCaseWorkflow(
   user_id: string,
   case_id: string,
+  case_service_id: string,
   workflow: ServiceTypeWorkflow,
 ) {
   const membership = await getLabMember(user_id);
+  assertCanManageCases(membership.role);
   const existing = await prisma.cases.findFirst({
     where: {
       id: case_id,
       lab_id: membership.lab_id,
+      case_services: {
+        some: {
+          id: case_service_id,
+        },
+      },
     },
     select: { id: true },
   });
@@ -224,7 +694,7 @@ export async function replaceCaseWorkflow(
   await validateWorkflowProcesses(membership.lab_id, workflow);
 
   const updatedCase = await prisma.$transaction(async (tx) => {
-    await replaceWorkflowForExistingCase(tx, existing.id, workflow);
+    await replaceWorkflowForExistingCase(tx, existing.id, case_service_id, workflow);
 
     return tx.cases.findUniqueOrThrow({
       where: { id: existing.id },

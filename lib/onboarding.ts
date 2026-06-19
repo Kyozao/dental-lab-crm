@@ -14,7 +14,7 @@ export async function requireCurrentLab() {
   const user = await requireAuthenticatedUser();
   const membership = await prisma.lab_members.findUnique({
     where: { user_id: user.id },
-    select: { lab_id: true },
+    select: { lab_id: true, role: true },
   });
 
   if (!membership) redirect("/onboarding/lab");
@@ -22,6 +22,7 @@ export async function requireCurrentLab() {
   return {
     user_id: user.id,
     lab_id: membership.lab_id,
+    role: membership.role,
   };
 }
 
@@ -29,11 +30,11 @@ export async function redirectIfOnboarded() {
   const user = await requireAuthenticatedUser();
   const membership = await prisma.lab_members.findUnique({
     where: { user_id: user.id },
-    select: { lab_id: true },
+    select: { lab_id: true, role: true },
   });
 
   if (membership) {
-    redirect("/cases");
+    redirect(membership.role === "PRODUCTION" ? "/production" : "/cases");
   }
 
   return user;

@@ -1,0 +1,2 @@
+ALTER TABLE case_millings
+ADD COLUMN blocks_used_qty INTEGER NOT NULL DEFAULT 1;

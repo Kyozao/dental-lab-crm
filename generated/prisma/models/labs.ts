@@ -27,6 +27,7 @@ export type AggregateLabs = {
 export type LabsMinAggregateOutputType = {
   id: string | null
   name: string | null
+  currency: string | null
   is_active: boolean | null
   created_at: Date | null
   updated_at: Date | null
@@ -35,6 +36,7 @@ export type LabsMinAggregateOutputType = {
 export type LabsMaxAggregateOutputType = {
   id: string | null
   name: string | null
+  currency: string | null
   is_active: boolean | null
   created_at: Date | null
   updated_at: Date | null
@@ -43,6 +45,7 @@ export type LabsMaxAggregateOutputType = {
 export type LabsCountAggregateOutputType = {
   id: number
   name: number
+  currency: number
   is_active: number
   created_at: number
   updated_at: number
@@ -53,6 +56,7 @@ export type LabsCountAggregateOutputType = {
 export type LabsMinAggregateInputType = {
   id?: true
   name?: true
+  currency?: true
   is_active?: true
   created_at?: true
   updated_at?: true
@@ -61,6 +65,7 @@ export type LabsMinAggregateInputType = {
 export type LabsMaxAggregateInputType = {
   id?: true
   name?: true
+  currency?: true
   is_active?: true
   created_at?: true
   updated_at?: true
@@ -69,6 +74,7 @@ export type LabsMaxAggregateInputType = {
 export type LabsCountAggregateInputType = {
   id?: true
   name?: true
+  currency?: true
   is_active?: true
   created_at?: true
   updated_at?: true
@@ -150,6 +156,7 @@ export type labsGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type LabsGroupByOutputType = {
   id: string
   name: string
+  currency: string
   is_active: boolean
   created_at: Date
   updated_at: Date
@@ -179,6 +186,7 @@ export type labsWhereInput = {
   NOT?: Prisma.labsWhereInput | Prisma.labsWhereInput[]
   id?: Prisma.UuidFilter<"labs"> | string
   name?: Prisma.StringFilter<"labs"> | string
+  currency?: Prisma.StringFilter<"labs"> | string
   is_active?: Prisma.BoolFilter<"labs"> | boolean
   created_at?: Prisma.DateTimeFilter<"labs"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"labs"> | Date | string
@@ -186,8 +194,10 @@ export type labsWhereInput = {
   customers?: Prisma.CustomersListRelationFilter
   dentists?: Prisma.DentistsListRelationFilter
   service_types?: Prisma.Service_typesListRelationFilter
+  price_tables?: Prisma.Price_tablesListRelationFilter
   components?: Prisma.ComponentsListRelationFilter
   block_types?: Prisma.Block_typesListRelationFilter
+  milling_machines?: Prisma.Milling_machinesListRelationFilter
   milling_drills?: Prisma.Milling_drillsListRelationFilter
   processes?: Prisma.ProcessesListRelationFilter
   employeeProcessAssignments?: Prisma.Employee_process_assignmentsListRelationFilter
@@ -198,6 +208,7 @@ export type labsWhereInput = {
 export type labsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -205,8 +216,10 @@ export type labsOrderByWithRelationInput = {
   customers?: Prisma.customersOrderByRelationAggregateInput
   dentists?: Prisma.dentistsOrderByRelationAggregateInput
   service_types?: Prisma.service_typesOrderByRelationAggregateInput
+  price_tables?: Prisma.price_tablesOrderByRelationAggregateInput
   components?: Prisma.componentsOrderByRelationAggregateInput
   block_types?: Prisma.block_typesOrderByRelationAggregateInput
+  milling_machines?: Prisma.milling_machinesOrderByRelationAggregateInput
   milling_drills?: Prisma.milling_drillsOrderByRelationAggregateInput
   processes?: Prisma.processesOrderByRelationAggregateInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsOrderByRelationAggregateInput
@@ -220,6 +233,7 @@ export type labsWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.labsWhereInput | Prisma.labsWhereInput[]
   OR?: Prisma.labsWhereInput[]
   NOT?: Prisma.labsWhereInput | Prisma.labsWhereInput[]
+  currency?: Prisma.StringFilter<"labs"> | string
   is_active?: Prisma.BoolFilter<"labs"> | boolean
   created_at?: Prisma.DateTimeFilter<"labs"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"labs"> | Date | string
@@ -227,8 +241,10 @@ export type labsWhereUniqueInput = Prisma.AtLeast<{
   customers?: Prisma.CustomersListRelationFilter
   dentists?: Prisma.DentistsListRelationFilter
   service_types?: Prisma.Service_typesListRelationFilter
+  price_tables?: Prisma.Price_tablesListRelationFilter
   components?: Prisma.ComponentsListRelationFilter
   block_types?: Prisma.Block_typesListRelationFilter
+  milling_machines?: Prisma.Milling_machinesListRelationFilter
   milling_drills?: Prisma.Milling_drillsListRelationFilter
   processes?: Prisma.ProcessesListRelationFilter
   employeeProcessAssignments?: Prisma.Employee_process_assignmentsListRelationFilter
@@ -239,6 +255,7 @@ export type labsWhereUniqueInput = Prisma.AtLeast<{
 export type labsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -253,6 +270,7 @@ export type labsScalarWhereWithAggregatesInput = {
   NOT?: Prisma.labsScalarWhereWithAggregatesInput | Prisma.labsScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"labs"> | string
   name?: Prisma.StringWithAggregatesFilter<"labs"> | string
+  currency?: Prisma.StringWithAggregatesFilter<"labs"> | string
   is_active?: Prisma.BoolWithAggregatesFilter<"labs"> | boolean
   created_at?: Prisma.DateTimeWithAggregatesFilter<"labs"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"labs"> | Date | string
@@ -261,6 +279,7 @@ export type labsScalarWhereWithAggregatesInput = {
 export type labsCreateInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -268,8 +287,10 @@ export type labsCreateInput = {
   customers?: Prisma.customersCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
@@ -280,6 +301,7 @@ export type labsCreateInput = {
 export type labsUncheckedCreateInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -287,8 +309,10 @@ export type labsUncheckedCreateInput = {
   customers?: Prisma.customersUncheckedCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsUncheckedCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesUncheckedCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesUncheckedCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsUncheckedCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
@@ -299,6 +323,7 @@ export type labsUncheckedCreateInput = {
 export type labsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -306,8 +331,10 @@ export type labsUpdateInput = {
   customers?: Prisma.customersUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
@@ -318,6 +345,7 @@ export type labsUpdateInput = {
 export type labsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -325,8 +353,10 @@ export type labsUncheckedUpdateInput = {
   customers?: Prisma.customersUncheckedUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUncheckedUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUncheckedUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUncheckedUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUncheckedUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
@@ -337,6 +367,7 @@ export type labsUncheckedUpdateInput = {
 export type labsCreateManyInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -345,6 +376,7 @@ export type labsCreateManyInput = {
 export type labsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -353,6 +385,7 @@ export type labsUpdateManyMutationInput = {
 export type labsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -361,6 +394,7 @@ export type labsUncheckedUpdateManyInput = {
 export type labsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -369,6 +403,7 @@ export type labsCountOrderByAggregateInput = {
 export type labsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -377,6 +412,7 @@ export type labsMaxOrderByAggregateInput = {
 export type labsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -413,6 +449,20 @@ export type labsUpdateOneRequiredWithoutService_typesNestedInput = {
   upsert?: Prisma.labsUpsertWithoutService_typesInput
   connect?: Prisma.labsWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.labsUpdateToOneWithWhereWithoutService_typesInput, Prisma.labsUpdateWithoutService_typesInput>, Prisma.labsUncheckedUpdateWithoutService_typesInput>
+}
+
+export type labsCreateNestedOneWithoutPrice_tablesInput = {
+  create?: Prisma.XOR<Prisma.labsCreateWithoutPrice_tablesInput, Prisma.labsUncheckedCreateWithoutPrice_tablesInput>
+  connectOrCreate?: Prisma.labsCreateOrConnectWithoutPrice_tablesInput
+  connect?: Prisma.labsWhereUniqueInput
+}
+
+export type labsUpdateOneRequiredWithoutPrice_tablesNestedInput = {
+  create?: Prisma.XOR<Prisma.labsCreateWithoutPrice_tablesInput, Prisma.labsUncheckedCreateWithoutPrice_tablesInput>
+  connectOrCreate?: Prisma.labsCreateOrConnectWithoutPrice_tablesInput
+  upsert?: Prisma.labsUpsertWithoutPrice_tablesInput
+  connect?: Prisma.labsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.labsUpdateToOneWithWhereWithoutPrice_tablesInput, Prisma.labsUpdateWithoutPrice_tablesInput>, Prisma.labsUncheckedUpdateWithoutPrice_tablesInput>
 }
 
 export type labsCreateNestedOneWithoutProcessesInput = {
@@ -455,6 +505,20 @@ export type labsUpdateOneRequiredWithoutMilling_drillsNestedInput = {
   upsert?: Prisma.labsUpsertWithoutMilling_drillsInput
   connect?: Prisma.labsWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.labsUpdateToOneWithWhereWithoutMilling_drillsInput, Prisma.labsUpdateWithoutMilling_drillsInput>, Prisma.labsUncheckedUpdateWithoutMilling_drillsInput>
+}
+
+export type labsCreateNestedOneWithoutMilling_machinesInput = {
+  create?: Prisma.XOR<Prisma.labsCreateWithoutMilling_machinesInput, Prisma.labsUncheckedCreateWithoutMilling_machinesInput>
+  connectOrCreate?: Prisma.labsCreateOrConnectWithoutMilling_machinesInput
+  connect?: Prisma.labsWhereUniqueInput
+}
+
+export type labsUpdateOneRequiredWithoutMilling_machinesNestedInput = {
+  create?: Prisma.XOR<Prisma.labsCreateWithoutMilling_machinesInput, Prisma.labsUncheckedCreateWithoutMilling_machinesInput>
+  connectOrCreate?: Prisma.labsCreateOrConnectWithoutMilling_machinesInput
+  upsert?: Prisma.labsUpsertWithoutMilling_machinesInput
+  connect?: Prisma.labsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.labsUpdateToOneWithWhereWithoutMilling_machinesInput, Prisma.labsUpdateWithoutMilling_machinesInput>, Prisma.labsUncheckedUpdateWithoutMilling_machinesInput>
 }
 
 export type labsCreateNestedOneWithoutMillingsInput = {
@@ -544,14 +608,17 @@ export type labsUpdateOneRequiredWithoutCasesNestedInput = {
 export type labsCreateWithoutMembershipsInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   customers?: Prisma.customersCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
@@ -562,14 +629,17 @@ export type labsCreateWithoutMembershipsInput = {
 export type labsUncheckedCreateWithoutMembershipsInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   customers?: Prisma.customersUncheckedCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsUncheckedCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesUncheckedCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesUncheckedCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsUncheckedCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
@@ -596,14 +666,17 @@ export type labsUpdateToOneWithWhereWithoutMembershipsInput = {
 export type labsUpdateWithoutMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customers?: Prisma.customersUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
@@ -614,14 +687,17 @@ export type labsUpdateWithoutMembershipsInput = {
 export type labsUncheckedUpdateWithoutMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customers?: Prisma.customersUncheckedUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUncheckedUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUncheckedUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUncheckedUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUncheckedUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
@@ -632,14 +708,17 @@ export type labsUncheckedUpdateWithoutMembershipsInput = {
 export type labsCreateWithoutService_typesInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
   customers?: Prisma.customersCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
@@ -650,14 +729,17 @@ export type labsCreateWithoutService_typesInput = {
 export type labsUncheckedCreateWithoutService_typesInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
   customers?: Prisma.customersUncheckedCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsUncheckedCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesUncheckedCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsUncheckedCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
@@ -684,14 +766,17 @@ export type labsUpdateToOneWithWhereWithoutService_typesInput = {
 export type labsUpdateWithoutService_typesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
   customers?: Prisma.customersUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
@@ -702,14 +787,117 @@ export type labsUpdateWithoutService_typesInput = {
 export type labsUncheckedUpdateWithoutService_typesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
   customers?: Prisma.customersUncheckedUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUncheckedUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUncheckedUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUncheckedUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUncheckedUpdateManyWithoutLabsNestedInput
+  milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
+  processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
+  cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
+  millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
+}
+
+export type labsCreateWithoutPrice_tablesInput = {
+  id?: string
+  name: string
+  currency?: string
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
+  customers?: Prisma.customersCreateNestedManyWithoutLabsInput
+  dentists?: Prisma.dentistsCreateNestedManyWithoutLabsInput
+  service_types?: Prisma.service_typesCreateNestedManyWithoutLabsInput
+  components?: Prisma.componentsCreateNestedManyWithoutLabsInput
+  block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedManyWithoutLabsInput
+  milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
+  processes?: Prisma.processesCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
+  cases?: Prisma.casesCreateNestedManyWithoutLabsInput
+  millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
+}
+
+export type labsUncheckedCreateWithoutPrice_tablesInput = {
+  id?: string
+  name: string
+  currency?: string
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
+  customers?: Prisma.customersUncheckedCreateNestedManyWithoutLabsInput
+  dentists?: Prisma.dentistsUncheckedCreateNestedManyWithoutLabsInput
+  service_types?: Prisma.service_typesUncheckedCreateNestedManyWithoutLabsInput
+  components?: Prisma.componentsUncheckedCreateNestedManyWithoutLabsInput
+  block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesUncheckedCreateNestedManyWithoutLabsInput
+  milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
+  processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
+  cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
+  millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
+}
+
+export type labsCreateOrConnectWithoutPrice_tablesInput = {
+  where: Prisma.labsWhereUniqueInput
+  create: Prisma.XOR<Prisma.labsCreateWithoutPrice_tablesInput, Prisma.labsUncheckedCreateWithoutPrice_tablesInput>
+}
+
+export type labsUpsertWithoutPrice_tablesInput = {
+  update: Prisma.XOR<Prisma.labsUpdateWithoutPrice_tablesInput, Prisma.labsUncheckedUpdateWithoutPrice_tablesInput>
+  create: Prisma.XOR<Prisma.labsCreateWithoutPrice_tablesInput, Prisma.labsUncheckedCreateWithoutPrice_tablesInput>
+  where?: Prisma.labsWhereInput
+}
+
+export type labsUpdateToOneWithWhereWithoutPrice_tablesInput = {
+  where?: Prisma.labsWhereInput
+  data: Prisma.XOR<Prisma.labsUpdateWithoutPrice_tablesInput, Prisma.labsUncheckedUpdateWithoutPrice_tablesInput>
+}
+
+export type labsUpdateWithoutPrice_tablesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
+  customers?: Prisma.customersUpdateManyWithoutLabsNestedInput
+  dentists?: Prisma.dentistsUpdateManyWithoutLabsNestedInput
+  service_types?: Prisma.service_typesUpdateManyWithoutLabsNestedInput
+  components?: Prisma.componentsUpdateManyWithoutLabsNestedInput
+  block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateManyWithoutLabsNestedInput
+  milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
+  processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
+  cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
+  millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
+}
+
+export type labsUncheckedUpdateWithoutPrice_tablesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
+  customers?: Prisma.customersUncheckedUpdateManyWithoutLabsNestedInput
+  dentists?: Prisma.dentistsUncheckedUpdateManyWithoutLabsNestedInput
+  service_types?: Prisma.service_typesUncheckedUpdateManyWithoutLabsNestedInput
+  components?: Prisma.componentsUncheckedUpdateManyWithoutLabsNestedInput
+  block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
@@ -720,6 +908,7 @@ export type labsUncheckedUpdateWithoutService_typesInput = {
 export type labsCreateWithoutProcessesInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -727,8 +916,10 @@ export type labsCreateWithoutProcessesInput = {
   customers?: Prisma.customersCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
@@ -738,6 +929,7 @@ export type labsCreateWithoutProcessesInput = {
 export type labsUncheckedCreateWithoutProcessesInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -745,8 +937,10 @@ export type labsUncheckedCreateWithoutProcessesInput = {
   customers?: Prisma.customersUncheckedCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsUncheckedCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesUncheckedCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesUncheckedCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsUncheckedCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
@@ -772,6 +966,7 @@ export type labsUpdateToOneWithWhereWithoutProcessesInput = {
 export type labsUpdateWithoutProcessesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -779,8 +974,10 @@ export type labsUpdateWithoutProcessesInput = {
   customers?: Prisma.customersUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
@@ -790,6 +987,7 @@ export type labsUpdateWithoutProcessesInput = {
 export type labsUncheckedUpdateWithoutProcessesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -797,8 +995,10 @@ export type labsUncheckedUpdateWithoutProcessesInput = {
   customers?: Prisma.customersUncheckedUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUncheckedUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUncheckedUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUncheckedUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUncheckedUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
@@ -808,6 +1008,7 @@ export type labsUncheckedUpdateWithoutProcessesInput = {
 export type labsCreateWithoutEmployeeProcessAssignmentsInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -815,8 +1016,10 @@ export type labsCreateWithoutEmployeeProcessAssignmentsInput = {
   customers?: Prisma.customersCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
@@ -826,6 +1029,7 @@ export type labsCreateWithoutEmployeeProcessAssignmentsInput = {
 export type labsUncheckedCreateWithoutEmployeeProcessAssignmentsInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -833,8 +1037,10 @@ export type labsUncheckedCreateWithoutEmployeeProcessAssignmentsInput = {
   customers?: Prisma.customersUncheckedCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsUncheckedCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesUncheckedCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesUncheckedCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsUncheckedCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
@@ -860,6 +1066,7 @@ export type labsUpdateToOneWithWhereWithoutEmployeeProcessAssignmentsInput = {
 export type labsUpdateWithoutEmployeeProcessAssignmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -867,8 +1074,10 @@ export type labsUpdateWithoutEmployeeProcessAssignmentsInput = {
   customers?: Prisma.customersUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
@@ -878,6 +1087,7 @@ export type labsUpdateWithoutEmployeeProcessAssignmentsInput = {
 export type labsUncheckedUpdateWithoutEmployeeProcessAssignmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -885,8 +1095,10 @@ export type labsUncheckedUpdateWithoutEmployeeProcessAssignmentsInput = {
   customers?: Prisma.customersUncheckedUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUncheckedUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUncheckedUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUncheckedUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUncheckedUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
@@ -896,6 +1108,7 @@ export type labsUncheckedUpdateWithoutEmployeeProcessAssignmentsInput = {
 export type labsCreateWithoutMilling_drillsInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -903,8 +1116,10 @@ export type labsCreateWithoutMilling_drillsInput = {
   customers?: Prisma.customersCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
@@ -914,6 +1129,7 @@ export type labsCreateWithoutMilling_drillsInput = {
 export type labsUncheckedCreateWithoutMilling_drillsInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -921,8 +1137,10 @@ export type labsUncheckedCreateWithoutMilling_drillsInput = {
   customers?: Prisma.customersUncheckedCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsUncheckedCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesUncheckedCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesUncheckedCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsUncheckedCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
@@ -948,6 +1166,7 @@ export type labsUpdateToOneWithWhereWithoutMilling_drillsInput = {
 export type labsUpdateWithoutMilling_drillsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -955,8 +1174,10 @@ export type labsUpdateWithoutMilling_drillsInput = {
   customers?: Prisma.customersUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
@@ -966,6 +1187,7 @@ export type labsUpdateWithoutMilling_drillsInput = {
 export type labsUncheckedUpdateWithoutMilling_drillsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -973,8 +1195,110 @@ export type labsUncheckedUpdateWithoutMilling_drillsInput = {
   customers?: Prisma.customersUncheckedUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUncheckedUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUncheckedUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUncheckedUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUncheckedUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUncheckedUpdateManyWithoutLabsNestedInput
+  processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
+  cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
+  millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
+}
+
+export type labsCreateWithoutMilling_machinesInput = {
+  id?: string
+  name: string
+  currency?: string
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
+  customers?: Prisma.customersCreateNestedManyWithoutLabsInput
+  dentists?: Prisma.dentistsCreateNestedManyWithoutLabsInput
+  service_types?: Prisma.service_typesCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesCreateNestedManyWithoutLabsInput
+  components?: Prisma.componentsCreateNestedManyWithoutLabsInput
+  block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
+  milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
+  processes?: Prisma.processesCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
+  cases?: Prisma.casesCreateNestedManyWithoutLabsInput
+  millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
+}
+
+export type labsUncheckedCreateWithoutMilling_machinesInput = {
+  id?: string
+  name: string
+  currency?: string
+  is_active?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
+  customers?: Prisma.customersUncheckedCreateNestedManyWithoutLabsInput
+  dentists?: Prisma.dentistsUncheckedCreateNestedManyWithoutLabsInput
+  service_types?: Prisma.service_typesUncheckedCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesUncheckedCreateNestedManyWithoutLabsInput
+  components?: Prisma.componentsUncheckedCreateNestedManyWithoutLabsInput
+  block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
+  milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
+  processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
+  cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
+  millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
+}
+
+export type labsCreateOrConnectWithoutMilling_machinesInput = {
+  where: Prisma.labsWhereUniqueInput
+  create: Prisma.XOR<Prisma.labsCreateWithoutMilling_machinesInput, Prisma.labsUncheckedCreateWithoutMilling_machinesInput>
+}
+
+export type labsUpsertWithoutMilling_machinesInput = {
+  update: Prisma.XOR<Prisma.labsUpdateWithoutMilling_machinesInput, Prisma.labsUncheckedUpdateWithoutMilling_machinesInput>
+  create: Prisma.XOR<Prisma.labsCreateWithoutMilling_machinesInput, Prisma.labsUncheckedCreateWithoutMilling_machinesInput>
+  where?: Prisma.labsWhereInput
+}
+
+export type labsUpdateToOneWithWhereWithoutMilling_machinesInput = {
+  where?: Prisma.labsWhereInput
+  data: Prisma.XOR<Prisma.labsUpdateWithoutMilling_machinesInput, Prisma.labsUncheckedUpdateWithoutMilling_machinesInput>
+}
+
+export type labsUpdateWithoutMilling_machinesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
+  customers?: Prisma.customersUpdateManyWithoutLabsNestedInput
+  dentists?: Prisma.dentistsUpdateManyWithoutLabsNestedInput
+  service_types?: Prisma.service_typesUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUpdateManyWithoutLabsNestedInput
+  components?: Prisma.componentsUpdateManyWithoutLabsNestedInput
+  block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
+  milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
+  processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
+  cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
+  millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
+}
+
+export type labsUncheckedUpdateWithoutMilling_machinesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
+  customers?: Prisma.customersUncheckedUpdateManyWithoutLabsNestedInput
+  dentists?: Prisma.dentistsUncheckedUpdateManyWithoutLabsNestedInput
+  service_types?: Prisma.service_typesUncheckedUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUncheckedUpdateManyWithoutLabsNestedInput
+  components?: Prisma.componentsUncheckedUpdateManyWithoutLabsNestedInput
+  block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
+  milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
@@ -984,6 +1308,7 @@ export type labsUncheckedUpdateWithoutMilling_drillsInput = {
 export type labsCreateWithoutMillingsInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -991,8 +1316,10 @@ export type labsCreateWithoutMillingsInput = {
   customers?: Prisma.customersCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
@@ -1002,6 +1329,7 @@ export type labsCreateWithoutMillingsInput = {
 export type labsUncheckedCreateWithoutMillingsInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -1009,8 +1337,10 @@ export type labsUncheckedCreateWithoutMillingsInput = {
   customers?: Prisma.customersUncheckedCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsUncheckedCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesUncheckedCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesUncheckedCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsUncheckedCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
@@ -1036,6 +1366,7 @@ export type labsUpdateToOneWithWhereWithoutMillingsInput = {
 export type labsUpdateWithoutMillingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1043,8 +1374,10 @@ export type labsUpdateWithoutMillingsInput = {
   customers?: Prisma.customersUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
@@ -1054,6 +1387,7 @@ export type labsUpdateWithoutMillingsInput = {
 export type labsUncheckedUpdateWithoutMillingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1061,8 +1395,10 @@ export type labsUncheckedUpdateWithoutMillingsInput = {
   customers?: Prisma.customersUncheckedUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUncheckedUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUncheckedUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUncheckedUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUncheckedUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
@@ -1072,14 +1408,17 @@ export type labsUncheckedUpdateWithoutMillingsInput = {
 export type labsCreateWithoutCustomersInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
@@ -1090,14 +1429,17 @@ export type labsCreateWithoutCustomersInput = {
 export type labsUncheckedCreateWithoutCustomersInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsUncheckedCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesUncheckedCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesUncheckedCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsUncheckedCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
@@ -1124,14 +1466,17 @@ export type labsUpdateToOneWithWhereWithoutCustomersInput = {
 export type labsUpdateWithoutCustomersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
@@ -1142,14 +1487,17 @@ export type labsUpdateWithoutCustomersInput = {
 export type labsUncheckedUpdateWithoutCustomersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUncheckedUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUncheckedUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUncheckedUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUncheckedUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
@@ -1160,14 +1508,17 @@ export type labsUncheckedUpdateWithoutCustomersInput = {
 export type labsCreateWithoutDentistsInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
   customers?: Prisma.customersCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
@@ -1178,14 +1529,17 @@ export type labsCreateWithoutDentistsInput = {
 export type labsUncheckedCreateWithoutDentistsInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
   customers?: Prisma.customersUncheckedCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesUncheckedCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesUncheckedCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsUncheckedCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
@@ -1212,14 +1566,17 @@ export type labsUpdateToOneWithWhereWithoutDentistsInput = {
 export type labsUpdateWithoutDentistsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
   customers?: Prisma.customersUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
@@ -1230,14 +1587,17 @@ export type labsUpdateWithoutDentistsInput = {
 export type labsUncheckedUpdateWithoutDentistsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
   customers?: Prisma.customersUncheckedUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUncheckedUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUncheckedUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUncheckedUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
@@ -1248,6 +1608,7 @@ export type labsUncheckedUpdateWithoutDentistsInput = {
 export type labsCreateWithoutComponentsInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -1255,7 +1616,9 @@ export type labsCreateWithoutComponentsInput = {
   customers?: Prisma.customersCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
@@ -1266,6 +1629,7 @@ export type labsCreateWithoutComponentsInput = {
 export type labsUncheckedCreateWithoutComponentsInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -1273,7 +1637,9 @@ export type labsUncheckedCreateWithoutComponentsInput = {
   customers?: Prisma.customersUncheckedCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsUncheckedCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesUncheckedCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesUncheckedCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
@@ -1300,6 +1666,7 @@ export type labsUpdateToOneWithWhereWithoutComponentsInput = {
 export type labsUpdateWithoutComponentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1307,7 +1674,9 @@ export type labsUpdateWithoutComponentsInput = {
   customers?: Prisma.customersUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
@@ -1318,6 +1687,7 @@ export type labsUpdateWithoutComponentsInput = {
 export type labsUncheckedUpdateWithoutComponentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1325,7 +1695,9 @@ export type labsUncheckedUpdateWithoutComponentsInput = {
   customers?: Prisma.customersUncheckedUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUncheckedUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUncheckedUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUncheckedUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
@@ -1336,6 +1708,7 @@ export type labsUncheckedUpdateWithoutComponentsInput = {
 export type labsCreateWithoutBlock_typesInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -1343,7 +1716,9 @@ export type labsCreateWithoutBlock_typesInput = {
   customers?: Prisma.customersCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
@@ -1354,6 +1729,7 @@ export type labsCreateWithoutBlock_typesInput = {
 export type labsUncheckedCreateWithoutBlock_typesInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -1361,7 +1737,9 @@ export type labsUncheckedCreateWithoutBlock_typesInput = {
   customers?: Prisma.customersUncheckedCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsUncheckedCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesUncheckedCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesUncheckedCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsUncheckedCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
@@ -1388,6 +1766,7 @@ export type labsUpdateToOneWithWhereWithoutBlock_typesInput = {
 export type labsUpdateWithoutBlock_typesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1395,7 +1774,9 @@ export type labsUpdateWithoutBlock_typesInput = {
   customers?: Prisma.customersUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
@@ -1406,6 +1787,7 @@ export type labsUpdateWithoutBlock_typesInput = {
 export type labsUncheckedUpdateWithoutBlock_typesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1413,7 +1795,9 @@ export type labsUncheckedUpdateWithoutBlock_typesInput = {
   customers?: Prisma.customersUncheckedUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUncheckedUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUncheckedUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUncheckedUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUncheckedUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
@@ -1424,6 +1808,7 @@ export type labsUncheckedUpdateWithoutBlock_typesInput = {
 export type labsCreateWithoutCasesInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -1431,8 +1816,10 @@ export type labsCreateWithoutCasesInput = {
   customers?: Prisma.customersCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
@@ -1442,6 +1829,7 @@ export type labsCreateWithoutCasesInput = {
 export type labsUncheckedCreateWithoutCasesInput = {
   id?: string
   name: string
+  currency?: string
   is_active?: boolean
   created_at?: Date | string
   updated_at?: Date | string
@@ -1449,8 +1837,10 @@ export type labsUncheckedCreateWithoutCasesInput = {
   customers?: Prisma.customersUncheckedCreateNestedManyWithoutLabsInput
   dentists?: Prisma.dentistsUncheckedCreateNestedManyWithoutLabsInput
   service_types?: Prisma.service_typesUncheckedCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesUncheckedCreateNestedManyWithoutLabsInput
   components?: Prisma.componentsUncheckedCreateNestedManyWithoutLabsInput
   block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesUncheckedCreateNestedManyWithoutLabsInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
   processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
@@ -1476,6 +1866,7 @@ export type labsUpdateToOneWithWhereWithoutCasesInput = {
 export type labsUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1483,8 +1874,10 @@ export type labsUpdateWithoutCasesInput = {
   customers?: Prisma.customersUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
@@ -1494,6 +1887,7 @@ export type labsUpdateWithoutCasesInput = {
 export type labsUncheckedUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1501,8 +1895,10 @@ export type labsUncheckedUpdateWithoutCasesInput = {
   customers?: Prisma.customersUncheckedUpdateManyWithoutLabsNestedInput
   dentists?: Prisma.dentistsUncheckedUpdateManyWithoutLabsNestedInput
   service_types?: Prisma.service_typesUncheckedUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUncheckedUpdateManyWithoutLabsNestedInput
   components?: Prisma.componentsUncheckedUpdateManyWithoutLabsNestedInput
   block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUncheckedUpdateManyWithoutLabsNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
@@ -1519,8 +1915,10 @@ export type LabsCountOutputType = {
   customers: number
   dentists: number
   service_types: number
+  price_tables: number
   components: number
   block_types: number
+  milling_machines: number
   milling_drills: number
   processes: number
   employeeProcessAssignments: number
@@ -1533,8 +1931,10 @@ export type LabsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   customers?: boolean | LabsCountOutputTypeCountCustomersArgs
   dentists?: boolean | LabsCountOutputTypeCountDentistsArgs
   service_types?: boolean | LabsCountOutputTypeCountService_typesArgs
+  price_tables?: boolean | LabsCountOutputTypeCountPrice_tablesArgs
   components?: boolean | LabsCountOutputTypeCountComponentsArgs
   block_types?: boolean | LabsCountOutputTypeCountBlock_typesArgs
+  milling_machines?: boolean | LabsCountOutputTypeCountMilling_machinesArgs
   milling_drills?: boolean | LabsCountOutputTypeCountMilling_drillsArgs
   processes?: boolean | LabsCountOutputTypeCountProcessesArgs
   employeeProcessAssignments?: boolean | LabsCountOutputTypeCountEmployeeProcessAssignmentsArgs
@@ -1583,6 +1983,13 @@ export type LabsCountOutputTypeCountService_typesArgs<ExtArgs extends runtime.Ty
 /**
  * LabsCountOutputType without action
  */
+export type LabsCountOutputTypeCountPrice_tablesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.price_tablesWhereInput
+}
+
+/**
+ * LabsCountOutputType without action
+ */
 export type LabsCountOutputTypeCountComponentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.componentsWhereInput
 }
@@ -1592,6 +1999,13 @@ export type LabsCountOutputTypeCountComponentsArgs<ExtArgs extends runtime.Types
  */
 export type LabsCountOutputTypeCountBlock_typesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.block_typesWhereInput
+}
+
+/**
+ * LabsCountOutputType without action
+ */
+export type LabsCountOutputTypeCountMilling_machinesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.milling_machinesWhereInput
 }
 
 /**
@@ -1633,6 +2047,7 @@ export type LabsCountOutputTypeCountMillingsArgs<ExtArgs extends runtime.Types.E
 export type labsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  currency?: boolean
   is_active?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -1640,8 +2055,10 @@ export type labsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   customers?: boolean | Prisma.labs$customersArgs<ExtArgs>
   dentists?: boolean | Prisma.labs$dentistsArgs<ExtArgs>
   service_types?: boolean | Prisma.labs$service_typesArgs<ExtArgs>
+  price_tables?: boolean | Prisma.labs$price_tablesArgs<ExtArgs>
   components?: boolean | Prisma.labs$componentsArgs<ExtArgs>
   block_types?: boolean | Prisma.labs$block_typesArgs<ExtArgs>
+  milling_machines?: boolean | Prisma.labs$milling_machinesArgs<ExtArgs>
   milling_drills?: boolean | Prisma.labs$milling_drillsArgs<ExtArgs>
   processes?: boolean | Prisma.labs$processesArgs<ExtArgs>
   employeeProcessAssignments?: boolean | Prisma.labs$employeeProcessAssignmentsArgs<ExtArgs>
@@ -1653,6 +2070,7 @@ export type labsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type labsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  currency?: boolean
   is_active?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -1661,6 +2079,7 @@ export type labsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type labsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  currency?: boolean
   is_active?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -1669,19 +2088,22 @@ export type labsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type labsSelectScalar = {
   id?: boolean
   name?: boolean
+  currency?: boolean
   is_active?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type labsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "is_active" | "created_at" | "updated_at", ExtArgs["result"]["labs"]>
+export type labsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "currency" | "is_active" | "created_at" | "updated_at", ExtArgs["result"]["labs"]>
 export type labsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   memberships?: boolean | Prisma.labs$membershipsArgs<ExtArgs>
   customers?: boolean | Prisma.labs$customersArgs<ExtArgs>
   dentists?: boolean | Prisma.labs$dentistsArgs<ExtArgs>
   service_types?: boolean | Prisma.labs$service_typesArgs<ExtArgs>
+  price_tables?: boolean | Prisma.labs$price_tablesArgs<ExtArgs>
   components?: boolean | Prisma.labs$componentsArgs<ExtArgs>
   block_types?: boolean | Prisma.labs$block_typesArgs<ExtArgs>
+  milling_machines?: boolean | Prisma.labs$milling_machinesArgs<ExtArgs>
   milling_drills?: boolean | Prisma.labs$milling_drillsArgs<ExtArgs>
   processes?: boolean | Prisma.labs$processesArgs<ExtArgs>
   employeeProcessAssignments?: boolean | Prisma.labs$employeeProcessAssignmentsArgs<ExtArgs>
@@ -1699,8 +2121,10 @@ export type $labsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     customers: Prisma.$customersPayload<ExtArgs>[]
     dentists: Prisma.$dentistsPayload<ExtArgs>[]
     service_types: Prisma.$service_typesPayload<ExtArgs>[]
+    price_tables: Prisma.$price_tablesPayload<ExtArgs>[]
     components: Prisma.$componentsPayload<ExtArgs>[]
     block_types: Prisma.$block_typesPayload<ExtArgs>[]
+    milling_machines: Prisma.$milling_machinesPayload<ExtArgs>[]
     milling_drills: Prisma.$milling_drillsPayload<ExtArgs>[]
     processes: Prisma.$processesPayload<ExtArgs>[]
     employeeProcessAssignments: Prisma.$employee_process_assignmentsPayload<ExtArgs>[]
@@ -1710,6 +2134,7 @@ export type $labsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
+    currency: string
     is_active: boolean
     created_at: Date
     updated_at: Date
@@ -2111,8 +2536,10 @@ export interface Prisma__labsClient<T, Null = never, ExtArgs extends runtime.Typ
   customers<T extends Prisma.labs$customersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$customersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$customersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   dentists<T extends Prisma.labs$dentistsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$dentistsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$dentistsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   service_types<T extends Prisma.labs$service_typesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$service_typesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$service_typesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  price_tables<T extends Prisma.labs$price_tablesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$price_tablesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$price_tablesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   components<T extends Prisma.labs$componentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$componentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$componentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   block_types<T extends Prisma.labs$block_typesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$block_typesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$block_typesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  milling_machines<T extends Prisma.labs$milling_machinesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$milling_machinesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$milling_machinesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   milling_drills<T extends Prisma.labs$milling_drillsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$milling_drillsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$milling_drillsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   processes<T extends Prisma.labs$processesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$processesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$processesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   employeeProcessAssignments<T extends Prisma.labs$employeeProcessAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$employeeProcessAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$employee_process_assignmentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2149,6 +2576,7 @@ export interface Prisma__labsClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface labsFieldRefs {
   readonly id: Prisma.FieldRef<"labs", 'String'>
   readonly name: Prisma.FieldRef<"labs", 'String'>
+  readonly currency: Prisma.FieldRef<"labs", 'String'>
   readonly is_active: Prisma.FieldRef<"labs", 'Boolean'>
   readonly created_at: Prisma.FieldRef<"labs", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"labs", 'DateTime'>
@@ -2641,6 +3069,30 @@ export type labs$service_typesArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
+ * labs.price_tables
+ */
+export type labs$price_tablesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the price_tables
+   */
+  select?: Prisma.price_tablesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the price_tables
+   */
+  omit?: Prisma.price_tablesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.price_tablesInclude<ExtArgs> | null
+  where?: Prisma.price_tablesWhereInput
+  orderBy?: Prisma.price_tablesOrderByWithRelationInput | Prisma.price_tablesOrderByWithRelationInput[]
+  cursor?: Prisma.price_tablesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Price_tablesScalarFieldEnum | Prisma.Price_tablesScalarFieldEnum[]
+}
+
+/**
  * labs.components
  */
 export type labs$componentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2686,6 +3138,30 @@ export type labs$block_typesArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.Block_typesScalarFieldEnum | Prisma.Block_typesScalarFieldEnum[]
+}
+
+/**
+ * labs.milling_machines
+ */
+export type labs$milling_machinesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the milling_machines
+   */
+  select?: Prisma.milling_machinesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the milling_machines
+   */
+  omit?: Prisma.milling_machinesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.milling_machinesInclude<ExtArgs> | null
+  where?: Prisma.milling_machinesWhereInput
+  orderBy?: Prisma.milling_machinesOrderByWithRelationInput | Prisma.milling_machinesOrderByWithRelationInput[]
+  cursor?: Prisma.milling_machinesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Milling_machinesScalarFieldEnum | Prisma.Milling_machinesScalarFieldEnum[]
 }
 
 /**

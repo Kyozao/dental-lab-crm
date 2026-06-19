@@ -27,59 +27,55 @@ export type AggregateMilling_drills = {
 }
 
 export type Milling_drillsAvgAggregateOutputType = {
-  max_teeth_recommended: number | null
+  current_blocks_count: number | null
+  estimated_max_blocks: number | null
 }
 
 export type Milling_drillsSumAggregateOutputType = {
-  max_teeth_recommended: number | null
+  current_blocks_count: number | null
+  estimated_max_blocks: number | null
 }
 
 export type Milling_drillsMinAggregateOutputType = {
-  lab_id: string | null
   id: string | null
+  lab_id: string | null
+  milling_machine_id: string | null
   name: string | null
-  type: string | null
-  brand: string | null
-  serial_number: string | null
-  max_teeth_recommended: number | null
+  status: $Enums.MillingDrillStatus | null
+  current_blocks_count: number | null
+  estimated_max_blocks: number | null
   installed_at: Date | null
-  changed_at: Date | null
-  is_active: boolean | null
-  deleted_at: Date | null
+  removed_at: Date | null
   notes: string | null
   created_at: Date | null
   updated_at: Date | null
 }
 
 export type Milling_drillsMaxAggregateOutputType = {
-  lab_id: string | null
   id: string | null
+  lab_id: string | null
+  milling_machine_id: string | null
   name: string | null
-  type: string | null
-  brand: string | null
-  serial_number: string | null
-  max_teeth_recommended: number | null
+  status: $Enums.MillingDrillStatus | null
+  current_blocks_count: number | null
+  estimated_max_blocks: number | null
   installed_at: Date | null
-  changed_at: Date | null
-  is_active: boolean | null
-  deleted_at: Date | null
+  removed_at: Date | null
   notes: string | null
   created_at: Date | null
   updated_at: Date | null
 }
 
 export type Milling_drillsCountAggregateOutputType = {
-  lab_id: number
   id: number
+  lab_id: number
+  milling_machine_id: number
   name: number
-  type: number
-  brand: number
-  serial_number: number
-  max_teeth_recommended: number
+  status: number
+  current_blocks_count: number
+  estimated_max_blocks: number
   installed_at: number
-  changed_at: number
-  is_active: number
-  deleted_at: number
+  removed_at: number
   notes: number
   created_at: number
   updated_at: number
@@ -88,59 +84,55 @@ export type Milling_drillsCountAggregateOutputType = {
 
 
 export type Milling_drillsAvgAggregateInputType = {
-  max_teeth_recommended?: true
+  current_blocks_count?: true
+  estimated_max_blocks?: true
 }
 
 export type Milling_drillsSumAggregateInputType = {
-  max_teeth_recommended?: true
+  current_blocks_count?: true
+  estimated_max_blocks?: true
 }
 
 export type Milling_drillsMinAggregateInputType = {
-  lab_id?: true
   id?: true
+  lab_id?: true
+  milling_machine_id?: true
   name?: true
-  type?: true
-  brand?: true
-  serial_number?: true
-  max_teeth_recommended?: true
+  status?: true
+  current_blocks_count?: true
+  estimated_max_blocks?: true
   installed_at?: true
-  changed_at?: true
-  is_active?: true
-  deleted_at?: true
+  removed_at?: true
   notes?: true
   created_at?: true
   updated_at?: true
 }
 
 export type Milling_drillsMaxAggregateInputType = {
-  lab_id?: true
   id?: true
+  lab_id?: true
+  milling_machine_id?: true
   name?: true
-  type?: true
-  brand?: true
-  serial_number?: true
-  max_teeth_recommended?: true
+  status?: true
+  current_blocks_count?: true
+  estimated_max_blocks?: true
   installed_at?: true
-  changed_at?: true
-  is_active?: true
-  deleted_at?: true
+  removed_at?: true
   notes?: true
   created_at?: true
   updated_at?: true
 }
 
 export type Milling_drillsCountAggregateInputType = {
-  lab_id?: true
   id?: true
+  lab_id?: true
+  milling_machine_id?: true
   name?: true
-  type?: true
-  brand?: true
-  serial_number?: true
-  max_teeth_recommended?: true
+  status?: true
+  current_blocks_count?: true
+  estimated_max_blocks?: true
   installed_at?: true
-  changed_at?: true
-  is_active?: true
-  deleted_at?: true
+  removed_at?: true
   notes?: true
   created_at?: true
   updated_at?: true
@@ -234,17 +226,15 @@ export type milling_drillsGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 export type Milling_drillsGroupByOutputType = {
-  lab_id: string
   id: string
+  lab_id: string
+  milling_machine_id: string | null
   name: string
-  type: string | null
-  brand: string | null
-  serial_number: string | null
-  max_teeth_recommended: number | null
+  status: $Enums.MillingDrillStatus
+  current_blocks_count: number
+  estimated_max_blocks: number | null
   installed_at: Date | null
-  changed_at: Date | null
-  is_active: boolean
-  deleted_at: Date | null
+  removed_at: Date | null
   notes: string | null
   created_at: Date
   updated_at: Date
@@ -274,84 +264,82 @@ export type milling_drillsWhereInput = {
   AND?: Prisma.milling_drillsWhereInput | Prisma.milling_drillsWhereInput[]
   OR?: Prisma.milling_drillsWhereInput[]
   NOT?: Prisma.milling_drillsWhereInput | Prisma.milling_drillsWhereInput[]
-  lab_id?: Prisma.UuidFilter<"milling_drills"> | string
   id?: Prisma.UuidFilter<"milling_drills"> | string
+  lab_id?: Prisma.UuidFilter<"milling_drills"> | string
+  milling_machine_id?: Prisma.UuidNullableFilter<"milling_drills"> | string | null
   name?: Prisma.StringFilter<"milling_drills"> | string
-  type?: Prisma.StringNullableFilter<"milling_drills"> | string | null
-  brand?: Prisma.StringNullableFilter<"milling_drills"> | string | null
-  serial_number?: Prisma.StringNullableFilter<"milling_drills"> | string | null
-  max_teeth_recommended?: Prisma.IntNullableFilter<"milling_drills"> | number | null
+  status?: Prisma.EnumMillingDrillStatusFilter<"milling_drills"> | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFilter<"milling_drills"> | number
+  estimated_max_blocks?: Prisma.IntNullableFilter<"milling_drills"> | number | null
   installed_at?: Prisma.DateTimeNullableFilter<"milling_drills"> | Date | string | null
-  changed_at?: Prisma.DateTimeNullableFilter<"milling_drills"> | Date | string | null
-  is_active?: Prisma.BoolFilter<"milling_drills"> | boolean
-  deleted_at?: Prisma.DateTimeNullableFilter<"milling_drills"> | Date | string | null
+  removed_at?: Prisma.DateTimeNullableFilter<"milling_drills"> | Date | string | null
   notes?: Prisma.StringNullableFilter<"milling_drills"> | string | null
   created_at?: Prisma.DateTimeFilter<"milling_drills"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"milling_drills"> | Date | string
   labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
+  milling_machines?: Prisma.XOR<Prisma.Milling_machinesNullableScalarRelationFilter, Prisma.milling_machinesWhereInput> | null
   millings?: Prisma.Case_millingsListRelationFilter
   fineMillings?: Prisma.Case_millingsListRelationFilter
   coarseMillings?: Prisma.Case_millingsListRelationFilter
+  selected_slots?: Prisma.Case_milling_drill_slotsListRelationFilter
 }
 
 export type milling_drillsOrderByWithRelationInput = {
-  lab_id?: Prisma.SortOrder
   id?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
+  milling_machine_id?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
-  type?: Prisma.SortOrderInput | Prisma.SortOrder
-  brand?: Prisma.SortOrderInput | Prisma.SortOrder
-  serial_number?: Prisma.SortOrderInput | Prisma.SortOrder
-  max_teeth_recommended?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
+  current_blocks_count?: Prisma.SortOrder
+  estimated_max_blocks?: Prisma.SortOrderInput | Prisma.SortOrder
   installed_at?: Prisma.SortOrderInput | Prisma.SortOrder
-  changed_at?: Prisma.SortOrderInput | Prisma.SortOrder
-  is_active?: Prisma.SortOrder
-  deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  removed_at?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   labs?: Prisma.labsOrderByWithRelationInput
+  milling_machines?: Prisma.milling_machinesOrderByWithRelationInput
   millings?: Prisma.case_millingsOrderByRelationAggregateInput
   fineMillings?: Prisma.case_millingsOrderByRelationAggregateInput
   coarseMillings?: Prisma.case_millingsOrderByRelationAggregateInput
+  selected_slots?: Prisma.case_milling_drill_slotsOrderByRelationAggregateInput
 }
 
 export type milling_drillsWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  serial_number?: string
   lab_id_name?: Prisma.milling_drillsLab_idNameCompoundUniqueInput
   AND?: Prisma.milling_drillsWhereInput | Prisma.milling_drillsWhereInput[]
   OR?: Prisma.milling_drillsWhereInput[]
   NOT?: Prisma.milling_drillsWhereInput | Prisma.milling_drillsWhereInput[]
   lab_id?: Prisma.UuidFilter<"milling_drills"> | string
+  milling_machine_id?: Prisma.UuidNullableFilter<"milling_drills"> | string | null
   name?: Prisma.StringFilter<"milling_drills"> | string
-  type?: Prisma.StringNullableFilter<"milling_drills"> | string | null
-  brand?: Prisma.StringNullableFilter<"milling_drills"> | string | null
-  max_teeth_recommended?: Prisma.IntNullableFilter<"milling_drills"> | number | null
+  status?: Prisma.EnumMillingDrillStatusFilter<"milling_drills"> | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFilter<"milling_drills"> | number
+  estimated_max_blocks?: Prisma.IntNullableFilter<"milling_drills"> | number | null
   installed_at?: Prisma.DateTimeNullableFilter<"milling_drills"> | Date | string | null
-  changed_at?: Prisma.DateTimeNullableFilter<"milling_drills"> | Date | string | null
-  is_active?: Prisma.BoolFilter<"milling_drills"> | boolean
-  deleted_at?: Prisma.DateTimeNullableFilter<"milling_drills"> | Date | string | null
+  removed_at?: Prisma.DateTimeNullableFilter<"milling_drills"> | Date | string | null
   notes?: Prisma.StringNullableFilter<"milling_drills"> | string | null
   created_at?: Prisma.DateTimeFilter<"milling_drills"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"milling_drills"> | Date | string
   labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
+  milling_machines?: Prisma.XOR<Prisma.Milling_machinesNullableScalarRelationFilter, Prisma.milling_machinesWhereInput> | null
   millings?: Prisma.Case_millingsListRelationFilter
   fineMillings?: Prisma.Case_millingsListRelationFilter
   coarseMillings?: Prisma.Case_millingsListRelationFilter
-}, "id" | "serial_number" | "lab_id_name">
+  selected_slots?: Prisma.Case_milling_drill_slotsListRelationFilter
+}, "id" | "lab_id_name">
 
 export type milling_drillsOrderByWithAggregationInput = {
-  lab_id?: Prisma.SortOrder
   id?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
+  milling_machine_id?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
-  type?: Prisma.SortOrderInput | Prisma.SortOrder
-  brand?: Prisma.SortOrderInput | Prisma.SortOrder
-  serial_number?: Prisma.SortOrderInput | Prisma.SortOrder
-  max_teeth_recommended?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
+  current_blocks_count?: Prisma.SortOrder
+  estimated_max_blocks?: Prisma.SortOrderInput | Prisma.SortOrder
   installed_at?: Prisma.SortOrderInput | Prisma.SortOrder
-  changed_at?: Prisma.SortOrderInput | Prisma.SortOrder
-  is_active?: Prisma.SortOrder
-  deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
+  removed_at?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -366,17 +354,15 @@ export type milling_drillsScalarWhereWithAggregatesInput = {
   AND?: Prisma.milling_drillsScalarWhereWithAggregatesInput | Prisma.milling_drillsScalarWhereWithAggregatesInput[]
   OR?: Prisma.milling_drillsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.milling_drillsScalarWhereWithAggregatesInput | Prisma.milling_drillsScalarWhereWithAggregatesInput[]
-  lab_id?: Prisma.UuidWithAggregatesFilter<"milling_drills"> | string
   id?: Prisma.UuidWithAggregatesFilter<"milling_drills"> | string
+  lab_id?: Prisma.UuidWithAggregatesFilter<"milling_drills"> | string
+  milling_machine_id?: Prisma.UuidNullableWithAggregatesFilter<"milling_drills"> | string | null
   name?: Prisma.StringWithAggregatesFilter<"milling_drills"> | string
-  type?: Prisma.StringNullableWithAggregatesFilter<"milling_drills"> | string | null
-  brand?: Prisma.StringNullableWithAggregatesFilter<"milling_drills"> | string | null
-  serial_number?: Prisma.StringNullableWithAggregatesFilter<"milling_drills"> | string | null
-  max_teeth_recommended?: Prisma.IntNullableWithAggregatesFilter<"milling_drills"> | number | null
+  status?: Prisma.EnumMillingDrillStatusWithAggregatesFilter<"milling_drills"> | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntWithAggregatesFilter<"milling_drills"> | number
+  estimated_max_blocks?: Prisma.IntNullableWithAggregatesFilter<"milling_drills"> | number | null
   installed_at?: Prisma.DateTimeNullableWithAggregatesFilter<"milling_drills"> | Date | string | null
-  changed_at?: Prisma.DateTimeNullableWithAggregatesFilter<"milling_drills"> | Date | string | null
-  is_active?: Prisma.BoolWithAggregatesFilter<"milling_drills"> | boolean
-  deleted_at?: Prisma.DateTimeNullableWithAggregatesFilter<"milling_drills"> | Date | string | null
+  removed_at?: Prisma.DateTimeNullableWithAggregatesFilter<"milling_drills"> | Date | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"milling_drills"> | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"milling_drills"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"milling_drills"> | Date | string
@@ -385,95 +371,89 @@ export type milling_drillsScalarWhereWithAggregatesInput = {
 export type milling_drillsCreateInput = {
   id?: string
   name: string
-  type?: string | null
-  brand?: string | null
-  serial_number?: string | null
-  max_teeth_recommended?: number | null
+  status?: $Enums.MillingDrillStatus
+  current_blocks_count?: number
+  estimated_max_blocks?: number | null
   installed_at?: Date | string | null
-  changed_at?: Date | string | null
-  is_active?: boolean
-  deleted_at?: Date | string | null
+  removed_at?: Date | string | null
   notes?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   labs: Prisma.labsCreateNestedOneWithoutMilling_drillsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedOneWithoutMilling_drillsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutMilling_drillsInput
   fineMillings?: Prisma.case_millingsCreateNestedManyWithoutFineMillingDrillInput
   coarseMillings?: Prisma.case_millingsCreateNestedManyWithoutCoarseMillingDrillInput
+  selected_slots?: Prisma.case_milling_drill_slotsCreateNestedManyWithoutMilling_drillsInput
 }
 
 export type milling_drillsUncheckedCreateInput = {
-  lab_id: string
   id?: string
+  lab_id: string
+  milling_machine_id?: string | null
   name: string
-  type?: string | null
-  brand?: string | null
-  serial_number?: string | null
-  max_teeth_recommended?: number | null
+  status?: $Enums.MillingDrillStatus
+  current_blocks_count?: number
+  estimated_max_blocks?: number | null
   installed_at?: Date | string | null
-  changed_at?: Date | string | null
-  is_active?: boolean
-  deleted_at?: Date | string | null
+  removed_at?: Date | string | null
   notes?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutMilling_drillsInput
   fineMillings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutFineMillingDrillInput
   coarseMillings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCoarseMillingDrillInput
+  selected_slots?: Prisma.case_milling_drill_slotsUncheckedCreateNestedManyWithoutMilling_drillsInput
 }
 
 export type milling_drillsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  max_teeth_recommended?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumMillingDrillStatusFieldUpdateOperationsInput | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_max_blocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   labs?: Prisma.labsUpdateOneRequiredWithoutMilling_drillsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateOneWithoutMilling_drillsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutMilling_drillsNestedInput
   fineMillings?: Prisma.case_millingsUpdateManyWithoutFineMillingDrillNestedInput
   coarseMillings?: Prisma.case_millingsUpdateManyWithoutCoarseMillingDrillNestedInput
+  selected_slots?: Prisma.case_milling_drill_slotsUpdateManyWithoutMilling_drillsNestedInput
 }
 
 export type milling_drillsUncheckedUpdateInput = {
-  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  max_teeth_recommended?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumMillingDrillStatusFieldUpdateOperationsInput | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_max_blocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutMilling_drillsNestedInput
   fineMillings?: Prisma.case_millingsUncheckedUpdateManyWithoutFineMillingDrillNestedInput
   coarseMillings?: Prisma.case_millingsUncheckedUpdateManyWithoutCoarseMillingDrillNestedInput
+  selected_slots?: Prisma.case_milling_drill_slotsUncheckedUpdateManyWithoutMilling_drillsNestedInput
 }
 
 export type milling_drillsCreateManyInput = {
-  lab_id: string
   id?: string
+  lab_id: string
+  milling_machine_id?: string | null
   name: string
-  type?: string | null
-  brand?: string | null
-  serial_number?: string | null
-  max_teeth_recommended?: number | null
+  status?: $Enums.MillingDrillStatus
+  current_blocks_count?: number
+  estimated_max_blocks?: number | null
   installed_at?: Date | string | null
-  changed_at?: Date | string | null
-  is_active?: boolean
-  deleted_at?: Date | string | null
+  removed_at?: Date | string | null
   notes?: string | null
   created_at?: Date | string
   updated_at?: Date | string
@@ -482,31 +462,26 @@ export type milling_drillsCreateManyInput = {
 export type milling_drillsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  max_teeth_recommended?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumMillingDrillStatusFieldUpdateOperationsInput | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_max_blocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type milling_drillsUncheckedUpdateManyInput = {
-  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  max_teeth_recommended?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumMillingDrillStatusFieldUpdateOperationsInput | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_max_blocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -528,67 +503,68 @@ export type milling_drillsLab_idNameCompoundUniqueInput = {
 }
 
 export type milling_drillsCountOrderByAggregateInput = {
-  lab_id?: Prisma.SortOrder
   id?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
+  milling_machine_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  brand?: Prisma.SortOrder
-  serial_number?: Prisma.SortOrder
-  max_teeth_recommended?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  current_blocks_count?: Prisma.SortOrder
+  estimated_max_blocks?: Prisma.SortOrder
   installed_at?: Prisma.SortOrder
-  changed_at?: Prisma.SortOrder
-  is_active?: Prisma.SortOrder
-  deleted_at?: Prisma.SortOrder
+  removed_at?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
 
 export type milling_drillsAvgOrderByAggregateInput = {
-  max_teeth_recommended?: Prisma.SortOrder
+  current_blocks_count?: Prisma.SortOrder
+  estimated_max_blocks?: Prisma.SortOrder
 }
 
 export type milling_drillsMaxOrderByAggregateInput = {
-  lab_id?: Prisma.SortOrder
   id?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
+  milling_machine_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  brand?: Prisma.SortOrder
-  serial_number?: Prisma.SortOrder
-  max_teeth_recommended?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  current_blocks_count?: Prisma.SortOrder
+  estimated_max_blocks?: Prisma.SortOrder
   installed_at?: Prisma.SortOrder
-  changed_at?: Prisma.SortOrder
-  is_active?: Prisma.SortOrder
-  deleted_at?: Prisma.SortOrder
+  removed_at?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
 
 export type milling_drillsMinOrderByAggregateInput = {
-  lab_id?: Prisma.SortOrder
   id?: Prisma.SortOrder
+  lab_id?: Prisma.SortOrder
+  milling_machine_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  brand?: Prisma.SortOrder
-  serial_number?: Prisma.SortOrder
-  max_teeth_recommended?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  current_blocks_count?: Prisma.SortOrder
+  estimated_max_blocks?: Prisma.SortOrder
   installed_at?: Prisma.SortOrder
-  changed_at?: Prisma.SortOrder
-  is_active?: Prisma.SortOrder
-  deleted_at?: Prisma.SortOrder
+  removed_at?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
 
 export type milling_drillsSumOrderByAggregateInput = {
-  max_teeth_recommended?: Prisma.SortOrder
+  current_blocks_count?: Prisma.SortOrder
+  estimated_max_blocks?: Prisma.SortOrder
 }
 
 export type Milling_drillsNullableScalarRelationFilter = {
   is?: Prisma.milling_drillsWhereInput | null
   isNot?: Prisma.milling_drillsWhereInput | null
+}
+
+export type Milling_drillsScalarRelationFilter = {
+  is?: Prisma.milling_drillsWhereInput
+  isNot?: Prisma.milling_drillsWhereInput
 }
 
 export type milling_drillsCreateNestedManyWithoutLabsInput = {
@@ -633,12 +609,66 @@ export type milling_drillsUncheckedUpdateManyWithoutLabsNestedInput = {
   deleteMany?: Prisma.milling_drillsScalarWhereInput | Prisma.milling_drillsScalarWhereInput[]
 }
 
+export type EnumMillingDrillStatusFieldUpdateOperationsInput = {
+  set?: $Enums.MillingDrillStatus
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type NullableIntFieldUpdateOperationsInput = {
   set?: number | null
   increment?: number
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type milling_drillsCreateNestedManyWithoutMilling_machinesInput = {
+  create?: Prisma.XOR<Prisma.milling_drillsCreateWithoutMilling_machinesInput, Prisma.milling_drillsUncheckedCreateWithoutMilling_machinesInput> | Prisma.milling_drillsCreateWithoutMilling_machinesInput[] | Prisma.milling_drillsUncheckedCreateWithoutMilling_machinesInput[]
+  connectOrCreate?: Prisma.milling_drillsCreateOrConnectWithoutMilling_machinesInput | Prisma.milling_drillsCreateOrConnectWithoutMilling_machinesInput[]
+  createMany?: Prisma.milling_drillsCreateManyMilling_machinesInputEnvelope
+  connect?: Prisma.milling_drillsWhereUniqueInput | Prisma.milling_drillsWhereUniqueInput[]
+}
+
+export type milling_drillsUncheckedCreateNestedManyWithoutMilling_machinesInput = {
+  create?: Prisma.XOR<Prisma.milling_drillsCreateWithoutMilling_machinesInput, Prisma.milling_drillsUncheckedCreateWithoutMilling_machinesInput> | Prisma.milling_drillsCreateWithoutMilling_machinesInput[] | Prisma.milling_drillsUncheckedCreateWithoutMilling_machinesInput[]
+  connectOrCreate?: Prisma.milling_drillsCreateOrConnectWithoutMilling_machinesInput | Prisma.milling_drillsCreateOrConnectWithoutMilling_machinesInput[]
+  createMany?: Prisma.milling_drillsCreateManyMilling_machinesInputEnvelope
+  connect?: Prisma.milling_drillsWhereUniqueInput | Prisma.milling_drillsWhereUniqueInput[]
+}
+
+export type milling_drillsUpdateManyWithoutMilling_machinesNestedInput = {
+  create?: Prisma.XOR<Prisma.milling_drillsCreateWithoutMilling_machinesInput, Prisma.milling_drillsUncheckedCreateWithoutMilling_machinesInput> | Prisma.milling_drillsCreateWithoutMilling_machinesInput[] | Prisma.milling_drillsUncheckedCreateWithoutMilling_machinesInput[]
+  connectOrCreate?: Prisma.milling_drillsCreateOrConnectWithoutMilling_machinesInput | Prisma.milling_drillsCreateOrConnectWithoutMilling_machinesInput[]
+  upsert?: Prisma.milling_drillsUpsertWithWhereUniqueWithoutMilling_machinesInput | Prisma.milling_drillsUpsertWithWhereUniqueWithoutMilling_machinesInput[]
+  createMany?: Prisma.milling_drillsCreateManyMilling_machinesInputEnvelope
+  set?: Prisma.milling_drillsWhereUniqueInput | Prisma.milling_drillsWhereUniqueInput[]
+  disconnect?: Prisma.milling_drillsWhereUniqueInput | Prisma.milling_drillsWhereUniqueInput[]
+  delete?: Prisma.milling_drillsWhereUniqueInput | Prisma.milling_drillsWhereUniqueInput[]
+  connect?: Prisma.milling_drillsWhereUniqueInput | Prisma.milling_drillsWhereUniqueInput[]
+  update?: Prisma.milling_drillsUpdateWithWhereUniqueWithoutMilling_machinesInput | Prisma.milling_drillsUpdateWithWhereUniqueWithoutMilling_machinesInput[]
+  updateMany?: Prisma.milling_drillsUpdateManyWithWhereWithoutMilling_machinesInput | Prisma.milling_drillsUpdateManyWithWhereWithoutMilling_machinesInput[]
+  deleteMany?: Prisma.milling_drillsScalarWhereInput | Prisma.milling_drillsScalarWhereInput[]
+}
+
+export type milling_drillsUncheckedUpdateManyWithoutMilling_machinesNestedInput = {
+  create?: Prisma.XOR<Prisma.milling_drillsCreateWithoutMilling_machinesInput, Prisma.milling_drillsUncheckedCreateWithoutMilling_machinesInput> | Prisma.milling_drillsCreateWithoutMilling_machinesInput[] | Prisma.milling_drillsUncheckedCreateWithoutMilling_machinesInput[]
+  connectOrCreate?: Prisma.milling_drillsCreateOrConnectWithoutMilling_machinesInput | Prisma.milling_drillsCreateOrConnectWithoutMilling_machinesInput[]
+  upsert?: Prisma.milling_drillsUpsertWithWhereUniqueWithoutMilling_machinesInput | Prisma.milling_drillsUpsertWithWhereUniqueWithoutMilling_machinesInput[]
+  createMany?: Prisma.milling_drillsCreateManyMilling_machinesInputEnvelope
+  set?: Prisma.milling_drillsWhereUniqueInput | Prisma.milling_drillsWhereUniqueInput[]
+  disconnect?: Prisma.milling_drillsWhereUniqueInput | Prisma.milling_drillsWhereUniqueInput[]
+  delete?: Prisma.milling_drillsWhereUniqueInput | Prisma.milling_drillsWhereUniqueInput[]
+  connect?: Prisma.milling_drillsWhereUniqueInput | Prisma.milling_drillsWhereUniqueInput[]
+  update?: Prisma.milling_drillsUpdateWithWhereUniqueWithoutMilling_machinesInput | Prisma.milling_drillsUpdateWithWhereUniqueWithoutMilling_machinesInput[]
+  updateMany?: Prisma.milling_drillsUpdateManyWithWhereWithoutMilling_machinesInput | Prisma.milling_drillsUpdateManyWithWhereWithoutMilling_machinesInput[]
+  deleteMany?: Prisma.milling_drillsScalarWhereInput | Prisma.milling_drillsScalarWhereInput[]
 }
 
 export type milling_drillsCreateNestedOneWithoutMillingsInput = {
@@ -689,42 +719,54 @@ export type milling_drillsUpdateOneWithoutCoarseMillingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.milling_drillsUpdateToOneWithWhereWithoutCoarseMillingsInput, Prisma.milling_drillsUpdateWithoutCoarseMillingsInput>, Prisma.milling_drillsUncheckedUpdateWithoutCoarseMillingsInput>
 }
 
+export type milling_drillsCreateNestedOneWithoutSelected_slotsInput = {
+  create?: Prisma.XOR<Prisma.milling_drillsCreateWithoutSelected_slotsInput, Prisma.milling_drillsUncheckedCreateWithoutSelected_slotsInput>
+  connectOrCreate?: Prisma.milling_drillsCreateOrConnectWithoutSelected_slotsInput
+  connect?: Prisma.milling_drillsWhereUniqueInput
+}
+
+export type milling_drillsUpdateOneRequiredWithoutSelected_slotsNestedInput = {
+  create?: Prisma.XOR<Prisma.milling_drillsCreateWithoutSelected_slotsInput, Prisma.milling_drillsUncheckedCreateWithoutSelected_slotsInput>
+  connectOrCreate?: Prisma.milling_drillsCreateOrConnectWithoutSelected_slotsInput
+  upsert?: Prisma.milling_drillsUpsertWithoutSelected_slotsInput
+  connect?: Prisma.milling_drillsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.milling_drillsUpdateToOneWithWhereWithoutSelected_slotsInput, Prisma.milling_drillsUpdateWithoutSelected_slotsInput>, Prisma.milling_drillsUncheckedUpdateWithoutSelected_slotsInput>
+}
+
 export type milling_drillsCreateWithoutLabsInput = {
   id?: string
   name: string
-  type?: string | null
-  brand?: string | null
-  serial_number?: string | null
-  max_teeth_recommended?: number | null
+  status?: $Enums.MillingDrillStatus
+  current_blocks_count?: number
+  estimated_max_blocks?: number | null
   installed_at?: Date | string | null
-  changed_at?: Date | string | null
-  is_active?: boolean
-  deleted_at?: Date | string | null
+  removed_at?: Date | string | null
   notes?: string | null
   created_at?: Date | string
   updated_at?: Date | string
+  milling_machines?: Prisma.milling_machinesCreateNestedOneWithoutMilling_drillsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutMilling_drillsInput
   fineMillings?: Prisma.case_millingsCreateNestedManyWithoutFineMillingDrillInput
   coarseMillings?: Prisma.case_millingsCreateNestedManyWithoutCoarseMillingDrillInput
+  selected_slots?: Prisma.case_milling_drill_slotsCreateNestedManyWithoutMilling_drillsInput
 }
 
 export type milling_drillsUncheckedCreateWithoutLabsInput = {
   id?: string
+  milling_machine_id?: string | null
   name: string
-  type?: string | null
-  brand?: string | null
-  serial_number?: string | null
-  max_teeth_recommended?: number | null
+  status?: $Enums.MillingDrillStatus
+  current_blocks_count?: number
+  estimated_max_blocks?: number | null
   installed_at?: Date | string | null
-  changed_at?: Date | string | null
-  is_active?: boolean
-  deleted_at?: Date | string | null
+  removed_at?: Date | string | null
   notes?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutMilling_drillsInput
   fineMillings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutFineMillingDrillInput
   coarseMillings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCoarseMillingDrillInput
+  selected_slots?: Prisma.case_milling_drill_slotsUncheckedCreateNestedManyWithoutMilling_drillsInput
 }
 
 export type milling_drillsCreateOrConnectWithoutLabsInput = {
@@ -757,58 +799,116 @@ export type milling_drillsScalarWhereInput = {
   AND?: Prisma.milling_drillsScalarWhereInput | Prisma.milling_drillsScalarWhereInput[]
   OR?: Prisma.milling_drillsScalarWhereInput[]
   NOT?: Prisma.milling_drillsScalarWhereInput | Prisma.milling_drillsScalarWhereInput[]
-  lab_id?: Prisma.UuidFilter<"milling_drills"> | string
   id?: Prisma.UuidFilter<"milling_drills"> | string
+  lab_id?: Prisma.UuidFilter<"milling_drills"> | string
+  milling_machine_id?: Prisma.UuidNullableFilter<"milling_drills"> | string | null
   name?: Prisma.StringFilter<"milling_drills"> | string
-  type?: Prisma.StringNullableFilter<"milling_drills"> | string | null
-  brand?: Prisma.StringNullableFilter<"milling_drills"> | string | null
-  serial_number?: Prisma.StringNullableFilter<"milling_drills"> | string | null
-  max_teeth_recommended?: Prisma.IntNullableFilter<"milling_drills"> | number | null
+  status?: Prisma.EnumMillingDrillStatusFilter<"milling_drills"> | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFilter<"milling_drills"> | number
+  estimated_max_blocks?: Prisma.IntNullableFilter<"milling_drills"> | number | null
   installed_at?: Prisma.DateTimeNullableFilter<"milling_drills"> | Date | string | null
-  changed_at?: Prisma.DateTimeNullableFilter<"milling_drills"> | Date | string | null
-  is_active?: Prisma.BoolFilter<"milling_drills"> | boolean
-  deleted_at?: Prisma.DateTimeNullableFilter<"milling_drills"> | Date | string | null
+  removed_at?: Prisma.DateTimeNullableFilter<"milling_drills"> | Date | string | null
   notes?: Prisma.StringNullableFilter<"milling_drills"> | string | null
   created_at?: Prisma.DateTimeFilter<"milling_drills"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"milling_drills"> | Date | string
 }
 
-export type milling_drillsCreateWithoutMillingsInput = {
+export type milling_drillsCreateWithoutMilling_machinesInput = {
   id?: string
   name: string
-  type?: string | null
-  brand?: string | null
-  serial_number?: string | null
-  max_teeth_recommended?: number | null
+  status?: $Enums.MillingDrillStatus
+  current_blocks_count?: number
+  estimated_max_blocks?: number | null
   installed_at?: Date | string | null
-  changed_at?: Date | string | null
-  is_active?: boolean
-  deleted_at?: Date | string | null
+  removed_at?: Date | string | null
   notes?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   labs: Prisma.labsCreateNestedOneWithoutMilling_drillsInput
+  millings?: Prisma.case_millingsCreateNestedManyWithoutMilling_drillsInput
   fineMillings?: Prisma.case_millingsCreateNestedManyWithoutFineMillingDrillInput
   coarseMillings?: Prisma.case_millingsCreateNestedManyWithoutCoarseMillingDrillInput
+  selected_slots?: Prisma.case_milling_drill_slotsCreateNestedManyWithoutMilling_drillsInput
+}
+
+export type milling_drillsUncheckedCreateWithoutMilling_machinesInput = {
+  id?: string
+  lab_id: string
+  name: string
+  status?: $Enums.MillingDrillStatus
+  current_blocks_count?: number
+  estimated_max_blocks?: number | null
+  installed_at?: Date | string | null
+  removed_at?: Date | string | null
+  notes?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutMilling_drillsInput
+  fineMillings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutFineMillingDrillInput
+  coarseMillings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCoarseMillingDrillInput
+  selected_slots?: Prisma.case_milling_drill_slotsUncheckedCreateNestedManyWithoutMilling_drillsInput
+}
+
+export type milling_drillsCreateOrConnectWithoutMilling_machinesInput = {
+  where: Prisma.milling_drillsWhereUniqueInput
+  create: Prisma.XOR<Prisma.milling_drillsCreateWithoutMilling_machinesInput, Prisma.milling_drillsUncheckedCreateWithoutMilling_machinesInput>
+}
+
+export type milling_drillsCreateManyMilling_machinesInputEnvelope = {
+  data: Prisma.milling_drillsCreateManyMilling_machinesInput | Prisma.milling_drillsCreateManyMilling_machinesInput[]
+  skipDuplicates?: boolean
+}
+
+export type milling_drillsUpsertWithWhereUniqueWithoutMilling_machinesInput = {
+  where: Prisma.milling_drillsWhereUniqueInput
+  update: Prisma.XOR<Prisma.milling_drillsUpdateWithoutMilling_machinesInput, Prisma.milling_drillsUncheckedUpdateWithoutMilling_machinesInput>
+  create: Prisma.XOR<Prisma.milling_drillsCreateWithoutMilling_machinesInput, Prisma.milling_drillsUncheckedCreateWithoutMilling_machinesInput>
+}
+
+export type milling_drillsUpdateWithWhereUniqueWithoutMilling_machinesInput = {
+  where: Prisma.milling_drillsWhereUniqueInput
+  data: Prisma.XOR<Prisma.milling_drillsUpdateWithoutMilling_machinesInput, Prisma.milling_drillsUncheckedUpdateWithoutMilling_machinesInput>
+}
+
+export type milling_drillsUpdateManyWithWhereWithoutMilling_machinesInput = {
+  where: Prisma.milling_drillsScalarWhereInput
+  data: Prisma.XOR<Prisma.milling_drillsUpdateManyMutationInput, Prisma.milling_drillsUncheckedUpdateManyWithoutMilling_machinesInput>
+}
+
+export type milling_drillsCreateWithoutMillingsInput = {
+  id?: string
+  name: string
+  status?: $Enums.MillingDrillStatus
+  current_blocks_count?: number
+  estimated_max_blocks?: number | null
+  installed_at?: Date | string | null
+  removed_at?: Date | string | null
+  notes?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutMilling_drillsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedOneWithoutMilling_drillsInput
+  fineMillings?: Prisma.case_millingsCreateNestedManyWithoutFineMillingDrillInput
+  coarseMillings?: Prisma.case_millingsCreateNestedManyWithoutCoarseMillingDrillInput
+  selected_slots?: Prisma.case_milling_drill_slotsCreateNestedManyWithoutMilling_drillsInput
 }
 
 export type milling_drillsUncheckedCreateWithoutMillingsInput = {
-  lab_id: string
   id?: string
+  lab_id: string
+  milling_machine_id?: string | null
   name: string
-  type?: string | null
-  brand?: string | null
-  serial_number?: string | null
-  max_teeth_recommended?: number | null
+  status?: $Enums.MillingDrillStatus
+  current_blocks_count?: number
+  estimated_max_blocks?: number | null
   installed_at?: Date | string | null
-  changed_at?: Date | string | null
-  is_active?: boolean
-  deleted_at?: Date | string | null
+  removed_at?: Date | string | null
   notes?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   fineMillings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutFineMillingDrillInput
   coarseMillings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCoarseMillingDrillInput
+  selected_slots?: Prisma.case_milling_drill_slotsUncheckedCreateNestedManyWithoutMilling_drillsInput
 }
 
 export type milling_drillsCreateOrConnectWithoutMillingsInput = {
@@ -819,39 +919,37 @@ export type milling_drillsCreateOrConnectWithoutMillingsInput = {
 export type milling_drillsCreateWithoutFineMillingsInput = {
   id?: string
   name: string
-  type?: string | null
-  brand?: string | null
-  serial_number?: string | null
-  max_teeth_recommended?: number | null
+  status?: $Enums.MillingDrillStatus
+  current_blocks_count?: number
+  estimated_max_blocks?: number | null
   installed_at?: Date | string | null
-  changed_at?: Date | string | null
-  is_active?: boolean
-  deleted_at?: Date | string | null
+  removed_at?: Date | string | null
   notes?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   labs: Prisma.labsCreateNestedOneWithoutMilling_drillsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedOneWithoutMilling_drillsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutMilling_drillsInput
   coarseMillings?: Prisma.case_millingsCreateNestedManyWithoutCoarseMillingDrillInput
+  selected_slots?: Prisma.case_milling_drill_slotsCreateNestedManyWithoutMilling_drillsInput
 }
 
 export type milling_drillsUncheckedCreateWithoutFineMillingsInput = {
-  lab_id: string
   id?: string
+  lab_id: string
+  milling_machine_id?: string | null
   name: string
-  type?: string | null
-  brand?: string | null
-  serial_number?: string | null
-  max_teeth_recommended?: number | null
+  status?: $Enums.MillingDrillStatus
+  current_blocks_count?: number
+  estimated_max_blocks?: number | null
   installed_at?: Date | string | null
-  changed_at?: Date | string | null
-  is_active?: boolean
-  deleted_at?: Date | string | null
+  removed_at?: Date | string | null
   notes?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutMilling_drillsInput
   coarseMillings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCoarseMillingDrillInput
+  selected_slots?: Prisma.case_milling_drill_slotsUncheckedCreateNestedManyWithoutMilling_drillsInput
 }
 
 export type milling_drillsCreateOrConnectWithoutFineMillingsInput = {
@@ -862,39 +960,37 @@ export type milling_drillsCreateOrConnectWithoutFineMillingsInput = {
 export type milling_drillsCreateWithoutCoarseMillingsInput = {
   id?: string
   name: string
-  type?: string | null
-  brand?: string | null
-  serial_number?: string | null
-  max_teeth_recommended?: number | null
+  status?: $Enums.MillingDrillStatus
+  current_blocks_count?: number
+  estimated_max_blocks?: number | null
   installed_at?: Date | string | null
-  changed_at?: Date | string | null
-  is_active?: boolean
-  deleted_at?: Date | string | null
+  removed_at?: Date | string | null
   notes?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   labs: Prisma.labsCreateNestedOneWithoutMilling_drillsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedOneWithoutMilling_drillsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutMilling_drillsInput
   fineMillings?: Prisma.case_millingsCreateNestedManyWithoutFineMillingDrillInput
+  selected_slots?: Prisma.case_milling_drill_slotsCreateNestedManyWithoutMilling_drillsInput
 }
 
 export type milling_drillsUncheckedCreateWithoutCoarseMillingsInput = {
-  lab_id: string
   id?: string
+  lab_id: string
+  milling_machine_id?: string | null
   name: string
-  type?: string | null
-  brand?: string | null
-  serial_number?: string | null
-  max_teeth_recommended?: number | null
+  status?: $Enums.MillingDrillStatus
+  current_blocks_count?: number
+  estimated_max_blocks?: number | null
   installed_at?: Date | string | null
-  changed_at?: Date | string | null
-  is_active?: boolean
-  deleted_at?: Date | string | null
+  removed_at?: Date | string | null
   notes?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutMilling_drillsInput
   fineMillings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutFineMillingDrillInput
+  selected_slots?: Prisma.case_milling_drill_slotsUncheckedCreateNestedManyWithoutMilling_drillsInput
 }
 
 export type milling_drillsCreateOrConnectWithoutCoarseMillingsInput = {
@@ -916,39 +1012,37 @@ export type milling_drillsUpdateToOneWithWhereWithoutMillingsInput = {
 export type milling_drillsUpdateWithoutMillingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  max_teeth_recommended?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumMillingDrillStatusFieldUpdateOperationsInput | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_max_blocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   labs?: Prisma.labsUpdateOneRequiredWithoutMilling_drillsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateOneWithoutMilling_drillsNestedInput
   fineMillings?: Prisma.case_millingsUpdateManyWithoutFineMillingDrillNestedInput
   coarseMillings?: Prisma.case_millingsUpdateManyWithoutCoarseMillingDrillNestedInput
+  selected_slots?: Prisma.case_milling_drill_slotsUpdateManyWithoutMilling_drillsNestedInput
 }
 
 export type milling_drillsUncheckedUpdateWithoutMillingsInput = {
-  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  max_teeth_recommended?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumMillingDrillStatusFieldUpdateOperationsInput | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_max_blocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fineMillings?: Prisma.case_millingsUncheckedUpdateManyWithoutFineMillingDrillNestedInput
   coarseMillings?: Prisma.case_millingsUncheckedUpdateManyWithoutCoarseMillingDrillNestedInput
+  selected_slots?: Prisma.case_milling_drill_slotsUncheckedUpdateManyWithoutMilling_drillsNestedInput
 }
 
 export type milling_drillsUpsertWithoutFineMillingsInput = {
@@ -965,39 +1059,37 @@ export type milling_drillsUpdateToOneWithWhereWithoutFineMillingsInput = {
 export type milling_drillsUpdateWithoutFineMillingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  max_teeth_recommended?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumMillingDrillStatusFieldUpdateOperationsInput | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_max_blocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   labs?: Prisma.labsUpdateOneRequiredWithoutMilling_drillsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateOneWithoutMilling_drillsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutMilling_drillsNestedInput
   coarseMillings?: Prisma.case_millingsUpdateManyWithoutCoarseMillingDrillNestedInput
+  selected_slots?: Prisma.case_milling_drill_slotsUpdateManyWithoutMilling_drillsNestedInput
 }
 
 export type milling_drillsUncheckedUpdateWithoutFineMillingsInput = {
-  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  max_teeth_recommended?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumMillingDrillStatusFieldUpdateOperationsInput | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_max_blocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutMilling_drillsNestedInput
   coarseMillings?: Prisma.case_millingsUncheckedUpdateManyWithoutCoarseMillingDrillNestedInput
+  selected_slots?: Prisma.case_milling_drill_slotsUncheckedUpdateManyWithoutMilling_drillsNestedInput
 }
 
 export type milling_drillsUpsertWithoutCoarseMillingsInput = {
@@ -1014,87 +1106,119 @@ export type milling_drillsUpdateToOneWithWhereWithoutCoarseMillingsInput = {
 export type milling_drillsUpdateWithoutCoarseMillingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  max_teeth_recommended?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumMillingDrillStatusFieldUpdateOperationsInput | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_max_blocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   labs?: Prisma.labsUpdateOneRequiredWithoutMilling_drillsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateOneWithoutMilling_drillsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutMilling_drillsNestedInput
   fineMillings?: Prisma.case_millingsUpdateManyWithoutFineMillingDrillNestedInput
+  selected_slots?: Prisma.case_milling_drill_slotsUpdateManyWithoutMilling_drillsNestedInput
 }
 
 export type milling_drillsUncheckedUpdateWithoutCoarseMillingsInput = {
-  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  max_teeth_recommended?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumMillingDrillStatusFieldUpdateOperationsInput | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_max_blocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutMilling_drillsNestedInput
   fineMillings?: Prisma.case_millingsUncheckedUpdateManyWithoutFineMillingDrillNestedInput
+  selected_slots?: Prisma.case_milling_drill_slotsUncheckedUpdateManyWithoutMilling_drillsNestedInput
 }
 
-export type milling_drillsCreateManyLabsInput = {
+export type milling_drillsCreateWithoutSelected_slotsInput = {
   id?: string
   name: string
-  type?: string | null
-  brand?: string | null
-  serial_number?: string | null
-  max_teeth_recommended?: number | null
+  status?: $Enums.MillingDrillStatus
+  current_blocks_count?: number
+  estimated_max_blocks?: number | null
   installed_at?: Date | string | null
-  changed_at?: Date | string | null
-  is_active?: boolean
-  deleted_at?: Date | string | null
+  removed_at?: Date | string | null
   notes?: string | null
   created_at?: Date | string
   updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutMilling_drillsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedOneWithoutMilling_drillsInput
+  millings?: Prisma.case_millingsCreateNestedManyWithoutMilling_drillsInput
+  fineMillings?: Prisma.case_millingsCreateNestedManyWithoutFineMillingDrillInput
+  coarseMillings?: Prisma.case_millingsCreateNestedManyWithoutCoarseMillingDrillInput
 }
 
-export type milling_drillsUpdateWithoutLabsInput = {
+export type milling_drillsUncheckedCreateWithoutSelected_slotsInput = {
+  id?: string
+  lab_id: string
+  milling_machine_id?: string | null
+  name: string
+  status?: $Enums.MillingDrillStatus
+  current_blocks_count?: number
+  estimated_max_blocks?: number | null
+  installed_at?: Date | string | null
+  removed_at?: Date | string | null
+  notes?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutMilling_drillsInput
+  fineMillings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutFineMillingDrillInput
+  coarseMillings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCoarseMillingDrillInput
+}
+
+export type milling_drillsCreateOrConnectWithoutSelected_slotsInput = {
+  where: Prisma.milling_drillsWhereUniqueInput
+  create: Prisma.XOR<Prisma.milling_drillsCreateWithoutSelected_slotsInput, Prisma.milling_drillsUncheckedCreateWithoutSelected_slotsInput>
+}
+
+export type milling_drillsUpsertWithoutSelected_slotsInput = {
+  update: Prisma.XOR<Prisma.milling_drillsUpdateWithoutSelected_slotsInput, Prisma.milling_drillsUncheckedUpdateWithoutSelected_slotsInput>
+  create: Prisma.XOR<Prisma.milling_drillsCreateWithoutSelected_slotsInput, Prisma.milling_drillsUncheckedCreateWithoutSelected_slotsInput>
+  where?: Prisma.milling_drillsWhereInput
+}
+
+export type milling_drillsUpdateToOneWithWhereWithoutSelected_slotsInput = {
+  where?: Prisma.milling_drillsWhereInput
+  data: Prisma.XOR<Prisma.milling_drillsUpdateWithoutSelected_slotsInput, Prisma.milling_drillsUncheckedUpdateWithoutSelected_slotsInput>
+}
+
+export type milling_drillsUpdateWithoutSelected_slotsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  max_teeth_recommended?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumMillingDrillStatusFieldUpdateOperationsInput | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_max_blocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutMilling_drillsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateOneWithoutMilling_drillsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutMilling_drillsNestedInput
   fineMillings?: Prisma.case_millingsUpdateManyWithoutFineMillingDrillNestedInput
   coarseMillings?: Prisma.case_millingsUpdateManyWithoutCoarseMillingDrillNestedInput
 }
 
-export type milling_drillsUncheckedUpdateWithoutLabsInput = {
+export type milling_drillsUncheckedUpdateWithoutSelected_slotsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  max_teeth_recommended?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumMillingDrillStatusFieldUpdateOperationsInput | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_max_blocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1103,17 +1227,129 @@ export type milling_drillsUncheckedUpdateWithoutLabsInput = {
   coarseMillings?: Prisma.case_millingsUncheckedUpdateManyWithoutCoarseMillingDrillNestedInput
 }
 
-export type milling_drillsUncheckedUpdateManyWithoutLabsInput = {
+export type milling_drillsCreateManyLabsInput = {
+  id?: string
+  milling_machine_id?: string | null
+  name: string
+  status?: $Enums.MillingDrillStatus
+  current_blocks_count?: number
+  estimated_max_blocks?: number | null
+  installed_at?: Date | string | null
+  removed_at?: Date | string | null
+  notes?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type milling_drillsUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  brand?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  max_teeth_recommended?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumMillingDrillStatusFieldUpdateOperationsInput | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_max_blocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  changed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  milling_machines?: Prisma.milling_machinesUpdateOneWithoutMilling_drillsNestedInput
+  millings?: Prisma.case_millingsUpdateManyWithoutMilling_drillsNestedInput
+  fineMillings?: Prisma.case_millingsUpdateManyWithoutFineMillingDrillNestedInput
+  coarseMillings?: Prisma.case_millingsUpdateManyWithoutCoarseMillingDrillNestedInput
+  selected_slots?: Prisma.case_milling_drill_slotsUpdateManyWithoutMilling_drillsNestedInput
+}
+
+export type milling_drillsUncheckedUpdateWithoutLabsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumMillingDrillStatusFieldUpdateOperationsInput | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_max_blocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  millings?: Prisma.case_millingsUncheckedUpdateManyWithoutMilling_drillsNestedInput
+  fineMillings?: Prisma.case_millingsUncheckedUpdateManyWithoutFineMillingDrillNestedInput
+  coarseMillings?: Prisma.case_millingsUncheckedUpdateManyWithoutCoarseMillingDrillNestedInput
+  selected_slots?: Prisma.case_milling_drill_slotsUncheckedUpdateManyWithoutMilling_drillsNestedInput
+}
+
+export type milling_drillsUncheckedUpdateManyWithoutLabsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumMillingDrillStatusFieldUpdateOperationsInput | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_max_blocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type milling_drillsCreateManyMilling_machinesInput = {
+  id?: string
+  lab_id: string
+  name: string
+  status?: $Enums.MillingDrillStatus
+  current_blocks_count?: number
+  estimated_max_blocks?: number | null
+  installed_at?: Date | string | null
+  removed_at?: Date | string | null
+  notes?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type milling_drillsUpdateWithoutMilling_machinesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumMillingDrillStatusFieldUpdateOperationsInput | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_max_blocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutMilling_drillsNestedInput
+  millings?: Prisma.case_millingsUpdateManyWithoutMilling_drillsNestedInput
+  fineMillings?: Prisma.case_millingsUpdateManyWithoutFineMillingDrillNestedInput
+  coarseMillings?: Prisma.case_millingsUpdateManyWithoutCoarseMillingDrillNestedInput
+  selected_slots?: Prisma.case_milling_drill_slotsUpdateManyWithoutMilling_drillsNestedInput
+}
+
+export type milling_drillsUncheckedUpdateWithoutMilling_machinesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumMillingDrillStatusFieldUpdateOperationsInput | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_max_blocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  millings?: Prisma.case_millingsUncheckedUpdateManyWithoutMilling_drillsNestedInput
+  fineMillings?: Prisma.case_millingsUncheckedUpdateManyWithoutFineMillingDrillNestedInput
+  coarseMillings?: Prisma.case_millingsUncheckedUpdateManyWithoutCoarseMillingDrillNestedInput
+  selected_slots?: Prisma.case_milling_drill_slotsUncheckedUpdateManyWithoutMilling_drillsNestedInput
+}
+
+export type milling_drillsUncheckedUpdateManyWithoutMilling_machinesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumMillingDrillStatusFieldUpdateOperationsInput | $Enums.MillingDrillStatus
+  current_blocks_count?: Prisma.IntFieldUpdateOperationsInput | number
+  estimated_max_blocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1128,12 +1364,14 @@ export type Milling_drillsCountOutputType = {
   millings: number
   fineMillings: number
   coarseMillings: number
+  selected_slots: number
 }
 
 export type Milling_drillsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   millings?: boolean | Milling_drillsCountOutputTypeCountMillingsArgs
   fineMillings?: boolean | Milling_drillsCountOutputTypeCountFineMillingsArgs
   coarseMillings?: boolean | Milling_drillsCountOutputTypeCountCoarseMillingsArgs
+  selected_slots?: boolean | Milling_drillsCountOutputTypeCountSelected_slotsArgs
 }
 
 /**
@@ -1167,117 +1405,124 @@ export type Milling_drillsCountOutputTypeCountCoarseMillingsArgs<ExtArgs extends
   where?: Prisma.case_millingsWhereInput
 }
 
+/**
+ * Milling_drillsCountOutputType without action
+ */
+export type Milling_drillsCountOutputTypeCountSelected_slotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.case_milling_drill_slotsWhereInput
+}
+
 
 export type milling_drillsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  lab_id?: boolean
   id?: boolean
+  lab_id?: boolean
+  milling_machine_id?: boolean
   name?: boolean
-  type?: boolean
-  brand?: boolean
-  serial_number?: boolean
-  max_teeth_recommended?: boolean
+  status?: boolean
+  current_blocks_count?: boolean
+  estimated_max_blocks?: boolean
   installed_at?: boolean
-  changed_at?: boolean
-  is_active?: boolean
-  deleted_at?: boolean
+  removed_at?: boolean
   notes?: boolean
   created_at?: boolean
   updated_at?: boolean
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  milling_machines?: boolean | Prisma.milling_drills$milling_machinesArgs<ExtArgs>
   millings?: boolean | Prisma.milling_drills$millingsArgs<ExtArgs>
   fineMillings?: boolean | Prisma.milling_drills$fineMillingsArgs<ExtArgs>
   coarseMillings?: boolean | Prisma.milling_drills$coarseMillingsArgs<ExtArgs>
+  selected_slots?: boolean | Prisma.milling_drills$selected_slotsArgs<ExtArgs>
   _count?: boolean | Prisma.Milling_drillsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["milling_drills"]>
 
 export type milling_drillsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  lab_id?: boolean
   id?: boolean
+  lab_id?: boolean
+  milling_machine_id?: boolean
   name?: boolean
-  type?: boolean
-  brand?: boolean
-  serial_number?: boolean
-  max_teeth_recommended?: boolean
+  status?: boolean
+  current_blocks_count?: boolean
+  estimated_max_blocks?: boolean
   installed_at?: boolean
-  changed_at?: boolean
-  is_active?: boolean
-  deleted_at?: boolean
+  removed_at?: boolean
   notes?: boolean
   created_at?: boolean
   updated_at?: boolean
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  milling_machines?: boolean | Prisma.milling_drills$milling_machinesArgs<ExtArgs>
 }, ExtArgs["result"]["milling_drills"]>
 
 export type milling_drillsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  lab_id?: boolean
   id?: boolean
+  lab_id?: boolean
+  milling_machine_id?: boolean
   name?: boolean
-  type?: boolean
-  brand?: boolean
-  serial_number?: boolean
-  max_teeth_recommended?: boolean
+  status?: boolean
+  current_blocks_count?: boolean
+  estimated_max_blocks?: boolean
   installed_at?: boolean
-  changed_at?: boolean
-  is_active?: boolean
-  deleted_at?: boolean
+  removed_at?: boolean
   notes?: boolean
   created_at?: boolean
   updated_at?: boolean
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  milling_machines?: boolean | Prisma.milling_drills$milling_machinesArgs<ExtArgs>
 }, ExtArgs["result"]["milling_drills"]>
 
 export type milling_drillsSelectScalar = {
-  lab_id?: boolean
   id?: boolean
+  lab_id?: boolean
+  milling_machine_id?: boolean
   name?: boolean
-  type?: boolean
-  brand?: boolean
-  serial_number?: boolean
-  max_teeth_recommended?: boolean
+  status?: boolean
+  current_blocks_count?: boolean
+  estimated_max_blocks?: boolean
   installed_at?: boolean
-  changed_at?: boolean
-  is_active?: boolean
-  deleted_at?: boolean
+  removed_at?: boolean
   notes?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type milling_drillsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"lab_id" | "id" | "name" | "type" | "brand" | "serial_number" | "max_teeth_recommended" | "installed_at" | "changed_at" | "is_active" | "deleted_at" | "notes" | "created_at" | "updated_at", ExtArgs["result"]["milling_drills"]>
+export type milling_drillsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "milling_machine_id" | "name" | "status" | "current_blocks_count" | "estimated_max_blocks" | "installed_at" | "removed_at" | "notes" | "created_at" | "updated_at", ExtArgs["result"]["milling_drills"]>
 export type milling_drillsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  milling_machines?: boolean | Prisma.milling_drills$milling_machinesArgs<ExtArgs>
   millings?: boolean | Prisma.milling_drills$millingsArgs<ExtArgs>
   fineMillings?: boolean | Prisma.milling_drills$fineMillingsArgs<ExtArgs>
   coarseMillings?: boolean | Prisma.milling_drills$coarseMillingsArgs<ExtArgs>
+  selected_slots?: boolean | Prisma.milling_drills$selected_slotsArgs<ExtArgs>
   _count?: boolean | Prisma.Milling_drillsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type milling_drillsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  milling_machines?: boolean | Prisma.milling_drills$milling_machinesArgs<ExtArgs>
 }
 export type milling_drillsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  milling_machines?: boolean | Prisma.milling_drills$milling_machinesArgs<ExtArgs>
 }
 
 export type $milling_drillsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "milling_drills"
   objects: {
     labs: Prisma.$labsPayload<ExtArgs>
+    milling_machines: Prisma.$milling_machinesPayload<ExtArgs> | null
     millings: Prisma.$case_millingsPayload<ExtArgs>[]
     fineMillings: Prisma.$case_millingsPayload<ExtArgs>[]
     coarseMillings: Prisma.$case_millingsPayload<ExtArgs>[]
+    selected_slots: Prisma.$case_milling_drill_slotsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    lab_id: string
     id: string
+    lab_id: string
+    milling_machine_id: string | null
     name: string
-    type: string | null
-    brand: string | null
-    serial_number: string | null
-    max_teeth_recommended: number | null
+    status: $Enums.MillingDrillStatus
+    current_blocks_count: number
+    estimated_max_blocks: number | null
     installed_at: Date | null
-    changed_at: Date | null
-    is_active: boolean
-    deleted_at: Date | null
+    removed_at: Date | null
     notes: string | null
     created_at: Date
     updated_at: Date
@@ -1364,8 +1609,8 @@ export interface milling_drillsDelegate<ExtArgs extends runtime.Types.Extensions
    * // Get first 10 Milling_drills
    * const milling_drills = await prisma.milling_drills.findMany({ take: 10 })
    * 
-   * // Only select the `lab_id`
-   * const milling_drillsWithLab_idOnly = await prisma.milling_drills.findMany({ select: { lab_id: true } })
+   * // Only select the `id`
+   * const milling_drillsWithIdOnly = await prisma.milling_drills.findMany({ select: { id: true } })
    * 
    */
   findMany<T extends milling_drillsFindManyArgs>(args?: Prisma.SelectSubset<T, milling_drillsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$milling_drillsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -1409,9 +1654,9 @@ export interface milling_drillsDelegate<ExtArgs extends runtime.Types.Extensions
    *   ]
    * })
    * 
-   * // Create many Milling_drills and only return the `lab_id`
-   * const milling_drillsWithLab_idOnly = await prisma.milling_drills.createManyAndReturn({
-   *   select: { lab_id: true },
+   * // Create many Milling_drills and only return the `id`
+   * const milling_drillsWithIdOnly = await prisma.milling_drills.createManyAndReturn({
+   *   select: { id: true },
    *   data: [
    *     // ... provide data here
    *   ]
@@ -1500,9 +1745,9 @@ export interface milling_drillsDelegate<ExtArgs extends runtime.Types.Extensions
    *   ]
    * })
    * 
-   * // Update zero or more Milling_drills and only return the `lab_id`
-   * const milling_drillsWithLab_idOnly = await prisma.milling_drills.updateManyAndReturn({
-   *   select: { lab_id: true },
+   * // Update zero or more Milling_drills and only return the `id`
+   * const milling_drillsWithIdOnly = await prisma.milling_drills.updateManyAndReturn({
+   *   select: { id: true },
    *   where: {
    *     // ... provide filter here
    *   },
@@ -1676,9 +1921,11 @@ readonly fields: milling_drillsFieldRefs;
 export interface Prisma__milling_drillsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   labs<T extends Prisma.labsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labsDefaultArgs<ExtArgs>>): Prisma.Prisma__labsClient<runtime.Types.Result.GetResult<Prisma.$labsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  milling_machines<T extends Prisma.milling_drills$milling_machinesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.milling_drills$milling_machinesArgs<ExtArgs>>): Prisma.Prisma__milling_machinesClient<runtime.Types.Result.GetResult<Prisma.$milling_machinesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   millings<T extends Prisma.milling_drills$millingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.milling_drills$millingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_millingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   fineMillings<T extends Prisma.milling_drills$fineMillingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.milling_drills$fineMillingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_millingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   coarseMillings<T extends Prisma.milling_drills$coarseMillingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.milling_drills$coarseMillingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_millingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  selected_slots<T extends Prisma.milling_drills$selected_slotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.milling_drills$selected_slotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_milling_drill_slotsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1708,17 +1955,15 @@ export interface Prisma__milling_drillsClient<T, Null = never, ExtArgs extends r
  * Fields of the milling_drills model
  */
 export interface milling_drillsFieldRefs {
-  readonly lab_id: Prisma.FieldRef<"milling_drills", 'String'>
   readonly id: Prisma.FieldRef<"milling_drills", 'String'>
+  readonly lab_id: Prisma.FieldRef<"milling_drills", 'String'>
+  readonly milling_machine_id: Prisma.FieldRef<"milling_drills", 'String'>
   readonly name: Prisma.FieldRef<"milling_drills", 'String'>
-  readonly type: Prisma.FieldRef<"milling_drills", 'String'>
-  readonly brand: Prisma.FieldRef<"milling_drills", 'String'>
-  readonly serial_number: Prisma.FieldRef<"milling_drills", 'String'>
-  readonly max_teeth_recommended: Prisma.FieldRef<"milling_drills", 'Int'>
+  readonly status: Prisma.FieldRef<"milling_drills", 'MillingDrillStatus'>
+  readonly current_blocks_count: Prisma.FieldRef<"milling_drills", 'Int'>
+  readonly estimated_max_blocks: Prisma.FieldRef<"milling_drills", 'Int'>
   readonly installed_at: Prisma.FieldRef<"milling_drills", 'DateTime'>
-  readonly changed_at: Prisma.FieldRef<"milling_drills", 'DateTime'>
-  readonly is_active: Prisma.FieldRef<"milling_drills", 'Boolean'>
-  readonly deleted_at: Prisma.FieldRef<"milling_drills", 'DateTime'>
+  readonly removed_at: Prisma.FieldRef<"milling_drills", 'DateTime'>
   readonly notes: Prisma.FieldRef<"milling_drills", 'String'>
   readonly created_at: Prisma.FieldRef<"milling_drills", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"milling_drills", 'DateTime'>
@@ -2123,6 +2368,25 @@ export type milling_drillsDeleteManyArgs<ExtArgs extends runtime.Types.Extension
 }
 
 /**
+ * milling_drills.milling_machines
+ */
+export type milling_drills$milling_machinesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the milling_machines
+   */
+  select?: Prisma.milling_machinesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the milling_machines
+   */
+  omit?: Prisma.milling_machinesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.milling_machinesInclude<ExtArgs> | null
+  where?: Prisma.milling_machinesWhereInput
+}
+
+/**
  * milling_drills.millings
  */
 export type milling_drills$millingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2192,6 +2456,30 @@ export type milling_drills$coarseMillingsArgs<ExtArgs extends runtime.Types.Exte
   take?: number
   skip?: number
   distinct?: Prisma.Case_millingsScalarFieldEnum | Prisma.Case_millingsScalarFieldEnum[]
+}
+
+/**
+ * milling_drills.selected_slots
+ */
+export type milling_drills$selected_slotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the case_milling_drill_slots
+   */
+  select?: Prisma.case_milling_drill_slotsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the case_milling_drill_slots
+   */
+  omit?: Prisma.case_milling_drill_slotsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.case_milling_drill_slotsInclude<ExtArgs> | null
+  where?: Prisma.case_milling_drill_slotsWhereInput
+  orderBy?: Prisma.case_milling_drill_slotsOrderByWithRelationInput | Prisma.case_milling_drill_slotsOrderByWithRelationInput[]
+  cursor?: Prisma.case_milling_drill_slotsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Case_milling_drill_slotsScalarFieldEnum | Prisma.Case_milling_drill_slotsScalarFieldEnum[]
 }
 
 /**

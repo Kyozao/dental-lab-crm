@@ -13,7 +13,7 @@ export async function PUT(
   request: Request,
   context: { params: Promise<{ id: string }> },
 ) {
-  const user_id = await getAuthenticatedUserId();
+  const user_id = await getAuthenticatedUserId({ ensureAppUser: false });
   if (!user_id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const payload = await parseJsonObject(request);

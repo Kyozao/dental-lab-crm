@@ -388,10 +388,15 @@ export const ModelName = {
   labs: 'labs',
   lab_members: 'lab_members',
   service_types: 'service_types',
+  price_tables: 'price_tables',
+  price_table_service_prices: 'price_table_service_prices',
   processes: 'processes',
   employee_process_assignments: 'employee_process_assignments',
   milling_drills: 'milling_drills',
+  milling_machines: 'milling_machines',
+  milling_machine_slots: 'milling_machine_slots',
   case_millings: 'case_millings',
+  case_milling_drill_slots: 'case_milling_drill_slots',
   case_attachments: 'case_attachments',
   customers: 'customers',
   dentists: 'dentists',
@@ -399,7 +404,10 @@ export const ModelName = {
   case_component_usages: 'case_component_usages',
   block_types: 'block_types',
   cases: 'cases',
+  case_comments: 'case_comments',
+  case_thread_reads: 'case_thread_reads',
   case_processes: 'case_processes',
+  case_services: 'case_services',
   case_process_dependencies: 'case_process_dependencies',
   case_status_histories: 'case_status_histories',
   notifications: 'notifications',
@@ -419,7 +427,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "users" | "labs" | "lab_members" | "service_types" | "processes" | "employee_process_assignments" | "milling_drills" | "case_millings" | "case_attachments" | "customers" | "dentists" | "components" | "case_component_usages" | "block_types" | "cases" | "case_processes" | "case_process_dependencies" | "case_status_histories" | "notifications" | "push_subscriptions"
+    modelProps: "users" | "labs" | "lab_members" | "service_types" | "price_tables" | "price_table_service_prices" | "processes" | "employee_process_assignments" | "milling_drills" | "milling_machines" | "milling_machine_slots" | "case_millings" | "case_milling_drill_slots" | "case_attachments" | "customers" | "dentists" | "components" | "case_component_usages" | "block_types" | "cases" | "case_comments" | "case_thread_reads" | "case_processes" | "case_services" | "case_process_dependencies" | "case_status_histories" | "notifications" | "push_subscriptions"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -719,6 +727,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    price_tables: {
+      payload: Prisma.$price_tablesPayload<ExtArgs>
+      fields: Prisma.price_tablesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.price_tablesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_tablesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.price_tablesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_tablesPayload>
+        }
+        findFirst: {
+          args: Prisma.price_tablesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_tablesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.price_tablesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_tablesPayload>
+        }
+        findMany: {
+          args: Prisma.price_tablesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_tablesPayload>[]
+        }
+        create: {
+          args: Prisma.price_tablesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_tablesPayload>
+        }
+        createMany: {
+          args: Prisma.price_tablesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.price_tablesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_tablesPayload>[]
+        }
+        delete: {
+          args: Prisma.price_tablesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_tablesPayload>
+        }
+        update: {
+          args: Prisma.price_tablesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_tablesPayload>
+        }
+        deleteMany: {
+          args: Prisma.price_tablesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.price_tablesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.price_tablesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_tablesPayload>[]
+        }
+        upsert: {
+          args: Prisma.price_tablesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_tablesPayload>
+        }
+        aggregate: {
+          args: Prisma.Price_tablesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePrice_tables>
+        }
+        groupBy: {
+          args: Prisma.price_tablesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Price_tablesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.price_tablesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Price_tablesCountAggregateOutputType> | number
+        }
+      }
+    }
+    price_table_service_prices: {
+      payload: Prisma.$price_table_service_pricesPayload<ExtArgs>
+      fields: Prisma.price_table_service_pricesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.price_table_service_pricesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_table_service_pricesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.price_table_service_pricesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_table_service_pricesPayload>
+        }
+        findFirst: {
+          args: Prisma.price_table_service_pricesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_table_service_pricesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.price_table_service_pricesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_table_service_pricesPayload>
+        }
+        findMany: {
+          args: Prisma.price_table_service_pricesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_table_service_pricesPayload>[]
+        }
+        create: {
+          args: Prisma.price_table_service_pricesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_table_service_pricesPayload>
+        }
+        createMany: {
+          args: Prisma.price_table_service_pricesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.price_table_service_pricesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_table_service_pricesPayload>[]
+        }
+        delete: {
+          args: Prisma.price_table_service_pricesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_table_service_pricesPayload>
+        }
+        update: {
+          args: Prisma.price_table_service_pricesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_table_service_pricesPayload>
+        }
+        deleteMany: {
+          args: Prisma.price_table_service_pricesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.price_table_service_pricesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.price_table_service_pricesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_table_service_pricesPayload>[]
+        }
+        upsert: {
+          args: Prisma.price_table_service_pricesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$price_table_service_pricesPayload>
+        }
+        aggregate: {
+          args: Prisma.Price_table_service_pricesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePrice_table_service_prices>
+        }
+        groupBy: {
+          args: Prisma.price_table_service_pricesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Price_table_service_pricesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.price_table_service_pricesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Price_table_service_pricesCountAggregateOutputType> | number
+        }
+      }
+    }
     processes: {
       payload: Prisma.$processesPayload<ExtArgs>
       fields: Prisma.processesFieldRefs
@@ -941,6 +1097,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    milling_machines: {
+      payload: Prisma.$milling_machinesPayload<ExtArgs>
+      fields: Prisma.milling_machinesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.milling_machinesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machinesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.milling_machinesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machinesPayload>
+        }
+        findFirst: {
+          args: Prisma.milling_machinesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machinesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.milling_machinesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machinesPayload>
+        }
+        findMany: {
+          args: Prisma.milling_machinesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machinesPayload>[]
+        }
+        create: {
+          args: Prisma.milling_machinesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machinesPayload>
+        }
+        createMany: {
+          args: Prisma.milling_machinesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.milling_machinesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machinesPayload>[]
+        }
+        delete: {
+          args: Prisma.milling_machinesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machinesPayload>
+        }
+        update: {
+          args: Prisma.milling_machinesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machinesPayload>
+        }
+        deleteMany: {
+          args: Prisma.milling_machinesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.milling_machinesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.milling_machinesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machinesPayload>[]
+        }
+        upsert: {
+          args: Prisma.milling_machinesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machinesPayload>
+        }
+        aggregate: {
+          args: Prisma.Milling_machinesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMilling_machines>
+        }
+        groupBy: {
+          args: Prisma.milling_machinesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Milling_machinesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.milling_machinesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Milling_machinesCountAggregateOutputType> | number
+        }
+      }
+    }
+    milling_machine_slots: {
+      payload: Prisma.$milling_machine_slotsPayload<ExtArgs>
+      fields: Prisma.milling_machine_slotsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.milling_machine_slotsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_slotsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.milling_machine_slotsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_slotsPayload>
+        }
+        findFirst: {
+          args: Prisma.milling_machine_slotsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_slotsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.milling_machine_slotsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_slotsPayload>
+        }
+        findMany: {
+          args: Prisma.milling_machine_slotsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_slotsPayload>[]
+        }
+        create: {
+          args: Prisma.milling_machine_slotsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_slotsPayload>
+        }
+        createMany: {
+          args: Prisma.milling_machine_slotsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.milling_machine_slotsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_slotsPayload>[]
+        }
+        delete: {
+          args: Prisma.milling_machine_slotsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_slotsPayload>
+        }
+        update: {
+          args: Prisma.milling_machine_slotsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_slotsPayload>
+        }
+        deleteMany: {
+          args: Prisma.milling_machine_slotsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.milling_machine_slotsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.milling_machine_slotsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_slotsPayload>[]
+        }
+        upsert: {
+          args: Prisma.milling_machine_slotsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_slotsPayload>
+        }
+        aggregate: {
+          args: Prisma.Milling_machine_slotsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMilling_machine_slots>
+        }
+        groupBy: {
+          args: Prisma.milling_machine_slotsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Milling_machine_slotsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.milling_machine_slotsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Milling_machine_slotsCountAggregateOutputType> | number
+        }
+      }
+    }
     case_millings: {
       payload: Prisma.$case_millingsPayload<ExtArgs>
       fields: Prisma.case_millingsFieldRefs
@@ -1012,6 +1316,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.case_millingsCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.Case_millingsCountAggregateOutputType> | number
+        }
+      }
+    }
+    case_milling_drill_slots: {
+      payload: Prisma.$case_milling_drill_slotsPayload<ExtArgs>
+      fields: Prisma.case_milling_drill_slotsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.case_milling_drill_slotsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_milling_drill_slotsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.case_milling_drill_slotsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_milling_drill_slotsPayload>
+        }
+        findFirst: {
+          args: Prisma.case_milling_drill_slotsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_milling_drill_slotsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.case_milling_drill_slotsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_milling_drill_slotsPayload>
+        }
+        findMany: {
+          args: Prisma.case_milling_drill_slotsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_milling_drill_slotsPayload>[]
+        }
+        create: {
+          args: Prisma.case_milling_drill_slotsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_milling_drill_slotsPayload>
+        }
+        createMany: {
+          args: Prisma.case_milling_drill_slotsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.case_milling_drill_slotsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_milling_drill_slotsPayload>[]
+        }
+        delete: {
+          args: Prisma.case_milling_drill_slotsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_milling_drill_slotsPayload>
+        }
+        update: {
+          args: Prisma.case_milling_drill_slotsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_milling_drill_slotsPayload>
+        }
+        deleteMany: {
+          args: Prisma.case_milling_drill_slotsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.case_milling_drill_slotsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.case_milling_drill_slotsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_milling_drill_slotsPayload>[]
+        }
+        upsert: {
+          args: Prisma.case_milling_drill_slotsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_milling_drill_slotsPayload>
+        }
+        aggregate: {
+          args: Prisma.Case_milling_drill_slotsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCase_milling_drill_slots>
+        }
+        groupBy: {
+          args: Prisma.case_milling_drill_slotsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Case_milling_drill_slotsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.case_milling_drill_slotsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Case_milling_drill_slotsCountAggregateOutputType> | number
         }
       }
     }
@@ -1533,6 +1911,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    case_comments: {
+      payload: Prisma.$case_commentsPayload<ExtArgs>
+      fields: Prisma.case_commentsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.case_commentsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_commentsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.case_commentsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_commentsPayload>
+        }
+        findFirst: {
+          args: Prisma.case_commentsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_commentsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.case_commentsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_commentsPayload>
+        }
+        findMany: {
+          args: Prisma.case_commentsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_commentsPayload>[]
+        }
+        create: {
+          args: Prisma.case_commentsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_commentsPayload>
+        }
+        createMany: {
+          args: Prisma.case_commentsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.case_commentsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_commentsPayload>[]
+        }
+        delete: {
+          args: Prisma.case_commentsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_commentsPayload>
+        }
+        update: {
+          args: Prisma.case_commentsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_commentsPayload>
+        }
+        deleteMany: {
+          args: Prisma.case_commentsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.case_commentsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.case_commentsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_commentsPayload>[]
+        }
+        upsert: {
+          args: Prisma.case_commentsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_commentsPayload>
+        }
+        aggregate: {
+          args: Prisma.Case_commentsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCase_comments>
+        }
+        groupBy: {
+          args: Prisma.case_commentsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Case_commentsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.case_commentsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Case_commentsCountAggregateOutputType> | number
+        }
+      }
+    }
+    case_thread_reads: {
+      payload: Prisma.$case_thread_readsPayload<ExtArgs>
+      fields: Prisma.case_thread_readsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.case_thread_readsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_thread_readsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.case_thread_readsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_thread_readsPayload>
+        }
+        findFirst: {
+          args: Prisma.case_thread_readsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_thread_readsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.case_thread_readsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_thread_readsPayload>
+        }
+        findMany: {
+          args: Prisma.case_thread_readsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_thread_readsPayload>[]
+        }
+        create: {
+          args: Prisma.case_thread_readsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_thread_readsPayload>
+        }
+        createMany: {
+          args: Prisma.case_thread_readsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.case_thread_readsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_thread_readsPayload>[]
+        }
+        delete: {
+          args: Prisma.case_thread_readsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_thread_readsPayload>
+        }
+        update: {
+          args: Prisma.case_thread_readsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_thread_readsPayload>
+        }
+        deleteMany: {
+          args: Prisma.case_thread_readsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.case_thread_readsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.case_thread_readsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_thread_readsPayload>[]
+        }
+        upsert: {
+          args: Prisma.case_thread_readsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_thread_readsPayload>
+        }
+        aggregate: {
+          args: Prisma.Case_thread_readsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCase_thread_reads>
+        }
+        groupBy: {
+          args: Prisma.case_thread_readsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Case_thread_readsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.case_thread_readsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Case_thread_readsCountAggregateOutputType> | number
+        }
+      }
+    }
     case_processes: {
       payload: Prisma.$case_processesPayload<ExtArgs>
       fields: Prisma.case_processesFieldRefs
@@ -1604,6 +2130,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.case_processesCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.Case_processesCountAggregateOutputType> | number
+        }
+      }
+    }
+    case_services: {
+      payload: Prisma.$case_servicesPayload<ExtArgs>
+      fields: Prisma.case_servicesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.case_servicesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_servicesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.case_servicesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_servicesPayload>
+        }
+        findFirst: {
+          args: Prisma.case_servicesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_servicesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.case_servicesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_servicesPayload>
+        }
+        findMany: {
+          args: Prisma.case_servicesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_servicesPayload>[]
+        }
+        create: {
+          args: Prisma.case_servicesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_servicesPayload>
+        }
+        createMany: {
+          args: Prisma.case_servicesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.case_servicesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_servicesPayload>[]
+        }
+        delete: {
+          args: Prisma.case_servicesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_servicesPayload>
+        }
+        update: {
+          args: Prisma.case_servicesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_servicesPayload>
+        }
+        deleteMany: {
+          args: Prisma.case_servicesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.case_servicesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.case_servicesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_servicesPayload>[]
+        }
+        upsert: {
+          args: Prisma.case_servicesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_servicesPayload>
+        }
+        aggregate: {
+          args: Prisma.Case_servicesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCase_services>
+        }
+        groupBy: {
+          args: Prisma.case_servicesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Case_servicesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.case_servicesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Case_servicesCountAggregateOutputType> | number
         }
       }
     }
@@ -1958,6 +2558,7 @@ export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof Us
 export const LabsScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  currency: 'currency',
   is_active: 'is_active',
   created_at: 'created_at',
   updated_at: 'updated_at'
@@ -1981,6 +2582,7 @@ export const Service_typesScalarFieldEnum = {
   id: 'id',
   lab_id: 'lab_id',
   name: 'name',
+  base_price: 'base_price',
   is_active: 'is_active',
   deleted_at: 'deleted_at',
   notes: 'notes',
@@ -1990,6 +2592,31 @@ export const Service_typesScalarFieldEnum = {
 } as const
 
 export type Service_typesScalarFieldEnum = (typeof Service_typesScalarFieldEnum)[keyof typeof Service_typesScalarFieldEnum]
+
+
+export const Price_tablesScalarFieldEnum = {
+  id: 'id',
+  lab_id: 'lab_id',
+  name: 'name',
+  is_active: 'is_active',
+  deleted_at: 'deleted_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Price_tablesScalarFieldEnum = (typeof Price_tablesScalarFieldEnum)[keyof typeof Price_tablesScalarFieldEnum]
+
+
+export const Price_table_service_pricesScalarFieldEnum = {
+  id: 'id',
+  price_table_id: 'price_table_id',
+  service_type_id: 'service_type_id',
+  price: 'price',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Price_table_service_pricesScalarFieldEnum = (typeof Price_table_service_pricesScalarFieldEnum)[keyof typeof Price_table_service_pricesScalarFieldEnum]
 
 
 export const ProcessesScalarFieldEnum = {
@@ -2018,17 +2645,15 @@ export type Employee_process_assignmentsScalarFieldEnum = (typeof Employee_proce
 
 
 export const Milling_drillsScalarFieldEnum = {
-  lab_id: 'lab_id',
   id: 'id',
+  lab_id: 'lab_id',
+  milling_machine_id: 'milling_machine_id',
   name: 'name',
-  type: 'type',
-  brand: 'brand',
-  serial_number: 'serial_number',
-  max_teeth_recommended: 'max_teeth_recommended',
+  status: 'status',
+  current_blocks_count: 'current_blocks_count',
+  estimated_max_blocks: 'estimated_max_blocks',
   installed_at: 'installed_at',
-  changed_at: 'changed_at',
-  is_active: 'is_active',
-  deleted_at: 'deleted_at',
+  removed_at: 'removed_at',
   notes: 'notes',
   created_at: 'created_at',
   updated_at: 'updated_at'
@@ -2037,17 +2662,51 @@ export const Milling_drillsScalarFieldEnum = {
 export type Milling_drillsScalarFieldEnum = (typeof Milling_drillsScalarFieldEnum)[keyof typeof Milling_drillsScalarFieldEnum]
 
 
+export const Milling_machinesScalarFieldEnum = {
+  id: 'id',
+  lab_id: 'lab_id',
+  name: 'name',
+  serial_number: 'serial_number',
+  model: 'model',
+  status: 'status',
+  status_reason: 'status_reason',
+  installed_at: 'installed_at',
+  removed_at: 'removed_at',
+  last_maintenance_at: 'last_maintenance_at',
+  next_maintenance_due_at: 'next_maintenance_due_at',
+  notes: 'notes',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Milling_machinesScalarFieldEnum = (typeof Milling_machinesScalarFieldEnum)[keyof typeof Milling_machinesScalarFieldEnum]
+
+
+export const Milling_machine_slotsScalarFieldEnum = {
+  id: 'id',
+  milling_machine_id: 'milling_machine_id',
+  label: 'label',
+  sort_order: 'sort_order',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Milling_machine_slotsScalarFieldEnum = (typeof Milling_machine_slotsScalarFieldEnum)[keyof typeof Milling_machine_slotsScalarFieldEnum]
+
+
 export const Case_millingsScalarFieldEnum = {
   id: 'id',
   lab_id: 'lab_id',
   case_id: 'case_id',
   block_type_id: 'block_type_id',
+  milling_machine_id: 'milling_machine_id',
   milling_drill_id: 'milling_drill_id',
   fine_milling_drill_id: 'fine_milling_drill_id',
   coarse_milling_drill_id: 'coarse_milling_drill_id',
   redone_from_milling_id: 'redone_from_milling_id',
   status: 'status',
   teeth_milled_qty: 'teeth_milled_qty',
+  blocks_used_qty: 'blocks_used_qty',
   failure_reason: 'failure_reason',
   notes: 'notes',
   milled_at: 'milled_at',
@@ -2056,6 +2715,20 @@ export const Case_millingsScalarFieldEnum = {
 } as const
 
 export type Case_millingsScalarFieldEnum = (typeof Case_millingsScalarFieldEnum)[keyof typeof Case_millingsScalarFieldEnum]
+
+
+export const Case_milling_drill_slotsScalarFieldEnum = {
+  id: 'id',
+  milling_id: 'milling_id',
+  milling_machine_slot_id: 'milling_machine_slot_id',
+  milling_drill_id: 'milling_drill_id',
+  slot_label_snapshot: 'slot_label_snapshot',
+  slot_order_snapshot: 'slot_order_snapshot',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Case_milling_drill_slotsScalarFieldEnum = (typeof Case_milling_drill_slotsScalarFieldEnum)[keyof typeof Case_milling_drill_slotsScalarFieldEnum]
 
 
 export const Case_attachmentsScalarFieldEnum = {
@@ -2078,6 +2751,7 @@ export type Case_attachmentsScalarFieldEnum = (typeof Case_attachmentsScalarFiel
 export const CustomersScalarFieldEnum = {
   id: 'id',
   lab_id: 'lab_id',
+  price_table_id: 'price_table_id',
   name: 'name',
   phone: 'phone',
   email: 'email',
@@ -2169,6 +2843,9 @@ export const CasesScalarFieldEnum = {
   dentist_id: 'dentist_id',
   created_by_user_id: 'created_by_user_id',
   current_status: 'current_status',
+  service_base_price_snapshot: 'service_base_price_snapshot',
+  case_price: 'case_price',
+  is_price_overridden: 'is_price_overridden',
   teeth: 'teeth',
   elements_qty: 'elements_qty',
   shade: 'shade',
@@ -2183,9 +2860,38 @@ export const CasesScalarFieldEnum = {
 export type CasesScalarFieldEnum = (typeof CasesScalarFieldEnum)[keyof typeof CasesScalarFieldEnum]
 
 
+export const Case_commentsScalarFieldEnum = {
+  id: 'id',
+  case_id: 'case_id',
+  author_user_id: 'author_user_id',
+  author_lab_member_id: 'author_lab_member_id',
+  body: 'body',
+  created_at: 'created_at',
+  deleted_at: 'deleted_at',
+  deleted_by_user_id: 'deleted_by_user_id'
+} as const
+
+export type Case_commentsScalarFieldEnum = (typeof Case_commentsScalarFieldEnum)[keyof typeof Case_commentsScalarFieldEnum]
+
+
+export const Case_thread_readsScalarFieldEnum = {
+  id: 'id',
+  case_id: 'case_id',
+  user_id: 'user_id',
+  lab_member_id: 'lab_member_id',
+  last_read_comment_id: 'last_read_comment_id',
+  last_read_at: 'last_read_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Case_thread_readsScalarFieldEnum = (typeof Case_thread_readsScalarFieldEnum)[keyof typeof Case_thread_readsScalarFieldEnum]
+
+
 export const Case_processesScalarFieldEnum = {
   id: 'id',
   case_id: 'case_id',
+  case_service_id: 'case_service_id',
   process_id: 'process_id',
   workflow_step_id: 'workflow_step_id',
   status: 'status',
@@ -2197,6 +2903,22 @@ export const Case_processesScalarFieldEnum = {
 } as const
 
 export type Case_processesScalarFieldEnum = (typeof Case_processesScalarFieldEnum)[keyof typeof Case_processesScalarFieldEnum]
+
+
+export const Case_servicesScalarFieldEnum = {
+  id: 'id',
+  case_id: 'case_id',
+  service_type_id: 'service_type_id',
+  service_name_snapshot: 'service_name_snapshot',
+  service_base_price_snapshot: 'service_base_price_snapshot',
+  unit_price: 'unit_price',
+  is_unit_price_overridden: 'is_unit_price_overridden',
+  quantity: 'quantity',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Case_servicesScalarFieldEnum = (typeof Case_servicesScalarFieldEnum)[keyof typeof Case_servicesScalarFieldEnum]
 
 
 export const Case_process_dependenciesScalarFieldEnum = {
@@ -2354,6 +3076,20 @@ export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
  * Reference to a field of type 'Json'
  */
 export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -2368,6 +3104,20 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
+ * Reference to a field of type 'MillingDrillStatus'
+ */
+export type EnumMillingDrillStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MillingDrillStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'MillingDrillStatus[]'
+ */
+export type ListEnumMillingDrillStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MillingDrillStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -2378,6 +3128,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'MillingMachineStatus'
+ */
+export type EnumMillingMachineStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MillingMachineStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'MillingMachineStatus[]'
+ */
+export type ListEnumMillingMachineStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MillingMachineStatus[]'>
     
 
 
@@ -2406,20 +3170,6 @@ export type EnumAttachmentKindFieldRefInput<$PrismaModel> = FieldRefInputType<$P
  * Reference to a field of type 'AttachmentKind[]'
  */
 export type ListEnumAttachmentKindFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttachmentKind[]'>
-    
-
-
-/**
- * Reference to a field of type 'Decimal'
- */
-export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
-    
-
-
-/**
- * Reference to a field of type 'Decimal[]'
- */
-export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 
@@ -2577,10 +3327,15 @@ export type GlobalOmitConfig = {
   labs?: Prisma.labsOmit
   lab_members?: Prisma.lab_membersOmit
   service_types?: Prisma.service_typesOmit
+  price_tables?: Prisma.price_tablesOmit
+  price_table_service_prices?: Prisma.price_table_service_pricesOmit
   processes?: Prisma.processesOmit
   employee_process_assignments?: Prisma.employee_process_assignmentsOmit
   milling_drills?: Prisma.milling_drillsOmit
+  milling_machines?: Prisma.milling_machinesOmit
+  milling_machine_slots?: Prisma.milling_machine_slotsOmit
   case_millings?: Prisma.case_millingsOmit
+  case_milling_drill_slots?: Prisma.case_milling_drill_slotsOmit
   case_attachments?: Prisma.case_attachmentsOmit
   customers?: Prisma.customersOmit
   dentists?: Prisma.dentistsOmit
@@ -2588,7 +3343,10 @@ export type GlobalOmitConfig = {
   case_component_usages?: Prisma.case_component_usagesOmit
   block_types?: Prisma.block_typesOmit
   cases?: Prisma.casesOmit
+  case_comments?: Prisma.case_commentsOmit
+  case_thread_reads?: Prisma.case_thread_readsOmit
   case_processes?: Prisma.case_processesOmit
+  case_services?: Prisma.case_servicesOmit
   case_process_dependencies?: Prisma.case_process_dependenciesOmit
   case_status_histories?: Prisma.case_status_historiesOmit
   notifications?: Prisma.notificationsOmit

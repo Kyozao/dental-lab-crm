@@ -10,13 +10,10 @@
 */
 
 export const CaseStatus = {
-  ENTRY: 'ENTRY',
-  WAITING_INFO: 'WAITING_INFO',
-  DESIGNING: 'DESIGNING',
-  WAITING_APPROVAL: 'WAITING_APPROVAL',
-  DESIGN_READY: 'DESIGN_READY',
-  MILLING_PRINTING: 'MILLING_PRINTING',
-  DONE: 'DONE'
+  IN_PRODUCTION: 'IN_PRODUCTION',
+  STANDBY: 'STANDBY',
+  DONE: 'DONE',
+  CANCELLED: 'CANCELLED'
 } as const
 
 export type CaseStatus = (typeof CaseStatus)[keyof typeof CaseStatus]
@@ -28,6 +25,25 @@ export const MillingStatus = {
 } as const
 
 export type MillingStatus = (typeof MillingStatus)[keyof typeof MillingStatus]
+
+
+export const MillingDrillStatus = {
+  ACTIVE: 'ACTIVE',
+  STORED: 'STORED',
+  RETIRED: 'RETIRED',
+  LOST: 'LOST'
+} as const
+
+export type MillingDrillStatus = (typeof MillingDrillStatus)[keyof typeof MillingDrillStatus]
+
+
+export const MillingMachineStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  MAINTENANCE: 'MAINTENANCE'
+} as const
+
+export type MillingMachineStatus = (typeof MillingMachineStatus)[keyof typeof MillingMachineStatus]
 
 
 export const CaseProcessStatus = {
@@ -46,7 +62,6 @@ export const UserRole = {
   OWNER: 'OWNER',
   ADMIN: 'ADMIN',
   MANAGER: 'MANAGER',
-  CAD_DESIGNER: 'CAD_DESIGNER',
   PRODUCTION: 'PRODUCTION'
 } as const
 

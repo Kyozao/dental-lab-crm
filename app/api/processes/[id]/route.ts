@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { RoleAuthorizationError } from "../../_shared/authorization";
 import { MissingLabMembershipError } from "../../_shared/membership";
 import {
   ReferenceNotFoundError,
@@ -33,6 +34,10 @@ export async function PATCH(
     const process = await updateProcessForLoggedLab(user_id, id, parsed.data);
     return NextResponse.json({ data: process, error: null, meta: {} });
   } catch (error) {
+    if (error instanceof RoleAuthorizationError) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     if (error instanceof MissingLabMembershipError) {
       return NextResponse.json({ error: "No lab membership found for this user." }, { status: 403 });
     }
@@ -63,6 +68,10 @@ export async function DELETE(
     const process = await archiveProcessForLoggedLab(user_id, id);
     return NextResponse.json({ data: process, error: null, meta: {} });
   } catch (error) {
+    if (error instanceof RoleAuthorizationError) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     if (error instanceof MissingLabMembershipError) {
       return NextResponse.json({ error: "No lab membership found for this user." }, { status: 403 });
     }

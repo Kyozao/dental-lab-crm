@@ -20,14 +20,25 @@ export type service_typesModel = runtime.Types.Result.DefaultSelection<Prisma.$s
 
 export type AggregateService_types = {
   _count: Service_typesCountAggregateOutputType | null
+  _avg: Service_typesAvgAggregateOutputType | null
+  _sum: Service_typesSumAggregateOutputType | null
   _min: Service_typesMinAggregateOutputType | null
   _max: Service_typesMaxAggregateOutputType | null
+}
+
+export type Service_typesAvgAggregateOutputType = {
+  base_price: runtime.Decimal | null
+}
+
+export type Service_typesSumAggregateOutputType = {
+  base_price: runtime.Decimal | null
 }
 
 export type Service_typesMinAggregateOutputType = {
   id: string | null
   lab_id: string | null
   name: string | null
+  base_price: runtime.Decimal | null
   is_active: boolean | null
   deleted_at: Date | null
   notes: string | null
@@ -39,6 +50,7 @@ export type Service_typesMaxAggregateOutputType = {
   id: string | null
   lab_id: string | null
   name: string | null
+  base_price: runtime.Decimal | null
   is_active: boolean | null
   deleted_at: Date | null
   notes: string | null
@@ -50,6 +62,7 @@ export type Service_typesCountAggregateOutputType = {
   id: number
   lab_id: number
   name: number
+  base_price: number
   is_active: number
   deleted_at: number
   notes: number
@@ -60,10 +73,19 @@ export type Service_typesCountAggregateOutputType = {
 }
 
 
+export type Service_typesAvgAggregateInputType = {
+  base_price?: true
+}
+
+export type Service_typesSumAggregateInputType = {
+  base_price?: true
+}
+
 export type Service_typesMinAggregateInputType = {
   id?: true
   lab_id?: true
   name?: true
+  base_price?: true
   is_active?: true
   deleted_at?: true
   notes?: true
@@ -75,6 +97,7 @@ export type Service_typesMaxAggregateInputType = {
   id?: true
   lab_id?: true
   name?: true
+  base_price?: true
   is_active?: true
   deleted_at?: true
   notes?: true
@@ -86,6 +109,7 @@ export type Service_typesCountAggregateInputType = {
   id?: true
   lab_id?: true
   name?: true
+  base_price?: true
   is_active?: true
   deleted_at?: true
   notes?: true
@@ -133,6 +157,18 @@ export type Service_typesAggregateArgs<ExtArgs extends runtime.Types.Extensions.
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: Service_typesAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: Service_typesSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: Service_typesMinAggregateInputType
@@ -163,6 +199,8 @@ export type service_typesGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   _count?: Service_typesCountAggregateInputType | true
+  _avg?: Service_typesAvgAggregateInputType
+  _sum?: Service_typesSumAggregateInputType
   _min?: Service_typesMinAggregateInputType
   _max?: Service_typesMaxAggregateInputType
 }
@@ -171,6 +209,7 @@ export type Service_typesGroupByOutputType = {
   id: string
   lab_id: string
   name: string
+  base_price: runtime.Decimal
   is_active: boolean
   deleted_at: Date | null
   notes: string | null
@@ -178,6 +217,8 @@ export type Service_typesGroupByOutputType = {
   created_at: Date
   updated_at: Date
   _count: Service_typesCountAggregateOutputType | null
+  _avg: Service_typesAvgAggregateOutputType | null
+  _sum: Service_typesSumAggregateOutputType | null
   _min: Service_typesMinAggregateOutputType | null
   _max: Service_typesMaxAggregateOutputType | null
 }
@@ -204,6 +245,7 @@ export type service_typesWhereInput = {
   id?: Prisma.UuidFilter<"service_types"> | string
   lab_id?: Prisma.UuidFilter<"service_types"> | string
   name?: Prisma.StringFilter<"service_types"> | string
+  base_price?: Prisma.DecimalFilter<"service_types"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFilter<"service_types"> | boolean
   deleted_at?: Prisma.DateTimeNullableFilter<"service_types"> | Date | string | null
   notes?: Prisma.StringNullableFilter<"service_types"> | string | null
@@ -212,12 +254,15 @@ export type service_typesWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"service_types"> | Date | string
   labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
   cases?: Prisma.CasesListRelationFilter
+  case_services?: Prisma.Case_servicesListRelationFilter
+  price_table_service_prices?: Prisma.Price_table_service_pricesListRelationFilter
 }
 
 export type service_typesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  base_price?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -226,6 +271,8 @@ export type service_typesOrderByWithRelationInput = {
   updated_at?: Prisma.SortOrder
   labs?: Prisma.labsOrderByWithRelationInput
   cases?: Prisma.casesOrderByRelationAggregateInput
+  case_services?: Prisma.case_servicesOrderByRelationAggregateInput
+  price_table_service_prices?: Prisma.price_table_service_pricesOrderByRelationAggregateInput
 }
 
 export type service_typesWhereUniqueInput = Prisma.AtLeast<{
@@ -236,6 +283,7 @@ export type service_typesWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.service_typesWhereInput | Prisma.service_typesWhereInput[]
   lab_id?: Prisma.UuidFilter<"service_types"> | string
   name?: Prisma.StringFilter<"service_types"> | string
+  base_price?: Prisma.DecimalFilter<"service_types"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFilter<"service_types"> | boolean
   deleted_at?: Prisma.DateTimeNullableFilter<"service_types"> | Date | string | null
   notes?: Prisma.StringNullableFilter<"service_types"> | string | null
@@ -244,12 +292,15 @@ export type service_typesWhereUniqueInput = Prisma.AtLeast<{
   updated_at?: Prisma.DateTimeFilter<"service_types"> | Date | string
   labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
   cases?: Prisma.CasesListRelationFilter
+  case_services?: Prisma.Case_servicesListRelationFilter
+  price_table_service_prices?: Prisma.Price_table_service_pricesListRelationFilter
 }, "id" | "lab_id_name">
 
 export type service_typesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  base_price?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -257,8 +308,10 @@ export type service_typesOrderByWithAggregationInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.service_typesCountOrderByAggregateInput
+  _avg?: Prisma.service_typesAvgOrderByAggregateInput
   _max?: Prisma.service_typesMaxOrderByAggregateInput
   _min?: Prisma.service_typesMinOrderByAggregateInput
+  _sum?: Prisma.service_typesSumOrderByAggregateInput
 }
 
 export type service_typesScalarWhereWithAggregatesInput = {
@@ -268,6 +321,7 @@ export type service_typesScalarWhereWithAggregatesInput = {
   id?: Prisma.UuidWithAggregatesFilter<"service_types"> | string
   lab_id?: Prisma.UuidWithAggregatesFilter<"service_types"> | string
   name?: Prisma.StringWithAggregatesFilter<"service_types"> | string
+  base_price?: Prisma.DecimalWithAggregatesFilter<"service_types"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolWithAggregatesFilter<"service_types"> | boolean
   deleted_at?: Prisma.DateTimeNullableWithAggregatesFilter<"service_types"> | Date | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"service_types"> | string | null
@@ -279,6 +333,7 @@ export type service_typesScalarWhereWithAggregatesInput = {
 export type service_typesCreateInput = {
   id?: string
   name: string
+  base_price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: boolean
   deleted_at?: Date | string | null
   notes?: string | null
@@ -287,12 +342,15 @@ export type service_typesCreateInput = {
   updated_at?: Date | string
   labs: Prisma.labsCreateNestedOneWithoutService_typesInput
   cases?: Prisma.casesCreateNestedManyWithoutService_typesInput
+  case_services?: Prisma.case_servicesCreateNestedManyWithoutService_typesInput
+  price_table_service_prices?: Prisma.price_table_service_pricesCreateNestedManyWithoutService_typesInput
 }
 
 export type service_typesUncheckedCreateInput = {
   id?: string
   lab_id: string
   name: string
+  base_price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: boolean
   deleted_at?: Date | string | null
   notes?: string | null
@@ -300,11 +358,14 @@ export type service_typesUncheckedCreateInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutService_typesInput
+  case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutService_typesInput
+  price_table_service_prices?: Prisma.price_table_service_pricesUncheckedCreateNestedManyWithoutService_typesInput
 }
 
 export type service_typesUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  base_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -313,12 +374,15 @@ export type service_typesUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   labs?: Prisma.labsUpdateOneRequiredWithoutService_typesNestedInput
   cases?: Prisma.casesUpdateManyWithoutService_typesNestedInput
+  case_services?: Prisma.case_servicesUpdateManyWithoutService_typesNestedInput
+  price_table_service_prices?: Prisma.price_table_service_pricesUpdateManyWithoutService_typesNestedInput
 }
 
 export type service_typesUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  base_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -326,12 +390,15 @@ export type service_typesUncheckedUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUncheckedUpdateManyWithoutService_typesNestedInput
+  case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutService_typesNestedInput
+  price_table_service_prices?: Prisma.price_table_service_pricesUncheckedUpdateManyWithoutService_typesNestedInput
 }
 
 export type service_typesCreateManyInput = {
   id?: string
   lab_id: string
   name: string
+  base_price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: boolean
   deleted_at?: Date | string | null
   notes?: string | null
@@ -343,6 +410,7 @@ export type service_typesCreateManyInput = {
 export type service_typesUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  base_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -355,6 +423,7 @@ export type service_typesUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  base_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -382,6 +451,7 @@ export type service_typesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  base_price?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrder
   notes?: Prisma.SortOrder
@@ -390,10 +460,15 @@ export type service_typesCountOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
 }
 
+export type service_typesAvgOrderByAggregateInput = {
+  base_price?: Prisma.SortOrder
+}
+
 export type service_typesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  base_price?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrder
   notes?: Prisma.SortOrder
@@ -405,11 +480,21 @@ export type service_typesMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  base_price?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+}
+
+export type service_typesSumOrderByAggregateInput = {
+  base_price?: Prisma.SortOrder
+}
+
+export type Service_typesScalarRelationFilter = {
+  is?: Prisma.service_typesWhereInput
+  isNot?: Prisma.service_typesWhereInput
 }
 
 export type Service_typesNullableScalarRelationFilter = {
@@ -459,8 +544,30 @@ export type service_typesUncheckedUpdateManyWithoutLabsNestedInput = {
   deleteMany?: Prisma.service_typesScalarWhereInput | Prisma.service_typesScalarWhereInput[]
 }
 
+export type DecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type service_typesCreateNestedOneWithoutPrice_table_service_pricesInput = {
+  create?: Prisma.XOR<Prisma.service_typesCreateWithoutPrice_table_service_pricesInput, Prisma.service_typesUncheckedCreateWithoutPrice_table_service_pricesInput>
+  connectOrCreate?: Prisma.service_typesCreateOrConnectWithoutPrice_table_service_pricesInput
+  connect?: Prisma.service_typesWhereUniqueInput
+}
+
+export type service_typesUpdateOneRequiredWithoutPrice_table_service_pricesNestedInput = {
+  create?: Prisma.XOR<Prisma.service_typesCreateWithoutPrice_table_service_pricesInput, Prisma.service_typesUncheckedCreateWithoutPrice_table_service_pricesInput>
+  connectOrCreate?: Prisma.service_typesCreateOrConnectWithoutPrice_table_service_pricesInput
+  upsert?: Prisma.service_typesUpsertWithoutPrice_table_service_pricesInput
+  connect?: Prisma.service_typesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.service_typesUpdateToOneWithWhereWithoutPrice_table_service_pricesInput, Prisma.service_typesUpdateWithoutPrice_table_service_pricesInput>, Prisma.service_typesUncheckedUpdateWithoutPrice_table_service_pricesInput>
 }
 
 export type service_typesCreateNestedOneWithoutCasesInput = {
@@ -479,9 +586,24 @@ export type service_typesUpdateOneWithoutCasesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.service_typesUpdateToOneWithWhereWithoutCasesInput, Prisma.service_typesUpdateWithoutCasesInput>, Prisma.service_typesUncheckedUpdateWithoutCasesInput>
 }
 
+export type service_typesCreateNestedOneWithoutCase_servicesInput = {
+  create?: Prisma.XOR<Prisma.service_typesCreateWithoutCase_servicesInput, Prisma.service_typesUncheckedCreateWithoutCase_servicesInput>
+  connectOrCreate?: Prisma.service_typesCreateOrConnectWithoutCase_servicesInput
+  connect?: Prisma.service_typesWhereUniqueInput
+}
+
+export type service_typesUpdateOneRequiredWithoutCase_servicesNestedInput = {
+  create?: Prisma.XOR<Prisma.service_typesCreateWithoutCase_servicesInput, Prisma.service_typesUncheckedCreateWithoutCase_servicesInput>
+  connectOrCreate?: Prisma.service_typesCreateOrConnectWithoutCase_servicesInput
+  upsert?: Prisma.service_typesUpsertWithoutCase_servicesInput
+  connect?: Prisma.service_typesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.service_typesUpdateToOneWithWhereWithoutCase_servicesInput, Prisma.service_typesUpdateWithoutCase_servicesInput>, Prisma.service_typesUncheckedUpdateWithoutCase_servicesInput>
+}
+
 export type service_typesCreateWithoutLabsInput = {
   id?: string
   name: string
+  base_price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: boolean
   deleted_at?: Date | string | null
   notes?: string | null
@@ -489,11 +611,14 @@ export type service_typesCreateWithoutLabsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cases?: Prisma.casesCreateNestedManyWithoutService_typesInput
+  case_services?: Prisma.case_servicesCreateNestedManyWithoutService_typesInput
+  price_table_service_prices?: Prisma.price_table_service_pricesCreateNestedManyWithoutService_typesInput
 }
 
 export type service_typesUncheckedCreateWithoutLabsInput = {
   id?: string
   name: string
+  base_price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: boolean
   deleted_at?: Date | string | null
   notes?: string | null
@@ -501,6 +626,8 @@ export type service_typesUncheckedCreateWithoutLabsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutService_typesInput
+  case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutService_typesInput
+  price_table_service_prices?: Prisma.price_table_service_pricesUncheckedCreateNestedManyWithoutService_typesInput
 }
 
 export type service_typesCreateOrConnectWithoutLabsInput = {
@@ -536,6 +663,7 @@ export type service_typesScalarWhereInput = {
   id?: Prisma.UuidFilter<"service_types"> | string
   lab_id?: Prisma.UuidFilter<"service_types"> | string
   name?: Prisma.StringFilter<"service_types"> | string
+  base_price?: Prisma.DecimalFilter<"service_types"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFilter<"service_types"> | boolean
   deleted_at?: Prisma.DateTimeNullableFilter<"service_types"> | Date | string | null
   notes?: Prisma.StringNullableFilter<"service_types"> | string | null
@@ -544,9 +672,10 @@ export type service_typesScalarWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"service_types"> | Date | string
 }
 
-export type service_typesCreateWithoutCasesInput = {
+export type service_typesCreateWithoutPrice_table_service_pricesInput = {
   id?: string
   name: string
+  base_price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: boolean
   deleted_at?: Date | string | null
   notes?: string | null
@@ -554,18 +683,99 @@ export type service_typesCreateWithoutCasesInput = {
   created_at?: Date | string
   updated_at?: Date | string
   labs: Prisma.labsCreateNestedOneWithoutService_typesInput
+  cases?: Prisma.casesCreateNestedManyWithoutService_typesInput
+  case_services?: Prisma.case_servicesCreateNestedManyWithoutService_typesInput
 }
 
-export type service_typesUncheckedCreateWithoutCasesInput = {
+export type service_typesUncheckedCreateWithoutPrice_table_service_pricesInput = {
   id?: string
   lab_id: string
   name: string
+  base_price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: boolean
   deleted_at?: Date | string | null
   notes?: string | null
   workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Date | string
   updated_at?: Date | string
+  cases?: Prisma.casesUncheckedCreateNestedManyWithoutService_typesInput
+  case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutService_typesInput
+}
+
+export type service_typesCreateOrConnectWithoutPrice_table_service_pricesInput = {
+  where: Prisma.service_typesWhereUniqueInput
+  create: Prisma.XOR<Prisma.service_typesCreateWithoutPrice_table_service_pricesInput, Prisma.service_typesUncheckedCreateWithoutPrice_table_service_pricesInput>
+}
+
+export type service_typesUpsertWithoutPrice_table_service_pricesInput = {
+  update: Prisma.XOR<Prisma.service_typesUpdateWithoutPrice_table_service_pricesInput, Prisma.service_typesUncheckedUpdateWithoutPrice_table_service_pricesInput>
+  create: Prisma.XOR<Prisma.service_typesCreateWithoutPrice_table_service_pricesInput, Prisma.service_typesUncheckedCreateWithoutPrice_table_service_pricesInput>
+  where?: Prisma.service_typesWhereInput
+}
+
+export type service_typesUpdateToOneWithWhereWithoutPrice_table_service_pricesInput = {
+  where?: Prisma.service_typesWhereInput
+  data: Prisma.XOR<Prisma.service_typesUpdateWithoutPrice_table_service_pricesInput, Prisma.service_typesUncheckedUpdateWithoutPrice_table_service_pricesInput>
+}
+
+export type service_typesUpdateWithoutPrice_table_service_pricesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  base_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutService_typesNestedInput
+  cases?: Prisma.casesUpdateManyWithoutService_typesNestedInput
+  case_services?: Prisma.case_servicesUpdateManyWithoutService_typesNestedInput
+}
+
+export type service_typesUncheckedUpdateWithoutPrice_table_service_pricesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  base_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cases?: Prisma.casesUncheckedUpdateManyWithoutService_typesNestedInput
+  case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutService_typesNestedInput
+}
+
+export type service_typesCreateWithoutCasesInput = {
+  id?: string
+  name: string
+  base_price?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  notes?: string | null
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutService_typesInput
+  case_services?: Prisma.case_servicesCreateNestedManyWithoutService_typesInput
+  price_table_service_prices?: Prisma.price_table_service_pricesCreateNestedManyWithoutService_typesInput
+}
+
+export type service_typesUncheckedCreateWithoutCasesInput = {
+  id?: string
+  lab_id: string
+  name: string
+  base_price?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  notes?: string | null
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  updated_at?: Date | string
+  case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutService_typesInput
+  price_table_service_prices?: Prisma.price_table_service_pricesUncheckedCreateNestedManyWithoutService_typesInput
 }
 
 export type service_typesCreateOrConnectWithoutCasesInput = {
@@ -587,6 +797,7 @@ export type service_typesUpdateToOneWithWhereWithoutCasesInput = {
 export type service_typesUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  base_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -594,23 +805,105 @@ export type service_typesUpdateWithoutCasesInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   labs?: Prisma.labsUpdateOneRequiredWithoutService_typesNestedInput
+  case_services?: Prisma.case_servicesUpdateManyWithoutService_typesNestedInput
+  price_table_service_prices?: Prisma.price_table_service_pricesUpdateManyWithoutService_typesNestedInput
 }
 
 export type service_typesUncheckedUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  base_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutService_typesNestedInput
+  price_table_service_prices?: Prisma.price_table_service_pricesUncheckedUpdateManyWithoutService_typesNestedInput
+}
+
+export type service_typesCreateWithoutCase_servicesInput = {
+  id?: string
+  name: string
+  base_price?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  notes?: string | null
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutService_typesInput
+  cases?: Prisma.casesCreateNestedManyWithoutService_typesInput
+  price_table_service_prices?: Prisma.price_table_service_pricesCreateNestedManyWithoutService_typesInput
+}
+
+export type service_typesUncheckedCreateWithoutCase_servicesInput = {
+  id?: string
+  lab_id: string
+  name: string
+  base_price?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  notes?: string | null
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  updated_at?: Date | string
+  cases?: Prisma.casesUncheckedCreateNestedManyWithoutService_typesInput
+  price_table_service_prices?: Prisma.price_table_service_pricesUncheckedCreateNestedManyWithoutService_typesInput
+}
+
+export type service_typesCreateOrConnectWithoutCase_servicesInput = {
+  where: Prisma.service_typesWhereUniqueInput
+  create: Prisma.XOR<Prisma.service_typesCreateWithoutCase_servicesInput, Prisma.service_typesUncheckedCreateWithoutCase_servicesInput>
+}
+
+export type service_typesUpsertWithoutCase_servicesInput = {
+  update: Prisma.XOR<Prisma.service_typesUpdateWithoutCase_servicesInput, Prisma.service_typesUncheckedUpdateWithoutCase_servicesInput>
+  create: Prisma.XOR<Prisma.service_typesCreateWithoutCase_servicesInput, Prisma.service_typesUncheckedCreateWithoutCase_servicesInput>
+  where?: Prisma.service_typesWhereInput
+}
+
+export type service_typesUpdateToOneWithWhereWithoutCase_servicesInput = {
+  where?: Prisma.service_typesWhereInput
+  data: Prisma.XOR<Prisma.service_typesUpdateWithoutCase_servicesInput, Prisma.service_typesUncheckedUpdateWithoutCase_servicesInput>
+}
+
+export type service_typesUpdateWithoutCase_servicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  base_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutService_typesNestedInput
+  cases?: Prisma.casesUpdateManyWithoutService_typesNestedInput
+  price_table_service_prices?: Prisma.price_table_service_pricesUpdateManyWithoutService_typesNestedInput
+}
+
+export type service_typesUncheckedUpdateWithoutCase_servicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  base_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  workflow_json?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cases?: Prisma.casesUncheckedUpdateManyWithoutService_typesNestedInput
+  price_table_service_prices?: Prisma.price_table_service_pricesUncheckedUpdateManyWithoutService_typesNestedInput
 }
 
 export type service_typesCreateManyLabsInput = {
   id?: string
   name: string
+  base_price?: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: boolean
   deleted_at?: Date | string | null
   notes?: string | null
@@ -622,6 +915,7 @@ export type service_typesCreateManyLabsInput = {
 export type service_typesUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  base_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -629,11 +923,14 @@ export type service_typesUpdateWithoutLabsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUpdateManyWithoutService_typesNestedInput
+  case_services?: Prisma.case_servicesUpdateManyWithoutService_typesNestedInput
+  price_table_service_prices?: Prisma.price_table_service_pricesUpdateManyWithoutService_typesNestedInput
 }
 
 export type service_typesUncheckedUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  base_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -641,11 +938,14 @@ export type service_typesUncheckedUpdateWithoutLabsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUncheckedUpdateManyWithoutService_typesNestedInput
+  case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutService_typesNestedInput
+  price_table_service_prices?: Prisma.price_table_service_pricesUncheckedUpdateManyWithoutService_typesNestedInput
 }
 
 export type service_typesUncheckedUpdateManyWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  base_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -661,10 +961,14 @@ export type service_typesUncheckedUpdateManyWithoutLabsInput = {
 
 export type Service_typesCountOutputType = {
   cases: number
+  case_services: number
+  price_table_service_prices: number
 }
 
 export type Service_typesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cases?: boolean | Service_typesCountOutputTypeCountCasesArgs
+  case_services?: boolean | Service_typesCountOutputTypeCountCase_servicesArgs
+  price_table_service_prices?: boolean | Service_typesCountOutputTypeCountPrice_table_service_pricesArgs
 }
 
 /**
@@ -684,11 +988,26 @@ export type Service_typesCountOutputTypeCountCasesArgs<ExtArgs extends runtime.T
   where?: Prisma.casesWhereInput
 }
 
+/**
+ * Service_typesCountOutputType without action
+ */
+export type Service_typesCountOutputTypeCountCase_servicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.case_servicesWhereInput
+}
+
+/**
+ * Service_typesCountOutputType without action
+ */
+export type Service_typesCountOutputTypeCountPrice_table_service_pricesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.price_table_service_pricesWhereInput
+}
+
 
 export type service_typesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   lab_id?: boolean
   name?: boolean
+  base_price?: boolean
   is_active?: boolean
   deleted_at?: boolean
   notes?: boolean
@@ -697,6 +1016,8 @@ export type service_typesSelect<ExtArgs extends runtime.Types.Extensions.Interna
   updated_at?: boolean
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   cases?: boolean | Prisma.service_types$casesArgs<ExtArgs>
+  case_services?: boolean | Prisma.service_types$case_servicesArgs<ExtArgs>
+  price_table_service_prices?: boolean | Prisma.service_types$price_table_service_pricesArgs<ExtArgs>
   _count?: boolean | Prisma.Service_typesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["service_types"]>
 
@@ -704,6 +1025,7 @@ export type service_typesSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   id?: boolean
   lab_id?: boolean
   name?: boolean
+  base_price?: boolean
   is_active?: boolean
   deleted_at?: boolean
   notes?: boolean
@@ -717,6 +1039,7 @@ export type service_typesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   id?: boolean
   lab_id?: boolean
   name?: boolean
+  base_price?: boolean
   is_active?: boolean
   deleted_at?: boolean
   notes?: boolean
@@ -730,6 +1053,7 @@ export type service_typesSelectScalar = {
   id?: boolean
   lab_id?: boolean
   name?: boolean
+  base_price?: boolean
   is_active?: boolean
   deleted_at?: boolean
   notes?: boolean
@@ -738,10 +1062,12 @@ export type service_typesSelectScalar = {
   updated_at?: boolean
 }
 
-export type service_typesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "name" | "is_active" | "deleted_at" | "notes" | "workflow_json" | "created_at" | "updated_at", ExtArgs["result"]["service_types"]>
+export type service_typesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "name" | "base_price" | "is_active" | "deleted_at" | "notes" | "workflow_json" | "created_at" | "updated_at", ExtArgs["result"]["service_types"]>
 export type service_typesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   cases?: boolean | Prisma.service_types$casesArgs<ExtArgs>
+  case_services?: boolean | Prisma.service_types$case_servicesArgs<ExtArgs>
+  price_table_service_prices?: boolean | Prisma.service_types$price_table_service_pricesArgs<ExtArgs>
   _count?: boolean | Prisma.Service_typesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type service_typesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -756,11 +1082,14 @@ export type $service_typesPayload<ExtArgs extends runtime.Types.Extensions.Inter
   objects: {
     labs: Prisma.$labsPayload<ExtArgs>
     cases: Prisma.$casesPayload<ExtArgs>[]
+    case_services: Prisma.$case_servicesPayload<ExtArgs>[]
+    price_table_service_prices: Prisma.$price_table_service_pricesPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     lab_id: string
     name: string
+    base_price: runtime.Decimal
     is_active: boolean
     deleted_at: Date | null
     notes: string | null
@@ -1163,6 +1492,8 @@ export interface Prisma__service_typesClient<T, Null = never, ExtArgs extends ru
   readonly [Symbol.toStringTag]: "PrismaPromise"
   labs<T extends Prisma.labsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labsDefaultArgs<ExtArgs>>): Prisma.Prisma__labsClient<runtime.Types.Result.GetResult<Prisma.$labsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   cases<T extends Prisma.service_types$casesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.service_types$casesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$casesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  case_services<T extends Prisma.service_types$case_servicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.service_types$case_servicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_servicesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  price_table_service_prices<T extends Prisma.service_types$price_table_service_pricesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.service_types$price_table_service_pricesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$price_table_service_pricesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1195,6 +1526,7 @@ export interface service_typesFieldRefs {
   readonly id: Prisma.FieldRef<"service_types", 'String'>
   readonly lab_id: Prisma.FieldRef<"service_types", 'String'>
   readonly name: Prisma.FieldRef<"service_types", 'String'>
+  readonly base_price: Prisma.FieldRef<"service_types", 'Decimal'>
   readonly is_active: Prisma.FieldRef<"service_types", 'Boolean'>
   readonly deleted_at: Prisma.FieldRef<"service_types", 'DateTime'>
   readonly notes: Prisma.FieldRef<"service_types", 'String'>
@@ -1623,6 +1955,54 @@ export type service_types$casesArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.CasesScalarFieldEnum | Prisma.CasesScalarFieldEnum[]
+}
+
+/**
+ * service_types.case_services
+ */
+export type service_types$case_servicesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the case_services
+   */
+  select?: Prisma.case_servicesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the case_services
+   */
+  omit?: Prisma.case_servicesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.case_servicesInclude<ExtArgs> | null
+  where?: Prisma.case_servicesWhereInput
+  orderBy?: Prisma.case_servicesOrderByWithRelationInput | Prisma.case_servicesOrderByWithRelationInput[]
+  cursor?: Prisma.case_servicesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Case_servicesScalarFieldEnum | Prisma.Case_servicesScalarFieldEnum[]
+}
+
+/**
+ * service_types.price_table_service_prices
+ */
+export type service_types$price_table_service_pricesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the price_table_service_prices
+   */
+  select?: Prisma.price_table_service_pricesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the price_table_service_prices
+   */
+  omit?: Prisma.price_table_service_pricesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.price_table_service_pricesInclude<ExtArgs> | null
+  where?: Prisma.price_table_service_pricesWhereInput
+  orderBy?: Prisma.price_table_service_pricesOrderByWithRelationInput | Prisma.price_table_service_pricesOrderByWithRelationInput[]
+  cursor?: Prisma.price_table_service_pricesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Price_table_service_pricesScalarFieldEnum | Prisma.Price_table_service_pricesScalarFieldEnum[]
 }
 
 /**

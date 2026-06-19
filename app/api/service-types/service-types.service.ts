@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 
 import { activeReferenceWhere, archiveData } from "../_shared/archive";
+import { assertCanAccessBackoffice } from "../_shared/authorization";
 import { getSingleLabMembership } from "../_shared/membership";
 import {
   activeStateData,
@@ -16,9 +17,19 @@ import {
 } from "./service-types.schemas";
 
 function mapServiceType<
-  T extends { created_at: Date; updated_at: Date; deleted_at: Date | null },
+  T extends {
+    created_at: Date;
+    updated_at: Date;
+    deleted_at: Date | null;
+    base_price: { toString(): string };
+    labs?: { currency: string } | null;
+  },
 >(serviceType: T) {
-  return mapReferenceDates(serviceType);
+  return {
+    ...mapReferenceDates(serviceType),
+    base_price: serviceType.base_price.toString(),
+    currency: serviceType.labs?.currency ?? "BRL",
+  };
 }
 
 async function validateWorkflowProcesses(
@@ -54,23 +65,69 @@ async function validateWorkflowProcesses(
 }
 
 export async function listServiceTypesForLoggedLab(user_id: string) {
-  const { lab_id } = await getSingleLabMembership(user_id);
+  const membership = await getSingleLabMembership(user_id);
+  assertCanAccessBackoffice(membership.role);
+  const { lab_id } = membership;
   const serviceTypes = await prisma.service_types.findMany({
     where: {
       lab_id,
       ...activeReferenceWhere,
     },
+    include: {
+      labs: {
+        select: {
+          currency: true,
+        },
+      },
+    },
     orderBy: { name: "asc" },
   });
 
-  return serviceTypes.map(mapServiceType);
+  return {
+    items: serviceTypes.map(mapServiceType),
+    currency: serviceTypes[0]?.labs?.currency ?? (
+      await prisma.labs.findUniqueOrThrow({
+        where: { id: lab_id },
+        select: { currency: true },
+      })
+    ).currency,
+  };
+}
+
+export async function getServiceTypeForLoggedLab(
+  user_id: string,
+  service_type_id: string,
+) {
+  const membership = await getSingleLabMembership(user_id);
+  assertCanAccessBackoffice(membership.role);
+  const { lab_id } = membership;
+  const serviceType = await prisma.service_types.findFirst({
+    where: {
+      id: service_type_id,
+      lab_id,
+      ...activeReferenceWhere,
+    },
+    include: {
+      labs: {
+        select: {
+          currency: true,
+        },
+      },
+    },
+  });
+
+  if (!serviceType) throw new ReferenceNotFoundError("Service type");
+
+  return mapServiceType(serviceType);
 }
 
 export async function createServiceTypeForLoggedLab(
   user_id: string,
   payload: ServiceTypeInput,
 ) {
-  const { lab_id } = await getSingleLabMembership(user_id);
+  const membership = await getSingleLabMembership(user_id);
+  assertCanAccessBackoffice(membership.role);
+  const { lab_id } = membership;
   const workflow_json = payload.workflow_json ?? emptyWorkflow;
   await validateWorkflowProcesses(lab_id, workflow_json);
 
@@ -78,9 +135,17 @@ export async function createServiceTypeForLoggedLab(
     data: {
       lab_id,
       name: payload.name!,
+      base_price: payload.base_price!,
       notes: optionalString(payload.notes),
       workflow_json,
       ...activeStateData(payload),
+    },
+    include: {
+      labs: {
+        select: {
+          currency: true,
+        },
+      },
     },
   });
 
@@ -92,7 +157,9 @@ export async function updateServiceTypeForLoggedLab(
   service_type_id: string,
   payload: ServiceTypeInput,
 ) {
-  const { lab_id } = await getSingleLabMembership(user_id);
+  const membership = await getSingleLabMembership(user_id);
+  assertCanAccessBackoffice(membership.role);
+  const { lab_id } = membership;
   const existing = await prisma.service_types.findFirst({
     where: { id: service_type_id, lab_id },
     select: { id: true },
@@ -108,9 +175,17 @@ export async function updateServiceTypeForLoggedLab(
     where: { id: service_type_id },
     data: {
       name: optionalString(payload.name) ?? undefined,
+      base_price: payload.base_price ?? undefined,
       notes: optionalString(payload.notes),
       workflow_json: payload.workflow_json,
       ...activeStateData(payload),
+    },
+    include: {
+      labs: {
+        select: {
+          currency: true,
+        },
+      },
     },
   });
 
@@ -121,7 +196,9 @@ export async function archiveServiceTypeForLoggedLab(
   user_id: string,
   service_type_id: string,
 ) {
-  const { lab_id } = await getSingleLabMembership(user_id);
+  const membership = await getSingleLabMembership(user_id);
+  assertCanAccessBackoffice(membership.role);
+  const { lab_id } = membership;
   const existing = await prisma.service_types.findFirst({
     where: {
       id: service_type_id,
@@ -136,6 +213,13 @@ export async function archiveServiceTypeForLoggedLab(
   const serviceType = await prisma.service_types.update({
     where: { id: service_type_id },
     data: archiveData(),
+    include: {
+      labs: {
+        select: {
+          currency: true,
+        },
+      },
+    },
   });
 
   return mapServiceType(serviceType);

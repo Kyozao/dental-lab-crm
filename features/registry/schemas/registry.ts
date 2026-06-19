@@ -60,20 +60,55 @@ export const createServiceTypeSchema = z.object({
 
 export const createMillingDrillSchema = z.object({
   name: z.string().trim().min(1, "Drill name is required"),
-  type: z.enum(["1.0MM", "2.5MM"], {
-    error: "Drill type must be 1.0mm or 2.5mm",
-  }),
-  brand: z.string().trim().optional(),
-  serialNumber: z.string().trim().optional(),
-  maxTeethRecommended: z
+  millingMachineId: z.string().trim().optional(),
+  status: z.enum(["ACTIVE", "STORED", "RETIRED", "LOST"]),
+  currentBlocksCount: z
     .string()
     .optional()
-    .transform((v) => (v && v.trim() ? parseInt(v) : undefined)),
+    .transform((v) => (v && v.trim() ? parseInt(v, 10) : 0)),
+  estimatedMaxBlocks: z
+    .string()
+    .optional()
+    .transform((v) => (v && v.trim() ? parseInt(v, 10) : undefined)),
+  installedAt: z.string().trim().optional(),
+  removedAt: z.string().trim().optional(),
   notes: z.string().trim().optional(),
-  isActive: z
-    .union([z.literal("on"), z.literal("true"), z.literal("false"), z.undefined()])
-    .transform((value) => value === "on" || value === "true")
-    .default(true),
+}).superRefine((value, ctx) => {
+  if (value.currentBlocksCount < 0) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["currentBlocksCount"],
+      message: "Current blocks count cannot be negative",
+    });
+  }
+
+  if (
+    value.estimatedMaxBlocks !== undefined &&
+    Number.isNaN(value.estimatedMaxBlocks)
+  ) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["estimatedMaxBlocks"],
+      message: "Estimated max blocks must be a whole number",
+    });
+  }
+
+  if (Number.isNaN(value.currentBlocksCount)) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["currentBlocksCount"],
+      message: "Current blocks count must be a whole number",
+    });
+  }
+
+  const hasMachine = Boolean(value.millingMachineId && value.millingMachineId.trim());
+  if (hasMachine && value.status !== "ACTIVE") {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["millingMachineId"],
+      message: "Only active drills can stay assigned to a machine",
+    });
+  }
 });
 
 export const updateCustomerSchema = createCustomerSchema.extend({

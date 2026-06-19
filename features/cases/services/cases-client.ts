@@ -1,5 +1,6 @@
 import type {
   AttachmentKindValue,
+  CaseCommentItem,
   CaseStatusValue,
   EditableCase,
 } from "@/features/cases/types";
@@ -26,6 +27,18 @@ export async function updateCaseApi(
 
 export async function getCaseDetailsApi(caseId: string): Promise<EditableCase> {
   return mapApiCaseToEditableCase(await casesApi.getById(caseId));
+}
+
+export async function getCaseCommentsApi(caseId: string) {
+  return casesApi.getComments(caseId);
+}
+
+export async function createCaseCommentApi(caseId: string, body: string) {
+  return casesApi.createComment(caseId, body);
+}
+
+export async function deleteCaseCommentApi(caseId: string, commentId: string) {
+  return casesApi.deleteComment(caseId, commentId);
 }
 
 export async function deleteCaseApi(_caseId: string) {
@@ -85,10 +98,18 @@ export function mapApiCaseToEditableCase(item: CaseListItem): EditableCase {
     dentistName: item.dentistName ?? "",
     dentistId: item.dentistId,
     serviceTypeId: item.serviceTypeId,
-    serviceTypeName: item.serviceTypeName ?? "",
+    serviceTypeName: item.serviceTypeName,
+    serviceLineCount: item.serviceLineCount,
+    serviceBasePriceSnapshot: item.serviceBasePriceSnapshot,
+    casePrice: item.casePrice,
+    isPriceOverridden: item.isPriceOverridden,
+    labCurrency: item.labCurrency,
     attachments: mockCase?.attachments ?? [],
     components: mockCase?.components ?? [],
     millings: mockCase?.millings ?? [],
+    comments: (item.comments ?? []) as CaseCommentItem[],
+    statusHistory: item.statusHistory ?? mockCase?.statusHistory ?? [],
+    serviceLines: item.serviceLines ?? [],
     processes: item.processes ?? [],
     availableProcesses: item.availableProcesses ?? [],
   };

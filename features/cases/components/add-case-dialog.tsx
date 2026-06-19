@@ -20,10 +20,11 @@ export function AddCaseDialog({
   currentUserRole,
 }: Props) {
   const [open, setOpen] = useState(false);
-  const customers = useCustomers(open);
-  const serviceTypes = useServiceTypes(open);
-  const processes = useProcesses(open);
-  const employees = useEmployees(open);
+  const canCreateCases = currentUserRole !== "PRODUCTION";
+  const customers = useCustomers(open && canCreateCases);
+  const serviceTypes = useServiceTypes(open && canCreateCases);
+  const processes = useProcesses(open && canCreateCases);
+  const employees = useEmployees(open && canCreateCases);
 
   const optionQueries = [
     customers,
@@ -46,12 +47,14 @@ export function AddCaseDialog({
 
   return (
     <>
-      <Button type="button" onClick={() => setOpen(true)}>
-        Add Case
-      </Button>
+      {canCreateCases ? (
+        <Button type="button" onClick={() => setOpen(true)}>
+          Add Case
+        </Button>
+      ) : null}
 
       <CaseDetailsDialog
-        open={open}
+        open={canCreateCases && open}
         onOpenChange={setOpen}
         mode="create"
         currentUserRole={currentUserRole}

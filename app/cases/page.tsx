@@ -9,22 +9,21 @@ import { CasesTable } from "@/features/cases/components/cases-table";
 import {
   mockCustomers,
   mockComponents,
-  mockUser,
 } from "@/lib/mock-data/pages";
 import { requireCurrentLab } from "@/lib/onboarding";
 
 export default async function CasesPage() {
-  await requireCurrentLab();
+  const { role } = await requireCurrentLab();
 
   return (
     <PageShell width="wide">
       <PageHeader
         title="Cases"
-        description="Manage and track mock cases locally while API calls are disabled."
+        description="Track active case work, stage progress, and production actions from one list."
         actions={
           <AddCaseDialog
             components={mockComponents}
-            currentUserRole={mockUser.role}
+            currentUserRole={role}
           />
         }
       />
@@ -37,7 +36,7 @@ export default async function CasesPage() {
         <Suspense fallback={null}>
           <CasesTable
             components={mockComponents}
-            currentUserRole={mockUser.role}
+            currentUserRole={role}
           />
         </Suspense>
       </Panel>

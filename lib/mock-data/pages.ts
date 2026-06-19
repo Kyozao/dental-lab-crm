@@ -66,6 +66,7 @@ const allMockCustomers: CustomerOption[] = [
     labCustomerId: "lab-customer-1",
     name: "Silva Dental",
     dentists: [{ id: "dentist-1", name: "Dr. Marcos Silva" }],
+    price_table: null,
   },
   {
     id: "customer-2",
@@ -73,6 +74,7 @@ const allMockCustomers: CustomerOption[] = [
     labCustomerId: "lab-customer-2",
     name: "Oral Prime",
     dentists: [{ id: "dentist-2", name: "Dra. Carla Ramos" }],
+    price_table: null,
   },
   {
     id: "customer-3",
@@ -80,13 +82,32 @@ const allMockCustomers: CustomerOption[] = [
     labCustomerId: "lab-customer-3",
     name: "Rio Smile",
     dentists: [{ id: "dentist-3", name: "Dr. Felipe Rocha" }],
+    price_table: null,
   },
 ];
 
 const allMockServiceTypes: Array<ServiceTypeOption & { dentalLabId: string }> = [
-  { id: "service-1", dentalLabId: "lab-vela-sao-paulo", name: "Crown" },
-  { id: "service-2", dentalLabId: "lab-vela-sao-paulo", name: "Bridge" },
-  { id: "service-3", dentalLabId: "lab-vela-rio", name: "Crown" },
+  {
+    id: "service-1",
+    dentalLabId: "lab-vela-sao-paulo",
+    name: "Crown",
+    base_price: "180.00",
+    currency: "BRL",
+  },
+  {
+    id: "service-2",
+    dentalLabId: "lab-vela-sao-paulo",
+    name: "Bridge",
+    base_price: "420.00",
+    currency: "BRL",
+  },
+  {
+    id: "service-3",
+    dentalLabId: "lab-vela-rio",
+    name: "Crown",
+    base_price: "200.00",
+    currency: "BRL",
+  },
 ];
 
 const allMockComponents: Array<ComponentOption & { dentalLabId: string }> = [
@@ -127,7 +148,7 @@ const allMockCases: EditableCase[] = [
     labCustomerName: "Silva Group",
     code: "DL-1001",
     patientName: "Maria Oliveira",
-    currentStatus: CASE_STATUS.DESIGNING,
+    currentStatus: CASE_STATUS.IN_PRODUCTION,
     teeth: "11, 12, 13",
     elementsQty: 3,
     shade: "A2",
@@ -143,7 +164,13 @@ const allMockCases: EditableCase[] = [
     dentistId: "dentist-1",
     serviceTypeId: "service-2",
     serviceTypeName: "Bridge",
+    serviceBasePriceSnapshot: "420.00",
+    casePrice: "420.00",
+    isPriceOverridden: false,
+    labCurrency: "BRL",
     attachments: [],
+    serviceLineCount: 1,
+    serviceLines: [],
     components: [
       {
         id: "usage-1",
@@ -157,6 +184,8 @@ const allMockCases: EditableCase[] = [
       },
     ],
     millings: [],
+    comments: [],
+    statusHistory: [],
   },
   {
     id: "case-2",
@@ -165,7 +194,7 @@ const allMockCases: EditableCase[] = [
     labCustomerName: "Oral Prime Network",
     code: "DL-1002",
     patientName: "Rafael Costa",
-    currentStatus: CASE_STATUS.DESIGN_READY,
+    currentStatus: CASE_STATUS.IN_PRODUCTION,
     teeth: "36",
     elementsQty: 1,
     shade: "A3",
@@ -181,9 +210,17 @@ const allMockCases: EditableCase[] = [
     dentistId: "dentist-2",
     serviceTypeId: "service-1",
     serviceTypeName: "Crown",
+    serviceBasePriceSnapshot: "180.00",
+    casePrice: "210.00",
+    isPriceOverridden: true,
+    labCurrency: "BRL",
     attachments: [],
+    serviceLineCount: 1,
+    serviceLines: [],
     components: [],
     millings: [],
+    comments: [],
+    statusHistory: [],
   },
   {
     id: "case-3",
@@ -208,13 +245,20 @@ const allMockCases: EditableCase[] = [
     dentistId: "dentist-1",
     serviceTypeId: "service-1",
     serviceTypeName: "Crown",
+    serviceBasePriceSnapshot: "180.00",
+    casePrice: "180.00",
+    isPriceOverridden: false,
+    labCurrency: "BRL",
     attachments: [],
+    serviceLineCount: 1,
+    serviceLines: [],
     components: [],
     millings: [
       {
         id: "milling-1",
         status: "SUCCESS",
         teethMilledQty: 2,
+        blocksUsedQty: 1,
         failureReason: null,
         notes: "Clean run.",
         milledAt: new Date(Date.now() - 2 * 86400000).toISOString(),
@@ -223,6 +267,8 @@ const allMockCases: EditableCase[] = [
         millingDrillName: "Diamond 1.0mm",
       },
     ],
+    comments: [],
+    statusHistory: [],
   },
   {
     id: "case-4",
@@ -231,7 +277,7 @@ const allMockCases: EditableCase[] = [
     labCustomerName: "Rio Smile Network",
     code: "DL-1001",
     patientName: "Paula Mendes",
-    currentStatus: CASE_STATUS.DESIGNING,
+    currentStatus: CASE_STATUS.IN_PRODUCTION,
     teeth: "14",
     elementsQty: 1,
     shade: "A1",
@@ -247,9 +293,17 @@ const allMockCases: EditableCase[] = [
     dentistId: "dentist-3",
     serviceTypeId: "service-3",
     serviceTypeName: "Crown",
+    serviceBasePriceSnapshot: "200.00",
+    casePrice: "200.00",
+    isPriceOverridden: false,
+    labCurrency: "BRL",
     attachments: [],
+    serviceLineCount: 1,
+    serviceLines: [],
     components: [],
     millings: [],
+    comments: [],
+    statusHistory: [],
   },
 ];
 
@@ -294,36 +348,58 @@ const allMockMillingDrills = [
     id: "drill-1",
     dentalLabId: "lab-vela-sao-paulo",
     name: "Diamond 1.0mm",
-    brand: "Roland",
-    type: "1.0mm",
-    serialNumber: "D10-001",
-    maxTeethRecommended: 120,
+    millingMachineId: "machine-1",
+    status: "ACTIVE",
+    currentBlocksCount: 42,
+    estimatedMaxBlocks: 120,
+    installedAt: new Date(Date.now() - 45 * 86400000).toISOString(),
+    removedAt: null,
     notes: null,
-    isActive: true,
   },
   {
     id: "drill-2",
     dentalLabId: "lab-vela-sao-paulo",
     name: "Diamond 2.5mm",
-    brand: "Roland",
-    type: "2.5mm",
-    serialNumber: "D25-001",
-    maxTeethRecommended: 100,
+    millingMachineId: "machine-1",
+    status: "ACTIVE",
+    currentBlocksCount: 31,
+    estimatedMaxBlocks: 100,
+    installedAt: new Date(Date.now() - 30 * 86400000).toISOString(),
+    removedAt: null,
     notes: null,
-    isActive: true,
   },
   {
     id: "drill-3",
     dentalLabId: "lab-vela-rio",
     name: "Diamond 1.0mm",
-    brand: "Roland",
-    type: "1.0mm",
-    serialNumber: "RIO-D10-001",
-    maxTeethRecommended: 120,
-    notes: null,
-    isActive: true,
+    millingMachineId: null,
+    status: "STORED",
+    currentBlocksCount: 118,
+    estimatedMaxBlocks: 120,
+    installedAt: new Date(Date.now() - 180 * 86400000).toISOString(),
+    removedAt: new Date(Date.now() - 7 * 86400000).toISOString(),
+    notes: "Stored after preventive replacement.",
   },
 ];
+
+export const mockMillingMachines = [
+  {
+    id: "machine-1",
+    dentalLabId: "lab-vela-sao-paulo",
+    name: "imes-icore 350i",
+    status: "ACTIVE" as const,
+    installedAt: new Date(Date.now() - 120 * 86400000).toISOString(),
+    notes: "Primary demo machine for Sao Paulo drill assignments.",
+  },
+  {
+    id: "machine-2",
+    dentalLabId: "lab-vela-rio",
+    name: "vhf K5+",
+    status: "MAINTENANCE" as const,
+    installedAt: new Date(Date.now() - 240 * 86400000).toISOString(),
+    notes: "Rio demo machine currently under maintenance.",
+  },
+].filter((item) => item.dentalLabId === activeDentalLabId);
 
 const allMockMillings = [
   {
@@ -409,12 +485,28 @@ function getCaseTeethCount(caseItem: EditableCase) {
 }
 
 export function getMockDashboardData() {
-  const openCases = mockCases.filter((caseItem) => caseItem.currentStatus !== CASE_STATUS.DONE);
-  const completedCases = mockCases.filter((caseItem) => caseItem.currentStatus === CASE_STATUS.DONE);
+  const openCases = mockCases.filter(
+    (caseItem) =>
+      caseItem.currentStatus !== CASE_STATUS.DONE &&
+      caseItem.currentStatus !== CASE_STATUS.CANCELLED,
+  );
+  const completedCases = mockCases.filter(
+    (caseItem) =>
+      caseItem.currentStatus === CASE_STATUS.DONE ||
+      caseItem.currentStatus === CASE_STATUS.CANCELLED,
+  );
   const statusStats = Object.entries(CASE_STATUS_META).map(([status, meta]) => {
     const assigned = mockCases.filter((item) => item.currentStatus === status);
-    const active = assigned.filter((item) => item.currentStatus !== CASE_STATUS.DONE);
-    const completed = assigned.filter((item) => item.currentStatus === CASE_STATUS.DONE);
+    const active = assigned.filter(
+      (item) =>
+        item.currentStatus !== CASE_STATUS.DONE &&
+        item.currentStatus !== CASE_STATUS.CANCELLED,
+    );
+    const completed = assigned.filter(
+      (item) =>
+        item.currentStatus === CASE_STATUS.DONE ||
+        item.currentStatus === CASE_STATUS.CANCELLED,
+    );
 
     return {
       id: status,

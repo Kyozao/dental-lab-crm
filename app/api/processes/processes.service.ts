@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 
 import { activeReferenceWhere, archiveData } from "../_shared/archive";
+import { assertCanAccessBackoffice } from "../_shared/authorization";
 import { getLabMember } from "../_shared/membership";
 import {
   activeStateData,
@@ -11,7 +12,9 @@ import {
 import type { ProcessInput } from "./processes.schemas";
 
 export async function listProcessesForLoggedLab(user_id: string) {
-  const { lab_id } = await getLabMember(user_id);
+  const membership = await getLabMember(user_id);
+  assertCanAccessBackoffice(membership.role);
+  const { lab_id } = membership;
   const processes = await prisma.processes.findMany({
     where: {
       lab_id,
@@ -27,7 +30,9 @@ export async function createProcessForLoggedLab(
   user_id: string,
   payload: ProcessInput,
 ) {
-  const { lab_id } = await getLabMember(user_id);
+  const membership = await getLabMember(user_id);
+  assertCanAccessBackoffice(membership.role);
+  const { lab_id } = membership;
   const process = await prisma.processes.create({
     data: {
       lab_id,
@@ -45,7 +50,9 @@ export async function updateProcessForLoggedLab(
   process_id: string,
   payload: ProcessInput,
 ) {
-  const { lab_id } = await getLabMember(user_id);
+  const membership = await getLabMember(user_id);
+  assertCanAccessBackoffice(membership.role);
+  const { lab_id } = membership;
   const existing = await prisma.processes.findFirst({
     where: { id: process_id, lab_id },
     select: { id: true },
@@ -69,7 +76,9 @@ export async function archiveProcessForLoggedLab(
   user_id: string,
   process_id: string,
 ) {
-  const { lab_id } = await getLabMember(user_id);
+  const membership = await getLabMember(user_id);
+  assertCanAccessBackoffice(membership.role);
+  const { lab_id } = membership;
   const existing = await prisma.processes.findFirst({
     where: {
       id: process_id,

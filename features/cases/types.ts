@@ -43,11 +43,24 @@ export type CustomerOption = {
   labCustomerId: string | null;
   name: string;
   dentists: DentistOption[];
+  price_table: {
+    id: string;
+    name: string;
+    service_prices: Array<{
+      service_type_id: string;
+      price: string;
+    }>;
+  } | null;
 };
 
 export type ServiceTypeOption = {
   id: string;
   name: string;
+  base_price: string;
+  currency: string;
+  notes?: string | null;
+  is_active?: boolean;
+  deleted_at?: string | null;
   workflow_json?: CaseWorkflow;
 };
 
@@ -68,6 +81,7 @@ export type CaseWorkflow = {
 
 export type CaseProcessItem = {
   id: string;
+  case_service_id: string;
   process_id: string;
   processName: string;
   workflow_step_id: string;
@@ -79,6 +93,20 @@ export type CaseProcessItem = {
   completed_at: string | null;
   created_at: string;
   updated_at: string;
+};
+
+export type CaseServiceLineItem = {
+  id: string;
+  serviceTypeId: string;
+  serviceTypeName: string;
+  serviceBasePriceSnapshot: string;
+  unitPrice: string;
+  isUnitPriceOverridden: boolean;
+  quantity: number;
+  lineTotal: string;
+  processes: CaseProcessItem[];
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type ComponentOption = {
@@ -123,12 +151,35 @@ export type CaseMillingItem = {
   id: string;
   status: "SUCCESS" | "FAILED";
   teethMilledQty: number;
+  blocksUsedQty: number;
   failureReason: string | null;
   notes: string | null;
   milledAt: string;
   blockTypeName: string;
   blockTypeShade: string | null;
   millingDrillName: string | null;
+};
+
+export type CaseCommentItem = {
+  id: string;
+  caseId: string;
+  authorUserId: string;
+  authorLabMemberId: string;
+  authorName: string;
+  authorRole: string;
+  body: string;
+  createdAt: string;
+  deletedAt: string | null;
+  deletedByUserId: string | null;
+  canDelete: boolean;
+};
+
+export type CaseStatusHistoryItem = {
+  id: string;
+  fromStatus: CaseStatusValue | null;
+  toStatus: CaseStatusValue;
+  note: string | null;
+  changedAt: string;
 };
 
 export type EditableCase = {
@@ -153,10 +204,18 @@ export type EditableCase = {
   dentistName: string;
   dentistId: string | null;
   serviceTypeId: string | null;
-  serviceTypeName: string;
+  serviceTypeName: string | null;
+  serviceLineCount: number;
+  serviceBasePriceSnapshot: string | null;
+  casePrice: string | null;
+  isPriceOverridden: boolean;
+  labCurrency: string;
   attachments: CaseAttachmentItem[];
   components: CaseComponentItem[];
   millings: CaseMillingItem[];
+  comments: CaseCommentItem[];
+  statusHistory: CaseStatusHistoryItem[];
+  serviceLines: CaseServiceLineItem[];
   processes?: CaseProcessItem[];
   availableProcesses?: ProcessOption[];
 };
@@ -178,8 +237,16 @@ export type CaseFormValues = {
   dueDate?: string | Date | null;
   observations?: string | null;
   pendingNote?: string | null;
+  statusReason?: string | null;
   isUrgent?: boolean;
   customerId?: string | null;
   dentistId?: string | null;
-  serviceTypeId?: string | null;
+  serviceLines?: Array<{
+    id?: string;
+    serviceTypeId: string;
+    quantity: number;
+    unitPrice?: string | null;
+    isUnitPriceOverridden?: boolean;
+    workflowJson?: CaseWorkflow;
+  }>;
 };

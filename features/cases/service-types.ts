@@ -4,7 +4,9 @@ import type { ServiceTypeOption } from "@/features/cases/types";
 type ServiceTypesResponse = {
   data: ServiceTypeOption[];
   error: string | null;
-  meta: Record<string, unknown>;
+  meta: {
+    currency?: string;
+  };
 };
 
 export const serviceTypesApi = {

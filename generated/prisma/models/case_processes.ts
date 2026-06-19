@@ -27,6 +27,7 @@ export type AggregateCase_processes = {
 export type Case_processesMinAggregateOutputType = {
   id: string | null
   case_id: string | null
+  case_service_id: string | null
   process_id: string | null
   workflow_step_id: string | null
   status: $Enums.CaseProcessStatus | null
@@ -40,6 +41,7 @@ export type Case_processesMinAggregateOutputType = {
 export type Case_processesMaxAggregateOutputType = {
   id: string | null
   case_id: string | null
+  case_service_id: string | null
   process_id: string | null
   workflow_step_id: string | null
   status: $Enums.CaseProcessStatus | null
@@ -53,6 +55,7 @@ export type Case_processesMaxAggregateOutputType = {
 export type Case_processesCountAggregateOutputType = {
   id: number
   case_id: number
+  case_service_id: number
   process_id: number
   workflow_step_id: number
   status: number
@@ -68,6 +71,7 @@ export type Case_processesCountAggregateOutputType = {
 export type Case_processesMinAggregateInputType = {
   id?: true
   case_id?: true
+  case_service_id?: true
   process_id?: true
   workflow_step_id?: true
   status?: true
@@ -81,6 +85,7 @@ export type Case_processesMinAggregateInputType = {
 export type Case_processesMaxAggregateInputType = {
   id?: true
   case_id?: true
+  case_service_id?: true
   process_id?: true
   workflow_step_id?: true
   status?: true
@@ -94,6 +99,7 @@ export type Case_processesMaxAggregateInputType = {
 export type Case_processesCountAggregateInputType = {
   id?: true
   case_id?: true
+  case_service_id?: true
   process_id?: true
   workflow_step_id?: true
   status?: true
@@ -180,6 +186,7 @@ export type case_processesGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 export type Case_processesGroupByOutputType = {
   id: string
   case_id: string
+  case_service_id: string
   process_id: string
   workflow_step_id: string
   status: $Enums.CaseProcessStatus
@@ -214,6 +221,7 @@ export type case_processesWhereInput = {
   NOT?: Prisma.case_processesWhereInput | Prisma.case_processesWhereInput[]
   id?: Prisma.UuidFilter<"case_processes"> | string
   case_id?: Prisma.UuidFilter<"case_processes"> | string
+  case_service_id?: Prisma.UuidFilter<"case_processes"> | string
   process_id?: Prisma.UuidFilter<"case_processes"> | string
   workflow_step_id?: Prisma.StringFilter<"case_processes"> | string
   status?: Prisma.EnumCaseProcessStatusFilter<"case_processes"> | $Enums.CaseProcessStatus
@@ -223,6 +231,7 @@ export type case_processesWhereInput = {
   created_at?: Prisma.DateTimeFilter<"case_processes"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"case_processes"> | Date | string
   cases?: Prisma.XOR<Prisma.CasesScalarRelationFilter, Prisma.casesWhereInput>
+  case_services?: Prisma.XOR<Prisma.Case_servicesScalarRelationFilter, Prisma.case_servicesWhereInput>
   processes?: Prisma.XOR<Prisma.ProcessesScalarRelationFilter, Prisma.processesWhereInput>
   assignedLabMember?: Prisma.XOR<Prisma.Lab_membersNullableScalarRelationFilter, Prisma.lab_membersWhereInput> | null
   dependencies?: Prisma.Case_process_dependenciesListRelationFilter
@@ -232,6 +241,7 @@ export type case_processesWhereInput = {
 export type case_processesOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   case_id?: Prisma.SortOrder
+  case_service_id?: Prisma.SortOrder
   process_id?: Prisma.SortOrder
   workflow_step_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -241,6 +251,7 @@ export type case_processesOrderByWithRelationInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   cases?: Prisma.casesOrderByWithRelationInput
+  case_services?: Prisma.case_servicesOrderByWithRelationInput
   processes?: Prisma.processesOrderByWithRelationInput
   assignedLabMember?: Prisma.lab_membersOrderByWithRelationInput
   dependencies?: Prisma.case_process_dependenciesOrderByRelationAggregateInput
@@ -249,11 +260,12 @@ export type case_processesOrderByWithRelationInput = {
 
 export type case_processesWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  case_id_workflow_step_id?: Prisma.case_processesCase_idWorkflow_step_idCompoundUniqueInput
+  case_service_id_workflow_step_id?: Prisma.case_processesCase_service_idWorkflow_step_idCompoundUniqueInput
   AND?: Prisma.case_processesWhereInput | Prisma.case_processesWhereInput[]
   OR?: Prisma.case_processesWhereInput[]
   NOT?: Prisma.case_processesWhereInput | Prisma.case_processesWhereInput[]
   case_id?: Prisma.UuidFilter<"case_processes"> | string
+  case_service_id?: Prisma.UuidFilter<"case_processes"> | string
   process_id?: Prisma.UuidFilter<"case_processes"> | string
   workflow_step_id?: Prisma.StringFilter<"case_processes"> | string
   status?: Prisma.EnumCaseProcessStatusFilter<"case_processes"> | $Enums.CaseProcessStatus
@@ -263,15 +275,17 @@ export type case_processesWhereUniqueInput = Prisma.AtLeast<{
   created_at?: Prisma.DateTimeFilter<"case_processes"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"case_processes"> | Date | string
   cases?: Prisma.XOR<Prisma.CasesScalarRelationFilter, Prisma.casesWhereInput>
+  case_services?: Prisma.XOR<Prisma.Case_servicesScalarRelationFilter, Prisma.case_servicesWhereInput>
   processes?: Prisma.XOR<Prisma.ProcessesScalarRelationFilter, Prisma.processesWhereInput>
   assignedLabMember?: Prisma.XOR<Prisma.Lab_membersNullableScalarRelationFilter, Prisma.lab_membersWhereInput> | null
   dependencies?: Prisma.Case_process_dependenciesListRelationFilter
   dependentProcesses?: Prisma.Case_process_dependenciesListRelationFilter
-}, "id" | "case_id_workflow_step_id">
+}, "id" | "case_service_id_workflow_step_id">
 
 export type case_processesOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   case_id?: Prisma.SortOrder
+  case_service_id?: Prisma.SortOrder
   process_id?: Prisma.SortOrder
   workflow_step_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -291,6 +305,7 @@ export type case_processesScalarWhereWithAggregatesInput = {
   NOT?: Prisma.case_processesScalarWhereWithAggregatesInput | Prisma.case_processesScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"case_processes"> | string
   case_id?: Prisma.UuidWithAggregatesFilter<"case_processes"> | string
+  case_service_id?: Prisma.UuidWithAggregatesFilter<"case_processes"> | string
   process_id?: Prisma.UuidWithAggregatesFilter<"case_processes"> | string
   workflow_step_id?: Prisma.StringWithAggregatesFilter<"case_processes"> | string
   status?: Prisma.EnumCaseProcessStatusWithAggregatesFilter<"case_processes"> | $Enums.CaseProcessStatus
@@ -310,6 +325,7 @@ export type case_processesCreateInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cases: Prisma.casesCreateNestedOneWithoutCase_processesInput
+  case_services: Prisma.case_servicesCreateNestedOneWithoutCase_processesInput
   processes: Prisma.processesCreateNestedOneWithoutCase_processesInput
   assignedLabMember?: Prisma.lab_membersCreateNestedOneWithoutAssignedProcessesInput
   dependencies?: Prisma.case_process_dependenciesCreateNestedManyWithoutCaseProcessInput
@@ -319,6 +335,7 @@ export type case_processesCreateInput = {
 export type case_processesUncheckedCreateInput = {
   id?: string
   case_id: string
+  case_service_id: string
   process_id: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
@@ -340,6 +357,7 @@ export type case_processesUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUpdateOneRequiredWithoutCase_processesNestedInput
+  case_services?: Prisma.case_servicesUpdateOneRequiredWithoutCase_processesNestedInput
   processes?: Prisma.processesUpdateOneRequiredWithoutCase_processesNestedInput
   assignedLabMember?: Prisma.lab_membersUpdateOneWithoutAssignedProcessesNestedInput
   dependencies?: Prisma.case_process_dependenciesUpdateManyWithoutCaseProcessNestedInput
@@ -349,6 +367,7 @@ export type case_processesUpdateInput = {
 export type case_processesUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   process_id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
@@ -364,6 +383,7 @@ export type case_processesUncheckedUpdateInput = {
 export type case_processesCreateManyInput = {
   id?: string
   case_id: string
+  case_service_id: string
   process_id: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
@@ -387,6 +407,7 @@ export type case_processesUpdateManyMutationInput = {
 export type case_processesUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   process_id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
@@ -407,14 +428,15 @@ export type case_processesOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type case_processesCase_idWorkflow_step_idCompoundUniqueInput = {
-  case_id: string
+export type case_processesCase_service_idWorkflow_step_idCompoundUniqueInput = {
+  case_service_id: string
   workflow_step_id: string
 }
 
 export type case_processesCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   case_id?: Prisma.SortOrder
+  case_service_id?: Prisma.SortOrder
   process_id?: Prisma.SortOrder
   workflow_step_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -428,6 +450,7 @@ export type case_processesCountOrderByAggregateInput = {
 export type case_processesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   case_id?: Prisma.SortOrder
+  case_service_id?: Prisma.SortOrder
   process_id?: Prisma.SortOrder
   workflow_step_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -441,6 +464,7 @@ export type case_processesMaxOrderByAggregateInput = {
 export type case_processesMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   case_id?: Prisma.SortOrder
+  case_service_id?: Prisma.SortOrder
   process_id?: Prisma.SortOrder
   workflow_step_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -586,6 +610,48 @@ export type EnumCaseProcessStatusFieldUpdateOperationsInput = {
   set?: $Enums.CaseProcessStatus
 }
 
+export type case_processesCreateNestedManyWithoutCase_servicesInput = {
+  create?: Prisma.XOR<Prisma.case_processesCreateWithoutCase_servicesInput, Prisma.case_processesUncheckedCreateWithoutCase_servicesInput> | Prisma.case_processesCreateWithoutCase_servicesInput[] | Prisma.case_processesUncheckedCreateWithoutCase_servicesInput[]
+  connectOrCreate?: Prisma.case_processesCreateOrConnectWithoutCase_servicesInput | Prisma.case_processesCreateOrConnectWithoutCase_servicesInput[]
+  createMany?: Prisma.case_processesCreateManyCase_servicesInputEnvelope
+  connect?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+}
+
+export type case_processesUncheckedCreateNestedManyWithoutCase_servicesInput = {
+  create?: Prisma.XOR<Prisma.case_processesCreateWithoutCase_servicesInput, Prisma.case_processesUncheckedCreateWithoutCase_servicesInput> | Prisma.case_processesCreateWithoutCase_servicesInput[] | Prisma.case_processesUncheckedCreateWithoutCase_servicesInput[]
+  connectOrCreate?: Prisma.case_processesCreateOrConnectWithoutCase_servicesInput | Prisma.case_processesCreateOrConnectWithoutCase_servicesInput[]
+  createMany?: Prisma.case_processesCreateManyCase_servicesInputEnvelope
+  connect?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+}
+
+export type case_processesUpdateManyWithoutCase_servicesNestedInput = {
+  create?: Prisma.XOR<Prisma.case_processesCreateWithoutCase_servicesInput, Prisma.case_processesUncheckedCreateWithoutCase_servicesInput> | Prisma.case_processesCreateWithoutCase_servicesInput[] | Prisma.case_processesUncheckedCreateWithoutCase_servicesInput[]
+  connectOrCreate?: Prisma.case_processesCreateOrConnectWithoutCase_servicesInput | Prisma.case_processesCreateOrConnectWithoutCase_servicesInput[]
+  upsert?: Prisma.case_processesUpsertWithWhereUniqueWithoutCase_servicesInput | Prisma.case_processesUpsertWithWhereUniqueWithoutCase_servicesInput[]
+  createMany?: Prisma.case_processesCreateManyCase_servicesInputEnvelope
+  set?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+  disconnect?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+  delete?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+  connect?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+  update?: Prisma.case_processesUpdateWithWhereUniqueWithoutCase_servicesInput | Prisma.case_processesUpdateWithWhereUniqueWithoutCase_servicesInput[]
+  updateMany?: Prisma.case_processesUpdateManyWithWhereWithoutCase_servicesInput | Prisma.case_processesUpdateManyWithWhereWithoutCase_servicesInput[]
+  deleteMany?: Prisma.case_processesScalarWhereInput | Prisma.case_processesScalarWhereInput[]
+}
+
+export type case_processesUncheckedUpdateManyWithoutCase_servicesNestedInput = {
+  create?: Prisma.XOR<Prisma.case_processesCreateWithoutCase_servicesInput, Prisma.case_processesUncheckedCreateWithoutCase_servicesInput> | Prisma.case_processesCreateWithoutCase_servicesInput[] | Prisma.case_processesUncheckedCreateWithoutCase_servicesInput[]
+  connectOrCreate?: Prisma.case_processesCreateOrConnectWithoutCase_servicesInput | Prisma.case_processesCreateOrConnectWithoutCase_servicesInput[]
+  upsert?: Prisma.case_processesUpsertWithWhereUniqueWithoutCase_servicesInput | Prisma.case_processesUpsertWithWhereUniqueWithoutCase_servicesInput[]
+  createMany?: Prisma.case_processesCreateManyCase_servicesInputEnvelope
+  set?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+  disconnect?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+  delete?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+  connect?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+  update?: Prisma.case_processesUpdateWithWhereUniqueWithoutCase_servicesInput | Prisma.case_processesUpdateWithWhereUniqueWithoutCase_servicesInput[]
+  updateMany?: Prisma.case_processesUpdateManyWithWhereWithoutCase_servicesInput | Prisma.case_processesUpdateManyWithWhereWithoutCase_servicesInput[]
+  deleteMany?: Prisma.case_processesScalarWhereInput | Prisma.case_processesScalarWhereInput[]
+}
+
 export type case_processesCreateNestedOneWithoutDependenciesInput = {
   create?: Prisma.XOR<Prisma.case_processesCreateWithoutDependenciesInput, Prisma.case_processesUncheckedCreateWithoutDependenciesInput>
   connectOrCreate?: Prisma.case_processesCreateOrConnectWithoutDependenciesInput
@@ -623,6 +689,7 @@ export type case_processesCreateWithoutAssignedLabMemberInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cases: Prisma.casesCreateNestedOneWithoutCase_processesInput
+  case_services: Prisma.case_servicesCreateNestedOneWithoutCase_processesInput
   processes: Prisma.processesCreateNestedOneWithoutCase_processesInput
   dependencies?: Prisma.case_process_dependenciesCreateNestedManyWithoutCaseProcessInput
   dependentProcesses?: Prisma.case_process_dependenciesCreateNestedManyWithoutDependsOnCaseProcessInput
@@ -631,6 +698,7 @@ export type case_processesCreateWithoutAssignedLabMemberInput = {
 export type case_processesUncheckedCreateWithoutAssignedLabMemberInput = {
   id?: string
   case_id: string
+  case_service_id: string
   process_id: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
@@ -674,6 +742,7 @@ export type case_processesScalarWhereInput = {
   NOT?: Prisma.case_processesScalarWhereInput | Prisma.case_processesScalarWhereInput[]
   id?: Prisma.UuidFilter<"case_processes"> | string
   case_id?: Prisma.UuidFilter<"case_processes"> | string
+  case_service_id?: Prisma.UuidFilter<"case_processes"> | string
   process_id?: Prisma.UuidFilter<"case_processes"> | string
   workflow_step_id?: Prisma.StringFilter<"case_processes"> | string
   status?: Prisma.EnumCaseProcessStatusFilter<"case_processes"> | $Enums.CaseProcessStatus
@@ -693,6 +762,7 @@ export type case_processesCreateWithoutProcessesInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cases: Prisma.casesCreateNestedOneWithoutCase_processesInput
+  case_services: Prisma.case_servicesCreateNestedOneWithoutCase_processesInput
   assignedLabMember?: Prisma.lab_membersCreateNestedOneWithoutAssignedProcessesInput
   dependencies?: Prisma.case_process_dependenciesCreateNestedManyWithoutCaseProcessInput
   dependentProcesses?: Prisma.case_process_dependenciesCreateNestedManyWithoutDependsOnCaseProcessInput
@@ -701,6 +771,7 @@ export type case_processesCreateWithoutProcessesInput = {
 export type case_processesUncheckedCreateWithoutProcessesInput = {
   id?: string
   case_id: string
+  case_service_id: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
@@ -746,6 +817,7 @@ export type case_processesCreateWithoutCasesInput = {
   completed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  case_services: Prisma.case_servicesCreateNestedOneWithoutCase_processesInput
   processes: Prisma.processesCreateNestedOneWithoutCase_processesInput
   assignedLabMember?: Prisma.lab_membersCreateNestedOneWithoutAssignedProcessesInput
   dependencies?: Prisma.case_process_dependenciesCreateNestedManyWithoutCaseProcessInput
@@ -754,6 +826,7 @@ export type case_processesCreateWithoutCasesInput = {
 
 export type case_processesUncheckedCreateWithoutCasesInput = {
   id?: string
+  case_service_id: string
   process_id: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
@@ -792,7 +865,7 @@ export type case_processesUpdateManyWithWhereWithoutCasesInput = {
   data: Prisma.XOR<Prisma.case_processesUpdateManyMutationInput, Prisma.case_processesUncheckedUpdateManyWithoutCasesInput>
 }
 
-export type case_processesCreateWithoutDependenciesInput = {
+export type case_processesCreateWithoutCase_servicesInput = {
   id?: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
@@ -803,12 +876,70 @@ export type case_processesCreateWithoutDependenciesInput = {
   cases: Prisma.casesCreateNestedOneWithoutCase_processesInput
   processes: Prisma.processesCreateNestedOneWithoutCase_processesInput
   assignedLabMember?: Prisma.lab_membersCreateNestedOneWithoutAssignedProcessesInput
+  dependencies?: Prisma.case_process_dependenciesCreateNestedManyWithoutCaseProcessInput
+  dependentProcesses?: Prisma.case_process_dependenciesCreateNestedManyWithoutDependsOnCaseProcessInput
+}
+
+export type case_processesUncheckedCreateWithoutCase_servicesInput = {
+  id?: string
+  case_id: string
+  process_id: string
+  workflow_step_id: string
+  status?: $Enums.CaseProcessStatus
+  assigned_lab_member_id?: string | null
+  started_at?: Date | string | null
+  completed_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  dependencies?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutCaseProcessInput
+  dependentProcesses?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutDependsOnCaseProcessInput
+}
+
+export type case_processesCreateOrConnectWithoutCase_servicesInput = {
+  where: Prisma.case_processesWhereUniqueInput
+  create: Prisma.XOR<Prisma.case_processesCreateWithoutCase_servicesInput, Prisma.case_processesUncheckedCreateWithoutCase_servicesInput>
+}
+
+export type case_processesCreateManyCase_servicesInputEnvelope = {
+  data: Prisma.case_processesCreateManyCase_servicesInput | Prisma.case_processesCreateManyCase_servicesInput[]
+  skipDuplicates?: boolean
+}
+
+export type case_processesUpsertWithWhereUniqueWithoutCase_servicesInput = {
+  where: Prisma.case_processesWhereUniqueInput
+  update: Prisma.XOR<Prisma.case_processesUpdateWithoutCase_servicesInput, Prisma.case_processesUncheckedUpdateWithoutCase_servicesInput>
+  create: Prisma.XOR<Prisma.case_processesCreateWithoutCase_servicesInput, Prisma.case_processesUncheckedCreateWithoutCase_servicesInput>
+}
+
+export type case_processesUpdateWithWhereUniqueWithoutCase_servicesInput = {
+  where: Prisma.case_processesWhereUniqueInput
+  data: Prisma.XOR<Prisma.case_processesUpdateWithoutCase_servicesInput, Prisma.case_processesUncheckedUpdateWithoutCase_servicesInput>
+}
+
+export type case_processesUpdateManyWithWhereWithoutCase_servicesInput = {
+  where: Prisma.case_processesScalarWhereInput
+  data: Prisma.XOR<Prisma.case_processesUpdateManyMutationInput, Prisma.case_processesUncheckedUpdateManyWithoutCase_servicesInput>
+}
+
+export type case_processesCreateWithoutDependenciesInput = {
+  id?: string
+  workflow_step_id: string
+  status?: $Enums.CaseProcessStatus
+  started_at?: Date | string | null
+  completed_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  cases: Prisma.casesCreateNestedOneWithoutCase_processesInput
+  case_services: Prisma.case_servicesCreateNestedOneWithoutCase_processesInput
+  processes: Prisma.processesCreateNestedOneWithoutCase_processesInput
+  assignedLabMember?: Prisma.lab_membersCreateNestedOneWithoutAssignedProcessesInput
   dependentProcesses?: Prisma.case_process_dependenciesCreateNestedManyWithoutDependsOnCaseProcessInput
 }
 
 export type case_processesUncheckedCreateWithoutDependenciesInput = {
   id?: string
   case_id: string
+  case_service_id: string
   process_id: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
@@ -834,6 +965,7 @@ export type case_processesCreateWithoutDependentProcessesInput = {
   created_at?: Date | string
   updated_at?: Date | string
   cases: Prisma.casesCreateNestedOneWithoutCase_processesInput
+  case_services: Prisma.case_servicesCreateNestedOneWithoutCase_processesInput
   processes: Prisma.processesCreateNestedOneWithoutCase_processesInput
   assignedLabMember?: Prisma.lab_membersCreateNestedOneWithoutAssignedProcessesInput
   dependencies?: Prisma.case_process_dependenciesCreateNestedManyWithoutCaseProcessInput
@@ -842,6 +974,7 @@ export type case_processesCreateWithoutDependentProcessesInput = {
 export type case_processesUncheckedCreateWithoutDependentProcessesInput = {
   id?: string
   case_id: string
+  case_service_id: string
   process_id: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
@@ -878,6 +1011,7 @@ export type case_processesUpdateWithoutDependenciesInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUpdateOneRequiredWithoutCase_processesNestedInput
+  case_services?: Prisma.case_servicesUpdateOneRequiredWithoutCase_processesNestedInput
   processes?: Prisma.processesUpdateOneRequiredWithoutCase_processesNestedInput
   assignedLabMember?: Prisma.lab_membersUpdateOneWithoutAssignedProcessesNestedInput
   dependentProcesses?: Prisma.case_process_dependenciesUpdateManyWithoutDependsOnCaseProcessNestedInput
@@ -886,6 +1020,7 @@ export type case_processesUpdateWithoutDependenciesInput = {
 export type case_processesUncheckedUpdateWithoutDependenciesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   process_id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
@@ -917,6 +1052,7 @@ export type case_processesUpdateWithoutDependentProcessesInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUpdateOneRequiredWithoutCase_processesNestedInput
+  case_services?: Prisma.case_servicesUpdateOneRequiredWithoutCase_processesNestedInput
   processes?: Prisma.processesUpdateOneRequiredWithoutCase_processesNestedInput
   assignedLabMember?: Prisma.lab_membersUpdateOneWithoutAssignedProcessesNestedInput
   dependencies?: Prisma.case_process_dependenciesUpdateManyWithoutCaseProcessNestedInput
@@ -925,6 +1061,7 @@ export type case_processesUpdateWithoutDependentProcessesInput = {
 export type case_processesUncheckedUpdateWithoutDependentProcessesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   process_id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
@@ -939,6 +1076,7 @@ export type case_processesUncheckedUpdateWithoutDependentProcessesInput = {
 export type case_processesCreateManyAssignedLabMemberInput = {
   id?: string
   case_id: string
+  case_service_id: string
   process_id: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
@@ -957,6 +1095,7 @@ export type case_processesUpdateWithoutAssignedLabMemberInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUpdateOneRequiredWithoutCase_processesNestedInput
+  case_services?: Prisma.case_servicesUpdateOneRequiredWithoutCase_processesNestedInput
   processes?: Prisma.processesUpdateOneRequiredWithoutCase_processesNestedInput
   dependencies?: Prisma.case_process_dependenciesUpdateManyWithoutCaseProcessNestedInput
   dependentProcesses?: Prisma.case_process_dependenciesUpdateManyWithoutDependsOnCaseProcessNestedInput
@@ -965,6 +1104,7 @@ export type case_processesUpdateWithoutAssignedLabMemberInput = {
 export type case_processesUncheckedUpdateWithoutAssignedLabMemberInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   process_id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
@@ -979,6 +1119,7 @@ export type case_processesUncheckedUpdateWithoutAssignedLabMemberInput = {
 export type case_processesUncheckedUpdateManyWithoutAssignedLabMemberInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   process_id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
@@ -991,6 +1132,7 @@ export type case_processesUncheckedUpdateManyWithoutAssignedLabMemberInput = {
 export type case_processesCreateManyProcessesInput = {
   id?: string
   case_id: string
+  case_service_id: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
@@ -1009,6 +1151,7 @@ export type case_processesUpdateWithoutProcessesInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   cases?: Prisma.casesUpdateOneRequiredWithoutCase_processesNestedInput
+  case_services?: Prisma.case_servicesUpdateOneRequiredWithoutCase_processesNestedInput
   assignedLabMember?: Prisma.lab_membersUpdateOneWithoutAssignedProcessesNestedInput
   dependencies?: Prisma.case_process_dependenciesUpdateManyWithoutCaseProcessNestedInput
   dependentProcesses?: Prisma.case_process_dependenciesUpdateManyWithoutDependsOnCaseProcessNestedInput
@@ -1017,6 +1160,7 @@ export type case_processesUpdateWithoutProcessesInput = {
 export type case_processesUncheckedUpdateWithoutProcessesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1031,6 +1175,7 @@ export type case_processesUncheckedUpdateWithoutProcessesInput = {
 export type case_processesUncheckedUpdateManyWithoutProcessesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1042,6 +1187,7 @@ export type case_processesUncheckedUpdateManyWithoutProcessesInput = {
 
 export type case_processesCreateManyCasesInput = {
   id?: string
+  case_service_id: string
   process_id: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
@@ -1060,6 +1206,7 @@ export type case_processesUpdateWithoutCasesInput = {
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  case_services?: Prisma.case_servicesUpdateOneRequiredWithoutCase_processesNestedInput
   processes?: Prisma.processesUpdateOneRequiredWithoutCase_processesNestedInput
   assignedLabMember?: Prisma.lab_membersUpdateOneWithoutAssignedProcessesNestedInput
   dependencies?: Prisma.case_process_dependenciesUpdateManyWithoutCaseProcessNestedInput
@@ -1068,6 +1215,7 @@ export type case_processesUpdateWithoutCasesInput = {
 
 export type case_processesUncheckedUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_service_id?: Prisma.StringFieldUpdateOperationsInput | string
   process_id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
@@ -1082,6 +1230,63 @@ export type case_processesUncheckedUpdateWithoutCasesInput = {
 
 export type case_processesUncheckedUpdateManyWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_service_id?: Prisma.StringFieldUpdateOperationsInput | string
+  process_id?: Prisma.StringFieldUpdateOperationsInput | string
+  workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type case_processesCreateManyCase_servicesInput = {
+  id?: string
+  case_id: string
+  process_id: string
+  workflow_step_id: string
+  status?: $Enums.CaseProcessStatus
+  assigned_lab_member_id?: string | null
+  started_at?: Date | string | null
+  completed_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type case_processesUpdateWithoutCase_servicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cases?: Prisma.casesUpdateOneRequiredWithoutCase_processesNestedInput
+  processes?: Prisma.processesUpdateOneRequiredWithoutCase_processesNestedInput
+  assignedLabMember?: Prisma.lab_membersUpdateOneWithoutAssignedProcessesNestedInput
+  dependencies?: Prisma.case_process_dependenciesUpdateManyWithoutCaseProcessNestedInput
+  dependentProcesses?: Prisma.case_process_dependenciesUpdateManyWithoutDependsOnCaseProcessNestedInput
+}
+
+export type case_processesUncheckedUpdateWithoutCase_servicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  process_id?: Prisma.StringFieldUpdateOperationsInput | string
+  workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dependencies?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutCaseProcessNestedInput
+  dependentProcesses?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutDependsOnCaseProcessNestedInput
+}
+
+export type case_processesUncheckedUpdateManyWithoutCase_servicesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
   process_id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
@@ -1135,6 +1340,7 @@ export type Case_processesCountOutputTypeCountDependentProcessesArgs<ExtArgs ext
 export type case_processesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   case_id?: boolean
+  case_service_id?: boolean
   process_id?: boolean
   workflow_step_id?: boolean
   status?: boolean
@@ -1144,6 +1350,7 @@ export type case_processesSelect<ExtArgs extends runtime.Types.Extensions.Intern
   created_at?: boolean
   updated_at?: boolean
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
+  case_services?: boolean | Prisma.case_servicesDefaultArgs<ExtArgs>
   processes?: boolean | Prisma.processesDefaultArgs<ExtArgs>
   assignedLabMember?: boolean | Prisma.case_processes$assignedLabMemberArgs<ExtArgs>
   dependencies?: boolean | Prisma.case_processes$dependenciesArgs<ExtArgs>
@@ -1154,6 +1361,7 @@ export type case_processesSelect<ExtArgs extends runtime.Types.Extensions.Intern
 export type case_processesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   case_id?: boolean
+  case_service_id?: boolean
   process_id?: boolean
   workflow_step_id?: boolean
   status?: boolean
@@ -1163,6 +1371,7 @@ export type case_processesSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   created_at?: boolean
   updated_at?: boolean
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
+  case_services?: boolean | Prisma.case_servicesDefaultArgs<ExtArgs>
   processes?: boolean | Prisma.processesDefaultArgs<ExtArgs>
   assignedLabMember?: boolean | Prisma.case_processes$assignedLabMemberArgs<ExtArgs>
 }, ExtArgs["result"]["case_processes"]>
@@ -1170,6 +1379,7 @@ export type case_processesSelectCreateManyAndReturn<ExtArgs extends runtime.Type
 export type case_processesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   case_id?: boolean
+  case_service_id?: boolean
   process_id?: boolean
   workflow_step_id?: boolean
   status?: boolean
@@ -1179,6 +1389,7 @@ export type case_processesSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   created_at?: boolean
   updated_at?: boolean
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
+  case_services?: boolean | Prisma.case_servicesDefaultArgs<ExtArgs>
   processes?: boolean | Prisma.processesDefaultArgs<ExtArgs>
   assignedLabMember?: boolean | Prisma.case_processes$assignedLabMemberArgs<ExtArgs>
 }, ExtArgs["result"]["case_processes"]>
@@ -1186,6 +1397,7 @@ export type case_processesSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
 export type case_processesSelectScalar = {
   id?: boolean
   case_id?: boolean
+  case_service_id?: boolean
   process_id?: boolean
   workflow_step_id?: boolean
   status?: boolean
@@ -1196,9 +1408,10 @@ export type case_processesSelectScalar = {
   updated_at?: boolean
 }
 
-export type case_processesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "case_id" | "process_id" | "workflow_step_id" | "status" | "assigned_lab_member_id" | "started_at" | "completed_at" | "created_at" | "updated_at", ExtArgs["result"]["case_processes"]>
+export type case_processesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "case_id" | "case_service_id" | "process_id" | "workflow_step_id" | "status" | "assigned_lab_member_id" | "started_at" | "completed_at" | "created_at" | "updated_at", ExtArgs["result"]["case_processes"]>
 export type case_processesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
+  case_services?: boolean | Prisma.case_servicesDefaultArgs<ExtArgs>
   processes?: boolean | Prisma.processesDefaultArgs<ExtArgs>
   assignedLabMember?: boolean | Prisma.case_processes$assignedLabMemberArgs<ExtArgs>
   dependencies?: boolean | Prisma.case_processes$dependenciesArgs<ExtArgs>
@@ -1207,11 +1420,13 @@ export type case_processesInclude<ExtArgs extends runtime.Types.Extensions.Inter
 }
 export type case_processesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
+  case_services?: boolean | Prisma.case_servicesDefaultArgs<ExtArgs>
   processes?: boolean | Prisma.processesDefaultArgs<ExtArgs>
   assignedLabMember?: boolean | Prisma.case_processes$assignedLabMemberArgs<ExtArgs>
 }
 export type case_processesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
+  case_services?: boolean | Prisma.case_servicesDefaultArgs<ExtArgs>
   processes?: boolean | Prisma.processesDefaultArgs<ExtArgs>
   assignedLabMember?: boolean | Prisma.case_processes$assignedLabMemberArgs<ExtArgs>
 }
@@ -1220,6 +1435,7 @@ export type $case_processesPayload<ExtArgs extends runtime.Types.Extensions.Inte
   name: "case_processes"
   objects: {
     cases: Prisma.$casesPayload<ExtArgs>
+    case_services: Prisma.$case_servicesPayload<ExtArgs>
     processes: Prisma.$processesPayload<ExtArgs>
     assignedLabMember: Prisma.$lab_membersPayload<ExtArgs> | null
     dependencies: Prisma.$case_process_dependenciesPayload<ExtArgs>[]
@@ -1228,6 +1444,7 @@ export type $case_processesPayload<ExtArgs extends runtime.Types.Extensions.Inte
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     case_id: string
+    case_service_id: string
     process_id: string
     workflow_step_id: string
     status: $Enums.CaseProcessStatus
@@ -1631,6 +1848,7 @@ readonly fields: case_processesFieldRefs;
 export interface Prisma__case_processesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   cases<T extends Prisma.casesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.casesDefaultArgs<ExtArgs>>): Prisma.Prisma__casesClient<runtime.Types.Result.GetResult<Prisma.$casesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  case_services<T extends Prisma.case_servicesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.case_servicesDefaultArgs<ExtArgs>>): Prisma.Prisma__case_servicesClient<runtime.Types.Result.GetResult<Prisma.$case_servicesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   processes<T extends Prisma.processesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.processesDefaultArgs<ExtArgs>>): Prisma.Prisma__processesClient<runtime.Types.Result.GetResult<Prisma.$processesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   assignedLabMember<T extends Prisma.case_processes$assignedLabMemberArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.case_processes$assignedLabMemberArgs<ExtArgs>>): Prisma.Prisma__lab_membersClient<runtime.Types.Result.GetResult<Prisma.$lab_membersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   dependencies<T extends Prisma.case_processes$dependenciesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.case_processes$dependenciesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_process_dependenciesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1666,6 +1884,7 @@ export interface Prisma__case_processesClient<T, Null = never, ExtArgs extends r
 export interface case_processesFieldRefs {
   readonly id: Prisma.FieldRef<"case_processes", 'String'>
   readonly case_id: Prisma.FieldRef<"case_processes", 'String'>
+  readonly case_service_id: Prisma.FieldRef<"case_processes", 'String'>
   readonly process_id: Prisma.FieldRef<"case_processes", 'String'>
   readonly workflow_step_id: Prisma.FieldRef<"case_processes", 'String'>
   readonly status: Prisma.FieldRef<"case_processes", 'CaseProcessStatus'>

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { getAuthenticatedUserId, parseJsonObject } from "../../_shared/request";
 import {
+  CaseAuthorizationError,
   CaseNotFoundError,
   getCaseById,
   InactiveReferenceError,
@@ -82,6 +83,10 @@ export async function PUT(request: Request, context: RouteContext) {
         { error: "Validation failed.", fields: error.fields },
         { status: 400 },
       );
+    }
+
+    if (error instanceof CaseAuthorizationError) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     console.error("[PUT /api/cases/:id]", error);

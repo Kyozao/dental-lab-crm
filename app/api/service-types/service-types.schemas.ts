@@ -12,6 +12,7 @@ export type ServiceTypeWorkflow = {
 
 export type ServiceTypeInput = {
   name?: string | null;
+  base_price?: string | null;
   notes?: string | null;
   is_active?: unknown;
   workflow_json?: ServiceTypeWorkflow;
@@ -166,6 +167,40 @@ export function parseWorkflowJson(
   return { steps };
 }
 
+function parseMoney(
+  value: unknown,
+  field: string,
+  errors: Record<string, string[]>,
+) {
+  if (value === undefined) return undefined;
+  if (value === null || value === "") return null;
+
+  const rawValue =
+    typeof value === "number"
+      ? String(value)
+      : typeof value === "string"
+        ? value.trim()
+        : null;
+
+  if (!rawValue) {
+    addError(errors, field, "Price is required.");
+    return undefined;
+  }
+
+  if (!/^\d+(\.\d{1,2})?$/.test(rawValue)) {
+    addError(errors, field, "Price must be a valid amount with up to 2 decimals.");
+    return undefined;
+  }
+
+  const parsed = Number(rawValue);
+  if (!Number.isFinite(parsed) || parsed < 0) {
+    addError(errors, field, "Price must be zero or greater.");
+    return undefined;
+  }
+
+  return parsed.toFixed(2);
+}
+
 function parseServiceTypeInput(
   payload: Record<string, unknown>,
   options: { requireName: boolean },
@@ -175,6 +210,11 @@ function parseServiceTypeInput(
 
   if (options.requireName && !name) {
     addError(errors, "name", "This field is required.");
+  }
+
+  const base_price = parseMoney(payload.base_price, "base_price", errors);
+  if (options.requireName && base_price === undefined) {
+    addError(errors, "base_price", "Price is required.");
   }
 
   if (payload.processes !== undefined) {
@@ -195,6 +235,7 @@ function parseServiceTypeInput(
     success: true,
     data: {
       name,
+      base_price,
       notes: optionalString(payload.notes),
       is_active: payload.is_active,
       workflow_json,

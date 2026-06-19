@@ -1,7 +1,9 @@
 import { UserRole } from "@/generated/prisma/enums";
 import { prisma } from "@/lib/prisma";
 
+import { assertCanAccessBackoffice } from "../_shared/authorization";
 import { ensureDefaultCatalogForLab } from "../_shared/default-catalog";
+import { getSingleLabMembership } from "../_shared/membership";
 
 type CreateLabInput = {
   name: string;
@@ -28,10 +30,12 @@ export async function createLabForUser(user_id: string, input: CreateLabInput) {
     const lab = await tx.labs.create({
       data: {
         name: input.name,
+        currency: "BRL",
       },
       select: {
         id: true,
         name: true,
+        currency: true,
       },
     });
 
@@ -46,5 +50,43 @@ export async function createLabForUser(user_id: string, input: CreateLabInput) {
     await ensureDefaultCatalogForLab(tx, lab.id);
 
     return lab;
+  });
+}
+
+export async function getCurrentLabForUser(user_id: string) {
+  const { lab_id, role } = await getSingleLabMembership(user_id);
+  assertCanAccessBackoffice(role);
+
+  const lab = await prisma.labs.findUniqueOrThrow({
+    where: { id: lab_id },
+    select: {
+      id: true,
+      name: true,
+      currency: true,
+    },
+  });
+
+  return {
+    ...lab,
+    currentUserRole: role,
+  };
+}
+
+export async function updateCurrentLabCurrencyForUser(
+  user_id: string,
+  currency: string,
+) {
+  const membership = await getSingleLabMembership(user_id);
+  assertCanAccessBackoffice(membership.role);
+  const { lab_id } = membership;
+
+  return prisma.labs.update({
+    where: { id: lab_id },
+    data: { currency },
+    select: {
+      id: true,
+      name: true,
+      currency: true,
+    },
   });
 }

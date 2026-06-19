@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { RoleAuthorizationError } from "../_shared/authorization";
 import { MissingLabMembershipError } from "../_shared/membership";
 import { ReferenceValidationError } from "../_shared/reference-resource";
 import { getAuthenticatedUserId, parseJsonObject } from "../_shared/request";
@@ -17,6 +18,10 @@ export async function GET() {
     const customers = await listCustomersForLoggedLab(user_id);
     return NextResponse.json({ data: customers, error: null, meta: {} });
   } catch (error) {
+    if (error instanceof RoleAuthorizationError) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     if (error instanceof MissingLabMembershipError) {
       return NextResponse.json({ error: "No lab membership found for this user." }, { status: 403 });
     }
@@ -42,6 +47,10 @@ export async function POST(request: Request) {
     const customer = await createCustomerForLoggedLab(user_id, parsed.data);
     return NextResponse.json({ data: customer, error: null, meta: {} }, { status: 201 });
   } catch (error) {
+    if (error instanceof RoleAuthorizationError) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     if (error instanceof MissingLabMembershipError) {
       return NextResponse.json({ error: "No lab membership found for this user." }, { status: 403 });
     }

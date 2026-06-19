@@ -1,11 +1,8 @@
 export const CASE_STATUS = {
-  ENTRY: "ENTRY",
-  WAITING_INFO: "WAITING_INFO",
-  DESIGNING: "DESIGNING",
-  WAITING_APPROVAL: "WAITING_APPROVAL",
-  DESIGN_READY: "DESIGN_READY",
-  MILLING_PRINTING: "MILLING_PRINTING",
+  IN_PRODUCTION: "IN_PRODUCTION",
+  STANDBY: "STANDBY",
   DONE: "DONE",
+  CANCELLED: "CANCELLED",
 } as const;
 
 export type CaseStatusValue =
@@ -28,47 +25,19 @@ export const CASE_STATUS_META: Record<
     dotClassName: string;
   }
 > = {
-  ENTRY: {
-    label: "Entrada",
-    shortLabel: "Entry",
-    tone: "neutral",
-    chartColor: "#64748b",
-    dotClassName: "bg-slate-400",
-  },
-  WAITING_INFO: {
-    label: "Aguardando Informacoes",
-    shortLabel: "Waiting info",
-    tone: "warning",
-    chartColor: "#eab308",
-    dotClassName: "bg-amber-400",
-  },
-  DESIGNING: {
-    label: "Desenhando",
-    shortLabel: "Designing",
+  IN_PRODUCTION: {
+    label: "Em producao",
+    shortLabel: "Production",
     tone: "info",
     chartColor: "#2563eb",
     dotClassName: "bg-blue-400",
   },
-  WAITING_APPROVAL: {
-    label: "Aguardando Aprovacao",
-    shortLabel: "Approval",
-    tone: "info",
-    chartColor: "#8b5cf6",
-    dotClassName: "bg-violet-400",
-  },
-  DESIGN_READY: {
-    label: "Design Pronto",
-    shortLabel: "Ready",
-    tone: "success",
-    chartColor: "#22c55e",
-    dotClassName: "bg-green-400",
-  },
-  MILLING_PRINTING: {
-    label: "Impressao/Fresagem",
-    shortLabel: "Milling",
+  STANDBY: {
+    label: "Stand by",
+    shortLabel: "Standby",
     tone: "warning",
-    chartColor: "#f97316",
-    dotClassName: "bg-orange-400",
+    chartColor: "#eab308",
+    dotClassName: "bg-amber-400",
   },
   DONE: {
     label: "Concluido",
@@ -76,6 +45,13 @@ export const CASE_STATUS_META: Record<
     tone: "success",
     chartColor: "#14b8a6",
     dotClassName: "bg-teal-400",
+  },
+  CANCELLED: {
+    label: "Cancelado",
+    shortLabel: "Cancelled",
+    tone: "danger",
+    chartColor: "#ef4444",
+    dotClassName: "bg-red-400",
   },
 };
 

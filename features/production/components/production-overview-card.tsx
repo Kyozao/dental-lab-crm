@@ -16,7 +16,7 @@ export function ProductionOverviewCard({ processes }: ProductionOverviewCardProp
   );
   const rushCases = processes.reduce(
     (sum, process) =>
-      sum + process.queue.filter((item) => item.priority === "rush").length,
+      sum + process.queue.filter((item) => item.priority === "urgent").length,
     0,
   );
   const busiestProcess = [...processes].sort(

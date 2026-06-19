@@ -8,9 +8,9 @@ export type CreateCaseInput = {
   patient_name: string;
   clientCaseCode?: string | null;
   customer_id?: string | null;
-  service_type_id?: string | null;
   dentist_id?: string | null;
   current_status?: CaseStatusValue;
+  status_reason?: string | null;
   teeth?: string | null;
   elements_qty?: number | null;
   shade?: string | null;
@@ -18,10 +18,19 @@ export type CreateCaseInput = {
   is_urgent?: boolean;
   observations?: string | null;
   pending_note?: string | null;
-  workflow_json?: ServiceTypeWorkflow;
+  service_lines: CaseServiceLineInput[];
 };
 
 export type UpdateCaseInput = Partial<CreateCaseInput>;
+
+export type CaseServiceLineInput = {
+  id?: string;
+  service_type_id: string;
+  quantity: number;
+  unit_price?: string | null;
+  is_unit_price_overridden?: boolean;
+  workflow_json?: ServiceTypeWorkflow;
+};
 
 export type ListCasesInput = {
   limit: number;
@@ -29,6 +38,7 @@ export type ListCasesInput = {
   customer_id?: string;
   urgent?: boolean;
   q?: string;
+  current_process_ids?: string[];
 };
 
 type ValidationResult =
@@ -39,11 +49,21 @@ type UpdateValidationResult =
   | { success: true; data: UpdateCaseInput }
   | { success: false; errors: Record<string, string[]> };
 
-type WorkflowValidationResult =
-  | { success: true; data: ServiceTypeWorkflow }
+type ReplaceWorkflowInput = {
+  case_service_id: string;
+  workflow_json: ServiceTypeWorkflow;
+};
+
+type ReplaceWorkflowValidationResult =
+  | { success: true; data: ReplaceWorkflowInput }
   | { success: false; errors: Record<string, string[]> };
 
 const caseStatusValues = new Set<string>(Object.values(CaseStatus));
+const statusesRequiringReason = new Set<string>([CaseStatus.STANDBY]);
+const statusesAllowingReason = new Set<string>([
+  CaseStatus.STANDBY,
+  CaseStatus.CANCELLED,
+]);
 const DEFAULT_CASE_LIST_LIMIT = 100;
 const MAX_CASE_LIST_LIMIT = 200;
 
@@ -81,17 +101,165 @@ function optionalDate(
 
 function optionalPositiveInteger(
   value: unknown,
+  field: string,
   errors: Record<string, string[]>,
 ) {
   if (value === undefined || value === null || value === "") return undefined;
 
   const parsed = typeof value === "number" ? value : Number(value);
   if (!Number.isInteger(parsed) || parsed < 1) {
-    addError(errors, "elements_qty", "Elements quantity must be a positive integer.");
+    addError(
+      errors,
+      field,
+      field === "elements_qty"
+        ? "Elements quantity must be a positive integer."
+        : "Must be a positive integer.",
+    );
     return undefined;
   }
 
   return parsed;
+}
+
+function optionalMoney(
+  value: unknown,
+  field: string,
+  errors: Record<string, string[]>,
+) {
+  if (value === undefined) return undefined;
+  if (value === null || value === "") return null;
+
+  const rawValue =
+    typeof value === "number"
+      ? String(value)
+      : typeof value === "string"
+        ? value.trim()
+        : null;
+
+  if (!rawValue) {
+    addError(errors, field, "Price is required.");
+    return undefined;
+  }
+
+  if (!/^\d+(\.\d{1,2})?$/.test(rawValue)) {
+    addError(errors, field, "Price must be a valid amount with up to 2 decimals.");
+    return undefined;
+  }
+
+  const parsed = Number(rawValue);
+  if (!Number.isFinite(parsed) || parsed < 0) {
+    addError(errors, field, "Price must be zero or greater.");
+    return undefined;
+  }
+
+  return parsed.toFixed(2);
+}
+
+function validateStatusReason(
+  nextStatus: string | null | undefined,
+  statusReason: string | null | undefined,
+  errors: Record<string, string[]>,
+) {
+  if (nextStatus === undefined) {
+    if (statusReason !== undefined) {
+      addError(
+        errors,
+        "status_reason",
+        "Status reason can only be sent when current status is changing.",
+      );
+    }
+    return;
+  }
+
+  if (nextStatus === null) {
+    if (statusReason !== undefined) {
+      addError(errors, "status_reason", "Status reason is invalid.");
+    }
+    return;
+  }
+
+  if (!statusesAllowingReason.has(nextStatus)) {
+    if (statusReason !== undefined) {
+      addError(
+        errors,
+        "status_reason",
+        "Status reason is only allowed for StandBy or Cancelled.",
+      );
+    }
+    return;
+  }
+
+  if (statusesRequiringReason.has(nextStatus) && !statusReason) {
+    addError(
+      errors,
+      "status_reason",
+      "Status reason is required when moving a case to StandBy.",
+    );
+  }
+}
+
+function parseServiceLines(
+  value: unknown,
+  errors: Record<string, string[]>,
+) {
+  if (!Array.isArray(value) || value.length === 0) {
+    addError(errors, "service_lines", "At least one service line is required.");
+    return [];
+  }
+
+  return value.flatMap((item, index): CaseServiceLineInput[] => {
+    const field = `service_lines.${index}`;
+
+    if (!item || typeof item !== "object" || Array.isArray(item)) {
+      addError(errors, field, "Service line must be an object.");
+      return [];
+    }
+
+    const line = item as Record<string, unknown>;
+    const service_type_id = optionalString(line.service_type_id);
+    const quantity = optionalPositiveInteger(
+      line.quantity,
+      `${field}.quantity`,
+      errors,
+    );
+    const unit_price = optionalMoney(
+      line.unit_price,
+      `${field}.unit_price`,
+      errors,
+    );
+    const is_unit_price_overridden =
+      typeof line.is_unit_price_overridden === "boolean"
+        ? line.is_unit_price_overridden
+        : undefined;
+    const workflow_json = parseWorkflowJson(line.workflow_json, errors);
+
+    if (!service_type_id) {
+      addError(errors, `${field}.service_type_id`, "Service type is required.");
+    }
+
+    if (is_unit_price_overridden && !unit_price) {
+      addError(
+        errors,
+        `${field}.unit_price`,
+        "Unit price is required when overriding the service price.",
+      );
+    }
+
+    if (!service_type_id || quantity === undefined) {
+      return [];
+    }
+
+    return [
+      {
+        id: optionalString(line.id) ?? undefined,
+        service_type_id,
+        quantity,
+        unit_price,
+        is_unit_price_overridden,
+        ...(workflow_json ? { workflow_json } : {}),
+      },
+    ];
+  });
 }
 
 export function parseCreateCaseInput(payload: unknown): ValidationResult {
@@ -116,10 +284,16 @@ export function parseCreateCaseInput(payload: unknown): ValidationResult {
   if (current_status && !caseStatusValues.has(current_status)) {
     addError(errors, "current_status", "Current status is invalid.");
   }
+  const status_reason = optionalString(body.status_reason);
+  validateStatusReason(current_status, status_reason, errors);
 
   const due_date = optionalDate(body.due_date, errors);
-  const elements_qty = optionalPositiveInteger(body.elements_qty, errors);
-  const workflow_json = parseWorkflowJson(body.workflow_json, errors);
+  const elements_qty = optionalPositiveInteger(
+    body.elements_qty,
+    "elements_qty",
+    errors,
+  );
+  const service_lines = parseServiceLines(body.service_lines, errors);
 
   if (Object.keys(errors).length > 0) {
     return { success: false, errors };
@@ -131,11 +305,11 @@ export function parseCreateCaseInput(payload: unknown): ValidationResult {
       patient_name,
       clientCaseCode: optionalString(body.clientCaseCode),
       customer_id: optionalString(body.customer_id),
-      service_type_id: optionalString(body.service_type_id),
       dentist_id: optionalString(body.dentist_id),
       current_status: current_status
         ? (current_status as CaseStatusValue)
         : undefined,
+      status_reason,
       teeth: optionalString(body.teeth),
       elements_qty,
       shade: optionalString(body.shade),
@@ -144,14 +318,14 @@ export function parseCreateCaseInput(payload: unknown): ValidationResult {
         typeof body.is_urgent === "boolean" ? body.is_urgent : undefined,
       observations: optionalString(body.observations),
       pending_note: optionalString(body.pending_note),
-      ...(workflow_json ? { workflow_json } : {}),
+      service_lines,
     },
   };
 }
 
 export function parseReplaceCaseWorkflowInput(
   payload: unknown,
-): WorkflowValidationResult {
+): ReplaceWorkflowValidationResult {
   const errors: Record<string, string[]> = {};
 
   if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
@@ -161,21 +335,29 @@ export function parseReplaceCaseWorkflowInput(
     };
   }
 
-  const workflow_json = parseWorkflowJson(
-    (payload as Record<string, unknown>).workflow_json,
-    errors,
-  );
+  const body = payload as Record<string, unknown>;
+  const workflow_json = parseWorkflowJson(body.workflow_json, errors);
+  const case_service_id = optionalString(body.case_service_id);
 
   if (!workflow_json) {
     addError(errors, "workflow_json", "Workflow is required.");
-    return { success: false, errors };
+  }
+
+  if (!case_service_id) {
+    addError(errors, "case_service_id", "Case service id is required.");
   }
 
   if (Object.keys(errors).length > 0) {
     return { success: false, errors };
   }
 
-  return { success: true, data: workflow_json };
+  return {
+    success: true,
+    data: {
+      case_service_id: case_service_id as string,
+      workflow_json: workflow_json as ServiceTypeWorkflow,
+    },
+  };
 }
 
 export function parseUpdateCaseInput(payload: unknown): UpdateValidationResult {
@@ -211,12 +393,26 @@ export function parseUpdateCaseInput(payload: unknown): UpdateValidationResult {
     }
   }
 
+  if ("status_reason" in body) {
+    data.status_reason = optionalString(body.status_reason);
+  }
+
+  validateStatusReason(
+    "current_status" in body ? (data.current_status ?? null) : undefined,
+    data.status_reason,
+    errors,
+  );
+
   if ("due_date" in body) {
     data.due_date = optionalDate(body.due_date, errors);
   }
 
   if ("elements_qty" in body) {
-    data.elements_qty = optionalPositiveInteger(body.elements_qty, errors);
+    data.elements_qty = optionalPositiveInteger(
+      body.elements_qty,
+      "elements_qty",
+      errors,
+    );
   }
 
   if ("clientCaseCode" in body) {
@@ -225,10 +421,6 @@ export function parseUpdateCaseInput(payload: unknown): UpdateValidationResult {
 
   if ("customer_id" in body) {
     data.customer_id = optionalString(body.customer_id);
-  }
-
-  if ("service_type_id" in body) {
-    data.service_type_id = optionalString(body.service_type_id);
   }
 
   if ("dentist_id" in body) {
@@ -255,6 +447,10 @@ export function parseUpdateCaseInput(payload: unknown): UpdateValidationResult {
     data.pending_note = optionalString(body.pending_note);
   }
 
+  if ("service_lines" in body) {
+    data.service_lines = parseServiceLines(body.service_lines, errors);
+  }
+
   if (Object.keys(errors).length > 0) {
     return { success: false, errors };
   }
@@ -279,6 +475,14 @@ function parseUrgentFilter(value: string | null) {
   return null;
 }
 
+function parseStringList(values: string[]) {
+  const normalized = values
+    .map((value) => optionalString(value))
+    .filter((value): value is string => Boolean(value));
+
+  return [...new Set(normalized)];
+}
+
 export function parseListCasesInput(searchParams: URLSearchParams) {
   const errors: Record<string, string[]> = {};
   const requestedLimit = parsePositiveInteger(searchParams.get("limit"));
@@ -286,6 +490,9 @@ export function parseListCasesInput(searchParams: URLSearchParams) {
   const customer_id = optionalString(searchParams.get("customer_id"));
   const urgent = parseUrgentFilter(searchParams.get("urgent"));
   const q = optionalString(searchParams.get("q") ?? searchParams.get("search"));
+  const current_process_ids = parseStringList(
+    searchParams.getAll("currentProcessId"),
+  );
 
   if (requestedLimit === null) {
     addError(errors, "limit", "Limit must be a positive integer.");
@@ -311,6 +518,8 @@ export function parseListCasesInput(searchParams: URLSearchParams) {
       customer_id: customer_id ?? undefined,
       urgent: urgent ?? undefined,
       q: q ?? undefined,
+      current_process_ids:
+        current_process_ids.length > 0 ? current_process_ids : undefined,
     } satisfies ListCasesInput,
   };
 }

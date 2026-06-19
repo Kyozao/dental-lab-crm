@@ -15,12 +15,20 @@ export type UpdateEmployeeProcessesInput = {
   process_ids: string[];
 };
 
+export type UpdateEmployeeRoleInput = {
+  role: AssignableEmployeeRole;
+};
+
 type ValidationResult =
   | { success: true; data: CreateEmployeeInput }
   | { success: false; errors: Record<string, string[]> };
 
 type ProcessAssignmentValidationResult =
   | { success: true; data: UpdateEmployeeProcessesInput }
+  | { success: false; errors: Record<string, string[]> };
+
+type RoleUpdateValidationResult =
+  | { success: true; data: UpdateEmployeeRoleInput }
   | { success: false; errors: Record<string, string[]> };
 
 function optionalString(value: unknown) {
@@ -112,6 +120,37 @@ export function parseUpdateEmployeeProcessesInput(
     success: true,
     data: {
       process_ids: [...new Set(processIds)],
+    },
+  };
+}
+
+export function parseUpdateEmployeeRoleInput(
+  payload: Record<string, unknown>,
+): RoleUpdateValidationResult {
+  const role = parseUserRole(payload.role);
+
+  if (!role) {
+    return {
+      success: false,
+      errors: {
+        role: ["Role is required."],
+      },
+    };
+  }
+
+  if (!isAssignableEmployeeRole(role)) {
+    return {
+      success: false,
+      errors: {
+        role: ["Role cannot be assigned to an employee."],
+      },
+    };
+  }
+
+  return {
+    success: true,
+    data: {
+      role,
     },
   };
 }

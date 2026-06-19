@@ -27,6 +27,7 @@ export type AggregateCustomers = {
 export type CustomersMinAggregateOutputType = {
   id: string | null
   lab_id: string | null
+  price_table_id: string | null
   name: string | null
   phone: string | null
   email: string | null
@@ -40,6 +41,7 @@ export type CustomersMinAggregateOutputType = {
 export type CustomersMaxAggregateOutputType = {
   id: string | null
   lab_id: string | null
+  price_table_id: string | null
   name: string | null
   phone: string | null
   email: string | null
@@ -53,6 +55,7 @@ export type CustomersMaxAggregateOutputType = {
 export type CustomersCountAggregateOutputType = {
   id: number
   lab_id: number
+  price_table_id: number
   name: number
   phone: number
   email: number
@@ -68,6 +71,7 @@ export type CustomersCountAggregateOutputType = {
 export type CustomersMinAggregateInputType = {
   id?: true
   lab_id?: true
+  price_table_id?: true
   name?: true
   phone?: true
   email?: true
@@ -81,6 +85,7 @@ export type CustomersMinAggregateInputType = {
 export type CustomersMaxAggregateInputType = {
   id?: true
   lab_id?: true
+  price_table_id?: true
   name?: true
   phone?: true
   email?: true
@@ -94,6 +99,7 @@ export type CustomersMaxAggregateInputType = {
 export type CustomersCountAggregateInputType = {
   id?: true
   lab_id?: true
+  price_table_id?: true
   name?: true
   phone?: true
   email?: true
@@ -180,6 +186,7 @@ export type customersGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 export type CustomersGroupByOutputType = {
   id: string
   lab_id: string
+  price_table_id: string | null
   name: string
   phone: string | null
   email: string | null
@@ -214,6 +221,7 @@ export type customersWhereInput = {
   NOT?: Prisma.customersWhereInput | Prisma.customersWhereInput[]
   id?: Prisma.UuidFilter<"customers"> | string
   lab_id?: Prisma.UuidFilter<"customers"> | string
+  price_table_id?: Prisma.UuidNullableFilter<"customers"> | string | null
   name?: Prisma.StringFilter<"customers"> | string
   phone?: Prisma.StringNullableFilter<"customers"> | string | null
   email?: Prisma.StringNullableFilter<"customers"> | string | null
@@ -223,6 +231,7 @@ export type customersWhereInput = {
   created_at?: Prisma.DateTimeFilter<"customers"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"customers"> | Date | string
   labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
+  price_tables?: Prisma.XOR<Prisma.Price_tablesNullableScalarRelationFilter, Prisma.price_tablesWhereInput> | null
   dentists?: Prisma.DentistsListRelationFilter
   cases?: Prisma.CasesListRelationFilter
 }
@@ -230,6 +239,7 @@ export type customersWhereInput = {
 export type customersOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   lab_id?: Prisma.SortOrder
+  price_table_id?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -239,6 +249,7 @@ export type customersOrderByWithRelationInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   labs?: Prisma.labsOrderByWithRelationInput
+  price_tables?: Prisma.price_tablesOrderByWithRelationInput
   dentists?: Prisma.dentistsOrderByRelationAggregateInput
   cases?: Prisma.casesOrderByRelationAggregateInput
 }
@@ -249,6 +260,7 @@ export type customersWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.customersWhereInput[]
   NOT?: Prisma.customersWhereInput | Prisma.customersWhereInput[]
   lab_id?: Prisma.UuidFilter<"customers"> | string
+  price_table_id?: Prisma.UuidNullableFilter<"customers"> | string | null
   name?: Prisma.StringFilter<"customers"> | string
   phone?: Prisma.StringNullableFilter<"customers"> | string | null
   email?: Prisma.StringNullableFilter<"customers"> | string | null
@@ -258,6 +270,7 @@ export type customersWhereUniqueInput = Prisma.AtLeast<{
   created_at?: Prisma.DateTimeFilter<"customers"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"customers"> | Date | string
   labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
+  price_tables?: Prisma.XOR<Prisma.Price_tablesNullableScalarRelationFilter, Prisma.price_tablesWhereInput> | null
   dentists?: Prisma.DentistsListRelationFilter
   cases?: Prisma.CasesListRelationFilter
 }, "id">
@@ -265,6 +278,7 @@ export type customersWhereUniqueInput = Prisma.AtLeast<{
 export type customersOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   lab_id?: Prisma.SortOrder
+  price_table_id?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -284,6 +298,7 @@ export type customersScalarWhereWithAggregatesInput = {
   NOT?: Prisma.customersScalarWhereWithAggregatesInput | Prisma.customersScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"customers"> | string
   lab_id?: Prisma.UuidWithAggregatesFilter<"customers"> | string
+  price_table_id?: Prisma.UuidNullableWithAggregatesFilter<"customers"> | string | null
   name?: Prisma.StringWithAggregatesFilter<"customers"> | string
   phone?: Prisma.StringNullableWithAggregatesFilter<"customers"> | string | null
   email?: Prisma.StringNullableWithAggregatesFilter<"customers"> | string | null
@@ -305,6 +320,7 @@ export type customersCreateInput = {
   created_at?: Date | string
   updated_at?: Date | string
   labs: Prisma.labsCreateNestedOneWithoutCustomersInput
+  price_tables?: Prisma.price_tablesCreateNestedOneWithoutCustomersInput
   dentists?: Prisma.dentistsCreateNestedManyWithoutCustomersInput
   cases?: Prisma.casesCreateNestedManyWithoutCustomersInput
 }
@@ -312,6 +328,7 @@ export type customersCreateInput = {
 export type customersUncheckedCreateInput = {
   id?: string
   lab_id: string
+  price_table_id?: string | null
   name: string
   phone?: string | null
   email?: string | null
@@ -335,6 +352,7 @@ export type customersUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   labs?: Prisma.labsUpdateOneRequiredWithoutCustomersNestedInput
+  price_tables?: Prisma.price_tablesUpdateOneWithoutCustomersNestedInput
   dentists?: Prisma.dentistsUpdateManyWithoutCustomersNestedInput
   cases?: Prisma.casesUpdateManyWithoutCustomersNestedInput
 }
@@ -342,6 +360,7 @@ export type customersUpdateInput = {
 export type customersUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  price_table_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -357,6 +376,7 @@ export type customersUncheckedUpdateInput = {
 export type customersCreateManyInput = {
   id?: string
   lab_id: string
+  price_table_id?: string | null
   name: string
   phone?: string | null
   email?: string | null
@@ -382,6 +402,7 @@ export type customersUpdateManyMutationInput = {
 export type customersUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  price_table_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -405,6 +426,7 @@ export type customersOrderByRelationAggregateInput = {
 export type customersCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lab_id?: Prisma.SortOrder
+  price_table_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
@@ -418,6 +440,7 @@ export type customersCountOrderByAggregateInput = {
 export type customersMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lab_id?: Prisma.SortOrder
+  price_table_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
@@ -431,6 +454,7 @@ export type customersMaxOrderByAggregateInput = {
 export type customersMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lab_id?: Prisma.SortOrder
+  price_table_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
@@ -493,6 +517,48 @@ export type customersUncheckedUpdateManyWithoutLabsNestedInput = {
   deleteMany?: Prisma.customersScalarWhereInput | Prisma.customersScalarWhereInput[]
 }
 
+export type customersCreateNestedManyWithoutPrice_tablesInput = {
+  create?: Prisma.XOR<Prisma.customersCreateWithoutPrice_tablesInput, Prisma.customersUncheckedCreateWithoutPrice_tablesInput> | Prisma.customersCreateWithoutPrice_tablesInput[] | Prisma.customersUncheckedCreateWithoutPrice_tablesInput[]
+  connectOrCreate?: Prisma.customersCreateOrConnectWithoutPrice_tablesInput | Prisma.customersCreateOrConnectWithoutPrice_tablesInput[]
+  createMany?: Prisma.customersCreateManyPrice_tablesInputEnvelope
+  connect?: Prisma.customersWhereUniqueInput | Prisma.customersWhereUniqueInput[]
+}
+
+export type customersUncheckedCreateNestedManyWithoutPrice_tablesInput = {
+  create?: Prisma.XOR<Prisma.customersCreateWithoutPrice_tablesInput, Prisma.customersUncheckedCreateWithoutPrice_tablesInput> | Prisma.customersCreateWithoutPrice_tablesInput[] | Prisma.customersUncheckedCreateWithoutPrice_tablesInput[]
+  connectOrCreate?: Prisma.customersCreateOrConnectWithoutPrice_tablesInput | Prisma.customersCreateOrConnectWithoutPrice_tablesInput[]
+  createMany?: Prisma.customersCreateManyPrice_tablesInputEnvelope
+  connect?: Prisma.customersWhereUniqueInput | Prisma.customersWhereUniqueInput[]
+}
+
+export type customersUpdateManyWithoutPrice_tablesNestedInput = {
+  create?: Prisma.XOR<Prisma.customersCreateWithoutPrice_tablesInput, Prisma.customersUncheckedCreateWithoutPrice_tablesInput> | Prisma.customersCreateWithoutPrice_tablesInput[] | Prisma.customersUncheckedCreateWithoutPrice_tablesInput[]
+  connectOrCreate?: Prisma.customersCreateOrConnectWithoutPrice_tablesInput | Prisma.customersCreateOrConnectWithoutPrice_tablesInput[]
+  upsert?: Prisma.customersUpsertWithWhereUniqueWithoutPrice_tablesInput | Prisma.customersUpsertWithWhereUniqueWithoutPrice_tablesInput[]
+  createMany?: Prisma.customersCreateManyPrice_tablesInputEnvelope
+  set?: Prisma.customersWhereUniqueInput | Prisma.customersWhereUniqueInput[]
+  disconnect?: Prisma.customersWhereUniqueInput | Prisma.customersWhereUniqueInput[]
+  delete?: Prisma.customersWhereUniqueInput | Prisma.customersWhereUniqueInput[]
+  connect?: Prisma.customersWhereUniqueInput | Prisma.customersWhereUniqueInput[]
+  update?: Prisma.customersUpdateWithWhereUniqueWithoutPrice_tablesInput | Prisma.customersUpdateWithWhereUniqueWithoutPrice_tablesInput[]
+  updateMany?: Prisma.customersUpdateManyWithWhereWithoutPrice_tablesInput | Prisma.customersUpdateManyWithWhereWithoutPrice_tablesInput[]
+  deleteMany?: Prisma.customersScalarWhereInput | Prisma.customersScalarWhereInput[]
+}
+
+export type customersUncheckedUpdateManyWithoutPrice_tablesNestedInput = {
+  create?: Prisma.XOR<Prisma.customersCreateWithoutPrice_tablesInput, Prisma.customersUncheckedCreateWithoutPrice_tablesInput> | Prisma.customersCreateWithoutPrice_tablesInput[] | Prisma.customersUncheckedCreateWithoutPrice_tablesInput[]
+  connectOrCreate?: Prisma.customersCreateOrConnectWithoutPrice_tablesInput | Prisma.customersCreateOrConnectWithoutPrice_tablesInput[]
+  upsert?: Prisma.customersUpsertWithWhereUniqueWithoutPrice_tablesInput | Prisma.customersUpsertWithWhereUniqueWithoutPrice_tablesInput[]
+  createMany?: Prisma.customersCreateManyPrice_tablesInputEnvelope
+  set?: Prisma.customersWhereUniqueInput | Prisma.customersWhereUniqueInput[]
+  disconnect?: Prisma.customersWhereUniqueInput | Prisma.customersWhereUniqueInput[]
+  delete?: Prisma.customersWhereUniqueInput | Prisma.customersWhereUniqueInput[]
+  connect?: Prisma.customersWhereUniqueInput | Prisma.customersWhereUniqueInput[]
+  update?: Prisma.customersUpdateWithWhereUniqueWithoutPrice_tablesInput | Prisma.customersUpdateWithWhereUniqueWithoutPrice_tablesInput[]
+  updateMany?: Prisma.customersUpdateManyWithWhereWithoutPrice_tablesInput | Prisma.customersUpdateManyWithWhereWithoutPrice_tablesInput[]
+  deleteMany?: Prisma.customersScalarWhereInput | Prisma.customersScalarWhereInput[]
+}
+
 export type customersCreateNestedOneWithoutDentistsInput = {
   create?: Prisma.XOR<Prisma.customersCreateWithoutDentistsInput, Prisma.customersUncheckedCreateWithoutDentistsInput>
   connectOrCreate?: Prisma.customersCreateOrConnectWithoutDentistsInput
@@ -533,12 +599,14 @@ export type customersCreateWithoutLabsInput = {
   deleted_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  price_tables?: Prisma.price_tablesCreateNestedOneWithoutCustomersInput
   dentists?: Prisma.dentistsCreateNestedManyWithoutCustomersInput
   cases?: Prisma.casesCreateNestedManyWithoutCustomersInput
 }
 
 export type customersUncheckedCreateWithoutLabsInput = {
   id?: string
+  price_table_id?: string | null
   name: string
   phone?: string | null
   email?: string | null
@@ -583,6 +651,7 @@ export type customersScalarWhereInput = {
   NOT?: Prisma.customersScalarWhereInput | Prisma.customersScalarWhereInput[]
   id?: Prisma.UuidFilter<"customers"> | string
   lab_id?: Prisma.UuidFilter<"customers"> | string
+  price_table_id?: Prisma.UuidNullableFilter<"customers"> | string | null
   name?: Prisma.StringFilter<"customers"> | string
   phone?: Prisma.StringNullableFilter<"customers"> | string | null
   email?: Prisma.StringNullableFilter<"customers"> | string | null
@@ -591,6 +660,62 @@ export type customersScalarWhereInput = {
   deleted_at?: Prisma.DateTimeNullableFilter<"customers"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"customers"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"customers"> | Date | string
+}
+
+export type customersCreateWithoutPrice_tablesInput = {
+  id?: string
+  name: string
+  phone?: string | null
+  email?: string | null
+  notes?: string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutCustomersInput
+  dentists?: Prisma.dentistsCreateNestedManyWithoutCustomersInput
+  cases?: Prisma.casesCreateNestedManyWithoutCustomersInput
+}
+
+export type customersUncheckedCreateWithoutPrice_tablesInput = {
+  id?: string
+  lab_id: string
+  name: string
+  phone?: string | null
+  email?: string | null
+  notes?: string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  dentists?: Prisma.dentistsUncheckedCreateNestedManyWithoutCustomersInput
+  cases?: Prisma.casesUncheckedCreateNestedManyWithoutCustomersInput
+}
+
+export type customersCreateOrConnectWithoutPrice_tablesInput = {
+  where: Prisma.customersWhereUniqueInput
+  create: Prisma.XOR<Prisma.customersCreateWithoutPrice_tablesInput, Prisma.customersUncheckedCreateWithoutPrice_tablesInput>
+}
+
+export type customersCreateManyPrice_tablesInputEnvelope = {
+  data: Prisma.customersCreateManyPrice_tablesInput | Prisma.customersCreateManyPrice_tablesInput[]
+  skipDuplicates?: boolean
+}
+
+export type customersUpsertWithWhereUniqueWithoutPrice_tablesInput = {
+  where: Prisma.customersWhereUniqueInput
+  update: Prisma.XOR<Prisma.customersUpdateWithoutPrice_tablesInput, Prisma.customersUncheckedUpdateWithoutPrice_tablesInput>
+  create: Prisma.XOR<Prisma.customersCreateWithoutPrice_tablesInput, Prisma.customersUncheckedCreateWithoutPrice_tablesInput>
+}
+
+export type customersUpdateWithWhereUniqueWithoutPrice_tablesInput = {
+  where: Prisma.customersWhereUniqueInput
+  data: Prisma.XOR<Prisma.customersUpdateWithoutPrice_tablesInput, Prisma.customersUncheckedUpdateWithoutPrice_tablesInput>
+}
+
+export type customersUpdateManyWithWhereWithoutPrice_tablesInput = {
+  where: Prisma.customersScalarWhereInput
+  data: Prisma.XOR<Prisma.customersUpdateManyMutationInput, Prisma.customersUncheckedUpdateManyWithoutPrice_tablesInput>
 }
 
 export type customersCreateWithoutDentistsInput = {
@@ -604,12 +729,14 @@ export type customersCreateWithoutDentistsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   labs: Prisma.labsCreateNestedOneWithoutCustomersInput
+  price_tables?: Prisma.price_tablesCreateNestedOneWithoutCustomersInput
   cases?: Prisma.casesCreateNestedManyWithoutCustomersInput
 }
 
 export type customersUncheckedCreateWithoutDentistsInput = {
   id?: string
   lab_id: string
+  price_table_id?: string | null
   name: string
   phone?: string | null
   email?: string | null
@@ -648,12 +775,14 @@ export type customersUpdateWithoutDentistsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   labs?: Prisma.labsUpdateOneRequiredWithoutCustomersNestedInput
+  price_tables?: Prisma.price_tablesUpdateOneWithoutCustomersNestedInput
   cases?: Prisma.casesUpdateManyWithoutCustomersNestedInput
 }
 
 export type customersUncheckedUpdateWithoutDentistsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  price_table_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -676,12 +805,14 @@ export type customersCreateWithoutCasesInput = {
   created_at?: Date | string
   updated_at?: Date | string
   labs: Prisma.labsCreateNestedOneWithoutCustomersInput
+  price_tables?: Prisma.price_tablesCreateNestedOneWithoutCustomersInput
   dentists?: Prisma.dentistsCreateNestedManyWithoutCustomersInput
 }
 
 export type customersUncheckedCreateWithoutCasesInput = {
   id?: string
   lab_id: string
+  price_table_id?: string | null
   name: string
   phone?: string | null
   email?: string | null
@@ -720,12 +851,14 @@ export type customersUpdateWithoutCasesInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   labs?: Prisma.labsUpdateOneRequiredWithoutCustomersNestedInput
+  price_tables?: Prisma.price_tablesUpdateOneWithoutCustomersNestedInput
   dentists?: Prisma.dentistsUpdateManyWithoutCustomersNestedInput
 }
 
 export type customersUncheckedUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  price_table_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -739,6 +872,7 @@ export type customersUncheckedUpdateWithoutCasesInput = {
 
 export type customersCreateManyLabsInput = {
   id?: string
+  price_table_id?: string | null
   name: string
   phone?: string | null
   email?: string | null
@@ -759,12 +893,14 @@ export type customersUpdateWithoutLabsInput = {
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  price_tables?: Prisma.price_tablesUpdateOneWithoutCustomersNestedInput
   dentists?: Prisma.dentistsUpdateManyWithoutCustomersNestedInput
   cases?: Prisma.casesUpdateManyWithoutCustomersNestedInput
 }
 
 export type customersUncheckedUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  price_table_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -779,6 +915,63 @@ export type customersUncheckedUpdateWithoutLabsInput = {
 
 export type customersUncheckedUpdateManyWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  price_table_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type customersCreateManyPrice_tablesInput = {
+  id?: string
+  lab_id: string
+  name: string
+  phone?: string | null
+  email?: string | null
+  notes?: string | null
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type customersUpdateWithoutPrice_tablesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutCustomersNestedInput
+  dentists?: Prisma.dentistsUpdateManyWithoutCustomersNestedInput
+  cases?: Prisma.casesUpdateManyWithoutCustomersNestedInput
+}
+
+export type customersUncheckedUpdateWithoutPrice_tablesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dentists?: Prisma.dentistsUncheckedUpdateManyWithoutCustomersNestedInput
+  cases?: Prisma.casesUncheckedUpdateManyWithoutCustomersNestedInput
+}
+
+export type customersUncheckedUpdateManyWithoutPrice_tablesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -832,6 +1025,7 @@ export type CustomersCountOutputTypeCountCasesArgs<ExtArgs extends runtime.Types
 export type customersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   lab_id?: boolean
+  price_table_id?: boolean
   name?: boolean
   phone?: boolean
   email?: boolean
@@ -841,6 +1035,7 @@ export type customersSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   created_at?: boolean
   updated_at?: boolean
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  price_tables?: boolean | Prisma.customers$price_tablesArgs<ExtArgs>
   dentists?: boolean | Prisma.customers$dentistsArgs<ExtArgs>
   cases?: boolean | Prisma.customers$casesArgs<ExtArgs>
   _count?: boolean | Prisma.CustomersCountOutputTypeDefaultArgs<ExtArgs>
@@ -849,6 +1044,7 @@ export type customersSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type customersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   lab_id?: boolean
+  price_table_id?: boolean
   name?: boolean
   phone?: boolean
   email?: boolean
@@ -858,11 +1054,13 @@ export type customersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   created_at?: boolean
   updated_at?: boolean
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  price_tables?: boolean | Prisma.customers$price_tablesArgs<ExtArgs>
 }, ExtArgs["result"]["customers"]>
 
 export type customersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   lab_id?: boolean
+  price_table_id?: boolean
   name?: boolean
   phone?: boolean
   email?: boolean
@@ -872,11 +1070,13 @@ export type customersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   created_at?: boolean
   updated_at?: boolean
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  price_tables?: boolean | Prisma.customers$price_tablesArgs<ExtArgs>
 }, ExtArgs["result"]["customers"]>
 
 export type customersSelectScalar = {
   id?: boolean
   lab_id?: boolean
+  price_table_id?: boolean
   name?: boolean
   phone?: boolean
   email?: boolean
@@ -887,30 +1087,35 @@ export type customersSelectScalar = {
   updated_at?: boolean
 }
 
-export type customersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "name" | "phone" | "email" | "notes" | "is_active" | "deleted_at" | "created_at" | "updated_at", ExtArgs["result"]["customers"]>
+export type customersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "price_table_id" | "name" | "phone" | "email" | "notes" | "is_active" | "deleted_at" | "created_at" | "updated_at", ExtArgs["result"]["customers"]>
 export type customersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  price_tables?: boolean | Prisma.customers$price_tablesArgs<ExtArgs>
   dentists?: boolean | Prisma.customers$dentistsArgs<ExtArgs>
   cases?: boolean | Prisma.customers$casesArgs<ExtArgs>
   _count?: boolean | Prisma.CustomersCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type customersIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  price_tables?: boolean | Prisma.customers$price_tablesArgs<ExtArgs>
 }
 export type customersIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
+  price_tables?: boolean | Prisma.customers$price_tablesArgs<ExtArgs>
 }
 
 export type $customersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "customers"
   objects: {
     labs: Prisma.$labsPayload<ExtArgs>
+    price_tables: Prisma.$price_tablesPayload<ExtArgs> | null
     dentists: Prisma.$dentistsPayload<ExtArgs>[]
     cases: Prisma.$casesPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     lab_id: string
+    price_table_id: string | null
     name: string
     phone: string | null
     email: string | null
@@ -1314,6 +1519,7 @@ readonly fields: customersFieldRefs;
 export interface Prisma__customersClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   labs<T extends Prisma.labsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labsDefaultArgs<ExtArgs>>): Prisma.Prisma__labsClient<runtime.Types.Result.GetResult<Prisma.$labsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  price_tables<T extends Prisma.customers$price_tablesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.customers$price_tablesArgs<ExtArgs>>): Prisma.Prisma__price_tablesClient<runtime.Types.Result.GetResult<Prisma.$price_tablesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   dentists<T extends Prisma.customers$dentistsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.customers$dentistsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$dentistsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   cases<T extends Prisma.customers$casesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.customers$casesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$casesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1347,6 +1553,7 @@ export interface Prisma__customersClient<T, Null = never, ExtArgs extends runtim
 export interface customersFieldRefs {
   readonly id: Prisma.FieldRef<"customers", 'String'>
   readonly lab_id: Prisma.FieldRef<"customers", 'String'>
+  readonly price_table_id: Prisma.FieldRef<"customers", 'String'>
   readonly name: Prisma.FieldRef<"customers", 'String'>
   readonly phone: Prisma.FieldRef<"customers", 'String'>
   readonly email: Prisma.FieldRef<"customers", 'String'>
@@ -1753,6 +1960,25 @@ export type customersDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Limit how many customers to delete.
    */
   limit?: number
+}
+
+/**
+ * customers.price_tables
+ */
+export type customers$price_tablesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the price_tables
+   */
+  select?: Prisma.price_tablesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the price_tables
+   */
+  omit?: Prisma.price_tablesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.price_tablesInclude<ExtArgs> | null
+  where?: Prisma.price_tablesWhereInput
 }
 
 /**

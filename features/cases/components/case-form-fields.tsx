@@ -9,14 +9,12 @@ import {
   CASE_STATUS_OPTIONS,
   CaseFormValues,
   CustomerOption,
-  ServiceTypeOption,
 } from "@/features/cases/types";
 
 type FormErrors = Partial<Record<string, string[]>>;
 
 type Props = {
   customers: CustomerOption[];
-  serviceTypes: ServiceTypeOption[];
   values?: CaseFormValues;
   errors?: FormErrors;
   idPrefix: string;
@@ -52,7 +50,6 @@ function ErrorText({ errors, field }: { errors?: FormErrors; field: string }) {
 
 export function CaseFormFields({
   customers,
-  serviceTypes,
   values,
   errors,
   idPrefix,
@@ -124,29 +121,11 @@ export function CaseFormFields({
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor={`${idPrefix}-serviceTypeId`}>Service type</Label>
-        <select
-          id={`${idPrefix}-serviceTypeId`}
-          name="serviceTypeId"
-          defaultValue={values?.serviceTypeId ?? ""}
-          className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm"
-        >
-          <option value="">No service type</option>
-          {serviceTypes.map((serviceType) => (
-            <option key={serviceType.id} value={serviceType.id}>
-              {serviceType.name}
-            </option>
-          ))}
-        </select>
-        <ErrorText errors={errors} field="serviceTypeId" />
-      </div>
-
-      <div className="space-y-2">
         <Label htmlFor={`${idPrefix}-currentStatus`}>Status</Label>
         <select
           id={`${idPrefix}-currentStatus`}
           name="currentStatus"
-          defaultValue={values?.currentStatus ?? "ENTRY"}
+          defaultValue={values?.currentStatus ?? "IN_PRODUCTION"}
           className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm"
         >
           {CASE_STATUS_OPTIONS.map((status) => (
@@ -213,17 +192,6 @@ export function CaseFormFields({
           className="h-4 w-4"
         />
         <Label htmlFor={`${idPrefix}-isUrgent`}>Urgent case</Label>
-      </div>
-
-      <div className="space-y-2 md:col-span-2">
-        <Label htmlFor={`${idPrefix}-pendingNote`}>Pending note</Label>
-        <Textarea
-          id={`${idPrefix}-pendingNote`}
-          name="pendingNote"
-          defaultValue={values?.pendingNote ?? ""}
-          placeholder="What information is missing?"
-        />
-        <ErrorText errors={errors} field="pendingNote" />
       </div>
 
       <div className="space-y-2 md:col-span-2">

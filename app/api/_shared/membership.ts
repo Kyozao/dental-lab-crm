@@ -11,6 +11,7 @@ export async function getLabMember(user_id: string) {
   const membership = await prisma.lab_members.findUnique({
     where: { user_id },
     select: {
+      id: true,
       lab_id: true,
       role: true,
     },
@@ -21,6 +22,7 @@ export async function getLabMember(user_id: string) {
   }
 
   return {
+    id: membership.id,
     lab_id: membership.lab_id,
     role: membership.role,
   };

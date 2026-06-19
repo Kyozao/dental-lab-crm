@@ -62,10 +62,9 @@ type DefaultBlockTypeDefinition = {
 
 type DefaultMillingDrillDefinition = {
   name: string;
-  type: string;
-  brand: string;
-  serial_number: string;
-  max_teeth_recommended: number;
+  status: "ACTIVE" | "STORED" | "RETIRED" | "LOST";
+  current_blocks_count: number;
+  estimated_max_blocks: number;
   notes?: string;
 };
 
@@ -436,24 +435,21 @@ const DEFAULT_BLOCK_TYPES: DefaultBlockTypeDefinition[] = [
 const DEFAULT_MILLING_DRILLS: DefaultMillingDrillDefinition[] = [
   {
     name: "Diamond 1.0mm",
-    type: "1.0mm",
-    brand: "Roland",
-    serial_number: "DEFAULT-D10",
-    max_teeth_recommended: 120,
+    status: "ACTIVE",
+    current_blocks_count: 0,
+    estimated_max_blocks: 120,
   },
   {
     name: "Diamond 2.5mm",
-    type: "2.5mm",
-    brand: "Roland",
-    serial_number: "DEFAULT-D25",
-    max_teeth_recommended: 100,
+    status: "ACTIVE",
+    current_blocks_count: 0,
+    estimated_max_blocks: 100,
   },
   {
     name: "Carbide 0.6mm",
-    type: "0.6mm",
-    brand: "Roland",
-    serial_number: "DEFAULT-C06",
-    max_teeth_recommended: 80,
+    status: "STORED",
+    current_blocks_count: 0,
+    estimated_max_blocks: 80,
     notes: "Detail tool for fine anatomy and margins.",
   },
 ] satisfies DefaultMillingDrillDefinition[];
@@ -622,10 +618,6 @@ async function ensureDefaultCustomers(
   return customers;
 }
 
-function labScopedSerialNumber(lab_id: string, serial_number: string) {
-  return `${serial_number}-${lab_id.slice(0, 8)}`;
-}
-
 async function ensureDefaultProductionReferences(
   prisma: PrismaClientLike,
   lab_id: string,
@@ -687,22 +679,18 @@ async function ensureDefaultProductionReferences(
       prisma.milling_drills.upsert({
         where: { lab_id_name: { lab_id, name: drill.name } },
         update: {
-          type: drill.type,
-          brand: drill.brand,
-          max_teeth_recommended: drill.max_teeth_recommended,
+          status: drill.status,
+          current_blocks_count: drill.current_blocks_count,
+          estimated_max_blocks: drill.estimated_max_blocks,
           notes: drill.notes,
-          is_active: true,
-          deleted_at: null,
         },
         create: {
           lab_id,
           name: drill.name,
-          type: drill.type,
-          brand: drill.brand,
-          serial_number: labScopedSerialNumber(lab_id, drill.serial_number),
-          max_teeth_recommended: drill.max_teeth_recommended,
+          status: drill.status,
+          current_blocks_count: drill.current_blocks_count,
+          estimated_max_blocks: drill.estimated_max_blocks,
           notes: drill.notes,
-          is_active: true,
         },
       }),
     ),
@@ -780,6 +768,7 @@ export async function   ensureDefaultCatalogForLab(
           where: { id: oldSeedService.id },
           data: {
             name: service.name,
+            base_price: oldSeedService.base_price,
             is_active: true,
             deleted_at: null,
             workflow_json,
@@ -794,6 +783,7 @@ export async function   ensureDefaultCatalogForLab(
         data: {
           lab_id,
           name: service.name,
+          base_price: "0.00",
           is_active: true,
           workflow_json,
         },

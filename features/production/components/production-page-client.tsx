@@ -4,22 +4,43 @@ import { PageHeader } from "@/components/app/page-header";
 import { PageShell } from "@/components/app/page-shell";
 import { Panel, PanelHeader } from "@/components/app/panel";
 import { Button } from "@/components/ui/button";
-import type { ProductionProcess } from "@/features/production/production.types";
+import { CaseDetailsDialog } from "@/features/cases/components/case-details-dialog";
+import { getCaseDetailsApi } from "@/features/cases/services/cases-client";
+import type {
+  CustomerOption,
+  EditableCase,
+  ServiceTypeOption,
+} from "@/features/cases/types";
+import type {
+  MillingWorkspace,
+  ProductionProcess,
+} from "@/features/production/production.types";
 import { CreateProcessDialog } from "@/features/production/components/create-process-dialog";
 import { MetricPills } from "@/features/production/components/metric-pills";
 import { ProductionOverviewCard } from "@/features/production/components/production-overview-card";
 import { ProductionProcessTable } from "@/features/production/components/production-process-table";
 import { QueueDetailSection } from "@/features/production/components/queue-detail-section";
-import { getProductionProcessesApi } from "@/features/production/services/production-api";
+import {
+  getMillingWorkspaceApi,
+  getProductionProcessesApi,
+} from "@/features/production/services/production-api";
+import { mockComponents } from "@/lib/mock-data/pages";
 import { Plus } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import * as React from "react";
 
 export function ProductionPageClient() {
   const [processes, setProcesses] = React.useState<ProductionProcess[]>([]);
+  const [millingWorkspace, setMillingWorkspace] =
+    React.useState<MillingWorkspace | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
   const [createOpen, setCreateOpen] = React.useState(false);
+  const [caseDialogOpen, setCaseDialogOpen] = React.useState(false);
+  const [selectedCase, setSelectedCase] = React.useState<EditableCase | null>(
+    null,
+  );
+  const [openingCaseId, setOpeningCaseId] = React.useState<string | null>(null);
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -30,34 +51,31 @@ export function ProductionPageClient() {
     processes[0] ??
     null;
 
-  React.useEffect(() => {
-    let active = true;
+  const loadProductionData = React.useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
 
-    async function loadProductionProcesses() {
-      try {
-        setIsLoading(true);
-        setError(null);
-        const data = await getProductionProcessesApi();
-        if (active) setProcesses(data);
-      } catch (loadError) {
-        if (active) {
-          setError(
-            loadError instanceof Error
-              ? loadError.message
-              : "Could not load production queue.",
-          );
-        }
-      } finally {
-        if (active) setIsLoading(false);
-      }
+    try {
+      const [processData, millingData] = await Promise.all([
+        getProductionProcessesApi(),
+        getMillingWorkspaceApi(),
+      ]);
+      setProcesses(processData);
+      setMillingWorkspace(millingData);
+    } catch (loadError) {
+      setError(
+        loadError instanceof Error
+          ? loadError.message
+          : "Could not load production queue.",
+      );
+    } finally {
+      setIsLoading(false);
     }
-
-    void loadProductionProcesses();
-
-    return () => {
-      active = false;
-    };
   }, []);
+
+  React.useEffect(() => {
+    void loadProductionData();
+  }, [loadProductionData]);
 
   function selectProcess(processId: string) {
     const params = new URLSearchParams(searchParams.toString());
@@ -70,13 +88,40 @@ export function ProductionPageClient() {
     selectProcess(process.id);
   }
 
+  async function openCase(caseId: string) {
+    if (openingCaseId) return;
+
+    try {
+      setOpeningCaseId(caseId);
+      const details = await getCaseDetailsApi(caseId);
+      setSelectedCase(details);
+      setCaseDialogOpen(true);
+    } catch (caseError) {
+      setError(
+        caseError instanceof Error
+          ? caseError.message
+          : "Could not open case details.",
+      );
+    } finally {
+      setOpeningCaseId(null);
+    }
+  }
+
+  async function handleCaseDialogOpenChange(nextOpen: boolean) {
+    setCaseDialogOpen(nextOpen);
+    if (!nextOpen) {
+      setSelectedCase(null);
+      await loadProductionData();
+    }
+  }
+
   const totalQueued = processes.reduce(
     (sum, process) => sum + process.queue.length,
     0,
   );
   const rushCases = processes.reduce(
     (sum, process) =>
-      sum + process.queue.filter((item) => item.priority === "rush").length,
+      sum + process.queue.filter((item) => item.priority === "urgent").length,
     0,
   );
   const totalCapacity = processes.reduce(
@@ -86,12 +131,15 @@ export function ProductionPageClient() {
   const loadPercent = totalCapacity
     ? Math.round((totalQueued / totalCapacity) * 100)
     : 0;
+  const dialogCustomers = buildProductionCustomerOptions(selectedCase);
+  const dialogServiceTypes = buildProductionServiceTypeOptions(selectedCase);
+  const dialogProcesses = selectedCase?.availableProcesses ?? [];
 
   return (
     <PageShell width="wide">
       <PageHeader
         title="Production"
-        description="Mock production queue overview for coordinating non-milling process steps."
+        description="Track active process queues and complete milling work through the milling record flow."
         actions={
           <Button type="button" onClick={() => setCreateOpen(true)}>
             <Plus className="h-4 w-4" />
@@ -134,7 +182,13 @@ export function ProductionPageClient() {
           </Panel>
 
           {selectedProcess ? (
-            <QueueDetailSection process={selectedProcess} />
+            <QueueDetailSection
+              process={selectedProcess}
+              millingWorkspace={millingWorkspace}
+              onQueueChanged={loadProductionData}
+              onOpenCase={(caseId) => void openCase(caseId)}
+              openingCaseId={openingCaseId}
+            />
           ) : null}
         </div>
 
@@ -146,6 +200,70 @@ export function ProductionPageClient() {
         onOpenChange={setCreateOpen}
         onCreate={createProcess}
       />
+
+      <CaseDetailsDialog
+        open={caseDialogOpen}
+        onOpenChange={(nextOpen) => void handleCaseDialogOpenChange(nextOpen)}
+        item={selectedCase}
+        currentUserRole="PRODUCTION"
+        customers={dialogCustomers}
+        serviceTypes={dialogServiceTypes}
+        components={mockComponents}
+        processes={dialogProcesses}
+        employees={[]}
+        optionsLoading={false}
+        optionsError={null}
+      />
     </PageShell>
   );
+}
+
+function buildProductionCustomerOptions(
+  caseItem: EditableCase | null,
+): CustomerOption[] {
+  if (!caseItem?.customerId) return [];
+
+  return [
+    {
+      id: caseItem.customerId,
+      dentalLabId: caseItem.dentalLabId,
+      labCustomerId: caseItem.labCustomerId ?? null,
+      name: caseItem.customerName,
+      dentists: caseItem.dentistId
+        ? [
+            {
+              id: caseItem.dentistId,
+              name: caseItem.dentistName || "Assigned dentist",
+            },
+          ]
+        : [],
+      price_table: null,
+    },
+  ];
+}
+
+function buildProductionServiceTypeOptions(
+  caseItem: EditableCase | null,
+): ServiceTypeOption[] {
+  if (!caseItem) return [];
+
+  return caseItem.serviceLines.map((serviceLine) => ({
+    id: serviceLine.serviceTypeId,
+    name: serviceLine.serviceTypeName,
+    base_price: serviceLine.serviceBasePriceSnapshot,
+    currency: caseItem.labCurrency,
+    workflow_json: {
+      steps: serviceLine.processes.map((process) => ({
+        id: process.workflow_step_id,
+        process_id: process.process_id,
+        dependsOn: process.dependsOnCaseProcessIds
+          .map((dependencyId) =>
+            serviceLine.processes.find(
+              (candidate) => candidate.id === dependencyId,
+            )?.workflow_step_id,
+          )
+          .filter((stepId): stepId is string => Boolean(stepId)),
+      })),
+    },
+  }));
 }

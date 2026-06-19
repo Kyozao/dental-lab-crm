@@ -1,4 +1,4 @@
-import { CaseProcessStatus } from "@/generated/prisma/enums";
+import { CaseProcessStatus, UserRole } from "@/generated/prisma/enums";
 import { prisma } from "@/lib/prisma";
 
 import { getSingleLabMembership } from "../_shared/membership";
@@ -8,6 +8,7 @@ import {
 } from "../_shared/reference-resource";
 import type { UpdateCaseProcessInput } from "./case-processes.schemas";
 import {
+  CaseProcessAuthorizationError,
   assertCanAssignCaseProcess,
   buildCaseProcessAssigneeEligibilityWhere,
 } from "./case-processes.rules";
@@ -15,6 +16,7 @@ import {
 const caseProcessSelect = {
   id: true,
   case_id: true,
+  case_service_id: true,
   process_id: true,
   workflow_step_id: true,
   status: true,
@@ -47,6 +49,7 @@ const caseProcessSelect = {
 type CaseProcessWithRelations = {
   id: string;
   case_id: string;
+  case_service_id: string;
   process_id: string;
   workflow_step_id: string;
   status: CaseProcessStatus;
@@ -72,6 +75,7 @@ function mapCaseProcess(caseProcess: CaseProcessWithRelations) {
   return {
     id: caseProcess.id,
     case_id: caseProcess.case_id,
+    case_service_id: caseProcess.case_service_id,
     process_id: caseProcess.process_id,
     processName: caseProcess.processes.name,
     workflow_step_id: caseProcess.workflow_step_id,
@@ -225,6 +229,7 @@ export async function updateCaseProcessForLoggedLab(
       id: true,
       process_id: true,
       status: true,
+      assigned_lab_member_id: true,
       started_at: true,
       dependencies: {
         select: {
@@ -248,6 +253,15 @@ export async function updateCaseProcessForLoggedLab(
   });
 
   if (!existing) throw new ReferenceNotFoundError("Case process");
+
+  if (
+    membership.role === UserRole.PRODUCTION &&
+    existing.assigned_lab_member_id !== membership.id
+  ) {
+    throw new CaseProcessAuthorizationError(
+      "Production users can only update their assigned tasks.",
+    );
+  }
 
   if (payload.assigned_lab_member_id !== undefined) {
     assertCanAssignCaseProcess(membership.role);

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { getAuthenticatedUserId, parseJsonObject } from "../../../_shared/request";
 import {
+  CaseAuthorizationError,
   CaseNotFoundError,
   InactiveReferenceError,
   MissingLabMembershipError,
@@ -33,7 +34,12 @@ export async function PUT(request: Request, context: RouteContext) {
   const { id } = await context.params;
 
   try {
-    const caseItem = await replaceCaseWorkflow(user_id, id, parsed.data);
+    const caseItem = await replaceCaseWorkflow(
+      user_id,
+      id,
+      parsed.data.case_service_id,
+      parsed.data.workflow_json,
+    );
     return NextResponse.json({ data: caseItem, error: null, meta: {} });
   } catch (error) {
     if (error instanceof MissingLabMembershipError) {
@@ -52,6 +58,10 @@ export async function PUT(request: Request, context: RouteContext) {
         { error: "Validation failed.", fields: error.fields },
         { status: 400 },
       );
+    }
+
+    if (error instanceof CaseAuthorizationError) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     console.error("[PUT /api/cases/:id/workflow]", error);

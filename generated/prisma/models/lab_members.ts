@@ -186,6 +186,8 @@ export type lab_membersWhereInput = {
   labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
   assignedProcesses?: Prisma.Case_processesListRelationFilter
   processOwnerships?: Prisma.Employee_process_assignmentsListRelationFilter
+  caseComments?: Prisma.Case_commentsListRelationFilter
+  caseThreadReads?: Prisma.Case_thread_readsListRelationFilter
 }
 
 export type lab_membersOrderByWithRelationInput = {
@@ -198,6 +200,8 @@ export type lab_membersOrderByWithRelationInput = {
   labs?: Prisma.labsOrderByWithRelationInput
   assignedProcesses?: Prisma.case_processesOrderByRelationAggregateInput
   processOwnerships?: Prisma.employee_process_assignmentsOrderByRelationAggregateInput
+  caseComments?: Prisma.case_commentsOrderByRelationAggregateInput
+  caseThreadReads?: Prisma.case_thread_readsOrderByRelationAggregateInput
 }
 
 export type lab_membersWhereUniqueInput = Prisma.AtLeast<{
@@ -214,6 +218,8 @@ export type lab_membersWhereUniqueInput = Prisma.AtLeast<{
   labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
   assignedProcesses?: Prisma.Case_processesListRelationFilter
   processOwnerships?: Prisma.Employee_process_assignmentsListRelationFilter
+  caseComments?: Prisma.Case_commentsListRelationFilter
+  caseThreadReads?: Prisma.Case_thread_readsListRelationFilter
 }, "id" | "user_id" | "user_id_lab_id">
 
 export type lab_membersOrderByWithAggregationInput = {
@@ -246,6 +252,8 @@ export type lab_membersCreateInput = {
   labs: Prisma.labsCreateNestedOneWithoutMembershipsInput
   assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedLabMemberInput
   processOwnerships?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLab_membersInput
+  caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorLabMemberInput
+  caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutLab_membersInput
 }
 
 export type lab_membersUncheckedCreateInput = {
@@ -256,6 +264,8 @@ export type lab_membersUncheckedCreateInput = {
   created_at?: Date | string
   assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedLabMemberInput
   processOwnerships?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLab_membersInput
+  caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorLabMemberInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutLab_membersInput
 }
 
 export type lab_membersUpdateInput = {
@@ -266,6 +276,8 @@ export type lab_membersUpdateInput = {
   labs?: Prisma.labsUpdateOneRequiredWithoutMembershipsNestedInput
   assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedLabMemberNestedInput
   processOwnerships?: Prisma.employee_process_assignmentsUpdateManyWithoutLab_membersNestedInput
+  caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorLabMemberNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutLab_membersNestedInput
 }
 
 export type lab_membersUncheckedUpdateInput = {
@@ -276,6 +288,8 @@ export type lab_membersUncheckedUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedLabMemberNestedInput
   processOwnerships?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLab_membersNestedInput
+  caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorLabMemberNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutLab_membersNestedInput
 }
 
 export type lab_membersCreateManyInput = {
@@ -451,6 +465,34 @@ export type lab_membersUpdateOneRequiredWithoutProcessOwnershipsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.lab_membersUpdateToOneWithWhereWithoutProcessOwnershipsInput, Prisma.lab_membersUpdateWithoutProcessOwnershipsInput>, Prisma.lab_membersUncheckedUpdateWithoutProcessOwnershipsInput>
 }
 
+export type lab_membersCreateNestedOneWithoutCaseCommentsInput = {
+  create?: Prisma.XOR<Prisma.lab_membersCreateWithoutCaseCommentsInput, Prisma.lab_membersUncheckedCreateWithoutCaseCommentsInput>
+  connectOrCreate?: Prisma.lab_membersCreateOrConnectWithoutCaseCommentsInput
+  connect?: Prisma.lab_membersWhereUniqueInput
+}
+
+export type lab_membersUpdateOneRequiredWithoutCaseCommentsNestedInput = {
+  create?: Prisma.XOR<Prisma.lab_membersCreateWithoutCaseCommentsInput, Prisma.lab_membersUncheckedCreateWithoutCaseCommentsInput>
+  connectOrCreate?: Prisma.lab_membersCreateOrConnectWithoutCaseCommentsInput
+  upsert?: Prisma.lab_membersUpsertWithoutCaseCommentsInput
+  connect?: Prisma.lab_membersWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.lab_membersUpdateToOneWithWhereWithoutCaseCommentsInput, Prisma.lab_membersUpdateWithoutCaseCommentsInput>, Prisma.lab_membersUncheckedUpdateWithoutCaseCommentsInput>
+}
+
+export type lab_membersCreateNestedOneWithoutCaseThreadReadsInput = {
+  create?: Prisma.XOR<Prisma.lab_membersCreateWithoutCaseThreadReadsInput, Prisma.lab_membersUncheckedCreateWithoutCaseThreadReadsInput>
+  connectOrCreate?: Prisma.lab_membersCreateOrConnectWithoutCaseThreadReadsInput
+  connect?: Prisma.lab_membersWhereUniqueInput
+}
+
+export type lab_membersUpdateOneRequiredWithoutCaseThreadReadsNestedInput = {
+  create?: Prisma.XOR<Prisma.lab_membersCreateWithoutCaseThreadReadsInput, Prisma.lab_membersUncheckedCreateWithoutCaseThreadReadsInput>
+  connectOrCreate?: Prisma.lab_membersCreateOrConnectWithoutCaseThreadReadsInput
+  upsert?: Prisma.lab_membersUpsertWithoutCaseThreadReadsInput
+  connect?: Prisma.lab_membersWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.lab_membersUpdateToOneWithWhereWithoutCaseThreadReadsInput, Prisma.lab_membersUpdateWithoutCaseThreadReadsInput>, Prisma.lab_membersUncheckedUpdateWithoutCaseThreadReadsInput>
+}
+
 export type lab_membersCreateNestedOneWithoutAssignedProcessesInput = {
   create?: Prisma.XOR<Prisma.lab_membersCreateWithoutAssignedProcessesInput, Prisma.lab_membersUncheckedCreateWithoutAssignedProcessesInput>
   connectOrCreate?: Prisma.lab_membersCreateOrConnectWithoutAssignedProcessesInput
@@ -474,6 +516,8 @@ export type lab_membersCreateWithoutUsersInput = {
   labs: Prisma.labsCreateNestedOneWithoutMembershipsInput
   assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedLabMemberInput
   processOwnerships?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLab_membersInput
+  caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorLabMemberInput
+  caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutLab_membersInput
 }
 
 export type lab_membersUncheckedCreateWithoutUsersInput = {
@@ -483,6 +527,8 @@ export type lab_membersUncheckedCreateWithoutUsersInput = {
   created_at?: Date | string
   assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedLabMemberInput
   processOwnerships?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLab_membersInput
+  caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorLabMemberInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutLab_membersInput
 }
 
 export type lab_membersCreateOrConnectWithoutUsersInput = {
@@ -529,6 +575,8 @@ export type lab_membersCreateWithoutLabsInput = {
   users: Prisma.usersCreateNestedOneWithoutMembershipsInput
   assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedLabMemberInput
   processOwnerships?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLab_membersInput
+  caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorLabMemberInput
+  caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutLab_membersInput
 }
 
 export type lab_membersUncheckedCreateWithoutLabsInput = {
@@ -538,6 +586,8 @@ export type lab_membersUncheckedCreateWithoutLabsInput = {
   created_at?: Date | string
   assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedLabMemberInput
   processOwnerships?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLab_membersInput
+  caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorLabMemberInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutLab_membersInput
 }
 
 export type lab_membersCreateOrConnectWithoutLabsInput = {
@@ -573,6 +623,8 @@ export type lab_membersCreateWithoutProcessOwnershipsInput = {
   users: Prisma.usersCreateNestedOneWithoutMembershipsInput
   labs: Prisma.labsCreateNestedOneWithoutMembershipsInput
   assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedLabMemberInput
+  caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorLabMemberInput
+  caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutLab_membersInput
 }
 
 export type lab_membersUncheckedCreateWithoutProcessOwnershipsInput = {
@@ -582,6 +634,8 @@ export type lab_membersUncheckedCreateWithoutProcessOwnershipsInput = {
   role: $Enums.UserRole
   created_at?: Date | string
   assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedLabMemberInput
+  caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorLabMemberInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutLab_membersInput
 }
 
 export type lab_membersCreateOrConnectWithoutProcessOwnershipsInput = {
@@ -607,6 +661,8 @@ export type lab_membersUpdateWithoutProcessOwnershipsInput = {
   users?: Prisma.usersUpdateOneRequiredWithoutMembershipsNestedInput
   labs?: Prisma.labsUpdateOneRequiredWithoutMembershipsNestedInput
   assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedLabMemberNestedInput
+  caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorLabMemberNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutLab_membersNestedInput
 }
 
 export type lab_membersUncheckedUpdateWithoutProcessOwnershipsInput = {
@@ -616,6 +672,128 @@ export type lab_membersUncheckedUpdateWithoutProcessOwnershipsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedLabMemberNestedInput
+  caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorLabMemberNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutLab_membersNestedInput
+}
+
+export type lab_membersCreateWithoutCaseCommentsInput = {
+  id?: string
+  role: $Enums.UserRole
+  created_at?: Date | string
+  users: Prisma.usersCreateNestedOneWithoutMembershipsInput
+  labs: Prisma.labsCreateNestedOneWithoutMembershipsInput
+  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedLabMemberInput
+  processOwnerships?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLab_membersInput
+  caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutLab_membersInput
+}
+
+export type lab_membersUncheckedCreateWithoutCaseCommentsInput = {
+  id?: string
+  user_id: string
+  lab_id: string
+  role: $Enums.UserRole
+  created_at?: Date | string
+  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedLabMemberInput
+  processOwnerships?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLab_membersInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutLab_membersInput
+}
+
+export type lab_membersCreateOrConnectWithoutCaseCommentsInput = {
+  where: Prisma.lab_membersWhereUniqueInput
+  create: Prisma.XOR<Prisma.lab_membersCreateWithoutCaseCommentsInput, Prisma.lab_membersUncheckedCreateWithoutCaseCommentsInput>
+}
+
+export type lab_membersUpsertWithoutCaseCommentsInput = {
+  update: Prisma.XOR<Prisma.lab_membersUpdateWithoutCaseCommentsInput, Prisma.lab_membersUncheckedUpdateWithoutCaseCommentsInput>
+  create: Prisma.XOR<Prisma.lab_membersCreateWithoutCaseCommentsInput, Prisma.lab_membersUncheckedCreateWithoutCaseCommentsInput>
+  where?: Prisma.lab_membersWhereInput
+}
+
+export type lab_membersUpdateToOneWithWhereWithoutCaseCommentsInput = {
+  where?: Prisma.lab_membersWhereInput
+  data: Prisma.XOR<Prisma.lab_membersUpdateWithoutCaseCommentsInput, Prisma.lab_membersUncheckedUpdateWithoutCaseCommentsInput>
+}
+
+export type lab_membersUpdateWithoutCaseCommentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.usersUpdateOneRequiredWithoutMembershipsNestedInput
+  labs?: Prisma.labsUpdateOneRequiredWithoutMembershipsNestedInput
+  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedLabMemberNestedInput
+  processOwnerships?: Prisma.employee_process_assignmentsUpdateManyWithoutLab_membersNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutLab_membersNestedInput
+}
+
+export type lab_membersUncheckedUpdateWithoutCaseCommentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedLabMemberNestedInput
+  processOwnerships?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLab_membersNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutLab_membersNestedInput
+}
+
+export type lab_membersCreateWithoutCaseThreadReadsInput = {
+  id?: string
+  role: $Enums.UserRole
+  created_at?: Date | string
+  users: Prisma.usersCreateNestedOneWithoutMembershipsInput
+  labs: Prisma.labsCreateNestedOneWithoutMembershipsInput
+  assignedProcesses?: Prisma.case_processesCreateNestedManyWithoutAssignedLabMemberInput
+  processOwnerships?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLab_membersInput
+  caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorLabMemberInput
+}
+
+export type lab_membersUncheckedCreateWithoutCaseThreadReadsInput = {
+  id?: string
+  user_id: string
+  lab_id: string
+  role: $Enums.UserRole
+  created_at?: Date | string
+  assignedProcesses?: Prisma.case_processesUncheckedCreateNestedManyWithoutAssignedLabMemberInput
+  processOwnerships?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLab_membersInput
+  caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorLabMemberInput
+}
+
+export type lab_membersCreateOrConnectWithoutCaseThreadReadsInput = {
+  where: Prisma.lab_membersWhereUniqueInput
+  create: Prisma.XOR<Prisma.lab_membersCreateWithoutCaseThreadReadsInput, Prisma.lab_membersUncheckedCreateWithoutCaseThreadReadsInput>
+}
+
+export type lab_membersUpsertWithoutCaseThreadReadsInput = {
+  update: Prisma.XOR<Prisma.lab_membersUpdateWithoutCaseThreadReadsInput, Prisma.lab_membersUncheckedUpdateWithoutCaseThreadReadsInput>
+  create: Prisma.XOR<Prisma.lab_membersCreateWithoutCaseThreadReadsInput, Prisma.lab_membersUncheckedCreateWithoutCaseThreadReadsInput>
+  where?: Prisma.lab_membersWhereInput
+}
+
+export type lab_membersUpdateToOneWithWhereWithoutCaseThreadReadsInput = {
+  where?: Prisma.lab_membersWhereInput
+  data: Prisma.XOR<Prisma.lab_membersUpdateWithoutCaseThreadReadsInput, Prisma.lab_membersUncheckedUpdateWithoutCaseThreadReadsInput>
+}
+
+export type lab_membersUpdateWithoutCaseThreadReadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.usersUpdateOneRequiredWithoutMembershipsNestedInput
+  labs?: Prisma.labsUpdateOneRequiredWithoutMembershipsNestedInput
+  assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedLabMemberNestedInput
+  processOwnerships?: Prisma.employee_process_assignmentsUpdateManyWithoutLab_membersNestedInput
+  caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorLabMemberNestedInput
+}
+
+export type lab_membersUncheckedUpdateWithoutCaseThreadReadsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  user_id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedLabMemberNestedInput
+  processOwnerships?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLab_membersNestedInput
+  caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorLabMemberNestedInput
 }
 
 export type lab_membersCreateWithoutAssignedProcessesInput = {
@@ -625,6 +803,8 @@ export type lab_membersCreateWithoutAssignedProcessesInput = {
   users: Prisma.usersCreateNestedOneWithoutMembershipsInput
   labs: Prisma.labsCreateNestedOneWithoutMembershipsInput
   processOwnerships?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLab_membersInput
+  caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorLabMemberInput
+  caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutLab_membersInput
 }
 
 export type lab_membersUncheckedCreateWithoutAssignedProcessesInput = {
@@ -634,6 +814,8 @@ export type lab_membersUncheckedCreateWithoutAssignedProcessesInput = {
   role: $Enums.UserRole
   created_at?: Date | string
   processOwnerships?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLab_membersInput
+  caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorLabMemberInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutLab_membersInput
 }
 
 export type lab_membersCreateOrConnectWithoutAssignedProcessesInput = {
@@ -659,6 +841,8 @@ export type lab_membersUpdateWithoutAssignedProcessesInput = {
   users?: Prisma.usersUpdateOneRequiredWithoutMembershipsNestedInput
   labs?: Prisma.labsUpdateOneRequiredWithoutMembershipsNestedInput
   processOwnerships?: Prisma.employee_process_assignmentsUpdateManyWithoutLab_membersNestedInput
+  caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorLabMemberNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutLab_membersNestedInput
 }
 
 export type lab_membersUncheckedUpdateWithoutAssignedProcessesInput = {
@@ -668,6 +852,8 @@ export type lab_membersUncheckedUpdateWithoutAssignedProcessesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   processOwnerships?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLab_membersNestedInput
+  caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorLabMemberNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutLab_membersNestedInput
 }
 
 export type lab_membersCreateManyUsersInput = {
@@ -684,6 +870,8 @@ export type lab_membersUpdateWithoutUsersInput = {
   labs?: Prisma.labsUpdateOneRequiredWithoutMembershipsNestedInput
   assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedLabMemberNestedInput
   processOwnerships?: Prisma.employee_process_assignmentsUpdateManyWithoutLab_membersNestedInput
+  caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorLabMemberNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutLab_membersNestedInput
 }
 
 export type lab_membersUncheckedUpdateWithoutUsersInput = {
@@ -693,6 +881,8 @@ export type lab_membersUncheckedUpdateWithoutUsersInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedLabMemberNestedInput
   processOwnerships?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLab_membersNestedInput
+  caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorLabMemberNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutLab_membersNestedInput
 }
 
 export type lab_membersUncheckedUpdateManyWithoutUsersInput = {
@@ -716,6 +906,8 @@ export type lab_membersUpdateWithoutLabsInput = {
   users?: Prisma.usersUpdateOneRequiredWithoutMembershipsNestedInput
   assignedProcesses?: Prisma.case_processesUpdateManyWithoutAssignedLabMemberNestedInput
   processOwnerships?: Prisma.employee_process_assignmentsUpdateManyWithoutLab_membersNestedInput
+  caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorLabMemberNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutLab_membersNestedInput
 }
 
 export type lab_membersUncheckedUpdateWithoutLabsInput = {
@@ -725,6 +917,8 @@ export type lab_membersUncheckedUpdateWithoutLabsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignedProcesses?: Prisma.case_processesUncheckedUpdateManyWithoutAssignedLabMemberNestedInput
   processOwnerships?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLab_membersNestedInput
+  caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorLabMemberNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutLab_membersNestedInput
 }
 
 export type lab_membersUncheckedUpdateManyWithoutLabsInput = {
@@ -742,11 +936,15 @@ export type lab_membersUncheckedUpdateManyWithoutLabsInput = {
 export type Lab_membersCountOutputType = {
   assignedProcesses: number
   processOwnerships: number
+  caseComments: number
+  caseThreadReads: number
 }
 
 export type Lab_membersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   assignedProcesses?: boolean | Lab_membersCountOutputTypeCountAssignedProcessesArgs
   processOwnerships?: boolean | Lab_membersCountOutputTypeCountProcessOwnershipsArgs
+  caseComments?: boolean | Lab_membersCountOutputTypeCountCaseCommentsArgs
+  caseThreadReads?: boolean | Lab_membersCountOutputTypeCountCaseThreadReadsArgs
 }
 
 /**
@@ -773,6 +971,20 @@ export type Lab_membersCountOutputTypeCountProcessOwnershipsArgs<ExtArgs extends
   where?: Prisma.employee_process_assignmentsWhereInput
 }
 
+/**
+ * Lab_membersCountOutputType without action
+ */
+export type Lab_membersCountOutputTypeCountCaseCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.case_commentsWhereInput
+}
+
+/**
+ * Lab_membersCountOutputType without action
+ */
+export type Lab_membersCountOutputTypeCountCaseThreadReadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.case_thread_readsWhereInput
+}
+
 
 export type lab_membersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -784,6 +996,8 @@ export type lab_membersSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   assignedProcesses?: boolean | Prisma.lab_members$assignedProcessesArgs<ExtArgs>
   processOwnerships?: boolean | Prisma.lab_members$processOwnershipsArgs<ExtArgs>
+  caseComments?: boolean | Prisma.lab_members$caseCommentsArgs<ExtArgs>
+  caseThreadReads?: boolean | Prisma.lab_members$caseThreadReadsArgs<ExtArgs>
   _count?: boolean | Prisma.Lab_membersCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["lab_members"]>
 
@@ -821,6 +1035,8 @@ export type lab_membersInclude<ExtArgs extends runtime.Types.Extensions.Internal
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   assignedProcesses?: boolean | Prisma.lab_members$assignedProcessesArgs<ExtArgs>
   processOwnerships?: boolean | Prisma.lab_members$processOwnershipsArgs<ExtArgs>
+  caseComments?: boolean | Prisma.lab_members$caseCommentsArgs<ExtArgs>
+  caseThreadReads?: boolean | Prisma.lab_members$caseThreadReadsArgs<ExtArgs>
   _count?: boolean | Prisma.Lab_membersCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type lab_membersIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -839,6 +1055,8 @@ export type $lab_membersPayload<ExtArgs extends runtime.Types.Extensions.Interna
     labs: Prisma.$labsPayload<ExtArgs>
     assignedProcesses: Prisma.$case_processesPayload<ExtArgs>[]
     processOwnerships: Prisma.$employee_process_assignmentsPayload<ExtArgs>[]
+    caseComments: Prisma.$case_commentsPayload<ExtArgs>[]
+    caseThreadReads: Prisma.$case_thread_readsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1244,6 +1462,8 @@ export interface Prisma__lab_membersClient<T, Null = never, ExtArgs extends runt
   labs<T extends Prisma.labsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labsDefaultArgs<ExtArgs>>): Prisma.Prisma__labsClient<runtime.Types.Result.GetResult<Prisma.$labsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   assignedProcesses<T extends Prisma.lab_members$assignedProcessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.lab_members$assignedProcessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_processesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   processOwnerships<T extends Prisma.lab_members$processOwnershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.lab_members$processOwnershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$employee_process_assignmentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  caseComments<T extends Prisma.lab_members$caseCommentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.lab_members$caseCommentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_commentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  caseThreadReads<T extends Prisma.lab_members$caseThreadReadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.lab_members$caseThreadReadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_thread_readsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1724,6 +1944,54 @@ export type lab_members$processOwnershipsArgs<ExtArgs extends runtime.Types.Exte
   take?: number
   skip?: number
   distinct?: Prisma.Employee_process_assignmentsScalarFieldEnum | Prisma.Employee_process_assignmentsScalarFieldEnum[]
+}
+
+/**
+ * lab_members.caseComments
+ */
+export type lab_members$caseCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the case_comments
+   */
+  select?: Prisma.case_commentsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the case_comments
+   */
+  omit?: Prisma.case_commentsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.case_commentsInclude<ExtArgs> | null
+  where?: Prisma.case_commentsWhereInput
+  orderBy?: Prisma.case_commentsOrderByWithRelationInput | Prisma.case_commentsOrderByWithRelationInput[]
+  cursor?: Prisma.case_commentsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Case_commentsScalarFieldEnum | Prisma.Case_commentsScalarFieldEnum[]
+}
+
+/**
+ * lab_members.caseThreadReads
+ */
+export type lab_members$caseThreadReadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the case_thread_reads
+   */
+  select?: Prisma.case_thread_readsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the case_thread_reads
+   */
+  omit?: Prisma.case_thread_readsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.case_thread_readsInclude<ExtArgs> | null
+  where?: Prisma.case_thread_readsWhereInput
+  orderBy?: Prisma.case_thread_readsOrderByWithRelationInput | Prisma.case_thread_readsOrderByWithRelationInput[]
+  cursor?: Prisma.case_thread_readsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Case_thread_readsScalarFieldEnum | Prisma.Case_thread_readsScalarFieldEnum[]
 }
 
 /**

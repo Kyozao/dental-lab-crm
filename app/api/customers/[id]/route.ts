@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { RoleAuthorizationError } from "../../_shared/authorization";
 import { MissingLabMembershipError } from "../../_shared/membership";
 import {
   ReferenceNotFoundError,
@@ -8,9 +9,40 @@ import {
 import { getAuthenticatedUserId, parseJsonObject } from "../../_shared/request";
 import {
   archiveCustomerForLoggedLab,
+  getCustomerForLoggedLab,
   updateCustomerForLoggedLab,
 } from "../customers.service";
 import { parseUpdateCustomerInput } from "../customers.schemas";
+
+export async function GET(
+  _request: Request,
+  context: { params: Promise<{ id: string }> },
+) {
+  const user_id = await getAuthenticatedUserId();
+  if (!user_id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const { id } = await context.params;
+
+  try {
+    const customer = await getCustomerForLoggedLab(user_id, id);
+    return NextResponse.json({ data: customer, error: null, meta: {} });
+  } catch (error) {
+    if (error instanceof RoleAuthorizationError) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    if (error instanceof MissingLabMembershipError) {
+      return NextResponse.json({ error: "No lab membership found for this user." }, { status: 403 });
+    }
+
+    if (error instanceof ReferenceNotFoundError) {
+      return NextResponse.json({ error: "customer not found." }, { status: 404 });
+    }
+
+    console.error("[GET /api/customers/:id]", error);
+    return NextResponse.json({ error: "Failed to load customer." }, { status: 500 });
+  }
+}
 
 export async function PATCH(
   request: Request,
@@ -32,6 +64,10 @@ export async function PATCH(
     const customer = await updateCustomerForLoggedLab(user_id, id, parsed.data);
     return NextResponse.json({ data: customer, error: null, meta: {} });
   } catch (error) {
+    if (error instanceof RoleAuthorizationError) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     if (error instanceof MissingLabMembershipError) {
       return NextResponse.json({ error: "No lab membership found for this user." }, { status: 403 });
     }
@@ -62,6 +98,10 @@ export async function DELETE(
     const customer = await archiveCustomerForLoggedLab(user_id, id);
     return NextResponse.json({ data: customer, error: null, meta: {} });
   } catch (error) {
+    if (error instanceof RoleAuthorizationError) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     if (error instanceof MissingLabMembershipError) {
       return NextResponse.json({ error: "No lab membership found for this user." }, { status: 403 });
     }

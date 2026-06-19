@@ -62,6 +62,16 @@ export type lab_members = Prisma.lab_membersModel
  */
 export type service_types = Prisma.service_typesModel
 /**
+ * Model price_tables
+ * 
+ */
+export type price_tables = Prisma.price_tablesModel
+/**
+ * Model price_table_service_prices
+ * 
+ */
+export type price_table_service_prices = Prisma.price_table_service_pricesModel
+/**
  * Model processes
  * 
  */
@@ -77,10 +87,25 @@ export type employee_process_assignments = Prisma.employee_process_assignmentsMo
  */
 export type milling_drills = Prisma.milling_drillsModel
 /**
+ * Model milling_machines
+ * 
+ */
+export type milling_machines = Prisma.milling_machinesModel
+/**
+ * Model milling_machine_slots
+ * 
+ */
+export type milling_machine_slots = Prisma.milling_machine_slotsModel
+/**
  * Model case_millings
  * 
  */
 export type case_millings = Prisma.case_millingsModel
+/**
+ * Model case_milling_drill_slots
+ * 
+ */
+export type case_milling_drill_slots = Prisma.case_milling_drill_slotsModel
 /**
  * Model case_attachments
  * 
@@ -117,10 +142,25 @@ export type block_types = Prisma.block_typesModel
  */
 export type cases = Prisma.casesModel
 /**
+ * Model case_comments
+ * 
+ */
+export type case_comments = Prisma.case_commentsModel
+/**
+ * Model case_thread_reads
+ * 
+ */
+export type case_thread_reads = Prisma.case_thread_readsModel
+/**
  * Model case_processes
  * 
  */
 export type case_processes = Prisma.case_processesModel
+/**
+ * Model case_services
+ * 
+ */
+export type case_services = Prisma.case_servicesModel
 /**
  * Model case_process_dependencies
  * 

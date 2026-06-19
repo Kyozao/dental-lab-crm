@@ -2,42 +2,41 @@ import {
   CASE_STATUS_OPTIONS,
   type CustomerOption,
   type EditableCase,
-  type ServiceTypeOption,
+  type CaseStatusValue,
 } from "@/features/cases/types";
+import { getCaseStatusMeta } from "@/features/cases/constants";
 
 type Props = {
   caseItem: EditableCase;
   customers: CustomerOption[];
-  serviceTypes: ServiceTypeOption[];
   availableDentists: CustomerOption["dentists"];
   selectedCustomerId: string;
   onSelectedCustomerChange: (customerId: string) => void;
-  selectedServiceTypeId?: string;
-  onSelectedServiceTypeChange?: (serviceTypeId: string) => void;
   canEditAll: boolean;
-  canEditPendingOnly: boolean;
   disableResourceFields: boolean;
   optionsLoading: boolean;
   overdue: boolean;
   isCreateMode: boolean;
+  selectedStatus: CaseStatusValue;
+  onSelectedStatusChange: (status: CaseStatusValue) => void;
 };
 
 export function CaseEditFieldsSection({
   caseItem,
   customers,
-  serviceTypes,
   availableDentists,
   selectedCustomerId,
   onSelectedCustomerChange,
-  selectedServiceTypeId,
-  onSelectedServiceTypeChange,
   canEditAll,
-  canEditPendingOnly,
   disableResourceFields,
   optionsLoading,
   overdue,
   isCreateMode,
+  selectedStatus,
+  onSelectedStatusChange,
 }: Props) {
+  const selectedStatusMeta = getCaseStatusMeta(selectedStatus);
+
   return (
     <>
       <div hidden={optionsLoading} className="grid gap-4 sm:grid-cols-2">
@@ -96,25 +95,14 @@ export function CaseEditFieldsSection({
           </select>
         </div>
 
-        <SelectField
-          label="Tipo de servico"
-          name="serviceTypeId"
-          value={selectedServiceTypeId}
-          defaultValue={selectedServiceTypeId ? undefined : (caseItem.serviceTypeId ?? "")}
-          onChange={onSelectedServiceTypeChange}
-          disabled={!canEditAll || disableResourceFields}
-          emptyLabel="Sem tipo"
-          options={serviceTypes.map((serviceType) => ({
-            id: serviceType.id,
-            name: serviceType.name,
-          }))}
-        />
-
         <div className="space-y-2">
           <label className="text-sm font-medium">Status</label>
           <select
             name="currentStatus"
-            defaultValue={caseItem.currentStatus}
+            value={selectedStatus}
+            onChange={(event) =>
+              onSelectedStatusChange(event.target.value as CaseStatusValue)
+            }
             disabled={!canEditAll}
             className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:opacity-60"
           >
@@ -124,6 +112,11 @@ export function CaseEditFieldsSection({
               </option>
             ))}
           </select>
+          {selectedStatusMeta ? (
+            <p className="text-xs text-muted-foreground">
+              Current state: {selectedStatusMeta.shortLabel}
+            </p>
+          ) : null}
         </div>
 
         <InputField
@@ -177,15 +170,8 @@ export function CaseEditFieldsSection({
             Urgente
           </label>
         </div>
-      </div>
 
-      <TextareaField
-        label="Pendencia"
-        name="pendingNote"
-        defaultValue={caseItem.pendingNote}
-        disabled={!(canEditAll || canEditPendingOnly)}
-        hidden={optionsLoading}
-      />
+      </div>
       <TextareaField
         label="Observacoes"
         name="observations"
@@ -278,12 +264,14 @@ function TextareaField({
   defaultValue,
   disabled,
   hidden,
+  placeholder,
 }: {
   label: string;
   name: string;
   defaultValue: string;
   disabled: boolean;
   hidden: boolean;
+  placeholder?: string;
 }) {
   return (
     <div hidden={hidden} className="space-y-2">
@@ -292,6 +280,7 @@ function TextareaField({
         name={name}
         defaultValue={defaultValue}
         disabled={disabled}
+        placeholder={placeholder}
         className="min-h-25 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:opacity-60"
       />
     </div>
