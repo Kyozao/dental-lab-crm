@@ -99,7 +99,6 @@ export async function GET() {
             teeth: true,
             due_date: true,
             is_urgent: true,
-            pending_note: true,
             observations: true,
             customers: {
               select: {
@@ -191,7 +190,7 @@ export async function GET() {
         progressPercent: progress.progressPercent,
         completedSteps: progress.completedSteps,
         totalSteps: progress.totalSteps,
-        notes: item.cases.pending_note ?? item.cases.observations ?? undefined,
+        notes: item.cases.observations ?? undefined,
       });
       existing.capacity = Math.max(existing.capacity, existing.queue.length);
       grouped.set(process.id, existing);
