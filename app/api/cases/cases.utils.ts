@@ -416,7 +416,6 @@ export function mapCaseSummary(caseItem: CaseSummaryWithRelations) {
     isUrgent: caseItem.is_urgent,
     priority: resolveCasePriority(caseItem.is_urgent, caseItem.due_date),
     observations: caseItem.observations,
-    pendingNote: caseItem.pending_note,
     currentCaseProcessId: currentProcess?.caseProcessId ?? null,
     currentProcessId: currentProcess?.processId ?? null,
     currentWorkflowStepId: currentProcess?.workflowStepId ?? null,
