@@ -154,7 +154,6 @@ export const caseSummarySelect = {
   due_date: true,
   is_urgent: true,
   observations: true,
-  pending_note: true,
   created_at: true,
   updated_at: true,
   customers: {
