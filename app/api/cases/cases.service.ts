@@ -32,8 +32,7 @@ import {
   type ServiceLineWorkflowPlan,
 } from "./cases.workflow";
 import type { ServiceTypeWorkflow } from "../service-types/service-types.schemas";
-import { resolveEffectiveServiceBasePrice } from "./cases.price-resolution";
-import { getCaseStatusTransitionHistoryEntry } from "./cases.status";
+import { resolveEffectiveServiceBasePrice } from "./cases.pricing";
 
 export { InactiveReferenceError, MissingLabMembershipError, MissingServiceTypeWorkflowError };
 
@@ -53,6 +52,64 @@ export class CaseAuthorizationError extends Error {
 
 export type LabMembershipContext = Awaited<ReturnType<typeof getLabMember>>;
 
+type ExistingCaseForUpdate = {
+  id: string;
+  customer_id: string | null;
+  dentist_id: string | null;
+  current_status: CaseStatus;
+};
+
+type ExistingCaseForServiceLineUpdate = ExistingCaseForUpdate & {
+  case_services: Array<{
+    id: string;
+    service_type_id: string;
+    service_name_snapshot: string;
+    service_base_price_snapshot: { toString(): string };
+    unit_price: { toString(): string };
+    is_unit_price_overridden: boolean;
+    quantity: number;
+    case_processes: Array<{
+      id: string;
+      process_id: string;
+      workflow_step_id: string;
+      dependencies: Array<{ depends_on_case_process_id: string }>;
+    }>;
+  }>;
+};
+
+type CaseUpdateData = {
+  patient_name: UpdateCaseInput["patient_name"];
+  customer_id: UpdateCaseInput["customer_id"];
+  dentist_id: UpdateCaseInput["dentist_id"];
+  current_status: UpdateCaseInput["current_status"];
+  teeth: UpdateCaseInput["teeth"];
+  elements_qty: UpdateCaseInput["elements_qty"];
+  shade: UpdateCaseInput["shade"];
+  due_date: UpdateCaseInput["due_date"];
+  is_urgent: UpdateCaseInput["is_urgent"];
+  observations: UpdateCaseInput["observations"];
+};
+
+export function getCaseStatusTransitionHistoryEntry(input: {
+  previousStatus: CaseStatus | null;
+  nextStatus?: CaseStatus | null;
+  statusReason?: string | null;
+}) {
+  if (!input.nextStatus) {
+    return null;
+  }
+
+  if (input.previousStatus === input.nextStatus) {
+    return null;
+  }
+
+  return {
+    fromStatus: input.previousStatus,
+    toStatus: input.nextStatus,
+    note: input.statusReason ?? null,
+  };
+}
+
 async function createStatusHistoryEntry(
   tx: Prisma.TransactionClient,
   input: {
@@ -69,6 +126,29 @@ async function createStatusHistoryEntry(
       to_status: input.to_status,
       note: input.note ?? null,
     },
+  });
+}
+
+async function applyCaseStatusTransitionHistory(
+  tx: Prisma.TransactionClient,
+  existingCase: ExistingCaseForUpdate,
+  input: UpdateCaseInput,
+) {
+  const transition = getCaseStatusTransitionHistoryEntry({
+    previousStatus: existingCase.current_status,
+    nextStatus: input.current_status,
+    statusReason: input.status_reason,
+  });
+
+  if (!transition) {
+    return;
+  }
+
+  await createStatusHistoryEntry(tx, {
+    case_id: existingCase.id,
+    from_status: transition.fromStatus,
+    to_status: transition.toStatus,
+    note: transition.note,
   });
 }
 
@@ -103,6 +183,33 @@ function assertCanManageCases(role: UserRole) {
   ) {
     throw new CaseAuthorizationError();
   }
+}
+
+function buildBaseCaseUpdateData(input: UpdateCaseInput): CaseUpdateData {
+  return {
+    patient_name: input.patient_name,
+    customer_id: input.customer_id,
+    dentist_id: input.dentist_id,
+    current_status: input.current_status,
+    teeth: input.teeth,
+    elements_qty: input.elements_qty,
+    shade: input.shade,
+    due_date: input.due_date,
+    is_urgent: input.is_urgent,
+    observations: input.observations,
+  };
+}
+
+function resolveNextCaseReferences(
+  input: UpdateCaseInput,
+  existingCase: ExistingCaseForUpdate,
+) {
+  return {
+    customer_id:
+      input.customer_id !== undefined ? input.customer_id : existingCase.customer_id,
+    dentist_id:
+      input.dentist_id !== undefined ? input.dentist_id : existingCase.dentist_id,
+  };
 }
 
 async function buildServiceLinePlans(
@@ -364,6 +471,161 @@ async function syncCaseServiceLines(
   });
 }
 
+async function loadExistingCaseForUpdate(
+  membership: LabMembershipContext,
+  case_id: string,
+) {
+  const existingCase = await prisma.cases.findFirst({
+    where: {
+      id: case_id,
+      lab_id: membership.lab_id,
+    },
+    select: {
+      id: true,
+      customer_id: true,
+      dentist_id: true,
+      current_status: true,
+    },
+  });
+
+  if (!existingCase) {
+    throw new CaseNotFoundError();
+  }
+
+  return existingCase satisfies ExistingCaseForUpdate;
+}
+
+async function loadExistingCaseForServiceLineUpdate(
+  membership: LabMembershipContext,
+  case_id: string,
+) {
+  const existingCase = await prisma.cases.findFirst({
+    where: {
+      id: case_id,
+      lab_id: membership.lab_id,
+    },
+    select: {
+      id: true,
+      customer_id: true,
+      dentist_id: true,
+      current_status: true,
+      case_services: {
+        select: {
+          id: true,
+          service_type_id: true,
+          service_name_snapshot: true,
+          service_base_price_snapshot: true,
+          unit_price: true,
+          is_unit_price_overridden: true,
+          quantity: true,
+          case_processes: {
+            select: {
+              id: true,
+              process_id: true,
+              workflow_step_id: true,
+              dependencies: {
+                select: {
+                  depends_on_case_process_id: true,
+                },
+              },
+            },
+          },
+        },
+        orderBy: { created_at: "asc" },
+      },
+    },
+  });
+
+  if (!existingCase) {
+    throw new CaseNotFoundError();
+  }
+
+  return existingCase satisfies ExistingCaseForServiceLineUpdate;
+}
+
+async function validateReferencesAndBuildServiceLinePlans(
+  membership: LabMembershipContext,
+  existingCase: ExistingCaseForUpdate,
+  input: UpdateCaseInput & {
+    service_lines: NonNullable<UpdateCaseInput["service_lines"]>;
+  },
+) {
+  const nextReferences = resolveNextCaseReferences(input, existingCase);
+  await validateActiveCaseReferences(membership.lab_id, {
+    ...nextReferences,
+    service_lines: input.service_lines,
+  });
+
+  return buildServiceLinePlans(
+    membership.lab_id,
+    nextReferences.customer_id,
+    { service_lines: input.service_lines },
+  );
+}
+
+async function validateUpdatedCaseReferences(
+  membership: LabMembershipContext,
+  existingCase: ExistingCaseForUpdate,
+  input: UpdateCaseInput,
+) {
+  await validateActiveCaseReferences(
+    membership.lab_id,
+    resolveNextCaseReferences(input, existingCase),
+  );
+}
+
+async function updateCaseWithServiceLines(
+  membership: LabMembershipContext,
+  case_id: string,
+  input: UpdateCaseInput & {
+    service_lines: NonNullable<UpdateCaseInput["service_lines"]>;
+  },
+  baseCaseUpdate: CaseUpdateData,
+) {
+  const existingCase = await loadExistingCaseForServiceLineUpdate(
+    membership,
+    case_id,
+  );
+  const serviceLinePlans = await validateReferencesAndBuildServiceLinePlans(
+    membership,
+    existingCase,
+    input,
+  );
+
+  await prisma.$transaction(async (tx) => {
+    await tx.cases.update({
+      where: { id: existingCase.id },
+      data: baseCaseUpdate,
+    });
+
+    await applyCaseStatusTransitionHistory(tx, existingCase, input);
+    await syncCaseServiceLines(tx, existingCase.id, existingCase, serviceLinePlans);
+  });
+
+  return existingCase.id;
+}
+
+async function updateCaseDetailsOnly(
+  membership: LabMembershipContext,
+  case_id: string,
+  input: UpdateCaseInput,
+  baseCaseUpdate: CaseUpdateData,
+) {
+  const existingCase = await loadExistingCaseForUpdate(membership, case_id);
+  await validateUpdatedCaseReferences(membership, existingCase, input);
+
+  await prisma.$transaction(async (tx) => {
+    await tx.cases.update({
+      where: { id: existingCase.id },
+      data: baseCaseUpdate,
+    });
+
+    await applyCaseStatusTransitionHistory(tx, existingCase, input);
+  });
+
+  return existingCase.id;
+}
+
 export async function listCases(
   user_id: string,
   input: ListCasesInput,
@@ -512,153 +774,13 @@ export async function updateCase(
 ) {
   const membership = await getLabMember(user_id);
   assertCanManageCases(membership.role);
-  const baseCaseUpdate = {
-    patient_name: input.patient_name,
-    customer_id: input.customer_id,
-    dentist_id: input.dentist_id,
-    current_status: input.current_status,
-    teeth: input.teeth,
-    elements_qty: input.elements_qty,
-    shade: input.shade,
-    due_date: input.due_date,
-    is_urgent: input.is_urgent,
-    observations: input.observations,
-    pending_note: input.pending_note,
-  };
-
-  let updatedCaseId: string;
-
-  if (input.service_lines) {
-    const existing = await prisma.cases.findFirst({
-      where: {
-        id: case_id,
-        lab_id: membership.lab_id,
-      },
-      select: {
-        id: true,
-        customer_id: true,
-        dentist_id: true,
-        current_status: true,
-        case_services: {
-          select: {
-            id: true,
-            service_type_id: true,
-            service_name_snapshot: true,
-            service_base_price_snapshot: true,
-            unit_price: true,
-            is_unit_price_overridden: true,
-            quantity: true,
-            case_processes: {
-              select: {
-                id: true,
-                process_id: true,
-                workflow_step_id: true,
-                dependencies: {
-                  select: {
-                    depends_on_case_process_id: true,
-                  },
-                },
-              },
-            },
-          },
-          orderBy: { created_at: "asc" },
-        },
-      },
-    });
-
-    if (!existing) throw new CaseNotFoundError();
-
-    await validateActiveCaseReferences(membership.lab_id, {
-      customer_id:
-        input.customer_id !== undefined ? input.customer_id : existing.customer_id,
-      dentist_id:
-        input.dentist_id !== undefined ? input.dentist_id : existing.dentist_id,
-      service_lines: input.service_lines,
-    });
-
-    const serviceLinePlans = await buildServiceLinePlans(
-      membership.lab_id,
-      input.customer_id !== undefined ? input.customer_id : existing.customer_id,
-      {
+  const baseCaseUpdate = buildBaseCaseUpdateData(input);
+  const updatedCaseId = input.service_lines
+    ? await updateCaseWithServiceLines(membership, case_id, {
+        ...input,
         service_lines: input.service_lines,
-      },
-    );
-
-    await prisma.$transaction(async (tx) => {
-      await tx.cases.update({
-        where: { id: existing.id },
-        data: baseCaseUpdate,
-      });
-
-      const transition = getCaseStatusTransitionHistoryEntry({
-        previousStatus: existing.current_status,
-        nextStatus: input.current_status,
-        statusReason: input.status_reason,
-      });
-      if (transition) {
-        await createStatusHistoryEntry(tx, {
-          case_id: existing.id,
-          from_status: transition.fromStatus,
-          to_status: transition.toStatus,
-          note: transition.note,
-        });
-      }
-
-      await syncCaseServiceLines(
-        tx,
-        existing.id,
-        existing,
-        serviceLinePlans,
-      );
-    });
-
-    updatedCaseId = existing.id;
-  } else {
-    const existing = await prisma.cases.findFirst({
-      where: {
-        id: case_id,
-        lab_id: membership.lab_id,
-      },
-      select: {
-        id: true,
-        customer_id: true,
-        dentist_id: true,
-        current_status: true,
-      },
-    });
-
-    if (!existing) throw new CaseNotFoundError();
-
-    await validateActiveCaseReferences(membership.lab_id, {
-      customer_id:
-        input.customer_id !== undefined ? input.customer_id : existing.customer_id,
-      dentist_id:
-        input.dentist_id !== undefined ? input.dentist_id : existing.dentist_id,
-    });
-
-    await prisma.$transaction(async (tx) => {
-      await tx.cases.update({
-        where: { id: existing.id },
-        data: baseCaseUpdate,
-      });
-
-      const transition = getCaseStatusTransitionHistoryEntry({
-        previousStatus: existing.current_status,
-        nextStatus: input.current_status,
-        statusReason: input.status_reason,
-      });
-      if (transition) {
-        await createStatusHistoryEntry(tx, {
-          case_id: existing.id,
-          from_status: transition.fromStatus,
-          to_status: transition.toStatus,
-          note: transition.note,
-        });
-      }
-    });
-
-    updatedCaseId = existing.id;
-  }
+      }, baseCaseUpdate)
+    : await updateCaseDetailsOnly(membership, case_id, input, baseCaseUpdate);
 
   const updatedCase = await prisma.cases.findUniqueOrThrow({
     where: { id: updatedCaseId },

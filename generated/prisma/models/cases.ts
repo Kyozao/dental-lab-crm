@@ -57,7 +57,6 @@ export type CasesMinAggregateOutputType = {
   due_date: Date | null
   is_urgent: boolean | null
   observations: string | null
-  pending_note: string | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -81,7 +80,6 @@ export type CasesMaxAggregateOutputType = {
   due_date: Date | null
   is_urgent: boolean | null
   observations: string | null
-  pending_note: string | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -105,7 +103,6 @@ export type CasesCountAggregateOutputType = {
   due_date: number
   is_urgent: number
   observations: number
-  pending_note: number
   created_at: number
   updated_at: number
   _all: number
@@ -143,7 +140,6 @@ export type CasesMinAggregateInputType = {
   due_date?: true
   is_urgent?: true
   observations?: true
-  pending_note?: true
   created_at?: true
   updated_at?: true
 }
@@ -167,7 +163,6 @@ export type CasesMaxAggregateInputType = {
   due_date?: true
   is_urgent?: true
   observations?: true
-  pending_note?: true
   created_at?: true
   updated_at?: true
 }
@@ -191,7 +186,6 @@ export type CasesCountAggregateInputType = {
   due_date?: true
   is_urgent?: true
   observations?: true
-  pending_note?: true
   created_at?: true
   updated_at?: true
   _all?: true
@@ -302,7 +296,6 @@ export type CasesGroupByOutputType = {
   due_date: Date | null
   is_urgent: boolean
   observations: string | null
-  pending_note: string | null
   created_at: Date
   updated_at: Date
   _count: CasesCountAggregateOutputType | null
@@ -349,7 +342,6 @@ export type casesWhereInput = {
   due_date?: Prisma.DateTimeNullableFilter<"cases"> | Date | string | null
   is_urgent?: Prisma.BoolFilter<"cases"> | boolean
   observations?: Prisma.StringNullableFilter<"cases"> | string | null
-  pending_note?: Prisma.StringNullableFilter<"cases"> | string | null
   created_at?: Prisma.DateTimeFilter<"cases"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"cases"> | Date | string
   caseComponentUsages?: Prisma.Case_component_usagesListRelationFilter
@@ -387,7 +379,6 @@ export type casesOrderByWithRelationInput = {
   due_date?: Prisma.SortOrderInput | Prisma.SortOrder
   is_urgent?: Prisma.SortOrder
   observations?: Prisma.SortOrderInput | Prisma.SortOrder
-  pending_note?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   caseComponentUsages?: Prisma.case_component_usagesOrderByRelationAggregateInput
@@ -429,7 +420,6 @@ export type casesWhereUniqueInput = Prisma.AtLeast<{
   due_date?: Prisma.DateTimeNullableFilter<"cases"> | Date | string | null
   is_urgent?: Prisma.BoolFilter<"cases"> | boolean
   observations?: Prisma.StringNullableFilter<"cases"> | string | null
-  pending_note?: Prisma.StringNullableFilter<"cases"> | string | null
   created_at?: Prisma.DateTimeFilter<"cases"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"cases"> | Date | string
   caseComponentUsages?: Prisma.Case_component_usagesListRelationFilter
@@ -467,7 +457,6 @@ export type casesOrderByWithAggregationInput = {
   due_date?: Prisma.SortOrderInput | Prisma.SortOrder
   is_urgent?: Prisma.SortOrder
   observations?: Prisma.SortOrderInput | Prisma.SortOrder
-  pending_note?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.casesCountOrderByAggregateInput
@@ -499,7 +488,6 @@ export type casesScalarWhereWithAggregatesInput = {
   due_date?: Prisma.DateTimeNullableWithAggregatesFilter<"cases"> | Date | string | null
   is_urgent?: Prisma.BoolWithAggregatesFilter<"cases"> | boolean
   observations?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
-  pending_note?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"cases"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"cases"> | Date | string
 }
@@ -518,7 +506,6 @@ export type casesCreateInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
@@ -556,7 +543,6 @@ export type casesUncheckedCreateInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
@@ -584,7 +570,6 @@ export type casesUpdateInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
@@ -622,7 +607,6 @@ export type casesUncheckedUpdateInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
@@ -655,7 +639,6 @@ export type casesCreateManyInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -674,7 +657,6 @@ export type casesUpdateManyMutationInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -698,7 +680,6 @@ export type casesUncheckedUpdateManyInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -742,7 +723,6 @@ export type casesCountOrderByAggregateInput = {
   due_date?: Prisma.SortOrder
   is_urgent?: Prisma.SortOrder
   observations?: Prisma.SortOrder
-  pending_note?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -772,7 +752,6 @@ export type casesMaxOrderByAggregateInput = {
   due_date?: Prisma.SortOrder
   is_urgent?: Prisma.SortOrder
   observations?: Prisma.SortOrder
-  pending_note?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -796,7 +775,6 @@ export type casesMinOrderByAggregateInput = {
   due_date?: Prisma.SortOrder
   is_urgent?: Prisma.SortOrder
   observations?: Prisma.SortOrder
-  pending_note?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -1168,7 +1146,6 @@ export type casesCreateWithoutCreatedByUserInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
@@ -1204,7 +1181,6 @@ export type casesUncheckedCreateWithoutCreatedByUserInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
@@ -1266,7 +1242,6 @@ export type casesScalarWhereInput = {
   due_date?: Prisma.DateTimeNullableFilter<"cases"> | Date | string | null
   is_urgent?: Prisma.BoolFilter<"cases"> | boolean
   observations?: Prisma.StringNullableFilter<"cases"> | string | null
-  pending_note?: Prisma.StringNullableFilter<"cases"> | string | null
   created_at?: Prisma.DateTimeFilter<"cases"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"cases"> | Date | string
 }
@@ -1285,7 +1260,6 @@ export type casesCreateWithoutLabsInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
@@ -1321,7 +1295,6 @@ export type casesUncheckedCreateWithoutLabsInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
@@ -1375,7 +1348,6 @@ export type casesCreateWithoutService_typesInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
@@ -1411,7 +1383,6 @@ export type casesUncheckedCreateWithoutService_typesInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
@@ -1465,7 +1436,6 @@ export type casesCreateWithoutMillingsInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
@@ -1502,7 +1472,6 @@ export type casesUncheckedCreateWithoutMillingsInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
@@ -1545,7 +1514,6 @@ export type casesUpdateWithoutMillingsInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
@@ -1582,7 +1550,6 @@ export type casesUncheckedUpdateWithoutMillingsInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
@@ -1609,7 +1576,6 @@ export type casesCreateWithoutCase_attachmentsInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
@@ -1646,7 +1612,6 @@ export type casesUncheckedCreateWithoutCase_attachmentsInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
@@ -1689,7 +1654,6 @@ export type casesUpdateWithoutCase_attachmentsInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
@@ -1726,7 +1690,6 @@ export type casesUncheckedUpdateWithoutCase_attachmentsInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
@@ -1753,7 +1716,6 @@ export type casesCreateWithoutCustomersInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
@@ -1789,7 +1751,6 @@ export type casesUncheckedCreateWithoutCustomersInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
@@ -1843,7 +1804,6 @@ export type casesCreateWithoutDentistsInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
@@ -1879,7 +1839,6 @@ export type casesUncheckedCreateWithoutDentistsInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
@@ -1933,7 +1892,6 @@ export type casesCreateWithoutCaseComponentUsagesInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
@@ -1970,7 +1928,6 @@ export type casesUncheckedCreateWithoutCaseComponentUsagesInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
@@ -2013,7 +1970,6 @@ export type casesUpdateWithoutCaseComponentUsagesInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
@@ -2050,7 +2006,6 @@ export type casesUncheckedUpdateWithoutCaseComponentUsagesInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
@@ -2077,7 +2032,6 @@ export type casesCreateWithoutCase_commentsInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
@@ -2114,7 +2068,6 @@ export type casesUncheckedCreateWithoutCase_commentsInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
@@ -2157,7 +2110,6 @@ export type casesUpdateWithoutCase_commentsInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
@@ -2194,7 +2146,6 @@ export type casesUncheckedUpdateWithoutCase_commentsInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
@@ -2221,7 +2172,6 @@ export type casesCreateWithoutCase_thread_readsInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
@@ -2258,7 +2208,6 @@ export type casesUncheckedCreateWithoutCase_thread_readsInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
@@ -2301,7 +2250,6 @@ export type casesUpdateWithoutCase_thread_readsInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
@@ -2338,7 +2286,6 @@ export type casesUncheckedUpdateWithoutCase_thread_readsInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
@@ -2365,7 +2312,6 @@ export type casesCreateWithoutCase_processesInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
@@ -2402,7 +2348,6 @@ export type casesUncheckedCreateWithoutCase_processesInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
@@ -2445,7 +2390,6 @@ export type casesUpdateWithoutCase_processesInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
@@ -2482,7 +2426,6 @@ export type casesUncheckedUpdateWithoutCase_processesInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
@@ -2509,7 +2452,6 @@ export type casesCreateWithoutCase_servicesInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
@@ -2546,7 +2488,6 @@ export type casesUncheckedCreateWithoutCase_servicesInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
@@ -2589,7 +2530,6 @@ export type casesUpdateWithoutCase_servicesInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
@@ -2626,7 +2566,6 @@ export type casesUncheckedUpdateWithoutCase_servicesInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
@@ -2653,7 +2592,6 @@ export type casesCreateWithoutStatusHistoryInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
@@ -2690,7 +2628,6 @@ export type casesUncheckedCreateWithoutStatusHistoryInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
@@ -2733,7 +2670,6 @@ export type casesUpdateWithoutStatusHistoryInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
@@ -2770,7 +2706,6 @@ export type casesUncheckedUpdateWithoutStatusHistoryInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
@@ -2797,7 +2732,6 @@ export type casesCreateWithoutNotificationsInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
@@ -2834,7 +2768,6 @@ export type casesUncheckedCreateWithoutNotificationsInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
@@ -2877,7 +2810,6 @@ export type casesUpdateWithoutNotificationsInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
@@ -2914,7 +2846,6 @@ export type casesUncheckedUpdateWithoutNotificationsInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
@@ -2945,7 +2876,6 @@ export type casesCreateManyCreatedByUserInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -2964,7 +2894,6 @@ export type casesUpdateWithoutCreatedByUserInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
@@ -3000,7 +2929,6 @@ export type casesUncheckedUpdateWithoutCreatedByUserInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
@@ -3032,7 +2960,6 @@ export type casesUncheckedUpdateManyWithoutCreatedByUserInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -3055,7 +2982,6 @@ export type casesCreateManyLabsInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -3074,7 +3000,6 @@ export type casesUpdateWithoutLabsInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
@@ -3110,7 +3035,6 @@ export type casesUncheckedUpdateWithoutLabsInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
@@ -3142,7 +3066,6 @@ export type casesUncheckedUpdateManyWithoutLabsInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -3165,7 +3088,6 @@ export type casesCreateManyService_typesInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -3184,7 +3106,6 @@ export type casesUpdateWithoutService_typesInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
@@ -3220,7 +3141,6 @@ export type casesUncheckedUpdateWithoutService_typesInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
@@ -3252,7 +3172,6 @@ export type casesUncheckedUpdateManyWithoutService_typesInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -3275,7 +3194,6 @@ export type casesCreateManyCustomersInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -3294,7 +3212,6 @@ export type casesUpdateWithoutCustomersInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
@@ -3330,7 +3247,6 @@ export type casesUncheckedUpdateWithoutCustomersInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
@@ -3362,7 +3278,6 @@ export type casesUncheckedUpdateManyWithoutCustomersInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -3385,7 +3300,6 @@ export type casesCreateManyDentistsInput = {
   due_date?: Date | string | null
   is_urgent?: boolean
   observations?: string | null
-  pending_note?: string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -3404,7 +3318,6 @@ export type casesUpdateWithoutDentistsInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
@@ -3440,7 +3353,6 @@ export type casesUncheckedUpdateWithoutDentistsInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
@@ -3472,7 +3384,6 @@ export type casesUncheckedUpdateManyWithoutDentistsInput = {
   due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
   observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  pending_note?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -3599,7 +3510,6 @@ export type casesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   due_date?: boolean
   is_urgent?: boolean
   observations?: boolean
-  pending_note?: boolean
   created_at?: boolean
   updated_at?: boolean
   caseComponentUsages?: boolean | Prisma.cases$caseComponentUsagesArgs<ExtArgs>
@@ -3638,7 +3548,6 @@ export type casesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   due_date?: boolean
   is_urgent?: boolean
   observations?: boolean
-  pending_note?: boolean
   created_at?: boolean
   updated_at?: boolean
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
@@ -3667,7 +3576,6 @@ export type casesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   due_date?: boolean
   is_urgent?: boolean
   observations?: boolean
-  pending_note?: boolean
   created_at?: boolean
   updated_at?: boolean
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
@@ -3696,12 +3604,11 @@ export type casesSelectScalar = {
   due_date?: boolean
   is_urgent?: boolean
   observations?: boolean
-  pending_note?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type casesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "code" | "patient_name" | "customer_id" | "service_type_id" | "dentist_id" | "created_by_user_id" | "current_status" | "service_base_price_snapshot" | "case_price" | "is_price_overridden" | "teeth" | "elements_qty" | "shade" | "due_date" | "is_urgent" | "observations" | "pending_note" | "created_at" | "updated_at", ExtArgs["result"]["cases"]>
+export type casesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "code" | "patient_name" | "customer_id" | "service_type_id" | "dentist_id" | "created_by_user_id" | "current_status" | "service_base_price_snapshot" | "case_price" | "is_price_overridden" | "teeth" | "elements_qty" | "shade" | "due_date" | "is_urgent" | "observations" | "created_at" | "updated_at", ExtArgs["result"]["cases"]>
 export type casesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   caseComponentUsages?: boolean | Prisma.cases$caseComponentUsagesArgs<ExtArgs>
   statusHistory?: boolean | Prisma.cases$statusHistoryArgs<ExtArgs>
@@ -3771,7 +3678,6 @@ export type $casesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     due_date: Date | null
     is_urgent: boolean
     observations: string | null
-    pending_note: string | null
     created_at: Date
     updated_at: Date
   }, ExtArgs["result"]["cases"]>
@@ -4229,7 +4135,6 @@ export interface casesFieldRefs {
   readonly due_date: Prisma.FieldRef<"cases", 'DateTime'>
   readonly is_urgent: Prisma.FieldRef<"cases", 'Boolean'>
   readonly observations: Prisma.FieldRef<"cases", 'String'>
-  readonly pending_note: Prisma.FieldRef<"cases", 'String'>
   readonly created_at: Prisma.FieldRef<"cases", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"cases", 'DateTime'>
 }

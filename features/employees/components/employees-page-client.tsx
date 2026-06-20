@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { EmptyState } from "@/components/app/empty-state";
 import { Panel, PanelHeader } from "@/components/app/panel";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { RefreshButton } from "@/components/ui/refresh-button";
 import {
   Table,
   TableBody,
@@ -91,14 +91,12 @@ export function EmployeesPageClient() {
             </div>
             <div className="flex flex-wrap items-center gap-2">
               {notice ? <Badge variant="success">{notice}</Badge> : null}
-              <Button
-                type="button"
-                variant="outline"
+              <RefreshButton
                 onClick={() => void refreshEmployees()}
                 disabled={!hydrated || loading}
-              >
-                Refresh
-              </Button>
+                label="Refresh employees"
+                spinning={loading}
+              />
               {canInviteEmployees ? (
                 <AddEmployeeButton
                   disabled={!hydrated || loading}

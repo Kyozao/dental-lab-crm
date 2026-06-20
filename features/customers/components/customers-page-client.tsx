@@ -7,6 +7,8 @@ import { EmptyState } from "@/components/app/empty-state";
 import { Panel, PanelHeader } from "@/components/app/panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { RefreshButton } from "@/components/ui/refresh-button";
+import { Spinner } from "@/components/ui/spinner";
 import {
   Table,
   TableBody,
@@ -72,21 +74,24 @@ export function CustomersPageClient() {
             <div>
               <h2 className="text-base font-semibold">Customer directory</h2>
               <p className="text-sm text-muted-foreground">
-                {loading
-                  ? "Loading customers"
-                  : `${customers.length} ${customers.length === 1 ? "customer" : "customers"}`}
+                {loading ? (
+                  <span className="inline-flex items-center gap-2">
+                    <Spinner className="size-4" />
+                    <span className="sr-only">Loading customers</span>
+                  </span>
+                ) : (
+                  `${customers.length} ${customers.length === 1 ? "customer" : "customers"}`
+                )}
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-2">
               {notice ? <Badge variant="success">{notice}</Badge> : null}
-              <Button
-                type="button"
-                variant="outline"
+              <RefreshButton
                 onClick={() => void refreshCustomers()}
                 disabled={!hydrated || loading}
-              >
-                Refresh
-              </Button>
+                label="Refresh customers"
+                spinning={loading}
+              />
               <AddCustomerButton
                 disabled={!hydrated || loading}
                 onClick={() => setAddDialogOpen(true)}
@@ -118,7 +123,10 @@ export function CustomersPageClient() {
               {loading ? (
                 <TableRow>
                   <TableCell colSpan={7} className="py-8 text-center text-sm text-muted-foreground">
-                    Loading customers...
+                    <div className="flex items-center justify-center">
+                      <Spinner className="size-4" />
+                      <span className="sr-only">Loading customers</span>
+                    </div>
                   </TableCell>
                 </TableRow>
               ) : null}

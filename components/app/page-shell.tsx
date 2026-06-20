@@ -7,8 +7,8 @@ type PageShellProps = React.ComponentProps<"main"> & {
 };
 
 const widthClass = {
-  default: "max-w-7xl",
-  wide: "max-w-7xl",
+  default: "max-w-[96rem]",
+  wide: "max-w-[96rem]",
   kanban: "max-w-none",
 };
 

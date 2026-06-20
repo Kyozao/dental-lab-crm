@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { RefreshButton } from "@/components/ui/refresh-button";
 import {
   Dialog,
   DialogContent,
@@ -308,9 +309,12 @@ export function ServicesPageClient() {
                 </p>
               </div>
               <div className="flex flex-wrap gap-2">
-                <Button type="button" variant="outline" onClick={() => void refreshAll()} disabled={loading || loadingPriceTables}>
-                  Refresh
-                </Button>
+                <RefreshButton
+                  onClick={() => void refreshAll()}
+                  disabled={loading || loadingPriceTables}
+                  label="Refresh services"
+                  spinning={loading || loadingPriceTables}
+                />
                 <Button type="button" onClick={openCreateDialog}>
                   Add service
                 </Button>

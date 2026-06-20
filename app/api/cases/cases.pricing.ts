@@ -4,6 +4,13 @@ export type CasePricingState = {
   is_price_overridden: boolean;
 };
 
+export function resolveEffectiveServiceBasePrice(args: {
+  serviceTypeBasePrice: string;
+  customerPriceTablePrice?: string | null;
+}) {
+  return args.customerPriceTablePrice ?? args.serviceTypeBasePrice;
+}
+
 export function resolveCasePricing(args: {
   currentServiceTypeId?: string | null;
   nextServiceTypeId?: string | null;

@@ -17,7 +17,6 @@ export type CreateCaseInput = {
   due_date?: Date | null;
   is_urgent?: boolean;
   observations?: string | null;
-  pending_note?: string | null;
   service_lines: CaseServiceLineInput[];
 };
 
@@ -317,7 +316,6 @@ export function parseCreateCaseInput(payload: unknown): ValidationResult {
       is_urgent:
         typeof body.is_urgent === "boolean" ? body.is_urgent : undefined,
       observations: optionalString(body.observations),
-      pending_note: optionalString(body.pending_note),
       service_lines,
     },
   };
@@ -441,10 +439,6 @@ export function parseUpdateCaseInput(payload: unknown): UpdateValidationResult {
 
   if ("observations" in body) {
     data.observations = optionalString(body.observations);
-  }
-
-  if ("pending_note" in body) {
-    data.pending_note = optionalString(body.pending_note);
   }
 
   if ("service_lines" in body) {

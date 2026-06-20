@@ -1,8 +1,10 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { resolveCasePricing } from "@/app/api/cases/cases.pricing";
-import { resolveEffectiveServiceBasePrice } from "@/app/api/cases/cases.price-resolution";
+import {
+  resolveCasePricing,
+  resolveEffectiveServiceBasePrice,
+} from "@/app/api/cases/cases.pricing";
 
 test("case pricing snapshots the selected service price on create", () => {
   assert.deepEqual(

@@ -37,7 +37,6 @@ export type CaseListItem = {
   isUrgent: boolean;
   priority: "urgent" | "high" | "normal" | "low";
   observations: string | null;
-  pendingNote: string | null;
   currentCaseProcessId: string | null;
   currentProcessId: string | null;
   currentWorkflowStepId: string | null;
@@ -118,7 +117,6 @@ export type CaseMutationPayload = {
   dueDate?: string | null;
   isUrgent?: boolean;
   observations?: string | null;
-  pendingNote?: string | null;
   statusReason?: string | null;
   serviceLines?: Array<{
     id?: string;
@@ -142,7 +140,6 @@ type CaseMutationApiPayload = {
   due_date?: string | null;
   is_urgent?: boolean;
   observations?: string | null;
-  pending_note?: string | null;
   status_reason?: string | null;
   service_lines?: Array<{
     id?: string;
@@ -215,10 +212,6 @@ function toCaseMutationApiPayload(payload: CaseMutationPayload) {
 
   if (payload.observations !== undefined) {
     apiPayload.observations = payload.observations;
-  }
-
-  if (payload.pendingNote !== undefined) {
-    apiPayload.pending_note = payload.pendingNote;
   }
 
   if (payload.statusReason !== undefined) {

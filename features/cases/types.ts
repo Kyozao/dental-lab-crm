@@ -195,7 +195,6 @@ export type EditableCase = {
   shade: string;
   dueDate: string | null;
   observations: string;
-  pendingNote: string;
   isUrgent: boolean;
   createdAt: string;
   updatedAt: string;
@@ -236,7 +235,6 @@ export type CaseFormValues = {
   shade?: string | null;
   dueDate?: string | Date | null;
   observations?: string | null;
-  pendingNote?: string | null;
   statusReason?: string | null;
   isUrgent?: boolean;
   customerId?: string | null;

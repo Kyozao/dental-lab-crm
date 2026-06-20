@@ -2852,7 +2852,6 @@ export const CasesScalarFieldEnum = {
   due_date: 'due_date',
   is_urgent: 'is_urgent',
   observations: 'observations',
-  pending_note: 'pending_note',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const

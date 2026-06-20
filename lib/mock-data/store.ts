@@ -101,7 +101,6 @@ export type MockCase = {
   shade: string;
   dueDate: string | null;
   observations: string;
-  pendingNote: string;
   isUrgent: boolean;
   createdAt: string;
   updatedAt: string;
@@ -243,7 +242,6 @@ function createInitialState(): MockState {
       shade: "A2",
       dueDate: daysFromNow(2),
       observations: "Anterior bridge, check emergence profile.",
-      pendingNote: "",
       isUrgent: true,
       createdAt: daysFromNow(-4),
       updatedAt: daysFromNow(-1),
@@ -267,7 +265,6 @@ function createInitialState(): MockState {
       shade: "A3",
       dueDate: daysFromNow(1),
       observations: "Single crown.",
-      pendingNote: "",
       isUrgent: false,
       createdAt: daysFromNow(-3),
       updatedAt: daysFromNow(-1),
@@ -291,7 +288,6 @@ function createInitialState(): MockState {
       shade: "B1",
       dueDate: daysFromNow(-2),
       observations: "Delivered.",
-      pendingNote: "",
       isUrgent: false,
       createdAt: daysFromNow(-10),
       updatedAt: daysFromNow(-2),
@@ -315,7 +311,6 @@ function createInitialState(): MockState {
       shade: "A1",
       dueDate: daysFromNow(3),
       observations: "Rio lab scoped case with code reused safely.",
-      pendingNote: "",
       isUrgent: false,
       createdAt: daysFromNow(-2),
       updatedAt: daysFromNow(-1),
@@ -544,7 +539,6 @@ export function serializeCase(item: MockCase, detailed = false) {
     shade: item.shade,
     dueDate: item.dueDate,
     observations: item.observations,
-    pendingNote: item.pendingNote,
     isUrgent: item.isUrgent,
     createdAt: item.createdAt,
     updatedAt: item.updatedAt,
@@ -656,7 +650,6 @@ export function createCase(payload: Record<string, unknown>) {
     shade: String(payload.shade || ""),
     dueDate: typeof payload.dueDate === "string" && payload.dueDate ? new Date(payload.dueDate).toISOString() : null,
     observations: String(payload.observations || ""),
-    pendingNote: String(payload.pendingNote || ""),
     isUrgent: Boolean(payload.isUrgent),
     createdAt,
     updatedAt: createdAt,
@@ -685,7 +678,6 @@ export function updateCase(idValue: string, payload: Record<string, unknown>) {
   if (typeof payload.shade === "string") item.shade = payload.shade;
   if ("dueDate" in payload) item.dueDate = typeof payload.dueDate === "string" && payload.dueDate ? new Date(payload.dueDate).toISOString() : null;
   if (typeof payload.observations === "string") item.observations = payload.observations;
-  if (typeof payload.pendingNote === "string") item.pendingNote = payload.pendingNote;
   if ("isUrgent" in payload) item.isUrgent = Boolean(payload.isUrgent);
   if ("customerId" in payload) {
     const selectedCustomer = activeCustomer(typeof payload.customerId === "string" ? payload.customerId : null);

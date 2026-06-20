@@ -25,7 +25,6 @@ const baseInput: CreateCaseInput = {
   due_date: new Date("2026-07-01T00:00:00.000Z"),
   is_urgent: true,
   observations: "Rush case",
-  pending_note: "Need approval",
   service_lines: [
     {
       service_type_id: "service-type-1",
@@ -164,7 +163,6 @@ test("createCaseWithWorkflow persists workflow step statuses and dependencies", 
     due_date: new Date("2026-07-01T00:00:00.000Z"),
     is_urgent: true,
     observations: "Rush case",
-    pending_note: "Need approval",
   });
   assert.deepEqual(stub.createdCaseServices, [
     {

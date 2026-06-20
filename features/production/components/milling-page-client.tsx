@@ -7,7 +7,6 @@ import {
   Drill,
   History,
   Loader2,
-  RefreshCw,
   TriangleAlert,
   Wrench,
 } from "lucide-react";
@@ -19,6 +18,7 @@ import { PageShell } from "@/components/app/page-shell";
 import { Panel, PanelHeader } from "@/components/app/panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { RefreshButton } from "@/components/ui/refresh-button";
 import {
   Tabs,
   TabsContent,
@@ -85,15 +85,12 @@ export function MillingPageClient() {
         title="Milling"
         description="Run the milling department from one workspace: monitor exceptions, complete queued work, and manage machines and drills."
         actions={
-          <Button
-            type="button"
-            variant="outline"
+          <RefreshButton
             onClick={() => void loadWorkspace()}
             disabled={isLoading}
-          >
-            <RefreshCw className={isLoading ? "h-4 w-4 animate-spin" : "h-4 w-4"} />
-            Refresh
-          </Button>
+            label="Refresh milling workspace"
+            spinning={isLoading}
+          />
         }
       />
 

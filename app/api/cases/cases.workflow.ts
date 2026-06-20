@@ -249,7 +249,6 @@ function buildCaseCreateData(
     due_date: input.due_date,
     is_urgent: input.is_urgent,
     observations: input.observations,
-    pending_note: input.pending_note,
   };
 }
 

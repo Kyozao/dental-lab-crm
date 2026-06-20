@@ -89,7 +89,6 @@ export function mapApiCaseToEditableCase(item: CaseListItem): EditableCase {
     shade: item.shade ?? "",
     dueDate: item.dueDate,
     observations: item.observations ?? "",
-    pendingNote: item.pendingNote ?? "",
     isUrgent: item.isUrgent,
     createdAt: item.createdAt,
     updatedAt: item.updatedAt,

@@ -8,6 +8,7 @@ import { EmptyState } from "@/components/app/empty-state";
 import { Panel, PanelHeader } from "@/components/app/panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { RefreshButton } from "@/components/ui/refresh-button";
 import { PageHeader } from "@/components/app/page-header";
 import {
   assignableRoles,
@@ -199,14 +200,12 @@ export function EmployeeDetailPageClient({
             <Button variant="outline" asChild>
               <Link href="/employees">Back to directory</Link>
             </Button>
-            <Button
-              type="button"
-              variant="outline"
+            <RefreshButton
               onClick={() => void refreshEmployee()}
               disabled={!hydrated || loading}
-            >
-              Refresh
-            </Button>
+              label="Refresh employee"
+              spinning={loading}
+            />
           </div>
         }
       />

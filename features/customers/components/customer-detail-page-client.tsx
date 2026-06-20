@@ -28,6 +28,7 @@ import { EmptyState } from "@/components/app/empty-state";
 import { Panel } from "@/components/app/panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { RefreshButton } from "@/components/ui/refresh-button";
 import {
   Card,
   CardContent,
@@ -351,15 +352,13 @@ export function CustomerDetailPageClient({
                         >
                           Edit customer
                         </Button>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
+                        <RefreshButton
                           onClick={() => void refreshCustomer()}
                           disabled={!hydrated || loading}
-                        >
-                          Refresh
-                        </Button>
+                          label="Refresh customer"
+                          spinning={loading}
+                          size="icon-sm"
+                        />
                       </div>
                     </div>
 

@@ -109,7 +109,6 @@ export function CaseDetailsDialog({
       shade: "",
       dueDate: null,
       observations: "",
-      pendingNote: "",
       isUrgent: false,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -587,7 +586,7 @@ export function CaseDetailsDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[92vh] overflow-y-auto p-0 sm:max-w-[96vw] xl:max-w-[1180px]">
+      <DialogContent className="max-h-[92vh] overflow-y-auto p-0 sm:max-w-[96vw] xl:max-w-295">
         <DialogHeader className="border-b px-6 py-5">
           {dialogView === "serviceWorkflow" ? (
             <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">

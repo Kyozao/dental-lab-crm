@@ -7,7 +7,7 @@ import {
   parseListCasesInput,
   parseUpdateCaseInput,
 } from "@/app/api/cases/cases.schemas";
-import { getCaseStatusTransitionHistoryEntry } from "@/app/api/cases/cases.status";
+import { getCaseStatusTransitionHistoryEntry } from "@/app/api/cases/cases.service";
 import { parseUpdateCaseProcessInput } from "@/app/api/case-processes/case-processes.schemas";
 import {
   assertCanAssignCaseProcess,
