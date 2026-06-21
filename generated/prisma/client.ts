@@ -57,6 +57,11 @@ export type labs = Prisma.labsModel
  */
 export type lab_members = Prisma.lab_membersModel
 /**
+ * Model employee_invites
+ * 
+ */
+export type employee_invites = Prisma.employee_invitesModel
+/**
  * Model service_types
  * 
  */

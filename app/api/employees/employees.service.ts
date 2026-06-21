@@ -5,6 +5,11 @@ import {
   SupabaseAdminConfigError,
 } from "@/lib/supabase/admin";
 
+import {
+  findSupabaseAuthUserByEmail,
+  normalizeEmail,
+} from "../auth/auth.service";
+import { ReferenceValidationError } from "../_shared/reference-resource";
 import { getSingleLabMembership } from "../_shared/membership";
 import type {
   CreateEmployeeInput,
@@ -15,23 +20,22 @@ import {
   assertCanAssignEmployeeProcesses,
   assertCanManageEmployees,
   assertCanViewEmployees,
-  assertUserHasNoLabMembership,
   canAssignEmployeeProcesses,
   EmployeeAuthorizationError,
   EmployeeConflictError,
 } from "./employees.rules";
-import { ReferenceValidationError } from "../_shared/reference-resource";
 
 export { EmployeeAuthorizationError, EmployeeConflictError };
 export { SupabaseAdminConfigError };
 
 type EmployeeListItem = {
   id: string;
-  lab_member_id: string;
-  user_id: string;
+  lab_member_id: string | null;
+  user_id: string | null;
   name: string;
   email: string;
   role: UserRole;
+  status: "ACTIVE" | "PENDING";
   is_active: boolean;
   created_at: string;
   processes: Array<{
@@ -54,6 +58,14 @@ type EmployeeRecord = {
       name: string;
     };
   }>;
+  role: UserRole;
+  created_at: Date;
+};
+
+type PendingInviteRecord = {
+  id: string;
+  name: string;
+  email: string;
   role: UserRole;
   created_at: Date;
 };
@@ -87,10 +99,26 @@ function serializeEmployee(item: EmployeeRecord): EmployeeListItem {
     name: item.users.name,
     email: item.users.email,
     role: item.role,
+    status: "ACTIVE",
     is_active: item.users.is_active,
     created_at: item.created_at.toISOString(),
     processes:
       item.processOwnerships?.map((assignment) => assignment.processes) ?? [],
+  };
+}
+
+function serializePendingInvite(item: PendingInviteRecord): EmployeeListItem {
+  return {
+    id: item.id,
+    lab_member_id: null,
+    user_id: null,
+    name: item.name,
+    email: item.email,
+    role: item.role,
+    status: "PENDING",
+    is_active: false,
+    created_at: item.created_at.toISOString(),
+    processes: [],
   };
 }
 
@@ -124,7 +152,7 @@ function buildEmployeeSelect(lab_id: string) {
   } as const;
 }
 
-function getInviteRedirectTo() {
+function getInviteRedirectTo(inviteId: string) {
   const appUrl =
     process.env.NEXT_PUBLIC_APP_URL ??
     process.env.APP_URL ??
@@ -132,7 +160,13 @@ function getInviteRedirectTo() {
     process.env.API_URL ??
     process.env.NEXT_PUBLIC_SUPABASE_URL;
 
-  return appUrl ? `${appUrl.replace(/\/$/, "")}/login` : undefined;
+  if (!appUrl) {
+    return undefined;
+  }
+
+  const redirectUrl = new URL("/employee-invite/accept", appUrl.replace(/\/$/, ""));
+  redirectUrl.searchParams.set("invite", inviteId);
+  return redirectUrl.toString();
 }
 
 async function requireEmployeeManager(user_id: string) {
@@ -153,22 +187,137 @@ async function requireProcessAssignmentManager(user_id: string) {
   return membership;
 }
 
+async function ensureEmployeeInviteCanBeSent(options: {
+  email: string;
+  lab_id: string;
+  pendingInvite:
+    | {
+        id: string;
+        lab_id: string;
+        auth_user_id: string | null;
+      }
+    | null;
+}) {
+  const normalizedEmail = normalizeEmail(options.email);
+
+  const existingUser = await prisma.users.findUnique({
+    where: { email: normalizedEmail },
+    select: {
+      id: true,
+    },
+  });
+
+  if (existingUser) {
+    throw new EmployeeConflictError(
+      "An account with this email already exists. Employee invites currently support only new users.",
+    );
+  }
+
+  const authUser = await findSupabaseAuthUserByEmail(normalizedEmail);
+  if (!authUser) {
+    return;
+  }
+
+  const canReusePendingInvite =
+    options.pendingInvite !== null &&
+    options.pendingInvite.lab_id === options.lab_id &&
+    (
+      options.pendingInvite.auth_user_id === null ||
+      options.pendingInvite.auth_user_id === authUser.id
+    );
+
+  if (!canReusePendingInvite) {
+    throw new EmployeeConflictError(
+      "An account or pending invite with this email already exists. Employee invites currently support only new users.",
+    );
+  }
+}
+
+async function createOrUpdatePendingInvite(options: {
+  lab_id: string;
+  invited_by_user_id: string;
+  payload: CreateEmployeeInput;
+  pendingInvite:
+    | {
+        id: string;
+      }
+    | null;
+}) {
+  if (options.pendingInvite) {
+    return prisma.employee_invites.update({
+      where: { id: options.pendingInvite.id },
+      data: {
+        name: options.payload.name,
+        email: options.payload.email,
+        role: options.payload.role,
+        invited_by_user_id: options.invited_by_user_id,
+        cancelled_at: null,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        created_at: true,
+      },
+    });
+  }
+
+  return prisma.employee_invites.create({
+    data: {
+      lab_id: options.lab_id,
+      invited_by_user_id: options.invited_by_user_id,
+      name: options.payload.name,
+      email: options.payload.email,
+      role: options.payload.role,
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      created_at: true,
+    },
+  });
+}
+
 export async function listEmployeesForLoggedLab(user_id: string) {
   const membership = await requireEmployeeViewer(user_id);
   const { lab_id } = membership;
-  const employees = await prisma.lab_members.findMany({
-    where: {
-      lab_id,
-      users: {
-        deleted_at: null,
+
+  const [employees, pendingInvites] = await Promise.all([
+    prisma.lab_members.findMany({
+      where: {
+        lab_id,
+        users: {
+          deleted_at: null,
+        },
       },
-    },
-    select: buildEmployeeSelect(lab_id),
-    orderBy: [{ role: "asc" }, { created_at: "asc" }],
-  });
+      select: buildEmployeeSelect(lab_id),
+      orderBy: [{ role: "asc" }, { created_at: "asc" }],
+    }),
+    prisma.employee_invites.findMany({
+      where: {
+        lab_id,
+        accepted_at: null,
+        cancelled_at: null,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        created_at: true,
+      },
+      orderBy: [{ created_at: "desc" }],
+    }),
+  ]);
 
   return {
-    employees: employees.map(serializeEmployee),
+    employees: [
+      ...employees.map(serializeEmployee),
+      ...pendingInvites.map(serializePendingInvite),
+    ],
     currentUserRole: membership.role,
     canInviteEmployees:
       membership.role === UserRole.OWNER || membership.role === UserRole.ADMIN,
@@ -209,17 +358,38 @@ export async function inviteEmployeeForLoggedLab(
   payload: CreateEmployeeInput,
 ) {
   const { lab_id } = await requireEmployeeManager(user_id);
-  const existingUser = await prisma.users.findUnique({
-    where: { email: payload.email },
+
+  const pendingInvite = await prisma.employee_invites.findFirst({
+    where: {
+      email: payload.email,
+      accepted_at: null,
+      cancelled_at: null,
+    },
     select: {
       id: true,
-      memberships: {
-        select: { id: true },
-      },
+      lab_id: true,
+      auth_user_id: true,
     },
   });
 
-  assertUserHasNoLabMembership(existingUser?.memberships.length ?? 0);
+  if (pendingInvite && pendingInvite.lab_id !== lab_id) {
+    throw new EmployeeConflictError(
+      "This email already has a pending invite in another lab.",
+    );
+  }
+
+  await ensureEmployeeInviteCanBeSent({
+    email: payload.email,
+    lab_id,
+    pendingInvite,
+  });
+
+  const inviteRecord = await createOrUpdatePendingInvite({
+    lab_id,
+    invited_by_user_id: user_id,
+    payload,
+    pendingInvite,
+  });
 
   const supabase = createSupabaseAdminClient();
   const { data, error } = await supabase.auth.admin.inviteUserByEmail(
@@ -228,72 +398,42 @@ export async function inviteEmployeeForLoggedLab(
       data: {
         name: payload.name,
         role: payload.role,
+        invite_id: inviteRecord.id,
       },
-      redirectTo: getInviteRedirectTo(),
+      redirectTo: getInviteRedirectTo(inviteRecord.id),
     },
   );
 
   if (error || !data.user) {
+    if (!pendingInvite) {
+      await prisma.employee_invites.delete({
+        where: { id: inviteRecord.id },
+      }).catch(() => undefined);
+    }
+
     throw new EmployeeInviteError(error?.message);
   }
 
-  const invitedUserId = data.user.id;
-  const employee = await prisma.$transaction(async (tx) => {
-    const userByEmail = await tx.users.findUnique({
-      where: { email: payload.email },
-      select: { id: true },
-    });
-
-    if (userByEmail && userByEmail.id !== invitedUserId) {
-      await tx.users.update({
-        where: { email: payload.email },
-        data: {
-          id: invitedUserId,
-          name: payload.name,
-          is_active: true,
-          deleted_at: null,
-        },
-      });
-    } else {
-      await tx.users.upsert({
-        where: { id: invitedUserId },
-        update: {
-          name: payload.name,
-          email: payload.email,
-          is_active: true,
-          deleted_at: null,
-        },
-        create: {
-          id: invitedUserId,
-          name: payload.name,
-          email: payload.email,
-        },
-      });
-    }
-
-    return tx.lab_members.create({
-      data: {
-        user_id: invitedUserId,
-        lab_id,
-        role: payload.role,
-      },
-      select: {
-        id: true,
-        role: true,
-        created_at: true,
-        users: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            is_active: true,
-          },
-        },
-      },
-    });
+  const updatedInvite = await prisma.employee_invites.update({
+    where: { id: inviteRecord.id },
+    data: {
+      auth_user_id: data.user.id,
+      last_sent_at: new Date(),
+      name: payload.name,
+      role: payload.role,
+      invited_by_user_id: user_id,
+      cancelled_at: null,
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      created_at: true,
+    },
   });
 
-  return serializeEmployee(employee);
+  return serializePendingInvite(updatedInvite);
 }
 
 export async function updateEmployeeProcessesForLoggedLab(
@@ -334,7 +474,7 @@ export async function updateEmployeeProcessesForLoggedLab(
         deleted_at: null,
         id: { in: payload.process_ids },
       },
-      select: { id: true },
+      select: { id: true, name: true },
     }),
   ]);
 

@@ -13,6 +13,14 @@ import { createClient } from "@/lib/supabase/client";
 
 type AuthMode = "login" | "signup" | "forgot";
 
+type EmailCheckResponse = {
+  data?: {
+    exists: boolean;
+  };
+  error?: string | null;
+  fields?: Record<string, string[]>;
+};
+
 export default function LoginPage() {
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
@@ -24,6 +32,26 @@ export default function LoginPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
+
+  async function emailAlreadyExists(nextEmail: string) {
+    const response = await fetch("/api/auth/check-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: nextEmail.trim() }),
+    });
+
+    const body = (await response.json().catch(() => null)) as
+      | EmailCheckResponse
+      | null;
+
+    if (!response.ok) {
+      throw new Error(body?.error ?? "Failed to check whether the email already exists.");
+    }
+
+    return body?.data?.exists === true;
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -49,13 +77,21 @@ export default function LoginPage() {
       }
 
       if (mode === "signup") {
+        const normalizedEmail = email.trim().toLowerCase();
+
+        if (await emailAlreadyExists(normalizedEmail)) {
+          throw new Error(
+            "An account with this email already exists. Log in or use password reset instead.",
+          );
+        }
+
         const emailRedirectTo =
           typeof window !== "undefined"
             ? `${window.location.origin}/onboarding/lab`
             : undefined;
 
         const { data, error: signUpError } = await supabase.auth.signUp({
-          email: email.trim(),
+          email: normalizedEmail,
           password,
           options: {
             data: {

@@ -67,13 +67,29 @@ export function EmployeesPageClient() {
     router.push(`/employees/${employeeId}`);
   }
 
+  function employeeStatusLabel(employee: Employee) {
+    if (employee.status === "PENDING") {
+      return "Pending";
+    }
+
+    return employee.is_active ? "Active" : "Inactive";
+  }
+
+  function employeeStatusVariant(employee: Employee) {
+    if (employee.status === "PENDING") {
+      return "warning" as const;
+    }
+
+    return employee.is_active ? "success" as const : "neutral" as const;
+  }
+
   return (
     <>
       <AddEmployeeDialog
         open={inviteDialogOpen}
         onOpenChange={setInviteDialogOpen}
         onCreated={async () => {
-          setNotice("Invite sent.");
+          setNotice("Invite sent. The employee will appear as pending until they accept.");
           await refreshEmployees();
         }}
       />
@@ -153,10 +169,14 @@ export function EmployeesPageClient() {
                 ? employees.map((employee) => (
                     <TableRow
                       key={employee.id}
-                      tabIndex={0}
-                      className="cursor-pointer"
-                      onClick={() => openEmployee(employee.lab_member_id)}
+                      tabIndex={employee.lab_member_id ? 0 : -1}
+                      className={employee.lab_member_id ? "cursor-pointer" : undefined}
+                      onClick={() => {
+                        if (!employee.lab_member_id) return;
+                        openEmployee(employee.lab_member_id);
+                      }}
                       onKeyDown={(event) => {
+                        if (!employee.lab_member_id) return;
                         if (event.key !== "Enter" && event.key !== " ") return;
                         event.preventDefault();
                         openEmployee(employee.lab_member_id);
@@ -170,13 +190,15 @@ export function EmployeesPageClient() {
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <Badge variant={employee.is_active ? "success" : "neutral"}>
-                          {employee.is_active ? "Active" : "Inactive"}
+                        <Badge variant={employeeStatusVariant(employee)}>
+                          {employeeStatusLabel(employee)}
                         </Badge>
                       </TableCell>
                       <TableCell>{formatEmployeeDate(employee.created_at)}</TableCell>
                       <TableCell className="text-right text-muted-foreground">
-                        <ChevronRight className="ml-auto h-4 w-4" />
+                        {employee.lab_member_id ? (
+                          <ChevronRight className="ml-auto h-4 w-4" />
+                        ) : null}
                       </TableCell>
                     </TableRow>
                   ))

@@ -8,6 +8,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  PASSWORD_SETUP_FLOW_COOKIE,
+  PASSWORD_SETUP_TARGET_COOKIE,
+  type PasswordSetupFlowType,
+} from "@/lib/auth/password-setup-flow";
 import { createClient } from "@/lib/supabase/client";
 
 export default function ResetPasswordPage() {
@@ -37,6 +42,7 @@ function ResetPasswordContent() {
       const hash = typeof window !== "undefined" ? window.location.hash : "";
       const hashParams = new URLSearchParams(hash.startsWith("#") ? hash.slice(1) : hash);
       const authError = getAuthErrorMessage(searchParams, hashParams);
+      const flowContext = readPasswordSetupFlowContext();
 
       if (authError) {
         setRecoveryReady(false);
@@ -81,9 +87,15 @@ function ResetPasswordContent() {
 
       if (cancelled) return;
 
-      if (!session) {
+      if (!flowContext || !session?.user) {
         setRecoveryReady(false);
         setError("Open this page from the latest password reset email link.");
+        return;
+      }
+
+      if (flowContext.targetUserId && session.user.id !== flowContext.targetUserId) {
+        setRecoveryReady(false);
+        setError(getSessionCollisionMessage(flowContext.type));
         return;
       }
 
@@ -146,6 +158,7 @@ function ResetPasswordContent() {
         );
       }
 
+      clearPasswordSetupFlowCookies();
       setMessage("Password updated. Redirecting you back to login.");
       setPassword("");
       setConfirmPassword("");
@@ -225,6 +238,46 @@ function ResetPasswordContent() {
       </div>
     </main>
   );
+}
+
+function readPasswordSetupFlowContext() {
+  if (typeof document === "undefined") {
+    return null;
+  }
+
+  const flowType = getCookieValue(PASSWORD_SETUP_FLOW_COOKIE);
+  if (flowType !== "invite" && flowType !== "recovery") {
+    return null;
+  }
+
+  return {
+    type: flowType as PasswordSetupFlowType,
+    targetUserId: getCookieValue(PASSWORD_SETUP_TARGET_COOKIE) || null,
+  };
+}
+
+function getCookieValue(name: string) {
+  const cookiePrefix = `${name}=`;
+
+  for (const cookie of document.cookie.split(";")) {
+    const trimmedCookie = cookie.trim();
+    if (trimmedCookie.startsWith(cookiePrefix)) {
+      return decodeURIComponent(trimmedCookie.slice(cookiePrefix.length));
+    }
+  }
+
+  return "";
+}
+
+function clearPasswordSetupFlowCookies() {
+  document.cookie = `${PASSWORD_SETUP_FLOW_COOKIE}=; Max-Age=0; path=/; SameSite=Lax`;
+  document.cookie = `${PASSWORD_SETUP_TARGET_COOKIE}=; Max-Age=0; path=/; SameSite=Lax`;
+}
+
+function getSessionCollisionMessage(type: PasswordSetupFlowType) {
+  return type === "invite"
+    ? "This invite belongs to a different account than the one currently signed in. Sign out first or open the invite link in a private window."
+    : "This password reset link belongs to a different account than the one currently signed in. Sign out first or open the link in a private window.";
 }
 
 function getAuthErrorMessage(

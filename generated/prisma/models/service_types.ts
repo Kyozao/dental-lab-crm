@@ -552,10 +552,6 @@ export type DecimalFieldUpdateOperationsInput = {
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type service_typesCreateNestedOneWithoutPrice_table_service_pricesInput = {
   create?: Prisma.XOR<Prisma.service_typesCreateWithoutPrice_table_service_pricesInput, Prisma.service_typesUncheckedCreateWithoutPrice_table_service_pricesInput>
   connectOrCreate?: Prisma.service_typesCreateOrConnectWithoutPrice_table_service_pricesInput

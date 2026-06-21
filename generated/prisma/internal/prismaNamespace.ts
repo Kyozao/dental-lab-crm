@@ -387,6 +387,7 @@ export const ModelName = {
   users: 'users',
   labs: 'labs',
   lab_members: 'lab_members',
+  employee_invites: 'employee_invites',
   service_types: 'service_types',
   price_tables: 'price_tables',
   price_table_service_prices: 'price_table_service_prices',
@@ -427,7 +428,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "users" | "labs" | "lab_members" | "service_types" | "price_tables" | "price_table_service_prices" | "processes" | "employee_process_assignments" | "milling_drills" | "milling_machines" | "milling_machine_slots" | "case_millings" | "case_milling_drill_slots" | "case_attachments" | "customers" | "dentists" | "components" | "case_component_usages" | "block_types" | "cases" | "case_comments" | "case_thread_reads" | "case_processes" | "case_services" | "case_process_dependencies" | "case_status_histories" | "notifications" | "push_subscriptions"
+    modelProps: "users" | "labs" | "lab_members" | "employee_invites" | "service_types" | "price_tables" | "price_table_service_prices" | "processes" | "employee_process_assignments" | "milling_drills" | "milling_machines" | "milling_machine_slots" | "case_millings" | "case_milling_drill_slots" | "case_attachments" | "customers" | "dentists" | "components" | "case_component_usages" | "block_types" | "cases" | "case_comments" | "case_thread_reads" | "case_processes" | "case_services" | "case_process_dependencies" | "case_status_histories" | "notifications" | "push_subscriptions"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -650,6 +651,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.lab_membersCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.Lab_membersCountAggregateOutputType> | number
+        }
+      }
+    }
+    employee_invites: {
+      payload: Prisma.$employee_invitesPayload<ExtArgs>
+      fields: Prisma.employee_invitesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.employee_invitesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_invitesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.employee_invitesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_invitesPayload>
+        }
+        findFirst: {
+          args: Prisma.employee_invitesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_invitesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.employee_invitesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_invitesPayload>
+        }
+        findMany: {
+          args: Prisma.employee_invitesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_invitesPayload>[]
+        }
+        create: {
+          args: Prisma.employee_invitesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_invitesPayload>
+        }
+        createMany: {
+          args: Prisma.employee_invitesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.employee_invitesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_invitesPayload>[]
+        }
+        delete: {
+          args: Prisma.employee_invitesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_invitesPayload>
+        }
+        update: {
+          args: Prisma.employee_invitesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_invitesPayload>
+        }
+        deleteMany: {
+          args: Prisma.employee_invitesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.employee_invitesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.employee_invitesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_invitesPayload>[]
+        }
+        upsert: {
+          args: Prisma.employee_invitesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_invitesPayload>
+        }
+        aggregate: {
+          args: Prisma.Employee_invitesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEmployee_invites>
+        }
+        groupBy: {
+          args: Prisma.employee_invitesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Employee_invitesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.employee_invitesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Employee_invitesCountAggregateOutputType> | number
         }
       }
     }
@@ -2578,6 +2653,24 @@ export const Lab_membersScalarFieldEnum = {
 export type Lab_membersScalarFieldEnum = (typeof Lab_membersScalarFieldEnum)[keyof typeof Lab_membersScalarFieldEnum]
 
 
+export const Employee_invitesScalarFieldEnum = {
+  id: 'id',
+  lab_id: 'lab_id',
+  invited_by_user_id: 'invited_by_user_id',
+  auth_user_id: 'auth_user_id',
+  name: 'name',
+  email: 'email',
+  role: 'role',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  last_sent_at: 'last_sent_at',
+  accepted_at: 'accepted_at',
+  cancelled_at: 'cancelled_at'
+} as const
+
+export type Employee_invitesScalarFieldEnum = (typeof Employee_invitesScalarFieldEnum)[keyof typeof Employee_invitesScalarFieldEnum]
+
+
 export const Service_typesScalarFieldEnum = {
   id: 'id',
   lab_id: 'lab_id',
@@ -3325,6 +3418,7 @@ export type GlobalOmitConfig = {
   users?: Prisma.usersOmit
   labs?: Prisma.labsOmit
   lab_members?: Prisma.lab_membersOmit
+  employee_invites?: Prisma.employee_invitesOmit
   service_types?: Prisma.service_typesOmit
   price_tables?: Prisma.price_tablesOmit
   price_table_service_prices?: Prisma.price_table_service_pricesOmit

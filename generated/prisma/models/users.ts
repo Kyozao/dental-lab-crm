@@ -206,6 +206,7 @@ export type usersWhereInput = {
   case_attachments?: Prisma.Case_attachmentsListRelationFilter
   notifications?: Prisma.NotificationsListRelationFilter
   pushSubscriptions?: Prisma.Push_subscriptionsListRelationFilter
+  employeeInvitesSent?: Prisma.Employee_invitesListRelationFilter
 }
 
 export type usersOrderByWithRelationInput = {
@@ -224,6 +225,7 @@ export type usersOrderByWithRelationInput = {
   case_attachments?: Prisma.case_attachmentsOrderByRelationAggregateInput
   notifications?: Prisma.notificationsOrderByRelationAggregateInput
   pushSubscriptions?: Prisma.push_subscriptionsOrderByRelationAggregateInput
+  employeeInvitesSent?: Prisma.employee_invitesOrderByRelationAggregateInput
 }
 
 export type usersWhereUniqueInput = Prisma.AtLeast<{
@@ -245,6 +247,7 @@ export type usersWhereUniqueInput = Prisma.AtLeast<{
   case_attachments?: Prisma.Case_attachmentsListRelationFilter
   notifications?: Prisma.NotificationsListRelationFilter
   pushSubscriptions?: Prisma.Push_subscriptionsListRelationFilter
+  employeeInvitesSent?: Prisma.Employee_invitesListRelationFilter
 }, "id" | "email">
 
 export type usersOrderByWithAggregationInput = {
@@ -289,6 +292,7 @@ export type usersCreateInput = {
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
 }
 
 export type usersUncheckedCreateInput = {
@@ -307,6 +311,7 @@ export type usersUncheckedCreateInput = {
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
 }
 
 export type usersUpdateInput = {
@@ -325,6 +330,7 @@ export type usersUpdateInput = {
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
 }
 
 export type usersUncheckedUpdateInput = {
@@ -343,6 +349,7 @@ export type usersUncheckedUpdateInput = {
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
 }
 
 export type usersCreateManyInput = {
@@ -443,6 +450,20 @@ export type usersUpdateOneRequiredWithoutMembershipsNestedInput = {
   upsert?: Prisma.usersUpsertWithoutMembershipsInput
   connect?: Prisma.usersWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutMembershipsInput, Prisma.usersUpdateWithoutMembershipsInput>, Prisma.usersUncheckedUpdateWithoutMembershipsInput>
+}
+
+export type usersCreateNestedOneWithoutEmployeeInvitesSentInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutEmployeeInvitesSentInput, Prisma.usersUncheckedCreateWithoutEmployeeInvitesSentInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutEmployeeInvitesSentInput
+  connect?: Prisma.usersWhereUniqueInput
+}
+
+export type usersUpdateOneRequiredWithoutEmployeeInvitesSentNestedInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutEmployeeInvitesSentInput, Prisma.usersUncheckedCreateWithoutEmployeeInvitesSentInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutEmployeeInvitesSentInput
+  upsert?: Prisma.usersUpsertWithoutEmployeeInvitesSentInput
+  connect?: Prisma.usersWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutEmployeeInvitesSentInput, Prisma.usersUpdateWithoutEmployeeInvitesSentInput>, Prisma.usersUncheckedUpdateWithoutEmployeeInvitesSentInput>
 }
 
 export type usersCreateNestedOneWithoutCase_attachmentsInput = {
@@ -564,6 +585,7 @@ export type usersCreateWithoutMembershipsInput = {
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
 }
 
 export type usersUncheckedCreateWithoutMembershipsInput = {
@@ -581,6 +603,7 @@ export type usersUncheckedCreateWithoutMembershipsInput = {
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
 }
 
 export type usersCreateOrConnectWithoutMembershipsInput = {
@@ -614,6 +637,7 @@ export type usersUpdateWithoutMembershipsInput = {
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
 }
 
 export type usersUncheckedUpdateWithoutMembershipsInput = {
@@ -624,6 +648,95 @@ export type usersUncheckedUpdateWithoutMembershipsInput = {
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorUserNestedInput
+  deletedCaseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutUsersNestedInput
+  case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
+  notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
+  pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
+}
+
+export type usersCreateWithoutEmployeeInvitesSentInput = {
+  id?: string
+  name: string
+  email: string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
+  createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
+  caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorUserInput
+  deletedCaseComments?: Prisma.case_commentsCreateNestedManyWithoutDeletedByUserInput
+  caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutUsersInput
+  case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
+  notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
+  pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
+}
+
+export type usersUncheckedCreateWithoutEmployeeInvitesSentInput = {
+  id?: string
+  name: string
+  email: string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
+  createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
+  caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorUserInput
+  deletedCaseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutDeletedByUserInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutUsersInput
+  case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
+  notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
+  pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+}
+
+export type usersCreateOrConnectWithoutEmployeeInvitesSentInput = {
+  where: Prisma.usersWhereUniqueInput
+  create: Prisma.XOR<Prisma.usersCreateWithoutEmployeeInvitesSentInput, Prisma.usersUncheckedCreateWithoutEmployeeInvitesSentInput>
+}
+
+export type usersUpsertWithoutEmployeeInvitesSentInput = {
+  update: Prisma.XOR<Prisma.usersUpdateWithoutEmployeeInvitesSentInput, Prisma.usersUncheckedUpdateWithoutEmployeeInvitesSentInput>
+  create: Prisma.XOR<Prisma.usersCreateWithoutEmployeeInvitesSentInput, Prisma.usersUncheckedCreateWithoutEmployeeInvitesSentInput>
+  where?: Prisma.usersWhereInput
+}
+
+export type usersUpdateToOneWithWhereWithoutEmployeeInvitesSentInput = {
+  where?: Prisma.usersWhereInput
+  data: Prisma.XOR<Prisma.usersUpdateWithoutEmployeeInvitesSentInput, Prisma.usersUncheckedUpdateWithoutEmployeeInvitesSentInput>
+}
+
+export type usersUpdateWithoutEmployeeInvitesSentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
+  createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
+  caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorUserNestedInput
+  deletedCaseComments?: Prisma.case_commentsUpdateManyWithoutDeletedByUserNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutUsersNestedInput
+  case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
+  notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
+  pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
+}
+
+export type usersUncheckedUpdateWithoutEmployeeInvitesSentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
   createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
   caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutDeletedByUserNestedInput
@@ -648,6 +761,7 @@ export type usersCreateWithoutCase_attachmentsInput = {
   caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutUsersInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
 }
 
 export type usersUncheckedCreateWithoutCase_attachmentsInput = {
@@ -665,6 +779,7 @@ export type usersUncheckedCreateWithoutCase_attachmentsInput = {
   caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutUsersInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
 }
 
 export type usersCreateOrConnectWithoutCase_attachmentsInput = {
@@ -698,6 +813,7 @@ export type usersUpdateWithoutCase_attachmentsInput = {
   caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutUsersNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
 }
 
 export type usersUncheckedUpdateWithoutCase_attachmentsInput = {
@@ -715,6 +831,7 @@ export type usersUncheckedUpdateWithoutCase_attachmentsInput = {
   caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutUsersNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
 }
 
 export type usersCreateWithoutCreatedCasesInput = {
@@ -732,6 +849,7 @@ export type usersCreateWithoutCreatedCasesInput = {
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
 }
 
 export type usersUncheckedCreateWithoutCreatedCasesInput = {
@@ -749,6 +867,7 @@ export type usersUncheckedCreateWithoutCreatedCasesInput = {
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
 }
 
 export type usersCreateOrConnectWithoutCreatedCasesInput = {
@@ -782,6 +901,7 @@ export type usersUpdateWithoutCreatedCasesInput = {
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
 }
 
 export type usersUncheckedUpdateWithoutCreatedCasesInput = {
@@ -799,6 +919,7 @@ export type usersUncheckedUpdateWithoutCreatedCasesInput = {
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
 }
 
 export type usersCreateWithoutCaseCommentsInput = {
@@ -816,6 +937,7 @@ export type usersCreateWithoutCaseCommentsInput = {
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
 }
 
 export type usersUncheckedCreateWithoutCaseCommentsInput = {
@@ -833,6 +955,7 @@ export type usersUncheckedCreateWithoutCaseCommentsInput = {
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
 }
 
 export type usersCreateOrConnectWithoutCaseCommentsInput = {
@@ -855,6 +978,7 @@ export type usersCreateWithoutDeletedCaseCommentsInput = {
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
 }
 
 export type usersUncheckedCreateWithoutDeletedCaseCommentsInput = {
@@ -872,6 +996,7 @@ export type usersUncheckedCreateWithoutDeletedCaseCommentsInput = {
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
 }
 
 export type usersCreateOrConnectWithoutDeletedCaseCommentsInput = {
@@ -905,6 +1030,7 @@ export type usersUpdateWithoutCaseCommentsInput = {
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
 }
 
 export type usersUncheckedUpdateWithoutCaseCommentsInput = {
@@ -922,6 +1048,7 @@ export type usersUncheckedUpdateWithoutCaseCommentsInput = {
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
 }
 
 export type usersUpsertWithoutDeletedCaseCommentsInput = {
@@ -950,6 +1077,7 @@ export type usersUpdateWithoutDeletedCaseCommentsInput = {
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
 }
 
 export type usersUncheckedUpdateWithoutDeletedCaseCommentsInput = {
@@ -967,6 +1095,7 @@ export type usersUncheckedUpdateWithoutDeletedCaseCommentsInput = {
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
 }
 
 export type usersCreateWithoutCaseThreadReadsInput = {
@@ -984,6 +1113,7 @@ export type usersCreateWithoutCaseThreadReadsInput = {
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
 }
 
 export type usersUncheckedCreateWithoutCaseThreadReadsInput = {
@@ -1001,6 +1131,7 @@ export type usersUncheckedCreateWithoutCaseThreadReadsInput = {
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
 }
 
 export type usersCreateOrConnectWithoutCaseThreadReadsInput = {
@@ -1034,6 +1165,7 @@ export type usersUpdateWithoutCaseThreadReadsInput = {
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
 }
 
 export type usersUncheckedUpdateWithoutCaseThreadReadsInput = {
@@ -1051,6 +1183,7 @@ export type usersUncheckedUpdateWithoutCaseThreadReadsInput = {
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
 }
 
 export type usersCreateWithoutNotificationsInput = {
@@ -1068,6 +1201,7 @@ export type usersCreateWithoutNotificationsInput = {
   caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutUsersInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
 }
 
 export type usersUncheckedCreateWithoutNotificationsInput = {
@@ -1085,6 +1219,7 @@ export type usersUncheckedCreateWithoutNotificationsInput = {
   caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutUsersInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
 }
 
 export type usersCreateOrConnectWithoutNotificationsInput = {
@@ -1118,6 +1253,7 @@ export type usersUpdateWithoutNotificationsInput = {
   caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutUsersNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
 }
 
 export type usersUncheckedUpdateWithoutNotificationsInput = {
@@ -1135,6 +1271,7 @@ export type usersUncheckedUpdateWithoutNotificationsInput = {
   caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutUsersNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
 }
 
 export type usersCreateWithoutPushSubscriptionsInput = {
@@ -1152,6 +1289,7 @@ export type usersCreateWithoutPushSubscriptionsInput = {
   caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutUsersInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
+  employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
 }
 
 export type usersUncheckedCreateWithoutPushSubscriptionsInput = {
@@ -1169,6 +1307,7 @@ export type usersUncheckedCreateWithoutPushSubscriptionsInput = {
   caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutUsersInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
 }
 
 export type usersCreateOrConnectWithoutPushSubscriptionsInput = {
@@ -1202,6 +1341,7 @@ export type usersUpdateWithoutPushSubscriptionsInput = {
   caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutUsersNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
 }
 
 export type usersUncheckedUpdateWithoutPushSubscriptionsInput = {
@@ -1219,6 +1359,7 @@ export type usersUncheckedUpdateWithoutPushSubscriptionsInput = {
   caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutUsersNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
 }
 
 
@@ -1235,6 +1376,7 @@ export type UsersCountOutputType = {
   case_attachments: number
   notifications: number
   pushSubscriptions: number
+  employeeInvitesSent: number
 }
 
 export type UsersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1246,6 +1388,7 @@ export type UsersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   case_attachments?: boolean | UsersCountOutputTypeCountCase_attachmentsArgs
   notifications?: boolean | UsersCountOutputTypeCountNotificationsArgs
   pushSubscriptions?: boolean | UsersCountOutputTypeCountPushSubscriptionsArgs
+  employeeInvitesSent?: boolean | UsersCountOutputTypeCountEmployeeInvitesSentArgs
 }
 
 /**
@@ -1314,6 +1457,13 @@ export type UsersCountOutputTypeCountPushSubscriptionsArgs<ExtArgs extends runti
   where?: Prisma.push_subscriptionsWhereInput
 }
 
+/**
+ * UsersCountOutputType without action
+ */
+export type UsersCountOutputTypeCountEmployeeInvitesSentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.employee_invitesWhereInput
+}
+
 
 export type usersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1331,6 +1481,7 @@ export type usersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   case_attachments?: boolean | Prisma.users$case_attachmentsArgs<ExtArgs>
   notifications?: boolean | Prisma.users$notificationsArgs<ExtArgs>
   pushSubscriptions?: boolean | Prisma.users$pushSubscriptionsArgs<ExtArgs>
+  employeeInvitesSent?: boolean | Prisma.users$employeeInvitesSentArgs<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["users"]>
 
@@ -1374,6 +1525,7 @@ export type usersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   case_attachments?: boolean | Prisma.users$case_attachmentsArgs<ExtArgs>
   notifications?: boolean | Prisma.users$notificationsArgs<ExtArgs>
   pushSubscriptions?: boolean | Prisma.users$pushSubscriptionsArgs<ExtArgs>
+  employeeInvitesSent?: boolean | Prisma.users$employeeInvitesSentArgs<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type usersIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1390,6 +1542,7 @@ export type $usersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     case_attachments: Prisma.$case_attachmentsPayload<ExtArgs>[]
     notifications: Prisma.$notificationsPayload<ExtArgs>[]
     pushSubscriptions: Prisma.$push_subscriptionsPayload<ExtArgs>[]
+    employeeInvitesSent: Prisma.$employee_invitesPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1801,6 +1954,7 @@ export interface Prisma__usersClient<T, Null = never, ExtArgs extends runtime.Ty
   case_attachments<T extends Prisma.users$case_attachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$case_attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_attachmentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.users$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$notificationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pushSubscriptions<T extends Prisma.users$pushSubscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$pushSubscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$push_subscriptionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  employeeInvitesSent<T extends Prisma.users$employeeInvitesSentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$employeeInvitesSentArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$employee_invitesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2419,6 +2573,30 @@ export type users$pushSubscriptionsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.Push_subscriptionsScalarFieldEnum | Prisma.Push_subscriptionsScalarFieldEnum[]
+}
+
+/**
+ * users.employeeInvitesSent
+ */
+export type users$employeeInvitesSentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the employee_invites
+   */
+  select?: Prisma.employee_invitesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the employee_invites
+   */
+  omit?: Prisma.employee_invitesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.employee_invitesInclude<ExtArgs> | null
+  where?: Prisma.employee_invitesWhereInput
+  orderBy?: Prisma.employee_invitesOrderByWithRelationInput | Prisma.employee_invitesOrderByWithRelationInput[]
+  cursor?: Prisma.employee_invitesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Employee_invitesScalarFieldEnum | Prisma.Employee_invitesScalarFieldEnum[]
 }
 
 /**

@@ -85,6 +85,7 @@ model users {
   case_attachments    case_attachments[]
   notifications       notifications[]      @relation("NotificationRecipient")
   pushSubscriptions   push_subscriptions[]
+  employeeInvitesSent employee_invites[]   @relation("EmployeeInviteInvitedBy")
 }
 
 model labs {
@@ -106,6 +107,7 @@ model labs {
   milling_drills             milling_drills[]
   processes                  processes[]
   employeeProcessAssignments employee_process_assignments[]
+  employeeInvites            employee_invites[]
   cases                      cases[]
   millings                   case_millings[]
 
@@ -129,6 +131,27 @@ model lab_members {
   @@unique([user_id])
   @@unique([user_id, lab_id])
   @@index([lab_id])
+}
+
+model employee_invites {
+  id                 String    @id @default(uuid(7)) @db.Uuid
+  lab_id             String    @db.Uuid
+  invited_by_user_id String    @db.Uuid
+  auth_user_id       String?   @unique @db.Uuid
+  name               String
+  email              String
+  role               UserRole
+  created_at         DateTime  @default(now())
+  updated_at         DateTime  @updatedAt
+  last_sent_at       DateTime?
+  accepted_at        DateTime?
+  cancelled_at       DateTime?
+
+  labs      labs  @relation(fields: [lab_id], references: [id], onDelete: Cascade)
+  invitedBy users @relation("EmployeeInviteInvitedBy", fields: [invited_by_user_id], references: [id], onDelete: Restrict)
+
+  @@unique([lab_id, email])
+  @@index([lab_id, created_at])
 }
 
 model service_types {

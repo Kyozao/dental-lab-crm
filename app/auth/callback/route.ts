@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+import {
+  PASSWORD_SETUP_FLOW_COOKIE,
+  PASSWORD_SETUP_TARGET_COOKIE,
+} from "@/lib/auth/password-setup-flow";
 import { createClient } from "@/lib/supabase/server";
 
 export async function GET(request: NextRequest) {
@@ -14,18 +18,63 @@ export async function GET(request: NextRequest) {
     redirectUrl.pathname = "/login";
     redirectUrl.searchParams.set("error", "access_denied");
     redirectUrl.searchParams.set("error_description", "Missing authentication code.");
-    return NextResponse.redirect(redirectUrl);
+    return createAuthRedirect(redirectUrl, null);
   }
 
   const supabase = await createClient();
-  const { error } = await supabase.auth.exchangeCodeForSession(code);
+  const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
   if (error) {
     redirectUrl.pathname = "/reset-password";
     redirectUrl.searchParams.set("error", "access_denied");
     redirectUrl.searchParams.set("error_description", error.message);
-    return NextResponse.redirect(redirectUrl);
+    return createAuthRedirect(redirectUrl, null);
   }
 
-  return NextResponse.redirect(redirectUrl);
+  return createAuthRedirect(
+    redirectUrl,
+    getFlowTypeForPathname(redirectUrl.pathname),
+    data.user?.id ?? data.session?.user.id ?? null,
+  );
+}
+
+function createAuthRedirect(
+  targetUrl: URL,
+  flowType: "invite" | "recovery" | null,
+  targetUserId?: string | null,
+) {
+  const response = NextResponse.redirect(targetUrl);
+
+  if (isEmployeeAuthFlowPath(targetUrl.pathname) && flowType) {
+    response.cookies.set(PASSWORD_SETUP_FLOW_COOKIE, flowType, {
+      httpOnly: false,
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 10,
+    });
+    response.cookies.set(PASSWORD_SETUP_TARGET_COOKIE, targetUserId ?? "", {
+      httpOnly: false,
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 10,
+    });
+  }
+
+  return response;
+}
+
+function getFlowTypeForPathname(pathname: string) {
+  if (pathname === "/employee-invite/accept") {
+    return "invite";
+  }
+
+  if (pathname === "/reset-password") {
+    return "recovery";
+  }
+
+  return null;
+}
+
+function isEmployeeAuthFlowPath(pathname: string) {
+  return pathname === "/reset-password" || pathname === "/employee-invite/accept";
 }

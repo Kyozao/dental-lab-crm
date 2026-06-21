@@ -54,6 +54,7 @@ export const ModelName = {
   users: 'users',
   labs: 'labs',
   lab_members: 'lab_members',
+  employee_invites: 'employee_invites',
   service_types: 'service_types',
   price_tables: 'price_tables',
   price_table_service_prices: 'price_table_service_prices',
@@ -131,6 +132,24 @@ export const Lab_membersScalarFieldEnum = {
 } as const
 
 export type Lab_membersScalarFieldEnum = (typeof Lab_membersScalarFieldEnum)[keyof typeof Lab_membersScalarFieldEnum]
+
+
+export const Employee_invitesScalarFieldEnum = {
+  id: 'id',
+  lab_id: 'lab_id',
+  invited_by_user_id: 'invited_by_user_id',
+  auth_user_id: 'auth_user_id',
+  name: 'name',
+  email: 'email',
+  role: 'role',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  last_sent_at: 'last_sent_at',
+  accepted_at: 'accepted_at',
+  cancelled_at: 'cancelled_at'
+} as const
+
+export type Employee_invitesScalarFieldEnum = (typeof Employee_invitesScalarFieldEnum)[keyof typeof Employee_invitesScalarFieldEnum]
 
 
 export const Service_typesScalarFieldEnum = {

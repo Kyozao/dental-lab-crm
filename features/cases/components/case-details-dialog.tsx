@@ -2,11 +2,12 @@
 
 import * as React from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { ArrowLeft, Settings2 } from "lucide-react";
+import { ArrowLeft, Settings2, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -586,11 +587,14 @@ export function CaseDetailsDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[92vh] overflow-y-auto p-0 sm:max-w-[96vw] xl:max-w-295">
-        <DialogHeader className="border-b px-6 py-5">
+      <DialogContent
+        showCloseButton={false}
+        className="inset-0 left-0 top-0 flex h-screen max-h-screen w-screen max-w-none translate-x-0 translate-y-0 flex-col overflow-x-hidden overflow-y-hidden rounded-none p-0 sm:inset-auto sm:left-1/2 sm:top-1/2 sm:h-auto sm:max-h-[92vh] sm:w-full sm:max-w-[96vw] sm:-translate-x-1/2 sm:-translate-y-1/2 sm:overflow-y-auto sm:rounded-xl xl:max-w-295"
+      >
+        <DialogHeader className="shrink-0 border-b px-4 py-4 sm:px-6 sm:py-5">
           {dialogView === "serviceWorkflow" ? (
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-              <div className="grid gap-1">
+            <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
+              <div className="grid min-w-0 gap-1 pr-2">
                 <Button
                   type="button"
                   variant="ghost"
@@ -615,15 +619,43 @@ export function CaseDetailsDialog({
                   case dialog.
                 </p>
               </div>
+              <DialogClose asChild>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon-sm"
+                  className="shrink-0 self-start"
+                >
+                  <X className="size-4" />
+                  <span className="sr-only">Close</span>
+                </Button>
+              </DialogClose>
             </div>
           ) : (
-            <DialogTitle className="text-xl">
-              {caseItem.patientName} {caseItem.code ? `- ${caseItem.code}` : ""}
-            </DialogTitle>
+            <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
+              <DialogTitle className="min-w-0 pr-2 text-xl">
+                {caseItem.patientName || (isCreateMode ? "New case" : "Case")}
+                {caseItem.code ? ` - ${caseItem.code}` : ""}
+              </DialogTitle>
+              <DialogClose asChild>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon-sm"
+                  className="shrink-0 self-start"
+                >
+                  <X className="size-4" />
+                  <span className="sr-only">Close</span>
+                </Button>
+              </DialogClose>
+            </div>
           )}
         </DialogHeader>
 
-        <form onSubmit={handleFormSubmit} className="grid gap-6 px-6 pb-6">
+        <form
+          onSubmit={handleFormSubmit}
+          className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-4 pb-[calc(env(safe-area-inset-bottom)+1rem)] sm:grid sm:min-h-fit sm:flex-none sm:overflow-visible sm:px-6 sm:pb-6"
+        >
           <input type="hidden" name="id" value={caseItem.id} />
           <input type="hidden" name="statusReason" value={statusReason} readOnly />
           <input
@@ -655,7 +687,7 @@ export function CaseDetailsDialog({
               onValueChange={setActiveTab}
               className="gap-5"
             >
-              <TabsList className="w-full justify-start">
+              <TabsList className="w-full justify-start overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 <TabsTrigger value="overview">Overview</TabsTrigger>
                 <TabsTrigger value="services">Services</TabsTrigger>
                 <TabsTrigger value="components">Components</TabsTrigger>
@@ -672,7 +704,7 @@ export function CaseDetailsDialog({
 
               {optionsLoading ? <CaseOptionsFallback /> : null}
 
-              <TabsContent value="overview" className="grid gap-6">
+              <TabsContent value="overview" forceMount className="grid gap-6 data-[state=inactive]:hidden">
                 <CaseBadges caseItem={caseItem} />
                 {!isCreateMode ? (
                   <CaseReferenceSummary caseItem={caseItem} />
@@ -703,8 +735,8 @@ export function CaseDetailsDialog({
                 />
               </TabsContent>
 
-              <TabsContent value="services" className="grid gap-4">
-                <div className="flex items-center justify-between">
+              <TabsContent value="services" forceMount className="grid gap-4 data-[state=inactive]:hidden">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <h3 className="text-sm font-medium">Service lines</h3>
                     <p className="text-sm text-muted-foreground">
@@ -888,7 +920,7 @@ export function CaseDetailsDialog({
                 </div>
               </TabsContent>
 
-              <TabsContent value="components">
+              <TabsContent value="components" forceMount className="data-[state=inactive]:hidden">
                 <CaseComponentsSection
                   rows={componentRows}
                   components={components}
@@ -909,7 +941,7 @@ export function CaseDetailsDialog({
                 />
               </TabsContent>
 
-              <TabsContent value="files">
+              <TabsContent value="files" forceMount className="data-[state=inactive]:hidden">
                 {!isCreateMode ? (
                   <CaseFilesSection
                     scanAttachments={scanAttachments}
@@ -926,13 +958,13 @@ export function CaseDetailsDialog({
                 ) : null}
               </TabsContent>
 
-              <TabsContent value="milling">
+              <TabsContent value="milling" forceMount className="data-[state=inactive]:hidden">
                 {!isCreateMode ? (
                   <CaseMillingSection caseItem={caseItem} />
                 ) : null}
               </TabsContent>
 
-              <TabsContent value="comments">
+              <TabsContent value="comments" forceMount className="data-[state=inactive]:hidden">
                 {!isCreateMode ? (
                   <CaseCommentsSection
                     comments={comments}
@@ -980,7 +1012,10 @@ export function CaseDetailsDialog({
                 }
                 taskItems={serviceLineProcessItems}
                 assigneeOptions={employees
-                  .filter((employee) => employee.is_active)
+                  .filter(
+                    (employee): employee is Employee & { lab_member_id: string } =>
+                      employee.is_active && Boolean(employee.lab_member_id),
+                  )
                   .map((employee) => ({
                     id: employee.lab_member_id,
                     name: employee.name,

@@ -112,7 +112,7 @@ export function EmployeeDetailPageClient({
   }
 
   async function saveDraftAssignments() {
-    if (!employee) return;
+    if (!employee?.lab_member_id) return;
 
     setSaving(true);
     setError(null);
@@ -138,7 +138,7 @@ export function EmployeeDetailPageClient({
   }
 
   async function saveDraftRole() {
-    if (!employee || !draftRole || draftRole === employee.role) return;
+    if (!employee?.lab_member_id || !draftRole || draftRole === employee.role) return;
 
     setSavingRole(true);
     setError(null);

@@ -5,16 +5,27 @@ export type EmployeeRole =
   | typeof UserRole.MANAGER
   | typeof UserRole.PRODUCTION;
 
+export type EmployeeStatus = "ACTIVE" | "PENDING";
+
 export type Employee = {
   id: string;
-  lab_member_id: string;
-  user_id: string;
+  lab_member_id: string | null;
+  user_id: string | null;
   name: string;
   email: string;
   role: UserRoleValue;
+  status: EmployeeStatus;
   is_active: boolean;
   created_at: string;
   processes: EmployeeProcess[];
+};
+
+export type EmployeeInviteDetails = {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRoleValue;
+  lab_name: string;
 };
 
 export type CreateEmployeePayload = {

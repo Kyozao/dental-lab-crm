@@ -31,7 +31,7 @@ export function AddEmployeeDialog({
         <DialogHeader>
           <DialogTitle>Add employee</DialogTitle>
           <DialogDescription>
-            Send a login invite and add the employee to this lab.
+            Send an onboarding invite. The employee stays pending until they accept it.
           </DialogDescription>
         </DialogHeader>
         <EmployeeForm

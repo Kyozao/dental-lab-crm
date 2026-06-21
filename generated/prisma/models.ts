@@ -11,6 +11,7 @@
 export type * from './models/users'
 export type * from './models/labs'
 export type * from './models/lab_members'
+export type * from './models/employee_invites'
 export type * from './models/service_types'
 export type * from './models/price_tables'
 export type * from './models/price_table_service_prices'

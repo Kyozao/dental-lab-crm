@@ -1,6 +1,36 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
+import { PASSWORD_SETUP_FLOW_COOKIE } from '@/lib/auth/password-setup-flow'
+
+function isEmployeeAuthFlowRequest(request: NextRequest) {
+  if (request.nextUrl.pathname === '/reset-password') {
+    if (request.cookies.get(PASSWORD_SETUP_FLOW_COOKIE)?.value === 'recovery') {
+      return true
+    }
+
+    return (
+      request.nextUrl.searchParams.has('token_hash') ||
+      request.nextUrl.searchParams.has('code') ||
+      request.nextUrl.searchParams.has('error') ||
+      request.nextUrl.searchParams.has('error_code') ||
+      request.nextUrl.searchParams.has('error_description')
+    )
+  }
+
+  if (request.nextUrl.pathname === '/employee-invite/accept') {
+    if (request.cookies.get(PASSWORD_SETUP_FLOW_COOKIE)?.value === 'invite') {
+      return true
+    }
+
+    return request.nextUrl.searchParams.has('error')
+      || request.nextUrl.searchParams.has('error_code')
+      || request.nextUrl.searchParams.has('error_description')
+  }
+
+  return false
+}
+
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
@@ -52,11 +82,36 @@ export async function updateSession(request: NextRequest) {
     }
   }
 
+  if (user) {
+    if (request.nextUrl.pathname.startsWith('/login')) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/cases'
+      url.search = ''
+      return NextResponse.redirect(url)
+    }
+
+    if (
+      (
+        request.nextUrl.pathname.startsWith('/reset-password') ||
+        request.nextUrl.pathname.startsWith('/employee-invite/accept')
+      ) &&
+      !isEmployeeAuthFlowRequest(request)
+    ) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/cases'
+      url.search = ''
+      return NextResponse.redirect(url)
+    }
+  }
+
   if (
     !user &&
     !request.nextUrl.pathname.startsWith('/login') &&
     !request.nextUrl.pathname.startsWith('/reset-password') &&
-    !request.nextUrl.pathname.startsWith('/auth')
+    !request.nextUrl.pathname.startsWith('/employee-invite') &&
+    !request.nextUrl.pathname.startsWith('/auth') &&
+    !request.nextUrl.pathname.startsWith('/api/auth') &&
+    !request.nextUrl.pathname.startsWith('/api/employee-invites')
   ) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone()

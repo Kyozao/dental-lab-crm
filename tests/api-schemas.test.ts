@@ -28,6 +28,7 @@ import {
   parseUpdateEmployeeRoleInput,
   parseUpdateEmployeeProcessesInput,
 } from "@/app/api/employees/employees.schemas";
+import { parseAcceptEmployeeInviteInput } from "@/app/api/employee-invites/employee-invites.schemas";
 import { parseUpdateLabCurrencyInput } from "@/app/api/labs/labs.schemas";
 import { parseListMessageThreadsInput } from "@/app/api/messages/messages.schemas";
 import {
@@ -484,6 +485,17 @@ test("employee create validation normalizes valid invite payloads", () => {
       email: "maria@lab.com",
       role: UserRole.MANAGER,
     },
+  });
+});
+
+test("employee invite accept validation requires a name", () => {
+  const result = parseAcceptEmployeeInviteInput({
+    name: "   ",
+  });
+
+  assert.equal(result.success, false);
+  assert.deepEqual(result.errors, {
+    name: ["Name is required."],
   });
 });
 
