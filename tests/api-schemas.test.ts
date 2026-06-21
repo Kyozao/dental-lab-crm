@@ -11,6 +11,7 @@ import { getCaseStatusTransitionHistoryEntry } from "@/app/api/cases/cases.servi
 import { parseUpdateCaseProcessInput } from "@/app/api/case-processes/case-processes.schemas";
 import {
   assertCanAssignCaseProcess,
+  canUpdateCaseProcessStatus,
   buildCaseProcessAssigneeEligibilityWhere,
   CaseProcessAuthorizationError,
 } from "@/app/api/case-processes/case-processes.rules";
@@ -669,6 +670,53 @@ test("case process assignee eligibility is scoped to lab member, lab, process, a
         },
       },
     },
+  );
+});
+
+test("case process status updates allow management roles or the assigned employee", () => {
+  assert.equal(
+    canUpdateCaseProcessStatus({
+      role: UserRole.OWNER,
+      membership_id: "member-1",
+      assigned_lab_member_id: null,
+    }),
+    true,
+  );
+
+  assert.equal(
+    canUpdateCaseProcessStatus({
+      role: UserRole.ADMIN,
+      membership_id: "member-1",
+      assigned_lab_member_id: "member-2",
+    }),
+    true,
+  );
+
+  assert.equal(
+    canUpdateCaseProcessStatus({
+      role: UserRole.MANAGER,
+      membership_id: "member-1",
+      assigned_lab_member_id: "member-2",
+    }),
+    true,
+  );
+
+  assert.equal(
+    canUpdateCaseProcessStatus({
+      role: UserRole.PRODUCTION,
+      membership_id: "member-1",
+      assigned_lab_member_id: "member-1",
+    }),
+    true,
+  );
+
+  assert.equal(
+    canUpdateCaseProcessStatus({
+      role: UserRole.PRODUCTION,
+      membership_id: "member-1",
+      assigned_lab_member_id: "member-2",
+    }),
+    false,
   );
 });
 

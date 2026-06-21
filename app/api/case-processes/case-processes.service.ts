@@ -1,4 +1,4 @@
-import { CaseProcessStatus, UserRole } from "@/generated/prisma/enums";
+import { CaseProcessStatus } from "@/generated/prisma/enums";
 import { prisma } from "@/lib/prisma";
 
 import { getSingleLabMembership } from "../_shared/membership";
@@ -8,8 +8,8 @@ import {
 } from "../_shared/reference-resource";
 import type { UpdateCaseProcessInput } from "./case-processes.schemas";
 import {
-  CaseProcessAuthorizationError,
   assertCanAssignCaseProcess,
+  assertCanUpdateCaseProcessStatus,
   buildCaseProcessAssigneeEligibilityWhere,
 } from "./case-processes.rules";
 
@@ -254,15 +254,6 @@ export async function updateCaseProcessForLoggedLab(
 
   if (!existing) throw new ReferenceNotFoundError("Case process");
 
-  if (
-    membership.role === UserRole.PRODUCTION &&
-    existing.assigned_lab_member_id !== membership.id
-  ) {
-    throw new CaseProcessAuthorizationError(
-      "Production users can only update their assigned tasks.",
-    );
-  }
-
   if (payload.assigned_lab_member_id !== undefined) {
     assertCanAssignCaseProcess(membership.role);
 
@@ -273,6 +264,14 @@ export async function updateCaseProcessForLoggedLab(
         payload.assigned_lab_member_id,
       );
     }
+  }
+
+  if (payload.status !== undefined) {
+    assertCanUpdateCaseProcessStatus({
+      role: membership.role,
+      membership_id: membership.id,
+      assigned_lab_member_id: existing.assigned_lab_member_id,
+    });
   }
 
   if (
