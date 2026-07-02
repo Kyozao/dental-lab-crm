@@ -20,15 +20,27 @@ export type labsModel = runtime.Types.Result.DefaultSelection<Prisma.$labsPayloa
 
 export type AggregateLabs = {
   _count: LabsCountAggregateOutputType | null
+  _avg: LabsAvgAggregateOutputType | null
+  _sum: LabsSumAggregateOutputType | null
   _min: LabsMinAggregateOutputType | null
   _max: LabsMaxAggregateOutputType | null
+}
+
+export type LabsAvgAggregateOutputType = {
+  schedule_revision: number | null
+}
+
+export type LabsSumAggregateOutputType = {
+  schedule_revision: number | null
 }
 
 export type LabsMinAggregateOutputType = {
   id: string | null
   name: string | null
   currency: string | null
+  timezone: string | null
   is_active: boolean | null
+  schedule_revision: number | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -37,7 +49,9 @@ export type LabsMaxAggregateOutputType = {
   id: string | null
   name: string | null
   currency: string | null
+  timezone: string | null
   is_active: boolean | null
+  schedule_revision: number | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -46,18 +60,30 @@ export type LabsCountAggregateOutputType = {
   id: number
   name: number
   currency: number
+  timezone: number
   is_active: number
+  schedule_revision: number
   created_at: number
   updated_at: number
   _all: number
 }
 
 
+export type LabsAvgAggregateInputType = {
+  schedule_revision?: true
+}
+
+export type LabsSumAggregateInputType = {
+  schedule_revision?: true
+}
+
 export type LabsMinAggregateInputType = {
   id?: true
   name?: true
   currency?: true
+  timezone?: true
   is_active?: true
+  schedule_revision?: true
   created_at?: true
   updated_at?: true
 }
@@ -66,7 +92,9 @@ export type LabsMaxAggregateInputType = {
   id?: true
   name?: true
   currency?: true
+  timezone?: true
   is_active?: true
+  schedule_revision?: true
   created_at?: true
   updated_at?: true
 }
@@ -75,7 +103,9 @@ export type LabsCountAggregateInputType = {
   id?: true
   name?: true
   currency?: true
+  timezone?: true
   is_active?: true
+  schedule_revision?: true
   created_at?: true
   updated_at?: true
   _all?: true
@@ -119,6 +149,18 @@ export type LabsAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: LabsAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: LabsSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: LabsMinAggregateInputType
@@ -149,6 +191,8 @@ export type labsGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: LabsCountAggregateInputType | true
+  _avg?: LabsAvgAggregateInputType
+  _sum?: LabsSumAggregateInputType
   _min?: LabsMinAggregateInputType
   _max?: LabsMaxAggregateInputType
 }
@@ -157,10 +201,14 @@ export type LabsGroupByOutputType = {
   id: string
   name: string
   currency: string
+  timezone: string
   is_active: boolean
+  schedule_revision: number
   created_at: Date
   updated_at: Date
   _count: LabsCountAggregateOutputType | null
+  _avg: LabsAvgAggregateOutputType | null
+  _sum: LabsSumAggregateOutputType | null
   _min: LabsMinAggregateOutputType | null
   _max: LabsMaxAggregateOutputType | null
 }
@@ -187,7 +235,9 @@ export type labsWhereInput = {
   id?: Prisma.UuidFilter<"labs"> | string
   name?: Prisma.StringFilter<"labs"> | string
   currency?: Prisma.StringFilter<"labs"> | string
+  timezone?: Prisma.StringFilter<"labs"> | string
   is_active?: Prisma.BoolFilter<"labs"> | boolean
+  schedule_revision?: Prisma.IntFilter<"labs"> | number
   created_at?: Prisma.DateTimeFilter<"labs"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"labs"> | Date | string
   memberships?: Prisma.Lab_membersListRelationFilter
@@ -204,13 +254,16 @@ export type labsWhereInput = {
   employeeInvites?: Prisma.Employee_invitesListRelationFilter
   cases?: Prisma.CasesListRelationFilter
   millings?: Prisma.Case_millingsListRelationFilter
+  scheduleProposals?: Prisma.Schedule_proposalsListRelationFilter
 }
 
 export type labsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
+  schedule_revision?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   memberships?: Prisma.lab_membersOrderByRelationAggregateInput
@@ -227,6 +280,7 @@ export type labsOrderByWithRelationInput = {
   employeeInvites?: Prisma.employee_invitesOrderByRelationAggregateInput
   cases?: Prisma.casesOrderByRelationAggregateInput
   millings?: Prisma.case_millingsOrderByRelationAggregateInput
+  scheduleProposals?: Prisma.schedule_proposalsOrderByRelationAggregateInput
 }
 
 export type labsWhereUniqueInput = Prisma.AtLeast<{
@@ -236,7 +290,9 @@ export type labsWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.labsWhereInput[]
   NOT?: Prisma.labsWhereInput | Prisma.labsWhereInput[]
   currency?: Prisma.StringFilter<"labs"> | string
+  timezone?: Prisma.StringFilter<"labs"> | string
   is_active?: Prisma.BoolFilter<"labs"> | boolean
+  schedule_revision?: Prisma.IntFilter<"labs"> | number
   created_at?: Prisma.DateTimeFilter<"labs"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"labs"> | Date | string
   memberships?: Prisma.Lab_membersListRelationFilter
@@ -253,18 +309,23 @@ export type labsWhereUniqueInput = Prisma.AtLeast<{
   employeeInvites?: Prisma.Employee_invitesListRelationFilter
   cases?: Prisma.CasesListRelationFilter
   millings?: Prisma.Case_millingsListRelationFilter
+  scheduleProposals?: Prisma.Schedule_proposalsListRelationFilter
 }, "id" | "name">
 
 export type labsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
+  schedule_revision?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.labsCountOrderByAggregateInput
+  _avg?: Prisma.labsAvgOrderByAggregateInput
   _max?: Prisma.labsMaxOrderByAggregateInput
   _min?: Prisma.labsMinOrderByAggregateInput
+  _sum?: Prisma.labsSumOrderByAggregateInput
 }
 
 export type labsScalarWhereWithAggregatesInput = {
@@ -274,7 +335,9 @@ export type labsScalarWhereWithAggregatesInput = {
   id?: Prisma.UuidWithAggregatesFilter<"labs"> | string
   name?: Prisma.StringWithAggregatesFilter<"labs"> | string
   currency?: Prisma.StringWithAggregatesFilter<"labs"> | string
+  timezone?: Prisma.StringWithAggregatesFilter<"labs"> | string
   is_active?: Prisma.BoolWithAggregatesFilter<"labs"> | boolean
+  schedule_revision?: Prisma.IntWithAggregatesFilter<"labs"> | number
   created_at?: Prisma.DateTimeWithAggregatesFilter<"labs"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"labs"> | Date | string
 }
@@ -283,7 +346,9 @@ export type labsCreateInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
@@ -300,13 +365,16 @@ export type labsCreateInput = {
   employeeInvites?: Prisma.employee_invitesCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutLabsInput
 }
 
 export type labsUncheckedCreateInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
@@ -323,13 +391,16 @@ export type labsUncheckedCreateInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutLabsInput
 }
 
 export type labsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
@@ -346,13 +417,16 @@ export type labsUpdateInput = {
   employeeInvites?: Prisma.employee_invitesUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutLabsNestedInput
 }
 
 export type labsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
@@ -369,13 +443,16 @@ export type labsUncheckedUpdateInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutLabsNestedInput
 }
 
 export type labsCreateManyInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -384,7 +461,9 @@ export type labsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -393,7 +472,9 @@ export type labsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -402,16 +483,24 @@ export type labsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
+  schedule_revision?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+}
+
+export type labsAvgOrderByAggregateInput = {
+  schedule_revision?: Prisma.SortOrder
 }
 
 export type labsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
+  schedule_revision?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -420,14 +509,28 @@ export type labsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   currency?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
+  schedule_revision?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+}
+
+export type labsSumOrderByAggregateInput = {
+  schedule_revision?: Prisma.SortOrder
 }
 
 export type LabsScalarRelationFilter = {
   is?: Prisma.labsWhereInput
   isNot?: Prisma.labsWhereInput
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type labsCreateNestedOneWithoutMembershipsInput = {
@@ -626,11 +729,27 @@ export type labsUpdateOneRequiredWithoutCasesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.labsUpdateToOneWithWhereWithoutCasesInput, Prisma.labsUpdateWithoutCasesInput>, Prisma.labsUncheckedUpdateWithoutCasesInput>
 }
 
+export type labsCreateNestedOneWithoutScheduleProposalsInput = {
+  create?: Prisma.XOR<Prisma.labsCreateWithoutScheduleProposalsInput, Prisma.labsUncheckedCreateWithoutScheduleProposalsInput>
+  connectOrCreate?: Prisma.labsCreateOrConnectWithoutScheduleProposalsInput
+  connect?: Prisma.labsWhereUniqueInput
+}
+
+export type labsUpdateOneRequiredWithoutScheduleProposalsNestedInput = {
+  create?: Prisma.XOR<Prisma.labsCreateWithoutScheduleProposalsInput, Prisma.labsUncheckedCreateWithoutScheduleProposalsInput>
+  connectOrCreate?: Prisma.labsCreateOrConnectWithoutScheduleProposalsInput
+  upsert?: Prisma.labsUpsertWithoutScheduleProposalsInput
+  connect?: Prisma.labsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.labsUpdateToOneWithWhereWithoutScheduleProposalsInput, Prisma.labsUpdateWithoutScheduleProposalsInput>, Prisma.labsUncheckedUpdateWithoutScheduleProposalsInput>
+}
+
 export type labsCreateWithoutMembershipsInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   customers?: Prisma.customersCreateNestedManyWithoutLabsInput
@@ -646,13 +765,16 @@ export type labsCreateWithoutMembershipsInput = {
   employeeInvites?: Prisma.employee_invitesCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutLabsInput
 }
 
 export type labsUncheckedCreateWithoutMembershipsInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   customers?: Prisma.customersUncheckedCreateNestedManyWithoutLabsInput
@@ -668,6 +790,7 @@ export type labsUncheckedCreateWithoutMembershipsInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutLabsInput
 }
 
 export type labsCreateOrConnectWithoutMembershipsInput = {
@@ -690,7 +813,9 @@ export type labsUpdateWithoutMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customers?: Prisma.customersUpdateManyWithoutLabsNestedInput
@@ -706,13 +831,16 @@ export type labsUpdateWithoutMembershipsInput = {
   employeeInvites?: Prisma.employee_invitesUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutLabsNestedInput
 }
 
 export type labsUncheckedUpdateWithoutMembershipsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customers?: Prisma.customersUncheckedUpdateManyWithoutLabsNestedInput
@@ -728,13 +856,16 @@ export type labsUncheckedUpdateWithoutMembershipsInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutLabsNestedInput
 }
 
 export type labsCreateWithoutEmployeeInvitesInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
@@ -750,13 +881,16 @@ export type labsCreateWithoutEmployeeInvitesInput = {
   employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutLabsInput
 }
 
 export type labsUncheckedCreateWithoutEmployeeInvitesInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
@@ -772,6 +906,7 @@ export type labsUncheckedCreateWithoutEmployeeInvitesInput = {
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutLabsInput
 }
 
 export type labsCreateOrConnectWithoutEmployeeInvitesInput = {
@@ -794,7 +929,9 @@ export type labsUpdateWithoutEmployeeInvitesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
@@ -810,13 +947,16 @@ export type labsUpdateWithoutEmployeeInvitesInput = {
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutLabsNestedInput
 }
 
 export type labsUncheckedUpdateWithoutEmployeeInvitesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
@@ -832,13 +972,16 @@ export type labsUncheckedUpdateWithoutEmployeeInvitesInput = {
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutLabsNestedInput
 }
 
 export type labsCreateWithoutService_typesInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
@@ -854,13 +997,16 @@ export type labsCreateWithoutService_typesInput = {
   employeeInvites?: Prisma.employee_invitesCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutLabsInput
 }
 
 export type labsUncheckedCreateWithoutService_typesInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
@@ -876,6 +1022,7 @@ export type labsUncheckedCreateWithoutService_typesInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutLabsInput
 }
 
 export type labsCreateOrConnectWithoutService_typesInput = {
@@ -898,7 +1045,9 @@ export type labsUpdateWithoutService_typesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
@@ -914,13 +1063,16 @@ export type labsUpdateWithoutService_typesInput = {
   employeeInvites?: Prisma.employee_invitesUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutLabsNestedInput
 }
 
 export type labsUncheckedUpdateWithoutService_typesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
@@ -936,13 +1088,16 @@ export type labsUncheckedUpdateWithoutService_typesInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutLabsNestedInput
 }
 
 export type labsCreateWithoutPrice_tablesInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
@@ -958,13 +1113,16 @@ export type labsCreateWithoutPrice_tablesInput = {
   employeeInvites?: Prisma.employee_invitesCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutLabsInput
 }
 
 export type labsUncheckedCreateWithoutPrice_tablesInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
@@ -980,6 +1138,7 @@ export type labsUncheckedCreateWithoutPrice_tablesInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutLabsInput
 }
 
 export type labsCreateOrConnectWithoutPrice_tablesInput = {
@@ -1002,7 +1161,9 @@ export type labsUpdateWithoutPrice_tablesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
@@ -1018,13 +1179,16 @@ export type labsUpdateWithoutPrice_tablesInput = {
   employeeInvites?: Prisma.employee_invitesUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutLabsNestedInput
 }
 
 export type labsUncheckedUpdateWithoutPrice_tablesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
@@ -1040,13 +1204,16 @@ export type labsUncheckedUpdateWithoutPrice_tablesInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutLabsNestedInput
 }
 
 export type labsCreateWithoutProcessesInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
@@ -1062,13 +1229,16 @@ export type labsCreateWithoutProcessesInput = {
   employeeInvites?: Prisma.employee_invitesCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutLabsInput
 }
 
 export type labsUncheckedCreateWithoutProcessesInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
@@ -1084,6 +1254,7 @@ export type labsUncheckedCreateWithoutProcessesInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutLabsInput
 }
 
 export type labsCreateOrConnectWithoutProcessesInput = {
@@ -1106,7 +1277,9 @@ export type labsUpdateWithoutProcessesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
@@ -1122,13 +1295,16 @@ export type labsUpdateWithoutProcessesInput = {
   employeeInvites?: Prisma.employee_invitesUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutLabsNestedInput
 }
 
 export type labsUncheckedUpdateWithoutProcessesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
@@ -1144,13 +1320,16 @@ export type labsUncheckedUpdateWithoutProcessesInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutLabsNestedInput
 }
 
 export type labsCreateWithoutEmployeeProcessAssignmentsInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
@@ -1166,13 +1345,16 @@ export type labsCreateWithoutEmployeeProcessAssignmentsInput = {
   employeeInvites?: Prisma.employee_invitesCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutLabsInput
 }
 
 export type labsUncheckedCreateWithoutEmployeeProcessAssignmentsInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
@@ -1188,6 +1370,7 @@ export type labsUncheckedCreateWithoutEmployeeProcessAssignmentsInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutLabsInput
 }
 
 export type labsCreateOrConnectWithoutEmployeeProcessAssignmentsInput = {
@@ -1210,7 +1393,9 @@ export type labsUpdateWithoutEmployeeProcessAssignmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
@@ -1226,13 +1411,16 @@ export type labsUpdateWithoutEmployeeProcessAssignmentsInput = {
   employeeInvites?: Prisma.employee_invitesUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutLabsNestedInput
 }
 
 export type labsUncheckedUpdateWithoutEmployeeProcessAssignmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
@@ -1248,13 +1436,16 @@ export type labsUncheckedUpdateWithoutEmployeeProcessAssignmentsInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutLabsNestedInput
 }
 
 export type labsCreateWithoutMilling_drillsInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
@@ -1270,13 +1461,16 @@ export type labsCreateWithoutMilling_drillsInput = {
   employeeInvites?: Prisma.employee_invitesCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutLabsInput
 }
 
 export type labsUncheckedCreateWithoutMilling_drillsInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
@@ -1292,6 +1486,7 @@ export type labsUncheckedCreateWithoutMilling_drillsInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutLabsInput
 }
 
 export type labsCreateOrConnectWithoutMilling_drillsInput = {
@@ -1314,7 +1509,9 @@ export type labsUpdateWithoutMilling_drillsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
@@ -1330,13 +1527,16 @@ export type labsUpdateWithoutMilling_drillsInput = {
   employeeInvites?: Prisma.employee_invitesUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutLabsNestedInput
 }
 
 export type labsUncheckedUpdateWithoutMilling_drillsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
@@ -1352,13 +1552,16 @@ export type labsUncheckedUpdateWithoutMilling_drillsInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutLabsNestedInput
 }
 
 export type labsCreateWithoutMilling_machinesInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
@@ -1374,13 +1577,16 @@ export type labsCreateWithoutMilling_machinesInput = {
   employeeInvites?: Prisma.employee_invitesCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutLabsInput
 }
 
 export type labsUncheckedCreateWithoutMilling_machinesInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
@@ -1396,6 +1602,7 @@ export type labsUncheckedCreateWithoutMilling_machinesInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutLabsInput
 }
 
 export type labsCreateOrConnectWithoutMilling_machinesInput = {
@@ -1418,7 +1625,9 @@ export type labsUpdateWithoutMilling_machinesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
@@ -1434,13 +1643,16 @@ export type labsUpdateWithoutMilling_machinesInput = {
   employeeInvites?: Prisma.employee_invitesUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutLabsNestedInput
 }
 
 export type labsUncheckedUpdateWithoutMilling_machinesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
@@ -1456,13 +1668,16 @@ export type labsUncheckedUpdateWithoutMilling_machinesInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutLabsNestedInput
 }
 
 export type labsCreateWithoutMillingsInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
@@ -1478,13 +1693,16 @@ export type labsCreateWithoutMillingsInput = {
   employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
   employeeInvites?: Prisma.employee_invitesCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutLabsInput
 }
 
 export type labsUncheckedCreateWithoutMillingsInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
@@ -1500,6 +1718,7 @@ export type labsUncheckedCreateWithoutMillingsInput = {
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
   employeeInvites?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutLabsInput
 }
 
 export type labsCreateOrConnectWithoutMillingsInput = {
@@ -1522,7 +1741,9 @@ export type labsUpdateWithoutMillingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
@@ -1538,13 +1759,16 @@ export type labsUpdateWithoutMillingsInput = {
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
   employeeInvites?: Prisma.employee_invitesUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutLabsNestedInput
 }
 
 export type labsUncheckedUpdateWithoutMillingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
@@ -1560,13 +1784,16 @@ export type labsUncheckedUpdateWithoutMillingsInput = {
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
   employeeInvites?: Prisma.employee_invitesUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutLabsNestedInput
 }
 
 export type labsCreateWithoutCustomersInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
@@ -1582,13 +1809,16 @@ export type labsCreateWithoutCustomersInput = {
   employeeInvites?: Prisma.employee_invitesCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutLabsInput
 }
 
 export type labsUncheckedCreateWithoutCustomersInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
@@ -1604,6 +1834,7 @@ export type labsUncheckedCreateWithoutCustomersInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutLabsInput
 }
 
 export type labsCreateOrConnectWithoutCustomersInput = {
@@ -1626,7 +1857,9 @@ export type labsUpdateWithoutCustomersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
@@ -1642,13 +1875,16 @@ export type labsUpdateWithoutCustomersInput = {
   employeeInvites?: Prisma.employee_invitesUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutLabsNestedInput
 }
 
 export type labsUncheckedUpdateWithoutCustomersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
@@ -1664,13 +1900,16 @@ export type labsUncheckedUpdateWithoutCustomersInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutLabsNestedInput
 }
 
 export type labsCreateWithoutDentistsInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
@@ -1686,13 +1925,16 @@ export type labsCreateWithoutDentistsInput = {
   employeeInvites?: Prisma.employee_invitesCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutLabsInput
 }
 
 export type labsUncheckedCreateWithoutDentistsInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
@@ -1708,6 +1950,7 @@ export type labsUncheckedCreateWithoutDentistsInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutLabsInput
 }
 
 export type labsCreateOrConnectWithoutDentistsInput = {
@@ -1730,7 +1973,9 @@ export type labsUpdateWithoutDentistsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
@@ -1746,13 +1991,16 @@ export type labsUpdateWithoutDentistsInput = {
   employeeInvites?: Prisma.employee_invitesUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutLabsNestedInput
 }
 
 export type labsUncheckedUpdateWithoutDentistsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
@@ -1768,13 +2016,16 @@ export type labsUncheckedUpdateWithoutDentistsInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutLabsNestedInput
 }
 
 export type labsCreateWithoutComponentsInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
@@ -1790,13 +2041,16 @@ export type labsCreateWithoutComponentsInput = {
   employeeInvites?: Prisma.employee_invitesCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutLabsInput
 }
 
 export type labsUncheckedCreateWithoutComponentsInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
@@ -1812,6 +2066,7 @@ export type labsUncheckedCreateWithoutComponentsInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutLabsInput
 }
 
 export type labsCreateOrConnectWithoutComponentsInput = {
@@ -1834,7 +2089,9 @@ export type labsUpdateWithoutComponentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
@@ -1850,13 +2107,16 @@ export type labsUpdateWithoutComponentsInput = {
   employeeInvites?: Prisma.employee_invitesUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutLabsNestedInput
 }
 
 export type labsUncheckedUpdateWithoutComponentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
@@ -1872,13 +2132,16 @@ export type labsUncheckedUpdateWithoutComponentsInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutLabsNestedInput
 }
 
 export type labsCreateWithoutBlock_typesInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
@@ -1894,13 +2157,16 @@ export type labsCreateWithoutBlock_typesInput = {
   employeeInvites?: Prisma.employee_invitesCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutLabsInput
 }
 
 export type labsUncheckedCreateWithoutBlock_typesInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
@@ -1916,6 +2182,7 @@ export type labsUncheckedCreateWithoutBlock_typesInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutLabsInput
   cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutLabsInput
 }
 
 export type labsCreateOrConnectWithoutBlock_typesInput = {
@@ -1938,7 +2205,9 @@ export type labsUpdateWithoutBlock_typesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
@@ -1954,13 +2223,16 @@ export type labsUpdateWithoutBlock_typesInput = {
   employeeInvites?: Prisma.employee_invitesUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutLabsNestedInput
 }
 
 export type labsUncheckedUpdateWithoutBlock_typesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
@@ -1976,13 +2248,16 @@ export type labsUncheckedUpdateWithoutBlock_typesInput = {
   employeeInvites?: Prisma.employee_invitesUncheckedUpdateManyWithoutLabsNestedInput
   cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutLabsNestedInput
 }
 
 export type labsCreateWithoutCasesInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
@@ -1998,13 +2273,16 @@ export type labsCreateWithoutCasesInput = {
   employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
   employeeInvites?: Prisma.employee_invitesCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutLabsInput
 }
 
 export type labsUncheckedCreateWithoutCasesInput = {
   id?: string
   name: string
   currency?: string
+  timezone?: string
   is_active?: boolean
+  schedule_revision?: number
   created_at?: Date | string
   updated_at?: Date | string
   memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
@@ -2020,6 +2298,7 @@ export type labsUncheckedCreateWithoutCasesInput = {
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
   employeeInvites?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutLabsInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutLabsInput
 }
 
 export type labsCreateOrConnectWithoutCasesInput = {
@@ -2042,7 +2321,9 @@ export type labsUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
@@ -2058,13 +2339,16 @@ export type labsUpdateWithoutCasesInput = {
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
   employeeInvites?: Prisma.employee_invitesUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutLabsNestedInput
 }
 
 export type labsUncheckedUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
@@ -2079,6 +2363,123 @@ export type labsUncheckedUpdateWithoutCasesInput = {
   processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
   employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
   employeeInvites?: Prisma.employee_invitesUncheckedUpdateManyWithoutLabsNestedInput
+  millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
+  scheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutLabsNestedInput
+}
+
+export type labsCreateWithoutScheduleProposalsInput = {
+  id?: string
+  name: string
+  currency?: string
+  timezone?: string
+  is_active?: boolean
+  schedule_revision?: number
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersCreateNestedManyWithoutLabsInput
+  customers?: Prisma.customersCreateNestedManyWithoutLabsInput
+  dentists?: Prisma.dentistsCreateNestedManyWithoutLabsInput
+  service_types?: Prisma.service_typesCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesCreateNestedManyWithoutLabsInput
+  components?: Prisma.componentsCreateNestedManyWithoutLabsInput
+  block_types?: Prisma.block_typesCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesCreateNestedManyWithoutLabsInput
+  milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutLabsInput
+  processes?: Prisma.processesCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsCreateNestedManyWithoutLabsInput
+  employeeInvites?: Prisma.employee_invitesCreateNestedManyWithoutLabsInput
+  cases?: Prisma.casesCreateNestedManyWithoutLabsInput
+  millings?: Prisma.case_millingsCreateNestedManyWithoutLabsInput
+}
+
+export type labsUncheckedCreateWithoutScheduleProposalsInput = {
+  id?: string
+  name: string
+  currency?: string
+  timezone?: string
+  is_active?: boolean
+  schedule_revision?: number
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutLabsInput
+  customers?: Prisma.customersUncheckedCreateNestedManyWithoutLabsInput
+  dentists?: Prisma.dentistsUncheckedCreateNestedManyWithoutLabsInput
+  service_types?: Prisma.service_typesUncheckedCreateNestedManyWithoutLabsInput
+  price_tables?: Prisma.price_tablesUncheckedCreateNestedManyWithoutLabsInput
+  components?: Prisma.componentsUncheckedCreateNestedManyWithoutLabsInput
+  block_types?: Prisma.block_typesUncheckedCreateNestedManyWithoutLabsInput
+  milling_machines?: Prisma.milling_machinesUncheckedCreateNestedManyWithoutLabsInput
+  milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutLabsInput
+  processes?: Prisma.processesUncheckedCreateNestedManyWithoutLabsInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedCreateNestedManyWithoutLabsInput
+  employeeInvites?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutLabsInput
+  cases?: Prisma.casesUncheckedCreateNestedManyWithoutLabsInput
+  millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutLabsInput
+}
+
+export type labsCreateOrConnectWithoutScheduleProposalsInput = {
+  where: Prisma.labsWhereUniqueInput
+  create: Prisma.XOR<Prisma.labsCreateWithoutScheduleProposalsInput, Prisma.labsUncheckedCreateWithoutScheduleProposalsInput>
+}
+
+export type labsUpsertWithoutScheduleProposalsInput = {
+  update: Prisma.XOR<Prisma.labsUpdateWithoutScheduleProposalsInput, Prisma.labsUncheckedUpdateWithoutScheduleProposalsInput>
+  create: Prisma.XOR<Prisma.labsCreateWithoutScheduleProposalsInput, Prisma.labsUncheckedCreateWithoutScheduleProposalsInput>
+  where?: Prisma.labsWhereInput
+}
+
+export type labsUpdateToOneWithWhereWithoutScheduleProposalsInput = {
+  where?: Prisma.labsWhereInput
+  data: Prisma.XOR<Prisma.labsUpdateWithoutScheduleProposalsInput, Prisma.labsUncheckedUpdateWithoutScheduleProposalsInput>
+}
+
+export type labsUpdateWithoutScheduleProposalsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUpdateManyWithoutLabsNestedInput
+  customers?: Prisma.customersUpdateManyWithoutLabsNestedInput
+  dentists?: Prisma.dentistsUpdateManyWithoutLabsNestedInput
+  service_types?: Prisma.service_typesUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUpdateManyWithoutLabsNestedInput
+  components?: Prisma.componentsUpdateManyWithoutLabsNestedInput
+  block_types?: Prisma.block_typesUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUpdateManyWithoutLabsNestedInput
+  milling_drills?: Prisma.milling_drillsUpdateManyWithoutLabsNestedInput
+  processes?: Prisma.processesUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUpdateManyWithoutLabsNestedInput
+  employeeInvites?: Prisma.employee_invitesUpdateManyWithoutLabsNestedInput
+  cases?: Prisma.casesUpdateManyWithoutLabsNestedInput
+  millings?: Prisma.case_millingsUpdateManyWithoutLabsNestedInput
+}
+
+export type labsUncheckedUpdateWithoutScheduleProposalsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schedule_revision?: Prisma.IntFieldUpdateOperationsInput | number
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutLabsNestedInput
+  customers?: Prisma.customersUncheckedUpdateManyWithoutLabsNestedInput
+  dentists?: Prisma.dentistsUncheckedUpdateManyWithoutLabsNestedInput
+  service_types?: Prisma.service_typesUncheckedUpdateManyWithoutLabsNestedInput
+  price_tables?: Prisma.price_tablesUncheckedUpdateManyWithoutLabsNestedInput
+  components?: Prisma.componentsUncheckedUpdateManyWithoutLabsNestedInput
+  block_types?: Prisma.block_typesUncheckedUpdateManyWithoutLabsNestedInput
+  milling_machines?: Prisma.milling_machinesUncheckedUpdateManyWithoutLabsNestedInput
+  milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutLabsNestedInput
+  processes?: Prisma.processesUncheckedUpdateManyWithoutLabsNestedInput
+  employeeProcessAssignments?: Prisma.employee_process_assignmentsUncheckedUpdateManyWithoutLabsNestedInput
+  employeeInvites?: Prisma.employee_invitesUncheckedUpdateManyWithoutLabsNestedInput
+  cases?: Prisma.casesUncheckedUpdateManyWithoutLabsNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutLabsNestedInput
 }
 
@@ -2102,6 +2503,7 @@ export type LabsCountOutputType = {
   employeeInvites: number
   cases: number
   millings: number
+  scheduleProposals: number
 }
 
 export type LabsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2119,6 +2521,7 @@ export type LabsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   employeeInvites?: boolean | LabsCountOutputTypeCountEmployeeInvitesArgs
   cases?: boolean | LabsCountOutputTypeCountCasesArgs
   millings?: boolean | LabsCountOutputTypeCountMillingsArgs
+  scheduleProposals?: boolean | LabsCountOutputTypeCountScheduleProposalsArgs
 }
 
 /**
@@ -2229,12 +2632,21 @@ export type LabsCountOutputTypeCountMillingsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.case_millingsWhereInput
 }
 
+/**
+ * LabsCountOutputType without action
+ */
+export type LabsCountOutputTypeCountScheduleProposalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.schedule_proposalsWhereInput
+}
+
 
 export type labsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   currency?: boolean
+  timezone?: boolean
   is_active?: boolean
+  schedule_revision?: boolean
   created_at?: boolean
   updated_at?: boolean
   memberships?: boolean | Prisma.labs$membershipsArgs<ExtArgs>
@@ -2251,6 +2663,7 @@ export type labsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   employeeInvites?: boolean | Prisma.labs$employeeInvitesArgs<ExtArgs>
   cases?: boolean | Prisma.labs$casesArgs<ExtArgs>
   millings?: boolean | Prisma.labs$millingsArgs<ExtArgs>
+  scheduleProposals?: boolean | Prisma.labs$scheduleProposalsArgs<ExtArgs>
   _count?: boolean | Prisma.LabsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["labs"]>
 
@@ -2258,7 +2671,9 @@ export type labsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   name?: boolean
   currency?: boolean
+  timezone?: boolean
   is_active?: boolean
+  schedule_revision?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["labs"]>
@@ -2267,7 +2682,9 @@ export type labsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   name?: boolean
   currency?: boolean
+  timezone?: boolean
   is_active?: boolean
+  schedule_revision?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["labs"]>
@@ -2276,12 +2693,14 @@ export type labsSelectScalar = {
   id?: boolean
   name?: boolean
   currency?: boolean
+  timezone?: boolean
   is_active?: boolean
+  schedule_revision?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type labsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "currency" | "is_active" | "created_at" | "updated_at", ExtArgs["result"]["labs"]>
+export type labsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "currency" | "timezone" | "is_active" | "schedule_revision" | "created_at" | "updated_at", ExtArgs["result"]["labs"]>
 export type labsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   memberships?: boolean | Prisma.labs$membershipsArgs<ExtArgs>
   customers?: boolean | Prisma.labs$customersArgs<ExtArgs>
@@ -2297,6 +2716,7 @@ export type labsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   employeeInvites?: boolean | Prisma.labs$employeeInvitesArgs<ExtArgs>
   cases?: boolean | Prisma.labs$casesArgs<ExtArgs>
   millings?: boolean | Prisma.labs$millingsArgs<ExtArgs>
+  scheduleProposals?: boolean | Prisma.labs$scheduleProposalsArgs<ExtArgs>
   _count?: boolean | Prisma.LabsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type labsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2319,12 +2739,15 @@ export type $labsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     employeeInvites: Prisma.$employee_invitesPayload<ExtArgs>[]
     cases: Prisma.$casesPayload<ExtArgs>[]
     millings: Prisma.$case_millingsPayload<ExtArgs>[]
+    scheduleProposals: Prisma.$schedule_proposalsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     currency: string
+    timezone: string
     is_active: boolean
+    schedule_revision: number
     created_at: Date
     updated_at: Date
   }, ExtArgs["result"]["labs"]>
@@ -2735,6 +3158,7 @@ export interface Prisma__labsClient<T, Null = never, ExtArgs extends runtime.Typ
   employeeInvites<T extends Prisma.labs$employeeInvitesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$employeeInvitesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$employee_invitesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   cases<T extends Prisma.labs$casesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$casesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$casesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   millings<T extends Prisma.labs$millingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$millingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_millingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  scheduleProposals<T extends Prisma.labs$scheduleProposalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.labs$scheduleProposalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$schedule_proposalsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2767,7 +3191,9 @@ export interface labsFieldRefs {
   readonly id: Prisma.FieldRef<"labs", 'String'>
   readonly name: Prisma.FieldRef<"labs", 'String'>
   readonly currency: Prisma.FieldRef<"labs", 'String'>
+  readonly timezone: Prisma.FieldRef<"labs", 'String'>
   readonly is_active: Prisma.FieldRef<"labs", 'Boolean'>
+  readonly schedule_revision: Prisma.FieldRef<"labs", 'Int'>
   readonly created_at: Prisma.FieldRef<"labs", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"labs", 'DateTime'>
 }
@@ -3496,6 +3922,30 @@ export type labs$millingsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.Case_millingsScalarFieldEnum | Prisma.Case_millingsScalarFieldEnum[]
+}
+
+/**
+ * labs.scheduleProposals
+ */
+export type labs$scheduleProposalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the schedule_proposals
+   */
+  select?: Prisma.schedule_proposalsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the schedule_proposals
+   */
+  omit?: Prisma.schedule_proposalsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.schedule_proposalsInclude<ExtArgs> | null
+  where?: Prisma.schedule_proposalsWhereInput
+  orderBy?: Prisma.schedule_proposalsOrderByWithRelationInput | Prisma.schedule_proposalsOrderByWithRelationInput[]
+  cursor?: Prisma.schedule_proposalsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Schedule_proposalsScalarFieldEnum | Prisma.Schedule_proposalsScalarFieldEnum[]
 }
 
 /**

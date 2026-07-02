@@ -408,8 +408,15 @@ export const ModelName = {
   case_comments: 'case_comments',
   case_thread_reads: 'case_thread_reads',
   case_processes: 'case_processes',
+  case_process_history_events: 'case_process_history_events',
   case_services: 'case_services',
   case_process_dependencies: 'case_process_dependencies',
+  case_process_schedule_allocations: 'case_process_schedule_allocations',
+  employee_schedule_shifts: 'employee_schedule_shifts',
+  employee_schedule_exceptions: 'employee_schedule_exceptions',
+  milling_machine_schedule_shifts: 'milling_machine_schedule_shifts',
+  milling_machine_schedule_exceptions: 'milling_machine_schedule_exceptions',
+  schedule_proposals: 'schedule_proposals',
   case_status_histories: 'case_status_histories',
   notifications: 'notifications',
   push_subscriptions: 'push_subscriptions'
@@ -428,7 +435,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "users" | "labs" | "lab_members" | "employee_invites" | "service_types" | "price_tables" | "price_table_service_prices" | "processes" | "employee_process_assignments" | "milling_drills" | "milling_machines" | "milling_machine_slots" | "case_millings" | "case_milling_drill_slots" | "case_attachments" | "customers" | "dentists" | "components" | "case_component_usages" | "block_types" | "cases" | "case_comments" | "case_thread_reads" | "case_processes" | "case_services" | "case_process_dependencies" | "case_status_histories" | "notifications" | "push_subscriptions"
+    modelProps: "users" | "labs" | "lab_members" | "employee_invites" | "service_types" | "price_tables" | "price_table_service_prices" | "processes" | "employee_process_assignments" | "milling_drills" | "milling_machines" | "milling_machine_slots" | "case_millings" | "case_milling_drill_slots" | "case_attachments" | "customers" | "dentists" | "components" | "case_component_usages" | "block_types" | "cases" | "case_comments" | "case_thread_reads" | "case_processes" | "case_process_history_events" | "case_services" | "case_process_dependencies" | "case_process_schedule_allocations" | "employee_schedule_shifts" | "employee_schedule_exceptions" | "milling_machine_schedule_shifts" | "milling_machine_schedule_exceptions" | "schedule_proposals" | "case_status_histories" | "notifications" | "push_subscriptions"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2208,6 +2215,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    case_process_history_events: {
+      payload: Prisma.$case_process_history_eventsPayload<ExtArgs>
+      fields: Prisma.case_process_history_eventsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.case_process_history_eventsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_history_eventsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.case_process_history_eventsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_history_eventsPayload>
+        }
+        findFirst: {
+          args: Prisma.case_process_history_eventsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_history_eventsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.case_process_history_eventsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_history_eventsPayload>
+        }
+        findMany: {
+          args: Prisma.case_process_history_eventsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_history_eventsPayload>[]
+        }
+        create: {
+          args: Prisma.case_process_history_eventsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_history_eventsPayload>
+        }
+        createMany: {
+          args: Prisma.case_process_history_eventsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.case_process_history_eventsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_history_eventsPayload>[]
+        }
+        delete: {
+          args: Prisma.case_process_history_eventsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_history_eventsPayload>
+        }
+        update: {
+          args: Prisma.case_process_history_eventsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_history_eventsPayload>
+        }
+        deleteMany: {
+          args: Prisma.case_process_history_eventsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.case_process_history_eventsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.case_process_history_eventsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_history_eventsPayload>[]
+        }
+        upsert: {
+          args: Prisma.case_process_history_eventsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_history_eventsPayload>
+        }
+        aggregate: {
+          args: Prisma.Case_process_history_eventsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCase_process_history_events>
+        }
+        groupBy: {
+          args: Prisma.case_process_history_eventsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Case_process_history_eventsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.case_process_history_eventsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Case_process_history_eventsCountAggregateOutputType> | number
+        }
+      }
+    }
     case_services: {
       payload: Prisma.$case_servicesPayload<ExtArgs>
       fields: Prisma.case_servicesFieldRefs
@@ -2353,6 +2434,450 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.case_process_dependenciesCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.Case_process_dependenciesCountAggregateOutputType> | number
+        }
+      }
+    }
+    case_process_schedule_allocations: {
+      payload: Prisma.$case_process_schedule_allocationsPayload<ExtArgs>
+      fields: Prisma.case_process_schedule_allocationsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.case_process_schedule_allocationsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_schedule_allocationsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.case_process_schedule_allocationsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_schedule_allocationsPayload>
+        }
+        findFirst: {
+          args: Prisma.case_process_schedule_allocationsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_schedule_allocationsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.case_process_schedule_allocationsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_schedule_allocationsPayload>
+        }
+        findMany: {
+          args: Prisma.case_process_schedule_allocationsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_schedule_allocationsPayload>[]
+        }
+        create: {
+          args: Prisma.case_process_schedule_allocationsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_schedule_allocationsPayload>
+        }
+        createMany: {
+          args: Prisma.case_process_schedule_allocationsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.case_process_schedule_allocationsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_schedule_allocationsPayload>[]
+        }
+        delete: {
+          args: Prisma.case_process_schedule_allocationsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_schedule_allocationsPayload>
+        }
+        update: {
+          args: Prisma.case_process_schedule_allocationsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_schedule_allocationsPayload>
+        }
+        deleteMany: {
+          args: Prisma.case_process_schedule_allocationsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.case_process_schedule_allocationsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.case_process_schedule_allocationsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_schedule_allocationsPayload>[]
+        }
+        upsert: {
+          args: Prisma.case_process_schedule_allocationsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$case_process_schedule_allocationsPayload>
+        }
+        aggregate: {
+          args: Prisma.Case_process_schedule_allocationsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCase_process_schedule_allocations>
+        }
+        groupBy: {
+          args: Prisma.case_process_schedule_allocationsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Case_process_schedule_allocationsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.case_process_schedule_allocationsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Case_process_schedule_allocationsCountAggregateOutputType> | number
+        }
+      }
+    }
+    employee_schedule_shifts: {
+      payload: Prisma.$employee_schedule_shiftsPayload<ExtArgs>
+      fields: Prisma.employee_schedule_shiftsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.employee_schedule_shiftsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_shiftsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.employee_schedule_shiftsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_shiftsPayload>
+        }
+        findFirst: {
+          args: Prisma.employee_schedule_shiftsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_shiftsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.employee_schedule_shiftsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_shiftsPayload>
+        }
+        findMany: {
+          args: Prisma.employee_schedule_shiftsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_shiftsPayload>[]
+        }
+        create: {
+          args: Prisma.employee_schedule_shiftsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_shiftsPayload>
+        }
+        createMany: {
+          args: Prisma.employee_schedule_shiftsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.employee_schedule_shiftsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_shiftsPayload>[]
+        }
+        delete: {
+          args: Prisma.employee_schedule_shiftsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_shiftsPayload>
+        }
+        update: {
+          args: Prisma.employee_schedule_shiftsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_shiftsPayload>
+        }
+        deleteMany: {
+          args: Prisma.employee_schedule_shiftsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.employee_schedule_shiftsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.employee_schedule_shiftsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_shiftsPayload>[]
+        }
+        upsert: {
+          args: Prisma.employee_schedule_shiftsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_shiftsPayload>
+        }
+        aggregate: {
+          args: Prisma.Employee_schedule_shiftsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEmployee_schedule_shifts>
+        }
+        groupBy: {
+          args: Prisma.employee_schedule_shiftsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Employee_schedule_shiftsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.employee_schedule_shiftsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Employee_schedule_shiftsCountAggregateOutputType> | number
+        }
+      }
+    }
+    employee_schedule_exceptions: {
+      payload: Prisma.$employee_schedule_exceptionsPayload<ExtArgs>
+      fields: Prisma.employee_schedule_exceptionsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.employee_schedule_exceptionsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_exceptionsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.employee_schedule_exceptionsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_exceptionsPayload>
+        }
+        findFirst: {
+          args: Prisma.employee_schedule_exceptionsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_exceptionsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.employee_schedule_exceptionsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_exceptionsPayload>
+        }
+        findMany: {
+          args: Prisma.employee_schedule_exceptionsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_exceptionsPayload>[]
+        }
+        create: {
+          args: Prisma.employee_schedule_exceptionsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_exceptionsPayload>
+        }
+        createMany: {
+          args: Prisma.employee_schedule_exceptionsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.employee_schedule_exceptionsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_exceptionsPayload>[]
+        }
+        delete: {
+          args: Prisma.employee_schedule_exceptionsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_exceptionsPayload>
+        }
+        update: {
+          args: Prisma.employee_schedule_exceptionsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_exceptionsPayload>
+        }
+        deleteMany: {
+          args: Prisma.employee_schedule_exceptionsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.employee_schedule_exceptionsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.employee_schedule_exceptionsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_exceptionsPayload>[]
+        }
+        upsert: {
+          args: Prisma.employee_schedule_exceptionsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$employee_schedule_exceptionsPayload>
+        }
+        aggregate: {
+          args: Prisma.Employee_schedule_exceptionsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEmployee_schedule_exceptions>
+        }
+        groupBy: {
+          args: Prisma.employee_schedule_exceptionsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Employee_schedule_exceptionsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.employee_schedule_exceptionsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Employee_schedule_exceptionsCountAggregateOutputType> | number
+        }
+      }
+    }
+    milling_machine_schedule_shifts: {
+      payload: Prisma.$milling_machine_schedule_shiftsPayload<ExtArgs>
+      fields: Prisma.milling_machine_schedule_shiftsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.milling_machine_schedule_shiftsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_shiftsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.milling_machine_schedule_shiftsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_shiftsPayload>
+        }
+        findFirst: {
+          args: Prisma.milling_machine_schedule_shiftsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_shiftsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.milling_machine_schedule_shiftsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_shiftsPayload>
+        }
+        findMany: {
+          args: Prisma.milling_machine_schedule_shiftsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_shiftsPayload>[]
+        }
+        create: {
+          args: Prisma.milling_machine_schedule_shiftsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_shiftsPayload>
+        }
+        createMany: {
+          args: Prisma.milling_machine_schedule_shiftsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.milling_machine_schedule_shiftsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_shiftsPayload>[]
+        }
+        delete: {
+          args: Prisma.milling_machine_schedule_shiftsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_shiftsPayload>
+        }
+        update: {
+          args: Prisma.milling_machine_schedule_shiftsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_shiftsPayload>
+        }
+        deleteMany: {
+          args: Prisma.milling_machine_schedule_shiftsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.milling_machine_schedule_shiftsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.milling_machine_schedule_shiftsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_shiftsPayload>[]
+        }
+        upsert: {
+          args: Prisma.milling_machine_schedule_shiftsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_shiftsPayload>
+        }
+        aggregate: {
+          args: Prisma.Milling_machine_schedule_shiftsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMilling_machine_schedule_shifts>
+        }
+        groupBy: {
+          args: Prisma.milling_machine_schedule_shiftsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Milling_machine_schedule_shiftsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.milling_machine_schedule_shiftsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Milling_machine_schedule_shiftsCountAggregateOutputType> | number
+        }
+      }
+    }
+    milling_machine_schedule_exceptions: {
+      payload: Prisma.$milling_machine_schedule_exceptionsPayload<ExtArgs>
+      fields: Prisma.milling_machine_schedule_exceptionsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.milling_machine_schedule_exceptionsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_exceptionsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.milling_machine_schedule_exceptionsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_exceptionsPayload>
+        }
+        findFirst: {
+          args: Prisma.milling_machine_schedule_exceptionsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_exceptionsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.milling_machine_schedule_exceptionsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_exceptionsPayload>
+        }
+        findMany: {
+          args: Prisma.milling_machine_schedule_exceptionsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_exceptionsPayload>[]
+        }
+        create: {
+          args: Prisma.milling_machine_schedule_exceptionsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_exceptionsPayload>
+        }
+        createMany: {
+          args: Prisma.milling_machine_schedule_exceptionsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.milling_machine_schedule_exceptionsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_exceptionsPayload>[]
+        }
+        delete: {
+          args: Prisma.milling_machine_schedule_exceptionsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_exceptionsPayload>
+        }
+        update: {
+          args: Prisma.milling_machine_schedule_exceptionsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_exceptionsPayload>
+        }
+        deleteMany: {
+          args: Prisma.milling_machine_schedule_exceptionsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.milling_machine_schedule_exceptionsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.milling_machine_schedule_exceptionsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_exceptionsPayload>[]
+        }
+        upsert: {
+          args: Prisma.milling_machine_schedule_exceptionsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$milling_machine_schedule_exceptionsPayload>
+        }
+        aggregate: {
+          args: Prisma.Milling_machine_schedule_exceptionsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMilling_machine_schedule_exceptions>
+        }
+        groupBy: {
+          args: Prisma.milling_machine_schedule_exceptionsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Milling_machine_schedule_exceptionsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.milling_machine_schedule_exceptionsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Milling_machine_schedule_exceptionsCountAggregateOutputType> | number
+        }
+      }
+    }
+    schedule_proposals: {
+      payload: Prisma.$schedule_proposalsPayload<ExtArgs>
+      fields: Prisma.schedule_proposalsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.schedule_proposalsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$schedule_proposalsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.schedule_proposalsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$schedule_proposalsPayload>
+        }
+        findFirst: {
+          args: Prisma.schedule_proposalsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$schedule_proposalsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.schedule_proposalsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$schedule_proposalsPayload>
+        }
+        findMany: {
+          args: Prisma.schedule_proposalsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$schedule_proposalsPayload>[]
+        }
+        create: {
+          args: Prisma.schedule_proposalsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$schedule_proposalsPayload>
+        }
+        createMany: {
+          args: Prisma.schedule_proposalsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.schedule_proposalsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$schedule_proposalsPayload>[]
+        }
+        delete: {
+          args: Prisma.schedule_proposalsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$schedule_proposalsPayload>
+        }
+        update: {
+          args: Prisma.schedule_proposalsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$schedule_proposalsPayload>
+        }
+        deleteMany: {
+          args: Prisma.schedule_proposalsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.schedule_proposalsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.schedule_proposalsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$schedule_proposalsPayload>[]
+        }
+        upsert: {
+          args: Prisma.schedule_proposalsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$schedule_proposalsPayload>
+        }
+        aggregate: {
+          args: Prisma.Schedule_proposalsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSchedule_proposals>
+        }
+        groupBy: {
+          args: Prisma.schedule_proposalsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Schedule_proposalsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.schedule_proposalsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Schedule_proposalsCountAggregateOutputType> | number
         }
       }
     }
@@ -2634,7 +3159,9 @@ export const LabsScalarFieldEnum = {
   id: 'id',
   name: 'name',
   currency: 'currency',
+  timezone: 'timezone',
   is_active: 'is_active',
+  schedule_revision: 'schedule_revision',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -2676,6 +3203,7 @@ export const Service_typesScalarFieldEnum = {
   lab_id: 'lab_id',
   name: 'name',
   base_price: 'base_price',
+  delivery_buffer_days: 'delivery_buffer_days',
   is_active: 'is_active',
   deleted_at: 'deleted_at',
   notes: 'notes',
@@ -2731,6 +3259,7 @@ export const Employee_process_assignmentsScalarFieldEnum = {
   lab_id: 'lab_id',
   lab_member_id: 'lab_member_id',
   process_id: 'process_id',
+  productivity_points_per_hour: 'productivity_points_per_hour',
   created_at: 'created_at'
 } as const
 
@@ -2762,6 +3291,7 @@ export const Milling_machinesScalarFieldEnum = {
   serial_number: 'serial_number',
   model: 'model',
   status: 'status',
+  productivity_points_per_hour: 'productivity_points_per_hour',
   status_reason: 'status_reason',
   installed_at: 'installed_at',
   removed_at: 'removed_at',
@@ -2939,6 +3469,7 @@ export const CasesScalarFieldEnum = {
   service_base_price_snapshot: 'service_base_price_snapshot',
   case_price: 'case_price',
   is_price_overridden: 'is_price_overridden',
+  priority: 'priority',
   teeth: 'teeth',
   elements_qty: 'elements_qty',
   shade: 'shade',
@@ -2988,6 +3519,16 @@ export const Case_processesScalarFieldEnum = {
   workflow_step_id: 'workflow_step_id',
   status: 'status',
   assigned_lab_member_id: 'assigned_lab_member_id',
+  snapshot_fixed_minutes: 'snapshot_fixed_minutes',
+  snapshot_minutes_per_unit: 'snapshot_minutes_per_unit',
+  snapshot_expected_duration_days: 'snapshot_expected_duration_days',
+  snapshot_dependency_lag_days: 'snapshot_dependency_lag_days',
+  snapshot_requires_milling_machine: 'snapshot_requires_milling_machine',
+  planned_start_date: 'planned_start_date',
+  planned_end_date: 'planned_end_date',
+  scheduling_locked: 'scheduling_locked',
+  scheduling_status: 'scheduling_status',
+  planned_milling_machine_id: 'planned_milling_machine_id',
   started_at: 'started_at',
   completed_at: 'completed_at',
   created_at: 'created_at',
@@ -2997,12 +3538,25 @@ export const Case_processesScalarFieldEnum = {
 export type Case_processesScalarFieldEnum = (typeof Case_processesScalarFieldEnum)[keyof typeof Case_processesScalarFieldEnum]
 
 
+export const Case_process_history_eventsScalarFieldEnum = {
+  id: 'id',
+  case_id: 'case_id',
+  case_process_id: 'case_process_id',
+  actor_user_id: 'actor_user_id',
+  event_type: 'event_type',
+  created_at: 'created_at'
+} as const
+
+export type Case_process_history_eventsScalarFieldEnum = (typeof Case_process_history_eventsScalarFieldEnum)[keyof typeof Case_process_history_eventsScalarFieldEnum]
+
+
 export const Case_servicesScalarFieldEnum = {
   id: 'id',
   case_id: 'case_id',
   service_type_id: 'service_type_id',
   service_name_snapshot: 'service_name_snapshot',
   service_base_price_snapshot: 'service_base_price_snapshot',
+  delivery_buffer_days_snapshot: 'delivery_buffer_days_snapshot',
   unit_price: 'unit_price',
   is_unit_price_overridden: 'is_unit_price_overridden',
   quantity: 'quantity',
@@ -3020,6 +3574,92 @@ export const Case_process_dependenciesScalarFieldEnum = {
 } as const
 
 export type Case_process_dependenciesScalarFieldEnum = (typeof Case_process_dependenciesScalarFieldEnum)[keyof typeof Case_process_dependenciesScalarFieldEnum]
+
+
+export const Case_process_schedule_allocationsScalarFieldEnum = {
+  id: 'id',
+  case_process_id: 'case_process_id',
+  lab_member_id: 'lab_member_id',
+  allocation_date: 'allocation_date',
+  planned_minutes: 'planned_minutes',
+  milling_machine_id: 'milling_machine_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Case_process_schedule_allocationsScalarFieldEnum = (typeof Case_process_schedule_allocationsScalarFieldEnum)[keyof typeof Case_process_schedule_allocationsScalarFieldEnum]
+
+
+export const Employee_schedule_shiftsScalarFieldEnum = {
+  id: 'id',
+  lab_member_id: 'lab_member_id',
+  day_of_week: 'day_of_week',
+  available_minutes: 'available_minutes',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Employee_schedule_shiftsScalarFieldEnum = (typeof Employee_schedule_shiftsScalarFieldEnum)[keyof typeof Employee_schedule_shiftsScalarFieldEnum]
+
+
+export const Employee_schedule_exceptionsScalarFieldEnum = {
+  id: 'id',
+  lab_member_id: 'lab_member_id',
+  exception_date: 'exception_date',
+  available_minutes: 'available_minutes',
+  reason: 'reason',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Employee_schedule_exceptionsScalarFieldEnum = (typeof Employee_schedule_exceptionsScalarFieldEnum)[keyof typeof Employee_schedule_exceptionsScalarFieldEnum]
+
+
+export const Milling_machine_schedule_shiftsScalarFieldEnum = {
+  id: 'id',
+  milling_machine_id: 'milling_machine_id',
+  day_of_week: 'day_of_week',
+  start_minute: 'start_minute',
+  end_minute: 'end_minute',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Milling_machine_schedule_shiftsScalarFieldEnum = (typeof Milling_machine_schedule_shiftsScalarFieldEnum)[keyof typeof Milling_machine_schedule_shiftsScalarFieldEnum]
+
+
+export const Milling_machine_schedule_exceptionsScalarFieldEnum = {
+  id: 'id',
+  milling_machine_id: 'milling_machine_id',
+  exception_date: 'exception_date',
+  start_minute: 'start_minute',
+  end_minute: 'end_minute',
+  is_available: 'is_available',
+  reason: 'reason',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Milling_machine_schedule_exceptionsScalarFieldEnum = (typeof Milling_machine_schedule_exceptionsScalarFieldEnum)[keyof typeof Milling_machine_schedule_exceptionsScalarFieldEnum]
+
+
+export const Schedule_proposalsScalarFieldEnum = {
+  id: 'id',
+  lab_id: 'lab_id',
+  status: 'status',
+  source_revision: 'source_revision',
+  summary_json: 'summary_json',
+  changes_json: 'changes_json',
+  created_by_user_id: 'created_by_user_id',
+  approved_by_user_id: 'approved_by_user_id',
+  rejected_by_user_id: 'rejected_by_user_id',
+  decided_at: 'decided_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Schedule_proposalsScalarFieldEnum = (typeof Schedule_proposalsScalarFieldEnum)[keyof typeof Schedule_proposalsScalarFieldEnum]
 
 
 export const Case_status_historiesScalarFieldEnum = {
@@ -3154,6 +3794,20 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
  * Reference to a field of type 'UserRole'
  */
 export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
@@ -3206,20 +3860,6 @@ export type EnumMillingDrillStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
  * Reference to a field of type 'MillingDrillStatus[]'
  */
 export type ListEnumMillingDrillStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MillingDrillStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -3280,6 +3920,20 @@ export type ListEnumCaseStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
+ * Reference to a field of type 'CasePriority'
+ */
+export type EnumCasePriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CasePriority'>
+    
+
+
+/**
+ * Reference to a field of type 'CasePriority[]'
+ */
+export type ListEnumCasePriorityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CasePriority[]'>
+    
+
+
+/**
  * Reference to a field of type 'CaseProcessStatus'
  */
 export type EnumCaseProcessStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CaseProcessStatus'>
@@ -3290,6 +3944,48 @@ export type EnumCaseProcessStatusFieldRefInput<$PrismaModel> = FieldRefInputType
  * Reference to a field of type 'CaseProcessStatus[]'
  */
 export type ListEnumCaseProcessStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CaseProcessStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CaseProcessSchedulingStatus'
+ */
+export type EnumCaseProcessSchedulingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CaseProcessSchedulingStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'CaseProcessSchedulingStatus[]'
+ */
+export type ListEnumCaseProcessSchedulingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CaseProcessSchedulingStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CaseProcessHistoryEventType'
+ */
+export type EnumCaseProcessHistoryEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CaseProcessHistoryEventType'>
+    
+
+
+/**
+ * Reference to a field of type 'CaseProcessHistoryEventType[]'
+ */
+export type ListEnumCaseProcessHistoryEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CaseProcessHistoryEventType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ScheduleProposalStatus'
+ */
+export type EnumScheduleProposalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ScheduleProposalStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ScheduleProposalStatus[]'
+ */
+export type ListEnumScheduleProposalStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ScheduleProposalStatus[]'>
     
 
 
@@ -3439,8 +4135,15 @@ export type GlobalOmitConfig = {
   case_comments?: Prisma.case_commentsOmit
   case_thread_reads?: Prisma.case_thread_readsOmit
   case_processes?: Prisma.case_processesOmit
+  case_process_history_events?: Prisma.case_process_history_eventsOmit
   case_services?: Prisma.case_servicesOmit
   case_process_dependencies?: Prisma.case_process_dependenciesOmit
+  case_process_schedule_allocations?: Prisma.case_process_schedule_allocationsOmit
+  employee_schedule_shifts?: Prisma.employee_schedule_shiftsOmit
+  employee_schedule_exceptions?: Prisma.employee_schedule_exceptionsOmit
+  milling_machine_schedule_shifts?: Prisma.milling_machine_schedule_shiftsOmit
+  milling_machine_schedule_exceptions?: Prisma.milling_machine_schedule_exceptionsOmit
+  schedule_proposals?: Prisma.schedule_proposalsOmit
   case_status_histories?: Prisma.case_status_historiesOmit
   notifications?: Prisma.notificationsOmit
   push_subscriptions?: Prisma.push_subscriptionsOmit

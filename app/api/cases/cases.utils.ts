@@ -18,6 +18,16 @@ const caseProcessSelect = {
   workflow_step_id: true,
   status: true,
   assigned_lab_member_id: true,
+  snapshot_fixed_minutes: true,
+  snapshot_minutes_per_unit: true,
+  snapshot_expected_duration_days: true,
+  snapshot_dependency_lag_days: true,
+  snapshot_requires_milling_machine: true,
+  planned_start_date: true,
+  planned_end_date: true,
+  scheduling_locked: true,
+  scheduling_status: true,
+  planned_milling_machine_id: true,
   started_at: true,
   completed_at: true,
   created_at: true,
@@ -76,6 +86,7 @@ export const caseInclude = {
       service_type_id: true,
       service_name_snapshot: true,
       service_base_price_snapshot: true,
+      delivery_buffer_days_snapshot: true,
       unit_price: true,
       is_unit_price_overridden: true,
       quantity: true,
@@ -133,6 +144,32 @@ export const caseInclude = {
     },
     orderBy: { changed_at: "desc" },
   },
+  processHistory: {
+    select: {
+      id: true,
+      case_process_id: true,
+      event_type: true,
+      created_at: true,
+      actor_user_id: true,
+      actorUser: {
+        select: {
+          name: true,
+          email: true,
+        },
+      },
+      caseProcess: {
+        select: {
+          process_id: true,
+          processes: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+    },
+    orderBy: { created_at: "desc" },
+  },
 } satisfies Prisma.casesInclude;
 
 export const caseSummarySelect = {
@@ -148,6 +185,7 @@ export const caseSummarySelect = {
   service_base_price_snapshot: true,
   case_price: true,
   is_price_overridden: true,
+  priority: true,
   teeth: true,
   elements_qty: true,
   shade: true,
@@ -178,6 +216,7 @@ export const caseSummarySelect = {
       service_type_id: true,
       service_name_snapshot: true,
       service_base_price_snapshot: true,
+      delivery_buffer_days_snapshot: true,
       unit_price: true,
       is_unit_price_overridden: true,
       quantity: true,
@@ -290,6 +329,16 @@ function mapCaseProcess(
     workflow_step_id: process.workflow_step_id,
     status: process.status,
     assigned_lab_member_id: process.assigned_lab_member_id,
+    fixed_minutes: process.snapshot_fixed_minutes,
+    minutes_per_unit: process.snapshot_minutes_per_unit,
+    expected_duration_days: process.snapshot_expected_duration_days,
+    dependency_lag_days: process.snapshot_dependency_lag_days,
+    requires_milling_machine: process.snapshot_requires_milling_machine,
+    planned_start_date: process.planned_start_date,
+    planned_end_date: process.planned_end_date,
+    scheduling_locked: process.scheduling_locked,
+    scheduling_status: process.scheduling_status,
+    planned_milling_machine_id: process.planned_milling_machine_id,
     assignedToName: process.assignedLabMember?.users.name ?? null,
     dependsOnCaseProcessIds: process.dependencies.map(
       (dependency) => dependency.depends_on_case_process_id,
@@ -364,12 +413,24 @@ export function mapCase(caseItem: CaseWithRelations) {
       note: historyItem.note,
       changedAt: historyItem.changed_at,
     })),
+    processHistory: caseItem.processHistory.map((historyItem) => ({
+      id: historyItem.id,
+      caseProcessId: historyItem.case_process_id,
+      processId: historyItem.caseProcess.process_id,
+      processName: historyItem.caseProcess.processes.name,
+      eventType: historyItem.event_type,
+      actorUserId: historyItem.actor_user_id,
+      actorName:
+        historyItem.actorUser?.name ?? historyItem.actorUser?.email ?? null,
+      createdAt: historyItem.created_at,
+    })),
     serviceLines: caseItem.case_services.map((serviceLine) => ({
       id: serviceLine.id,
       serviceTypeId: serviceLine.service_type_id,
       serviceTypeName: serviceLine.service_name_snapshot,
       serviceBasePriceSnapshot:
         serviceLine.service_base_price_snapshot.toString(),
+      deliveryBufferDaysSnapshot: serviceLine.delivery_buffer_days_snapshot,
       unitPrice: serviceLine.unit_price.toString(),
       isUnitPriceOverridden: serviceLine.is_unit_price_overridden,
       quantity: serviceLine.quantity,
@@ -414,7 +475,11 @@ export function mapCaseSummary(caseItem: CaseSummaryWithRelations) {
     patientDetail: buildCasePatientDetail(caseItem),
     dueDate: caseItem.due_date,
     isUrgent: caseItem.is_urgent,
-    priority: resolveCasePriority(caseItem.is_urgent, caseItem.due_date),
+    priority: resolveCasePriority(
+      caseItem.priority,
+      caseItem.is_urgent,
+      caseItem.due_date,
+    ),
     observations: caseItem.observations,
     currentCaseProcessId: currentProcess?.caseProcessId ?? null,
     currentProcessId: currentProcess?.processId ?? null,

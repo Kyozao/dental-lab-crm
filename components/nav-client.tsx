@@ -201,6 +201,11 @@ function getNavRoutes(role?: string, pathname?: string) {
       active: pathname?.startsWith("/milling") ?? false,
     },
     {
+      href: "/schedule",
+      label: "Schedule",
+      active: pathname?.startsWith("/schedule") ?? false,
+    },
+    {
       href: "/customers",
       label: "Customers",
       active: pathname?.startsWith("/customers") ?? false,

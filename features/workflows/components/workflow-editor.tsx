@@ -21,6 +21,11 @@ export type WorkflowStep = {
   id: string;
   process_id: string;
   dependsOn: string[];
+  fixed_minutes: number;
+  minutes_per_unit: number;
+  expected_duration_days: number;
+  dependency_lag_days: number;
+  requires_milling_machine: boolean;
 };
 
 export type WorkflowDefinition = {
@@ -47,6 +52,7 @@ type Props = {
   processes: WorkflowProcessOption[];
   taskItems?: WorkflowTaskItem[];
   assigneeOptions?: WorkflowAssigneeOption[];
+  showInspectorAssignee?: boolean;
   disabled?: boolean;
   statusDisabled?: boolean;
   assigneeDisabled?: boolean;
@@ -85,6 +91,7 @@ export function WorkflowEditor({
   processes,
   taskItems = [],
   assigneeOptions = [],
+  showInspectorAssignee = true,
   disabled = false,
   statusDisabled = false,
   assigneeDisabled = false,
@@ -157,6 +164,11 @@ export function WorkflowEditor({
         id: stepId,
         process_id: firstProcess.id,
         dependsOn: [],
+        fixed_minutes: 1,
+        minutes_per_unit: 0,
+        expected_duration_days: 1,
+        dependency_lag_days: 0,
+        requires_milling_machine: false,
       },
     ]);
     setSelectedStepId(stepId);
@@ -239,6 +251,17 @@ export function WorkflowEditor({
     updateSteps((steps) =>
       steps.map((step) =>
         step.id === stepId ? { ...step, process_id: processId } : step,
+      ),
+    );
+  }
+
+  function updateStepFields(
+    stepId: string,
+    fields: Partial<Omit<WorkflowStep, "id" | "process_id" | "dependsOn">>,
+  ) {
+    updateSteps((steps) =>
+      steps.map((step) =>
+        step.id === stepId ? { ...step, ...fields } : step,
       ),
     );
   }
@@ -375,11 +398,13 @@ export function WorkflowEditor({
             processes={processes}
             taskItem={selectedStep ? taskItemByStepId.get(selectedStep.id) : undefined}
             assigneeOptions={assigneeOptions}
+            showAssignee={showInspectorAssignee}
             disabled={disabled}
             statusDisabled={statusDisabled}
             assigneeDisabled={assigneeDisabled}
             updatingProcessId={updatingProcessId}
             onProcessChange={updateProcess}
+            onStepFieldsChange={updateStepFields}
             onDependencyChange={toggleDependency}
             onRemove={removeStep}
             onStatusChange={onStatusChange}
@@ -481,11 +506,13 @@ function WorkflowStepInspector({
   processes,
   taskItem,
   assigneeOptions,
+  showAssignee,
   disabled,
   statusDisabled,
   assigneeDisabled,
   updatingProcessId,
   onProcessChange,
+  onStepFieldsChange,
   onDependencyChange,
   onRemove,
   onStatusChange,
@@ -496,11 +523,16 @@ function WorkflowStepInspector({
   processes: WorkflowProcessOption[];
   taskItem?: WorkflowTaskItem;
   assigneeOptions: WorkflowAssigneeOption[];
+  showAssignee: boolean;
   disabled: boolean;
   statusDisabled: boolean;
   assigneeDisabled: boolean;
   updatingProcessId: string | null;
   onProcessChange: (stepId: string, processId: string) => void;
+  onStepFieldsChange: (
+    stepId: string,
+    fields: Partial<Omit<WorkflowStep, "id" | "process_id" | "dependsOn">>,
+  ) => void;
   onDependencyChange: (
     stepId: string,
     dependencyId: string,
@@ -559,6 +591,106 @@ function WorkflowStepInspector({
           ) : null}
         </div>
 
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-2">
+            <label className="text-sm font-medium" htmlFor="workflow-step-fixed-minutes">
+              Fixed minutes
+            </label>
+            <input
+              id="workflow-step-fixed-minutes"
+              type="number"
+              min={0}
+              step={1}
+              value={step.fixed_minutes}
+              disabled={disabled}
+              onChange={(event) =>
+                onStepFieldsChange(
+                  step.id,
+                  { fixed_minutes: Math.max(0, Number(event.target.value) || 0) },
+                )
+              }
+              className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:opacity-60"
+            />
+          </div>
+          <div className="grid gap-2">
+            <label className="text-sm font-medium" htmlFor="workflow-step-minutes-per-unit">
+              Minutes per unit
+            </label>
+            <input
+              id="workflow-step-minutes-per-unit"
+              type="number"
+              min={0}
+              step={1}
+              value={step.minutes_per_unit}
+              disabled={disabled}
+              onChange={(event) =>
+                onStepFieldsChange(step.id, {
+                  minutes_per_unit: Math.max(0, Number(event.target.value) || 0),
+                })
+              }
+              className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:opacity-60"
+            />
+          </div>
+          <div className="grid gap-2">
+            <label className="text-sm font-medium" htmlFor="workflow-step-duration">
+              Min days
+            </label>
+            <input
+              id="workflow-step-duration"
+              type="number"
+              min={1}
+              step={1}
+              value={step.expected_duration_days}
+              disabled={disabled}
+              onChange={(event) =>
+                onStepFieldsChange(step.id, {
+                  expected_duration_days: Math.max(
+                    1,
+                    Number(event.target.value) || 1,
+                  ),
+                })
+              }
+              className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:opacity-60"
+            />
+          </div>
+          <div className="grid gap-2">
+            <label className="text-sm font-medium" htmlFor="workflow-step-lag">
+              Lag days
+            </label>
+            <input
+              id="workflow-step-lag"
+              type="number"
+              min={0}
+              step={1}
+              value={step.dependency_lag_days}
+              disabled={disabled}
+              onChange={(event) =>
+                onStepFieldsChange(step.id, {
+                  dependency_lag_days: Math.max(
+                    0,
+                    Number(event.target.value) || 0,
+                  ),
+                })
+              }
+              className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:opacity-60"
+            />
+          </div>
+        </div>
+
+        <label className="flex items-center gap-2 rounded-md border px-3 py-2 text-sm">
+          <input
+            type="checkbox"
+            checked={step.requires_milling_machine}
+            disabled={disabled}
+            onChange={(event) =>
+              onStepFieldsChange(step.id, {
+                requires_milling_machine: event.target.checked,
+              })
+            }
+          />
+          Requires milling machine capacity
+        </label>
+
         <div className="grid gap-2">
           <p className="text-sm font-medium">Dependencies</p>
           {dependencyOptions.length === 0 ? (
@@ -604,7 +736,7 @@ function WorkflowStepInspector({
           )}
         </div>
 
-        {taskItem ? (
+        {taskItem && showAssignee ? (
           <div className="grid gap-2">
             <label className="text-sm font-medium" htmlFor="workflow-step-assignee">
               Assignee

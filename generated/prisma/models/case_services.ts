@@ -28,12 +28,14 @@ export type AggregateCase_services = {
 
 export type Case_servicesAvgAggregateOutputType = {
   service_base_price_snapshot: runtime.Decimal | null
+  delivery_buffer_days_snapshot: number | null
   unit_price: runtime.Decimal | null
   quantity: number | null
 }
 
 export type Case_servicesSumAggregateOutputType = {
   service_base_price_snapshot: runtime.Decimal | null
+  delivery_buffer_days_snapshot: number | null
   unit_price: runtime.Decimal | null
   quantity: number | null
 }
@@ -44,6 +46,7 @@ export type Case_servicesMinAggregateOutputType = {
   service_type_id: string | null
   service_name_snapshot: string | null
   service_base_price_snapshot: runtime.Decimal | null
+  delivery_buffer_days_snapshot: number | null
   unit_price: runtime.Decimal | null
   is_unit_price_overridden: boolean | null
   quantity: number | null
@@ -57,6 +60,7 @@ export type Case_servicesMaxAggregateOutputType = {
   service_type_id: string | null
   service_name_snapshot: string | null
   service_base_price_snapshot: runtime.Decimal | null
+  delivery_buffer_days_snapshot: number | null
   unit_price: runtime.Decimal | null
   is_unit_price_overridden: boolean | null
   quantity: number | null
@@ -70,6 +74,7 @@ export type Case_servicesCountAggregateOutputType = {
   service_type_id: number
   service_name_snapshot: number
   service_base_price_snapshot: number
+  delivery_buffer_days_snapshot: number
   unit_price: number
   is_unit_price_overridden: number
   quantity: number
@@ -81,12 +86,14 @@ export type Case_servicesCountAggregateOutputType = {
 
 export type Case_servicesAvgAggregateInputType = {
   service_base_price_snapshot?: true
+  delivery_buffer_days_snapshot?: true
   unit_price?: true
   quantity?: true
 }
 
 export type Case_servicesSumAggregateInputType = {
   service_base_price_snapshot?: true
+  delivery_buffer_days_snapshot?: true
   unit_price?: true
   quantity?: true
 }
@@ -97,6 +104,7 @@ export type Case_servicesMinAggregateInputType = {
   service_type_id?: true
   service_name_snapshot?: true
   service_base_price_snapshot?: true
+  delivery_buffer_days_snapshot?: true
   unit_price?: true
   is_unit_price_overridden?: true
   quantity?: true
@@ -110,6 +118,7 @@ export type Case_servicesMaxAggregateInputType = {
   service_type_id?: true
   service_name_snapshot?: true
   service_base_price_snapshot?: true
+  delivery_buffer_days_snapshot?: true
   unit_price?: true
   is_unit_price_overridden?: true
   quantity?: true
@@ -123,6 +132,7 @@ export type Case_servicesCountAggregateInputType = {
   service_type_id?: true
   service_name_snapshot?: true
   service_base_price_snapshot?: true
+  delivery_buffer_days_snapshot?: true
   unit_price?: true
   is_unit_price_overridden?: true
   quantity?: true
@@ -223,6 +233,7 @@ export type Case_servicesGroupByOutputType = {
   service_type_id: string
   service_name_snapshot: string
   service_base_price_snapshot: runtime.Decimal
+  delivery_buffer_days_snapshot: number
   unit_price: runtime.Decimal
   is_unit_price_overridden: boolean
   quantity: number
@@ -259,6 +270,7 @@ export type case_servicesWhereInput = {
   service_type_id?: Prisma.UuidFilter<"case_services"> | string
   service_name_snapshot?: Prisma.StringFilter<"case_services"> | string
   service_base_price_snapshot?: Prisma.DecimalFilter<"case_services"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: Prisma.IntFilter<"case_services"> | number
   unit_price?: Prisma.DecimalFilter<"case_services"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: Prisma.BoolFilter<"case_services"> | boolean
   quantity?: Prisma.IntFilter<"case_services"> | number
@@ -275,6 +287,7 @@ export type case_servicesOrderByWithRelationInput = {
   service_type_id?: Prisma.SortOrder
   service_name_snapshot?: Prisma.SortOrder
   service_base_price_snapshot?: Prisma.SortOrder
+  delivery_buffer_days_snapshot?: Prisma.SortOrder
   unit_price?: Prisma.SortOrder
   is_unit_price_overridden?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
@@ -294,6 +307,7 @@ export type case_servicesWhereUniqueInput = Prisma.AtLeast<{
   service_type_id?: Prisma.UuidFilter<"case_services"> | string
   service_name_snapshot?: Prisma.StringFilter<"case_services"> | string
   service_base_price_snapshot?: Prisma.DecimalFilter<"case_services"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: Prisma.IntFilter<"case_services"> | number
   unit_price?: Prisma.DecimalFilter<"case_services"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: Prisma.BoolFilter<"case_services"> | boolean
   quantity?: Prisma.IntFilter<"case_services"> | number
@@ -310,6 +324,7 @@ export type case_servicesOrderByWithAggregationInput = {
   service_type_id?: Prisma.SortOrder
   service_name_snapshot?: Prisma.SortOrder
   service_base_price_snapshot?: Prisma.SortOrder
+  delivery_buffer_days_snapshot?: Prisma.SortOrder
   unit_price?: Prisma.SortOrder
   is_unit_price_overridden?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
@@ -331,6 +346,7 @@ export type case_servicesScalarWhereWithAggregatesInput = {
   service_type_id?: Prisma.UuidWithAggregatesFilter<"case_services"> | string
   service_name_snapshot?: Prisma.StringWithAggregatesFilter<"case_services"> | string
   service_base_price_snapshot?: Prisma.DecimalWithAggregatesFilter<"case_services"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: Prisma.IntWithAggregatesFilter<"case_services"> | number
   unit_price?: Prisma.DecimalWithAggregatesFilter<"case_services"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: Prisma.BoolWithAggregatesFilter<"case_services"> | boolean
   quantity?: Prisma.IntWithAggregatesFilter<"case_services"> | number
@@ -342,6 +358,7 @@ export type case_servicesCreateInput = {
   id?: string
   service_name_snapshot: string
   service_base_price_snapshot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: number
   unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: boolean
   quantity: number
@@ -358,6 +375,7 @@ export type case_servicesUncheckedCreateInput = {
   service_type_id: string
   service_name_snapshot: string
   service_base_price_snapshot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: number
   unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: boolean
   quantity: number
@@ -370,6 +388,7 @@ export type case_servicesUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   service_name_snapshot?: Prisma.StringFieldUpdateOperationsInput | string
   service_base_price_snapshot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: Prisma.IntFieldUpdateOperationsInput | number
   unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
@@ -386,6 +405,7 @@ export type case_servicesUncheckedUpdateInput = {
   service_type_id?: Prisma.StringFieldUpdateOperationsInput | string
   service_name_snapshot?: Prisma.StringFieldUpdateOperationsInput | string
   service_base_price_snapshot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: Prisma.IntFieldUpdateOperationsInput | number
   unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
@@ -400,6 +420,7 @@ export type case_servicesCreateManyInput = {
   service_type_id: string
   service_name_snapshot: string
   service_base_price_snapshot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: number
   unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: boolean
   quantity: number
@@ -411,6 +432,7 @@ export type case_servicesUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   service_name_snapshot?: Prisma.StringFieldUpdateOperationsInput | string
   service_base_price_snapshot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: Prisma.IntFieldUpdateOperationsInput | number
   unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
@@ -424,6 +446,7 @@ export type case_servicesUncheckedUpdateManyInput = {
   service_type_id?: Prisma.StringFieldUpdateOperationsInput | string
   service_name_snapshot?: Prisma.StringFieldUpdateOperationsInput | string
   service_base_price_snapshot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: Prisma.IntFieldUpdateOperationsInput | number
   unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
@@ -452,6 +475,7 @@ export type case_servicesCountOrderByAggregateInput = {
   service_type_id?: Prisma.SortOrder
   service_name_snapshot?: Prisma.SortOrder
   service_base_price_snapshot?: Prisma.SortOrder
+  delivery_buffer_days_snapshot?: Prisma.SortOrder
   unit_price?: Prisma.SortOrder
   is_unit_price_overridden?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
@@ -461,6 +485,7 @@ export type case_servicesCountOrderByAggregateInput = {
 
 export type case_servicesAvgOrderByAggregateInput = {
   service_base_price_snapshot?: Prisma.SortOrder
+  delivery_buffer_days_snapshot?: Prisma.SortOrder
   unit_price?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
 }
@@ -471,6 +496,7 @@ export type case_servicesMaxOrderByAggregateInput = {
   service_type_id?: Prisma.SortOrder
   service_name_snapshot?: Prisma.SortOrder
   service_base_price_snapshot?: Prisma.SortOrder
+  delivery_buffer_days_snapshot?: Prisma.SortOrder
   unit_price?: Prisma.SortOrder
   is_unit_price_overridden?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
@@ -484,6 +510,7 @@ export type case_servicesMinOrderByAggregateInput = {
   service_type_id?: Prisma.SortOrder
   service_name_snapshot?: Prisma.SortOrder
   service_base_price_snapshot?: Prisma.SortOrder
+  delivery_buffer_days_snapshot?: Prisma.SortOrder
   unit_price?: Prisma.SortOrder
   is_unit_price_overridden?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
@@ -493,6 +520,7 @@ export type case_servicesMinOrderByAggregateInput = {
 
 export type case_servicesSumOrderByAggregateInput = {
   service_base_price_snapshot?: Prisma.SortOrder
+  delivery_buffer_days_snapshot?: Prisma.SortOrder
   unit_price?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
 }
@@ -599,6 +627,7 @@ export type case_servicesCreateWithoutService_typesInput = {
   id?: string
   service_name_snapshot: string
   service_base_price_snapshot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: number
   unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: boolean
   quantity: number
@@ -613,6 +642,7 @@ export type case_servicesUncheckedCreateWithoutService_typesInput = {
   case_id: string
   service_name_snapshot: string
   service_base_price_snapshot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: number
   unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: boolean
   quantity: number
@@ -656,6 +686,7 @@ export type case_servicesScalarWhereInput = {
   service_type_id?: Prisma.UuidFilter<"case_services"> | string
   service_name_snapshot?: Prisma.StringFilter<"case_services"> | string
   service_base_price_snapshot?: Prisma.DecimalFilter<"case_services"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: Prisma.IntFilter<"case_services"> | number
   unit_price?: Prisma.DecimalFilter<"case_services"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: Prisma.BoolFilter<"case_services"> | boolean
   quantity?: Prisma.IntFilter<"case_services"> | number
@@ -667,6 +698,7 @@ export type case_servicesCreateWithoutCasesInput = {
   id?: string
   service_name_snapshot: string
   service_base_price_snapshot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: number
   unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: boolean
   quantity: number
@@ -681,6 +713,7 @@ export type case_servicesUncheckedCreateWithoutCasesInput = {
   service_type_id: string
   service_name_snapshot: string
   service_base_price_snapshot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: number
   unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: boolean
   quantity: number
@@ -719,6 +752,7 @@ export type case_servicesCreateWithoutCase_processesInput = {
   id?: string
   service_name_snapshot: string
   service_base_price_snapshot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: number
   unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: boolean
   quantity: number
@@ -734,6 +768,7 @@ export type case_servicesUncheckedCreateWithoutCase_processesInput = {
   service_type_id: string
   service_name_snapshot: string
   service_base_price_snapshot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: number
   unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: boolean
   quantity: number
@@ -761,6 +796,7 @@ export type case_servicesUpdateWithoutCase_processesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   service_name_snapshot?: Prisma.StringFieldUpdateOperationsInput | string
   service_base_price_snapshot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: Prisma.IntFieldUpdateOperationsInput | number
   unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
@@ -776,6 +812,7 @@ export type case_servicesUncheckedUpdateWithoutCase_processesInput = {
   service_type_id?: Prisma.StringFieldUpdateOperationsInput | string
   service_name_snapshot?: Prisma.StringFieldUpdateOperationsInput | string
   service_base_price_snapshot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: Prisma.IntFieldUpdateOperationsInput | number
   unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
@@ -788,6 +825,7 @@ export type case_servicesCreateManyService_typesInput = {
   case_id: string
   service_name_snapshot: string
   service_base_price_snapshot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: number
   unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: boolean
   quantity: number
@@ -799,6 +837,7 @@ export type case_servicesUpdateWithoutService_typesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   service_name_snapshot?: Prisma.StringFieldUpdateOperationsInput | string
   service_base_price_snapshot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: Prisma.IntFieldUpdateOperationsInput | number
   unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
@@ -813,6 +852,7 @@ export type case_servicesUncheckedUpdateWithoutService_typesInput = {
   case_id?: Prisma.StringFieldUpdateOperationsInput | string
   service_name_snapshot?: Prisma.StringFieldUpdateOperationsInput | string
   service_base_price_snapshot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: Prisma.IntFieldUpdateOperationsInput | number
   unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
@@ -826,6 +866,7 @@ export type case_servicesUncheckedUpdateManyWithoutService_typesInput = {
   case_id?: Prisma.StringFieldUpdateOperationsInput | string
   service_name_snapshot?: Prisma.StringFieldUpdateOperationsInput | string
   service_base_price_snapshot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: Prisma.IntFieldUpdateOperationsInput | number
   unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
@@ -838,6 +879,7 @@ export type case_servicesCreateManyCasesInput = {
   service_type_id: string
   service_name_snapshot: string
   service_base_price_snapshot: runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: number
   unit_price: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: boolean
   quantity: number
@@ -849,6 +891,7 @@ export type case_servicesUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   service_name_snapshot?: Prisma.StringFieldUpdateOperationsInput | string
   service_base_price_snapshot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: Prisma.IntFieldUpdateOperationsInput | number
   unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
@@ -863,6 +906,7 @@ export type case_servicesUncheckedUpdateWithoutCasesInput = {
   service_type_id?: Prisma.StringFieldUpdateOperationsInput | string
   service_name_snapshot?: Prisma.StringFieldUpdateOperationsInput | string
   service_base_price_snapshot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: Prisma.IntFieldUpdateOperationsInput | number
   unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
@@ -876,6 +920,7 @@ export type case_servicesUncheckedUpdateManyWithoutCasesInput = {
   service_type_id?: Prisma.StringFieldUpdateOperationsInput | string
   service_name_snapshot?: Prisma.StringFieldUpdateOperationsInput | string
   service_base_price_snapshot?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  delivery_buffer_days_snapshot?: Prisma.IntFieldUpdateOperationsInput | number
   unit_price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_unit_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
@@ -920,6 +965,7 @@ export type case_servicesSelect<ExtArgs extends runtime.Types.Extensions.Interna
   service_type_id?: boolean
   service_name_snapshot?: boolean
   service_base_price_snapshot?: boolean
+  delivery_buffer_days_snapshot?: boolean
   unit_price?: boolean
   is_unit_price_overridden?: boolean
   quantity?: boolean
@@ -937,6 +983,7 @@ export type case_servicesSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   service_type_id?: boolean
   service_name_snapshot?: boolean
   service_base_price_snapshot?: boolean
+  delivery_buffer_days_snapshot?: boolean
   unit_price?: boolean
   is_unit_price_overridden?: boolean
   quantity?: boolean
@@ -952,6 +999,7 @@ export type case_servicesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   service_type_id?: boolean
   service_name_snapshot?: boolean
   service_base_price_snapshot?: boolean
+  delivery_buffer_days_snapshot?: boolean
   unit_price?: boolean
   is_unit_price_overridden?: boolean
   quantity?: boolean
@@ -967,6 +1015,7 @@ export type case_servicesSelectScalar = {
   service_type_id?: boolean
   service_name_snapshot?: boolean
   service_base_price_snapshot?: boolean
+  delivery_buffer_days_snapshot?: boolean
   unit_price?: boolean
   is_unit_price_overridden?: boolean
   quantity?: boolean
@@ -974,7 +1023,7 @@ export type case_servicesSelectScalar = {
   updated_at?: boolean
 }
 
-export type case_servicesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "case_id" | "service_type_id" | "service_name_snapshot" | "service_base_price_snapshot" | "unit_price" | "is_unit_price_overridden" | "quantity" | "created_at" | "updated_at", ExtArgs["result"]["case_services"]>
+export type case_servicesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "case_id" | "service_type_id" | "service_name_snapshot" | "service_base_price_snapshot" | "delivery_buffer_days_snapshot" | "unit_price" | "is_unit_price_overridden" | "quantity" | "created_at" | "updated_at", ExtArgs["result"]["case_services"]>
 export type case_servicesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
   service_types?: boolean | Prisma.service_typesDefaultArgs<ExtArgs>
@@ -1003,6 +1052,7 @@ export type $case_servicesPayload<ExtArgs extends runtime.Types.Extensions.Inter
     service_type_id: string
     service_name_snapshot: string
     service_base_price_snapshot: runtime.Decimal
+    delivery_buffer_days_snapshot: number
     unit_price: runtime.Decimal
     is_unit_price_overridden: boolean
     quantity: number
@@ -1439,6 +1489,7 @@ export interface case_servicesFieldRefs {
   readonly service_type_id: Prisma.FieldRef<"case_services", 'String'>
   readonly service_name_snapshot: Prisma.FieldRef<"case_services", 'String'>
   readonly service_base_price_snapshot: Prisma.FieldRef<"case_services", 'Decimal'>
+  readonly delivery_buffer_days_snapshot: Prisma.FieldRef<"case_services", 'Int'>
   readonly unit_price: Prisma.FieldRef<"case_services", 'Decimal'>
   readonly is_unit_price_overridden: Prisma.FieldRef<"case_services", 'Boolean'>
   readonly quantity: Prisma.FieldRef<"case_services", 'Int'>

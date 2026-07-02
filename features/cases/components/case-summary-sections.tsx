@@ -1,8 +1,12 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import type { CaseCommentItem } from "@/features/cases/types";
-import type { EditableCase } from "@/features/cases/types";
+import type {
+  CaseCommentItem,
+  CaseProcessHistoryItem,
+  CaseTimelineItem,
+  EditableCase,
+} from "@/features/cases/types";
 import { getCaseStatusMeta } from "@/features/cases/constants";
 import { formatCurrency } from "@/lib/currency";
 import * as React from "react";
@@ -41,58 +45,126 @@ export function CaseReferenceSummary({ caseItem }: { caseItem: EditableCase }) {
   );
 }
 
-export function CaseStatusHistorySection({
-  caseItem,
+export function buildCaseTimelineItems(input: {
+  statusHistory: EditableCase["statusHistory"];
+  processHistory: CaseProcessHistoryItem[];
+}): CaseTimelineItem[] {
+  return [
+    ...input.statusHistory.map((entry) => ({
+      id: `status-${entry.id}`,
+      kind: "status" as const,
+      changedAt: entry.changedAt,
+      statusHistory: entry,
+    })),
+    ...input.processHistory.map((entry) => ({
+      id: `process-${entry.id}`,
+      kind: "process" as const,
+      changedAt: entry.createdAt,
+      processHistory: entry,
+    })),
+  ].sort(
+    (left, right) =>
+      new Date(right.changedAt).getTime() - new Date(left.changedAt).getTime(),
+  );
+}
+
+function formatProcessHistoryLabel(eventType: CaseProcessHistoryItem["eventType"]) {
+  return eventType === "STARTED" ? "started" : "completed";
+}
+
+export function CaseHistorySection({
+  statusHistory,
+  processHistory,
 }: {
-  caseItem: EditableCase;
+  statusHistory: EditableCase["statusHistory"];
+  processHistory: CaseProcessHistoryItem[];
 }) {
+  const timelineItems = buildCaseTimelineItems({ statusHistory, processHistory });
+
   return (
     <div className="rounded-xl border p-4">
       <div className="mb-3">
-        <p className="font-medium">Historico de status</p>
+        <p className="font-medium">Case history</p>
         <p className="text-sm text-muted-foreground">
-          Mudancas de status do caso, incluindo entradas repetidas em standby.
+          Status changes and process activity in one timeline.
         </p>
       </div>
 
-      {caseItem.statusHistory.length === 0 ? (
+      {timelineItems.length === 0 ? (
         <p className="text-sm text-muted-foreground">
-          Nenhuma mudanca de status registrada.
+          No case history recorded yet.
         </p>
       ) : (
         <div className="space-y-3">
-          {caseItem.statusHistory.map((entry) => {
-            const fromMeta = entry.fromStatus
-              ? getCaseStatusMeta(entry.fromStatus)
-              : null;
-            const toMeta = getCaseStatusMeta(entry.toStatus);
-
-            return (
-              <div key={entry.id} className="rounded-lg border p-3 text-sm">
-                <div className="flex flex-wrap items-center gap-2">
-                  {fromMeta ? (
-                    <Badge variant={fromMeta.tone}>{fromMeta.shortLabel}</Badge>
-                  ) : (
-                    <Badge variant="outline">Created</Badge>
-                  )}
-                  <span className="text-muted-foreground">to</span>
-                  <Badge variant={toMeta?.tone ?? "secondary"}>
-                    {toMeta?.shortLabel ?? entry.toStatus}
-                  </Badge>
-                  <span className="text-xs text-muted-foreground">
-                    {formatDateTime(entry.changedAt)}
-                  </span>
-                </div>
-                {entry.note ? (
-                  <p className="mt-2 whitespace-pre-wrap text-sm text-muted-foreground">
-                    {entry.note}
-                  </p>
-                ) : null}
-              </div>
-            );
-          })}
+          {timelineItems.map((item) =>
+            item.kind === "status" ? (
+              <StatusHistoryTimelineCard key={item.id} entry={item.statusHistory} />
+            ) : (
+              <ProcessHistoryTimelineCard
+                key={item.id}
+                entry={item.processHistory}
+              />
+            ),
+          )}
         </div>
       )}
+    </div>
+  );
+}
+
+function StatusHistoryTimelineCard({
+  entry,
+}: {
+  entry: EditableCase["statusHistory"][number];
+}) {
+  const fromMeta = entry.fromStatus ? getCaseStatusMeta(entry.fromStatus) : null;
+  const toMeta = getCaseStatusMeta(entry.toStatus);
+
+  return (
+    <div className="rounded-lg border p-3 text-sm">
+      <div className="flex flex-wrap items-center gap-2">
+        {fromMeta ? (
+          <Badge variant={fromMeta.tone}>{fromMeta.shortLabel}</Badge>
+        ) : (
+          <Badge variant="outline">Created</Badge>
+        )}
+        <span className="text-muted-foreground">to</span>
+        <Badge variant={toMeta?.tone ?? "secondary"}>
+          {toMeta?.shortLabel ?? entry.toStatus}
+        </Badge>
+        <span className="text-xs text-muted-foreground">
+          {formatDateTime(entry.changedAt)}
+        </span>
+      </div>
+      {entry.note ? (
+        <p className="mt-2 whitespace-pre-wrap text-sm text-muted-foreground">
+          {entry.note}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+function ProcessHistoryTimelineCard({
+  entry,
+}: {
+  entry: CaseProcessHistoryItem;
+}) {
+  return (
+    <div className="rounded-lg border p-3 text-sm">
+      <div className="flex flex-wrap items-center gap-2">
+        <Badge variant="outline">
+          {entry.processName} ({formatProcessHistoryLabel(entry.eventType)})
+        </Badge>
+        <span className="text-xs text-muted-foreground">
+          {formatDateTime(entry.createdAt)}
+        </span>
+      </div>
+      {entry.actorName ? (
+        <p className="mt-2 text-sm text-muted-foreground">
+          By {entry.actorName}
+        </p>
+      ) : null}
     </div>
   );
 }

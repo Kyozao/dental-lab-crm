@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
 
-import { ensureCurrentAppUser } from "@/app/api/_shared/current-user";
+import { getCurrentSupabaseUser } from "@/app/api/_shared/current-user";
 import { prisma } from "@/lib/prisma";
 
 export async function requireAuthenticatedUser() {
-  const user = await ensureCurrentAppUser();
+  const user = await getCurrentSupabaseUser();
   if (!user) redirect("/login");
 
   return user;

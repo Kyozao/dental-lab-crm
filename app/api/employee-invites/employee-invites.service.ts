@@ -1,6 +1,7 @@
 import { UserRole } from "@/generated/prisma/enums";
 import { prisma } from "@/lib/prisma";
 
+import { syncCurrentAppUser } from "../_shared/current-user";
 import { normalizeEmail } from "../auth/auth.service";
 import type { AcceptEmployeeInviteInput } from "./employee-invites.schemas";
 
@@ -112,21 +113,14 @@ export async function acceptEmployeeInviteForAuthenticatedUser(
       );
     }
 
-    await tx.users.upsert({
-      where: { id: user.id },
-      update: {
-        name: payload.name,
-        email: invite.email,
-        is_active: true,
-        deleted_at: null,
-      },
-      create: {
+    await syncCurrentAppUser(
+      {
         id: user.id,
-        name: payload.name,
         email: invite.email,
-        is_active: true,
+        name: payload.name,
       },
-    });
+      tx,
+    );
 
     if (!existingMembership) {
       await tx.lab_members.create({

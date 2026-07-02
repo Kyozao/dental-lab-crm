@@ -3,6 +3,9 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 import { PASSWORD_SETUP_FLOW_COOKIE } from '@/lib/auth/password-setup-flow'
 
+const AUTH_USER_ID_HEADER = 'x-authenticated-user-id'
+const AUTH_USER_EMAIL_HEADER = 'x-authenticated-user-email'
+
 function isEmployeeAuthFlowRequest(request: NextRequest) {
   if (request.nextUrl.pathname === '/reset-password') {
     if (request.cookies.get(PASSWORD_SETUP_FLOW_COOKIE)?.value === 'recovery') {
@@ -29,6 +32,36 @@ function isEmployeeAuthFlowRequest(request: NextRequest) {
   }
 
   return false
+}
+
+function withAuthenticatedUserHeaders(
+  request: NextRequest,
+  response: NextResponse,
+  claims: Record<string, unknown> | null | undefined,
+) {
+  const requestHeaders = new Headers(request.headers)
+  const userId = typeof claims?.sub === 'string' ? claims.sub : null
+  const userEmail = typeof claims?.email === 'string' ? claims.email : null
+
+  if (userId && userEmail) {
+    requestHeaders.set(AUTH_USER_ID_HEADER, userId)
+    requestHeaders.set(AUTH_USER_EMAIL_HEADER, userEmail)
+  } else {
+    requestHeaders.delete(AUTH_USER_ID_HEADER)
+    requestHeaders.delete(AUTH_USER_EMAIL_HEADER)
+  }
+
+  const nextResponse = NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  })
+
+  response.cookies.getAll().forEach(({ name, value, ...options }) => {
+    nextResponse.cookies.set(name, value, options)
+  })
+
+  return nextResponse
 }
 
 export async function updateSession(request: NextRequest) {
@@ -102,6 +135,8 @@ export async function updateSession(request: NextRequest) {
       url.search = ''
       return NextResponse.redirect(url)
     }
+
+    return withAuthenticatedUserHeaders(request, supabaseResponse, user)
   }
 
   if (

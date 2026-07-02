@@ -1,4 +1,9 @@
-import { CaseStatus, type CaseStatus as CaseStatusValue } from "@/generated/prisma/enums";
+import {
+  CasePriority,
+  CaseStatus,
+  type CasePriority as CasePriorityValue,
+  type CaseStatus as CaseStatusValue,
+} from "@/generated/prisma/enums";
 import {
   parseWorkflowJson,
   type ServiceTypeWorkflow,
@@ -15,6 +20,7 @@ export type CreateCaseInput = {
   elements_qty?: number | null;
   shade?: string | null;
   due_date?: Date | null;
+  priority?: CasePriorityValue;
   is_urgent?: boolean;
   observations?: string | null;
   service_lines: CaseServiceLineInput[];
@@ -35,6 +41,7 @@ export type ListCasesInput = {
   limit: number;
   status?: CaseStatusValue;
   customer_id?: string;
+  priority?: CasePriorityValue;
   urgent?: boolean;
   q?: string;
   current_process_ids?: string[];
@@ -58,6 +65,7 @@ type ReplaceWorkflowValidationResult =
   | { success: false; errors: Record<string, string[]> };
 
 const caseStatusValues = new Set<string>(Object.values(CaseStatus));
+const casePriorityValues = new Set<string>(Object.values(CasePriority));
 const statusesRequiringReason = new Set<string>([CaseStatus.STANDBY]);
 const statusesAllowingReason = new Set<string>([
   CaseStatus.STANDBY,
@@ -287,6 +295,10 @@ export function parseCreateCaseInput(payload: unknown): ValidationResult {
   validateStatusReason(current_status, status_reason, errors);
 
   const due_date = optionalDate(body.due_date, errors);
+  const priority = optionalString(body.priority);
+  if (priority && !casePriorityValues.has(priority)) {
+    addError(errors, "priority", "Priority is invalid.");
+  }
   const elements_qty = optionalPositiveInteger(
     body.elements_qty,
     "elements_qty",
@@ -313,8 +325,10 @@ export function parseCreateCaseInput(payload: unknown): ValidationResult {
       elements_qty,
       shade: optionalString(body.shade),
       due_date,
-      is_urgent:
-        typeof body.is_urgent === "boolean" ? body.is_urgent : undefined,
+      ...(priority ? { priority: priority as CasePriorityValue } : {}),
+      ...(typeof body.is_urgent === "boolean"
+        ? { is_urgent: body.is_urgent }
+        : {}),
       observations: optionalString(body.observations),
       service_lines,
     },
@@ -405,6 +419,15 @@ export function parseUpdateCaseInput(payload: unknown): UpdateValidationResult {
     data.due_date = optionalDate(body.due_date, errors);
   }
 
+  if ("priority" in body) {
+    const priority = optionalString(body.priority);
+    if (priority && !casePriorityValues.has(priority)) {
+      addError(errors, "priority", "Priority is invalid.");
+    } else if (priority !== undefined) {
+      data.priority = priority as CasePriorityValue;
+    }
+  }
+
   if ("elements_qty" in body) {
     data.elements_qty = optionalPositiveInteger(
       body.elements_qty,
@@ -482,6 +505,7 @@ export function parseListCasesInput(searchParams: URLSearchParams) {
   const requestedLimit = parsePositiveInteger(searchParams.get("limit"));
   const status = optionalString(searchParams.get("status"));
   const customer_id = optionalString(searchParams.get("customer_id"));
+  const priority = optionalString(searchParams.get("priority"));
   const urgent = parseUrgentFilter(searchParams.get("urgent"));
   const q = optionalString(searchParams.get("q") ?? searchParams.get("search"));
   const current_process_ids = parseStringList(
@@ -500,6 +524,10 @@ export function parseListCasesInput(searchParams: URLSearchParams) {
     addError(errors, "urgent", "Urgent must be urgent, normal, true, or false.");
   }
 
+  if (priority && !casePriorityValues.has(priority)) {
+    addError(errors, "priority", "Priority is invalid.");
+  }
+
   if (Object.keys(errors).length > 0) {
     return { success: false as const, errors };
   }
@@ -510,10 +538,12 @@ export function parseListCasesInput(searchParams: URLSearchParams) {
       limit: Math.min(requestedLimit ?? DEFAULT_CASE_LIST_LIMIT, MAX_CASE_LIST_LIMIT),
       status: status ? (status as CaseStatusValue) : undefined,
       customer_id: customer_id ?? undefined,
-      urgent: urgent ?? undefined,
-      q: q ?? undefined,
-      current_process_ids:
-        current_process_ids.length > 0 ? current_process_ids : undefined,
+      ...(priority ? { priority: priority as CasePriorityValue } : {}),
+      ...(urgent === true || urgent === false ? { urgent } : {}),
+      ...(q ? { q } : {}),
+      ...(current_process_ids.length > 0
+        ? { current_process_ids }
+        : {}),
     } satisfies ListCasesInput,
   };
 }

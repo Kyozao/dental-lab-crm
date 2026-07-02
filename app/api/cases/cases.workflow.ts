@@ -1,6 +1,7 @@
 import type { Prisma } from "@/generated/prisma/client";
-import { CaseProcessStatus, CaseStatus } from "@/generated/prisma/enums";
+import { CasePriority, CaseProcessStatus, CaseStatus } from "@/generated/prisma/enums";
 import { prisma } from "@/lib/prisma";
+import { normalizeCasePriorityInput } from "../_shared/scheduling";
 
 import { activeReferenceWhere } from "../_shared/archive";
 import type {
@@ -12,11 +13,13 @@ import type {
   ServiceTypeWorkflow,
   ServiceTypeWorkflowStep,
 } from "../service-types/service-types.schemas";
+import { normalizeWorkflow } from "../service-types/service-types.schemas";
 
 type ServiceLineWorkflowPlan = {
   input: CaseServiceLineInput;
   serviceNameSnapshot: string;
   serviceBasePriceSnapshot: string;
+  deliveryBufferDaysSnapshot: number;
   unitPrice: string;
   isUnitPriceOverridden: boolean;
   workflow: ServiceTypeWorkflow;
@@ -30,25 +33,37 @@ function isWorkflowStep(value: Prisma.JsonValue): value is ServiceTypeWorkflowSt
   const id = value.id;
   const process_id = value.process_id;
   const dependsOn = value.dependsOn;
+  const fixed_minutes = value.fixed_minutes ?? value.fixed_points;
+  const minutes_per_unit = value.minutes_per_unit ?? value.points_per_unit;
+  const expected_duration_days = value.expected_duration_days;
+  const dependency_lag_days = value.dependency_lag_days;
+  const requires_milling_machine = value.requires_milling_machine;
 
   return (
     typeof id === "string" &&
     typeof process_id === "string" &&
     Array.isArray(dependsOn) &&
-    dependsOn.every((dependency) => typeof dependency === "string")
+    dependsOn.every((dependency) => typeof dependency === "string") &&
+    typeof fixed_minutes === "number" &&
+    Number.isInteger(fixed_minutes) &&
+    fixed_minutes >= 0 &&
+    typeof minutes_per_unit === "number" &&
+    Number.isInteger(minutes_per_unit) &&
+    minutes_per_unit >= 0 &&
+    typeof expected_duration_days === "number" &&
+    Number.isInteger(expected_duration_days) &&
+    expected_duration_days >= 1 &&
+    typeof dependency_lag_days === "number" &&
+    Number.isInteger(dependency_lag_days) &&
+    dependency_lag_days >= 0 &&
+    typeof requires_milling_machine === "boolean"
   );
 }
 
 function normalizeWorkflowJson(value: Prisma.JsonValue | undefined): ServiceTypeWorkflow {
-  if (value === undefined || value === null || typeof value !== "object" || Array.isArray(value)) {
-    return { steps: [] };
-  }
-
-  const steps = value.steps;
-  if (!Array.isArray(steps)) return { steps: [] };
-
+  const normalized = normalizeWorkflow(value);
   return {
-    steps: steps.filter(isWorkflowStep),
+    steps: normalized.steps.filter(isWorkflowStep),
   };
 }
 
@@ -140,6 +155,11 @@ function buildCaseProcessRows(
     case_service_id,
     process_id: step.process_id,
     workflow_step_id: step.id,
+    snapshot_fixed_minutes: step.fixed_minutes ?? 1,
+    snapshot_minutes_per_unit: step.minutes_per_unit ?? 0,
+    snapshot_expected_duration_days: step.expected_duration_days ?? 1,
+    snapshot_dependency_lag_days: step.dependency_lag_days ?? 0,
+    snapshot_requires_milling_machine: step.requires_milling_machine ?? false,
     status:
       step.dependsOn.length === 0
         ? CaseProcessStatus.READY
@@ -232,6 +252,9 @@ function buildCaseCreateData(
   primaryLine: ServiceLineWorkflowPlan,
 ) {
   return {
+    priority:
+      normalizeCasePriorityInput(input.priority, input.is_urgent) ??
+      CasePriority.NORMAL,
     lab_id,
     code,
     patient_name: input.patient_name,
@@ -247,7 +270,10 @@ function buildCaseCreateData(
     elements_qty: input.elements_qty,
     shade: input.shade,
     due_date: input.due_date,
-    is_urgent: input.is_urgent,
+    is_urgent:
+      input.is_urgent ??
+      normalizeCasePriorityInput(input.priority, input.is_urgent) ===
+        CasePriority.URGENT,
     observations: input.observations,
   };
 }
@@ -265,6 +291,7 @@ async function createServiceLineWorkflow(
       service_type_id: plan.input.service_type_id,
       service_name_snapshot: plan.serviceNameSnapshot,
       service_base_price_snapshot: plan.serviceBasePriceSnapshot,
+      delivery_buffer_days_snapshot: plan.deliveryBufferDaysSnapshot,
       unit_price: plan.unitPrice,
       is_unit_price_overridden: plan.isUnitPriceOverridden,
       quantity: plan.input.quantity,

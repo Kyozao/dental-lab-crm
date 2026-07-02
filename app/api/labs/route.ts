@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 
-import { getAuthenticatedUserId, parseJsonObject } from "../_shared/request";
+import { syncCurrentAppUser } from "../_shared/current-user";
+import { getAuthenticatedUser, parseJsonObject } from "../_shared/request";
 import { createLabForUser, UserAlreadyHasLabError } from "./labs.service";
 import { parseCreateLabInput } from "./labs.schemas";
 
 export async function POST(request: Request) {
-  const user_id = await getAuthenticatedUserId();
-  if (!user_id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const user = await getAuthenticatedUser();
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const payload = await parseJsonObject(request);
   if (payload.data === null) {
@@ -22,7 +23,8 @@ export async function POST(request: Request) {
   }
 
   try {
-    const lab = await createLabForUser(user_id, parsed.data);
+    await syncCurrentAppUser(user);
+    const lab = await createLabForUser(user.id, parsed.data);
     return NextResponse.json({ data: lab, error: null, meta: {} }, { status: 201 });
   } catch (error) {
     if (error instanceof UserAlreadyHasLabError) {

@@ -3,6 +3,7 @@ import type {
   CaseServiceLineItem,
   CaseCommentItem,
   CaseProcessItem,
+  CaseProcessHistoryItem,
   CaseStatusHistoryItem,
   CaseStatusValue,
   CaseWorkflow,
@@ -34,8 +35,8 @@ export type CaseListItem = {
   elementsQty: number | null;
   shade: string | null;
   dueDate: string | null;
-  isUrgent: boolean;
   priority: "urgent" | "high" | "normal" | "low";
+  isUrgent: boolean;
   observations: string | null;
   currentCaseProcessId: string | null;
   currentProcessId: string | null;
@@ -54,6 +55,7 @@ export type CaseListItem = {
   availableProcesses?: ProcessOption[];
   comments?: CaseCommentItem[];
   statusHistory?: CaseStatusHistoryItem[];
+  processHistory?: CaseProcessHistoryItem[];
 };
 
 export type CaseListQuery = {
@@ -61,6 +63,7 @@ export type CaseListQuery = {
   status?: string;
   customerId?: string;
   urgent?: string;
+  priority?: string;
   q?: string;
   currentProcessIds?: string[];
 };
@@ -85,6 +88,7 @@ type CaseProcessResponse = {
   data?: {
     process: CaseProcessItem;
     processes: CaseProcessItem[];
+    processHistory?: CaseProcessHistoryItem[];
   };
   error?: string | null;
   fields?: Record<string, string[]>;
@@ -115,6 +119,7 @@ export type CaseMutationPayload = {
   elementsQty?: number | null;
   shade?: string | null;
   dueDate?: string | null;
+  priority?: "LOW" | "NORMAL" | "HIGH" | "URGENT";
   isUrgent?: boolean;
   observations?: string | null;
   statusReason?: string | null;
@@ -138,6 +143,7 @@ type CaseMutationApiPayload = {
   elements_qty?: number | null;
   shade?: string | null;
   due_date?: string | null;
+  priority?: "LOW" | "NORMAL" | "HIGH" | "URGENT";
   is_urgent?: boolean;
   observations?: string | null;
   status_reason?: string | null;
@@ -158,6 +164,7 @@ function buildCasesEndpoint(query?: CaseListQuery) {
   if (query?.status) params.set("status", query.status);
   if (query?.customerId) params.set("customer_id", query.customerId);
   if (query?.urgent) params.set("urgent", query.urgent);
+  if (query?.priority) params.set("priority", query.priority);
   if (query?.q) params.set("q", query.q);
   query?.currentProcessIds?.forEach((processId) =>
     params.append("currentProcessId", processId),
@@ -204,6 +211,10 @@ function toCaseMutationApiPayload(payload: CaseMutationPayload) {
 
   if (payload.dueDate !== undefined) {
     apiPayload.due_date = payload.dueDate;
+  }
+
+  if (payload.priority !== undefined) {
+    apiPayload.priority = payload.priority;
   }
 
   if (payload.isUrgent !== undefined) {

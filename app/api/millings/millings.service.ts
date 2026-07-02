@@ -614,12 +614,7 @@ export async function listMillingsForLoggedLab(user_id: string) {
   const { lab_id } = membership;
   await ensureMachineSlots(lab_id);
 
-  const [records, blockTypes, machines, drills, readyCases] = await Promise.all([
-    prisma.case_millings.findMany({
-      where: { lab_id },
-      select: millingRecordSelect,
-      orderBy: { milled_at: "desc" },
-    }),
+  const [blockTypes, machines, drills, readyCases] = await Promise.all([
     prisma.block_types.findMany({
       where: {
         lab_id,
@@ -680,6 +675,12 @@ export async function listMillingsForLoggedLab(user_id: string) {
       },
     }),
   ]);
+
+  const records = await prisma.case_millings.findMany({
+    where: { lab_id },
+    select: millingRecordSelect,
+    orderBy: { milled_at: "desc" },
+  });
 
   const machineItems = machines.map(mapMachine);
   const inventoryDrills = drills.map(mapInventoryDrill);

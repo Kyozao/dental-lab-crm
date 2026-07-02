@@ -4,27 +4,11 @@ import { NextResponse } from "next/server";
 
 import { MissingLabMembershipError, getSingleLabMembership } from "../_shared/membership";
 import { getAuthenticatedUserId } from "../_shared/request";
+import { resolveCasePriority } from "../_shared/scheduling";
 
 function buildPatientDetail(teeth: string | null, serviceName: string) {
   if (!teeth) return null;
   return `${teeth} ${serviceName}`;
-}
-
-function resolvePriority(isUrgent: boolean, dueDate: Date | null) {
-  if (isUrgent) return "urgent" as const;
-  if (!dueDate) return "normal" as const;
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const target = new Date(dueDate);
-  target.setHours(0, 0, 0, 0);
-  const diffDays = Math.round(
-    (target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24),
-  );
-
-  if (diffDays <= 1) return "high" as const;
-  if (diffDays >= 5) return "low" as const;
-  return "normal" as const;
 }
 
 function computeProgress(
@@ -98,6 +82,7 @@ export async function GET() {
             patient_name: true,
             teeth: true,
             due_date: true,
+            priority: true,
             is_urgent: true,
             observations: true,
             customers: {
@@ -186,7 +171,11 @@ export async function GET() {
         currentStage: process.name,
         status: item.status,
         assignee: item.assignedLabMember?.users.name ?? "Unassigned",
-        priority: resolvePriority(item.cases.is_urgent, item.cases.due_date),
+        priority: resolveCasePriority(
+          item.cases.priority,
+          item.cases.is_urgent,
+          item.cases.due_date,
+        ),
         progressPercent: progress.progressPercent,
         completedSteps: progress.completedSteps,
         totalSteps: progress.totalSteps,

@@ -34,10 +34,10 @@ import {
 import { CaseOptionsFallback } from "@/features/cases/components/case-details-options";
 import {
   CaseBadges,
+  CaseHistorySection,
   CaseCommentsSection,
   CaseMillingSection,
   CaseReferenceSummary,
-  CaseStatusHistorySection,
 } from "@/features/cases/components/case-summary-sections";
 import { casesQueryKey } from "@/features/cases/hooks/useCases";
 import {
@@ -49,11 +49,13 @@ import {
 import { WorkflowEditor } from "@/features/workflows/components/workflow-editor";
 import type { Employee } from "@/features/employees/types";
 import { formatCurrency } from "@/lib/currency";
+import { cn } from "@/lib/utils";
 
 import {
   type CustomerOption,
   type CaseCommentItem,
   type CaseProcessItem,
+  type CaseProcessHistoryItem,
   type ComponentOption,
   type EditableCase,
   type ProcessOption,
@@ -77,6 +79,8 @@ type Props = {
 };
 
 type DialogView = "main" | "serviceWorkflow";
+
+const UNASSIGNED_VALUE = "__none";
 
 export function CaseDetailsDialog({
   open,
@@ -109,6 +113,7 @@ export function CaseDetailsDialog({
       elementsQty: null,
       shade: "",
       dueDate: null,
+      priority: "normal",
       observations: "",
       isUrgent: false,
       createdAt: new Date().toISOString(),
@@ -129,6 +134,7 @@ export function CaseDetailsDialog({
       millings: [],
       comments: [],
       statusHistory: [],
+      processHistory: [],
       serviceLines: [],
       processes: [],
       availableProcesses: processes,
@@ -150,6 +156,9 @@ export function CaseDetailsDialog({
   );
   const [caseProcesses, setCaseProcesses] = React.useState<CaseProcessItem[]>(
     () => caseItem.processes ?? [],
+  );
+  const [processHistory, setProcessHistory] = React.useState<CaseProcessHistoryItem[]>(
+    () => caseItem.processHistory ?? [],
   );
   const [updatingProcessId, setUpdatingProcessId] = React.useState<
     string | null
@@ -185,6 +194,7 @@ export function CaseDetailsDialog({
     const nextServiceLineRows = buildServiceLineDraftsFromCaseItem(caseItem);
     setSelectedCustomerId(caseItem.customerId ?? "");
     setCaseProcesses(caseItem.processes ?? []);
+    setProcessHistory(caseItem.processHistory ?? []);
     setProcessStatusError(null);
     setComponentRows(buildDraftFromCaseItem(caseItem));
     setServiceLineRows(nextServiceLineRows);
@@ -270,6 +280,20 @@ export function CaseDetailsDialog({
     serviceTypes.find(
       (serviceType) => serviceType.id === selectedServiceLine.serviceTypeId,
     )?.name;
+  const activeAssignableEmployees = React.useMemo(
+    () =>
+      employees
+        .filter(
+          (employee): employee is Employee & { lab_member_id: string } =>
+            employee.is_active && Boolean(employee.lab_member_id),
+        )
+        .map((employee) => ({
+          id: employee.lab_member_id,
+          name: employee.name,
+          processIds: employee.processes.map((process) => process.id),
+        })),
+    [employees],
+  );
 
   const getDefaultUnitPriceForCustomer = React.useCallback(
     (customerId: string, serviceTypeId: string) => {
@@ -486,6 +510,7 @@ export function CaseDetailsDialog({
         status,
       );
       setCaseProcesses(updatedWorkflow.processes);
+      setProcessHistory(updatedWorkflow.processHistory ?? []);
       void queryClient.invalidateQueries({ queryKey: casesQueryKey });
     } catch (error) {
       setCaseProcesses(previousProcesses);
@@ -710,7 +735,10 @@ export function CaseDetailsDialog({
                   <CaseReferenceSummary caseItem={caseItem} />
                 ) : null}
                 {!isCreateMode ? (
-                  <CaseStatusHistorySection caseItem={caseItem} />
+                  <CaseHistorySection
+                    statusHistory={caseItem.statusHistory}
+                    processHistory={processHistory}
+                  />
                 ) : null}
                 <p className="text-sm text-muted-foreground">
                   Services total:{" "}
@@ -1003,6 +1031,87 @@ export function CaseDetailsDialog({
                 </p>
               </div>
 
+              {!isCreateMode && serviceLineProcessItems.length > 0 ? (
+                <section className="grid gap-2 rounded-lg border border-border/60 bg-background p-3">
+                  <div>
+                    <h3 className="text-sm font-medium">Assignments</h3>
+                    <p className="text-sm text-muted-foreground">
+                      Route each workflow step without opening the node inspector.
+                    </p>
+                  </div>
+
+                  <div className="grid gap-2">
+                    {serviceLineProcessItems.map((process) => {
+                      const eligibleAssignees = activeAssignableEmployees.filter(
+                        (employee) => employee.processIds.includes(process.process_id),
+                      );
+                      const isUpdatingAssignee = updatingProcessId === process.id;
+
+                      return (
+                        <div
+                          key={process.id}
+                          className="grid gap-2 rounded-md border border-border/60 px-3 py-2 md:grid-cols-[minmax(0,1fr)_110px_minmax(180px,220px)] md:items-center"
+                        >
+                          <div className="flex min-w-0 items-center gap-2">
+                            <p className="truncate text-sm font-medium">
+                              {process.processName}
+                            </p>
+                            <span className="truncate text-[11px] text-muted-foreground">
+                              {process.workflow_step_id}
+                            </span>
+                          </div>
+
+                          <span
+                            className={cn(
+                              "inline-flex w-fit rounded-md border px-2 py-1 text-[11px] font-medium",
+                              getProcessStatusBadgeClassName(process.status),
+                            )}
+                          >
+                            {formatProcessStatus(process.status)}
+                          </span>
+
+                          <div className="grid gap-1">
+                            <select
+                              id={`process-assignee-${process.id}`}
+                              value={
+                                process.assigned_lab_member_id ?? UNASSIGNED_VALUE
+                              }
+                              disabled={
+                                isUpdatingAssignee ||
+                                !["OWNER", "ADMIN", "MANAGER"].includes(
+                                  currentUserRole,
+                                )
+                              }
+                              onChange={(event) =>
+                                void handleProcessAssigneeChange(
+                                  process.id,
+                                  event.target.value === UNASSIGNED_VALUE
+                                    ? null
+                                    : event.target.value,
+                                )
+                              }
+                              className="flex h-8 w-full rounded-md border bg-background px-2 py-1 text-sm disabled:opacity-60"
+                            >
+                              <option value={UNASSIGNED_VALUE}>Unassigned</option>
+                              {eligibleAssignees.map((employee) => (
+                                <option key={employee.id} value={employee.id}>
+                                  {employee.name}
+                                </option>
+                              ))}
+                            </select>
+                            {eligibleAssignees.length === 0 ? (
+                              <p className="text-xs text-muted-foreground">
+                                No eligible employees.
+                              </p>
+                            ) : null}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </section>
+              ) : null}
+
               <WorkflowEditor
                 workflow={selectedServiceLine.workflow}
                 processes={
@@ -1011,16 +1120,8 @@ export function CaseDetailsDialog({
                     : (caseItem.availableProcesses ?? [])
                 }
                 taskItems={serviceLineProcessItems}
-                assigneeOptions={employees
-                  .filter(
-                    (employee): employee is Employee & { lab_member_id: string } =>
-                      employee.is_active && Boolean(employee.lab_member_id),
-                  )
-                  .map((employee) => ({
-                    id: employee.lab_member_id,
-                    name: employee.name,
-                    processIds: employee.processes.map((process) => process.id),
-                  }))}
+                assigneeOptions={activeAssignableEmployees}
+                showInspectorAssignee={isCreateMode}
                 disabled={disableResourceFields || !canEditAll}
                 statusDisabled={isCreateMode}
                 assigneeDisabled={
@@ -1141,7 +1242,16 @@ function isCaseOverdue(dueDate: string | null) {
 }
 
 function cloneWorkflow(workflow: {
-  steps: Array<{ id: string; process_id: string; dependsOn: string[] }>;
+  steps: Array<{
+    id: string;
+    process_id: string;
+    dependsOn: string[];
+    fixed_minutes: number;
+    minutes_per_unit: number;
+    expected_duration_days: number;
+    dependency_lag_days: number;
+    requires_milling_machine: boolean;
+  }>;
 }) {
   return {
     steps: workflow.steps.map((step) => ({
@@ -1149,4 +1259,27 @@ function cloneWorkflow(workflow: {
       dependsOn: [...step.dependsOn],
     })),
   };
+}
+
+function formatProcessStatus(status: string) {
+  return status
+    .toLowerCase()
+    .split("_")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function getProcessStatusBadgeClassName(status: string) {
+  switch (status) {
+    case "COMPLETED":
+      return "border-emerald-200 bg-emerald-50 text-emerald-700";
+    case "IN_PROGRESS":
+      return "border-blue-200 bg-blue-50 text-blue-700";
+    case "READY":
+      return "border-amber-200 bg-amber-50 text-amber-700";
+    case "LOCKED":
+      return "border-slate-200 bg-slate-100 text-slate-600";
+    default:
+      return "border-border bg-muted text-muted-foreground";
+  }
 }

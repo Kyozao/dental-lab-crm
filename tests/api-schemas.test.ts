@@ -26,6 +26,8 @@ import {
 import { parseUpdateCustomerInput } from "@/app/api/customers/customers.schemas";
 import {
   parseCreateEmployeeInput,
+  parseUpdateEmployeeAvailabilityInput,
+  parseUpdateEmployeeProductivityInput,
   parseUpdateEmployeeRoleInput,
   parseUpdateEmployeeProcessesInput,
 } from "@/app/api/employees/employees.schemas";
@@ -203,8 +205,6 @@ test("case list validation normalizes repeated current-process filters", () => {
       limit: 100,
       status: undefined,
       customer_id: undefined,
-      urgent: undefined,
-      q: undefined,
       current_process_ids: ["process-1", "process-2"],
     },
   });
@@ -749,6 +749,125 @@ test("employee process assignment validation allows empty arrays and normalizes 
   assert.deepEqual(duplicates, {
     success: true,
     data: { process_ids: ["process-1", "process-2"] },
+  });
+});
+
+test("employee productivity validation requires assigned process ids and positive decimal rates", () => {
+  const invalid = parseUpdateEmployeeProductivityInput({
+    assignments: [
+      {
+        process_id: " ",
+        productivity_points_per_hour: "0",
+      },
+      {
+        process_id: "process-1",
+        productivity_points_per_hour: "-2",
+      },
+    ],
+  });
+  const valid = parseUpdateEmployeeProductivityInput({
+    assignments: [
+      {
+        process_id: " process-1 ",
+        productivity_points_per_hour: "8.5",
+      },
+    ],
+  });
+
+  assert.equal(invalid.success, false);
+  assert.deepEqual(invalid.errors, {
+    "assignments.0.process_id": ["Process id is required."],
+    "assignments.0.productivity_points_per_hour": [
+      "Productivity must be a positive amount with up to 2 decimals.",
+    ],
+    "assignments.1.productivity_points_per_hour": [
+      "Productivity must be a positive amount with up to 2 decimals.",
+    ],
+  });
+  assert.deepEqual(valid, {
+    success: true,
+    data: {
+      assignments: [
+        {
+          process_id: "process-1",
+          productivity_points_per_hour: "8.50",
+        },
+      ],
+    },
+  });
+});
+
+test("employee availability validation rejects invalid time ranges and duplicate exception dates", () => {
+  const invalid = parseUpdateEmployeeAvailabilityInput({
+    weekday_capacities: [
+      { day_of_week: 0, available_minutes: 480 },
+      { day_of_week: 1, available_minutes: 480 },
+      { day_of_week: 1, available_minutes: 420 },
+      { day_of_week: 2, available_minutes: 480 },
+      { day_of_week: 3, available_minutes: 480 },
+      { day_of_week: 4, available_minutes: 480 },
+      { day_of_week: 5, available_minutes: 240 },
+    ],
+    exceptions: [
+      {
+        exception_date: "2026-06-25",
+        available_minutes: 120,
+      },
+      {
+        exception_date: "2026-06-25",
+        available_minutes: 0,
+      },
+    ],
+  });
+
+  const valid = parseUpdateEmployeeAvailabilityInput({
+    weekday_capacities: [
+      { day_of_week: 0, available_minutes: 0 },
+      { day_of_week: 1, available_minutes: 480 },
+      { day_of_week: 2, available_minutes: 480 },
+      { day_of_week: 3, available_minutes: 480 },
+      { day_of_week: 4, available_minutes: 480 },
+      { day_of_week: 5, available_minutes: 360 },
+      { day_of_week: 6, available_minutes: 0 },
+    ],
+    exceptions: [
+      {
+        exception_date: "2026-06-25",
+        available_minutes: 300,
+        reason: "Overtime",
+      },
+    ],
+  });
+
+  assert.equal(invalid.success, false);
+  assert.deepEqual(invalid.errors, {
+    weekday_capacities: [
+      "Only one weekday capacity is allowed per day.",
+      "Provide exactly seven weekday capacity rows, one for each day 0 through 6.",
+    ],
+    exceptions: ["Only one exception is allowed per date."],
+  });
+  assert.deepEqual(valid, {
+    success: true,
+    data: {
+      weekday_capacities: [
+        { id: undefined, day_of_week: 0, available_minutes: 0 },
+        { id: undefined, day_of_week: 1, available_minutes: 480 },
+        { id: undefined, day_of_week: 2, available_minutes: 480 },
+        { id: undefined, day_of_week: 3, available_minutes: 480 },
+        { id: undefined, day_of_week: 4, available_minutes: 480 },
+        { id: undefined, day_of_week: 5, available_minutes: 360 },
+        { id: undefined, day_of_week: 6, available_minutes: 0 },
+      ],
+      exceptions: [
+        {
+          id: undefined,
+          exception_date: "2026-06-25",
+          available_minutes: 300,
+          reason: "Overtime",
+        },
+      ],
+    },
   });
 });
 

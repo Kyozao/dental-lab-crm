@@ -2,6 +2,7 @@ import type { EmailOtpType } from "@supabase/supabase-js";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
+import { syncCurrentAppUser } from "@/app/api/_shared/current-user";
 import {
   PASSWORD_SETUP_FLOW_COOKIE,
   PASSWORD_SETUP_TARGET_COOKIE,
@@ -40,6 +41,14 @@ export async function GET(request: NextRequest) {
     failureRedirectUrl.searchParams.set("error", "access_denied");
     failureRedirectUrl.searchParams.set("error_description", error.message);
     return createAuthRedirect(failureRedirectUrl, flowType);
+  }
+
+  if (data.user?.email) {
+    await syncCurrentAppUser({
+      id: data.user.id,
+      email: data.user.email,
+      name: getUserDisplayName(data.user.user_metadata),
+    });
   }
 
   return createAuthRedirect(
@@ -129,4 +138,11 @@ function createAuthRedirect(
 
 function isEmployeeAuthFlowPath(pathname: string) {
   return pathname === "/reset-password" || pathname === "/employee-invite/accept";
+}
+
+function getUserDisplayName(metadata: Record<string, unknown> | null | undefined) {
+  const candidate = metadata?.name;
+  return typeof candidate === "string" && candidate.trim().length > 0
+    ? candidate.trim()
+    : null;
 }

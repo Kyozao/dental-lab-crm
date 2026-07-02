@@ -19,6 +19,16 @@ export const CaseStatus = {
 export type CaseStatus = (typeof CaseStatus)[keyof typeof CaseStatus]
 
 
+export const CasePriority = {
+  LOW: 'LOW',
+  NORMAL: 'NORMAL',
+  HIGH: 'HIGH',
+  URGENT: 'URGENT'
+} as const
+
+export type CasePriority = (typeof CasePriority)[keyof typeof CasePriority]
+
+
 export const MillingStatus = {
   SUCCESS: 'SUCCESS',
   FAILED: 'FAILED'
@@ -56,6 +66,32 @@ export const CaseProcessStatus = {
 } as const
 
 export type CaseProcessStatus = (typeof CaseProcessStatus)[keyof typeof CaseProcessStatus]
+
+
+export const CaseProcessHistoryEventType = {
+  STARTED: 'STARTED',
+  COMPLETED: 'COMPLETED'
+} as const
+
+export type CaseProcessHistoryEventType = (typeof CaseProcessHistoryEventType)[keyof typeof CaseProcessHistoryEventType]
+
+
+export const CaseProcessSchedulingStatus = {
+  UNSCHEDULED: 'UNSCHEDULED',
+  SCHEDULED: 'SCHEDULED',
+  AT_RISK: 'AT_RISK'
+} as const
+
+export type CaseProcessSchedulingStatus = (typeof CaseProcessSchedulingStatus)[keyof typeof CaseProcessSchedulingStatus]
+
+
+export const ScheduleProposalStatus = {
+  DRAFT: 'DRAFT',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type ScheduleProposalStatus = (typeof ScheduleProposalStatus)[keyof typeof ScheduleProposalStatus]
 
 
 export const UserRole = {

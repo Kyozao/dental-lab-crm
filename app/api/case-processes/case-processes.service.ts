@@ -1,4 +1,7 @@
-import { CaseProcessStatus } from "@/generated/prisma/enums";
+import {
+  CaseProcessHistoryEventType,
+  CaseProcessStatus,
+} from "@/generated/prisma/enums";
 import { prisma } from "@/lib/prisma";
 
 import { getSingleLabMembership } from "../_shared/membership";
@@ -7,6 +10,7 @@ import {
   ReferenceValidationError,
 } from "../_shared/reference-resource";
 import type { UpdateCaseProcessInput } from "./case-processes.schemas";
+import { bumpLabScheduleRevision } from "../_shared/scheduling";
 import {
   assertCanAssignCaseProcess,
   assertCanUpdateCaseProcessStatus,
@@ -21,6 +25,16 @@ const caseProcessSelect = {
   workflow_step_id: true,
   status: true,
   assigned_lab_member_id: true,
+  snapshot_fixed_minutes: true,
+  snapshot_minutes_per_unit: true,
+  snapshot_expected_duration_days: true,
+  snapshot_dependency_lag_days: true,
+  snapshot_requires_milling_machine: true,
+  planned_start_date: true,
+  planned_end_date: true,
+  scheduling_locked: true,
+  scheduling_status: true,
+  planned_milling_machine_id: true,
   started_at: true,
   completed_at: true,
   created_at: true,
@@ -54,6 +68,16 @@ type CaseProcessWithRelations = {
   workflow_step_id: string;
   status: CaseProcessStatus;
   assigned_lab_member_id: string | null;
+  snapshot_fixed_minutes: number;
+  snapshot_minutes_per_unit: number;
+  snapshot_expected_duration_days: number;
+  snapshot_dependency_lag_days: number;
+  snapshot_requires_milling_machine: boolean;
+  planned_start_date: Date | null;
+  planned_end_date: Date | null;
+  scheduling_locked: boolean;
+  scheduling_status: string;
+  planned_milling_machine_id: string | null;
   started_at: Date | null;
   completed_at: Date | null;
   created_at: Date;
@@ -81,6 +105,16 @@ function mapCaseProcess(caseProcess: CaseProcessWithRelations) {
     workflow_step_id: caseProcess.workflow_step_id,
     status: caseProcess.status,
     assigned_lab_member_id: caseProcess.assigned_lab_member_id,
+    fixed_minutes: caseProcess.snapshot_fixed_minutes,
+    minutes_per_unit: caseProcess.snapshot_minutes_per_unit,
+    expected_duration_days: caseProcess.snapshot_expected_duration_days,
+    dependency_lag_days: caseProcess.snapshot_dependency_lag_days,
+    requires_milling_machine: caseProcess.snapshot_requires_milling_machine,
+    planned_start_date: caseProcess.planned_start_date,
+    planned_end_date: caseProcess.planned_end_date,
+    scheduling_locked: caseProcess.scheduling_locked,
+    scheduling_status: caseProcess.scheduling_status,
+    planned_milling_machine_id: caseProcess.planned_milling_machine_id,
     assignedToName: caseProcess.assignedLabMember?.users.name ?? null,
     dependsOnCaseProcessIds: caseProcess.dependencies.map(
       (dependency) => dependency.depends_on_case_process_id,
@@ -213,6 +247,83 @@ function isActiveOrCompletedStatus(status: CaseProcessStatus) {
   );
 }
 
+export function getCaseProcessHistoryEventType(input: {
+  previousStatus: CaseProcessStatus;
+  nextStatus?: CaseProcessStatus;
+}) {
+  if (input.nextStatus === undefined || input.previousStatus === input.nextStatus) {
+    return null;
+  }
+
+  if (input.nextStatus === CaseProcessStatus.IN_PROGRESS) {
+    return CaseProcessHistoryEventType.STARTED;
+  }
+
+  if (input.nextStatus === CaseProcessStatus.COMPLETED) {
+    return CaseProcessHistoryEventType.COMPLETED;
+  }
+
+  return null;
+}
+
+const caseProcessHistorySelect = {
+  id: true,
+  case_process_id: true,
+  actor_user_id: true,
+  event_type: true,
+  created_at: true,
+  actorUser: {
+    select: {
+      name: true,
+      email: true,
+    },
+  },
+  caseProcess: {
+    select: {
+      process_id: true,
+      processes: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  },
+} as const;
+
+type CaseProcessHistoryWithRelations = {
+  id: string;
+  case_process_id: string;
+  actor_user_id: string | null;
+  event_type: CaseProcessHistoryEventType;
+  created_at: Date;
+  actorUser: {
+    name: string;
+    email: string;
+  } | null;
+  caseProcess: {
+    process_id: string;
+    processes: {
+      name: string;
+    };
+  };
+};
+
+function mapCaseProcessHistoryEvent(
+  historyEvent: CaseProcessHistoryWithRelations,
+) {
+  return {
+    id: historyEvent.id,
+    caseProcessId: historyEvent.case_process_id,
+    processId: historyEvent.caseProcess.process_id,
+    processName: historyEvent.caseProcess.processes.name,
+    eventType: historyEvent.event_type,
+    actorUserId: historyEvent.actor_user_id,
+    actorName:
+      historyEvent.actorUser?.name ?? historyEvent.actorUser?.email ?? null,
+    createdAt: historyEvent.created_at,
+  };
+}
+
 export async function updateCaseProcessForLoggedLab(
   user_id: string,
   case_process_id: string,
@@ -303,6 +414,10 @@ export async function updateCaseProcessForLoggedLab(
   }
 
   const now = new Date();
+  const historyEventType = getCaseProcessHistoryEventType({
+    previousStatus: existing.status,
+    nextStatus: payload.status,
+  });
   const caseProcess = await prisma.case_processes.update({
     where: { id: case_process_id },
     data: {
@@ -331,14 +446,37 @@ export async function updateCaseProcessForLoggedLab(
     await lockBlockedDependents(case_process_id);
   }
 
-  const caseProcesses = await prisma.case_processes.findMany({
-    where: { case_id: caseProcess.case_id },
-    select: caseProcessSelect,
-    orderBy: { created_at: "asc" },
+  if (historyEventType) {
+    await prisma.case_process_history_events.create({
+      data: {
+        case_id: caseProcess.case_id,
+        case_process_id,
+        actor_user_id: user_id,
+        event_type: historyEventType,
+      },
+    });
+  }
+
+  await prisma.$transaction(async (tx) => {
+    await bumpLabScheduleRevision(tx, lab_id);
   });
+
+  const [caseProcesses, processHistory] = await Promise.all([
+    prisma.case_processes.findMany({
+      where: { case_id: caseProcess.case_id },
+      select: caseProcessSelect,
+      orderBy: { created_at: "asc" },
+    }),
+    prisma.case_process_history_events.findMany({
+      where: { case_id: caseProcess.case_id },
+      select: caseProcessHistorySelect,
+      orderBy: { created_at: "desc" },
+    }),
+  ]);
 
   return {
     process: mapCaseProcess(caseProcess),
     processes: caseProcesses.map(mapCaseProcess),
+    processHistory: processHistory.map(mapCaseProcessHistoryEvent),
   };
 }

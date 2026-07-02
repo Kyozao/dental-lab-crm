@@ -162,6 +162,11 @@ export type case_thread_reads = Prisma.case_thread_readsModel
  */
 export type case_processes = Prisma.case_processesModel
 /**
+ * Model case_process_history_events
+ * 
+ */
+export type case_process_history_events = Prisma.case_process_history_eventsModel
+/**
  * Model case_services
  * 
  */
@@ -171,6 +176,36 @@ export type case_services = Prisma.case_servicesModel
  * 
  */
 export type case_process_dependencies = Prisma.case_process_dependenciesModel
+/**
+ * Model case_process_schedule_allocations
+ * 
+ */
+export type case_process_schedule_allocations = Prisma.case_process_schedule_allocationsModel
+/**
+ * Model employee_schedule_shifts
+ * 
+ */
+export type employee_schedule_shifts = Prisma.employee_schedule_shiftsModel
+/**
+ * Model employee_schedule_exceptions
+ * 
+ */
+export type employee_schedule_exceptions = Prisma.employee_schedule_exceptionsModel
+/**
+ * Model milling_machine_schedule_shifts
+ * 
+ */
+export type milling_machine_schedule_shifts = Prisma.milling_machine_schedule_shiftsModel
+/**
+ * Model milling_machine_schedule_exceptions
+ * 
+ */
+export type milling_machine_schedule_exceptions = Prisma.milling_machine_schedule_exceptionsModel
+/**
+ * Model schedule_proposals
+ * 
+ */
+export type schedule_proposals = Prisma.schedule_proposalsModel
 /**
  * Model case_status_histories
  * 

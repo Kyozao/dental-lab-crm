@@ -20,8 +20,24 @@ export type case_processesModel = runtime.Types.Result.DefaultSelection<Prisma.$
 
 export type AggregateCase_processes = {
   _count: Case_processesCountAggregateOutputType | null
+  _avg: Case_processesAvgAggregateOutputType | null
+  _sum: Case_processesSumAggregateOutputType | null
   _min: Case_processesMinAggregateOutputType | null
   _max: Case_processesMaxAggregateOutputType | null
+}
+
+export type Case_processesAvgAggregateOutputType = {
+  snapshot_fixed_minutes: number | null
+  snapshot_minutes_per_unit: number | null
+  snapshot_expected_duration_days: number | null
+  snapshot_dependency_lag_days: number | null
+}
+
+export type Case_processesSumAggregateOutputType = {
+  snapshot_fixed_minutes: number | null
+  snapshot_minutes_per_unit: number | null
+  snapshot_expected_duration_days: number | null
+  snapshot_dependency_lag_days: number | null
 }
 
 export type Case_processesMinAggregateOutputType = {
@@ -32,6 +48,16 @@ export type Case_processesMinAggregateOutputType = {
   workflow_step_id: string | null
   status: $Enums.CaseProcessStatus | null
   assigned_lab_member_id: string | null
+  snapshot_fixed_minutes: number | null
+  snapshot_minutes_per_unit: number | null
+  snapshot_expected_duration_days: number | null
+  snapshot_dependency_lag_days: number | null
+  snapshot_requires_milling_machine: boolean | null
+  planned_start_date: Date | null
+  planned_end_date: Date | null
+  scheduling_locked: boolean | null
+  scheduling_status: $Enums.CaseProcessSchedulingStatus | null
+  planned_milling_machine_id: string | null
   started_at: Date | null
   completed_at: Date | null
   created_at: Date | null
@@ -46,6 +72,16 @@ export type Case_processesMaxAggregateOutputType = {
   workflow_step_id: string | null
   status: $Enums.CaseProcessStatus | null
   assigned_lab_member_id: string | null
+  snapshot_fixed_minutes: number | null
+  snapshot_minutes_per_unit: number | null
+  snapshot_expected_duration_days: number | null
+  snapshot_dependency_lag_days: number | null
+  snapshot_requires_milling_machine: boolean | null
+  planned_start_date: Date | null
+  planned_end_date: Date | null
+  scheduling_locked: boolean | null
+  scheduling_status: $Enums.CaseProcessSchedulingStatus | null
+  planned_milling_machine_id: string | null
   started_at: Date | null
   completed_at: Date | null
   created_at: Date | null
@@ -60,6 +96,16 @@ export type Case_processesCountAggregateOutputType = {
   workflow_step_id: number
   status: number
   assigned_lab_member_id: number
+  snapshot_fixed_minutes: number
+  snapshot_minutes_per_unit: number
+  snapshot_expected_duration_days: number
+  snapshot_dependency_lag_days: number
+  snapshot_requires_milling_machine: number
+  planned_start_date: number
+  planned_end_date: number
+  scheduling_locked: number
+  scheduling_status: number
+  planned_milling_machine_id: number
   started_at: number
   completed_at: number
   created_at: number
@@ -67,6 +113,20 @@ export type Case_processesCountAggregateOutputType = {
   _all: number
 }
 
+
+export type Case_processesAvgAggregateInputType = {
+  snapshot_fixed_minutes?: true
+  snapshot_minutes_per_unit?: true
+  snapshot_expected_duration_days?: true
+  snapshot_dependency_lag_days?: true
+}
+
+export type Case_processesSumAggregateInputType = {
+  snapshot_fixed_minutes?: true
+  snapshot_minutes_per_unit?: true
+  snapshot_expected_duration_days?: true
+  snapshot_dependency_lag_days?: true
+}
 
 export type Case_processesMinAggregateInputType = {
   id?: true
@@ -76,6 +136,16 @@ export type Case_processesMinAggregateInputType = {
   workflow_step_id?: true
   status?: true
   assigned_lab_member_id?: true
+  snapshot_fixed_minutes?: true
+  snapshot_minutes_per_unit?: true
+  snapshot_expected_duration_days?: true
+  snapshot_dependency_lag_days?: true
+  snapshot_requires_milling_machine?: true
+  planned_start_date?: true
+  planned_end_date?: true
+  scheduling_locked?: true
+  scheduling_status?: true
+  planned_milling_machine_id?: true
   started_at?: true
   completed_at?: true
   created_at?: true
@@ -90,6 +160,16 @@ export type Case_processesMaxAggregateInputType = {
   workflow_step_id?: true
   status?: true
   assigned_lab_member_id?: true
+  snapshot_fixed_minutes?: true
+  snapshot_minutes_per_unit?: true
+  snapshot_expected_duration_days?: true
+  snapshot_dependency_lag_days?: true
+  snapshot_requires_milling_machine?: true
+  planned_start_date?: true
+  planned_end_date?: true
+  scheduling_locked?: true
+  scheduling_status?: true
+  planned_milling_machine_id?: true
   started_at?: true
   completed_at?: true
   created_at?: true
@@ -104,6 +184,16 @@ export type Case_processesCountAggregateInputType = {
   workflow_step_id?: true
   status?: true
   assigned_lab_member_id?: true
+  snapshot_fixed_minutes?: true
+  snapshot_minutes_per_unit?: true
+  snapshot_expected_duration_days?: true
+  snapshot_dependency_lag_days?: true
+  snapshot_requires_milling_machine?: true
+  planned_start_date?: true
+  planned_end_date?: true
+  scheduling_locked?: true
+  scheduling_status?: true
+  planned_milling_machine_id?: true
   started_at?: true
   completed_at?: true
   created_at?: true
@@ -149,6 +239,18 @@ export type Case_processesAggregateArgs<ExtArgs extends runtime.Types.Extensions
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: Case_processesAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: Case_processesSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: Case_processesMinAggregateInputType
@@ -179,6 +281,8 @@ export type case_processesGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   _count?: Case_processesCountAggregateInputType | true
+  _avg?: Case_processesAvgAggregateInputType
+  _sum?: Case_processesSumAggregateInputType
   _min?: Case_processesMinAggregateInputType
   _max?: Case_processesMaxAggregateInputType
 }
@@ -191,11 +295,23 @@ export type Case_processesGroupByOutputType = {
   workflow_step_id: string
   status: $Enums.CaseProcessStatus
   assigned_lab_member_id: string | null
+  snapshot_fixed_minutes: number
+  snapshot_minutes_per_unit: number
+  snapshot_expected_duration_days: number
+  snapshot_dependency_lag_days: number
+  snapshot_requires_milling_machine: boolean
+  planned_start_date: Date | null
+  planned_end_date: Date | null
+  scheduling_locked: boolean
+  scheduling_status: $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id: string | null
   started_at: Date | null
   completed_at: Date | null
   created_at: Date
   updated_at: Date
   _count: Case_processesCountAggregateOutputType | null
+  _avg: Case_processesAvgAggregateOutputType | null
+  _sum: Case_processesSumAggregateOutputType | null
   _min: Case_processesMinAggregateOutputType | null
   _max: Case_processesMaxAggregateOutputType | null
 }
@@ -226,6 +342,16 @@ export type case_processesWhereInput = {
   workflow_step_id?: Prisma.StringFilter<"case_processes"> | string
   status?: Prisma.EnumCaseProcessStatusFilter<"case_processes"> | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.UuidNullableFilter<"case_processes"> | string | null
+  snapshot_fixed_minutes?: Prisma.IntFilter<"case_processes"> | number
+  snapshot_minutes_per_unit?: Prisma.IntFilter<"case_processes"> | number
+  snapshot_expected_duration_days?: Prisma.IntFilter<"case_processes"> | number
+  snapshot_dependency_lag_days?: Prisma.IntFilter<"case_processes"> | number
+  snapshot_requires_milling_machine?: Prisma.BoolFilter<"case_processes"> | boolean
+  planned_start_date?: Prisma.DateTimeNullableFilter<"case_processes"> | Date | string | null
+  planned_end_date?: Prisma.DateTimeNullableFilter<"case_processes"> | Date | string | null
+  scheduling_locked?: Prisma.BoolFilter<"case_processes"> | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFilter<"case_processes"> | $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: Prisma.UuidNullableFilter<"case_processes"> | string | null
   started_at?: Prisma.DateTimeNullableFilter<"case_processes"> | Date | string | null
   completed_at?: Prisma.DateTimeNullableFilter<"case_processes"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"case_processes"> | Date | string
@@ -234,8 +360,11 @@ export type case_processesWhereInput = {
   case_services?: Prisma.XOR<Prisma.Case_servicesScalarRelationFilter, Prisma.case_servicesWhereInput>
   processes?: Prisma.XOR<Prisma.ProcessesScalarRelationFilter, Prisma.processesWhereInput>
   assignedLabMember?: Prisma.XOR<Prisma.Lab_membersNullableScalarRelationFilter, Prisma.lab_membersWhereInput> | null
+  plannedMillingMachine?: Prisma.XOR<Prisma.Milling_machinesNullableScalarRelationFilter, Prisma.milling_machinesWhereInput> | null
+  historyEvents?: Prisma.Case_process_history_eventsListRelationFilter
   dependencies?: Prisma.Case_process_dependenciesListRelationFilter
   dependentProcesses?: Prisma.Case_process_dependenciesListRelationFilter
+  scheduleAllocations?: Prisma.Case_process_schedule_allocationsListRelationFilter
 }
 
 export type case_processesOrderByWithRelationInput = {
@@ -246,6 +375,16 @@ export type case_processesOrderByWithRelationInput = {
   workflow_step_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
   assigned_lab_member_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  snapshot_fixed_minutes?: Prisma.SortOrder
+  snapshot_minutes_per_unit?: Prisma.SortOrder
+  snapshot_expected_duration_days?: Prisma.SortOrder
+  snapshot_dependency_lag_days?: Prisma.SortOrder
+  snapshot_requires_milling_machine?: Prisma.SortOrder
+  planned_start_date?: Prisma.SortOrderInput | Prisma.SortOrder
+  planned_end_date?: Prisma.SortOrderInput | Prisma.SortOrder
+  scheduling_locked?: Prisma.SortOrder
+  scheduling_status?: Prisma.SortOrder
+  planned_milling_machine_id?: Prisma.SortOrderInput | Prisma.SortOrder
   started_at?: Prisma.SortOrderInput | Prisma.SortOrder
   completed_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -254,8 +393,11 @@ export type case_processesOrderByWithRelationInput = {
   case_services?: Prisma.case_servicesOrderByWithRelationInput
   processes?: Prisma.processesOrderByWithRelationInput
   assignedLabMember?: Prisma.lab_membersOrderByWithRelationInput
+  plannedMillingMachine?: Prisma.milling_machinesOrderByWithRelationInput
+  historyEvents?: Prisma.case_process_history_eventsOrderByRelationAggregateInput
   dependencies?: Prisma.case_process_dependenciesOrderByRelationAggregateInput
   dependentProcesses?: Prisma.case_process_dependenciesOrderByRelationAggregateInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsOrderByRelationAggregateInput
 }
 
 export type case_processesWhereUniqueInput = Prisma.AtLeast<{
@@ -270,6 +412,16 @@ export type case_processesWhereUniqueInput = Prisma.AtLeast<{
   workflow_step_id?: Prisma.StringFilter<"case_processes"> | string
   status?: Prisma.EnumCaseProcessStatusFilter<"case_processes"> | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.UuidNullableFilter<"case_processes"> | string | null
+  snapshot_fixed_minutes?: Prisma.IntFilter<"case_processes"> | number
+  snapshot_minutes_per_unit?: Prisma.IntFilter<"case_processes"> | number
+  snapshot_expected_duration_days?: Prisma.IntFilter<"case_processes"> | number
+  snapshot_dependency_lag_days?: Prisma.IntFilter<"case_processes"> | number
+  snapshot_requires_milling_machine?: Prisma.BoolFilter<"case_processes"> | boolean
+  planned_start_date?: Prisma.DateTimeNullableFilter<"case_processes"> | Date | string | null
+  planned_end_date?: Prisma.DateTimeNullableFilter<"case_processes"> | Date | string | null
+  scheduling_locked?: Prisma.BoolFilter<"case_processes"> | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFilter<"case_processes"> | $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: Prisma.UuidNullableFilter<"case_processes"> | string | null
   started_at?: Prisma.DateTimeNullableFilter<"case_processes"> | Date | string | null
   completed_at?: Prisma.DateTimeNullableFilter<"case_processes"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"case_processes"> | Date | string
@@ -278,8 +430,11 @@ export type case_processesWhereUniqueInput = Prisma.AtLeast<{
   case_services?: Prisma.XOR<Prisma.Case_servicesScalarRelationFilter, Prisma.case_servicesWhereInput>
   processes?: Prisma.XOR<Prisma.ProcessesScalarRelationFilter, Prisma.processesWhereInput>
   assignedLabMember?: Prisma.XOR<Prisma.Lab_membersNullableScalarRelationFilter, Prisma.lab_membersWhereInput> | null
+  plannedMillingMachine?: Prisma.XOR<Prisma.Milling_machinesNullableScalarRelationFilter, Prisma.milling_machinesWhereInput> | null
+  historyEvents?: Prisma.Case_process_history_eventsListRelationFilter
   dependencies?: Prisma.Case_process_dependenciesListRelationFilter
   dependentProcesses?: Prisma.Case_process_dependenciesListRelationFilter
+  scheduleAllocations?: Prisma.Case_process_schedule_allocationsListRelationFilter
 }, "id" | "case_service_id_workflow_step_id">
 
 export type case_processesOrderByWithAggregationInput = {
@@ -290,13 +445,25 @@ export type case_processesOrderByWithAggregationInput = {
   workflow_step_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
   assigned_lab_member_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  snapshot_fixed_minutes?: Prisma.SortOrder
+  snapshot_minutes_per_unit?: Prisma.SortOrder
+  snapshot_expected_duration_days?: Prisma.SortOrder
+  snapshot_dependency_lag_days?: Prisma.SortOrder
+  snapshot_requires_milling_machine?: Prisma.SortOrder
+  planned_start_date?: Prisma.SortOrderInput | Prisma.SortOrder
+  planned_end_date?: Prisma.SortOrderInput | Prisma.SortOrder
+  scheduling_locked?: Prisma.SortOrder
+  scheduling_status?: Prisma.SortOrder
+  planned_milling_machine_id?: Prisma.SortOrderInput | Prisma.SortOrder
   started_at?: Prisma.SortOrderInput | Prisma.SortOrder
   completed_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.case_processesCountOrderByAggregateInput
+  _avg?: Prisma.case_processesAvgOrderByAggregateInput
   _max?: Prisma.case_processesMaxOrderByAggregateInput
   _min?: Prisma.case_processesMinOrderByAggregateInput
+  _sum?: Prisma.case_processesSumOrderByAggregateInput
 }
 
 export type case_processesScalarWhereWithAggregatesInput = {
@@ -310,6 +477,16 @@ export type case_processesScalarWhereWithAggregatesInput = {
   workflow_step_id?: Prisma.StringWithAggregatesFilter<"case_processes"> | string
   status?: Prisma.EnumCaseProcessStatusWithAggregatesFilter<"case_processes"> | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.UuidNullableWithAggregatesFilter<"case_processes"> | string | null
+  snapshot_fixed_minutes?: Prisma.IntWithAggregatesFilter<"case_processes"> | number
+  snapshot_minutes_per_unit?: Prisma.IntWithAggregatesFilter<"case_processes"> | number
+  snapshot_expected_duration_days?: Prisma.IntWithAggregatesFilter<"case_processes"> | number
+  snapshot_dependency_lag_days?: Prisma.IntWithAggregatesFilter<"case_processes"> | number
+  snapshot_requires_milling_machine?: Prisma.BoolWithAggregatesFilter<"case_processes"> | boolean
+  planned_start_date?: Prisma.DateTimeNullableWithAggregatesFilter<"case_processes"> | Date | string | null
+  planned_end_date?: Prisma.DateTimeNullableWithAggregatesFilter<"case_processes"> | Date | string | null
+  scheduling_locked?: Prisma.BoolWithAggregatesFilter<"case_processes"> | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusWithAggregatesFilter<"case_processes"> | $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: Prisma.UuidNullableWithAggregatesFilter<"case_processes"> | string | null
   started_at?: Prisma.DateTimeNullableWithAggregatesFilter<"case_processes"> | Date | string | null
   completed_at?: Prisma.DateTimeNullableWithAggregatesFilter<"case_processes"> | Date | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"case_processes"> | Date | string
@@ -320,6 +497,15 @@ export type case_processesCreateInput = {
   id?: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
@@ -328,8 +514,11 @@ export type case_processesCreateInput = {
   case_services: Prisma.case_servicesCreateNestedOneWithoutCase_processesInput
   processes: Prisma.processesCreateNestedOneWithoutCase_processesInput
   assignedLabMember?: Prisma.lab_membersCreateNestedOneWithoutAssignedProcessesInput
+  plannedMillingMachine?: Prisma.milling_machinesCreateNestedOneWithoutPlanned_case_processesInput
+  historyEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutCaseProcessInput
   dependencies?: Prisma.case_process_dependenciesCreateNestedManyWithoutCaseProcessInput
   dependentProcesses?: Prisma.case_process_dependenciesCreateNestedManyWithoutDependsOnCaseProcessInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsCreateNestedManyWithoutCaseProcessInput
 }
 
 export type case_processesUncheckedCreateInput = {
@@ -340,18 +529,39 @@ export type case_processesUncheckedCreateInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: string | null
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  historyEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCaseProcessInput
   dependencies?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutCaseProcessInput
   dependentProcesses?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutDependsOnCaseProcessInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedCreateNestedManyWithoutCaseProcessInput
 }
 
 export type case_processesUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -360,8 +570,11 @@ export type case_processesUpdateInput = {
   case_services?: Prisma.case_servicesUpdateOneRequiredWithoutCase_processesNestedInput
   processes?: Prisma.processesUpdateOneRequiredWithoutCase_processesNestedInput
   assignedLabMember?: Prisma.lab_membersUpdateOneWithoutAssignedProcessesNestedInput
+  plannedMillingMachine?: Prisma.milling_machinesUpdateOneWithoutPlanned_case_processesNestedInput
+  historyEvents?: Prisma.case_process_history_eventsUpdateManyWithoutCaseProcessNestedInput
   dependencies?: Prisma.case_process_dependenciesUpdateManyWithoutCaseProcessNestedInput
   dependentProcesses?: Prisma.case_process_dependenciesUpdateManyWithoutDependsOnCaseProcessNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUpdateManyWithoutCaseProcessNestedInput
 }
 
 export type case_processesUncheckedUpdateInput = {
@@ -372,12 +585,24 @@ export type case_processesUncheckedUpdateInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  historyEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCaseProcessNestedInput
   dependencies?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutCaseProcessNestedInput
   dependentProcesses?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutDependsOnCaseProcessNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedUpdateManyWithoutCaseProcessNestedInput
 }
 
 export type case_processesCreateManyInput = {
@@ -388,6 +613,16 @@ export type case_processesCreateManyInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: string | null
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
@@ -398,6 +633,15 @@ export type case_processesUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -412,6 +656,16 @@ export type case_processesUncheckedUpdateManyInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -441,10 +695,27 @@ export type case_processesCountOrderByAggregateInput = {
   workflow_step_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
   assigned_lab_member_id?: Prisma.SortOrder
+  snapshot_fixed_minutes?: Prisma.SortOrder
+  snapshot_minutes_per_unit?: Prisma.SortOrder
+  snapshot_expected_duration_days?: Prisma.SortOrder
+  snapshot_dependency_lag_days?: Prisma.SortOrder
+  snapshot_requires_milling_machine?: Prisma.SortOrder
+  planned_start_date?: Prisma.SortOrder
+  planned_end_date?: Prisma.SortOrder
+  scheduling_locked?: Prisma.SortOrder
+  scheduling_status?: Prisma.SortOrder
+  planned_milling_machine_id?: Prisma.SortOrder
   started_at?: Prisma.SortOrder
   completed_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+}
+
+export type case_processesAvgOrderByAggregateInput = {
+  snapshot_fixed_minutes?: Prisma.SortOrder
+  snapshot_minutes_per_unit?: Prisma.SortOrder
+  snapshot_expected_duration_days?: Prisma.SortOrder
+  snapshot_dependency_lag_days?: Prisma.SortOrder
 }
 
 export type case_processesMaxOrderByAggregateInput = {
@@ -455,6 +726,16 @@ export type case_processesMaxOrderByAggregateInput = {
   workflow_step_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
   assigned_lab_member_id?: Prisma.SortOrder
+  snapshot_fixed_minutes?: Prisma.SortOrder
+  snapshot_minutes_per_unit?: Prisma.SortOrder
+  snapshot_expected_duration_days?: Prisma.SortOrder
+  snapshot_dependency_lag_days?: Prisma.SortOrder
+  snapshot_requires_milling_machine?: Prisma.SortOrder
+  planned_start_date?: Prisma.SortOrder
+  planned_end_date?: Prisma.SortOrder
+  scheduling_locked?: Prisma.SortOrder
+  scheduling_status?: Prisma.SortOrder
+  planned_milling_machine_id?: Prisma.SortOrder
   started_at?: Prisma.SortOrder
   completed_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -469,10 +750,27 @@ export type case_processesMinOrderByAggregateInput = {
   workflow_step_id?: Prisma.SortOrder
   status?: Prisma.SortOrder
   assigned_lab_member_id?: Prisma.SortOrder
+  snapshot_fixed_minutes?: Prisma.SortOrder
+  snapshot_minutes_per_unit?: Prisma.SortOrder
+  snapshot_expected_duration_days?: Prisma.SortOrder
+  snapshot_dependency_lag_days?: Prisma.SortOrder
+  snapshot_requires_milling_machine?: Prisma.SortOrder
+  planned_start_date?: Prisma.SortOrder
+  planned_end_date?: Prisma.SortOrder
+  scheduling_locked?: Prisma.SortOrder
+  scheduling_status?: Prisma.SortOrder
+  planned_milling_machine_id?: Prisma.SortOrder
   started_at?: Prisma.SortOrder
   completed_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+}
+
+export type case_processesSumOrderByAggregateInput = {
+  snapshot_fixed_minutes?: Prisma.SortOrder
+  snapshot_minutes_per_unit?: Prisma.SortOrder
+  snapshot_expected_duration_days?: Prisma.SortOrder
+  snapshot_dependency_lag_days?: Prisma.SortOrder
 }
 
 export type Case_processesScalarRelationFilter = {
@@ -564,6 +862,48 @@ export type case_processesUncheckedUpdateManyWithoutProcessesNestedInput = {
   deleteMany?: Prisma.case_processesScalarWhereInput | Prisma.case_processesScalarWhereInput[]
 }
 
+export type case_processesCreateNestedManyWithoutPlannedMillingMachineInput = {
+  create?: Prisma.XOR<Prisma.case_processesCreateWithoutPlannedMillingMachineInput, Prisma.case_processesUncheckedCreateWithoutPlannedMillingMachineInput> | Prisma.case_processesCreateWithoutPlannedMillingMachineInput[] | Prisma.case_processesUncheckedCreateWithoutPlannedMillingMachineInput[]
+  connectOrCreate?: Prisma.case_processesCreateOrConnectWithoutPlannedMillingMachineInput | Prisma.case_processesCreateOrConnectWithoutPlannedMillingMachineInput[]
+  createMany?: Prisma.case_processesCreateManyPlannedMillingMachineInputEnvelope
+  connect?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+}
+
+export type case_processesUncheckedCreateNestedManyWithoutPlannedMillingMachineInput = {
+  create?: Prisma.XOR<Prisma.case_processesCreateWithoutPlannedMillingMachineInput, Prisma.case_processesUncheckedCreateWithoutPlannedMillingMachineInput> | Prisma.case_processesCreateWithoutPlannedMillingMachineInput[] | Prisma.case_processesUncheckedCreateWithoutPlannedMillingMachineInput[]
+  connectOrCreate?: Prisma.case_processesCreateOrConnectWithoutPlannedMillingMachineInput | Prisma.case_processesCreateOrConnectWithoutPlannedMillingMachineInput[]
+  createMany?: Prisma.case_processesCreateManyPlannedMillingMachineInputEnvelope
+  connect?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+}
+
+export type case_processesUpdateManyWithoutPlannedMillingMachineNestedInput = {
+  create?: Prisma.XOR<Prisma.case_processesCreateWithoutPlannedMillingMachineInput, Prisma.case_processesUncheckedCreateWithoutPlannedMillingMachineInput> | Prisma.case_processesCreateWithoutPlannedMillingMachineInput[] | Prisma.case_processesUncheckedCreateWithoutPlannedMillingMachineInput[]
+  connectOrCreate?: Prisma.case_processesCreateOrConnectWithoutPlannedMillingMachineInput | Prisma.case_processesCreateOrConnectWithoutPlannedMillingMachineInput[]
+  upsert?: Prisma.case_processesUpsertWithWhereUniqueWithoutPlannedMillingMachineInput | Prisma.case_processesUpsertWithWhereUniqueWithoutPlannedMillingMachineInput[]
+  createMany?: Prisma.case_processesCreateManyPlannedMillingMachineInputEnvelope
+  set?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+  disconnect?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+  delete?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+  connect?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+  update?: Prisma.case_processesUpdateWithWhereUniqueWithoutPlannedMillingMachineInput | Prisma.case_processesUpdateWithWhereUniqueWithoutPlannedMillingMachineInput[]
+  updateMany?: Prisma.case_processesUpdateManyWithWhereWithoutPlannedMillingMachineInput | Prisma.case_processesUpdateManyWithWhereWithoutPlannedMillingMachineInput[]
+  deleteMany?: Prisma.case_processesScalarWhereInput | Prisma.case_processesScalarWhereInput[]
+}
+
+export type case_processesUncheckedUpdateManyWithoutPlannedMillingMachineNestedInput = {
+  create?: Prisma.XOR<Prisma.case_processesCreateWithoutPlannedMillingMachineInput, Prisma.case_processesUncheckedCreateWithoutPlannedMillingMachineInput> | Prisma.case_processesCreateWithoutPlannedMillingMachineInput[] | Prisma.case_processesUncheckedCreateWithoutPlannedMillingMachineInput[]
+  connectOrCreate?: Prisma.case_processesCreateOrConnectWithoutPlannedMillingMachineInput | Prisma.case_processesCreateOrConnectWithoutPlannedMillingMachineInput[]
+  upsert?: Prisma.case_processesUpsertWithWhereUniqueWithoutPlannedMillingMachineInput | Prisma.case_processesUpsertWithWhereUniqueWithoutPlannedMillingMachineInput[]
+  createMany?: Prisma.case_processesCreateManyPlannedMillingMachineInputEnvelope
+  set?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+  disconnect?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+  delete?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+  connect?: Prisma.case_processesWhereUniqueInput | Prisma.case_processesWhereUniqueInput[]
+  update?: Prisma.case_processesUpdateWithWhereUniqueWithoutPlannedMillingMachineInput | Prisma.case_processesUpdateWithWhereUniqueWithoutPlannedMillingMachineInput[]
+  updateMany?: Prisma.case_processesUpdateManyWithWhereWithoutPlannedMillingMachineInput | Prisma.case_processesUpdateManyWithWhereWithoutPlannedMillingMachineInput[]
+  deleteMany?: Prisma.case_processesScalarWhereInput | Prisma.case_processesScalarWhereInput[]
+}
+
 export type case_processesCreateNestedManyWithoutCasesInput = {
   create?: Prisma.XOR<Prisma.case_processesCreateWithoutCasesInput, Prisma.case_processesUncheckedCreateWithoutCasesInput> | Prisma.case_processesCreateWithoutCasesInput[] | Prisma.case_processesUncheckedCreateWithoutCasesInput[]
   connectOrCreate?: Prisma.case_processesCreateOrConnectWithoutCasesInput | Prisma.case_processesCreateOrConnectWithoutCasesInput[]
@@ -608,6 +948,24 @@ export type case_processesUncheckedUpdateManyWithoutCasesNestedInput = {
 
 export type EnumCaseProcessStatusFieldUpdateOperationsInput = {
   set?: $Enums.CaseProcessStatus
+}
+
+export type EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput = {
+  set?: $Enums.CaseProcessSchedulingStatus
+}
+
+export type case_processesCreateNestedOneWithoutHistoryEventsInput = {
+  create?: Prisma.XOR<Prisma.case_processesCreateWithoutHistoryEventsInput, Prisma.case_processesUncheckedCreateWithoutHistoryEventsInput>
+  connectOrCreate?: Prisma.case_processesCreateOrConnectWithoutHistoryEventsInput
+  connect?: Prisma.case_processesWhereUniqueInput
+}
+
+export type case_processesUpdateOneRequiredWithoutHistoryEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.case_processesCreateWithoutHistoryEventsInput, Prisma.case_processesUncheckedCreateWithoutHistoryEventsInput>
+  connectOrCreate?: Prisma.case_processesCreateOrConnectWithoutHistoryEventsInput
+  upsert?: Prisma.case_processesUpsertWithoutHistoryEventsInput
+  connect?: Prisma.case_processesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.case_processesUpdateToOneWithWhereWithoutHistoryEventsInput, Prisma.case_processesUpdateWithoutHistoryEventsInput>, Prisma.case_processesUncheckedUpdateWithoutHistoryEventsInput>
 }
 
 export type case_processesCreateNestedManyWithoutCase_servicesInput = {
@@ -680,10 +1038,33 @@ export type case_processesUpdateOneRequiredWithoutDependentProcessesNestedInput 
   update?: Prisma.XOR<Prisma.XOR<Prisma.case_processesUpdateToOneWithWhereWithoutDependentProcessesInput, Prisma.case_processesUpdateWithoutDependentProcessesInput>, Prisma.case_processesUncheckedUpdateWithoutDependentProcessesInput>
 }
 
+export type case_processesCreateNestedOneWithoutScheduleAllocationsInput = {
+  create?: Prisma.XOR<Prisma.case_processesCreateWithoutScheduleAllocationsInput, Prisma.case_processesUncheckedCreateWithoutScheduleAllocationsInput>
+  connectOrCreate?: Prisma.case_processesCreateOrConnectWithoutScheduleAllocationsInput
+  connect?: Prisma.case_processesWhereUniqueInput
+}
+
+export type case_processesUpdateOneRequiredWithoutScheduleAllocationsNestedInput = {
+  create?: Prisma.XOR<Prisma.case_processesCreateWithoutScheduleAllocationsInput, Prisma.case_processesUncheckedCreateWithoutScheduleAllocationsInput>
+  connectOrCreate?: Prisma.case_processesCreateOrConnectWithoutScheduleAllocationsInput
+  upsert?: Prisma.case_processesUpsertWithoutScheduleAllocationsInput
+  connect?: Prisma.case_processesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.case_processesUpdateToOneWithWhereWithoutScheduleAllocationsInput, Prisma.case_processesUpdateWithoutScheduleAllocationsInput>, Prisma.case_processesUncheckedUpdateWithoutScheduleAllocationsInput>
+}
+
 export type case_processesCreateWithoutAssignedLabMemberInput = {
   id?: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
@@ -691,8 +1072,11 @@ export type case_processesCreateWithoutAssignedLabMemberInput = {
   cases: Prisma.casesCreateNestedOneWithoutCase_processesInput
   case_services: Prisma.case_servicesCreateNestedOneWithoutCase_processesInput
   processes: Prisma.processesCreateNestedOneWithoutCase_processesInput
+  plannedMillingMachine?: Prisma.milling_machinesCreateNestedOneWithoutPlanned_case_processesInput
+  historyEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutCaseProcessInput
   dependencies?: Prisma.case_process_dependenciesCreateNestedManyWithoutCaseProcessInput
   dependentProcesses?: Prisma.case_process_dependenciesCreateNestedManyWithoutDependsOnCaseProcessInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsCreateNestedManyWithoutCaseProcessInput
 }
 
 export type case_processesUncheckedCreateWithoutAssignedLabMemberInput = {
@@ -702,12 +1086,24 @@ export type case_processesUncheckedCreateWithoutAssignedLabMemberInput = {
   process_id: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: string | null
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  historyEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCaseProcessInput
   dependencies?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutCaseProcessInput
   dependentProcesses?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutDependsOnCaseProcessInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedCreateNestedManyWithoutCaseProcessInput
 }
 
 export type case_processesCreateOrConnectWithoutAssignedLabMemberInput = {
@@ -747,6 +1143,16 @@ export type case_processesScalarWhereInput = {
   workflow_step_id?: Prisma.StringFilter<"case_processes"> | string
   status?: Prisma.EnumCaseProcessStatusFilter<"case_processes"> | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.UuidNullableFilter<"case_processes"> | string | null
+  snapshot_fixed_minutes?: Prisma.IntFilter<"case_processes"> | number
+  snapshot_minutes_per_unit?: Prisma.IntFilter<"case_processes"> | number
+  snapshot_expected_duration_days?: Prisma.IntFilter<"case_processes"> | number
+  snapshot_dependency_lag_days?: Prisma.IntFilter<"case_processes"> | number
+  snapshot_requires_milling_machine?: Prisma.BoolFilter<"case_processes"> | boolean
+  planned_start_date?: Prisma.DateTimeNullableFilter<"case_processes"> | Date | string | null
+  planned_end_date?: Prisma.DateTimeNullableFilter<"case_processes"> | Date | string | null
+  scheduling_locked?: Prisma.BoolFilter<"case_processes"> | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFilter<"case_processes"> | $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: Prisma.UuidNullableFilter<"case_processes"> | string | null
   started_at?: Prisma.DateTimeNullableFilter<"case_processes"> | Date | string | null
   completed_at?: Prisma.DateTimeNullableFilter<"case_processes"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"case_processes"> | Date | string
@@ -757,6 +1163,15 @@ export type case_processesCreateWithoutProcessesInput = {
   id?: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
@@ -764,8 +1179,11 @@ export type case_processesCreateWithoutProcessesInput = {
   cases: Prisma.casesCreateNestedOneWithoutCase_processesInput
   case_services: Prisma.case_servicesCreateNestedOneWithoutCase_processesInput
   assignedLabMember?: Prisma.lab_membersCreateNestedOneWithoutAssignedProcessesInput
+  plannedMillingMachine?: Prisma.milling_machinesCreateNestedOneWithoutPlanned_case_processesInput
+  historyEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutCaseProcessInput
   dependencies?: Prisma.case_process_dependenciesCreateNestedManyWithoutCaseProcessInput
   dependentProcesses?: Prisma.case_process_dependenciesCreateNestedManyWithoutDependsOnCaseProcessInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsCreateNestedManyWithoutCaseProcessInput
 }
 
 export type case_processesUncheckedCreateWithoutProcessesInput = {
@@ -775,12 +1193,24 @@ export type case_processesUncheckedCreateWithoutProcessesInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: string | null
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  historyEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCaseProcessInput
   dependencies?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutCaseProcessInput
   dependentProcesses?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutDependsOnCaseProcessInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedCreateNestedManyWithoutCaseProcessInput
 }
 
 export type case_processesCreateOrConnectWithoutProcessesInput = {
@@ -809,10 +1239,99 @@ export type case_processesUpdateManyWithWhereWithoutProcessesInput = {
   data: Prisma.XOR<Prisma.case_processesUpdateManyMutationInput, Prisma.case_processesUncheckedUpdateManyWithoutProcessesInput>
 }
 
+export type case_processesCreateWithoutPlannedMillingMachineInput = {
+  id?: string
+  workflow_step_id: string
+  status?: $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  started_at?: Date | string | null
+  completed_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  cases: Prisma.casesCreateNestedOneWithoutCase_processesInput
+  case_services: Prisma.case_servicesCreateNestedOneWithoutCase_processesInput
+  processes: Prisma.processesCreateNestedOneWithoutCase_processesInput
+  assignedLabMember?: Prisma.lab_membersCreateNestedOneWithoutAssignedProcessesInput
+  historyEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutCaseProcessInput
+  dependencies?: Prisma.case_process_dependenciesCreateNestedManyWithoutCaseProcessInput
+  dependentProcesses?: Prisma.case_process_dependenciesCreateNestedManyWithoutDependsOnCaseProcessInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsCreateNestedManyWithoutCaseProcessInput
+}
+
+export type case_processesUncheckedCreateWithoutPlannedMillingMachineInput = {
+  id?: string
+  case_id: string
+  case_service_id: string
+  process_id: string
+  workflow_step_id: string
+  status?: $Enums.CaseProcessStatus
+  assigned_lab_member_id?: string | null
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  started_at?: Date | string | null
+  completed_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  historyEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCaseProcessInput
+  dependencies?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutCaseProcessInput
+  dependentProcesses?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutDependsOnCaseProcessInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedCreateNestedManyWithoutCaseProcessInput
+}
+
+export type case_processesCreateOrConnectWithoutPlannedMillingMachineInput = {
+  where: Prisma.case_processesWhereUniqueInput
+  create: Prisma.XOR<Prisma.case_processesCreateWithoutPlannedMillingMachineInput, Prisma.case_processesUncheckedCreateWithoutPlannedMillingMachineInput>
+}
+
+export type case_processesCreateManyPlannedMillingMachineInputEnvelope = {
+  data: Prisma.case_processesCreateManyPlannedMillingMachineInput | Prisma.case_processesCreateManyPlannedMillingMachineInput[]
+  skipDuplicates?: boolean
+}
+
+export type case_processesUpsertWithWhereUniqueWithoutPlannedMillingMachineInput = {
+  where: Prisma.case_processesWhereUniqueInput
+  update: Prisma.XOR<Prisma.case_processesUpdateWithoutPlannedMillingMachineInput, Prisma.case_processesUncheckedUpdateWithoutPlannedMillingMachineInput>
+  create: Prisma.XOR<Prisma.case_processesCreateWithoutPlannedMillingMachineInput, Prisma.case_processesUncheckedCreateWithoutPlannedMillingMachineInput>
+}
+
+export type case_processesUpdateWithWhereUniqueWithoutPlannedMillingMachineInput = {
+  where: Prisma.case_processesWhereUniqueInput
+  data: Prisma.XOR<Prisma.case_processesUpdateWithoutPlannedMillingMachineInput, Prisma.case_processesUncheckedUpdateWithoutPlannedMillingMachineInput>
+}
+
+export type case_processesUpdateManyWithWhereWithoutPlannedMillingMachineInput = {
+  where: Prisma.case_processesScalarWhereInput
+  data: Prisma.XOR<Prisma.case_processesUpdateManyMutationInput, Prisma.case_processesUncheckedUpdateManyWithoutPlannedMillingMachineInput>
+}
+
 export type case_processesCreateWithoutCasesInput = {
   id?: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
@@ -820,8 +1339,11 @@ export type case_processesCreateWithoutCasesInput = {
   case_services: Prisma.case_servicesCreateNestedOneWithoutCase_processesInput
   processes: Prisma.processesCreateNestedOneWithoutCase_processesInput
   assignedLabMember?: Prisma.lab_membersCreateNestedOneWithoutAssignedProcessesInput
+  plannedMillingMachine?: Prisma.milling_machinesCreateNestedOneWithoutPlanned_case_processesInput
+  historyEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutCaseProcessInput
   dependencies?: Prisma.case_process_dependenciesCreateNestedManyWithoutCaseProcessInput
   dependentProcesses?: Prisma.case_process_dependenciesCreateNestedManyWithoutDependsOnCaseProcessInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsCreateNestedManyWithoutCaseProcessInput
 }
 
 export type case_processesUncheckedCreateWithoutCasesInput = {
@@ -831,12 +1353,24 @@ export type case_processesUncheckedCreateWithoutCasesInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: string | null
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  historyEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCaseProcessInput
   dependencies?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutCaseProcessInput
   dependentProcesses?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutDependsOnCaseProcessInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedCreateNestedManyWithoutCaseProcessInput
 }
 
 export type case_processesCreateOrConnectWithoutCasesInput = {
@@ -865,10 +1399,143 @@ export type case_processesUpdateManyWithWhereWithoutCasesInput = {
   data: Prisma.XOR<Prisma.case_processesUpdateManyMutationInput, Prisma.case_processesUncheckedUpdateManyWithoutCasesInput>
 }
 
+export type case_processesCreateWithoutHistoryEventsInput = {
+  id?: string
+  workflow_step_id: string
+  status?: $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  started_at?: Date | string | null
+  completed_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  cases: Prisma.casesCreateNestedOneWithoutCase_processesInput
+  case_services: Prisma.case_servicesCreateNestedOneWithoutCase_processesInput
+  processes: Prisma.processesCreateNestedOneWithoutCase_processesInput
+  assignedLabMember?: Prisma.lab_membersCreateNestedOneWithoutAssignedProcessesInput
+  plannedMillingMachine?: Prisma.milling_machinesCreateNestedOneWithoutPlanned_case_processesInput
+  dependencies?: Prisma.case_process_dependenciesCreateNestedManyWithoutCaseProcessInput
+  dependentProcesses?: Prisma.case_process_dependenciesCreateNestedManyWithoutDependsOnCaseProcessInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsCreateNestedManyWithoutCaseProcessInput
+}
+
+export type case_processesUncheckedCreateWithoutHistoryEventsInput = {
+  id?: string
+  case_id: string
+  case_service_id: string
+  process_id: string
+  workflow_step_id: string
+  status?: $Enums.CaseProcessStatus
+  assigned_lab_member_id?: string | null
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: string | null
+  started_at?: Date | string | null
+  completed_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  dependencies?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutCaseProcessInput
+  dependentProcesses?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutDependsOnCaseProcessInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedCreateNestedManyWithoutCaseProcessInput
+}
+
+export type case_processesCreateOrConnectWithoutHistoryEventsInput = {
+  where: Prisma.case_processesWhereUniqueInput
+  create: Prisma.XOR<Prisma.case_processesCreateWithoutHistoryEventsInput, Prisma.case_processesUncheckedCreateWithoutHistoryEventsInput>
+}
+
+export type case_processesUpsertWithoutHistoryEventsInput = {
+  update: Prisma.XOR<Prisma.case_processesUpdateWithoutHistoryEventsInput, Prisma.case_processesUncheckedUpdateWithoutHistoryEventsInput>
+  create: Prisma.XOR<Prisma.case_processesCreateWithoutHistoryEventsInput, Prisma.case_processesUncheckedCreateWithoutHistoryEventsInput>
+  where?: Prisma.case_processesWhereInput
+}
+
+export type case_processesUpdateToOneWithWhereWithoutHistoryEventsInput = {
+  where?: Prisma.case_processesWhereInput
+  data: Prisma.XOR<Prisma.case_processesUpdateWithoutHistoryEventsInput, Prisma.case_processesUncheckedUpdateWithoutHistoryEventsInput>
+}
+
+export type case_processesUpdateWithoutHistoryEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
+  started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cases?: Prisma.casesUpdateOneRequiredWithoutCase_processesNestedInput
+  case_services?: Prisma.case_servicesUpdateOneRequiredWithoutCase_processesNestedInput
+  processes?: Prisma.processesUpdateOneRequiredWithoutCase_processesNestedInput
+  assignedLabMember?: Prisma.lab_membersUpdateOneWithoutAssignedProcessesNestedInput
+  plannedMillingMachine?: Prisma.milling_machinesUpdateOneWithoutPlanned_case_processesNestedInput
+  dependencies?: Prisma.case_process_dependenciesUpdateManyWithoutCaseProcessNestedInput
+  dependentProcesses?: Prisma.case_process_dependenciesUpdateManyWithoutDependsOnCaseProcessNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUpdateManyWithoutCaseProcessNestedInput
+}
+
+export type case_processesUncheckedUpdateWithoutHistoryEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_service_id?: Prisma.StringFieldUpdateOperationsInput | string
+  process_id?: Prisma.StringFieldUpdateOperationsInput | string
+  workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dependencies?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutCaseProcessNestedInput
+  dependentProcesses?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutDependsOnCaseProcessNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedUpdateManyWithoutCaseProcessNestedInput
+}
+
 export type case_processesCreateWithoutCase_servicesInput = {
   id?: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
@@ -876,8 +1543,11 @@ export type case_processesCreateWithoutCase_servicesInput = {
   cases: Prisma.casesCreateNestedOneWithoutCase_processesInput
   processes: Prisma.processesCreateNestedOneWithoutCase_processesInput
   assignedLabMember?: Prisma.lab_membersCreateNestedOneWithoutAssignedProcessesInput
+  plannedMillingMachine?: Prisma.milling_machinesCreateNestedOneWithoutPlanned_case_processesInput
+  historyEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutCaseProcessInput
   dependencies?: Prisma.case_process_dependenciesCreateNestedManyWithoutCaseProcessInput
   dependentProcesses?: Prisma.case_process_dependenciesCreateNestedManyWithoutDependsOnCaseProcessInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsCreateNestedManyWithoutCaseProcessInput
 }
 
 export type case_processesUncheckedCreateWithoutCase_servicesInput = {
@@ -887,12 +1557,24 @@ export type case_processesUncheckedCreateWithoutCase_servicesInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: string | null
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  historyEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCaseProcessInput
   dependencies?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutCaseProcessInput
   dependentProcesses?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutDependsOnCaseProcessInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedCreateNestedManyWithoutCaseProcessInput
 }
 
 export type case_processesCreateOrConnectWithoutCase_servicesInput = {
@@ -925,6 +1607,15 @@ export type case_processesCreateWithoutDependenciesInput = {
   id?: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
@@ -933,7 +1624,10 @@ export type case_processesCreateWithoutDependenciesInput = {
   case_services: Prisma.case_servicesCreateNestedOneWithoutCase_processesInput
   processes: Prisma.processesCreateNestedOneWithoutCase_processesInput
   assignedLabMember?: Prisma.lab_membersCreateNestedOneWithoutAssignedProcessesInput
+  plannedMillingMachine?: Prisma.milling_machinesCreateNestedOneWithoutPlanned_case_processesInput
+  historyEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutCaseProcessInput
   dependentProcesses?: Prisma.case_process_dependenciesCreateNestedManyWithoutDependsOnCaseProcessInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsCreateNestedManyWithoutCaseProcessInput
 }
 
 export type case_processesUncheckedCreateWithoutDependenciesInput = {
@@ -944,11 +1638,23 @@ export type case_processesUncheckedCreateWithoutDependenciesInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: string | null
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  historyEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCaseProcessInput
   dependentProcesses?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutDependsOnCaseProcessInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedCreateNestedManyWithoutCaseProcessInput
 }
 
 export type case_processesCreateOrConnectWithoutDependenciesInput = {
@@ -960,6 +1666,15 @@ export type case_processesCreateWithoutDependentProcessesInput = {
   id?: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
@@ -968,7 +1683,10 @@ export type case_processesCreateWithoutDependentProcessesInput = {
   case_services: Prisma.case_servicesCreateNestedOneWithoutCase_processesInput
   processes: Prisma.processesCreateNestedOneWithoutCase_processesInput
   assignedLabMember?: Prisma.lab_membersCreateNestedOneWithoutAssignedProcessesInput
+  plannedMillingMachine?: Prisma.milling_machinesCreateNestedOneWithoutPlanned_case_processesInput
+  historyEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutCaseProcessInput
   dependencies?: Prisma.case_process_dependenciesCreateNestedManyWithoutCaseProcessInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsCreateNestedManyWithoutCaseProcessInput
 }
 
 export type case_processesUncheckedCreateWithoutDependentProcessesInput = {
@@ -979,11 +1697,23 @@ export type case_processesUncheckedCreateWithoutDependentProcessesInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: string | null
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  historyEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCaseProcessInput
   dependencies?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutCaseProcessInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedCreateNestedManyWithoutCaseProcessInput
 }
 
 export type case_processesCreateOrConnectWithoutDependentProcessesInput = {
@@ -1006,6 +1736,15 @@ export type case_processesUpdateWithoutDependenciesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1014,7 +1753,10 @@ export type case_processesUpdateWithoutDependenciesInput = {
   case_services?: Prisma.case_servicesUpdateOneRequiredWithoutCase_processesNestedInput
   processes?: Prisma.processesUpdateOneRequiredWithoutCase_processesNestedInput
   assignedLabMember?: Prisma.lab_membersUpdateOneWithoutAssignedProcessesNestedInput
+  plannedMillingMachine?: Prisma.milling_machinesUpdateOneWithoutPlanned_case_processesNestedInput
+  historyEvents?: Prisma.case_process_history_eventsUpdateManyWithoutCaseProcessNestedInput
   dependentProcesses?: Prisma.case_process_dependenciesUpdateManyWithoutDependsOnCaseProcessNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUpdateManyWithoutCaseProcessNestedInput
 }
 
 export type case_processesUncheckedUpdateWithoutDependenciesInput = {
@@ -1025,11 +1767,23 @@ export type case_processesUncheckedUpdateWithoutDependenciesInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  historyEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCaseProcessNestedInput
   dependentProcesses?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutDependsOnCaseProcessNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedUpdateManyWithoutCaseProcessNestedInput
 }
 
 export type case_processesUpsertWithoutDependentProcessesInput = {
@@ -1047,6 +1801,15 @@ export type case_processesUpdateWithoutDependentProcessesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1055,7 +1818,10 @@ export type case_processesUpdateWithoutDependentProcessesInput = {
   case_services?: Prisma.case_servicesUpdateOneRequiredWithoutCase_processesNestedInput
   processes?: Prisma.processesUpdateOneRequiredWithoutCase_processesNestedInput
   assignedLabMember?: Prisma.lab_membersUpdateOneWithoutAssignedProcessesNestedInput
+  plannedMillingMachine?: Prisma.milling_machinesUpdateOneWithoutPlanned_case_processesNestedInput
+  historyEvents?: Prisma.case_process_history_eventsUpdateManyWithoutCaseProcessNestedInput
   dependencies?: Prisma.case_process_dependenciesUpdateManyWithoutCaseProcessNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUpdateManyWithoutCaseProcessNestedInput
 }
 
 export type case_processesUncheckedUpdateWithoutDependentProcessesInput = {
@@ -1066,11 +1832,147 @@ export type case_processesUncheckedUpdateWithoutDependentProcessesInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  historyEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCaseProcessNestedInput
   dependencies?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutCaseProcessNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedUpdateManyWithoutCaseProcessNestedInput
+}
+
+export type case_processesCreateWithoutScheduleAllocationsInput = {
+  id?: string
+  workflow_step_id: string
+  status?: $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  started_at?: Date | string | null
+  completed_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  cases: Prisma.casesCreateNestedOneWithoutCase_processesInput
+  case_services: Prisma.case_servicesCreateNestedOneWithoutCase_processesInput
+  processes: Prisma.processesCreateNestedOneWithoutCase_processesInput
+  assignedLabMember?: Prisma.lab_membersCreateNestedOneWithoutAssignedProcessesInput
+  plannedMillingMachine?: Prisma.milling_machinesCreateNestedOneWithoutPlanned_case_processesInput
+  historyEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutCaseProcessInput
+  dependencies?: Prisma.case_process_dependenciesCreateNestedManyWithoutCaseProcessInput
+  dependentProcesses?: Prisma.case_process_dependenciesCreateNestedManyWithoutDependsOnCaseProcessInput
+}
+
+export type case_processesUncheckedCreateWithoutScheduleAllocationsInput = {
+  id?: string
+  case_id: string
+  case_service_id: string
+  process_id: string
+  workflow_step_id: string
+  status?: $Enums.CaseProcessStatus
+  assigned_lab_member_id?: string | null
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: string | null
+  started_at?: Date | string | null
+  completed_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  historyEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCaseProcessInput
+  dependencies?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutCaseProcessInput
+  dependentProcesses?: Prisma.case_process_dependenciesUncheckedCreateNestedManyWithoutDependsOnCaseProcessInput
+}
+
+export type case_processesCreateOrConnectWithoutScheduleAllocationsInput = {
+  where: Prisma.case_processesWhereUniqueInput
+  create: Prisma.XOR<Prisma.case_processesCreateWithoutScheduleAllocationsInput, Prisma.case_processesUncheckedCreateWithoutScheduleAllocationsInput>
+}
+
+export type case_processesUpsertWithoutScheduleAllocationsInput = {
+  update: Prisma.XOR<Prisma.case_processesUpdateWithoutScheduleAllocationsInput, Prisma.case_processesUncheckedUpdateWithoutScheduleAllocationsInput>
+  create: Prisma.XOR<Prisma.case_processesCreateWithoutScheduleAllocationsInput, Prisma.case_processesUncheckedCreateWithoutScheduleAllocationsInput>
+  where?: Prisma.case_processesWhereInput
+}
+
+export type case_processesUpdateToOneWithWhereWithoutScheduleAllocationsInput = {
+  where?: Prisma.case_processesWhereInput
+  data: Prisma.XOR<Prisma.case_processesUpdateWithoutScheduleAllocationsInput, Prisma.case_processesUncheckedUpdateWithoutScheduleAllocationsInput>
+}
+
+export type case_processesUpdateWithoutScheduleAllocationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
+  started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cases?: Prisma.casesUpdateOneRequiredWithoutCase_processesNestedInput
+  case_services?: Prisma.case_servicesUpdateOneRequiredWithoutCase_processesNestedInput
+  processes?: Prisma.processesUpdateOneRequiredWithoutCase_processesNestedInput
+  assignedLabMember?: Prisma.lab_membersUpdateOneWithoutAssignedProcessesNestedInput
+  plannedMillingMachine?: Prisma.milling_machinesUpdateOneWithoutPlanned_case_processesNestedInput
+  historyEvents?: Prisma.case_process_history_eventsUpdateManyWithoutCaseProcessNestedInput
+  dependencies?: Prisma.case_process_dependenciesUpdateManyWithoutCaseProcessNestedInput
+  dependentProcesses?: Prisma.case_process_dependenciesUpdateManyWithoutDependsOnCaseProcessNestedInput
+}
+
+export type case_processesUncheckedUpdateWithoutScheduleAllocationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_service_id?: Prisma.StringFieldUpdateOperationsInput | string
+  process_id?: Prisma.StringFieldUpdateOperationsInput | string
+  workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  historyEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCaseProcessNestedInput
+  dependencies?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutCaseProcessNestedInput
+  dependentProcesses?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutDependsOnCaseProcessNestedInput
 }
 
 export type case_processesCreateManyAssignedLabMemberInput = {
@@ -1080,6 +1982,16 @@ export type case_processesCreateManyAssignedLabMemberInput = {
   process_id: string
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: string | null
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
@@ -1090,6 +2002,15 @@ export type case_processesUpdateWithoutAssignedLabMemberInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1097,8 +2018,11 @@ export type case_processesUpdateWithoutAssignedLabMemberInput = {
   cases?: Prisma.casesUpdateOneRequiredWithoutCase_processesNestedInput
   case_services?: Prisma.case_servicesUpdateOneRequiredWithoutCase_processesNestedInput
   processes?: Prisma.processesUpdateOneRequiredWithoutCase_processesNestedInput
+  plannedMillingMachine?: Prisma.milling_machinesUpdateOneWithoutPlanned_case_processesNestedInput
+  historyEvents?: Prisma.case_process_history_eventsUpdateManyWithoutCaseProcessNestedInput
   dependencies?: Prisma.case_process_dependenciesUpdateManyWithoutCaseProcessNestedInput
   dependentProcesses?: Prisma.case_process_dependenciesUpdateManyWithoutDependsOnCaseProcessNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUpdateManyWithoutCaseProcessNestedInput
 }
 
 export type case_processesUncheckedUpdateWithoutAssignedLabMemberInput = {
@@ -1108,12 +2032,24 @@ export type case_processesUncheckedUpdateWithoutAssignedLabMemberInput = {
   process_id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  historyEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCaseProcessNestedInput
   dependencies?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutCaseProcessNestedInput
   dependentProcesses?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutDependsOnCaseProcessNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedUpdateManyWithoutCaseProcessNestedInput
 }
 
 export type case_processesUncheckedUpdateManyWithoutAssignedLabMemberInput = {
@@ -1123,6 +2059,16 @@ export type case_processesUncheckedUpdateManyWithoutAssignedLabMemberInput = {
   process_id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1136,6 +2082,16 @@ export type case_processesCreateManyProcessesInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: string | null
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
@@ -1146,6 +2102,15 @@ export type case_processesUpdateWithoutProcessesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1153,8 +2118,11 @@ export type case_processesUpdateWithoutProcessesInput = {
   cases?: Prisma.casesUpdateOneRequiredWithoutCase_processesNestedInput
   case_services?: Prisma.case_servicesUpdateOneRequiredWithoutCase_processesNestedInput
   assignedLabMember?: Prisma.lab_membersUpdateOneWithoutAssignedProcessesNestedInput
+  plannedMillingMachine?: Prisma.milling_machinesUpdateOneWithoutPlanned_case_processesNestedInput
+  historyEvents?: Prisma.case_process_history_eventsUpdateManyWithoutCaseProcessNestedInput
   dependencies?: Prisma.case_process_dependenciesUpdateManyWithoutCaseProcessNestedInput
   dependentProcesses?: Prisma.case_process_dependenciesUpdateManyWithoutDependsOnCaseProcessNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUpdateManyWithoutCaseProcessNestedInput
 }
 
 export type case_processesUncheckedUpdateWithoutProcessesInput = {
@@ -1164,12 +2132,24 @@ export type case_processesUncheckedUpdateWithoutProcessesInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  historyEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCaseProcessNestedInput
   dependencies?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutCaseProcessNestedInput
   dependentProcesses?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutDependsOnCaseProcessNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedUpdateManyWithoutCaseProcessNestedInput
 }
 
 export type case_processesUncheckedUpdateManyWithoutProcessesInput = {
@@ -1179,6 +2159,116 @@ export type case_processesUncheckedUpdateManyWithoutProcessesInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type case_processesCreateManyPlannedMillingMachineInput = {
+  id?: string
+  case_id: string
+  case_service_id: string
+  process_id: string
+  workflow_step_id: string
+  status?: $Enums.CaseProcessStatus
+  assigned_lab_member_id?: string | null
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  started_at?: Date | string | null
+  completed_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+}
+
+export type case_processesUpdateWithoutPlannedMillingMachineInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
+  started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cases?: Prisma.casesUpdateOneRequiredWithoutCase_processesNestedInput
+  case_services?: Prisma.case_servicesUpdateOneRequiredWithoutCase_processesNestedInput
+  processes?: Prisma.processesUpdateOneRequiredWithoutCase_processesNestedInput
+  assignedLabMember?: Prisma.lab_membersUpdateOneWithoutAssignedProcessesNestedInput
+  historyEvents?: Prisma.case_process_history_eventsUpdateManyWithoutCaseProcessNestedInput
+  dependencies?: Prisma.case_process_dependenciesUpdateManyWithoutCaseProcessNestedInput
+  dependentProcesses?: Prisma.case_process_dependenciesUpdateManyWithoutDependsOnCaseProcessNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUpdateManyWithoutCaseProcessNestedInput
+}
+
+export type case_processesUncheckedUpdateWithoutPlannedMillingMachineInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_service_id?: Prisma.StringFieldUpdateOperationsInput | string
+  process_id?: Prisma.StringFieldUpdateOperationsInput | string
+  workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
+  started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  historyEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCaseProcessNestedInput
+  dependencies?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutCaseProcessNestedInput
+  dependentProcesses?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutDependsOnCaseProcessNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedUpdateManyWithoutCaseProcessNestedInput
+}
+
+export type case_processesUncheckedUpdateManyWithoutPlannedMillingMachineInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_id?: Prisma.StringFieldUpdateOperationsInput | string
+  case_service_id?: Prisma.StringFieldUpdateOperationsInput | string
+  process_id?: Prisma.StringFieldUpdateOperationsInput | string
+  workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1192,6 +2282,16 @@ export type case_processesCreateManyCasesInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: string | null
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
@@ -1202,6 +2302,15 @@ export type case_processesUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1209,8 +2318,11 @@ export type case_processesUpdateWithoutCasesInput = {
   case_services?: Prisma.case_servicesUpdateOneRequiredWithoutCase_processesNestedInput
   processes?: Prisma.processesUpdateOneRequiredWithoutCase_processesNestedInput
   assignedLabMember?: Prisma.lab_membersUpdateOneWithoutAssignedProcessesNestedInput
+  plannedMillingMachine?: Prisma.milling_machinesUpdateOneWithoutPlanned_case_processesNestedInput
+  historyEvents?: Prisma.case_process_history_eventsUpdateManyWithoutCaseProcessNestedInput
   dependencies?: Prisma.case_process_dependenciesUpdateManyWithoutCaseProcessNestedInput
   dependentProcesses?: Prisma.case_process_dependenciesUpdateManyWithoutDependsOnCaseProcessNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUpdateManyWithoutCaseProcessNestedInput
 }
 
 export type case_processesUncheckedUpdateWithoutCasesInput = {
@@ -1220,12 +2332,24 @@ export type case_processesUncheckedUpdateWithoutCasesInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  historyEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCaseProcessNestedInput
   dependencies?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutCaseProcessNestedInput
   dependentProcesses?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutDependsOnCaseProcessNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedUpdateManyWithoutCaseProcessNestedInput
 }
 
 export type case_processesUncheckedUpdateManyWithoutCasesInput = {
@@ -1235,6 +2359,16 @@ export type case_processesUncheckedUpdateManyWithoutCasesInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1248,6 +2382,16 @@ export type case_processesCreateManyCase_servicesInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
+  snapshot_fixed_minutes?: number
+  snapshot_minutes_per_unit?: number
+  snapshot_expected_duration_days?: number
+  snapshot_dependency_lag_days?: number
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: Date | string | null
+  planned_end_date?: Date | string | null
+  scheduling_locked?: boolean
+  scheduling_status?: $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: string | null
   started_at?: Date | string | null
   completed_at?: Date | string | null
   created_at?: Date | string
@@ -1258,6 +2402,15 @@ export type case_processesUpdateWithoutCase_servicesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1265,8 +2418,11 @@ export type case_processesUpdateWithoutCase_servicesInput = {
   cases?: Prisma.casesUpdateOneRequiredWithoutCase_processesNestedInput
   processes?: Prisma.processesUpdateOneRequiredWithoutCase_processesNestedInput
   assignedLabMember?: Prisma.lab_membersUpdateOneWithoutAssignedProcessesNestedInput
+  plannedMillingMachine?: Prisma.milling_machinesUpdateOneWithoutPlanned_case_processesNestedInput
+  historyEvents?: Prisma.case_process_history_eventsUpdateManyWithoutCaseProcessNestedInput
   dependencies?: Prisma.case_process_dependenciesUpdateManyWithoutCaseProcessNestedInput
   dependentProcesses?: Prisma.case_process_dependenciesUpdateManyWithoutDependsOnCaseProcessNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUpdateManyWithoutCaseProcessNestedInput
 }
 
 export type case_processesUncheckedUpdateWithoutCase_servicesInput = {
@@ -1276,12 +2432,24 @@ export type case_processesUncheckedUpdateWithoutCase_servicesInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  historyEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCaseProcessNestedInput
   dependencies?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutCaseProcessNestedInput
   dependentProcesses?: Prisma.case_process_dependenciesUncheckedUpdateManyWithoutDependsOnCaseProcessNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedUpdateManyWithoutCaseProcessNestedInput
 }
 
 export type case_processesUncheckedUpdateManyWithoutCase_servicesInput = {
@@ -1291,6 +2459,16 @@ export type case_processesUncheckedUpdateManyWithoutCase_servicesInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
+  snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scheduling_locked?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  scheduling_status?: Prisma.EnumCaseProcessSchedulingStatusFieldUpdateOperationsInput | $Enums.CaseProcessSchedulingStatus
+  planned_milling_machine_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   started_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   completed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1303,13 +2481,17 @@ export type case_processesUncheckedUpdateManyWithoutCase_servicesInput = {
  */
 
 export type Case_processesCountOutputType = {
+  historyEvents: number
   dependencies: number
   dependentProcesses: number
+  scheduleAllocations: number
 }
 
 export type Case_processesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  historyEvents?: boolean | Case_processesCountOutputTypeCountHistoryEventsArgs
   dependencies?: boolean | Case_processesCountOutputTypeCountDependenciesArgs
   dependentProcesses?: boolean | Case_processesCountOutputTypeCountDependentProcessesArgs
+  scheduleAllocations?: boolean | Case_processesCountOutputTypeCountScheduleAllocationsArgs
 }
 
 /**
@@ -1320,6 +2502,13 @@ export type Case_processesCountOutputTypeDefaultArgs<ExtArgs extends runtime.Typ
    * Select specific fields to fetch from the Case_processesCountOutputType
    */
   select?: Prisma.Case_processesCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * Case_processesCountOutputType without action
+ */
+export type Case_processesCountOutputTypeCountHistoryEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.case_process_history_eventsWhereInput
 }
 
 /**
@@ -1336,6 +2525,13 @@ export type Case_processesCountOutputTypeCountDependentProcessesArgs<ExtArgs ext
   where?: Prisma.case_process_dependenciesWhereInput
 }
 
+/**
+ * Case_processesCountOutputType without action
+ */
+export type Case_processesCountOutputTypeCountScheduleAllocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.case_process_schedule_allocationsWhereInput
+}
+
 
 export type case_processesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1345,6 +2541,16 @@ export type case_processesSelect<ExtArgs extends runtime.Types.Extensions.Intern
   workflow_step_id?: boolean
   status?: boolean
   assigned_lab_member_id?: boolean
+  snapshot_fixed_minutes?: boolean
+  snapshot_minutes_per_unit?: boolean
+  snapshot_expected_duration_days?: boolean
+  snapshot_dependency_lag_days?: boolean
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: boolean
+  planned_end_date?: boolean
+  scheduling_locked?: boolean
+  scheduling_status?: boolean
+  planned_milling_machine_id?: boolean
   started_at?: boolean
   completed_at?: boolean
   created_at?: boolean
@@ -1353,8 +2559,11 @@ export type case_processesSelect<ExtArgs extends runtime.Types.Extensions.Intern
   case_services?: boolean | Prisma.case_servicesDefaultArgs<ExtArgs>
   processes?: boolean | Prisma.processesDefaultArgs<ExtArgs>
   assignedLabMember?: boolean | Prisma.case_processes$assignedLabMemberArgs<ExtArgs>
+  plannedMillingMachine?: boolean | Prisma.case_processes$plannedMillingMachineArgs<ExtArgs>
+  historyEvents?: boolean | Prisma.case_processes$historyEventsArgs<ExtArgs>
   dependencies?: boolean | Prisma.case_processes$dependenciesArgs<ExtArgs>
   dependentProcesses?: boolean | Prisma.case_processes$dependentProcessesArgs<ExtArgs>
+  scheduleAllocations?: boolean | Prisma.case_processes$scheduleAllocationsArgs<ExtArgs>
   _count?: boolean | Prisma.Case_processesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["case_processes"]>
 
@@ -1366,6 +2575,16 @@ export type case_processesSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   workflow_step_id?: boolean
   status?: boolean
   assigned_lab_member_id?: boolean
+  snapshot_fixed_minutes?: boolean
+  snapshot_minutes_per_unit?: boolean
+  snapshot_expected_duration_days?: boolean
+  snapshot_dependency_lag_days?: boolean
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: boolean
+  planned_end_date?: boolean
+  scheduling_locked?: boolean
+  scheduling_status?: boolean
+  planned_milling_machine_id?: boolean
   started_at?: boolean
   completed_at?: boolean
   created_at?: boolean
@@ -1374,6 +2593,7 @@ export type case_processesSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   case_services?: boolean | Prisma.case_servicesDefaultArgs<ExtArgs>
   processes?: boolean | Prisma.processesDefaultArgs<ExtArgs>
   assignedLabMember?: boolean | Prisma.case_processes$assignedLabMemberArgs<ExtArgs>
+  plannedMillingMachine?: boolean | Prisma.case_processes$plannedMillingMachineArgs<ExtArgs>
 }, ExtArgs["result"]["case_processes"]>
 
 export type case_processesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1384,6 +2604,16 @@ export type case_processesSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   workflow_step_id?: boolean
   status?: boolean
   assigned_lab_member_id?: boolean
+  snapshot_fixed_minutes?: boolean
+  snapshot_minutes_per_unit?: boolean
+  snapshot_expected_duration_days?: boolean
+  snapshot_dependency_lag_days?: boolean
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: boolean
+  planned_end_date?: boolean
+  scheduling_locked?: boolean
+  scheduling_status?: boolean
+  planned_milling_machine_id?: boolean
   started_at?: boolean
   completed_at?: boolean
   created_at?: boolean
@@ -1392,6 +2622,7 @@ export type case_processesSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   case_services?: boolean | Prisma.case_servicesDefaultArgs<ExtArgs>
   processes?: boolean | Prisma.processesDefaultArgs<ExtArgs>
   assignedLabMember?: boolean | Prisma.case_processes$assignedLabMemberArgs<ExtArgs>
+  plannedMillingMachine?: boolean | Prisma.case_processes$plannedMillingMachineArgs<ExtArgs>
 }, ExtArgs["result"]["case_processes"]>
 
 export type case_processesSelectScalar = {
@@ -1402,20 +2633,33 @@ export type case_processesSelectScalar = {
   workflow_step_id?: boolean
   status?: boolean
   assigned_lab_member_id?: boolean
+  snapshot_fixed_minutes?: boolean
+  snapshot_minutes_per_unit?: boolean
+  snapshot_expected_duration_days?: boolean
+  snapshot_dependency_lag_days?: boolean
+  snapshot_requires_milling_machine?: boolean
+  planned_start_date?: boolean
+  planned_end_date?: boolean
+  scheduling_locked?: boolean
+  scheduling_status?: boolean
+  planned_milling_machine_id?: boolean
   started_at?: boolean
   completed_at?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type case_processesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "case_id" | "case_service_id" | "process_id" | "workflow_step_id" | "status" | "assigned_lab_member_id" | "started_at" | "completed_at" | "created_at" | "updated_at", ExtArgs["result"]["case_processes"]>
+export type case_processesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "case_id" | "case_service_id" | "process_id" | "workflow_step_id" | "status" | "assigned_lab_member_id" | "snapshot_fixed_minutes" | "snapshot_minutes_per_unit" | "snapshot_expected_duration_days" | "snapshot_dependency_lag_days" | "snapshot_requires_milling_machine" | "planned_start_date" | "planned_end_date" | "scheduling_locked" | "scheduling_status" | "planned_milling_machine_id" | "started_at" | "completed_at" | "created_at" | "updated_at", ExtArgs["result"]["case_processes"]>
 export type case_processesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
   case_services?: boolean | Prisma.case_servicesDefaultArgs<ExtArgs>
   processes?: boolean | Prisma.processesDefaultArgs<ExtArgs>
   assignedLabMember?: boolean | Prisma.case_processes$assignedLabMemberArgs<ExtArgs>
+  plannedMillingMachine?: boolean | Prisma.case_processes$plannedMillingMachineArgs<ExtArgs>
+  historyEvents?: boolean | Prisma.case_processes$historyEventsArgs<ExtArgs>
   dependencies?: boolean | Prisma.case_processes$dependenciesArgs<ExtArgs>
   dependentProcesses?: boolean | Prisma.case_processes$dependentProcessesArgs<ExtArgs>
+  scheduleAllocations?: boolean | Prisma.case_processes$scheduleAllocationsArgs<ExtArgs>
   _count?: boolean | Prisma.Case_processesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type case_processesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1423,12 +2667,14 @@ export type case_processesIncludeCreateManyAndReturn<ExtArgs extends runtime.Typ
   case_services?: boolean | Prisma.case_servicesDefaultArgs<ExtArgs>
   processes?: boolean | Prisma.processesDefaultArgs<ExtArgs>
   assignedLabMember?: boolean | Prisma.case_processes$assignedLabMemberArgs<ExtArgs>
+  plannedMillingMachine?: boolean | Prisma.case_processes$plannedMillingMachineArgs<ExtArgs>
 }
 export type case_processesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
   case_services?: boolean | Prisma.case_servicesDefaultArgs<ExtArgs>
   processes?: boolean | Prisma.processesDefaultArgs<ExtArgs>
   assignedLabMember?: boolean | Prisma.case_processes$assignedLabMemberArgs<ExtArgs>
+  plannedMillingMachine?: boolean | Prisma.case_processes$plannedMillingMachineArgs<ExtArgs>
 }
 
 export type $case_processesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1438,8 +2684,11 @@ export type $case_processesPayload<ExtArgs extends runtime.Types.Extensions.Inte
     case_services: Prisma.$case_servicesPayload<ExtArgs>
     processes: Prisma.$processesPayload<ExtArgs>
     assignedLabMember: Prisma.$lab_membersPayload<ExtArgs> | null
+    plannedMillingMachine: Prisma.$milling_machinesPayload<ExtArgs> | null
+    historyEvents: Prisma.$case_process_history_eventsPayload<ExtArgs>[]
     dependencies: Prisma.$case_process_dependenciesPayload<ExtArgs>[]
     dependentProcesses: Prisma.$case_process_dependenciesPayload<ExtArgs>[]
+    scheduleAllocations: Prisma.$case_process_schedule_allocationsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1449,6 +2698,16 @@ export type $case_processesPayload<ExtArgs extends runtime.Types.Extensions.Inte
     workflow_step_id: string
     status: $Enums.CaseProcessStatus
     assigned_lab_member_id: string | null
+    snapshot_fixed_minutes: number
+    snapshot_minutes_per_unit: number
+    snapshot_expected_duration_days: number
+    snapshot_dependency_lag_days: number
+    snapshot_requires_milling_machine: boolean
+    planned_start_date: Date | null
+    planned_end_date: Date | null
+    scheduling_locked: boolean
+    scheduling_status: $Enums.CaseProcessSchedulingStatus
+    planned_milling_machine_id: string | null
     started_at: Date | null
     completed_at: Date | null
     created_at: Date
@@ -1851,8 +3110,11 @@ export interface Prisma__case_processesClient<T, Null = never, ExtArgs extends r
   case_services<T extends Prisma.case_servicesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.case_servicesDefaultArgs<ExtArgs>>): Prisma.Prisma__case_servicesClient<runtime.Types.Result.GetResult<Prisma.$case_servicesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   processes<T extends Prisma.processesDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.processesDefaultArgs<ExtArgs>>): Prisma.Prisma__processesClient<runtime.Types.Result.GetResult<Prisma.$processesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   assignedLabMember<T extends Prisma.case_processes$assignedLabMemberArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.case_processes$assignedLabMemberArgs<ExtArgs>>): Prisma.Prisma__lab_membersClient<runtime.Types.Result.GetResult<Prisma.$lab_membersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  plannedMillingMachine<T extends Prisma.case_processes$plannedMillingMachineArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.case_processes$plannedMillingMachineArgs<ExtArgs>>): Prisma.Prisma__milling_machinesClient<runtime.Types.Result.GetResult<Prisma.$milling_machinesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  historyEvents<T extends Prisma.case_processes$historyEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.case_processes$historyEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_process_history_eventsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   dependencies<T extends Prisma.case_processes$dependenciesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.case_processes$dependenciesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_process_dependenciesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   dependentProcesses<T extends Prisma.case_processes$dependentProcessesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.case_processes$dependentProcessesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_process_dependenciesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  scheduleAllocations<T extends Prisma.case_processes$scheduleAllocationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.case_processes$scheduleAllocationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_process_schedule_allocationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1889,6 +3151,16 @@ export interface case_processesFieldRefs {
   readonly workflow_step_id: Prisma.FieldRef<"case_processes", 'String'>
   readonly status: Prisma.FieldRef<"case_processes", 'CaseProcessStatus'>
   readonly assigned_lab_member_id: Prisma.FieldRef<"case_processes", 'String'>
+  readonly snapshot_fixed_minutes: Prisma.FieldRef<"case_processes", 'Int'>
+  readonly snapshot_minutes_per_unit: Prisma.FieldRef<"case_processes", 'Int'>
+  readonly snapshot_expected_duration_days: Prisma.FieldRef<"case_processes", 'Int'>
+  readonly snapshot_dependency_lag_days: Prisma.FieldRef<"case_processes", 'Int'>
+  readonly snapshot_requires_milling_machine: Prisma.FieldRef<"case_processes", 'Boolean'>
+  readonly planned_start_date: Prisma.FieldRef<"case_processes", 'DateTime'>
+  readonly planned_end_date: Prisma.FieldRef<"case_processes", 'DateTime'>
+  readonly scheduling_locked: Prisma.FieldRef<"case_processes", 'Boolean'>
+  readonly scheduling_status: Prisma.FieldRef<"case_processes", 'CaseProcessSchedulingStatus'>
+  readonly planned_milling_machine_id: Prisma.FieldRef<"case_processes", 'String'>
   readonly started_at: Prisma.FieldRef<"case_processes", 'DateTime'>
   readonly completed_at: Prisma.FieldRef<"case_processes", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"case_processes", 'DateTime'>
@@ -2313,6 +3585,49 @@ export type case_processes$assignedLabMemberArgs<ExtArgs extends runtime.Types.E
 }
 
 /**
+ * case_processes.plannedMillingMachine
+ */
+export type case_processes$plannedMillingMachineArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the milling_machines
+   */
+  select?: Prisma.milling_machinesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the milling_machines
+   */
+  omit?: Prisma.milling_machinesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.milling_machinesInclude<ExtArgs> | null
+  where?: Prisma.milling_machinesWhereInput
+}
+
+/**
+ * case_processes.historyEvents
+ */
+export type case_processes$historyEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the case_process_history_events
+   */
+  select?: Prisma.case_process_history_eventsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the case_process_history_events
+   */
+  omit?: Prisma.case_process_history_eventsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.case_process_history_eventsInclude<ExtArgs> | null
+  where?: Prisma.case_process_history_eventsWhereInput
+  orderBy?: Prisma.case_process_history_eventsOrderByWithRelationInput | Prisma.case_process_history_eventsOrderByWithRelationInput[]
+  cursor?: Prisma.case_process_history_eventsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Case_process_history_eventsScalarFieldEnum | Prisma.Case_process_history_eventsScalarFieldEnum[]
+}
+
+/**
  * case_processes.dependencies
  */
 export type case_processes$dependenciesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2358,6 +3673,30 @@ export type case_processes$dependentProcessesArgs<ExtArgs extends runtime.Types.
   take?: number
   skip?: number
   distinct?: Prisma.Case_process_dependenciesScalarFieldEnum | Prisma.Case_process_dependenciesScalarFieldEnum[]
+}
+
+/**
+ * case_processes.scheduleAllocations
+ */
+export type case_processes$scheduleAllocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the case_process_schedule_allocations
+   */
+  select?: Prisma.case_process_schedule_allocationsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the case_process_schedule_allocations
+   */
+  omit?: Prisma.case_process_schedule_allocationsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.case_process_schedule_allocationsInclude<ExtArgs> | null
+  where?: Prisma.case_process_schedule_allocationsWhereInput
+  orderBy?: Prisma.case_process_schedule_allocationsOrderByWithRelationInput | Prisma.case_process_schedule_allocationsOrderByWithRelationInput[]
+  cursor?: Prisma.case_process_schedule_allocationsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Case_process_schedule_allocationsScalarFieldEnum | Prisma.Case_process_schedule_allocationsScalarFieldEnum[]
 }
 
 /**

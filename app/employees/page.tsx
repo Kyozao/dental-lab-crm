@@ -10,7 +10,7 @@ export default async function EmployeesPage() {
     <PageShell width="default">
       <PageHeader
         title="Employees"
-        description="Browse your lab directory and open employee details."
+        description="Review your lab roster, pending invites, and employee details."
       />
       <EmployeesPageClient />
     </PageShell>

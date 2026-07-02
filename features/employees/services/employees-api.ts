@@ -1,10 +1,12 @@
 import type {
   CreateEmployeePayload,
   EmployeeDetailResult,
+  EmployeeDashboard,
   Employee,
   EmployeeListResult,
   EmployeeProcess,
   EmployeeRole,
+  EmployeeScheduleProfile,
 } from "@/features/employees/types";
 import type { UserRole } from "@/generated/prisma/enums";
 
@@ -85,14 +87,20 @@ export async function getEmployeeApi(employeeId: string) {
       currentUserRole?: UserRole;
       canAssignProcesses?: boolean;
       canEditRole?: boolean;
+      canManageCapacity?: boolean;
+      scheduleProfile?: EmployeeScheduleProfile | null;
+      employeeDashboard?: EmployeeDashboard | null;
     };
   };
 
   return {
     employee: body.data,
+    scheduleProfile: body.meta.scheduleProfile ?? null,
+    dashboard: body.meta.employeeDashboard ?? null,
     currentUserRole: body.meta.currentUserRole ?? null,
     canAssignProcesses: Boolean(body.meta.canAssignProcesses),
     canEditRole: Boolean(body.meta.canEditRole),
+    canManageCapacity: Boolean(body.meta.canManageCapacity),
   } satisfies EmployeeDetailResult;
 }
 
@@ -150,4 +158,55 @@ export async function listEmployeeProcessesApi() {
 
   const body = (await response.json()) as ApiSuccess<EmployeeProcess[]>;
   return body.data;
+}
+
+export async function updateEmployeeProductivityApi(
+  employeeId: string,
+  assignments: Array<{
+    process_id: string;
+    productivity_points_per_hour: string;
+  }>,
+) {
+  const response = await fetch(`/api/employees/${employeeId}/productivity`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ assignments }),
+  });
+
+  if (!response.ok) {
+    throw new Error(await parseApiError(response));
+  }
+}
+
+export async function updateEmployeeAvailabilityApi(
+  employeeId: string,
+  payload: {
+    weekday_capacities: Array<{
+      id?: string;
+      day_of_week: number;
+      available_minutes: number;
+    }>;
+    exceptions: Array<{
+      id?: string;
+      exception_date: string;
+      available_minutes: number;
+      reason?: string | null;
+    }>;
+  },
+) {
+  const response = await fetch(`/api/employees/${employeeId}/availability`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    throw new Error(await parseApiError(response));
+  }
 }

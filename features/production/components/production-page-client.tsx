@@ -263,6 +263,11 @@ function buildProductionServiceTypeOptions(
             )?.workflow_step_id,
           )
           .filter((stepId): stepId is string => Boolean(stepId)),
+        fixed_minutes: process.fixed_minutes,
+        minutes_per_unit: process.minutes_per_unit,
+        expected_duration_days: process.expected_duration_days,
+        dependency_lag_days: process.dependency_lag_days,
+        requires_milling_machine: process.requires_milling_machine,
       })),
     },
   }));

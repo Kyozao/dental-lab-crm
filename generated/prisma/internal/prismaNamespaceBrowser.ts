@@ -75,8 +75,15 @@ export const ModelName = {
   case_comments: 'case_comments',
   case_thread_reads: 'case_thread_reads',
   case_processes: 'case_processes',
+  case_process_history_events: 'case_process_history_events',
   case_services: 'case_services',
   case_process_dependencies: 'case_process_dependencies',
+  case_process_schedule_allocations: 'case_process_schedule_allocations',
+  employee_schedule_shifts: 'employee_schedule_shifts',
+  employee_schedule_exceptions: 'employee_schedule_exceptions',
+  milling_machine_schedule_shifts: 'milling_machine_schedule_shifts',
+  milling_machine_schedule_exceptions: 'milling_machine_schedule_exceptions',
+  schedule_proposals: 'schedule_proposals',
   case_status_histories: 'case_status_histories',
   notifications: 'notifications',
   push_subscriptions: 'push_subscriptions'
@@ -115,7 +122,9 @@ export const LabsScalarFieldEnum = {
   id: 'id',
   name: 'name',
   currency: 'currency',
+  timezone: 'timezone',
   is_active: 'is_active',
+  schedule_revision: 'schedule_revision',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -157,6 +166,7 @@ export const Service_typesScalarFieldEnum = {
   lab_id: 'lab_id',
   name: 'name',
   base_price: 'base_price',
+  delivery_buffer_days: 'delivery_buffer_days',
   is_active: 'is_active',
   deleted_at: 'deleted_at',
   notes: 'notes',
@@ -212,6 +222,7 @@ export const Employee_process_assignmentsScalarFieldEnum = {
   lab_id: 'lab_id',
   lab_member_id: 'lab_member_id',
   process_id: 'process_id',
+  productivity_points_per_hour: 'productivity_points_per_hour',
   created_at: 'created_at'
 } as const
 
@@ -243,6 +254,7 @@ export const Milling_machinesScalarFieldEnum = {
   serial_number: 'serial_number',
   model: 'model',
   status: 'status',
+  productivity_points_per_hour: 'productivity_points_per_hour',
   status_reason: 'status_reason',
   installed_at: 'installed_at',
   removed_at: 'removed_at',
@@ -420,6 +432,7 @@ export const CasesScalarFieldEnum = {
   service_base_price_snapshot: 'service_base_price_snapshot',
   case_price: 'case_price',
   is_price_overridden: 'is_price_overridden',
+  priority: 'priority',
   teeth: 'teeth',
   elements_qty: 'elements_qty',
   shade: 'shade',
@@ -469,6 +482,16 @@ export const Case_processesScalarFieldEnum = {
   workflow_step_id: 'workflow_step_id',
   status: 'status',
   assigned_lab_member_id: 'assigned_lab_member_id',
+  snapshot_fixed_minutes: 'snapshot_fixed_minutes',
+  snapshot_minutes_per_unit: 'snapshot_minutes_per_unit',
+  snapshot_expected_duration_days: 'snapshot_expected_duration_days',
+  snapshot_dependency_lag_days: 'snapshot_dependency_lag_days',
+  snapshot_requires_milling_machine: 'snapshot_requires_milling_machine',
+  planned_start_date: 'planned_start_date',
+  planned_end_date: 'planned_end_date',
+  scheduling_locked: 'scheduling_locked',
+  scheduling_status: 'scheduling_status',
+  planned_milling_machine_id: 'planned_milling_machine_id',
   started_at: 'started_at',
   completed_at: 'completed_at',
   created_at: 'created_at',
@@ -478,12 +501,25 @@ export const Case_processesScalarFieldEnum = {
 export type Case_processesScalarFieldEnum = (typeof Case_processesScalarFieldEnum)[keyof typeof Case_processesScalarFieldEnum]
 
 
+export const Case_process_history_eventsScalarFieldEnum = {
+  id: 'id',
+  case_id: 'case_id',
+  case_process_id: 'case_process_id',
+  actor_user_id: 'actor_user_id',
+  event_type: 'event_type',
+  created_at: 'created_at'
+} as const
+
+export type Case_process_history_eventsScalarFieldEnum = (typeof Case_process_history_eventsScalarFieldEnum)[keyof typeof Case_process_history_eventsScalarFieldEnum]
+
+
 export const Case_servicesScalarFieldEnum = {
   id: 'id',
   case_id: 'case_id',
   service_type_id: 'service_type_id',
   service_name_snapshot: 'service_name_snapshot',
   service_base_price_snapshot: 'service_base_price_snapshot',
+  delivery_buffer_days_snapshot: 'delivery_buffer_days_snapshot',
   unit_price: 'unit_price',
   is_unit_price_overridden: 'is_unit_price_overridden',
   quantity: 'quantity',
@@ -501,6 +537,92 @@ export const Case_process_dependenciesScalarFieldEnum = {
 } as const
 
 export type Case_process_dependenciesScalarFieldEnum = (typeof Case_process_dependenciesScalarFieldEnum)[keyof typeof Case_process_dependenciesScalarFieldEnum]
+
+
+export const Case_process_schedule_allocationsScalarFieldEnum = {
+  id: 'id',
+  case_process_id: 'case_process_id',
+  lab_member_id: 'lab_member_id',
+  allocation_date: 'allocation_date',
+  planned_minutes: 'planned_minutes',
+  milling_machine_id: 'milling_machine_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Case_process_schedule_allocationsScalarFieldEnum = (typeof Case_process_schedule_allocationsScalarFieldEnum)[keyof typeof Case_process_schedule_allocationsScalarFieldEnum]
+
+
+export const Employee_schedule_shiftsScalarFieldEnum = {
+  id: 'id',
+  lab_member_id: 'lab_member_id',
+  day_of_week: 'day_of_week',
+  available_minutes: 'available_minutes',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Employee_schedule_shiftsScalarFieldEnum = (typeof Employee_schedule_shiftsScalarFieldEnum)[keyof typeof Employee_schedule_shiftsScalarFieldEnum]
+
+
+export const Employee_schedule_exceptionsScalarFieldEnum = {
+  id: 'id',
+  lab_member_id: 'lab_member_id',
+  exception_date: 'exception_date',
+  available_minutes: 'available_minutes',
+  reason: 'reason',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Employee_schedule_exceptionsScalarFieldEnum = (typeof Employee_schedule_exceptionsScalarFieldEnum)[keyof typeof Employee_schedule_exceptionsScalarFieldEnum]
+
+
+export const Milling_machine_schedule_shiftsScalarFieldEnum = {
+  id: 'id',
+  milling_machine_id: 'milling_machine_id',
+  day_of_week: 'day_of_week',
+  start_minute: 'start_minute',
+  end_minute: 'end_minute',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Milling_machine_schedule_shiftsScalarFieldEnum = (typeof Milling_machine_schedule_shiftsScalarFieldEnum)[keyof typeof Milling_machine_schedule_shiftsScalarFieldEnum]
+
+
+export const Milling_machine_schedule_exceptionsScalarFieldEnum = {
+  id: 'id',
+  milling_machine_id: 'milling_machine_id',
+  exception_date: 'exception_date',
+  start_minute: 'start_minute',
+  end_minute: 'end_minute',
+  is_available: 'is_available',
+  reason: 'reason',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Milling_machine_schedule_exceptionsScalarFieldEnum = (typeof Milling_machine_schedule_exceptionsScalarFieldEnum)[keyof typeof Milling_machine_schedule_exceptionsScalarFieldEnum]
+
+
+export const Schedule_proposalsScalarFieldEnum = {
+  id: 'id',
+  lab_id: 'lab_id',
+  status: 'status',
+  source_revision: 'source_revision',
+  summary_json: 'summary_json',
+  changes_json: 'changes_json',
+  created_by_user_id: 'created_by_user_id',
+  approved_by_user_id: 'approved_by_user_id',
+  rejected_by_user_id: 'rejected_by_user_id',
+  decided_at: 'decided_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type Schedule_proposalsScalarFieldEnum = (typeof Schedule_proposalsScalarFieldEnum)[keyof typeof Schedule_proposalsScalarFieldEnum]
 
 
 export const Case_status_historiesScalarFieldEnum = {

@@ -153,6 +153,7 @@ const allMockCases: EditableCase[] = [
     elementsQty: 3,
     shade: "A2",
     dueDate: new Date(Date.now() + 2 * 86400000).toISOString(),
+    priority: "urgent",
     observations: "Anterior bridge, check emergence profile.",
     isUrgent: true,
     createdAt: new Date(Date.now() - 4 * 86400000).toISOString(),
@@ -185,6 +186,7 @@ const allMockCases: EditableCase[] = [
     millings: [],
     comments: [],
     statusHistory: [],
+    processHistory: [],
   },
   {
     id: "case-2",
@@ -198,6 +200,7 @@ const allMockCases: EditableCase[] = [
     elementsQty: 1,
     shade: "A3",
     dueDate: new Date(Date.now() + 1 * 86400000).toISOString(),
+    priority: "high",
     observations: "Single crown.",
     isUrgent: false,
     createdAt: new Date(Date.now() - 3 * 86400000).toISOString(),
@@ -219,6 +222,7 @@ const allMockCases: EditableCase[] = [
     millings: [],
     comments: [],
     statusHistory: [],
+    processHistory: [],
   },
   {
     id: "case-3",
@@ -232,6 +236,7 @@ const allMockCases: EditableCase[] = [
     elementsQty: 2,
     shade: "B1",
     dueDate: new Date(Date.now() - 2 * 86400000).toISOString(),
+    priority: "normal",
     observations: "Delivered.",
     isUrgent: false,
     createdAt: new Date(Date.now() - 10 * 86400000).toISOString(),
@@ -266,6 +271,7 @@ const allMockCases: EditableCase[] = [
     ],
     comments: [],
     statusHistory: [],
+    processHistory: [],
   },
   {
     id: "case-4",
@@ -279,6 +285,7 @@ const allMockCases: EditableCase[] = [
     elementsQty: 1,
     shade: "A1",
     dueDate: new Date(Date.now() + 3 * 86400000).toISOString(),
+    priority: "normal",
     observations: "Rio lab scoped case with code reused safely.",
     isUrgent: false,
     createdAt: new Date(Date.now() - 2 * 86400000).toISOString(),
@@ -300,6 +307,7 @@ const allMockCases: EditableCase[] = [
     millings: [],
     comments: [],
     statusHistory: [],
+    processHistory: [],
   },
 ];
 

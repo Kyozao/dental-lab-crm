@@ -12,6 +12,7 @@ import {
 } from "../_shared/reference-resource";
 import {
   emptyWorkflow,
+  normalizeWorkflow,
   type ServiceTypeInput,
   type ServiceTypeWorkflow,
 } from "./service-types.schemas";
@@ -28,6 +29,7 @@ function mapServiceType<
   return {
     ...mapReferenceDates(serviceType),
     base_price: serviceType.base_price.toString(),
+    workflow_json: normalizeWorkflow((serviceType as { workflow_json?: unknown }).workflow_json),
     currency: serviceType.labs?.currency ?? "BRL",
   };
 }
@@ -136,6 +138,7 @@ export async function createServiceTypeForLoggedLab(
       lab_id,
       name: payload.name!,
       base_price: payload.base_price!,
+      delivery_buffer_days: payload.delivery_buffer_days ?? 0,
       notes: optionalString(payload.notes),
       workflow_json,
       ...activeStateData(payload),
@@ -176,6 +179,7 @@ export async function updateServiceTypeForLoggedLab(
     data: {
       name: optionalString(payload.name) ?? undefined,
       base_price: payload.base_price ?? undefined,
+      delivery_buffer_days: payload.delivery_buffer_days ?? undefined,
       notes: optionalString(payload.notes),
       workflow_json: payload.workflow_json,
       ...activeStateData(payload),

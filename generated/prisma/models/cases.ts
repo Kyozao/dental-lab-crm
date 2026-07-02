@@ -51,6 +51,7 @@ export type CasesMinAggregateOutputType = {
   service_base_price_snapshot: runtime.Decimal | null
   case_price: runtime.Decimal | null
   is_price_overridden: boolean | null
+  priority: $Enums.CasePriority | null
   teeth: string | null
   elements_qty: number | null
   shade: string | null
@@ -74,6 +75,7 @@ export type CasesMaxAggregateOutputType = {
   service_base_price_snapshot: runtime.Decimal | null
   case_price: runtime.Decimal | null
   is_price_overridden: boolean | null
+  priority: $Enums.CasePriority | null
   teeth: string | null
   elements_qty: number | null
   shade: string | null
@@ -97,6 +99,7 @@ export type CasesCountAggregateOutputType = {
   service_base_price_snapshot: number
   case_price: number
   is_price_overridden: number
+  priority: number
   teeth: number
   elements_qty: number
   shade: number
@@ -134,6 +137,7 @@ export type CasesMinAggregateInputType = {
   service_base_price_snapshot?: true
   case_price?: true
   is_price_overridden?: true
+  priority?: true
   teeth?: true
   elements_qty?: true
   shade?: true
@@ -157,6 +161,7 @@ export type CasesMaxAggregateInputType = {
   service_base_price_snapshot?: true
   case_price?: true
   is_price_overridden?: true
+  priority?: true
   teeth?: true
   elements_qty?: true
   shade?: true
@@ -180,6 +185,7 @@ export type CasesCountAggregateInputType = {
   service_base_price_snapshot?: true
   case_price?: true
   is_price_overridden?: true
+  priority?: true
   teeth?: true
   elements_qty?: true
   shade?: true
@@ -290,6 +296,7 @@ export type CasesGroupByOutputType = {
   service_base_price_snapshot: runtime.Decimal | null
   case_price: runtime.Decimal | null
   is_price_overridden: boolean
+  priority: $Enums.CasePriority
   teeth: string | null
   elements_qty: number | null
   shade: string | null
@@ -336,6 +343,7 @@ export type casesWhereInput = {
   service_base_price_snapshot?: Prisma.DecimalNullableFilter<"cases"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.DecimalNullableFilter<"cases"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFilter<"cases"> | boolean
+  priority?: Prisma.EnumCasePriorityFilter<"cases"> | $Enums.CasePriority
   teeth?: Prisma.StringNullableFilter<"cases"> | string | null
   elements_qty?: Prisma.IntNullableFilter<"cases"> | number | null
   shade?: Prisma.StringNullableFilter<"cases"> | string | null
@@ -348,6 +356,7 @@ export type casesWhereInput = {
   statusHistory?: Prisma.Case_status_historiesListRelationFilter
   millings?: Prisma.Case_millingsListRelationFilter
   case_processes?: Prisma.Case_processesListRelationFilter
+  processHistory?: Prisma.Case_process_history_eventsListRelationFilter
   case_services?: Prisma.Case_servicesListRelationFilter
   case_comments?: Prisma.Case_commentsListRelationFilter
   case_thread_reads?: Prisma.Case_thread_readsListRelationFilter
@@ -373,6 +382,7 @@ export type casesOrderByWithRelationInput = {
   service_base_price_snapshot?: Prisma.SortOrderInput | Prisma.SortOrder
   case_price?: Prisma.SortOrderInput | Prisma.SortOrder
   is_price_overridden?: Prisma.SortOrder
+  priority?: Prisma.SortOrder
   teeth?: Prisma.SortOrderInput | Prisma.SortOrder
   elements_qty?: Prisma.SortOrderInput | Prisma.SortOrder
   shade?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -385,6 +395,7 @@ export type casesOrderByWithRelationInput = {
   statusHistory?: Prisma.case_status_historiesOrderByRelationAggregateInput
   millings?: Prisma.case_millingsOrderByRelationAggregateInput
   case_processes?: Prisma.case_processesOrderByRelationAggregateInput
+  processHistory?: Prisma.case_process_history_eventsOrderByRelationAggregateInput
   case_services?: Prisma.case_servicesOrderByRelationAggregateInput
   case_comments?: Prisma.case_commentsOrderByRelationAggregateInput
   case_thread_reads?: Prisma.case_thread_readsOrderByRelationAggregateInput
@@ -414,6 +425,7 @@ export type casesWhereUniqueInput = Prisma.AtLeast<{
   service_base_price_snapshot?: Prisma.DecimalNullableFilter<"cases"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.DecimalNullableFilter<"cases"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFilter<"cases"> | boolean
+  priority?: Prisma.EnumCasePriorityFilter<"cases"> | $Enums.CasePriority
   teeth?: Prisma.StringNullableFilter<"cases"> | string | null
   elements_qty?: Prisma.IntNullableFilter<"cases"> | number | null
   shade?: Prisma.StringNullableFilter<"cases"> | string | null
@@ -426,6 +438,7 @@ export type casesWhereUniqueInput = Prisma.AtLeast<{
   statusHistory?: Prisma.Case_status_historiesListRelationFilter
   millings?: Prisma.Case_millingsListRelationFilter
   case_processes?: Prisma.Case_processesListRelationFilter
+  processHistory?: Prisma.Case_process_history_eventsListRelationFilter
   case_services?: Prisma.Case_servicesListRelationFilter
   case_comments?: Prisma.Case_commentsListRelationFilter
   case_thread_reads?: Prisma.Case_thread_readsListRelationFilter
@@ -451,6 +464,7 @@ export type casesOrderByWithAggregationInput = {
   service_base_price_snapshot?: Prisma.SortOrderInput | Prisma.SortOrder
   case_price?: Prisma.SortOrderInput | Prisma.SortOrder
   is_price_overridden?: Prisma.SortOrder
+  priority?: Prisma.SortOrder
   teeth?: Prisma.SortOrderInput | Prisma.SortOrder
   elements_qty?: Prisma.SortOrderInput | Prisma.SortOrder
   shade?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -482,6 +496,7 @@ export type casesScalarWhereWithAggregatesInput = {
   service_base_price_snapshot?: Prisma.DecimalNullableWithAggregatesFilter<"cases"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.DecimalNullableWithAggregatesFilter<"cases"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolWithAggregatesFilter<"cases"> | boolean
+  priority?: Prisma.EnumCasePriorityWithAggregatesFilter<"cases"> | $Enums.CasePriority
   teeth?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
   elements_qty?: Prisma.IntNullableWithAggregatesFilter<"cases"> | number | null
   shade?: Prisma.StringNullableWithAggregatesFilter<"cases"> | string | null
@@ -500,6 +515,7 @@ export type casesCreateInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -512,6 +528,7 @@ export type casesCreateInput = {
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsCreateNestedManyWithoutCasesInput
@@ -537,6 +554,7 @@ export type casesUncheckedCreateInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -549,6 +567,7 @@ export type casesUncheckedCreateInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutCasesInput
@@ -564,6 +583,7 @@ export type casesUpdateInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -576,6 +596,7 @@ export type casesUpdateInput = {
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUpdateManyWithoutCasesNestedInput
@@ -601,6 +622,7 @@ export type casesUncheckedUpdateInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -613,6 +635,7 @@ export type casesUncheckedUpdateInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUncheckedUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutCasesNestedInput
@@ -633,6 +656,7 @@ export type casesCreateManyInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -651,6 +675,7 @@ export type casesUpdateManyMutationInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -674,6 +699,7 @@ export type casesUncheckedUpdateManyInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -717,6 +743,7 @@ export type casesCountOrderByAggregateInput = {
   service_base_price_snapshot?: Prisma.SortOrder
   case_price?: Prisma.SortOrder
   is_price_overridden?: Prisma.SortOrder
+  priority?: Prisma.SortOrder
   teeth?: Prisma.SortOrder
   elements_qty?: Prisma.SortOrder
   shade?: Prisma.SortOrder
@@ -746,6 +773,7 @@ export type casesMaxOrderByAggregateInput = {
   service_base_price_snapshot?: Prisma.SortOrder
   case_price?: Prisma.SortOrder
   is_price_overridden?: Prisma.SortOrder
+  priority?: Prisma.SortOrder
   teeth?: Prisma.SortOrder
   elements_qty?: Prisma.SortOrder
   shade?: Prisma.SortOrder
@@ -769,6 +797,7 @@ export type casesMinOrderByAggregateInput = {
   service_base_price_snapshot?: Prisma.SortOrder
   case_price?: Prisma.SortOrder
   is_price_overridden?: Prisma.SortOrder
+  priority?: Prisma.SortOrder
   teeth?: Prisma.SortOrder
   elements_qty?: Prisma.SortOrder
   shade?: Prisma.SortOrder
@@ -1046,6 +1075,10 @@ export type EnumCaseStatusFieldUpdateOperationsInput = {
   set?: $Enums.CaseStatus
 }
 
+export type EnumCasePriorityFieldUpdateOperationsInput = {
+  set?: $Enums.CasePriority
+}
+
 export type casesCreateNestedOneWithoutCase_commentsInput = {
   create?: Prisma.XOR<Prisma.casesCreateWithoutCase_commentsInput, Prisma.casesUncheckedCreateWithoutCase_commentsInput>
   connectOrCreate?: Prisma.casesCreateOrConnectWithoutCase_commentsInput
@@ -1086,6 +1119,20 @@ export type casesUpdateOneRequiredWithoutCase_processesNestedInput = {
   upsert?: Prisma.casesUpsertWithoutCase_processesInput
   connect?: Prisma.casesWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.casesUpdateToOneWithWhereWithoutCase_processesInput, Prisma.casesUpdateWithoutCase_processesInput>, Prisma.casesUncheckedUpdateWithoutCase_processesInput>
+}
+
+export type casesCreateNestedOneWithoutProcessHistoryInput = {
+  create?: Prisma.XOR<Prisma.casesCreateWithoutProcessHistoryInput, Prisma.casesUncheckedCreateWithoutProcessHistoryInput>
+  connectOrCreate?: Prisma.casesCreateOrConnectWithoutProcessHistoryInput
+  connect?: Prisma.casesWhereUniqueInput
+}
+
+export type casesUpdateOneRequiredWithoutProcessHistoryNestedInput = {
+  create?: Prisma.XOR<Prisma.casesCreateWithoutProcessHistoryInput, Prisma.casesUncheckedCreateWithoutProcessHistoryInput>
+  connectOrCreate?: Prisma.casesCreateOrConnectWithoutProcessHistoryInput
+  upsert?: Prisma.casesUpsertWithoutProcessHistoryInput
+  connect?: Prisma.casesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.casesUpdateToOneWithWhereWithoutProcessHistoryInput, Prisma.casesUpdateWithoutProcessHistoryInput>, Prisma.casesUncheckedUpdateWithoutProcessHistoryInput>
 }
 
 export type casesCreateNestedOneWithoutCase_servicesInput = {
@@ -1140,6 +1187,7 @@ export type casesCreateWithoutCreatedByUserInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -1152,6 +1200,7 @@ export type casesCreateWithoutCreatedByUserInput = {
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsCreateNestedManyWithoutCasesInput
@@ -1175,6 +1224,7 @@ export type casesUncheckedCreateWithoutCreatedByUserInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -1187,6 +1237,7 @@ export type casesUncheckedCreateWithoutCreatedByUserInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutCasesInput
@@ -1236,6 +1287,7 @@ export type casesScalarWhereInput = {
   service_base_price_snapshot?: Prisma.DecimalNullableFilter<"cases"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.DecimalNullableFilter<"cases"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFilter<"cases"> | boolean
+  priority?: Prisma.EnumCasePriorityFilter<"cases"> | $Enums.CasePriority
   teeth?: Prisma.StringNullableFilter<"cases"> | string | null
   elements_qty?: Prisma.IntNullableFilter<"cases"> | number | null
   shade?: Prisma.StringNullableFilter<"cases"> | string | null
@@ -1254,6 +1306,7 @@ export type casesCreateWithoutLabsInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -1266,6 +1319,7 @@ export type casesCreateWithoutLabsInput = {
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsCreateNestedManyWithoutCasesInput
@@ -1289,6 +1343,7 @@ export type casesUncheckedCreateWithoutLabsInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -1301,6 +1356,7 @@ export type casesUncheckedCreateWithoutLabsInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutCasesInput
@@ -1342,6 +1398,7 @@ export type casesCreateWithoutService_typesInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -1354,6 +1411,7 @@ export type casesCreateWithoutService_typesInput = {
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsCreateNestedManyWithoutCasesInput
@@ -1377,6 +1435,7 @@ export type casesUncheckedCreateWithoutService_typesInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -1389,6 +1448,7 @@ export type casesUncheckedCreateWithoutService_typesInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutCasesInput
@@ -1430,6 +1490,7 @@ export type casesCreateWithoutMillingsInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -1441,6 +1502,7 @@ export type casesCreateWithoutMillingsInput = {
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsCreateNestedManyWithoutCasesInput
@@ -1466,6 +1528,7 @@ export type casesUncheckedCreateWithoutMillingsInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -1477,6 +1540,7 @@ export type casesUncheckedCreateWithoutMillingsInput = {
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutCasesInput
@@ -1508,6 +1572,7 @@ export type casesUpdateWithoutMillingsInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1519,6 +1584,7 @@ export type casesUpdateWithoutMillingsInput = {
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUpdateManyWithoutCasesNestedInput
@@ -1544,6 +1610,7 @@ export type casesUncheckedUpdateWithoutMillingsInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1555,6 +1622,7 @@ export type casesUncheckedUpdateWithoutMillingsInput = {
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUncheckedUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutCasesNestedInput
@@ -1570,6 +1638,7 @@ export type casesCreateWithoutCase_attachmentsInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -1582,6 +1651,7 @@ export type casesCreateWithoutCase_attachmentsInput = {
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsCreateNestedManyWithoutCasesInput
@@ -1606,6 +1676,7 @@ export type casesUncheckedCreateWithoutCase_attachmentsInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -1618,6 +1689,7 @@ export type casesUncheckedCreateWithoutCase_attachmentsInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutCasesInput
@@ -1648,6 +1720,7 @@ export type casesUpdateWithoutCase_attachmentsInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1660,6 +1733,7 @@ export type casesUpdateWithoutCase_attachmentsInput = {
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUpdateManyWithoutCasesNestedInput
@@ -1684,6 +1758,7 @@ export type casesUncheckedUpdateWithoutCase_attachmentsInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1696,6 +1771,7 @@ export type casesUncheckedUpdateWithoutCase_attachmentsInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUncheckedUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutCasesNestedInput
@@ -1710,6 +1786,7 @@ export type casesCreateWithoutCustomersInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -1722,6 +1799,7 @@ export type casesCreateWithoutCustomersInput = {
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsCreateNestedManyWithoutCasesInput
@@ -1745,6 +1823,7 @@ export type casesUncheckedCreateWithoutCustomersInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -1757,6 +1836,7 @@ export type casesUncheckedCreateWithoutCustomersInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutCasesInput
@@ -1798,6 +1878,7 @@ export type casesCreateWithoutDentistsInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -1810,6 +1891,7 @@ export type casesCreateWithoutDentistsInput = {
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsCreateNestedManyWithoutCasesInput
@@ -1833,6 +1915,7 @@ export type casesUncheckedCreateWithoutDentistsInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -1845,6 +1928,7 @@ export type casesUncheckedCreateWithoutDentistsInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutCasesInput
@@ -1886,6 +1970,7 @@ export type casesCreateWithoutCaseComponentUsagesInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -1897,6 +1982,7 @@ export type casesCreateWithoutCaseComponentUsagesInput = {
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsCreateNestedManyWithoutCasesInput
@@ -1922,6 +2008,7 @@ export type casesUncheckedCreateWithoutCaseComponentUsagesInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -1933,6 +2020,7 @@ export type casesUncheckedCreateWithoutCaseComponentUsagesInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutCasesInput
@@ -1964,6 +2052,7 @@ export type casesUpdateWithoutCaseComponentUsagesInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1975,6 +2064,7 @@ export type casesUpdateWithoutCaseComponentUsagesInput = {
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUpdateManyWithoutCasesNestedInput
@@ -2000,6 +2090,7 @@ export type casesUncheckedUpdateWithoutCaseComponentUsagesInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2011,6 +2102,7 @@ export type casesUncheckedUpdateWithoutCaseComponentUsagesInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUncheckedUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutCasesNestedInput
@@ -2026,6 +2118,7 @@ export type casesCreateWithoutCase_commentsInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -2038,6 +2131,7 @@ export type casesCreateWithoutCase_commentsInput = {
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsCreateNestedManyWithoutCasesInput
   labs: Prisma.labsCreateNestedOneWithoutCasesInput
@@ -2062,6 +2156,7 @@ export type casesUncheckedCreateWithoutCase_commentsInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -2074,6 +2169,7 @@ export type casesUncheckedCreateWithoutCase_commentsInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutCasesInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutCasesInput
@@ -2104,6 +2200,7 @@ export type casesUpdateWithoutCase_commentsInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2116,6 +2213,7 @@ export type casesUpdateWithoutCase_commentsInput = {
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUpdateManyWithoutCasesNestedInput
   labs?: Prisma.labsUpdateOneRequiredWithoutCasesNestedInput
@@ -2140,6 +2238,7 @@ export type casesUncheckedUpdateWithoutCase_commentsInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2152,6 +2251,7 @@ export type casesUncheckedUpdateWithoutCase_commentsInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutCasesNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutCasesNestedInput
@@ -2166,6 +2266,7 @@ export type casesCreateWithoutCase_thread_readsInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -2178,6 +2279,7 @@ export type casesCreateWithoutCase_thread_readsInput = {
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsCreateNestedManyWithoutCasesInput
   labs: Prisma.labsCreateNestedOneWithoutCasesInput
@@ -2202,6 +2304,7 @@ export type casesUncheckedCreateWithoutCase_thread_readsInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -2214,6 +2317,7 @@ export type casesUncheckedCreateWithoutCase_thread_readsInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutCasesInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutCasesInput
@@ -2244,6 +2348,7 @@ export type casesUpdateWithoutCase_thread_readsInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2256,6 +2361,7 @@ export type casesUpdateWithoutCase_thread_readsInput = {
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUpdateManyWithoutCasesNestedInput
   labs?: Prisma.labsUpdateOneRequiredWithoutCasesNestedInput
@@ -2280,6 +2386,7 @@ export type casesUncheckedUpdateWithoutCase_thread_readsInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2292,6 +2399,7 @@ export type casesUncheckedUpdateWithoutCase_thread_readsInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUncheckedUpdateManyWithoutCasesNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutCasesNestedInput
@@ -2306,6 +2414,7 @@ export type casesCreateWithoutCase_processesInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -2317,6 +2426,7 @@ export type casesCreateWithoutCase_processesInput = {
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsCreateNestedManyWithoutCasesInput
@@ -2342,6 +2452,7 @@ export type casesUncheckedCreateWithoutCase_processesInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -2353,6 +2464,7 @@ export type casesUncheckedCreateWithoutCase_processesInput = {
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutCasesInput
@@ -2384,6 +2496,7 @@ export type casesUpdateWithoutCase_processesInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2395,6 +2508,7 @@ export type casesUpdateWithoutCase_processesInput = {
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUpdateManyWithoutCasesNestedInput
@@ -2420,6 +2534,7 @@ export type casesUncheckedUpdateWithoutCase_processesInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2431,6 +2546,155 @@ export type casesUncheckedUpdateWithoutCase_processesInput = {
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCasesNestedInput
+  case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutCasesNestedInput
+  case_comments?: Prisma.case_commentsUncheckedUpdateManyWithoutCasesNestedInput
+  case_thread_reads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutCasesNestedInput
+  case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutCasesNestedInput
+  notifications?: Prisma.notificationsUncheckedUpdateManyWithoutCasesNestedInput
+}
+
+export type casesCreateWithoutProcessHistoryInput = {
+  id?: string
+  code: string
+  patient_name: string
+  current_status?: $Enums.CaseStatus
+  service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
+  teeth?: string | null
+  elements_qty?: number | null
+  shade?: string | null
+  due_date?: Date | string | null
+  is_urgent?: boolean
+  observations?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
+  statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
+  millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
+  case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  case_services?: Prisma.case_servicesCreateNestedManyWithoutCasesInput
+  case_comments?: Prisma.case_commentsCreateNestedManyWithoutCasesInput
+  case_thread_reads?: Prisma.case_thread_readsCreateNestedManyWithoutCasesInput
+  labs: Prisma.labsCreateNestedOneWithoutCasesInput
+  customers?: Prisma.customersCreateNestedOneWithoutCasesInput
+  dentists?: Prisma.dentistsCreateNestedOneWithoutCasesInput
+  service_types?: Prisma.service_typesCreateNestedOneWithoutCasesInput
+  createdByUser?: Prisma.usersCreateNestedOneWithoutCreatedCasesInput
+  case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutCasesInput
+  notifications?: Prisma.notificationsCreateNestedManyWithoutCasesInput
+}
+
+export type casesUncheckedCreateWithoutProcessHistoryInput = {
+  id?: string
+  lab_id: string
+  code: string
+  patient_name: string
+  customer_id?: string | null
+  service_type_id?: string | null
+  dentist_id?: string | null
+  created_by_user_id?: string | null
+  current_status?: $Enums.CaseStatus
+  service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
+  teeth?: string | null
+  elements_qty?: number | null
+  shade?: string | null
+  due_date?: Date | string | null
+  is_urgent?: boolean
+  observations?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
+  statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
+  millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
+  case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
+  case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutCasesInput
+  case_comments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutCasesInput
+  case_thread_reads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutCasesInput
+  case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutCasesInput
+  notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutCasesInput
+}
+
+export type casesCreateOrConnectWithoutProcessHistoryInput = {
+  where: Prisma.casesWhereUniqueInput
+  create: Prisma.XOR<Prisma.casesCreateWithoutProcessHistoryInput, Prisma.casesUncheckedCreateWithoutProcessHistoryInput>
+}
+
+export type casesUpsertWithoutProcessHistoryInput = {
+  update: Prisma.XOR<Prisma.casesUpdateWithoutProcessHistoryInput, Prisma.casesUncheckedUpdateWithoutProcessHistoryInput>
+  create: Prisma.XOR<Prisma.casesCreateWithoutProcessHistoryInput, Prisma.casesUncheckedCreateWithoutProcessHistoryInput>
+  where?: Prisma.casesWhereInput
+}
+
+export type casesUpdateToOneWithWhereWithoutProcessHistoryInput = {
+  where?: Prisma.casesWhereInput
+  data: Prisma.XOR<Prisma.casesUpdateWithoutProcessHistoryInput, Prisma.casesUncheckedUpdateWithoutProcessHistoryInput>
+}
+
+export type casesUpdateWithoutProcessHistoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
+  teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
+  statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
+  millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  case_services?: Prisma.case_servicesUpdateManyWithoutCasesNestedInput
+  case_comments?: Prisma.case_commentsUpdateManyWithoutCasesNestedInput
+  case_thread_reads?: Prisma.case_thread_readsUpdateManyWithoutCasesNestedInput
+  labs?: Prisma.labsUpdateOneRequiredWithoutCasesNestedInput
+  customers?: Prisma.customersUpdateOneWithoutCasesNestedInput
+  dentists?: Prisma.dentistsUpdateOneWithoutCasesNestedInput
+  service_types?: Prisma.service_typesUpdateOneWithoutCasesNestedInput
+  createdByUser?: Prisma.usersUpdateOneWithoutCreatedCasesNestedInput
+  case_attachments?: Prisma.case_attachmentsUpdateManyWithoutCasesNestedInput
+  notifications?: Prisma.notificationsUpdateManyWithoutCasesNestedInput
+}
+
+export type casesUncheckedUpdateWithoutProcessHistoryInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  patient_name?: Prisma.StringFieldUpdateOperationsInput | string
+  customer_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  service_type_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dentist_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_by_user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  current_status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
+  service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
+  teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  due_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  is_urgent?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  observations?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
+  statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
+  millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
+  case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUncheckedUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutCasesNestedInput
@@ -2446,6 +2710,7 @@ export type casesCreateWithoutCase_servicesInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -2458,6 +2723,7 @@ export type casesCreateWithoutCase_servicesInput = {
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsCreateNestedManyWithoutCasesInput
   labs: Prisma.labsCreateNestedOneWithoutCasesInput
@@ -2482,6 +2748,7 @@ export type casesUncheckedCreateWithoutCase_servicesInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -2494,6 +2761,7 @@ export type casesUncheckedCreateWithoutCase_servicesInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutCasesInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutCasesInput
@@ -2524,6 +2792,7 @@ export type casesUpdateWithoutCase_servicesInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2536,6 +2805,7 @@ export type casesUpdateWithoutCase_servicesInput = {
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUpdateManyWithoutCasesNestedInput
   labs?: Prisma.labsUpdateOneRequiredWithoutCasesNestedInput
@@ -2560,6 +2830,7 @@ export type casesUncheckedUpdateWithoutCase_servicesInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2572,6 +2843,7 @@ export type casesUncheckedUpdateWithoutCase_servicesInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUncheckedUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutCasesNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutCasesNestedInput
@@ -2586,6 +2858,7 @@ export type casesCreateWithoutStatusHistoryInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -2597,6 +2870,7 @@ export type casesCreateWithoutStatusHistoryInput = {
   caseComponentUsages?: Prisma.case_component_usagesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsCreateNestedManyWithoutCasesInput
@@ -2622,6 +2896,7 @@ export type casesUncheckedCreateWithoutStatusHistoryInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -2633,6 +2908,7 @@ export type casesUncheckedCreateWithoutStatusHistoryInput = {
   caseComponentUsages?: Prisma.case_component_usagesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutCasesInput
@@ -2664,6 +2940,7 @@ export type casesUpdateWithoutStatusHistoryInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2675,6 +2952,7 @@ export type casesUpdateWithoutStatusHistoryInput = {
   caseComponentUsages?: Prisma.case_component_usagesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUpdateManyWithoutCasesNestedInput
@@ -2700,6 +2978,7 @@ export type casesUncheckedUpdateWithoutStatusHistoryInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2711,6 +2990,7 @@ export type casesUncheckedUpdateWithoutStatusHistoryInput = {
   caseComponentUsages?: Prisma.case_component_usagesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUncheckedUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutCasesNestedInput
@@ -2726,6 +3006,7 @@ export type casesCreateWithoutNotificationsInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -2738,6 +3019,7 @@ export type casesCreateWithoutNotificationsInput = {
   statusHistory?: Prisma.case_status_historiesCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsCreateNestedManyWithoutCasesInput
@@ -2762,6 +3044,7 @@ export type casesUncheckedCreateWithoutNotificationsInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -2774,6 +3057,7 @@ export type casesUncheckedCreateWithoutNotificationsInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedCreateNestedManyWithoutCasesInput
   millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutCasesInput
   case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutCasesInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutCasesInput
   case_services?: Prisma.case_servicesUncheckedCreateNestedManyWithoutCasesInput
   case_comments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutCasesInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutCasesInput
@@ -2804,6 +3088,7 @@ export type casesUpdateWithoutNotificationsInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2816,6 +3101,7 @@ export type casesUpdateWithoutNotificationsInput = {
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUpdateManyWithoutCasesNestedInput
@@ -2840,6 +3126,7 @@ export type casesUncheckedUpdateWithoutNotificationsInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2852,6 +3139,7 @@ export type casesUncheckedUpdateWithoutNotificationsInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUncheckedUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutCasesNestedInput
@@ -2870,6 +3158,7 @@ export type casesCreateManyCreatedByUserInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -2888,6 +3177,7 @@ export type casesUpdateWithoutCreatedByUserInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2900,6 +3190,7 @@ export type casesUpdateWithoutCreatedByUserInput = {
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUpdateManyWithoutCasesNestedInput
@@ -2923,6 +3214,7 @@ export type casesUncheckedUpdateWithoutCreatedByUserInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2935,6 +3227,7 @@ export type casesUncheckedUpdateWithoutCreatedByUserInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUncheckedUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutCasesNestedInput
@@ -2954,6 +3247,7 @@ export type casesUncheckedUpdateManyWithoutCreatedByUserInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2976,6 +3270,7 @@ export type casesCreateManyLabsInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -2994,6 +3289,7 @@ export type casesUpdateWithoutLabsInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3006,6 +3302,7 @@ export type casesUpdateWithoutLabsInput = {
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUpdateManyWithoutCasesNestedInput
@@ -3029,6 +3326,7 @@ export type casesUncheckedUpdateWithoutLabsInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3041,6 +3339,7 @@ export type casesUncheckedUpdateWithoutLabsInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUncheckedUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutCasesNestedInput
@@ -3060,6 +3359,7 @@ export type casesUncheckedUpdateManyWithoutLabsInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3082,6 +3382,7 @@ export type casesCreateManyService_typesInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -3100,6 +3401,7 @@ export type casesUpdateWithoutService_typesInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3112,6 +3414,7 @@ export type casesUpdateWithoutService_typesInput = {
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUpdateManyWithoutCasesNestedInput
@@ -3135,6 +3438,7 @@ export type casesUncheckedUpdateWithoutService_typesInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3147,6 +3451,7 @@ export type casesUncheckedUpdateWithoutService_typesInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUncheckedUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutCasesNestedInput
@@ -3166,6 +3471,7 @@ export type casesUncheckedUpdateManyWithoutService_typesInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3188,6 +3494,7 @@ export type casesCreateManyCustomersInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -3206,6 +3513,7 @@ export type casesUpdateWithoutCustomersInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3218,6 +3526,7 @@ export type casesUpdateWithoutCustomersInput = {
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUpdateManyWithoutCasesNestedInput
@@ -3241,6 +3550,7 @@ export type casesUncheckedUpdateWithoutCustomersInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3253,6 +3563,7 @@ export type casesUncheckedUpdateWithoutCustomersInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUncheckedUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutCasesNestedInput
@@ -3272,6 +3583,7 @@ export type casesUncheckedUpdateManyWithoutCustomersInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3294,6 +3606,7 @@ export type casesCreateManyDentistsInput = {
   service_base_price_snapshot?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: boolean
+  priority?: $Enums.CasePriority
   teeth?: string | null
   elements_qty?: number | null
   shade?: string | null
@@ -3312,6 +3625,7 @@ export type casesUpdateWithoutDentistsInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3324,6 +3638,7 @@ export type casesUpdateWithoutDentistsInput = {
   statusHistory?: Prisma.case_status_historiesUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUpdateManyWithoutCasesNestedInput
@@ -3347,6 +3662,7 @@ export type casesUncheckedUpdateWithoutDentistsInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3359,6 +3675,7 @@ export type casesUncheckedUpdateWithoutDentistsInput = {
   statusHistory?: Prisma.case_status_historiesUncheckedUpdateManyWithoutCasesNestedInput
   millings?: Prisma.case_millingsUncheckedUpdateManyWithoutCasesNestedInput
   case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutCasesNestedInput
+  processHistory?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutCasesNestedInput
   case_services?: Prisma.case_servicesUncheckedUpdateManyWithoutCasesNestedInput
   case_comments?: Prisma.case_commentsUncheckedUpdateManyWithoutCasesNestedInput
   case_thread_reads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutCasesNestedInput
@@ -3378,6 +3695,7 @@ export type casesUncheckedUpdateManyWithoutDentistsInput = {
   service_base_price_snapshot?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   case_price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   is_price_overridden?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  priority?: Prisma.EnumCasePriorityFieldUpdateOperationsInput | $Enums.CasePriority
   teeth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   elements_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   shade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3398,6 +3716,7 @@ export type CasesCountOutputType = {
   statusHistory: number
   millings: number
   case_processes: number
+  processHistory: number
   case_services: number
   case_comments: number
   case_thread_reads: number
@@ -3410,6 +3729,7 @@ export type CasesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   statusHistory?: boolean | CasesCountOutputTypeCountStatusHistoryArgs
   millings?: boolean | CasesCountOutputTypeCountMillingsArgs
   case_processes?: boolean | CasesCountOutputTypeCountCase_processesArgs
+  processHistory?: boolean | CasesCountOutputTypeCountProcessHistoryArgs
   case_services?: boolean | CasesCountOutputTypeCountCase_servicesArgs
   case_comments?: boolean | CasesCountOutputTypeCountCase_commentsArgs
   case_thread_reads?: boolean | CasesCountOutputTypeCountCase_thread_readsArgs
@@ -3453,6 +3773,13 @@ export type CasesCountOutputTypeCountMillingsArgs<ExtArgs extends runtime.Types.
  */
 export type CasesCountOutputTypeCountCase_processesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.case_processesWhereInput
+}
+
+/**
+ * CasesCountOutputType without action
+ */
+export type CasesCountOutputTypeCountProcessHistoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.case_process_history_eventsWhereInput
 }
 
 /**
@@ -3504,6 +3831,7 @@ export type casesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   service_base_price_snapshot?: boolean
   case_price?: boolean
   is_price_overridden?: boolean
+  priority?: boolean
   teeth?: boolean
   elements_qty?: boolean
   shade?: boolean
@@ -3516,6 +3844,7 @@ export type casesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   statusHistory?: boolean | Prisma.cases$statusHistoryArgs<ExtArgs>
   millings?: boolean | Prisma.cases$millingsArgs<ExtArgs>
   case_processes?: boolean | Prisma.cases$case_processesArgs<ExtArgs>
+  processHistory?: boolean | Prisma.cases$processHistoryArgs<ExtArgs>
   case_services?: boolean | Prisma.cases$case_servicesArgs<ExtArgs>
   case_comments?: boolean | Prisma.cases$case_commentsArgs<ExtArgs>
   case_thread_reads?: boolean | Prisma.cases$case_thread_readsArgs<ExtArgs>
@@ -3542,6 +3871,7 @@ export type casesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   service_base_price_snapshot?: boolean
   case_price?: boolean
   is_price_overridden?: boolean
+  priority?: boolean
   teeth?: boolean
   elements_qty?: boolean
   shade?: boolean
@@ -3570,6 +3900,7 @@ export type casesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   service_base_price_snapshot?: boolean
   case_price?: boolean
   is_price_overridden?: boolean
+  priority?: boolean
   teeth?: boolean
   elements_qty?: boolean
   shade?: boolean
@@ -3598,6 +3929,7 @@ export type casesSelectScalar = {
   service_base_price_snapshot?: boolean
   case_price?: boolean
   is_price_overridden?: boolean
+  priority?: boolean
   teeth?: boolean
   elements_qty?: boolean
   shade?: boolean
@@ -3608,12 +3940,13 @@ export type casesSelectScalar = {
   updated_at?: boolean
 }
 
-export type casesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "code" | "patient_name" | "customer_id" | "service_type_id" | "dentist_id" | "created_by_user_id" | "current_status" | "service_base_price_snapshot" | "case_price" | "is_price_overridden" | "teeth" | "elements_qty" | "shade" | "due_date" | "is_urgent" | "observations" | "created_at" | "updated_at", ExtArgs["result"]["cases"]>
+export type casesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "code" | "patient_name" | "customer_id" | "service_type_id" | "dentist_id" | "created_by_user_id" | "current_status" | "service_base_price_snapshot" | "case_price" | "is_price_overridden" | "priority" | "teeth" | "elements_qty" | "shade" | "due_date" | "is_urgent" | "observations" | "created_at" | "updated_at", ExtArgs["result"]["cases"]>
 export type casesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   caseComponentUsages?: boolean | Prisma.cases$caseComponentUsagesArgs<ExtArgs>
   statusHistory?: boolean | Prisma.cases$statusHistoryArgs<ExtArgs>
   millings?: boolean | Prisma.cases$millingsArgs<ExtArgs>
   case_processes?: boolean | Prisma.cases$case_processesArgs<ExtArgs>
+  processHistory?: boolean | Prisma.cases$processHistoryArgs<ExtArgs>
   case_services?: boolean | Prisma.cases$case_servicesArgs<ExtArgs>
   case_comments?: boolean | Prisma.cases$case_commentsArgs<ExtArgs>
   case_thread_reads?: boolean | Prisma.cases$case_thread_readsArgs<ExtArgs>
@@ -3648,6 +3981,7 @@ export type $casesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     statusHistory: Prisma.$case_status_historiesPayload<ExtArgs>[]
     millings: Prisma.$case_millingsPayload<ExtArgs>[]
     case_processes: Prisma.$case_processesPayload<ExtArgs>[]
+    processHistory: Prisma.$case_process_history_eventsPayload<ExtArgs>[]
     case_services: Prisma.$case_servicesPayload<ExtArgs>[]
     case_comments: Prisma.$case_commentsPayload<ExtArgs>[]
     case_thread_reads: Prisma.$case_thread_readsPayload<ExtArgs>[]
@@ -3672,6 +4006,7 @@ export type $casesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     service_base_price_snapshot: runtime.Decimal | null
     case_price: runtime.Decimal | null
     is_price_overridden: boolean
+    priority: $Enums.CasePriority
     teeth: string | null
     elements_qty: number | null
     shade: string | null
@@ -4078,6 +4413,7 @@ export interface Prisma__casesClient<T, Null = never, ExtArgs extends runtime.Ty
   statusHistory<T extends Prisma.cases$statusHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cases$statusHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_status_historiesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   millings<T extends Prisma.cases$millingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cases$millingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_millingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   case_processes<T extends Prisma.cases$case_processesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cases$case_processesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_processesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  processHistory<T extends Prisma.cases$processHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cases$processHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_process_history_eventsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   case_services<T extends Prisma.cases$case_servicesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cases$case_servicesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_servicesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   case_comments<T extends Prisma.cases$case_commentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cases$case_commentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_commentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   case_thread_reads<T extends Prisma.cases$case_thread_readsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.cases$case_thread_readsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_thread_readsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4129,6 +4465,7 @@ export interface casesFieldRefs {
   readonly service_base_price_snapshot: Prisma.FieldRef<"cases", 'Decimal'>
   readonly case_price: Prisma.FieldRef<"cases", 'Decimal'>
   readonly is_price_overridden: Prisma.FieldRef<"cases", 'Boolean'>
+  readonly priority: Prisma.FieldRef<"cases", 'CasePriority'>
   readonly teeth: Prisma.FieldRef<"cases", 'String'>
   readonly elements_qty: Prisma.FieldRef<"cases", 'Int'>
   readonly shade: Prisma.FieldRef<"cases", 'String'>
@@ -4631,6 +4968,30 @@ export type cases$case_processesArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.Case_processesScalarFieldEnum | Prisma.Case_processesScalarFieldEnum[]
+}
+
+/**
+ * cases.processHistory
+ */
+export type cases$processHistoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the case_process_history_events
+   */
+  select?: Prisma.case_process_history_eventsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the case_process_history_events
+   */
+  omit?: Prisma.case_process_history_eventsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.case_process_history_eventsInclude<ExtArgs> | null
+  where?: Prisma.case_process_history_eventsWhereInput
+  orderBy?: Prisma.case_process_history_eventsOrderByWithRelationInput | Prisma.case_process_history_eventsOrderByWithRelationInput[]
+  cursor?: Prisma.case_process_history_eventsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Case_process_history_eventsScalarFieldEnum | Prisma.Case_process_history_eventsScalarFieldEnum[]
 }
 
 /**

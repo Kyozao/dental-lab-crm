@@ -100,6 +100,7 @@ export type MockCase = {
   elementsQty: number | null;
   shade: string;
   dueDate: string | null;
+  priority: "low" | "normal" | "high" | "urgent";
   observations: string;
   isUrgent: boolean;
   createdAt: string;
@@ -241,6 +242,7 @@ function createInitialState(): MockState {
       elementsQty: 3,
       shade: "A2",
       dueDate: daysFromNow(2),
+      priority: "urgent",
       observations: "Anterior bridge, check emergence profile.",
       isUrgent: true,
       createdAt: daysFromNow(-4),
@@ -264,6 +266,7 @@ function createInitialState(): MockState {
       elementsQty: 1,
       shade: "A3",
       dueDate: daysFromNow(1),
+      priority: "high",
       observations: "Single crown.",
       isUrgent: false,
       createdAt: daysFromNow(-3),
@@ -287,6 +290,7 @@ function createInitialState(): MockState {
       elementsQty: 2,
       shade: "B1",
       dueDate: daysFromNow(-2),
+      priority: "normal",
       observations: "Delivered.",
       isUrgent: false,
       createdAt: daysFromNow(-10),
@@ -310,6 +314,7 @@ function createInitialState(): MockState {
       elementsQty: 1,
       shade: "A1",
       dueDate: daysFromNow(3),
+      priority: "normal",
       observations: "Rio lab scoped case with code reused safely.",
       isUrgent: false,
       createdAt: daysFromNow(-2),
@@ -538,6 +543,7 @@ export function serializeCase(item: MockCase, detailed = false) {
     elementsQty: item.elementsQty,
     shade: item.shade,
     dueDate: item.dueDate,
+    priority: item.priority,
     observations: item.observations,
     isUrgent: item.isUrgent,
     createdAt: item.createdAt,
@@ -597,11 +603,13 @@ export function listCases(filters: URLSearchParams) {
   const q = (filters.get("q") ?? filters.get("search") ?? "").trim().toLowerCase();
   const status = filters.get("status") as CaseStatusValue | null;
   const urgent = filters.get("urgent");
+  const priority = filters.get("priority");
   const customerId = filters.get("customerId");
 
   let items = state().cases.filter(isActiveLabItem);
   if (status) items = items.filter((item) => item.currentStatus === status);
   if (customerId) items = items.filter((item) => item.customerId === customerId);
+  if (priority) items = items.filter((item) => item.priority === priority.toLowerCase());
   if (urgent === "urgent") items = items.filter((item) => item.isUrgent);
   if (urgent === "normal") items = items.filter((item) => !item.isUrgent);
   if (q) {
@@ -649,6 +657,12 @@ export function createCase(payload: Record<string, unknown>) {
     elementsQty: Number(payload.elementsQty || 0) || null,
     shade: String(payload.shade || ""),
     dueDate: typeof payload.dueDate === "string" && payload.dueDate ? new Date(payload.dueDate).toISOString() : null,
+    priority:
+      typeof payload.priority === "string"
+        ? (payload.priority.toLowerCase() as MockCase["priority"])
+        : Boolean(payload.isUrgent)
+          ? "urgent"
+          : "normal",
     observations: String(payload.observations || ""),
     isUrgent: Boolean(payload.isUrgent),
     createdAt,
@@ -677,6 +691,9 @@ export function updateCase(idValue: string, payload: Record<string, unknown>) {
   if ("elementsQty" in payload) item.elementsQty = Number(payload.elementsQty || 0) || null;
   if (typeof payload.shade === "string") item.shade = payload.shade;
   if ("dueDate" in payload) item.dueDate = typeof payload.dueDate === "string" && payload.dueDate ? new Date(payload.dueDate).toISOString() : null;
+  if (typeof payload.priority === "string") {
+    item.priority = payload.priority.toLowerCase() as MockCase["priority"];
+  }
   if (typeof payload.observations === "string") item.observations = payload.observations;
   if ("isUrgent" in payload) item.isUrgent = Boolean(payload.isUrgent);
   if ("customerId" in payload) {

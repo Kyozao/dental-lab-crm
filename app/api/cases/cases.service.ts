@@ -1,10 +1,14 @@
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@/generated/prisma/client";
-import { CaseStatus, UserRole } from "@/generated/prisma/enums";
+import { CasePriority, CaseStatus, UserRole } from "@/generated/prisma/enums";
 import {
   getLabMember,
   MissingLabMembershipError,
 } from "../_shared/membership";
+import {
+  bumpLabScheduleRevision,
+  normalizeCasePriorityInput,
+} from "../_shared/scheduling";
 
 import {
   caseInclude,
@@ -72,6 +76,11 @@ type ExistingCaseForServiceLineUpdate = ExistingCaseForUpdate & {
       id: string;
       process_id: string;
       workflow_step_id: string;
+      snapshot_fixed_minutes: number;
+      snapshot_minutes_per_unit: number;
+      snapshot_expected_duration_days: number;
+      snapshot_dependency_lag_days: number;
+      snapshot_requires_milling_machine: boolean;
       dependencies: Array<{ depends_on_case_process_id: string }>;
     }>;
   }>;
@@ -86,6 +95,7 @@ type CaseUpdateData = {
   elements_qty: UpdateCaseInput["elements_qty"];
   shade: UpdateCaseInput["shade"];
   due_date: UpdateCaseInput["due_date"];
+  priority: CasePriority | undefined;
   is_urgent: UpdateCaseInput["is_urgent"];
   observations: UpdateCaseInput["observations"];
 };
@@ -186,6 +196,11 @@ function assertCanManageCases(role: UserRole) {
 }
 
 function buildBaseCaseUpdateData(input: UpdateCaseInput): CaseUpdateData {
+  const priority = normalizeCasePriorityInput(
+    input.priority,
+    input.is_urgent,
+  );
+
   return {
     patient_name: input.patient_name,
     customer_id: input.customer_id,
@@ -195,7 +210,15 @@ function buildBaseCaseUpdateData(input: UpdateCaseInput): CaseUpdateData {
     elements_qty: input.elements_qty,
     shade: input.shade,
     due_date: input.due_date,
-    is_urgent: input.is_urgent,
+    priority,
+    is_urgent:
+      input.is_urgent !== undefined
+        ? input.is_urgent
+        : priority === CasePriority.URGENT
+          ? true
+          : priority
+            ? false
+            : undefined,
     observations: input.observations,
   };
 }
@@ -230,6 +253,7 @@ async function buildServiceLinePlans(
         id: true,
         name: true,
         base_price: true,
+        delivery_buffer_days: true,
       },
     }),
     customer_id
@@ -291,6 +315,7 @@ async function buildServiceLinePlans(
         input: serviceLine,
         serviceNameSnapshot: serviceType.name,
         serviceBasePriceSnapshot: resolvedBasePrice,
+        deliveryBufferDaysSnapshot: serviceType.delivery_buffer_days,
         unitPrice:
           serviceLine.is_unit_price_overridden && serviceLine.unit_price
             ? serviceLine.unit_price
@@ -308,6 +333,11 @@ function getWorkflowFromExistingLine(
       id: string;
       process_id: string;
       workflow_step_id: string;
+      snapshot_fixed_minutes: number;
+      snapshot_minutes_per_unit: number;
+      snapshot_expected_duration_days: number;
+      snapshot_dependency_lag_days: number;
+      snapshot_requires_milling_machine: boolean;
       dependencies: Array<{ depends_on_case_process_id: string }>;
     }>;
   },
@@ -320,6 +350,11 @@ function getWorkflowFromExistingLine(
     steps: serviceLine.case_processes.map((process) => ({
       id: process.workflow_step_id,
       process_id: process.process_id,
+      fixed_minutes: process.snapshot_fixed_minutes,
+      minutes_per_unit: process.snapshot_minutes_per_unit,
+      expected_duration_days: process.snapshot_expected_duration_days,
+      dependency_lag_days: process.snapshot_dependency_lag_days,
+      requires_milling_machine: process.snapshot_requires_milling_machine,
       dependsOn: process.dependencies
         .map((dependency) => stepIdByCaseProcessId.get(dependency.depends_on_case_process_id))
         .filter((stepId): stepId is string => Boolean(stepId)),
@@ -359,10 +394,15 @@ async function syncCaseServiceLines(
       unit_price: { toString(): string };
       is_unit_price_overridden: boolean;
       quantity: number;
-          case_processes: Array<{
-            id: string;
-            process_id: string;
+      case_processes: Array<{
+        id: string;
+        process_id: string;
         workflow_step_id: string;
+        snapshot_fixed_minutes: number;
+        snapshot_minutes_per_unit: number;
+        snapshot_expected_duration_days: number;
+        snapshot_dependency_lag_days: number;
+        snapshot_requires_milling_machine: boolean;
         dependencies: Array<{ depends_on_case_process_id: string }>;
       }>;
     }>;
@@ -400,6 +440,7 @@ async function syncCaseServiceLines(
           service_type_id: plan.input.service_type_id,
           service_name_snapshot: plan.serviceNameSnapshot,
           service_base_price_snapshot: plan.serviceBasePriceSnapshot,
+          delivery_buffer_days_snapshot: plan.deliveryBufferDaysSnapshot,
           unit_price: plan.unitPrice,
           is_unit_price_overridden: plan.isUnitPriceOverridden,
           quantity: plan.input.quantity,
@@ -429,6 +470,7 @@ async function syncCaseServiceLines(
         service_type_id: plan.input.service_type_id,
         service_name_snapshot: plan.serviceNameSnapshot,
         service_base_price_snapshot: plan.serviceBasePriceSnapshot,
+        delivery_buffer_days_snapshot: plan.deliveryBufferDaysSnapshot,
         unit_price: nextUnitPrice,
         is_unit_price_overridden: nextIsUnitPriceOverridden,
         quantity: plan.input.quantity,
@@ -523,6 +565,11 @@ async function loadExistingCaseForServiceLineUpdate(
               id: true,
               process_id: true,
               workflow_step_id: true,
+              snapshot_fixed_minutes: true,
+              snapshot_minutes_per_unit: true,
+              snapshot_expected_duration_days: true,
+              snapshot_dependency_lag_days: true,
+              snapshot_requires_milling_machine: true,
               dependencies: {
                 select: {
                   depends_on_case_process_id: true,
@@ -600,6 +647,7 @@ async function updateCaseWithServiceLines(
 
     await applyCaseStatusTransitionHistory(tx, existingCase, input);
     await syncCaseServiceLines(tx, existingCase.id, existingCase, serviceLinePlans);
+    await bumpLabScheduleRevision(tx, membership.lab_id);
   });
 
   return existingCase.id;
@@ -621,6 +669,7 @@ async function updateCaseDetailsOnly(
     });
 
     await applyCaseStatusTransitionHistory(tx, existingCase, input);
+    await bumpLabScheduleRevision(tx, membership.lab_id);
   });
 
   return existingCase.id;
@@ -635,6 +684,7 @@ export async function listCases(
     ...buildAccessibleCasesWhere(membership),
     current_status: input.status,
     customer_id: input.customer_id,
+    priority: input.priority,
     is_urgent: input.urgent,
     ...(input.current_process_ids?.length
       ? {
@@ -744,7 +794,7 @@ export async function createCase(
 
     try {
       const createdCase = await prisma.$transaction(async (tx) => {
-        return createCaseWithWorkflow(
+        const created = await createCaseWithWorkflow(
           tx,
           user_id,
           membership.lab_id,
@@ -752,6 +802,8 @@ export async function createCase(
           code,
           serviceLinePlans,
         );
+        await bumpLabScheduleRevision(tx, membership.lab_id);
+        return created;
       });
 
       return mapCase(createdCase);
@@ -817,6 +869,7 @@ export async function replaceCaseWorkflow(
 
   const updatedCase = await prisma.$transaction(async (tx) => {
     await replaceWorkflowForExistingCase(tx, existing.id, case_service_id, workflow);
+    await bumpLabScheduleRevision(tx, membership.lab_id);
 
     return tx.cases.findUniqueOrThrow({
       where: { id: existing.id },

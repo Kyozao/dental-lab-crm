@@ -1,4 +1,5 @@
 import { CaseProcessStatus } from "@/generated/prisma/enums";
+import { resolveCasePriority as resolveSharedCasePriority } from "../_shared/scheduling";
 
 export type CaseListSummaryProcess = {
   id: string;
@@ -60,23 +61,30 @@ export function buildCasePatientDetail(caseItem: {
 }
 
 export function resolveCasePriority(
-  isUrgent: boolean,
-  dueDate: Date | null,
+  priorityOrIsUrgent:
+    | "LOW"
+    | "NORMAL"
+    | "HIGH"
+    | "URGENT"
+    | boolean
+    | null
+    | undefined,
+  isUrgentOrDueDate: boolean | Date | null,
+  maybeDueDate?: Date | null,
 ) {
-  if (isUrgent) return "urgent" as const;
-  if (!dueDate) return "normal" as const;
+  if (typeof priorityOrIsUrgent === "boolean") {
+    return resolveSharedCasePriority(
+      undefined,
+      priorityOrIsUrgent,
+      (isUrgentOrDueDate as Date | null) ?? null,
+    );
+  }
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const target = new Date(dueDate);
-  target.setHours(0, 0, 0, 0);
-  const diffDays = Math.round(
-    (target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24),
+  return resolveSharedCasePriority(
+    priorityOrIsUrgent,
+    isUrgentOrDueDate as boolean,
+    maybeDueDate ?? null,
   );
-
-  if (diffDays <= 1) return "high" as const;
-  if (diffDays >= 5) return "low" as const;
-  return "normal" as const;
 }
 
 export function computeCaseProgress(

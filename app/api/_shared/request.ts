@@ -1,11 +1,30 @@
-import { ensureCurrentAppUser, getCurrentSupabaseUser } from "./current-user";
+import {
+  getCurrentSupabaseUser,
+  syncCurrentAppUser,
+  type AuthenticatedUser,
+} from "./current-user";
 
-export async function getAuthenticatedUserId(options?: {
+type AuthOptions = {
   ensureAppUser?: boolean;
-}) {
-  const user = options?.ensureAppUser === false
-    ? await getCurrentSupabaseUser()
-    : await ensureCurrentAppUser();
+};
+
+export async function getAuthenticatedUser(
+  options?: AuthOptions,
+): Promise<AuthenticatedUser | null> {
+  const user = await getCurrentSupabaseUser();
+  if (!user) {
+    return null;
+  }
+
+  if (options?.ensureAppUser) {
+    await syncCurrentAppUser(user);
+  }
+
+  return user;
+}
+
+export async function getAuthenticatedUserId(options?: AuthOptions) {
+  const user = await getAuthenticatedUser(options);
   return user?.id ?? null;
 }
 type JsonObjectResult =

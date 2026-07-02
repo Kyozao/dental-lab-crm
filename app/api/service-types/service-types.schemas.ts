@@ -4,6 +4,11 @@ export type ServiceTypeWorkflowStep = {
   id: string;
   process_id: string;
   dependsOn: string[];
+  fixed_minutes: number;
+  minutes_per_unit: number;
+  expected_duration_days: number;
+  dependency_lag_days: number;
+  requires_milling_machine: boolean;
 };
 
 export type ServiceTypeWorkflow = {
@@ -13,6 +18,7 @@ export type ServiceTypeWorkflow = {
 export type ServiceTypeInput = {
   name?: string | null;
   base_price?: string | null;
+  delivery_buffer_days?: number | null;
   notes?: string | null;
   is_active?: unknown;
   workflow_json?: ServiceTypeWorkflow;
@@ -54,6 +60,36 @@ function parseStringArray(
   });
 
   return items;
+}
+
+function parseNonNegativeInteger(
+  value: unknown,
+  field: string,
+  errors: Record<string, string[]>,
+) {
+  const parsed = typeof value === "number" ? value : Number(value);
+
+  if (!Number.isInteger(parsed) || parsed < 0) {
+    addError(errors, field, "Must be a non-negative integer.");
+    return null;
+  }
+
+  return parsed;
+}
+
+function parsePositiveInteger(
+  value: unknown,
+  field: string,
+  errors: Record<string, string[]>,
+) {
+  const parsed = typeof value === "number" ? value : Number(value);
+
+  if (!Number.isInteger(parsed) || parsed < 1) {
+    addError(errors, field, "Must be a positive integer.");
+    return null;
+  }
+
+  return parsed;
 }
 
 function addCycleErrors(
@@ -128,6 +164,30 @@ export function parseWorkflowJson(
       `${field}.dependsOn`,
       errors,
     );
+    const fixed_minutes = parseNonNegativeInteger(
+      step.fixed_minutes ?? step.fixed_points ?? 0,
+      `${field}.fixed_minutes`,
+      errors,
+    );
+    const minutes_per_unit = parseNonNegativeInteger(
+      step.minutes_per_unit ?? step.points_per_unit ?? 0,
+      `${field}.minutes_per_unit`,
+      errors,
+    );
+    const expected_duration_days = parsePositiveInteger(
+      step.expected_duration_days ?? 1,
+      `${field}.expected_duration_days`,
+      errors,
+    );
+    const dependency_lag_days = parseNonNegativeInteger(
+      step.dependency_lag_days ?? 0,
+      `${field}.dependency_lag_days`,
+      errors,
+    );
+    const requires_milling_machine =
+      typeof step.requires_milling_machine === "boolean"
+        ? step.requires_milling_machine
+        : false;
 
     if (!id) {
       addError(errors, `${field}.id`, "Step id is required.");
@@ -145,9 +205,27 @@ export function parseWorkflowJson(
       addError(errors, `${field}.dependsOn`, "Step cannot depend on itself.");
     }
 
-    if (!id || !process_id) return;
+    if (
+      !id ||
+      !process_id ||
+      fixed_minutes === null ||
+      minutes_per_unit === null ||
+      expected_duration_days === null ||
+      dependency_lag_days === null
+    ) {
+      return;
+    }
 
-    steps.push({ id, process_id, dependsOn });
+    steps.push({
+      id,
+      process_id,
+      dependsOn,
+      fixed_minutes,
+      minutes_per_unit,
+      expected_duration_days,
+      dependency_lag_days,
+      requires_milling_machine,
+    });
   });
 
   steps.forEach((step, index) => {
@@ -165,6 +243,69 @@ export function parseWorkflowJson(
   addCycleErrors(steps, errors);
 
   return { steps };
+}
+
+export function normalizeWorkflow(value: unknown): ServiceTypeWorkflow {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return emptyWorkflow;
+  }
+
+  const steps = Array.isArray((value as { steps?: unknown }).steps)
+    ? (value as { steps: unknown[] }).steps
+    : [];
+
+  return {
+    steps: steps.flatMap((item) => {
+      if (!item || typeof item !== "object" || Array.isArray(item)) {
+        return [];
+      }
+
+      const step = item as Record<string, unknown>;
+      const id = optionalString(step.id);
+      const process_id = optionalString(step.process_id);
+      const dependsOn = Array.isArray(step.dependsOn)
+        ? step.dependsOn
+            .map((dependency) => optionalString(dependency))
+            .filter((dependency): dependency is string => Boolean(dependency))
+        : [];
+
+      if (!id || !process_id) {
+        return [];
+      }
+
+      return [
+        {
+          id,
+          process_id,
+          dependsOn,
+          fixed_minutes:
+            typeof (step.fixed_minutes ?? step.fixed_points) === "number" &&
+            Number.isInteger(step.fixed_minutes ?? step.fixed_points)
+              ? Math.max(0, Number(step.fixed_minutes ?? step.fixed_points))
+              : 1,
+          minutes_per_unit:
+            typeof (step.minutes_per_unit ?? step.points_per_unit) === "number" &&
+            Number.isInteger(step.minutes_per_unit ?? step.points_per_unit)
+              ? Math.max(
+                  0,
+                  Number(step.minutes_per_unit ?? step.points_per_unit),
+                )
+              : 0,
+          expected_duration_days:
+            typeof step.expected_duration_days === "number" &&
+            Number.isInteger(step.expected_duration_days)
+              ? Math.max(1, step.expected_duration_days)
+              : 1,
+          dependency_lag_days:
+            typeof step.dependency_lag_days === "number" &&
+            Number.isInteger(step.dependency_lag_days)
+              ? Math.max(0, step.dependency_lag_days)
+              : 0,
+          requires_milling_machine: step.requires_milling_machine === true,
+        },
+      ];
+    }),
+  };
 }
 
 function parseMoney(
@@ -201,6 +342,16 @@ function parseMoney(
   return parsed.toFixed(2);
 }
 
+function parseOptionalNonNegativeInteger(
+  value: unknown,
+  field: string,
+  errors: Record<string, string[]>,
+) {
+  if (value === undefined) return undefined;
+  if (value === null || value === "") return null;
+  return parseNonNegativeInteger(value, field, errors);
+}
+
 function parseServiceTypeInput(
   payload: Record<string, unknown>,
   options: { requireName: boolean },
@@ -216,6 +367,12 @@ function parseServiceTypeInput(
   if (options.requireName && base_price === undefined) {
     addError(errors, "base_price", "Price is required.");
   }
+
+  const delivery_buffer_days = parseOptionalNonNegativeInteger(
+    payload.delivery_buffer_days,
+    "delivery_buffer_days",
+    errors,
+  );
 
   if (payload.processes !== undefined) {
     addError(
@@ -236,6 +393,9 @@ function parseServiceTypeInput(
     data: {
       name,
       base_price,
+      ...(delivery_buffer_days !== undefined
+        ? { delivery_buffer_days }
+        : {}),
       notes: optionalString(payload.notes),
       is_active: payload.is_active,
       workflow_json,

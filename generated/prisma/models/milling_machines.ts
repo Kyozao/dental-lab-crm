@@ -20,8 +20,18 @@ export type milling_machinesModel = runtime.Types.Result.DefaultSelection<Prisma
 
 export type AggregateMilling_machines = {
   _count: Milling_machinesCountAggregateOutputType | null
+  _avg: Milling_machinesAvgAggregateOutputType | null
+  _sum: Milling_machinesSumAggregateOutputType | null
   _min: Milling_machinesMinAggregateOutputType | null
   _max: Milling_machinesMaxAggregateOutputType | null
+}
+
+export type Milling_machinesAvgAggregateOutputType = {
+  productivity_points_per_hour: runtime.Decimal | null
+}
+
+export type Milling_machinesSumAggregateOutputType = {
+  productivity_points_per_hour: runtime.Decimal | null
 }
 
 export type Milling_machinesMinAggregateOutputType = {
@@ -31,6 +41,7 @@ export type Milling_machinesMinAggregateOutputType = {
   serial_number: string | null
   model: string | null
   status: $Enums.MillingMachineStatus | null
+  productivity_points_per_hour: runtime.Decimal | null
   status_reason: string | null
   installed_at: Date | null
   removed_at: Date | null
@@ -48,6 +59,7 @@ export type Milling_machinesMaxAggregateOutputType = {
   serial_number: string | null
   model: string | null
   status: $Enums.MillingMachineStatus | null
+  productivity_points_per_hour: runtime.Decimal | null
   status_reason: string | null
   installed_at: Date | null
   removed_at: Date | null
@@ -65,6 +77,7 @@ export type Milling_machinesCountAggregateOutputType = {
   serial_number: number
   model: number
   status: number
+  productivity_points_per_hour: number
   status_reason: number
   installed_at: number
   removed_at: number
@@ -77,6 +90,14 @@ export type Milling_machinesCountAggregateOutputType = {
 }
 
 
+export type Milling_machinesAvgAggregateInputType = {
+  productivity_points_per_hour?: true
+}
+
+export type Milling_machinesSumAggregateInputType = {
+  productivity_points_per_hour?: true
+}
+
 export type Milling_machinesMinAggregateInputType = {
   id?: true
   lab_id?: true
@@ -84,6 +105,7 @@ export type Milling_machinesMinAggregateInputType = {
   serial_number?: true
   model?: true
   status?: true
+  productivity_points_per_hour?: true
   status_reason?: true
   installed_at?: true
   removed_at?: true
@@ -101,6 +123,7 @@ export type Milling_machinesMaxAggregateInputType = {
   serial_number?: true
   model?: true
   status?: true
+  productivity_points_per_hour?: true
   status_reason?: true
   installed_at?: true
   removed_at?: true
@@ -118,6 +141,7 @@ export type Milling_machinesCountAggregateInputType = {
   serial_number?: true
   model?: true
   status?: true
+  productivity_points_per_hour?: true
   status_reason?: true
   installed_at?: true
   removed_at?: true
@@ -167,6 +191,18 @@ export type Milling_machinesAggregateArgs<ExtArgs extends runtime.Types.Extensio
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: Milling_machinesAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: Milling_machinesSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: Milling_machinesMinAggregateInputType
@@ -197,6 +233,8 @@ export type milling_machinesGroupByArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   _count?: Milling_machinesCountAggregateInputType | true
+  _avg?: Milling_machinesAvgAggregateInputType
+  _sum?: Milling_machinesSumAggregateInputType
   _min?: Milling_machinesMinAggregateInputType
   _max?: Milling_machinesMaxAggregateInputType
 }
@@ -208,6 +246,7 @@ export type Milling_machinesGroupByOutputType = {
   serial_number: string | null
   model: string | null
   status: $Enums.MillingMachineStatus
+  productivity_points_per_hour: runtime.Decimal
   status_reason: string | null
   installed_at: Date | null
   removed_at: Date | null
@@ -217,6 +256,8 @@ export type Milling_machinesGroupByOutputType = {
   created_at: Date
   updated_at: Date
   _count: Milling_machinesCountAggregateOutputType | null
+  _avg: Milling_machinesAvgAggregateOutputType | null
+  _sum: Milling_machinesSumAggregateOutputType | null
   _min: Milling_machinesMinAggregateOutputType | null
   _max: Milling_machinesMaxAggregateOutputType | null
 }
@@ -246,6 +287,7 @@ export type milling_machinesWhereInput = {
   serial_number?: Prisma.StringNullableFilter<"milling_machines"> | string | null
   model?: Prisma.StringNullableFilter<"milling_machines"> | string | null
   status?: Prisma.EnumMillingMachineStatusFilter<"milling_machines"> | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFilter<"milling_machines"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: Prisma.StringNullableFilter<"milling_machines"> | string | null
   installed_at?: Prisma.DateTimeNullableFilter<"milling_machines"> | Date | string | null
   removed_at?: Prisma.DateTimeNullableFilter<"milling_machines"> | Date | string | null
@@ -258,6 +300,10 @@ export type milling_machinesWhereInput = {
   case_millings?: Prisma.Case_millingsListRelationFilter
   milling_drills?: Prisma.Milling_drillsListRelationFilter
   machine_slots?: Prisma.Milling_machine_slotsListRelationFilter
+  planned_case_processes?: Prisma.Case_processesListRelationFilter
+  scheduleAllocations?: Prisma.Case_process_schedule_allocationsListRelationFilter
+  scheduleShifts?: Prisma.Milling_machine_schedule_shiftsListRelationFilter
+  scheduleExceptions?: Prisma.Milling_machine_schedule_exceptionsListRelationFilter
 }
 
 export type milling_machinesOrderByWithRelationInput = {
@@ -267,6 +313,7 @@ export type milling_machinesOrderByWithRelationInput = {
   serial_number?: Prisma.SortOrderInput | Prisma.SortOrder
   model?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  productivity_points_per_hour?: Prisma.SortOrder
   status_reason?: Prisma.SortOrderInput | Prisma.SortOrder
   installed_at?: Prisma.SortOrderInput | Prisma.SortOrder
   removed_at?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -279,6 +326,10 @@ export type milling_machinesOrderByWithRelationInput = {
   case_millings?: Prisma.case_millingsOrderByRelationAggregateInput
   milling_drills?: Prisma.milling_drillsOrderByRelationAggregateInput
   machine_slots?: Prisma.milling_machine_slotsOrderByRelationAggregateInput
+  planned_case_processes?: Prisma.case_processesOrderByRelationAggregateInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsOrderByRelationAggregateInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsOrderByRelationAggregateInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsOrderByRelationAggregateInput
 }
 
 export type milling_machinesWhereUniqueInput = Prisma.AtLeast<{
@@ -293,6 +344,7 @@ export type milling_machinesWhereUniqueInput = Prisma.AtLeast<{
   serial_number?: Prisma.StringNullableFilter<"milling_machines"> | string | null
   model?: Prisma.StringNullableFilter<"milling_machines"> | string | null
   status?: Prisma.EnumMillingMachineStatusFilter<"milling_machines"> | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFilter<"milling_machines"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: Prisma.StringNullableFilter<"milling_machines"> | string | null
   installed_at?: Prisma.DateTimeNullableFilter<"milling_machines"> | Date | string | null
   removed_at?: Prisma.DateTimeNullableFilter<"milling_machines"> | Date | string | null
@@ -305,6 +357,10 @@ export type milling_machinesWhereUniqueInput = Prisma.AtLeast<{
   case_millings?: Prisma.Case_millingsListRelationFilter
   milling_drills?: Prisma.Milling_drillsListRelationFilter
   machine_slots?: Prisma.Milling_machine_slotsListRelationFilter
+  planned_case_processes?: Prisma.Case_processesListRelationFilter
+  scheduleAllocations?: Prisma.Case_process_schedule_allocationsListRelationFilter
+  scheduleShifts?: Prisma.Milling_machine_schedule_shiftsListRelationFilter
+  scheduleExceptions?: Prisma.Milling_machine_schedule_exceptionsListRelationFilter
 }, "id" | "lab_id_name" | "lab_id_serial_number">
 
 export type milling_machinesOrderByWithAggregationInput = {
@@ -314,6 +370,7 @@ export type milling_machinesOrderByWithAggregationInput = {
   serial_number?: Prisma.SortOrderInput | Prisma.SortOrder
   model?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  productivity_points_per_hour?: Prisma.SortOrder
   status_reason?: Prisma.SortOrderInput | Prisma.SortOrder
   installed_at?: Prisma.SortOrderInput | Prisma.SortOrder
   removed_at?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -323,8 +380,10 @@ export type milling_machinesOrderByWithAggregationInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.milling_machinesCountOrderByAggregateInput
+  _avg?: Prisma.milling_machinesAvgOrderByAggregateInput
   _max?: Prisma.milling_machinesMaxOrderByAggregateInput
   _min?: Prisma.milling_machinesMinOrderByAggregateInput
+  _sum?: Prisma.milling_machinesSumOrderByAggregateInput
 }
 
 export type milling_machinesScalarWhereWithAggregatesInput = {
@@ -337,6 +396,7 @@ export type milling_machinesScalarWhereWithAggregatesInput = {
   serial_number?: Prisma.StringNullableWithAggregatesFilter<"milling_machines"> | string | null
   model?: Prisma.StringNullableWithAggregatesFilter<"milling_machines"> | string | null
   status?: Prisma.EnumMillingMachineStatusWithAggregatesFilter<"milling_machines"> | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalWithAggregatesFilter<"milling_machines"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: Prisma.StringNullableWithAggregatesFilter<"milling_machines"> | string | null
   installed_at?: Prisma.DateTimeNullableWithAggregatesFilter<"milling_machines"> | Date | string | null
   removed_at?: Prisma.DateTimeNullableWithAggregatesFilter<"milling_machines"> | Date | string | null
@@ -353,6 +413,7 @@ export type milling_machinesCreateInput = {
   serial_number?: string | null
   model?: string | null
   status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: string | null
   installed_at?: Date | string | null
   removed_at?: Date | string | null
@@ -365,6 +426,10 @@ export type milling_machinesCreateInput = {
   case_millings?: Prisma.case_millingsCreateNestedManyWithoutMilling_machinesInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutMilling_machinesInput
   machine_slots?: Prisma.milling_machine_slotsCreateNestedManyWithoutMilling_machinesInput
+  planned_case_processes?: Prisma.case_processesCreateNestedManyWithoutPlannedMillingMachineInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsCreateNestedManyWithoutMillingMachineInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsCreateNestedManyWithoutMillingMachineInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsCreateNestedManyWithoutMillingMachineInput
 }
 
 export type milling_machinesUncheckedCreateInput = {
@@ -374,6 +439,7 @@ export type milling_machinesUncheckedCreateInput = {
   serial_number?: string | null
   model?: string | null
   status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: string | null
   installed_at?: Date | string | null
   removed_at?: Date | string | null
@@ -385,6 +451,10 @@ export type milling_machinesUncheckedCreateInput = {
   case_millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutMilling_machinesInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutMilling_machinesInput
   machine_slots?: Prisma.milling_machine_slotsUncheckedCreateNestedManyWithoutMilling_machinesInput
+  planned_case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutPlannedMillingMachineInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedCreateNestedManyWithoutMillingMachineInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUncheckedCreateNestedManyWithoutMillingMachineInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUncheckedCreateNestedManyWithoutMillingMachineInput
 }
 
 export type milling_machinesUpdateInput = {
@@ -393,6 +463,7 @@ export type milling_machinesUpdateInput = {
   serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -405,6 +476,10 @@ export type milling_machinesUpdateInput = {
   case_millings?: Prisma.case_millingsUpdateManyWithoutMilling_machinesNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutMilling_machinesNestedInput
   machine_slots?: Prisma.milling_machine_slotsUpdateManyWithoutMilling_machinesNestedInput
+  planned_case_processes?: Prisma.case_processesUpdateManyWithoutPlannedMillingMachineNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUpdateManyWithoutMillingMachineNestedInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUpdateManyWithoutMillingMachineNestedInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUpdateManyWithoutMillingMachineNestedInput
 }
 
 export type milling_machinesUncheckedUpdateInput = {
@@ -414,6 +489,7 @@ export type milling_machinesUncheckedUpdateInput = {
   serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -425,6 +501,10 @@ export type milling_machinesUncheckedUpdateInput = {
   case_millings?: Prisma.case_millingsUncheckedUpdateManyWithoutMilling_machinesNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutMilling_machinesNestedInput
   machine_slots?: Prisma.milling_machine_slotsUncheckedUpdateManyWithoutMilling_machinesNestedInput
+  planned_case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutPlannedMillingMachineNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedUpdateManyWithoutMillingMachineNestedInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUncheckedUpdateManyWithoutMillingMachineNestedInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUncheckedUpdateManyWithoutMillingMachineNestedInput
 }
 
 export type milling_machinesCreateManyInput = {
@@ -434,6 +514,7 @@ export type milling_machinesCreateManyInput = {
   serial_number?: string | null
   model?: string | null
   status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: string | null
   installed_at?: Date | string | null
   removed_at?: Date | string | null
@@ -450,6 +531,7 @@ export type milling_machinesUpdateManyMutationInput = {
   serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -467,6 +549,7 @@ export type milling_machinesUncheckedUpdateManyInput = {
   serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -509,6 +592,7 @@ export type milling_machinesCountOrderByAggregateInput = {
   serial_number?: Prisma.SortOrder
   model?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  productivity_points_per_hour?: Prisma.SortOrder
   status_reason?: Prisma.SortOrder
   installed_at?: Prisma.SortOrder
   removed_at?: Prisma.SortOrder
@@ -519,6 +603,10 @@ export type milling_machinesCountOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
 }
 
+export type milling_machinesAvgOrderByAggregateInput = {
+  productivity_points_per_hour?: Prisma.SortOrder
+}
+
 export type milling_machinesMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   lab_id?: Prisma.SortOrder
@@ -526,6 +614,7 @@ export type milling_machinesMaxOrderByAggregateInput = {
   serial_number?: Prisma.SortOrder
   model?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  productivity_points_per_hour?: Prisma.SortOrder
   status_reason?: Prisma.SortOrder
   installed_at?: Prisma.SortOrder
   removed_at?: Prisma.SortOrder
@@ -543,6 +632,7 @@ export type milling_machinesMinOrderByAggregateInput = {
   serial_number?: Prisma.SortOrder
   model?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  productivity_points_per_hour?: Prisma.SortOrder
   status_reason?: Prisma.SortOrder
   installed_at?: Prisma.SortOrder
   removed_at?: Prisma.SortOrder
@@ -551,6 +641,10 @@ export type milling_machinesMinOrderByAggregateInput = {
   notes?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+}
+
+export type milling_machinesSumOrderByAggregateInput = {
+  productivity_points_per_hour?: Prisma.SortOrder
 }
 
 export type Milling_machinesScalarRelationFilter = {
@@ -650,12 +744,73 @@ export type milling_machinesUpdateOneWithoutCase_millingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.milling_machinesUpdateToOneWithWhereWithoutCase_millingsInput, Prisma.milling_machinesUpdateWithoutCase_millingsInput>, Prisma.milling_machinesUncheckedUpdateWithoutCase_millingsInput>
 }
 
+export type milling_machinesCreateNestedOneWithoutPlanned_case_processesInput = {
+  create?: Prisma.XOR<Prisma.milling_machinesCreateWithoutPlanned_case_processesInput, Prisma.milling_machinesUncheckedCreateWithoutPlanned_case_processesInput>
+  connectOrCreate?: Prisma.milling_machinesCreateOrConnectWithoutPlanned_case_processesInput
+  connect?: Prisma.milling_machinesWhereUniqueInput
+}
+
+export type milling_machinesUpdateOneWithoutPlanned_case_processesNestedInput = {
+  create?: Prisma.XOR<Prisma.milling_machinesCreateWithoutPlanned_case_processesInput, Prisma.milling_machinesUncheckedCreateWithoutPlanned_case_processesInput>
+  connectOrCreate?: Prisma.milling_machinesCreateOrConnectWithoutPlanned_case_processesInput
+  upsert?: Prisma.milling_machinesUpsertWithoutPlanned_case_processesInput
+  disconnect?: Prisma.milling_machinesWhereInput | boolean
+  delete?: Prisma.milling_machinesWhereInput | boolean
+  connect?: Prisma.milling_machinesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.milling_machinesUpdateToOneWithWhereWithoutPlanned_case_processesInput, Prisma.milling_machinesUpdateWithoutPlanned_case_processesInput>, Prisma.milling_machinesUncheckedUpdateWithoutPlanned_case_processesInput>
+}
+
+export type milling_machinesCreateNestedOneWithoutScheduleAllocationsInput = {
+  create?: Prisma.XOR<Prisma.milling_machinesCreateWithoutScheduleAllocationsInput, Prisma.milling_machinesUncheckedCreateWithoutScheduleAllocationsInput>
+  connectOrCreate?: Prisma.milling_machinesCreateOrConnectWithoutScheduleAllocationsInput
+  connect?: Prisma.milling_machinesWhereUniqueInput
+}
+
+export type milling_machinesUpdateOneWithoutScheduleAllocationsNestedInput = {
+  create?: Prisma.XOR<Prisma.milling_machinesCreateWithoutScheduleAllocationsInput, Prisma.milling_machinesUncheckedCreateWithoutScheduleAllocationsInput>
+  connectOrCreate?: Prisma.milling_machinesCreateOrConnectWithoutScheduleAllocationsInput
+  upsert?: Prisma.milling_machinesUpsertWithoutScheduleAllocationsInput
+  disconnect?: Prisma.milling_machinesWhereInput | boolean
+  delete?: Prisma.milling_machinesWhereInput | boolean
+  connect?: Prisma.milling_machinesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.milling_machinesUpdateToOneWithWhereWithoutScheduleAllocationsInput, Prisma.milling_machinesUpdateWithoutScheduleAllocationsInput>, Prisma.milling_machinesUncheckedUpdateWithoutScheduleAllocationsInput>
+}
+
+export type milling_machinesCreateNestedOneWithoutScheduleShiftsInput = {
+  create?: Prisma.XOR<Prisma.milling_machinesCreateWithoutScheduleShiftsInput, Prisma.milling_machinesUncheckedCreateWithoutScheduleShiftsInput>
+  connectOrCreate?: Prisma.milling_machinesCreateOrConnectWithoutScheduleShiftsInput
+  connect?: Prisma.milling_machinesWhereUniqueInput
+}
+
+export type milling_machinesUpdateOneRequiredWithoutScheduleShiftsNestedInput = {
+  create?: Prisma.XOR<Prisma.milling_machinesCreateWithoutScheduleShiftsInput, Prisma.milling_machinesUncheckedCreateWithoutScheduleShiftsInput>
+  connectOrCreate?: Prisma.milling_machinesCreateOrConnectWithoutScheduleShiftsInput
+  upsert?: Prisma.milling_machinesUpsertWithoutScheduleShiftsInput
+  connect?: Prisma.milling_machinesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.milling_machinesUpdateToOneWithWhereWithoutScheduleShiftsInput, Prisma.milling_machinesUpdateWithoutScheduleShiftsInput>, Prisma.milling_machinesUncheckedUpdateWithoutScheduleShiftsInput>
+}
+
+export type milling_machinesCreateNestedOneWithoutScheduleExceptionsInput = {
+  create?: Prisma.XOR<Prisma.milling_machinesCreateWithoutScheduleExceptionsInput, Prisma.milling_machinesUncheckedCreateWithoutScheduleExceptionsInput>
+  connectOrCreate?: Prisma.milling_machinesCreateOrConnectWithoutScheduleExceptionsInput
+  connect?: Prisma.milling_machinesWhereUniqueInput
+}
+
+export type milling_machinesUpdateOneRequiredWithoutScheduleExceptionsNestedInput = {
+  create?: Prisma.XOR<Prisma.milling_machinesCreateWithoutScheduleExceptionsInput, Prisma.milling_machinesUncheckedCreateWithoutScheduleExceptionsInput>
+  connectOrCreate?: Prisma.milling_machinesCreateOrConnectWithoutScheduleExceptionsInput
+  upsert?: Prisma.milling_machinesUpsertWithoutScheduleExceptionsInput
+  connect?: Prisma.milling_machinesWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.milling_machinesUpdateToOneWithWhereWithoutScheduleExceptionsInput, Prisma.milling_machinesUpdateWithoutScheduleExceptionsInput>, Prisma.milling_machinesUncheckedUpdateWithoutScheduleExceptionsInput>
+}
+
 export type milling_machinesCreateWithoutLabsInput = {
   id?: string
   name: string
   serial_number?: string | null
   model?: string | null
   status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: string | null
   installed_at?: Date | string | null
   removed_at?: Date | string | null
@@ -667,6 +822,10 @@ export type milling_machinesCreateWithoutLabsInput = {
   case_millings?: Prisma.case_millingsCreateNestedManyWithoutMilling_machinesInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutMilling_machinesInput
   machine_slots?: Prisma.milling_machine_slotsCreateNestedManyWithoutMilling_machinesInput
+  planned_case_processes?: Prisma.case_processesCreateNestedManyWithoutPlannedMillingMachineInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsCreateNestedManyWithoutMillingMachineInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsCreateNestedManyWithoutMillingMachineInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsCreateNestedManyWithoutMillingMachineInput
 }
 
 export type milling_machinesUncheckedCreateWithoutLabsInput = {
@@ -675,6 +834,7 @@ export type milling_machinesUncheckedCreateWithoutLabsInput = {
   serial_number?: string | null
   model?: string | null
   status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: string | null
   installed_at?: Date | string | null
   removed_at?: Date | string | null
@@ -686,6 +846,10 @@ export type milling_machinesUncheckedCreateWithoutLabsInput = {
   case_millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutMilling_machinesInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutMilling_machinesInput
   machine_slots?: Prisma.milling_machine_slotsUncheckedCreateNestedManyWithoutMilling_machinesInput
+  planned_case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutPlannedMillingMachineInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedCreateNestedManyWithoutMillingMachineInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUncheckedCreateNestedManyWithoutMillingMachineInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUncheckedCreateNestedManyWithoutMillingMachineInput
 }
 
 export type milling_machinesCreateOrConnectWithoutLabsInput = {
@@ -724,6 +888,7 @@ export type milling_machinesScalarWhereInput = {
   serial_number?: Prisma.StringNullableFilter<"milling_machines"> | string | null
   model?: Prisma.StringNullableFilter<"milling_machines"> | string | null
   status?: Prisma.EnumMillingMachineStatusFilter<"milling_machines"> | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFilter<"milling_machines"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: Prisma.StringNullableFilter<"milling_machines"> | string | null
   installed_at?: Prisma.DateTimeNullableFilter<"milling_machines"> | Date | string | null
   removed_at?: Prisma.DateTimeNullableFilter<"milling_machines"> | Date | string | null
@@ -740,6 +905,7 @@ export type milling_machinesCreateWithoutMilling_drillsInput = {
   serial_number?: string | null
   model?: string | null
   status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: string | null
   installed_at?: Date | string | null
   removed_at?: Date | string | null
@@ -751,6 +917,10 @@ export type milling_machinesCreateWithoutMilling_drillsInput = {
   labs: Prisma.labsCreateNestedOneWithoutMilling_machinesInput
   case_millings?: Prisma.case_millingsCreateNestedManyWithoutMilling_machinesInput
   machine_slots?: Prisma.milling_machine_slotsCreateNestedManyWithoutMilling_machinesInput
+  planned_case_processes?: Prisma.case_processesCreateNestedManyWithoutPlannedMillingMachineInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsCreateNestedManyWithoutMillingMachineInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsCreateNestedManyWithoutMillingMachineInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsCreateNestedManyWithoutMillingMachineInput
 }
 
 export type milling_machinesUncheckedCreateWithoutMilling_drillsInput = {
@@ -760,6 +930,7 @@ export type milling_machinesUncheckedCreateWithoutMilling_drillsInput = {
   serial_number?: string | null
   model?: string | null
   status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: string | null
   installed_at?: Date | string | null
   removed_at?: Date | string | null
@@ -770,6 +941,10 @@ export type milling_machinesUncheckedCreateWithoutMilling_drillsInput = {
   updated_at?: Date | string
   case_millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutMilling_machinesInput
   machine_slots?: Prisma.milling_machine_slotsUncheckedCreateNestedManyWithoutMilling_machinesInput
+  planned_case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutPlannedMillingMachineInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedCreateNestedManyWithoutMillingMachineInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUncheckedCreateNestedManyWithoutMillingMachineInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUncheckedCreateNestedManyWithoutMillingMachineInput
 }
 
 export type milling_machinesCreateOrConnectWithoutMilling_drillsInput = {
@@ -794,6 +969,7 @@ export type milling_machinesUpdateWithoutMilling_drillsInput = {
   serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -805,6 +981,10 @@ export type milling_machinesUpdateWithoutMilling_drillsInput = {
   labs?: Prisma.labsUpdateOneRequiredWithoutMilling_machinesNestedInput
   case_millings?: Prisma.case_millingsUpdateManyWithoutMilling_machinesNestedInput
   machine_slots?: Prisma.milling_machine_slotsUpdateManyWithoutMilling_machinesNestedInput
+  planned_case_processes?: Prisma.case_processesUpdateManyWithoutPlannedMillingMachineNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUpdateManyWithoutMillingMachineNestedInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUpdateManyWithoutMillingMachineNestedInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUpdateManyWithoutMillingMachineNestedInput
 }
 
 export type milling_machinesUncheckedUpdateWithoutMilling_drillsInput = {
@@ -814,6 +994,7 @@ export type milling_machinesUncheckedUpdateWithoutMilling_drillsInput = {
   serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -824,6 +1005,10 @@ export type milling_machinesUncheckedUpdateWithoutMilling_drillsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   case_millings?: Prisma.case_millingsUncheckedUpdateManyWithoutMilling_machinesNestedInput
   machine_slots?: Prisma.milling_machine_slotsUncheckedUpdateManyWithoutMilling_machinesNestedInput
+  planned_case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutPlannedMillingMachineNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedUpdateManyWithoutMillingMachineNestedInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUncheckedUpdateManyWithoutMillingMachineNestedInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUncheckedUpdateManyWithoutMillingMachineNestedInput
 }
 
 export type milling_machinesCreateWithoutMachine_slotsInput = {
@@ -832,6 +1017,7 @@ export type milling_machinesCreateWithoutMachine_slotsInput = {
   serial_number?: string | null
   model?: string | null
   status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: string | null
   installed_at?: Date | string | null
   removed_at?: Date | string | null
@@ -843,6 +1029,10 @@ export type milling_machinesCreateWithoutMachine_slotsInput = {
   labs: Prisma.labsCreateNestedOneWithoutMilling_machinesInput
   case_millings?: Prisma.case_millingsCreateNestedManyWithoutMilling_machinesInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutMilling_machinesInput
+  planned_case_processes?: Prisma.case_processesCreateNestedManyWithoutPlannedMillingMachineInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsCreateNestedManyWithoutMillingMachineInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsCreateNestedManyWithoutMillingMachineInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsCreateNestedManyWithoutMillingMachineInput
 }
 
 export type milling_machinesUncheckedCreateWithoutMachine_slotsInput = {
@@ -852,6 +1042,7 @@ export type milling_machinesUncheckedCreateWithoutMachine_slotsInput = {
   serial_number?: string | null
   model?: string | null
   status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: string | null
   installed_at?: Date | string | null
   removed_at?: Date | string | null
@@ -862,6 +1053,10 @@ export type milling_machinesUncheckedCreateWithoutMachine_slotsInput = {
   updated_at?: Date | string
   case_millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutMilling_machinesInput
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutMilling_machinesInput
+  planned_case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutPlannedMillingMachineInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedCreateNestedManyWithoutMillingMachineInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUncheckedCreateNestedManyWithoutMillingMachineInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUncheckedCreateNestedManyWithoutMillingMachineInput
 }
 
 export type milling_machinesCreateOrConnectWithoutMachine_slotsInput = {
@@ -886,6 +1081,7 @@ export type milling_machinesUpdateWithoutMachine_slotsInput = {
   serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -897,6 +1093,10 @@ export type milling_machinesUpdateWithoutMachine_slotsInput = {
   labs?: Prisma.labsUpdateOneRequiredWithoutMilling_machinesNestedInput
   case_millings?: Prisma.case_millingsUpdateManyWithoutMilling_machinesNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutMilling_machinesNestedInput
+  planned_case_processes?: Prisma.case_processesUpdateManyWithoutPlannedMillingMachineNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUpdateManyWithoutMillingMachineNestedInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUpdateManyWithoutMillingMachineNestedInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUpdateManyWithoutMillingMachineNestedInput
 }
 
 export type milling_machinesUncheckedUpdateWithoutMachine_slotsInput = {
@@ -906,6 +1106,7 @@ export type milling_machinesUncheckedUpdateWithoutMachine_slotsInput = {
   serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -916,6 +1117,10 @@ export type milling_machinesUncheckedUpdateWithoutMachine_slotsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   case_millings?: Prisma.case_millingsUncheckedUpdateManyWithoutMilling_machinesNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutMilling_machinesNestedInput
+  planned_case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutPlannedMillingMachineNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedUpdateManyWithoutMillingMachineNestedInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUncheckedUpdateManyWithoutMillingMachineNestedInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUncheckedUpdateManyWithoutMillingMachineNestedInput
 }
 
 export type milling_machinesCreateWithoutCase_millingsInput = {
@@ -924,6 +1129,7 @@ export type milling_machinesCreateWithoutCase_millingsInput = {
   serial_number?: string | null
   model?: string | null
   status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: string | null
   installed_at?: Date | string | null
   removed_at?: Date | string | null
@@ -935,6 +1141,10 @@ export type milling_machinesCreateWithoutCase_millingsInput = {
   labs: Prisma.labsCreateNestedOneWithoutMilling_machinesInput
   milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutMilling_machinesInput
   machine_slots?: Prisma.milling_machine_slotsCreateNestedManyWithoutMilling_machinesInput
+  planned_case_processes?: Prisma.case_processesCreateNestedManyWithoutPlannedMillingMachineInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsCreateNestedManyWithoutMillingMachineInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsCreateNestedManyWithoutMillingMachineInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsCreateNestedManyWithoutMillingMachineInput
 }
 
 export type milling_machinesUncheckedCreateWithoutCase_millingsInput = {
@@ -944,6 +1154,7 @@ export type milling_machinesUncheckedCreateWithoutCase_millingsInput = {
   serial_number?: string | null
   model?: string | null
   status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: string | null
   installed_at?: Date | string | null
   removed_at?: Date | string | null
@@ -954,6 +1165,10 @@ export type milling_machinesUncheckedCreateWithoutCase_millingsInput = {
   updated_at?: Date | string
   milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutMilling_machinesInput
   machine_slots?: Prisma.milling_machine_slotsUncheckedCreateNestedManyWithoutMilling_machinesInput
+  planned_case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutPlannedMillingMachineInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedCreateNestedManyWithoutMillingMachineInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUncheckedCreateNestedManyWithoutMillingMachineInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUncheckedCreateNestedManyWithoutMillingMachineInput
 }
 
 export type milling_machinesCreateOrConnectWithoutCase_millingsInput = {
@@ -978,6 +1193,7 @@ export type milling_machinesUpdateWithoutCase_millingsInput = {
   serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -989,6 +1205,10 @@ export type milling_machinesUpdateWithoutCase_millingsInput = {
   labs?: Prisma.labsUpdateOneRequiredWithoutMilling_machinesNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutMilling_machinesNestedInput
   machine_slots?: Prisma.milling_machine_slotsUpdateManyWithoutMilling_machinesNestedInput
+  planned_case_processes?: Prisma.case_processesUpdateManyWithoutPlannedMillingMachineNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUpdateManyWithoutMillingMachineNestedInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUpdateManyWithoutMillingMachineNestedInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUpdateManyWithoutMillingMachineNestedInput
 }
 
 export type milling_machinesUncheckedUpdateWithoutCase_millingsInput = {
@@ -998,6 +1218,7 @@ export type milling_machinesUncheckedUpdateWithoutCase_millingsInput = {
   serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1008,6 +1229,458 @@ export type milling_machinesUncheckedUpdateWithoutCase_millingsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutMilling_machinesNestedInput
   machine_slots?: Prisma.milling_machine_slotsUncheckedUpdateManyWithoutMilling_machinesNestedInput
+  planned_case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutPlannedMillingMachineNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedUpdateManyWithoutMillingMachineNestedInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUncheckedUpdateManyWithoutMillingMachineNestedInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUncheckedUpdateManyWithoutMillingMachineNestedInput
+}
+
+export type milling_machinesCreateWithoutPlanned_case_processesInput = {
+  id?: string
+  name: string
+  serial_number?: string | null
+  model?: string | null
+  status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status_reason?: string | null
+  installed_at?: Date | string | null
+  removed_at?: Date | string | null
+  last_maintenance_at?: Date | string | null
+  next_maintenance_due_at?: Date | string | null
+  notes?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutMilling_machinesInput
+  case_millings?: Prisma.case_millingsCreateNestedManyWithoutMilling_machinesInput
+  milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutMilling_machinesInput
+  machine_slots?: Prisma.milling_machine_slotsCreateNestedManyWithoutMilling_machinesInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsCreateNestedManyWithoutMillingMachineInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsCreateNestedManyWithoutMillingMachineInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsCreateNestedManyWithoutMillingMachineInput
+}
+
+export type milling_machinesUncheckedCreateWithoutPlanned_case_processesInput = {
+  id?: string
+  lab_id: string
+  name: string
+  serial_number?: string | null
+  model?: string | null
+  status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status_reason?: string | null
+  installed_at?: Date | string | null
+  removed_at?: Date | string | null
+  last_maintenance_at?: Date | string | null
+  next_maintenance_due_at?: Date | string | null
+  notes?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  case_millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutMilling_machinesInput
+  milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutMilling_machinesInput
+  machine_slots?: Prisma.milling_machine_slotsUncheckedCreateNestedManyWithoutMilling_machinesInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedCreateNestedManyWithoutMillingMachineInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUncheckedCreateNestedManyWithoutMillingMachineInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUncheckedCreateNestedManyWithoutMillingMachineInput
+}
+
+export type milling_machinesCreateOrConnectWithoutPlanned_case_processesInput = {
+  where: Prisma.milling_machinesWhereUniqueInput
+  create: Prisma.XOR<Prisma.milling_machinesCreateWithoutPlanned_case_processesInput, Prisma.milling_machinesUncheckedCreateWithoutPlanned_case_processesInput>
+}
+
+export type milling_machinesUpsertWithoutPlanned_case_processesInput = {
+  update: Prisma.XOR<Prisma.milling_machinesUpdateWithoutPlanned_case_processesInput, Prisma.milling_machinesUncheckedUpdateWithoutPlanned_case_processesInput>
+  create: Prisma.XOR<Prisma.milling_machinesCreateWithoutPlanned_case_processesInput, Prisma.milling_machinesUncheckedCreateWithoutPlanned_case_processesInput>
+  where?: Prisma.milling_machinesWhereInput
+}
+
+export type milling_machinesUpdateToOneWithWhereWithoutPlanned_case_processesInput = {
+  where?: Prisma.milling_machinesWhereInput
+  data: Prisma.XOR<Prisma.milling_machinesUpdateWithoutPlanned_case_processesInput, Prisma.milling_machinesUncheckedUpdateWithoutPlanned_case_processesInput>
+}
+
+export type milling_machinesUpdateWithoutPlanned_case_processesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  last_maintenance_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  next_maintenance_due_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutMilling_machinesNestedInput
+  case_millings?: Prisma.case_millingsUpdateManyWithoutMilling_machinesNestedInput
+  milling_drills?: Prisma.milling_drillsUpdateManyWithoutMilling_machinesNestedInput
+  machine_slots?: Prisma.milling_machine_slotsUpdateManyWithoutMilling_machinesNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUpdateManyWithoutMillingMachineNestedInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUpdateManyWithoutMillingMachineNestedInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUpdateManyWithoutMillingMachineNestedInput
+}
+
+export type milling_machinesUncheckedUpdateWithoutPlanned_case_processesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  last_maintenance_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  next_maintenance_due_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  case_millings?: Prisma.case_millingsUncheckedUpdateManyWithoutMilling_machinesNestedInput
+  milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutMilling_machinesNestedInput
+  machine_slots?: Prisma.milling_machine_slotsUncheckedUpdateManyWithoutMilling_machinesNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedUpdateManyWithoutMillingMachineNestedInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUncheckedUpdateManyWithoutMillingMachineNestedInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUncheckedUpdateManyWithoutMillingMachineNestedInput
+}
+
+export type milling_machinesCreateWithoutScheduleAllocationsInput = {
+  id?: string
+  name: string
+  serial_number?: string | null
+  model?: string | null
+  status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status_reason?: string | null
+  installed_at?: Date | string | null
+  removed_at?: Date | string | null
+  last_maintenance_at?: Date | string | null
+  next_maintenance_due_at?: Date | string | null
+  notes?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutMilling_machinesInput
+  case_millings?: Prisma.case_millingsCreateNestedManyWithoutMilling_machinesInput
+  milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutMilling_machinesInput
+  machine_slots?: Prisma.milling_machine_slotsCreateNestedManyWithoutMilling_machinesInput
+  planned_case_processes?: Prisma.case_processesCreateNestedManyWithoutPlannedMillingMachineInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsCreateNestedManyWithoutMillingMachineInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsCreateNestedManyWithoutMillingMachineInput
+}
+
+export type milling_machinesUncheckedCreateWithoutScheduleAllocationsInput = {
+  id?: string
+  lab_id: string
+  name: string
+  serial_number?: string | null
+  model?: string | null
+  status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status_reason?: string | null
+  installed_at?: Date | string | null
+  removed_at?: Date | string | null
+  last_maintenance_at?: Date | string | null
+  next_maintenance_due_at?: Date | string | null
+  notes?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  case_millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutMilling_machinesInput
+  milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutMilling_machinesInput
+  machine_slots?: Prisma.milling_machine_slotsUncheckedCreateNestedManyWithoutMilling_machinesInput
+  planned_case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutPlannedMillingMachineInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUncheckedCreateNestedManyWithoutMillingMachineInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUncheckedCreateNestedManyWithoutMillingMachineInput
+}
+
+export type milling_machinesCreateOrConnectWithoutScheduleAllocationsInput = {
+  where: Prisma.milling_machinesWhereUniqueInput
+  create: Prisma.XOR<Prisma.milling_machinesCreateWithoutScheduleAllocationsInput, Prisma.milling_machinesUncheckedCreateWithoutScheduleAllocationsInput>
+}
+
+export type milling_machinesUpsertWithoutScheduleAllocationsInput = {
+  update: Prisma.XOR<Prisma.milling_machinesUpdateWithoutScheduleAllocationsInput, Prisma.milling_machinesUncheckedUpdateWithoutScheduleAllocationsInput>
+  create: Prisma.XOR<Prisma.milling_machinesCreateWithoutScheduleAllocationsInput, Prisma.milling_machinesUncheckedCreateWithoutScheduleAllocationsInput>
+  where?: Prisma.milling_machinesWhereInput
+}
+
+export type milling_machinesUpdateToOneWithWhereWithoutScheduleAllocationsInput = {
+  where?: Prisma.milling_machinesWhereInput
+  data: Prisma.XOR<Prisma.milling_machinesUpdateWithoutScheduleAllocationsInput, Prisma.milling_machinesUncheckedUpdateWithoutScheduleAllocationsInput>
+}
+
+export type milling_machinesUpdateWithoutScheduleAllocationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  last_maintenance_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  next_maintenance_due_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutMilling_machinesNestedInput
+  case_millings?: Prisma.case_millingsUpdateManyWithoutMilling_machinesNestedInput
+  milling_drills?: Prisma.milling_drillsUpdateManyWithoutMilling_machinesNestedInput
+  machine_slots?: Prisma.milling_machine_slotsUpdateManyWithoutMilling_machinesNestedInput
+  planned_case_processes?: Prisma.case_processesUpdateManyWithoutPlannedMillingMachineNestedInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUpdateManyWithoutMillingMachineNestedInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUpdateManyWithoutMillingMachineNestedInput
+}
+
+export type milling_machinesUncheckedUpdateWithoutScheduleAllocationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  last_maintenance_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  next_maintenance_due_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  case_millings?: Prisma.case_millingsUncheckedUpdateManyWithoutMilling_machinesNestedInput
+  milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutMilling_machinesNestedInput
+  machine_slots?: Prisma.milling_machine_slotsUncheckedUpdateManyWithoutMilling_machinesNestedInput
+  planned_case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutPlannedMillingMachineNestedInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUncheckedUpdateManyWithoutMillingMachineNestedInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUncheckedUpdateManyWithoutMillingMachineNestedInput
+}
+
+export type milling_machinesCreateWithoutScheduleShiftsInput = {
+  id?: string
+  name: string
+  serial_number?: string | null
+  model?: string | null
+  status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status_reason?: string | null
+  installed_at?: Date | string | null
+  removed_at?: Date | string | null
+  last_maintenance_at?: Date | string | null
+  next_maintenance_due_at?: Date | string | null
+  notes?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutMilling_machinesInput
+  case_millings?: Prisma.case_millingsCreateNestedManyWithoutMilling_machinesInput
+  milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutMilling_machinesInput
+  machine_slots?: Prisma.milling_machine_slotsCreateNestedManyWithoutMilling_machinesInput
+  planned_case_processes?: Prisma.case_processesCreateNestedManyWithoutPlannedMillingMachineInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsCreateNestedManyWithoutMillingMachineInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsCreateNestedManyWithoutMillingMachineInput
+}
+
+export type milling_machinesUncheckedCreateWithoutScheduleShiftsInput = {
+  id?: string
+  lab_id: string
+  name: string
+  serial_number?: string | null
+  model?: string | null
+  status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status_reason?: string | null
+  installed_at?: Date | string | null
+  removed_at?: Date | string | null
+  last_maintenance_at?: Date | string | null
+  next_maintenance_due_at?: Date | string | null
+  notes?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  case_millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutMilling_machinesInput
+  milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutMilling_machinesInput
+  machine_slots?: Prisma.milling_machine_slotsUncheckedCreateNestedManyWithoutMilling_machinesInput
+  planned_case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutPlannedMillingMachineInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedCreateNestedManyWithoutMillingMachineInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUncheckedCreateNestedManyWithoutMillingMachineInput
+}
+
+export type milling_machinesCreateOrConnectWithoutScheduleShiftsInput = {
+  where: Prisma.milling_machinesWhereUniqueInput
+  create: Prisma.XOR<Prisma.milling_machinesCreateWithoutScheduleShiftsInput, Prisma.milling_machinesUncheckedCreateWithoutScheduleShiftsInput>
+}
+
+export type milling_machinesUpsertWithoutScheduleShiftsInput = {
+  update: Prisma.XOR<Prisma.milling_machinesUpdateWithoutScheduleShiftsInput, Prisma.milling_machinesUncheckedUpdateWithoutScheduleShiftsInput>
+  create: Prisma.XOR<Prisma.milling_machinesCreateWithoutScheduleShiftsInput, Prisma.milling_machinesUncheckedCreateWithoutScheduleShiftsInput>
+  where?: Prisma.milling_machinesWhereInput
+}
+
+export type milling_machinesUpdateToOneWithWhereWithoutScheduleShiftsInput = {
+  where?: Prisma.milling_machinesWhereInput
+  data: Prisma.XOR<Prisma.milling_machinesUpdateWithoutScheduleShiftsInput, Prisma.milling_machinesUncheckedUpdateWithoutScheduleShiftsInput>
+}
+
+export type milling_machinesUpdateWithoutScheduleShiftsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  last_maintenance_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  next_maintenance_due_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutMilling_machinesNestedInput
+  case_millings?: Prisma.case_millingsUpdateManyWithoutMilling_machinesNestedInput
+  milling_drills?: Prisma.milling_drillsUpdateManyWithoutMilling_machinesNestedInput
+  machine_slots?: Prisma.milling_machine_slotsUpdateManyWithoutMilling_machinesNestedInput
+  planned_case_processes?: Prisma.case_processesUpdateManyWithoutPlannedMillingMachineNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUpdateManyWithoutMillingMachineNestedInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUpdateManyWithoutMillingMachineNestedInput
+}
+
+export type milling_machinesUncheckedUpdateWithoutScheduleShiftsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  last_maintenance_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  next_maintenance_due_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  case_millings?: Prisma.case_millingsUncheckedUpdateManyWithoutMilling_machinesNestedInput
+  milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutMilling_machinesNestedInput
+  machine_slots?: Prisma.milling_machine_slotsUncheckedUpdateManyWithoutMilling_machinesNestedInput
+  planned_case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutPlannedMillingMachineNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedUpdateManyWithoutMillingMachineNestedInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUncheckedUpdateManyWithoutMillingMachineNestedInput
+}
+
+export type milling_machinesCreateWithoutScheduleExceptionsInput = {
+  id?: string
+  name: string
+  serial_number?: string | null
+  model?: string | null
+  status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status_reason?: string | null
+  installed_at?: Date | string | null
+  removed_at?: Date | string | null
+  last_maintenance_at?: Date | string | null
+  next_maintenance_due_at?: Date | string | null
+  notes?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  labs: Prisma.labsCreateNestedOneWithoutMilling_machinesInput
+  case_millings?: Prisma.case_millingsCreateNestedManyWithoutMilling_machinesInput
+  milling_drills?: Prisma.milling_drillsCreateNestedManyWithoutMilling_machinesInput
+  machine_slots?: Prisma.milling_machine_slotsCreateNestedManyWithoutMilling_machinesInput
+  planned_case_processes?: Prisma.case_processesCreateNestedManyWithoutPlannedMillingMachineInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsCreateNestedManyWithoutMillingMachineInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsCreateNestedManyWithoutMillingMachineInput
+}
+
+export type milling_machinesUncheckedCreateWithoutScheduleExceptionsInput = {
+  id?: string
+  lab_id: string
+  name: string
+  serial_number?: string | null
+  model?: string | null
+  status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  status_reason?: string | null
+  installed_at?: Date | string | null
+  removed_at?: Date | string | null
+  last_maintenance_at?: Date | string | null
+  next_maintenance_due_at?: Date | string | null
+  notes?: string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  case_millings?: Prisma.case_millingsUncheckedCreateNestedManyWithoutMilling_machinesInput
+  milling_drills?: Prisma.milling_drillsUncheckedCreateNestedManyWithoutMilling_machinesInput
+  machine_slots?: Prisma.milling_machine_slotsUncheckedCreateNestedManyWithoutMilling_machinesInput
+  planned_case_processes?: Prisma.case_processesUncheckedCreateNestedManyWithoutPlannedMillingMachineInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedCreateNestedManyWithoutMillingMachineInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUncheckedCreateNestedManyWithoutMillingMachineInput
+}
+
+export type milling_machinesCreateOrConnectWithoutScheduleExceptionsInput = {
+  where: Prisma.milling_machinesWhereUniqueInput
+  create: Prisma.XOR<Prisma.milling_machinesCreateWithoutScheduleExceptionsInput, Prisma.milling_machinesUncheckedCreateWithoutScheduleExceptionsInput>
+}
+
+export type milling_machinesUpsertWithoutScheduleExceptionsInput = {
+  update: Prisma.XOR<Prisma.milling_machinesUpdateWithoutScheduleExceptionsInput, Prisma.milling_machinesUncheckedUpdateWithoutScheduleExceptionsInput>
+  create: Prisma.XOR<Prisma.milling_machinesCreateWithoutScheduleExceptionsInput, Prisma.milling_machinesUncheckedCreateWithoutScheduleExceptionsInput>
+  where?: Prisma.milling_machinesWhereInput
+}
+
+export type milling_machinesUpdateToOneWithWhereWithoutScheduleExceptionsInput = {
+  where?: Prisma.milling_machinesWhereInput
+  data: Prisma.XOR<Prisma.milling_machinesUpdateWithoutScheduleExceptionsInput, Prisma.milling_machinesUncheckedUpdateWithoutScheduleExceptionsInput>
+}
+
+export type milling_machinesUpdateWithoutScheduleExceptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  last_maintenance_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  next_maintenance_due_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  labs?: Prisma.labsUpdateOneRequiredWithoutMilling_machinesNestedInput
+  case_millings?: Prisma.case_millingsUpdateManyWithoutMilling_machinesNestedInput
+  milling_drills?: Prisma.milling_drillsUpdateManyWithoutMilling_machinesNestedInput
+  machine_slots?: Prisma.milling_machine_slotsUpdateManyWithoutMilling_machinesNestedInput
+  planned_case_processes?: Prisma.case_processesUpdateManyWithoutPlannedMillingMachineNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUpdateManyWithoutMillingMachineNestedInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUpdateManyWithoutMillingMachineNestedInput
+}
+
+export type milling_machinesUncheckedUpdateWithoutScheduleExceptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  lab_id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  last_maintenance_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  next_maintenance_due_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  case_millings?: Prisma.case_millingsUncheckedUpdateManyWithoutMilling_machinesNestedInput
+  milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutMilling_machinesNestedInput
+  machine_slots?: Prisma.milling_machine_slotsUncheckedUpdateManyWithoutMilling_machinesNestedInput
+  planned_case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutPlannedMillingMachineNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedUpdateManyWithoutMillingMachineNestedInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUncheckedUpdateManyWithoutMillingMachineNestedInput
 }
 
 export type milling_machinesCreateManyLabsInput = {
@@ -1016,6 +1689,7 @@ export type milling_machinesCreateManyLabsInput = {
   serial_number?: string | null
   model?: string | null
   status?: $Enums.MillingMachineStatus
+  productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: string | null
   installed_at?: Date | string | null
   removed_at?: Date | string | null
@@ -1032,6 +1706,7 @@ export type milling_machinesUpdateWithoutLabsInput = {
   serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1043,6 +1718,10 @@ export type milling_machinesUpdateWithoutLabsInput = {
   case_millings?: Prisma.case_millingsUpdateManyWithoutMilling_machinesNestedInput
   milling_drills?: Prisma.milling_drillsUpdateManyWithoutMilling_machinesNestedInput
   machine_slots?: Prisma.milling_machine_slotsUpdateManyWithoutMilling_machinesNestedInput
+  planned_case_processes?: Prisma.case_processesUpdateManyWithoutPlannedMillingMachineNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUpdateManyWithoutMillingMachineNestedInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUpdateManyWithoutMillingMachineNestedInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUpdateManyWithoutMillingMachineNestedInput
 }
 
 export type milling_machinesUncheckedUpdateWithoutLabsInput = {
@@ -1051,6 +1730,7 @@ export type milling_machinesUncheckedUpdateWithoutLabsInput = {
   serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1062,6 +1742,10 @@ export type milling_machinesUncheckedUpdateWithoutLabsInput = {
   case_millings?: Prisma.case_millingsUncheckedUpdateManyWithoutMilling_machinesNestedInput
   milling_drills?: Prisma.milling_drillsUncheckedUpdateManyWithoutMilling_machinesNestedInput
   machine_slots?: Prisma.milling_machine_slotsUncheckedUpdateManyWithoutMilling_machinesNestedInput
+  planned_case_processes?: Prisma.case_processesUncheckedUpdateManyWithoutPlannedMillingMachineNestedInput
+  scheduleAllocations?: Prisma.case_process_schedule_allocationsUncheckedUpdateManyWithoutMillingMachineNestedInput
+  scheduleShifts?: Prisma.milling_machine_schedule_shiftsUncheckedUpdateManyWithoutMillingMachineNestedInput
+  scheduleExceptions?: Prisma.milling_machine_schedule_exceptionsUncheckedUpdateManyWithoutMillingMachineNestedInput
 }
 
 export type milling_machinesUncheckedUpdateManyWithoutLabsInput = {
@@ -1070,6 +1754,7 @@ export type milling_machinesUncheckedUpdateManyWithoutLabsInput = {
   serial_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   model?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumMillingMachineStatusFieldUpdateOperationsInput | $Enums.MillingMachineStatus
+  productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   installed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   removed_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1089,12 +1774,20 @@ export type Milling_machinesCountOutputType = {
   case_millings: number
   milling_drills: number
   machine_slots: number
+  planned_case_processes: number
+  scheduleAllocations: number
+  scheduleShifts: number
+  scheduleExceptions: number
 }
 
 export type Milling_machinesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   case_millings?: boolean | Milling_machinesCountOutputTypeCountCase_millingsArgs
   milling_drills?: boolean | Milling_machinesCountOutputTypeCountMilling_drillsArgs
   machine_slots?: boolean | Milling_machinesCountOutputTypeCountMachine_slotsArgs
+  planned_case_processes?: boolean | Milling_machinesCountOutputTypeCountPlanned_case_processesArgs
+  scheduleAllocations?: boolean | Milling_machinesCountOutputTypeCountScheduleAllocationsArgs
+  scheduleShifts?: boolean | Milling_machinesCountOutputTypeCountScheduleShiftsArgs
+  scheduleExceptions?: boolean | Milling_machinesCountOutputTypeCountScheduleExceptionsArgs
 }
 
 /**
@@ -1128,6 +1821,34 @@ export type Milling_machinesCountOutputTypeCountMachine_slotsArgs<ExtArgs extend
   where?: Prisma.milling_machine_slotsWhereInput
 }
 
+/**
+ * Milling_machinesCountOutputType without action
+ */
+export type Milling_machinesCountOutputTypeCountPlanned_case_processesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.case_processesWhereInput
+}
+
+/**
+ * Milling_machinesCountOutputType without action
+ */
+export type Milling_machinesCountOutputTypeCountScheduleAllocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.case_process_schedule_allocationsWhereInput
+}
+
+/**
+ * Milling_machinesCountOutputType without action
+ */
+export type Milling_machinesCountOutputTypeCountScheduleShiftsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.milling_machine_schedule_shiftsWhereInput
+}
+
+/**
+ * Milling_machinesCountOutputType without action
+ */
+export type Milling_machinesCountOutputTypeCountScheduleExceptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.milling_machine_schedule_exceptionsWhereInput
+}
+
 
 export type milling_machinesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1136,6 +1857,7 @@ export type milling_machinesSelect<ExtArgs extends runtime.Types.Extensions.Inte
   serial_number?: boolean
   model?: boolean
   status?: boolean
+  productivity_points_per_hour?: boolean
   status_reason?: boolean
   installed_at?: boolean
   removed_at?: boolean
@@ -1148,6 +1870,10 @@ export type milling_machinesSelect<ExtArgs extends runtime.Types.Extensions.Inte
   case_millings?: boolean | Prisma.milling_machines$case_millingsArgs<ExtArgs>
   milling_drills?: boolean | Prisma.milling_machines$milling_drillsArgs<ExtArgs>
   machine_slots?: boolean | Prisma.milling_machines$machine_slotsArgs<ExtArgs>
+  planned_case_processes?: boolean | Prisma.milling_machines$planned_case_processesArgs<ExtArgs>
+  scheduleAllocations?: boolean | Prisma.milling_machines$scheduleAllocationsArgs<ExtArgs>
+  scheduleShifts?: boolean | Prisma.milling_machines$scheduleShiftsArgs<ExtArgs>
+  scheduleExceptions?: boolean | Prisma.milling_machines$scheduleExceptionsArgs<ExtArgs>
   _count?: boolean | Prisma.Milling_machinesCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["milling_machines"]>
 
@@ -1158,6 +1884,7 @@ export type milling_machinesSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   serial_number?: boolean
   model?: boolean
   status?: boolean
+  productivity_points_per_hour?: boolean
   status_reason?: boolean
   installed_at?: boolean
   removed_at?: boolean
@@ -1176,6 +1903,7 @@ export type milling_machinesSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   serial_number?: boolean
   model?: boolean
   status?: boolean
+  productivity_points_per_hour?: boolean
   status_reason?: boolean
   installed_at?: boolean
   removed_at?: boolean
@@ -1194,6 +1922,7 @@ export type milling_machinesSelectScalar = {
   serial_number?: boolean
   model?: boolean
   status?: boolean
+  productivity_points_per_hour?: boolean
   status_reason?: boolean
   installed_at?: boolean
   removed_at?: boolean
@@ -1204,12 +1933,16 @@ export type milling_machinesSelectScalar = {
   updated_at?: boolean
 }
 
-export type milling_machinesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "name" | "serial_number" | "model" | "status" | "status_reason" | "installed_at" | "removed_at" | "last_maintenance_at" | "next_maintenance_due_at" | "notes" | "created_at" | "updated_at", ExtArgs["result"]["milling_machines"]>
+export type milling_machinesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "name" | "serial_number" | "model" | "status" | "productivity_points_per_hour" | "status_reason" | "installed_at" | "removed_at" | "last_maintenance_at" | "next_maintenance_due_at" | "notes" | "created_at" | "updated_at", ExtArgs["result"]["milling_machines"]>
 export type milling_machinesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   case_millings?: boolean | Prisma.milling_machines$case_millingsArgs<ExtArgs>
   milling_drills?: boolean | Prisma.milling_machines$milling_drillsArgs<ExtArgs>
   machine_slots?: boolean | Prisma.milling_machines$machine_slotsArgs<ExtArgs>
+  planned_case_processes?: boolean | Prisma.milling_machines$planned_case_processesArgs<ExtArgs>
+  scheduleAllocations?: boolean | Prisma.milling_machines$scheduleAllocationsArgs<ExtArgs>
+  scheduleShifts?: boolean | Prisma.milling_machines$scheduleShiftsArgs<ExtArgs>
+  scheduleExceptions?: boolean | Prisma.milling_machines$scheduleExceptionsArgs<ExtArgs>
   _count?: boolean | Prisma.Milling_machinesCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type milling_machinesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1226,6 +1959,10 @@ export type $milling_machinesPayload<ExtArgs extends runtime.Types.Extensions.In
     case_millings: Prisma.$case_millingsPayload<ExtArgs>[]
     milling_drills: Prisma.$milling_drillsPayload<ExtArgs>[]
     machine_slots: Prisma.$milling_machine_slotsPayload<ExtArgs>[]
+    planned_case_processes: Prisma.$case_processesPayload<ExtArgs>[]
+    scheduleAllocations: Prisma.$case_process_schedule_allocationsPayload<ExtArgs>[]
+    scheduleShifts: Prisma.$milling_machine_schedule_shiftsPayload<ExtArgs>[]
+    scheduleExceptions: Prisma.$milling_machine_schedule_exceptionsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1234,6 +1971,7 @@ export type $milling_machinesPayload<ExtArgs extends runtime.Types.Extensions.In
     serial_number: string | null
     model: string | null
     status: $Enums.MillingMachineStatus
+    productivity_points_per_hour: runtime.Decimal
     status_reason: string | null
     installed_at: Date | null
     removed_at: Date | null
@@ -1640,6 +2378,10 @@ export interface Prisma__milling_machinesClient<T, Null = never, ExtArgs extends
   case_millings<T extends Prisma.milling_machines$case_millingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.milling_machines$case_millingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_millingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   milling_drills<T extends Prisma.milling_machines$milling_drillsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.milling_machines$milling_drillsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$milling_drillsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   machine_slots<T extends Prisma.milling_machines$machine_slotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.milling_machines$machine_slotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$milling_machine_slotsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  planned_case_processes<T extends Prisma.milling_machines$planned_case_processesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.milling_machines$planned_case_processesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_processesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  scheduleAllocations<T extends Prisma.milling_machines$scheduleAllocationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.milling_machines$scheduleAllocationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_process_schedule_allocationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  scheduleShifts<T extends Prisma.milling_machines$scheduleShiftsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.milling_machines$scheduleShiftsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$milling_machine_schedule_shiftsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  scheduleExceptions<T extends Prisma.milling_machines$scheduleExceptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.milling_machines$scheduleExceptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$milling_machine_schedule_exceptionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1675,6 +2417,7 @@ export interface milling_machinesFieldRefs {
   readonly serial_number: Prisma.FieldRef<"milling_machines", 'String'>
   readonly model: Prisma.FieldRef<"milling_machines", 'String'>
   readonly status: Prisma.FieldRef<"milling_machines", 'MillingMachineStatus'>
+  readonly productivity_points_per_hour: Prisma.FieldRef<"milling_machines", 'Decimal'>
   readonly status_reason: Prisma.FieldRef<"milling_machines", 'String'>
   readonly installed_at: Prisma.FieldRef<"milling_machines", 'DateTime'>
   readonly removed_at: Prisma.FieldRef<"milling_machines", 'DateTime'>
@@ -2153,6 +2896,102 @@ export type milling_machines$machine_slotsArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.Milling_machine_slotsScalarFieldEnum | Prisma.Milling_machine_slotsScalarFieldEnum[]
+}
+
+/**
+ * milling_machines.planned_case_processes
+ */
+export type milling_machines$planned_case_processesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the case_processes
+   */
+  select?: Prisma.case_processesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the case_processes
+   */
+  omit?: Prisma.case_processesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.case_processesInclude<ExtArgs> | null
+  where?: Prisma.case_processesWhereInput
+  orderBy?: Prisma.case_processesOrderByWithRelationInput | Prisma.case_processesOrderByWithRelationInput[]
+  cursor?: Prisma.case_processesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Case_processesScalarFieldEnum | Prisma.Case_processesScalarFieldEnum[]
+}
+
+/**
+ * milling_machines.scheduleAllocations
+ */
+export type milling_machines$scheduleAllocationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the case_process_schedule_allocations
+   */
+  select?: Prisma.case_process_schedule_allocationsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the case_process_schedule_allocations
+   */
+  omit?: Prisma.case_process_schedule_allocationsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.case_process_schedule_allocationsInclude<ExtArgs> | null
+  where?: Prisma.case_process_schedule_allocationsWhereInput
+  orderBy?: Prisma.case_process_schedule_allocationsOrderByWithRelationInput | Prisma.case_process_schedule_allocationsOrderByWithRelationInput[]
+  cursor?: Prisma.case_process_schedule_allocationsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Case_process_schedule_allocationsScalarFieldEnum | Prisma.Case_process_schedule_allocationsScalarFieldEnum[]
+}
+
+/**
+ * milling_machines.scheduleShifts
+ */
+export type milling_machines$scheduleShiftsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the milling_machine_schedule_shifts
+   */
+  select?: Prisma.milling_machine_schedule_shiftsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the milling_machine_schedule_shifts
+   */
+  omit?: Prisma.milling_machine_schedule_shiftsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.milling_machine_schedule_shiftsInclude<ExtArgs> | null
+  where?: Prisma.milling_machine_schedule_shiftsWhereInput
+  orderBy?: Prisma.milling_machine_schedule_shiftsOrderByWithRelationInput | Prisma.milling_machine_schedule_shiftsOrderByWithRelationInput[]
+  cursor?: Prisma.milling_machine_schedule_shiftsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Milling_machine_schedule_shiftsScalarFieldEnum | Prisma.Milling_machine_schedule_shiftsScalarFieldEnum[]
+}
+
+/**
+ * milling_machines.scheduleExceptions
+ */
+export type milling_machines$scheduleExceptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the milling_machine_schedule_exceptions
+   */
+  select?: Prisma.milling_machine_schedule_exceptionsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the milling_machine_schedule_exceptions
+   */
+  omit?: Prisma.milling_machine_schedule_exceptionsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.milling_machine_schedule_exceptionsInclude<ExtArgs> | null
+  where?: Prisma.milling_machine_schedule_exceptionsWhereInput
+  orderBy?: Prisma.milling_machine_schedule_exceptionsOrderByWithRelationInput | Prisma.milling_machine_schedule_exceptionsOrderByWithRelationInput[]
+  cursor?: Prisma.milling_machine_schedule_exceptionsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Milling_machine_schedule_exceptionsScalarFieldEnum | Prisma.Milling_machine_schedule_exceptionsScalarFieldEnum[]
 }
 
 /**

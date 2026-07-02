@@ -203,10 +203,14 @@ export type usersWhereInput = {
   caseComments?: Prisma.Case_commentsListRelationFilter
   deletedCaseComments?: Prisma.Case_commentsListRelationFilter
   caseThreadReads?: Prisma.Case_thread_readsListRelationFilter
+  caseProcessHistoryEvents?: Prisma.Case_process_history_eventsListRelationFilter
   case_attachments?: Prisma.Case_attachmentsListRelationFilter
   notifications?: Prisma.NotificationsListRelationFilter
   pushSubscriptions?: Prisma.Push_subscriptionsListRelationFilter
   employeeInvitesSent?: Prisma.Employee_invitesListRelationFilter
+  createdScheduleProposals?: Prisma.Schedule_proposalsListRelationFilter
+  approvedScheduleProposals?: Prisma.Schedule_proposalsListRelationFilter
+  rejectedScheduleProposals?: Prisma.Schedule_proposalsListRelationFilter
 }
 
 export type usersOrderByWithRelationInput = {
@@ -222,10 +226,14 @@ export type usersOrderByWithRelationInput = {
   caseComments?: Prisma.case_commentsOrderByRelationAggregateInput
   deletedCaseComments?: Prisma.case_commentsOrderByRelationAggregateInput
   caseThreadReads?: Prisma.case_thread_readsOrderByRelationAggregateInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsOrderByRelationAggregateInput
   case_attachments?: Prisma.case_attachmentsOrderByRelationAggregateInput
   notifications?: Prisma.notificationsOrderByRelationAggregateInput
   pushSubscriptions?: Prisma.push_subscriptionsOrderByRelationAggregateInput
   employeeInvitesSent?: Prisma.employee_invitesOrderByRelationAggregateInput
+  createdScheduleProposals?: Prisma.schedule_proposalsOrderByRelationAggregateInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsOrderByRelationAggregateInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsOrderByRelationAggregateInput
 }
 
 export type usersWhereUniqueInput = Prisma.AtLeast<{
@@ -244,10 +252,14 @@ export type usersWhereUniqueInput = Prisma.AtLeast<{
   caseComments?: Prisma.Case_commentsListRelationFilter
   deletedCaseComments?: Prisma.Case_commentsListRelationFilter
   caseThreadReads?: Prisma.Case_thread_readsListRelationFilter
+  caseProcessHistoryEvents?: Prisma.Case_process_history_eventsListRelationFilter
   case_attachments?: Prisma.Case_attachmentsListRelationFilter
   notifications?: Prisma.NotificationsListRelationFilter
   pushSubscriptions?: Prisma.Push_subscriptionsListRelationFilter
   employeeInvitesSent?: Prisma.Employee_invitesListRelationFilter
+  createdScheduleProposals?: Prisma.Schedule_proposalsListRelationFilter
+  approvedScheduleProposals?: Prisma.Schedule_proposalsListRelationFilter
+  rejectedScheduleProposals?: Prisma.Schedule_proposalsListRelationFilter
 }, "id" | "email">
 
 export type usersOrderByWithAggregationInput = {
@@ -289,10 +301,14 @@ export type usersCreateInput = {
   caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorUserInput
   deletedCaseComments?: Prisma.case_commentsCreateNestedManyWithoutDeletedByUserInput
   caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutActorUserInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
   employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersUncheckedCreateInput = {
@@ -308,10 +324,14 @@ export type usersUncheckedCreateInput = {
   caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorUserInput
   deletedCaseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutDeletedByUserInput
   caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutActorUserInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
   employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersUpdateInput = {
@@ -327,10 +347,14 @@ export type usersUpdateInput = {
   caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUpdateManyWithoutDeletedByUserNestedInput
   caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUpdateManyWithoutActorUserNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
   employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutRejectedByUserNestedInput
 }
 
 export type usersUncheckedUpdateInput = {
@@ -346,10 +370,14 @@ export type usersUncheckedUpdateInput = {
   caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutDeletedByUserNestedInput
   caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutActorUserNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
   employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutRejectedByUserNestedInput
 }
 
 export type usersCreateManyInput = {
@@ -542,6 +570,70 @@ export type usersUpdateOneRequiredWithoutCaseThreadReadsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutCaseThreadReadsInput, Prisma.usersUpdateWithoutCaseThreadReadsInput>, Prisma.usersUncheckedUpdateWithoutCaseThreadReadsInput>
 }
 
+export type usersCreateNestedOneWithoutCaseProcessHistoryEventsInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutCaseProcessHistoryEventsInput, Prisma.usersUncheckedCreateWithoutCaseProcessHistoryEventsInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutCaseProcessHistoryEventsInput
+  connect?: Prisma.usersWhereUniqueInput
+}
+
+export type usersUpdateOneWithoutCaseProcessHistoryEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutCaseProcessHistoryEventsInput, Prisma.usersUncheckedCreateWithoutCaseProcessHistoryEventsInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutCaseProcessHistoryEventsInput
+  upsert?: Prisma.usersUpsertWithoutCaseProcessHistoryEventsInput
+  disconnect?: Prisma.usersWhereInput | boolean
+  delete?: Prisma.usersWhereInput | boolean
+  connect?: Prisma.usersWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutCaseProcessHistoryEventsInput, Prisma.usersUpdateWithoutCaseProcessHistoryEventsInput>, Prisma.usersUncheckedUpdateWithoutCaseProcessHistoryEventsInput>
+}
+
+export type usersCreateNestedOneWithoutCreatedScheduleProposalsInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutCreatedScheduleProposalsInput, Prisma.usersUncheckedCreateWithoutCreatedScheduleProposalsInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutCreatedScheduleProposalsInput
+  connect?: Prisma.usersWhereUniqueInput
+}
+
+export type usersCreateNestedOneWithoutApprovedScheduleProposalsInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutApprovedScheduleProposalsInput, Prisma.usersUncheckedCreateWithoutApprovedScheduleProposalsInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutApprovedScheduleProposalsInput
+  connect?: Prisma.usersWhereUniqueInput
+}
+
+export type usersCreateNestedOneWithoutRejectedScheduleProposalsInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutRejectedScheduleProposalsInput, Prisma.usersUncheckedCreateWithoutRejectedScheduleProposalsInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutRejectedScheduleProposalsInput
+  connect?: Prisma.usersWhereUniqueInput
+}
+
+export type usersUpdateOneWithoutCreatedScheduleProposalsNestedInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutCreatedScheduleProposalsInput, Prisma.usersUncheckedCreateWithoutCreatedScheduleProposalsInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutCreatedScheduleProposalsInput
+  upsert?: Prisma.usersUpsertWithoutCreatedScheduleProposalsInput
+  disconnect?: Prisma.usersWhereInput | boolean
+  delete?: Prisma.usersWhereInput | boolean
+  connect?: Prisma.usersWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutCreatedScheduleProposalsInput, Prisma.usersUpdateWithoutCreatedScheduleProposalsInput>, Prisma.usersUncheckedUpdateWithoutCreatedScheduleProposalsInput>
+}
+
+export type usersUpdateOneWithoutApprovedScheduleProposalsNestedInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutApprovedScheduleProposalsInput, Prisma.usersUncheckedCreateWithoutApprovedScheduleProposalsInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutApprovedScheduleProposalsInput
+  upsert?: Prisma.usersUpsertWithoutApprovedScheduleProposalsInput
+  disconnect?: Prisma.usersWhereInput | boolean
+  delete?: Prisma.usersWhereInput | boolean
+  connect?: Prisma.usersWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutApprovedScheduleProposalsInput, Prisma.usersUpdateWithoutApprovedScheduleProposalsInput>, Prisma.usersUncheckedUpdateWithoutApprovedScheduleProposalsInput>
+}
+
+export type usersUpdateOneWithoutRejectedScheduleProposalsNestedInput = {
+  create?: Prisma.XOR<Prisma.usersCreateWithoutRejectedScheduleProposalsInput, Prisma.usersUncheckedCreateWithoutRejectedScheduleProposalsInput>
+  connectOrCreate?: Prisma.usersCreateOrConnectWithoutRejectedScheduleProposalsInput
+  upsert?: Prisma.usersUpsertWithoutRejectedScheduleProposalsInput
+  disconnect?: Prisma.usersWhereInput | boolean
+  delete?: Prisma.usersWhereInput | boolean
+  connect?: Prisma.usersWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.usersUpdateToOneWithWhereWithoutRejectedScheduleProposalsInput, Prisma.usersUpdateWithoutRejectedScheduleProposalsInput>, Prisma.usersUncheckedUpdateWithoutRejectedScheduleProposalsInput>
+}
+
 export type usersCreateNestedOneWithoutNotificationsInput = {
   create?: Prisma.XOR<Prisma.usersCreateWithoutNotificationsInput, Prisma.usersUncheckedCreateWithoutNotificationsInput>
   connectOrCreate?: Prisma.usersCreateOrConnectWithoutNotificationsInput
@@ -582,10 +674,14 @@ export type usersCreateWithoutMembershipsInput = {
   caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorUserInput
   deletedCaseComments?: Prisma.case_commentsCreateNestedManyWithoutDeletedByUserInput
   caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutActorUserInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
   employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersUncheckedCreateWithoutMembershipsInput = {
@@ -600,10 +696,14 @@ export type usersUncheckedCreateWithoutMembershipsInput = {
   caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorUserInput
   deletedCaseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutDeletedByUserInput
   caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutActorUserInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
   employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersCreateOrConnectWithoutMembershipsInput = {
@@ -634,10 +734,14 @@ export type usersUpdateWithoutMembershipsInput = {
   caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUpdateManyWithoutDeletedByUserNestedInput
   caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUpdateManyWithoutActorUserNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
   employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutRejectedByUserNestedInput
 }
 
 export type usersUncheckedUpdateWithoutMembershipsInput = {
@@ -652,10 +756,14 @@ export type usersUncheckedUpdateWithoutMembershipsInput = {
   caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutDeletedByUserNestedInput
   caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutActorUserNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
   employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutRejectedByUserNestedInput
 }
 
 export type usersCreateWithoutEmployeeInvitesSentInput = {
@@ -671,9 +779,13 @@ export type usersCreateWithoutEmployeeInvitesSentInput = {
   caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorUserInput
   deletedCaseComments?: Prisma.case_commentsCreateNestedManyWithoutDeletedByUserInput
   caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutActorUserInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
+  createdScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersUncheckedCreateWithoutEmployeeInvitesSentInput = {
@@ -689,9 +801,13 @@ export type usersUncheckedCreateWithoutEmployeeInvitesSentInput = {
   caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorUserInput
   deletedCaseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutDeletedByUserInput
   caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutActorUserInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersCreateOrConnectWithoutEmployeeInvitesSentInput = {
@@ -723,9 +839,13 @@ export type usersUpdateWithoutEmployeeInvitesSentInput = {
   caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUpdateManyWithoutDeletedByUserNestedInput
   caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUpdateManyWithoutActorUserNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutRejectedByUserNestedInput
 }
 
 export type usersUncheckedUpdateWithoutEmployeeInvitesSentInput = {
@@ -741,9 +861,13 @@ export type usersUncheckedUpdateWithoutEmployeeInvitesSentInput = {
   caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutDeletedByUserNestedInput
   caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutActorUserNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutRejectedByUserNestedInput
 }
 
 export type usersCreateWithoutCase_attachmentsInput = {
@@ -759,9 +883,13 @@ export type usersCreateWithoutCase_attachmentsInput = {
   caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorUserInput
   deletedCaseComments?: Prisma.case_commentsCreateNestedManyWithoutDeletedByUserInput
   caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutActorUserInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
   employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersUncheckedCreateWithoutCase_attachmentsInput = {
@@ -777,9 +905,13 @@ export type usersUncheckedCreateWithoutCase_attachmentsInput = {
   caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorUserInput
   deletedCaseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutDeletedByUserInput
   caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutActorUserInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
   employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersCreateOrConnectWithoutCase_attachmentsInput = {
@@ -811,9 +943,13 @@ export type usersUpdateWithoutCase_attachmentsInput = {
   caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUpdateManyWithoutDeletedByUserNestedInput
   caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUpdateManyWithoutActorUserNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
   employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutRejectedByUserNestedInput
 }
 
 export type usersUncheckedUpdateWithoutCase_attachmentsInput = {
@@ -829,9 +965,13 @@ export type usersUncheckedUpdateWithoutCase_attachmentsInput = {
   caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutDeletedByUserNestedInput
   caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutActorUserNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
   employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutRejectedByUserNestedInput
 }
 
 export type usersCreateWithoutCreatedCasesInput = {
@@ -846,10 +986,14 @@ export type usersCreateWithoutCreatedCasesInput = {
   caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorUserInput
   deletedCaseComments?: Prisma.case_commentsCreateNestedManyWithoutDeletedByUserInput
   caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutActorUserInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
   employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersUncheckedCreateWithoutCreatedCasesInput = {
@@ -864,10 +1008,14 @@ export type usersUncheckedCreateWithoutCreatedCasesInput = {
   caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorUserInput
   deletedCaseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutDeletedByUserInput
   caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutActorUserInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
   employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersCreateOrConnectWithoutCreatedCasesInput = {
@@ -898,10 +1046,14 @@ export type usersUpdateWithoutCreatedCasesInput = {
   caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUpdateManyWithoutDeletedByUserNestedInput
   caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUpdateManyWithoutActorUserNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
   employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutRejectedByUserNestedInput
 }
 
 export type usersUncheckedUpdateWithoutCreatedCasesInput = {
@@ -916,10 +1068,14 @@ export type usersUncheckedUpdateWithoutCreatedCasesInput = {
   caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutDeletedByUserNestedInput
   caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutActorUserNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
   employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutRejectedByUserNestedInput
 }
 
 export type usersCreateWithoutCaseCommentsInput = {
@@ -934,10 +1090,14 @@ export type usersCreateWithoutCaseCommentsInput = {
   createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
   deletedCaseComments?: Prisma.case_commentsCreateNestedManyWithoutDeletedByUserInput
   caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutActorUserInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
   employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersUncheckedCreateWithoutCaseCommentsInput = {
@@ -952,10 +1112,14 @@ export type usersUncheckedCreateWithoutCaseCommentsInput = {
   createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
   deletedCaseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutDeletedByUserInput
   caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutActorUserInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
   employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersCreateOrConnectWithoutCaseCommentsInput = {
@@ -975,10 +1139,14 @@ export type usersCreateWithoutDeletedCaseCommentsInput = {
   createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
   caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorUserInput
   caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutActorUserInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
   employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersUncheckedCreateWithoutDeletedCaseCommentsInput = {
@@ -993,10 +1161,14 @@ export type usersUncheckedCreateWithoutDeletedCaseCommentsInput = {
   createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
   caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorUserInput
   caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutActorUserInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
   employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersCreateOrConnectWithoutDeletedCaseCommentsInput = {
@@ -1027,10 +1199,14 @@ export type usersUpdateWithoutCaseCommentsInput = {
   createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUpdateManyWithoutDeletedByUserNestedInput
   caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUpdateManyWithoutActorUserNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
   employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutRejectedByUserNestedInput
 }
 
 export type usersUncheckedUpdateWithoutCaseCommentsInput = {
@@ -1045,10 +1221,14 @@ export type usersUncheckedUpdateWithoutCaseCommentsInput = {
   createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutDeletedByUserNestedInput
   caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutActorUserNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
   employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutRejectedByUserNestedInput
 }
 
 export type usersUpsertWithoutDeletedCaseCommentsInput = {
@@ -1074,10 +1254,14 @@ export type usersUpdateWithoutDeletedCaseCommentsInput = {
   createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
   caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorUserNestedInput
   caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUpdateManyWithoutActorUserNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
   employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutRejectedByUserNestedInput
 }
 
 export type usersUncheckedUpdateWithoutDeletedCaseCommentsInput = {
@@ -1092,10 +1276,14 @@ export type usersUncheckedUpdateWithoutDeletedCaseCommentsInput = {
   createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
   caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorUserNestedInput
   caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutActorUserNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
   employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutRejectedByUserNestedInput
 }
 
 export type usersCreateWithoutCaseThreadReadsInput = {
@@ -1110,10 +1298,14 @@ export type usersCreateWithoutCaseThreadReadsInput = {
   createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
   caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorUserInput
   deletedCaseComments?: Prisma.case_commentsCreateNestedManyWithoutDeletedByUserInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutActorUserInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
   employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersUncheckedCreateWithoutCaseThreadReadsInput = {
@@ -1128,10 +1320,14 @@ export type usersUncheckedCreateWithoutCaseThreadReadsInput = {
   createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
   caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorUserInput
   deletedCaseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutDeletedByUserInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutActorUserInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
   employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersCreateOrConnectWithoutCaseThreadReadsInput = {
@@ -1162,10 +1358,14 @@ export type usersUpdateWithoutCaseThreadReadsInput = {
   createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
   caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUpdateManyWithoutDeletedByUserNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUpdateManyWithoutActorUserNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
   employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutRejectedByUserNestedInput
 }
 
 export type usersUncheckedUpdateWithoutCaseThreadReadsInput = {
@@ -1180,10 +1380,430 @@ export type usersUncheckedUpdateWithoutCaseThreadReadsInput = {
   createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
   caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutActorUserNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
   employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutRejectedByUserNestedInput
+}
+
+export type usersCreateWithoutCaseProcessHistoryEventsInput = {
+  id?: string
+  name: string
+  email: string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
+  createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
+  caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorUserInput
+  deletedCaseComments?: Prisma.case_commentsCreateNestedManyWithoutDeletedByUserInput
+  caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutUsersInput
+  case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
+  notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
+  pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutRejectedByUserInput
+}
+
+export type usersUncheckedCreateWithoutCaseProcessHistoryEventsInput = {
+  id?: string
+  name: string
+  email: string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
+  createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
+  caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorUserInput
+  deletedCaseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutDeletedByUserInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutUsersInput
+  case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
+  notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
+  pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutRejectedByUserInput
+}
+
+export type usersCreateOrConnectWithoutCaseProcessHistoryEventsInput = {
+  where: Prisma.usersWhereUniqueInput
+  create: Prisma.XOR<Prisma.usersCreateWithoutCaseProcessHistoryEventsInput, Prisma.usersUncheckedCreateWithoutCaseProcessHistoryEventsInput>
+}
+
+export type usersUpsertWithoutCaseProcessHistoryEventsInput = {
+  update: Prisma.XOR<Prisma.usersUpdateWithoutCaseProcessHistoryEventsInput, Prisma.usersUncheckedUpdateWithoutCaseProcessHistoryEventsInput>
+  create: Prisma.XOR<Prisma.usersCreateWithoutCaseProcessHistoryEventsInput, Prisma.usersUncheckedCreateWithoutCaseProcessHistoryEventsInput>
+  where?: Prisma.usersWhereInput
+}
+
+export type usersUpdateToOneWithWhereWithoutCaseProcessHistoryEventsInput = {
+  where?: Prisma.usersWhereInput
+  data: Prisma.XOR<Prisma.usersUpdateWithoutCaseProcessHistoryEventsInput, Prisma.usersUncheckedUpdateWithoutCaseProcessHistoryEventsInput>
+}
+
+export type usersUpdateWithoutCaseProcessHistoryEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
+  createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
+  caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorUserNestedInput
+  deletedCaseComments?: Prisma.case_commentsUpdateManyWithoutDeletedByUserNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutUsersNestedInput
+  case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
+  notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
+  pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutRejectedByUserNestedInput
+}
+
+export type usersUncheckedUpdateWithoutCaseProcessHistoryEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
+  createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorUserNestedInput
+  deletedCaseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutUsersNestedInput
+  case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
+  notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
+  pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutRejectedByUserNestedInput
+}
+
+export type usersCreateWithoutCreatedScheduleProposalsInput = {
+  id?: string
+  name: string
+  email: string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
+  createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
+  caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorUserInput
+  deletedCaseComments?: Prisma.case_commentsCreateNestedManyWithoutDeletedByUserInput
+  caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutActorUserInput
+  case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
+  notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
+  pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutRejectedByUserInput
+}
+
+export type usersUncheckedCreateWithoutCreatedScheduleProposalsInput = {
+  id?: string
+  name: string
+  email: string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
+  createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
+  caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorUserInput
+  deletedCaseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutDeletedByUserInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutActorUserInput
+  case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
+  notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
+  pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutRejectedByUserInput
+}
+
+export type usersCreateOrConnectWithoutCreatedScheduleProposalsInput = {
+  where: Prisma.usersWhereUniqueInput
+  create: Prisma.XOR<Prisma.usersCreateWithoutCreatedScheduleProposalsInput, Prisma.usersUncheckedCreateWithoutCreatedScheduleProposalsInput>
+}
+
+export type usersCreateWithoutApprovedScheduleProposalsInput = {
+  id?: string
+  name: string
+  email: string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
+  createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
+  caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorUserInput
+  deletedCaseComments?: Prisma.case_commentsCreateNestedManyWithoutDeletedByUserInput
+  caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutActorUserInput
+  case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
+  notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
+  pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutCreatedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutRejectedByUserInput
+}
+
+export type usersUncheckedCreateWithoutApprovedScheduleProposalsInput = {
+  id?: string
+  name: string
+  email: string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
+  createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
+  caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorUserInput
+  deletedCaseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutDeletedByUserInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutActorUserInput
+  case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
+  notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
+  pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutCreatedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutRejectedByUserInput
+}
+
+export type usersCreateOrConnectWithoutApprovedScheduleProposalsInput = {
+  where: Prisma.usersWhereUniqueInput
+  create: Prisma.XOR<Prisma.usersCreateWithoutApprovedScheduleProposalsInput, Prisma.usersUncheckedCreateWithoutApprovedScheduleProposalsInput>
+}
+
+export type usersCreateWithoutRejectedScheduleProposalsInput = {
+  id?: string
+  name: string
+  email: string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersCreateNestedManyWithoutUsersInput
+  createdCases?: Prisma.casesCreateNestedManyWithoutCreatedByUserInput
+  caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorUserInput
+  deletedCaseComments?: Prisma.case_commentsCreateNestedManyWithoutDeletedByUserInput
+  caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutActorUserInput
+  case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
+  notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
+  pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutApprovedByUserInput
+}
+
+export type usersUncheckedCreateWithoutRejectedScheduleProposalsInput = {
+  id?: string
+  name: string
+  email: string
+  is_active?: boolean
+  deleted_at?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  memberships?: Prisma.lab_membersUncheckedCreateNestedManyWithoutUsersInput
+  createdCases?: Prisma.casesUncheckedCreateNestedManyWithoutCreatedByUserInput
+  caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorUserInput
+  deletedCaseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutDeletedByUserInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutActorUserInput
+  case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
+  notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
+  pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutApprovedByUserInput
+}
+
+export type usersCreateOrConnectWithoutRejectedScheduleProposalsInput = {
+  where: Prisma.usersWhereUniqueInput
+  create: Prisma.XOR<Prisma.usersCreateWithoutRejectedScheduleProposalsInput, Prisma.usersUncheckedCreateWithoutRejectedScheduleProposalsInput>
+}
+
+export type usersUpsertWithoutCreatedScheduleProposalsInput = {
+  update: Prisma.XOR<Prisma.usersUpdateWithoutCreatedScheduleProposalsInput, Prisma.usersUncheckedUpdateWithoutCreatedScheduleProposalsInput>
+  create: Prisma.XOR<Prisma.usersCreateWithoutCreatedScheduleProposalsInput, Prisma.usersUncheckedCreateWithoutCreatedScheduleProposalsInput>
+  where?: Prisma.usersWhereInput
+}
+
+export type usersUpdateToOneWithWhereWithoutCreatedScheduleProposalsInput = {
+  where?: Prisma.usersWhereInput
+  data: Prisma.XOR<Prisma.usersUpdateWithoutCreatedScheduleProposalsInput, Prisma.usersUncheckedUpdateWithoutCreatedScheduleProposalsInput>
+}
+
+export type usersUpdateWithoutCreatedScheduleProposalsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
+  createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
+  caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorUserNestedInput
+  deletedCaseComments?: Prisma.case_commentsUpdateManyWithoutDeletedByUserNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUpdateManyWithoutActorUserNestedInput
+  case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
+  notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
+  pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutRejectedByUserNestedInput
+}
+
+export type usersUncheckedUpdateWithoutCreatedScheduleProposalsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
+  createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorUserNestedInput
+  deletedCaseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutActorUserNestedInput
+  case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
+  notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
+  pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutRejectedByUserNestedInput
+}
+
+export type usersUpsertWithoutApprovedScheduleProposalsInput = {
+  update: Prisma.XOR<Prisma.usersUpdateWithoutApprovedScheduleProposalsInput, Prisma.usersUncheckedUpdateWithoutApprovedScheduleProposalsInput>
+  create: Prisma.XOR<Prisma.usersCreateWithoutApprovedScheduleProposalsInput, Prisma.usersUncheckedCreateWithoutApprovedScheduleProposalsInput>
+  where?: Prisma.usersWhereInput
+}
+
+export type usersUpdateToOneWithWhereWithoutApprovedScheduleProposalsInput = {
+  where?: Prisma.usersWhereInput
+  data: Prisma.XOR<Prisma.usersUpdateWithoutApprovedScheduleProposalsInput, Prisma.usersUncheckedUpdateWithoutApprovedScheduleProposalsInput>
+}
+
+export type usersUpdateWithoutApprovedScheduleProposalsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
+  createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
+  caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorUserNestedInput
+  deletedCaseComments?: Prisma.case_commentsUpdateManyWithoutDeletedByUserNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUpdateManyWithoutActorUserNestedInput
+  case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
+  notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
+  pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutCreatedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutRejectedByUserNestedInput
+}
+
+export type usersUncheckedUpdateWithoutApprovedScheduleProposalsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
+  createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorUserNestedInput
+  deletedCaseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutActorUserNestedInput
+  case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
+  notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
+  pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutRejectedByUserNestedInput
+}
+
+export type usersUpsertWithoutRejectedScheduleProposalsInput = {
+  update: Prisma.XOR<Prisma.usersUpdateWithoutRejectedScheduleProposalsInput, Prisma.usersUncheckedUpdateWithoutRejectedScheduleProposalsInput>
+  create: Prisma.XOR<Prisma.usersCreateWithoutRejectedScheduleProposalsInput, Prisma.usersUncheckedCreateWithoutRejectedScheduleProposalsInput>
+  where?: Prisma.usersWhereInput
+}
+
+export type usersUpdateToOneWithWhereWithoutRejectedScheduleProposalsInput = {
+  where?: Prisma.usersWhereInput
+  data: Prisma.XOR<Prisma.usersUpdateWithoutRejectedScheduleProposalsInput, Prisma.usersUncheckedUpdateWithoutRejectedScheduleProposalsInput>
+}
+
+export type usersUpdateWithoutRejectedScheduleProposalsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUpdateManyWithoutUsersNestedInput
+  createdCases?: Prisma.casesUpdateManyWithoutCreatedByUserNestedInput
+  caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorUserNestedInput
+  deletedCaseComments?: Prisma.case_commentsUpdateManyWithoutDeletedByUserNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUpdateManyWithoutActorUserNestedInput
+  case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
+  notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
+  pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutApprovedByUserNestedInput
+}
+
+export type usersUncheckedUpdateWithoutRejectedScheduleProposalsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.lab_membersUncheckedUpdateManyWithoutUsersNestedInput
+  createdCases?: Prisma.casesUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorUserNestedInput
+  deletedCaseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutDeletedByUserNestedInput
+  caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutActorUserNestedInput
+  case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
+  notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
+  pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
+  employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutApprovedByUserNestedInput
 }
 
 export type usersCreateWithoutNotificationsInput = {
@@ -1199,9 +1819,13 @@ export type usersCreateWithoutNotificationsInput = {
   caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorUserInput
   deletedCaseComments?: Prisma.case_commentsCreateNestedManyWithoutDeletedByUserInput
   caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutActorUserInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   pushSubscriptions?: Prisma.push_subscriptionsCreateNestedManyWithoutUsersInput
   employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersUncheckedCreateWithoutNotificationsInput = {
@@ -1217,9 +1841,13 @@ export type usersUncheckedCreateWithoutNotificationsInput = {
   caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorUserInput
   deletedCaseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutDeletedByUserInput
   caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutActorUserInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedCreateNestedManyWithoutUsersInput
   employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersCreateOrConnectWithoutNotificationsInput = {
@@ -1251,9 +1879,13 @@ export type usersUpdateWithoutNotificationsInput = {
   caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUpdateManyWithoutDeletedByUserNestedInput
   caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUpdateManyWithoutActorUserNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUpdateManyWithoutUsersNestedInput
   employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutRejectedByUserNestedInput
 }
 
 export type usersUncheckedUpdateWithoutNotificationsInput = {
@@ -1269,9 +1901,13 @@ export type usersUncheckedUpdateWithoutNotificationsInput = {
   caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutDeletedByUserNestedInput
   caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutActorUserNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   pushSubscriptions?: Prisma.push_subscriptionsUncheckedUpdateManyWithoutUsersNestedInput
   employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutRejectedByUserNestedInput
 }
 
 export type usersCreateWithoutPushSubscriptionsInput = {
@@ -1287,9 +1923,13 @@ export type usersCreateWithoutPushSubscriptionsInput = {
   caseComments?: Prisma.case_commentsCreateNestedManyWithoutAuthorUserInput
   deletedCaseComments?: Prisma.case_commentsCreateNestedManyWithoutDeletedByUserInput
   caseThreadReads?: Prisma.case_thread_readsCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsCreateNestedManyWithoutActorUserInput
   case_attachments?: Prisma.case_attachmentsCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsCreateNestedManyWithoutRecipientUserInput
   employeeInvitesSent?: Prisma.employee_invitesCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersUncheckedCreateWithoutPushSubscriptionsInput = {
@@ -1305,9 +1945,13 @@ export type usersUncheckedCreateWithoutPushSubscriptionsInput = {
   caseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutAuthorUserInput
   deletedCaseComments?: Prisma.case_commentsUncheckedCreateNestedManyWithoutDeletedByUserInput
   caseThreadReads?: Prisma.case_thread_readsUncheckedCreateNestedManyWithoutUsersInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedCreateNestedManyWithoutActorUserInput
   case_attachments?: Prisma.case_attachmentsUncheckedCreateNestedManyWithoutUploadedByInput
   notifications?: Prisma.notificationsUncheckedCreateNestedManyWithoutRecipientUserInput
   employeeInvitesSent?: Prisma.employee_invitesUncheckedCreateNestedManyWithoutInvitedByInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutCreatedByUserInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutApprovedByUserInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedCreateNestedManyWithoutRejectedByUserInput
 }
 
 export type usersCreateOrConnectWithoutPushSubscriptionsInput = {
@@ -1339,9 +1983,13 @@ export type usersUpdateWithoutPushSubscriptionsInput = {
   caseComments?: Prisma.case_commentsUpdateManyWithoutAuthorUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUpdateManyWithoutDeletedByUserNestedInput
   caseThreadReads?: Prisma.case_thread_readsUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUpdateManyWithoutActorUserNestedInput
   case_attachments?: Prisma.case_attachmentsUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUpdateManyWithoutRecipientUserNestedInput
   employeeInvitesSent?: Prisma.employee_invitesUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUpdateManyWithoutRejectedByUserNestedInput
 }
 
 export type usersUncheckedUpdateWithoutPushSubscriptionsInput = {
@@ -1357,9 +2005,13 @@ export type usersUncheckedUpdateWithoutPushSubscriptionsInput = {
   caseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutAuthorUserNestedInput
   deletedCaseComments?: Prisma.case_commentsUncheckedUpdateManyWithoutDeletedByUserNestedInput
   caseThreadReads?: Prisma.case_thread_readsUncheckedUpdateManyWithoutUsersNestedInput
+  caseProcessHistoryEvents?: Prisma.case_process_history_eventsUncheckedUpdateManyWithoutActorUserNestedInput
   case_attachments?: Prisma.case_attachmentsUncheckedUpdateManyWithoutUploadedByNestedInput
   notifications?: Prisma.notificationsUncheckedUpdateManyWithoutRecipientUserNestedInput
   employeeInvitesSent?: Prisma.employee_invitesUncheckedUpdateManyWithoutInvitedByNestedInput
+  createdScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutCreatedByUserNestedInput
+  approvedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutApprovedByUserNestedInput
+  rejectedScheduleProposals?: Prisma.schedule_proposalsUncheckedUpdateManyWithoutRejectedByUserNestedInput
 }
 
 
@@ -1373,10 +2025,14 @@ export type UsersCountOutputType = {
   caseComments: number
   deletedCaseComments: number
   caseThreadReads: number
+  caseProcessHistoryEvents: number
   case_attachments: number
   notifications: number
   pushSubscriptions: number
   employeeInvitesSent: number
+  createdScheduleProposals: number
+  approvedScheduleProposals: number
+  rejectedScheduleProposals: number
 }
 
 export type UsersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1385,10 +2041,14 @@ export type UsersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.
   caseComments?: boolean | UsersCountOutputTypeCountCaseCommentsArgs
   deletedCaseComments?: boolean | UsersCountOutputTypeCountDeletedCaseCommentsArgs
   caseThreadReads?: boolean | UsersCountOutputTypeCountCaseThreadReadsArgs
+  caseProcessHistoryEvents?: boolean | UsersCountOutputTypeCountCaseProcessHistoryEventsArgs
   case_attachments?: boolean | UsersCountOutputTypeCountCase_attachmentsArgs
   notifications?: boolean | UsersCountOutputTypeCountNotificationsArgs
   pushSubscriptions?: boolean | UsersCountOutputTypeCountPushSubscriptionsArgs
   employeeInvitesSent?: boolean | UsersCountOutputTypeCountEmployeeInvitesSentArgs
+  createdScheduleProposals?: boolean | UsersCountOutputTypeCountCreatedScheduleProposalsArgs
+  approvedScheduleProposals?: boolean | UsersCountOutputTypeCountApprovedScheduleProposalsArgs
+  rejectedScheduleProposals?: boolean | UsersCountOutputTypeCountRejectedScheduleProposalsArgs
 }
 
 /**
@@ -1439,6 +2099,13 @@ export type UsersCountOutputTypeCountCaseThreadReadsArgs<ExtArgs extends runtime
 /**
  * UsersCountOutputType without action
  */
+export type UsersCountOutputTypeCountCaseProcessHistoryEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.case_process_history_eventsWhereInput
+}
+
+/**
+ * UsersCountOutputType without action
+ */
 export type UsersCountOutputTypeCountCase_attachmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.case_attachmentsWhereInput
 }
@@ -1464,6 +2131,27 @@ export type UsersCountOutputTypeCountEmployeeInvitesSentArgs<ExtArgs extends run
   where?: Prisma.employee_invitesWhereInput
 }
 
+/**
+ * UsersCountOutputType without action
+ */
+export type UsersCountOutputTypeCountCreatedScheduleProposalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.schedule_proposalsWhereInput
+}
+
+/**
+ * UsersCountOutputType without action
+ */
+export type UsersCountOutputTypeCountApprovedScheduleProposalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.schedule_proposalsWhereInput
+}
+
+/**
+ * UsersCountOutputType without action
+ */
+export type UsersCountOutputTypeCountRejectedScheduleProposalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.schedule_proposalsWhereInput
+}
+
 
 export type usersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1478,10 +2166,14 @@ export type usersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   caseComments?: boolean | Prisma.users$caseCommentsArgs<ExtArgs>
   deletedCaseComments?: boolean | Prisma.users$deletedCaseCommentsArgs<ExtArgs>
   caseThreadReads?: boolean | Prisma.users$caseThreadReadsArgs<ExtArgs>
+  caseProcessHistoryEvents?: boolean | Prisma.users$caseProcessHistoryEventsArgs<ExtArgs>
   case_attachments?: boolean | Prisma.users$case_attachmentsArgs<ExtArgs>
   notifications?: boolean | Prisma.users$notificationsArgs<ExtArgs>
   pushSubscriptions?: boolean | Prisma.users$pushSubscriptionsArgs<ExtArgs>
   employeeInvitesSent?: boolean | Prisma.users$employeeInvitesSentArgs<ExtArgs>
+  createdScheduleProposals?: boolean | Prisma.users$createdScheduleProposalsArgs<ExtArgs>
+  approvedScheduleProposals?: boolean | Prisma.users$approvedScheduleProposalsArgs<ExtArgs>
+  rejectedScheduleProposals?: boolean | Prisma.users$rejectedScheduleProposalsArgs<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["users"]>
 
@@ -1522,10 +2214,14 @@ export type usersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   caseComments?: boolean | Prisma.users$caseCommentsArgs<ExtArgs>
   deletedCaseComments?: boolean | Prisma.users$deletedCaseCommentsArgs<ExtArgs>
   caseThreadReads?: boolean | Prisma.users$caseThreadReadsArgs<ExtArgs>
+  caseProcessHistoryEvents?: boolean | Prisma.users$caseProcessHistoryEventsArgs<ExtArgs>
   case_attachments?: boolean | Prisma.users$case_attachmentsArgs<ExtArgs>
   notifications?: boolean | Prisma.users$notificationsArgs<ExtArgs>
   pushSubscriptions?: boolean | Prisma.users$pushSubscriptionsArgs<ExtArgs>
   employeeInvitesSent?: boolean | Prisma.users$employeeInvitesSentArgs<ExtArgs>
+  createdScheduleProposals?: boolean | Prisma.users$createdScheduleProposalsArgs<ExtArgs>
+  approvedScheduleProposals?: boolean | Prisma.users$approvedScheduleProposalsArgs<ExtArgs>
+  rejectedScheduleProposals?: boolean | Prisma.users$rejectedScheduleProposalsArgs<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type usersIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1539,10 +2235,14 @@ export type $usersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     caseComments: Prisma.$case_commentsPayload<ExtArgs>[]
     deletedCaseComments: Prisma.$case_commentsPayload<ExtArgs>[]
     caseThreadReads: Prisma.$case_thread_readsPayload<ExtArgs>[]
+    caseProcessHistoryEvents: Prisma.$case_process_history_eventsPayload<ExtArgs>[]
     case_attachments: Prisma.$case_attachmentsPayload<ExtArgs>[]
     notifications: Prisma.$notificationsPayload<ExtArgs>[]
     pushSubscriptions: Prisma.$push_subscriptionsPayload<ExtArgs>[]
     employeeInvitesSent: Prisma.$employee_invitesPayload<ExtArgs>[]
+    createdScheduleProposals: Prisma.$schedule_proposalsPayload<ExtArgs>[]
+    approvedScheduleProposals: Prisma.$schedule_proposalsPayload<ExtArgs>[]
+    rejectedScheduleProposals: Prisma.$schedule_proposalsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1951,10 +2651,14 @@ export interface Prisma__usersClient<T, Null = never, ExtArgs extends runtime.Ty
   caseComments<T extends Prisma.users$caseCommentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$caseCommentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_commentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   deletedCaseComments<T extends Prisma.users$deletedCaseCommentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$deletedCaseCommentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_commentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   caseThreadReads<T extends Prisma.users$caseThreadReadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$caseThreadReadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_thread_readsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  caseProcessHistoryEvents<T extends Prisma.users$caseProcessHistoryEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$caseProcessHistoryEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_process_history_eventsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   case_attachments<T extends Prisma.users$case_attachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$case_attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$case_attachmentsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.users$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$notificationsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pushSubscriptions<T extends Prisma.users$pushSubscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$pushSubscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$push_subscriptionsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   employeeInvitesSent<T extends Prisma.users$employeeInvitesSentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$employeeInvitesSentArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$employee_invitesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdScheduleProposals<T extends Prisma.users$createdScheduleProposalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$createdScheduleProposalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$schedule_proposalsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  approvedScheduleProposals<T extends Prisma.users$approvedScheduleProposalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$approvedScheduleProposalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$schedule_proposalsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  rejectedScheduleProposals<T extends Prisma.users$rejectedScheduleProposalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.users$rejectedScheduleProposalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$schedule_proposalsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2504,6 +3208,30 @@ export type users$caseThreadReadsArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 /**
+ * users.caseProcessHistoryEvents
+ */
+export type users$caseProcessHistoryEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the case_process_history_events
+   */
+  select?: Prisma.case_process_history_eventsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the case_process_history_events
+   */
+  omit?: Prisma.case_process_history_eventsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.case_process_history_eventsInclude<ExtArgs> | null
+  where?: Prisma.case_process_history_eventsWhereInput
+  orderBy?: Prisma.case_process_history_eventsOrderByWithRelationInput | Prisma.case_process_history_eventsOrderByWithRelationInput[]
+  cursor?: Prisma.case_process_history_eventsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Case_process_history_eventsScalarFieldEnum | Prisma.Case_process_history_eventsScalarFieldEnum[]
+}
+
+/**
  * users.case_attachments
  */
 export type users$case_attachmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2597,6 +3325,78 @@ export type users$employeeInvitesSentArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.Employee_invitesScalarFieldEnum | Prisma.Employee_invitesScalarFieldEnum[]
+}
+
+/**
+ * users.createdScheduleProposals
+ */
+export type users$createdScheduleProposalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the schedule_proposals
+   */
+  select?: Prisma.schedule_proposalsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the schedule_proposals
+   */
+  omit?: Prisma.schedule_proposalsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.schedule_proposalsInclude<ExtArgs> | null
+  where?: Prisma.schedule_proposalsWhereInput
+  orderBy?: Prisma.schedule_proposalsOrderByWithRelationInput | Prisma.schedule_proposalsOrderByWithRelationInput[]
+  cursor?: Prisma.schedule_proposalsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Schedule_proposalsScalarFieldEnum | Prisma.Schedule_proposalsScalarFieldEnum[]
+}
+
+/**
+ * users.approvedScheduleProposals
+ */
+export type users$approvedScheduleProposalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the schedule_proposals
+   */
+  select?: Prisma.schedule_proposalsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the schedule_proposals
+   */
+  omit?: Prisma.schedule_proposalsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.schedule_proposalsInclude<ExtArgs> | null
+  where?: Prisma.schedule_proposalsWhereInput
+  orderBy?: Prisma.schedule_proposalsOrderByWithRelationInput | Prisma.schedule_proposalsOrderByWithRelationInput[]
+  cursor?: Prisma.schedule_proposalsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Schedule_proposalsScalarFieldEnum | Prisma.Schedule_proposalsScalarFieldEnum[]
+}
+
+/**
+ * users.rejectedScheduleProposals
+ */
+export type users$rejectedScheduleProposalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the schedule_proposals
+   */
+  select?: Prisma.schedule_proposalsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the schedule_proposals
+   */
+  omit?: Prisma.schedule_proposalsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.schedule_proposalsInclude<ExtArgs> | null
+  where?: Prisma.schedule_proposalsWhereInput
+  orderBy?: Prisma.schedule_proposalsOrderByWithRelationInput | Prisma.schedule_proposalsOrderByWithRelationInput[]
+  cursor?: Prisma.schedule_proposalsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Schedule_proposalsScalarFieldEnum | Prisma.Schedule_proposalsScalarFieldEnum[]
 }
 
 /**

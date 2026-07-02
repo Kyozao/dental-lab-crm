@@ -73,6 +73,11 @@ export type CaseWorkflowStep = {
   id: string;
   process_id: string;
   dependsOn: string[];
+  fixed_minutes: number;
+  minutes_per_unit: number;
+  expected_duration_days: number;
+  dependency_lag_days: number;
+  requires_milling_machine: boolean;
 };
 
 export type CaseWorkflow = {
@@ -87,6 +92,16 @@ export type CaseProcessItem = {
   workflow_step_id: string;
   status: string;
   assigned_lab_member_id: string | null;
+  fixed_minutes: number;
+  minutes_per_unit: number;
+  expected_duration_days: number;
+  dependency_lag_days: number;
+  requires_milling_machine: boolean;
+  planned_start_date: string | null;
+  planned_end_date: string | null;
+  scheduling_locked: boolean;
+  scheduling_status: string;
+  planned_milling_machine_id: string | null;
   assignedToName: string | null;
   dependsOnCaseProcessIds: string[];
   started_at: string | null;
@@ -100,6 +115,7 @@ export type CaseServiceLineItem = {
   serviceTypeId: string;
   serviceTypeName: string;
   serviceBasePriceSnapshot: string;
+  deliveryBufferDaysSnapshot: number;
   unitPrice: string;
   isUnitPriceOverridden: boolean;
   quantity: number;
@@ -182,6 +198,33 @@ export type CaseStatusHistoryItem = {
   changedAt: string;
 };
 
+export type CaseProcessHistoryEventType = "STARTED" | "COMPLETED";
+
+export type CaseProcessHistoryItem = {
+  id: string;
+  caseProcessId: string;
+  processId: string;
+  processName: string;
+  eventType: CaseProcessHistoryEventType;
+  actorUserId: string | null;
+  actorName: string | null;
+  createdAt: string;
+};
+
+export type CaseTimelineItem =
+  | {
+      id: string;
+      kind: "status";
+      changedAt: string;
+      statusHistory: CaseStatusHistoryItem;
+    }
+  | {
+      id: string;
+      kind: "process";
+      changedAt: string;
+      processHistory: CaseProcessHistoryItem;
+    };
+
 export type EditableCase = {
   id: string;
   dentalLabId: string;
@@ -194,6 +237,7 @@ export type EditableCase = {
   elementsQty: number | null;
   shade: string;
   dueDate: string | null;
+  priority: "low" | "normal" | "high" | "urgent";
   observations: string;
   isUrgent: boolean;
   createdAt: string;
@@ -214,6 +258,7 @@ export type EditableCase = {
   millings: CaseMillingItem[];
   comments: CaseCommentItem[];
   statusHistory: CaseStatusHistoryItem[];
+  processHistory: CaseProcessHistoryItem[];
   serviceLines: CaseServiceLineItem[];
   processes?: CaseProcessItem[];
   availableProcesses?: ProcessOption[];
@@ -234,6 +279,7 @@ export type CaseFormValues = {
   elementsQty?: number | null;
   shade?: string | null;
   dueDate?: string | Date | null;
+  priority?: "LOW" | "NORMAL" | "HIGH" | "URGENT";
   observations?: string | null;
   statusReason?: string | null;
   isUrgent?: boolean;

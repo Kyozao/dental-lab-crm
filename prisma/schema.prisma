@@ -20,6 +20,13 @@ enum CaseStatus {
   CANCELLED
 }
 
+enum CasePriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
 enum MillingStatus {
   SUCCESS
   FAILED
@@ -45,6 +52,23 @@ enum CaseProcessStatus {
   COMPLETED   @map("completed")
   SKIPPED     @map("skipped")
   CANCELLED   @map("cancelled")
+}
+
+enum CaseProcessHistoryEventType {
+  STARTED
+  COMPLETED
+}
+
+enum CaseProcessSchedulingStatus {
+  UNSCHEDULED
+  SCHEDULED
+  AT_RISK
+}
+
+enum ScheduleProposalStatus {
+  DRAFT
+  APPROVED
+  REJECTED
 }
 
 enum UserRole {
@@ -82,17 +106,23 @@ model users {
   caseComments        case_comments[]      @relation("CaseCommentAuthor")
   deletedCaseComments case_comments[]      @relation("CaseCommentDeletedBy")
   caseThreadReads     case_thread_reads[]  @relation("CaseThreadReadUser")
+  caseProcessHistoryEvents case_process_history_events[] @relation("CaseProcessHistoryActor")
   case_attachments    case_attachments[]
   notifications       notifications[]      @relation("NotificationRecipient")
   pushSubscriptions   push_subscriptions[]
   employeeInvitesSent employee_invites[]   @relation("EmployeeInviteInvitedBy")
+  createdScheduleProposals schedule_proposals[] @relation("ScheduleProposalCreatedBy")
+  approvedScheduleProposals schedule_proposals[] @relation("ScheduleProposalApprovedBy")
+  rejectedScheduleProposals schedule_proposals[] @relation("ScheduleProposalRejectedBy")
 }
 
 model labs {
   id         String   @id @default(uuid(7)) @db.Uuid
   name       String
   currency   String   @default("BRL")
+  timezone   String   @default("America/Sao_Paulo")
   is_active  Boolean  @default(true)
+  schedule_revision Int @default(1)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
@@ -110,6 +140,7 @@ model labs {
   employeeInvites            employee_invites[]
   cases                      cases[]
   millings                   case_millings[]
+  scheduleProposals          schedule_proposals[]
 
   @@unique([name])
 }
@@ -127,6 +158,9 @@ model lab_members {
   processOwnerships employee_process_assignments[]
   caseComments      case_comments[]                @relation("CaseCommentLabMember")
   caseThreadReads   case_thread_reads[]            @relation("CaseThreadReadLabMember")
+  scheduleShifts    employee_schedule_shifts[]
+  scheduleExceptions employee_schedule_exceptions[]
+  scheduleAllocations case_process_schedule_allocations[]
 
   @@unique([user_id])
   @@unique([user_id, lab_id])
@@ -159,6 +193,7 @@ model service_types {
   lab_id        String    @db.Uuid
   name          String
   base_price    Decimal   @default(0) @db.Decimal(10, 2)
+  delivery_buffer_days Int @default(0)
   is_active     Boolean   @default(true)
   deleted_at    DateTime?
   notes         String?
@@ -231,6 +266,7 @@ model employee_process_assignments {
   lab_id        String   @db.Uuid
   lab_member_id String   @db.Uuid
   process_id    String   @db.Uuid
+  productivity_points_per_hour Decimal @default(1) @db.Decimal(10, 2)
   created_at    DateTime @default(now())
 
   labs        labs        @relation(fields: [lab_id], references: [id], onDelete: Cascade)
@@ -277,6 +313,7 @@ model milling_machines {
   serial_number           String?
   model                   String?
   status                  MillingMachineStatus @default(ACTIVE)
+  productivity_points_per_hour Decimal         @default(1) @db.Decimal(10, 2)
   status_reason           String?
   installed_at            DateTime?
   removed_at              DateTime?
@@ -290,6 +327,10 @@ model milling_machines {
   case_millings  case_millings[]
   milling_drills milling_drills[]
   machine_slots  milling_machine_slots[]
+  planned_case_processes case_processes[] @relation("CaseProcessPlannedMillingMachine")
+  scheduleAllocations case_process_schedule_allocations[]
+  scheduleShifts milling_machine_schedule_shifts[]
+  scheduleExceptions milling_machine_schedule_exceptions[]
 
   @@unique([lab_id, name])
   @@unique([lab_id, serial_number])
@@ -509,6 +550,7 @@ model cases {
   service_base_price_snapshot Decimal?   @db.Decimal(10, 2)
   case_price                  Decimal?   @db.Decimal(10, 2)
   is_price_overridden         Boolean    @default(false)
+  priority                    CasePriority @default(NORMAL)
 
   teeth        String?
   elements_qty Int?
@@ -521,6 +563,7 @@ model cases {
   statusHistory       case_status_histories[]
   millings            case_millings[]
   case_processes      case_processes[]
+  processHistory      case_process_history_events[]
   case_services       case_services[]
   case_comments       case_comments[]
   case_thread_reads   case_thread_reads[]
@@ -599,6 +642,16 @@ model case_processes {
   workflow_step_id       String
   status                 CaseProcessStatus @default(LOCKED)
   assigned_lab_member_id String?           @db.Uuid
+  snapshot_fixed_minutes Int               @default(1)
+  snapshot_minutes_per_unit Int            @default(0)
+  snapshot_expected_duration_days Int      @default(1)
+  snapshot_dependency_lag_days Int         @default(0)
+  snapshot_requires_milling_machine Boolean @default(false)
+  planned_start_date     DateTime?
+  planned_end_date       DateTime?
+  scheduling_locked      Boolean           @default(false)
+  scheduling_status      CaseProcessSchedulingStatus @default(UNSCHEDULED)
+  planned_milling_machine_id String?       @db.Uuid
   started_at             DateTime?
   completed_at           DateTime?
   created_at             DateTime          @default(now())
@@ -608,15 +661,38 @@ model case_processes {
   case_services      case_services               @relation(fields: [case_service_id], references: [id], onDelete: Cascade)
   processes          processes                   @relation(fields: [process_id], references: [id], onDelete: Restrict)
   assignedLabMember  lab_members?                @relation("CaseProcessAssignee", fields: [assigned_lab_member_id], references: [id], onDelete: SetNull)
+  plannedMillingMachine milling_machines?        @relation("CaseProcessPlannedMillingMachine", fields: [planned_milling_machine_id], references: [id], onDelete: SetNull)
+  historyEvents      case_process_history_events[]
   dependencies       case_process_dependencies[] @relation("CaseProcessDependencyTarget")
   dependentProcesses case_process_dependencies[] @relation("CaseProcessDependencySource")
+  scheduleAllocations case_process_schedule_allocations[]
 
   @@unique([case_service_id, workflow_step_id])
   @@index([case_id])
   @@index([case_service_id])
   @@index([process_id])
   @@index([assigned_lab_member_id])
+  @@index([planned_milling_machine_id])
   @@index([status])
+  @@index([planned_start_date])
+  @@index([planned_end_date])
+}
+
+model case_process_history_events {
+  id              String                      @id @default(uuid(7)) @db.Uuid
+  case_id         String                      @db.Uuid
+  case_process_id String                      @db.Uuid
+  actor_user_id   String?                     @db.Uuid
+  event_type      CaseProcessHistoryEventType
+  created_at      DateTime                    @default(now())
+
+  cases       cases          @relation(fields: [case_id], references: [id], onDelete: Cascade)
+  caseProcess case_processes @relation(fields: [case_process_id], references: [id], onDelete: Cascade)
+  actorUser   users?         @relation("CaseProcessHistoryActor", fields: [actor_user_id], references: [id], onDelete: SetNull)
+
+  @@index([case_id, created_at])
+  @@index([case_process_id, created_at])
+  @@index([actor_user_id])
 }
 
 model case_services {
@@ -625,6 +701,7 @@ model case_services {
   service_type_id             String   @db.Uuid
   service_name_snapshot       String
   service_base_price_snapshot Decimal  @db.Decimal(10, 2)
+  delivery_buffer_days_snapshot Int    @default(0)
   unit_price                  Decimal  @db.Decimal(10, 2)
   is_unit_price_overridden    Boolean  @default(false)
   quantity                    Int
@@ -650,6 +727,106 @@ model case_process_dependencies {
   @@unique([case_process_id, depends_on_case_process_id])
   @@index([case_process_id])
   @@index([depends_on_case_process_id])
+}
+
+model case_process_schedule_allocations {
+  id                 String   @id @default(uuid(7)) @db.Uuid
+  case_process_id    String   @db.Uuid
+  lab_member_id      String   @db.Uuid
+  allocation_date    DateTime
+  planned_minutes    Int
+  milling_machine_id String?  @db.Uuid
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+
+  caseProcess     case_processes    @relation(fields: [case_process_id], references: [id], onDelete: Cascade)
+  lab_members     lab_members       @relation(fields: [lab_member_id], references: [id], onDelete: Cascade)
+  millingMachine  milling_machines? @relation(fields: [milling_machine_id], references: [id], onDelete: SetNull)
+
+  @@unique([case_process_id, allocation_date])
+  @@index([lab_member_id, allocation_date])
+  @@index([milling_machine_id, allocation_date])
+}
+
+model employee_schedule_shifts {
+  id            String   @id @default(uuid(7)) @db.Uuid
+  lab_member_id String   @db.Uuid
+  day_of_week   Int
+  available_minutes Int
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  lab_members lab_members @relation(fields: [lab_member_id], references: [id], onDelete: Cascade)
+
+  @@unique([lab_member_id, day_of_week])
+  @@index([lab_member_id, day_of_week])
+}
+
+model employee_schedule_exceptions {
+  id            String   @id @default(uuid(7)) @db.Uuid
+  lab_member_id String   @db.Uuid
+  exception_date DateTime
+  available_minutes Int
+  reason        String?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  lab_members lab_members @relation(fields: [lab_member_id], references: [id], onDelete: Cascade)
+
+  @@index([lab_member_id, exception_date])
+}
+
+model milling_machine_schedule_shifts {
+  id                 String   @id @default(uuid(7)) @db.Uuid
+  milling_machine_id String   @db.Uuid
+  day_of_week        Int
+  start_minute       Int
+  end_minute         Int
+  is_active          Boolean  @default(true)
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+
+  millingMachine milling_machines @relation(fields: [milling_machine_id], references: [id], onDelete: Cascade)
+
+  @@index([milling_machine_id, day_of_week])
+}
+
+model milling_machine_schedule_exceptions {
+  id                 String   @id @default(uuid(7)) @db.Uuid
+  milling_machine_id String   @db.Uuid
+  exception_date     DateTime
+  start_minute       Int?
+  end_minute         Int?
+  is_available       Boolean
+  reason             String?
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+
+  millingMachine milling_machines @relation(fields: [milling_machine_id], references: [id], onDelete: Cascade)
+
+  @@index([milling_machine_id, exception_date])
+}
+
+model schedule_proposals {
+  id                  String                 @id @default(uuid(7)) @db.Uuid
+  lab_id              String                 @db.Uuid
+  status              ScheduleProposalStatus @default(DRAFT)
+  source_revision     Int
+  summary_json        Json
+  changes_json        Json
+  created_by_user_id  String?                @db.Uuid
+  approved_by_user_id String?                @db.Uuid
+  rejected_by_user_id String?                @db.Uuid
+  decided_at          DateTime?
+  created_at          DateTime               @default(now())
+  updated_at          DateTime               @updatedAt
+
+  labs            labs   @relation(fields: [lab_id], references: [id], onDelete: Cascade)
+  createdByUser   users? @relation("ScheduleProposalCreatedBy", fields: [created_by_user_id], references: [id], onDelete: SetNull)
+  approvedByUser  users? @relation("ScheduleProposalApprovedBy", fields: [approved_by_user_id], references: [id], onDelete: SetNull)
+  rejectedByUser  users? @relation("ScheduleProposalRejectedBy", fields: [rejected_by_user_id], references: [id], onDelete: SetNull)
+
+  @@index([lab_id, status, created_at])
 }
 
 model case_status_histories {

@@ -29,6 +29,9 @@ export async function GET(
         currentUserRole: result.currentUserRole,
         canAssignProcesses: result.canAssignProcesses,
         canEditRole: result.canEditRole,
+        canManageCapacity: result.canManageCapacity,
+        scheduleProfile: result.scheduleProfile,
+        employeeDashboard: result.dashboard,
       },
     });
   } catch (error) {

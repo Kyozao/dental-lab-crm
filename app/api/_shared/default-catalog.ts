@@ -26,6 +26,11 @@ type DefaultServiceDefinition = {
     id: string;
     processStepId: string;
     dependsOn: string[];
+    fixedPoints?: number;
+    pointsPerUnit?: number;
+    expectedDurationDays?: number;
+    dependencyLagDays?: number;
+    requiresMillingMachine?: boolean;
   }>;
 };
 
@@ -534,13 +539,18 @@ function buildWorkflow(
         throw new Error(`Missing default process for step "${step.id}".`);
       }
 
-      return {
-        id: step.id,
-        process_id,
-        dependsOn: step.dependsOn,
-      };
-    }),
-  };
+        return {
+          id: step.id,
+          process_id,
+          dependsOn: step.dependsOn,
+          fixed_minutes: step.fixedPoints ?? 1,
+          minutes_per_unit: step.pointsPerUnit ?? 0,
+          expected_duration_days: step.expectedDurationDays ?? 1,
+          dependency_lag_days: step.dependencyLagDays ?? 0,
+          requires_milling_machine: step.requiresMillingMachine ?? false,
+        };
+      }),
+    };
 }
 
 async function ensureDefaultCustomers(
