@@ -15,7 +15,7 @@ export default async function ServiceDetailPage({ params }: Props) {
     <PageShell width="default">
       <PageHeader
         title="Service"
-        description="Edit service overview."
+        description="Edit the customer-facing catalog entry for this service."
       />
       <ServiceDetailPageClient serviceId={id} />
     </PageShell>

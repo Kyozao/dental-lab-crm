@@ -43,11 +43,18 @@ export type CreateEmployeePayload = {
 export type EmployeeProcess = {
   id: string;
   name: string;
+  default_labor_cost?: string;
+  labor_cost_override?: string | null;
+  effective_labor_cost?: string;
+  productivity_points_per_hour?: string | null;
 };
 
 export type EmployeeProductivityAssignment = {
   processId: string;
   processName: string;
+  defaultLaborCost?: string;
+  laborCostOverride?: string | null;
+  effectiveLaborCost?: string;
 };
 
 export type EmployeeWeekdayCapacity = {
@@ -115,6 +122,9 @@ export type EmployeeProcessPermissionItem = {
   isPrimary: boolean;
   isAllowed: boolean;
   productivityPointsPerHour: number | null;
+  defaultLaborCost: number | null;
+  laborCostOverride: number | null;
+  effectiveLaborCost: number | null;
 };
 
 export type EmployeeActivityItem = {
@@ -156,6 +166,7 @@ export type EmployeeDetailResult = {
   employee: Employee;
   scheduleProfile: EmployeeScheduleProfile | null;
   dashboard: EmployeeDashboard | null;
+  labCurrency: string;
   currentUserRole: UserRoleValue | null;
   canAssignProcesses: boolean;
   canEditRole: boolean;

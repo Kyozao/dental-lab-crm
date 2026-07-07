@@ -544,9 +544,7 @@ function buildWorkflow(
           process_id,
           dependsOn: step.dependsOn,
           fixed_minutes: step.fixedPoints ?? 1,
-          minutes_per_unit: step.pointsPerUnit ?? 0,
           expected_duration_days: step.expectedDurationDays ?? 1,
-          dependency_lag_days: step.dependencyLagDays ?? 0,
           requires_milling_machine: step.requiresMillingMachine ?? false,
         };
       }),

@@ -28,16 +28,12 @@ export type AggregateCase_processes = {
 
 export type Case_processesAvgAggregateOutputType = {
   snapshot_fixed_minutes: number | null
-  snapshot_minutes_per_unit: number | null
   snapshot_expected_duration_days: number | null
-  snapshot_dependency_lag_days: number | null
 }
 
 export type Case_processesSumAggregateOutputType = {
   snapshot_fixed_minutes: number | null
-  snapshot_minutes_per_unit: number | null
   snapshot_expected_duration_days: number | null
-  snapshot_dependency_lag_days: number | null
 }
 
 export type Case_processesMinAggregateOutputType = {
@@ -49,9 +45,7 @@ export type Case_processesMinAggregateOutputType = {
   status: $Enums.CaseProcessStatus | null
   assigned_lab_member_id: string | null
   snapshot_fixed_minutes: number | null
-  snapshot_minutes_per_unit: number | null
   snapshot_expected_duration_days: number | null
-  snapshot_dependency_lag_days: number | null
   snapshot_requires_milling_machine: boolean | null
   planned_start_date: Date | null
   planned_end_date: Date | null
@@ -73,9 +67,7 @@ export type Case_processesMaxAggregateOutputType = {
   status: $Enums.CaseProcessStatus | null
   assigned_lab_member_id: string | null
   snapshot_fixed_minutes: number | null
-  snapshot_minutes_per_unit: number | null
   snapshot_expected_duration_days: number | null
-  snapshot_dependency_lag_days: number | null
   snapshot_requires_milling_machine: boolean | null
   planned_start_date: Date | null
   planned_end_date: Date | null
@@ -97,9 +89,7 @@ export type Case_processesCountAggregateOutputType = {
   status: number
   assigned_lab_member_id: number
   snapshot_fixed_minutes: number
-  snapshot_minutes_per_unit: number
   snapshot_expected_duration_days: number
-  snapshot_dependency_lag_days: number
   snapshot_requires_milling_machine: number
   planned_start_date: number
   planned_end_date: number
@@ -116,16 +106,12 @@ export type Case_processesCountAggregateOutputType = {
 
 export type Case_processesAvgAggregateInputType = {
   snapshot_fixed_minutes?: true
-  snapshot_minutes_per_unit?: true
   snapshot_expected_duration_days?: true
-  snapshot_dependency_lag_days?: true
 }
 
 export type Case_processesSumAggregateInputType = {
   snapshot_fixed_minutes?: true
-  snapshot_minutes_per_unit?: true
   snapshot_expected_duration_days?: true
-  snapshot_dependency_lag_days?: true
 }
 
 export type Case_processesMinAggregateInputType = {
@@ -137,9 +123,7 @@ export type Case_processesMinAggregateInputType = {
   status?: true
   assigned_lab_member_id?: true
   snapshot_fixed_minutes?: true
-  snapshot_minutes_per_unit?: true
   snapshot_expected_duration_days?: true
-  snapshot_dependency_lag_days?: true
   snapshot_requires_milling_machine?: true
   planned_start_date?: true
   planned_end_date?: true
@@ -161,9 +145,7 @@ export type Case_processesMaxAggregateInputType = {
   status?: true
   assigned_lab_member_id?: true
   snapshot_fixed_minutes?: true
-  snapshot_minutes_per_unit?: true
   snapshot_expected_duration_days?: true
-  snapshot_dependency_lag_days?: true
   snapshot_requires_milling_machine?: true
   planned_start_date?: true
   planned_end_date?: true
@@ -185,9 +167,7 @@ export type Case_processesCountAggregateInputType = {
   status?: true
   assigned_lab_member_id?: true
   snapshot_fixed_minutes?: true
-  snapshot_minutes_per_unit?: true
   snapshot_expected_duration_days?: true
-  snapshot_dependency_lag_days?: true
   snapshot_requires_milling_machine?: true
   planned_start_date?: true
   planned_end_date?: true
@@ -296,9 +276,7 @@ export type Case_processesGroupByOutputType = {
   status: $Enums.CaseProcessStatus
   assigned_lab_member_id: string | null
   snapshot_fixed_minutes: number
-  snapshot_minutes_per_unit: number
   snapshot_expected_duration_days: number
-  snapshot_dependency_lag_days: number
   snapshot_requires_milling_machine: boolean
   planned_start_date: Date | null
   planned_end_date: Date | null
@@ -343,9 +321,7 @@ export type case_processesWhereInput = {
   status?: Prisma.EnumCaseProcessStatusFilter<"case_processes"> | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.UuidNullableFilter<"case_processes"> | string | null
   snapshot_fixed_minutes?: Prisma.IntFilter<"case_processes"> | number
-  snapshot_minutes_per_unit?: Prisma.IntFilter<"case_processes"> | number
   snapshot_expected_duration_days?: Prisma.IntFilter<"case_processes"> | number
-  snapshot_dependency_lag_days?: Prisma.IntFilter<"case_processes"> | number
   snapshot_requires_milling_machine?: Prisma.BoolFilter<"case_processes"> | boolean
   planned_start_date?: Prisma.DateTimeNullableFilter<"case_processes"> | Date | string | null
   planned_end_date?: Prisma.DateTimeNullableFilter<"case_processes"> | Date | string | null
@@ -376,9 +352,7 @@ export type case_processesOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   assigned_lab_member_id?: Prisma.SortOrderInput | Prisma.SortOrder
   snapshot_fixed_minutes?: Prisma.SortOrder
-  snapshot_minutes_per_unit?: Prisma.SortOrder
   snapshot_expected_duration_days?: Prisma.SortOrder
-  snapshot_dependency_lag_days?: Prisma.SortOrder
   snapshot_requires_milling_machine?: Prisma.SortOrder
   planned_start_date?: Prisma.SortOrderInput | Prisma.SortOrder
   planned_end_date?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -413,9 +387,7 @@ export type case_processesWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumCaseProcessStatusFilter<"case_processes"> | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.UuidNullableFilter<"case_processes"> | string | null
   snapshot_fixed_minutes?: Prisma.IntFilter<"case_processes"> | number
-  snapshot_minutes_per_unit?: Prisma.IntFilter<"case_processes"> | number
   snapshot_expected_duration_days?: Prisma.IntFilter<"case_processes"> | number
-  snapshot_dependency_lag_days?: Prisma.IntFilter<"case_processes"> | number
   snapshot_requires_milling_machine?: Prisma.BoolFilter<"case_processes"> | boolean
   planned_start_date?: Prisma.DateTimeNullableFilter<"case_processes"> | Date | string | null
   planned_end_date?: Prisma.DateTimeNullableFilter<"case_processes"> | Date | string | null
@@ -446,9 +418,7 @@ export type case_processesOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   assigned_lab_member_id?: Prisma.SortOrderInput | Prisma.SortOrder
   snapshot_fixed_minutes?: Prisma.SortOrder
-  snapshot_minutes_per_unit?: Prisma.SortOrder
   snapshot_expected_duration_days?: Prisma.SortOrder
-  snapshot_dependency_lag_days?: Prisma.SortOrder
   snapshot_requires_milling_machine?: Prisma.SortOrder
   planned_start_date?: Prisma.SortOrderInput | Prisma.SortOrder
   planned_end_date?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -478,9 +448,7 @@ export type case_processesScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumCaseProcessStatusWithAggregatesFilter<"case_processes"> | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.UuidNullableWithAggregatesFilter<"case_processes"> | string | null
   snapshot_fixed_minutes?: Prisma.IntWithAggregatesFilter<"case_processes"> | number
-  snapshot_minutes_per_unit?: Prisma.IntWithAggregatesFilter<"case_processes"> | number
   snapshot_expected_duration_days?: Prisma.IntWithAggregatesFilter<"case_processes"> | number
-  snapshot_dependency_lag_days?: Prisma.IntWithAggregatesFilter<"case_processes"> | number
   snapshot_requires_milling_machine?: Prisma.BoolWithAggregatesFilter<"case_processes"> | boolean
   planned_start_date?: Prisma.DateTimeNullableWithAggregatesFilter<"case_processes"> | Date | string | null
   planned_end_date?: Prisma.DateTimeNullableWithAggregatesFilter<"case_processes"> | Date | string | null
@@ -498,9 +466,7 @@ export type case_processesCreateInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -530,9 +496,7 @@ export type case_processesUncheckedCreateInput = {
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -554,9 +518,7 @@ export type case_processesUpdateInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -586,9 +548,7 @@ export type case_processesUncheckedUpdateInput = {
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -614,9 +574,7 @@ export type case_processesCreateManyInput = {
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -634,9 +592,7 @@ export type case_processesUpdateManyMutationInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -657,9 +613,7 @@ export type case_processesUncheckedUpdateManyInput = {
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -696,9 +650,7 @@ export type case_processesCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   assigned_lab_member_id?: Prisma.SortOrder
   snapshot_fixed_minutes?: Prisma.SortOrder
-  snapshot_minutes_per_unit?: Prisma.SortOrder
   snapshot_expected_duration_days?: Prisma.SortOrder
-  snapshot_dependency_lag_days?: Prisma.SortOrder
   snapshot_requires_milling_machine?: Prisma.SortOrder
   planned_start_date?: Prisma.SortOrder
   planned_end_date?: Prisma.SortOrder
@@ -713,9 +665,7 @@ export type case_processesCountOrderByAggregateInput = {
 
 export type case_processesAvgOrderByAggregateInput = {
   snapshot_fixed_minutes?: Prisma.SortOrder
-  snapshot_minutes_per_unit?: Prisma.SortOrder
   snapshot_expected_duration_days?: Prisma.SortOrder
-  snapshot_dependency_lag_days?: Prisma.SortOrder
 }
 
 export type case_processesMaxOrderByAggregateInput = {
@@ -727,9 +677,7 @@ export type case_processesMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   assigned_lab_member_id?: Prisma.SortOrder
   snapshot_fixed_minutes?: Prisma.SortOrder
-  snapshot_minutes_per_unit?: Prisma.SortOrder
   snapshot_expected_duration_days?: Prisma.SortOrder
-  snapshot_dependency_lag_days?: Prisma.SortOrder
   snapshot_requires_milling_machine?: Prisma.SortOrder
   planned_start_date?: Prisma.SortOrder
   planned_end_date?: Prisma.SortOrder
@@ -751,9 +699,7 @@ export type case_processesMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   assigned_lab_member_id?: Prisma.SortOrder
   snapshot_fixed_minutes?: Prisma.SortOrder
-  snapshot_minutes_per_unit?: Prisma.SortOrder
   snapshot_expected_duration_days?: Prisma.SortOrder
-  snapshot_dependency_lag_days?: Prisma.SortOrder
   snapshot_requires_milling_machine?: Prisma.SortOrder
   planned_start_date?: Prisma.SortOrder
   planned_end_date?: Prisma.SortOrder
@@ -768,9 +714,7 @@ export type case_processesMinOrderByAggregateInput = {
 
 export type case_processesSumOrderByAggregateInput = {
   snapshot_fixed_minutes?: Prisma.SortOrder
-  snapshot_minutes_per_unit?: Prisma.SortOrder
   snapshot_expected_duration_days?: Prisma.SortOrder
-  snapshot_dependency_lag_days?: Prisma.SortOrder
 }
 
 export type Case_processesScalarRelationFilter = {
@@ -1057,9 +1001,7 @@ export type case_processesCreateWithoutAssignedLabMemberInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -1087,9 +1029,7 @@ export type case_processesUncheckedCreateWithoutAssignedLabMemberInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -1144,9 +1084,7 @@ export type case_processesScalarWhereInput = {
   status?: Prisma.EnumCaseProcessStatusFilter<"case_processes"> | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.UuidNullableFilter<"case_processes"> | string | null
   snapshot_fixed_minutes?: Prisma.IntFilter<"case_processes"> | number
-  snapshot_minutes_per_unit?: Prisma.IntFilter<"case_processes"> | number
   snapshot_expected_duration_days?: Prisma.IntFilter<"case_processes"> | number
-  snapshot_dependency_lag_days?: Prisma.IntFilter<"case_processes"> | number
   snapshot_requires_milling_machine?: Prisma.BoolFilter<"case_processes"> | boolean
   planned_start_date?: Prisma.DateTimeNullableFilter<"case_processes"> | Date | string | null
   planned_end_date?: Prisma.DateTimeNullableFilter<"case_processes"> | Date | string | null
@@ -1164,9 +1102,7 @@ export type case_processesCreateWithoutProcessesInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -1194,9 +1130,7 @@ export type case_processesUncheckedCreateWithoutProcessesInput = {
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -1244,9 +1178,7 @@ export type case_processesCreateWithoutPlannedMillingMachineInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -1275,9 +1207,7 @@ export type case_processesUncheckedCreateWithoutPlannedMillingMachineInput = {
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -1324,9 +1254,7 @@ export type case_processesCreateWithoutCasesInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -1354,9 +1282,7 @@ export type case_processesUncheckedCreateWithoutCasesInput = {
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -1404,9 +1330,7 @@ export type case_processesCreateWithoutHistoryEventsInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -1435,9 +1359,7 @@ export type case_processesUncheckedCreateWithoutHistoryEventsInput = {
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -1474,9 +1396,7 @@ export type case_processesUpdateWithoutHistoryEventsInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1505,9 +1425,7 @@ export type case_processesUncheckedUpdateWithoutHistoryEventsInput = {
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1528,9 +1446,7 @@ export type case_processesCreateWithoutCase_servicesInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -1558,9 +1474,7 @@ export type case_processesUncheckedCreateWithoutCase_servicesInput = {
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -1608,9 +1522,7 @@ export type case_processesCreateWithoutDependenciesInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -1639,9 +1551,7 @@ export type case_processesUncheckedCreateWithoutDependenciesInput = {
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -1667,9 +1577,7 @@ export type case_processesCreateWithoutDependentProcessesInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -1698,9 +1606,7 @@ export type case_processesUncheckedCreateWithoutDependentProcessesInput = {
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -1737,9 +1643,7 @@ export type case_processesUpdateWithoutDependenciesInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1768,9 +1672,7 @@ export type case_processesUncheckedUpdateWithoutDependenciesInput = {
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1802,9 +1704,7 @@ export type case_processesUpdateWithoutDependentProcessesInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1833,9 +1733,7 @@ export type case_processesUncheckedUpdateWithoutDependentProcessesInput = {
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1856,9 +1754,7 @@ export type case_processesCreateWithoutScheduleAllocationsInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -1887,9 +1783,7 @@ export type case_processesUncheckedCreateWithoutScheduleAllocationsInput = {
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -1926,9 +1820,7 @@ export type case_processesUpdateWithoutScheduleAllocationsInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1957,9 +1849,7 @@ export type case_processesUncheckedUpdateWithoutScheduleAllocationsInput = {
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1983,9 +1873,7 @@ export type case_processesCreateManyAssignedLabMemberInput = {
   workflow_step_id: string
   status?: $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -2003,9 +1891,7 @@ export type case_processesUpdateWithoutAssignedLabMemberInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2033,9 +1919,7 @@ export type case_processesUncheckedUpdateWithoutAssignedLabMemberInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2060,9 +1944,7 @@ export type case_processesUncheckedUpdateManyWithoutAssignedLabMemberInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2083,9 +1965,7 @@ export type case_processesCreateManyProcessesInput = {
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -2103,9 +1983,7 @@ export type case_processesUpdateWithoutProcessesInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2133,9 +2011,7 @@ export type case_processesUncheckedUpdateWithoutProcessesInput = {
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2160,9 +2036,7 @@ export type case_processesUncheckedUpdateManyWithoutProcessesInput = {
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2184,9 +2058,7 @@ export type case_processesCreateManyPlannedMillingMachineInput = {
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -2203,9 +2075,7 @@ export type case_processesUpdateWithoutPlannedMillingMachineInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2234,9 +2104,7 @@ export type case_processesUncheckedUpdateWithoutPlannedMillingMachineInput = {
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2261,9 +2129,7 @@ export type case_processesUncheckedUpdateManyWithoutPlannedMillingMachineInput =
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2283,9 +2149,7 @@ export type case_processesCreateManyCasesInput = {
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -2303,9 +2167,7 @@ export type case_processesUpdateWithoutCasesInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2333,9 +2195,7 @@ export type case_processesUncheckedUpdateWithoutCasesInput = {
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2360,9 +2220,7 @@ export type case_processesUncheckedUpdateManyWithoutCasesInput = {
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2383,9 +2241,7 @@ export type case_processesCreateManyCase_servicesInput = {
   status?: $Enums.CaseProcessStatus
   assigned_lab_member_id?: string | null
   snapshot_fixed_minutes?: number
-  snapshot_minutes_per_unit?: number
   snapshot_expected_duration_days?: number
-  snapshot_dependency_lag_days?: number
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: Date | string | null
   planned_end_date?: Date | string | null
@@ -2403,9 +2259,7 @@ export type case_processesUpdateWithoutCase_servicesInput = {
   workflow_step_id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2433,9 +2287,7 @@ export type case_processesUncheckedUpdateWithoutCase_servicesInput = {
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2460,9 +2312,7 @@ export type case_processesUncheckedUpdateManyWithoutCase_servicesInput = {
   status?: Prisma.EnumCaseProcessStatusFieldUpdateOperationsInput | $Enums.CaseProcessStatus
   assigned_lab_member_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   snapshot_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_minutes_per_unit?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
-  snapshot_dependency_lag_days?: Prisma.IntFieldUpdateOperationsInput | number
   snapshot_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
   planned_start_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   planned_end_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2542,9 +2392,7 @@ export type case_processesSelect<ExtArgs extends runtime.Types.Extensions.Intern
   status?: boolean
   assigned_lab_member_id?: boolean
   snapshot_fixed_minutes?: boolean
-  snapshot_minutes_per_unit?: boolean
   snapshot_expected_duration_days?: boolean
-  snapshot_dependency_lag_days?: boolean
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: boolean
   planned_end_date?: boolean
@@ -2576,9 +2424,7 @@ export type case_processesSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   status?: boolean
   assigned_lab_member_id?: boolean
   snapshot_fixed_minutes?: boolean
-  snapshot_minutes_per_unit?: boolean
   snapshot_expected_duration_days?: boolean
-  snapshot_dependency_lag_days?: boolean
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: boolean
   planned_end_date?: boolean
@@ -2605,9 +2451,7 @@ export type case_processesSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   status?: boolean
   assigned_lab_member_id?: boolean
   snapshot_fixed_minutes?: boolean
-  snapshot_minutes_per_unit?: boolean
   snapshot_expected_duration_days?: boolean
-  snapshot_dependency_lag_days?: boolean
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: boolean
   planned_end_date?: boolean
@@ -2634,9 +2478,7 @@ export type case_processesSelectScalar = {
   status?: boolean
   assigned_lab_member_id?: boolean
   snapshot_fixed_minutes?: boolean
-  snapshot_minutes_per_unit?: boolean
   snapshot_expected_duration_days?: boolean
-  snapshot_dependency_lag_days?: boolean
   snapshot_requires_milling_machine?: boolean
   planned_start_date?: boolean
   planned_end_date?: boolean
@@ -2649,7 +2491,7 @@ export type case_processesSelectScalar = {
   updated_at?: boolean
 }
 
-export type case_processesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "case_id" | "case_service_id" | "process_id" | "workflow_step_id" | "status" | "assigned_lab_member_id" | "snapshot_fixed_minutes" | "snapshot_minutes_per_unit" | "snapshot_expected_duration_days" | "snapshot_dependency_lag_days" | "snapshot_requires_milling_machine" | "planned_start_date" | "planned_end_date" | "scheduling_locked" | "scheduling_status" | "planned_milling_machine_id" | "started_at" | "completed_at" | "created_at" | "updated_at", ExtArgs["result"]["case_processes"]>
+export type case_processesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "case_id" | "case_service_id" | "process_id" | "workflow_step_id" | "status" | "assigned_lab_member_id" | "snapshot_fixed_minutes" | "snapshot_expected_duration_days" | "snapshot_requires_milling_machine" | "planned_start_date" | "planned_end_date" | "scheduling_locked" | "scheduling_status" | "planned_milling_machine_id" | "started_at" | "completed_at" | "created_at" | "updated_at", ExtArgs["result"]["case_processes"]>
 export type case_processesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cases?: boolean | Prisma.casesDefaultArgs<ExtArgs>
   case_services?: boolean | Prisma.case_servicesDefaultArgs<ExtArgs>
@@ -2699,9 +2541,7 @@ export type $case_processesPayload<ExtArgs extends runtime.Types.Extensions.Inte
     status: $Enums.CaseProcessStatus
     assigned_lab_member_id: string | null
     snapshot_fixed_minutes: number
-    snapshot_minutes_per_unit: number
     snapshot_expected_duration_days: number
-    snapshot_dependency_lag_days: number
     snapshot_requires_milling_machine: boolean
     planned_start_date: Date | null
     planned_end_date: Date | null
@@ -3152,9 +2992,7 @@ export interface case_processesFieldRefs {
   readonly status: Prisma.FieldRef<"case_processes", 'CaseProcessStatus'>
   readonly assigned_lab_member_id: Prisma.FieldRef<"case_processes", 'String'>
   readonly snapshot_fixed_minutes: Prisma.FieldRef<"case_processes", 'Int'>
-  readonly snapshot_minutes_per_unit: Prisma.FieldRef<"case_processes", 'Int'>
   readonly snapshot_expected_duration_days: Prisma.FieldRef<"case_processes", 'Int'>
-  readonly snapshot_dependency_lag_days: Prisma.FieldRef<"case_processes", 'Int'>
   readonly snapshot_requires_milling_machine: Prisma.FieldRef<"case_processes", 'Boolean'>
   readonly planned_start_date: Prisma.FieldRef<"case_processes", 'DateTime'>
   readonly planned_end_date: Prisma.FieldRef<"case_processes", 'DateTime'>

@@ -274,6 +274,12 @@ export const casesApi = {
     return response.data;
   },
 
+  async delete(caseId: string) {
+    return api<CaseResponse>(`/api/cases/${caseId}`, {
+      method: "DELETE",
+    });
+  },
+
   async replaceWorkflow(
     caseId: string,
     caseServiceId: string,

@@ -42,6 +42,7 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserRole } from "@/generated/prisma/enums";
+import { formatCurrency } from "@/lib/currency";
 import {
   assignableRoles,
   formatEmployeeDate,
@@ -55,6 +56,7 @@ import {
   getEmployeeApi,
   listEmployeeProcessesApi,
   updateEmployeeAvailabilityApi,
+  updateEmployeeLaborCostsApi,
   updateEmployeeProcessesApi,
   updateEmployeeRoleApi,
 } from "@/features/employees/services/employees-api";
@@ -84,6 +86,8 @@ type DraftScheduleException = {
   availableMinutes: number;
   reason: string;
 };
+
+type DraftLaborCostOverride = Record<string, string>;
 
 const weekdayDisplayOrder = [1, 2, 3, 4, 5, 6, 0];
 const defaultWeekdayMinutes = 8 * 60;
@@ -161,6 +165,14 @@ function formatMetricNumber(value: number | null) {
   }
 
   return value.toFixed(1);
+}
+
+function buildLaborCostOverrideDraft(employee: Employee | null) {
+  const entries = employee?.processes ?? [];
+  return entries.reduce<DraftLaborCostOverride>((map, process) => {
+    map[process.id] = process.labor_cost_override ?? "";
+    return map;
+  }, {});
 }
 
 function processStatusLabel(status: string) {
@@ -264,14 +276,18 @@ export function EmployeeDetailPageClient({
   >(
     [],
   );
+  const [draftLaborCostOverrides, setDraftLaborCostOverrides] =
+    useState<DraftLaborCostOverride>({});
   const [draftExceptions, setDraftExceptions] = useState<
     DraftScheduleException[]
   >([]);
   const [hydrated, setHydrated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [savingAssignments, setSavingAssignments] = useState(false);
+  const [savingLaborCosts, setSavingLaborCosts] = useState(false);
   const [savingRole, setSavingRole] = useState(false);
   const [savingAvailability, setSavingAvailability] = useState(false);
+  const [labCurrency, setLabCurrency] = useState("BRL");
   const [canAssignProcesses, setCanAssignProcesses] = useState(false);
   const [canEditRole, setCanEditRole] = useState(false);
   const [canManageCapacity, setCanManageCapacity] = useState(false);
@@ -292,8 +308,12 @@ export function EmployeeDetailPageClient({
       setEmployee(employeeResult.employee);
       setScheduleProfile(employeeResult.scheduleProfile);
       setDashboard(employeeResult.dashboard);
+      setLabCurrency(employeeResult.labCurrency);
       setDraftProcessIds(
         employeeResult.employee.processes.map((process) => process.id),
+      );
+      setDraftLaborCostOverrides(
+        buildLaborCostOverrideDraft(employeeResult.employee),
       );
       setDraftWeekdayCapacities(
         buildWeekdayCapacityDraft(employeeResult.scheduleProfile),
@@ -331,6 +351,13 @@ export function EmployeeDetailPageClient({
     setDraftProcessIds(employee.processes.map((process) => process.id));
   }
 
+  function resetDraftLaborCosts() {
+    if (!employee) return;
+    setError(null);
+    setNotice(null);
+    setDraftLaborCostOverrides(buildLaborCostOverrideDraft(employee));
+  }
+
   async function saveDraftAssignments() {
     if (!employee?.lab_member_id) return;
 
@@ -350,6 +377,34 @@ export function EmployeeDetailPageClient({
       );
     } finally {
       setSavingAssignments(false);
+    }
+  }
+
+  async function saveDraftLaborCosts() {
+    if (!employee?.lab_member_id) return;
+
+    setSavingLaborCosts(true);
+    setError(null);
+    setNotice(null);
+
+    try {
+      await updateEmployeeLaborCostsApi(
+        employee.lab_member_id,
+        draftProcessIds.map((processId) => ({
+          process_id: processId,
+          labor_cost_override: draftLaborCostOverrides[processId]?.trim() || null,
+        })),
+      );
+      await refreshEmployee();
+      setNotice("Labor cost overrides updated.");
+    } catch (updateError) {
+      setError(
+        updateError instanceof Error
+          ? updateError.message
+          : "Failed to update labor cost overrides.",
+      );
+    } finally {
+      setSavingLaborCosts(false);
     }
   }
 
@@ -420,6 +475,8 @@ export function EmployeeDetailPageClient({
 
   const canEditAssignments =
     Boolean(employee?.is_active) && canAssignProcesses && !savingAssignments;
+  const canEditLaborCosts =
+    Boolean(employee?.is_active) && canAssignProcesses && !savingLaborCosts;
   const canSubmitRoleChange =
     employee !== null &&
     Boolean(draftRole) &&
@@ -440,6 +497,20 @@ export function EmployeeDetailPageClient({
     : false;
   const hasUnsavedRoleChange =
     employee !== null && Boolean(draftRole) && employee.role !== draftRole;
+  const activeEmployeeProcessIds = employee?.processes.map((process) => process.id) ?? [];
+  const hasUnsavedLaborCosts = employee
+    ? draftProcessIds.some((processId) => {
+        const process = employee.processes.find((item) => item.id === processId);
+        const currentOverride = process?.labor_cost_override ?? "";
+        const draftOverride = draftLaborCostOverrides[processId]?.trim() ?? "";
+        return currentOverride !== draftOverride;
+      }) ||
+      activeEmployeeProcessIds.some(
+        (processId) =>
+          !draftProcessIds.includes(processId) &&
+          Boolean(draftLaborCostOverrides[processId]),
+      )
+    : false;
   const hasUnsavedAvailability =
     normalizeWeekdayCapacitySnapshot(draftWeekdayCapacities) !==
       normalizeWeekdayCapacitySnapshot(
@@ -759,13 +830,24 @@ export function EmployeeDetailPageClient({
                       <div className="space-y-1">
                         <div className="font-medium">{permission.processName}</div>
                         <div className="text-sm text-muted-foreground">
-                          Allowed for minute-based scheduling.
+                          Effective labor cost{" "}
+                          {permission.effectiveLaborCost === null
+                            ? "not set"
+                            : formatCurrency(
+                                permission.effectiveLaborCost,
+                                labCurrency,
+                              )}
                         </div>
                       </div>
                       <div className="flex flex-wrap justify-end gap-2">
                         <Badge variant={permission.isAllowed ? "success" : "neutral"}>
                           Allowed
                         </Badge>
+                        {permission.laborCostOverride !== null ? (
+                          <Badge variant="info">Override</Badge>
+                        ) : (
+                          <Badge variant="outline">Default</Badge>
+                        )}
                       </div>
                     </div>
                   ))
@@ -1080,39 +1162,109 @@ export function EmployeeDetailPageClient({
                 <CardHeader>
                   <CardTitle>Allowed processes</CardTitle>
                   <CardDescription>
-                    Select which processes this employee may own and receive in assignment flows.
+                    Select which processes this employee may own and receive in assignment flows, then manage labor cost overrides for assigned rows.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="grid gap-3">
                   {processes.length > 0 ? (
                     processes.map((process) => {
                       const checked = draftProcessIds.includes(process.id);
+                      const employeeProcess = employee.processes.find(
+                        (item) => item.id === process.id,
+                      );
+                      const effectiveLaborCost = checked
+                        ? draftLaborCostOverrides[process.id]?.trim() ||
+                          employeeProcess?.default_labor_cost ||
+                          process.default_labor_cost ||
+                          "0.00"
+                        : process.default_labor_cost ?? "0.00";
+                      const defaultLaborCost =
+                        employeeProcess?.default_labor_cost ??
+                        process.default_labor_cost ??
+                        "0.00";
 
                       return (
-                        <label
+                        <div
                           key={process.id}
-                          className="flex items-center justify-between gap-3 rounded-lg border px-4 py-3"
+                          className="grid gap-3 rounded-lg border px-4 py-3"
                         >
-                          <div className="space-y-1">
-                            <div className="font-medium">{process.name}</div>
-                            <div className="text-sm text-muted-foreground">
-                              {checked ? "Currently allowed" : "Not allowed"}
+                          <div className="flex items-center justify-between gap-3">
+                            <div className="space-y-1">
+                              <div className="font-medium">{process.name}</div>
+                              <div className="text-sm text-muted-foreground">
+                                {checked ? "Currently allowed" : "Not allowed"}
+                              </div>
                             </div>
+                            <Checkbox
+                              checked={checked}
+                              disabled={!canEditAssignments}
+                              onCheckedChange={(nextChecked) =>
+                                setDraftProcessIds((current) =>
+                                  nextChecked === true
+                                    ? current.includes(process.id)
+                                      ? current
+                                      : [...current, process.id]
+                                    : current.filter((id) => id !== process.id),
+                                )
+                              }
+                            />
                           </div>
-                          <Checkbox
-                            checked={checked}
-                            disabled={!canEditAssignments}
-                            onCheckedChange={(nextChecked) =>
-                              setDraftProcessIds((current) =>
-                                nextChecked === true
-                                  ? current.includes(process.id)
-                                    ? current
-                                    : [...current, process.id]
-                                  : current.filter((id) => id !== process.id),
-                              )
-                            }
-                          />
-                        </label>
+
+                          {checked ? (
+                            <div className="grid gap-3 rounded-lg border border-dashed px-3 py-3 sm:grid-cols-3">
+                              <div>
+                                <div className="text-xs uppercase tracking-wide text-muted-foreground">
+                                  Process default
+                                </div>
+                                <div className="mt-1 text-sm font-medium">
+                                  {formatCurrency(defaultLaborCost, labCurrency)}
+                                </div>
+                              </div>
+                              <div className="grid gap-2">
+                                <Label htmlFor={`labor-cost-${process.id}`}>
+                                  Labor cost override
+                                </Label>
+                                <Input
+                                  id={`labor-cost-${process.id}`}
+                                  inputMode="decimal"
+                                  placeholder="Use process default"
+                                  value={draftLaborCostOverrides[process.id] ?? ""}
+                                  disabled={!canEditLaborCosts}
+                                  onChange={(event) =>
+                                    setDraftLaborCostOverrides((current) => ({
+                                      ...current,
+                                      [process.id]: event.target.value,
+                                    }))
+                                  }
+                                />
+                              </div>
+                              <div className="flex items-end justify-between gap-3 sm:block">
+                                <div>
+                                  <div className="text-xs uppercase tracking-wide text-muted-foreground">
+                                    Effective labor cost
+                                  </div>
+                                  <div className="mt-1 text-sm font-medium">
+                                    {formatCurrency(effectiveLaborCost, labCurrency)}
+                                  </div>
+                                </div>
+                                <Button
+                                  type="button"
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() =>
+                                    setDraftLaborCostOverrides((current) => ({
+                                      ...current,
+                                      [process.id]: "",
+                                    }))
+                                  }
+                                  disabled={!canEditLaborCosts}
+                                >
+                                  Clear override
+                                </Button>
+                              </div>
+                            </div>
+                          ) : null}
+                        </div>
                       );
                     })
                   ) : (
@@ -1144,6 +1296,29 @@ export function EmployeeDetailPageClient({
                       disabled={!hasUnsavedAssignments || savingAssignments}
                     >
                       Reset
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => void saveDraftLaborCosts()}
+                      disabled={!hasUnsavedLaborCosts || !canEditLaborCosts}
+                    >
+                      {savingLaborCosts ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Saving costs
+                        </>
+                      ) : (
+                        "Save labor costs"
+                      )}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={resetDraftLaborCosts}
+                      disabled={!hasUnsavedLaborCosts || savingLaborCosts}
+                    >
+                      Reset costs
                     </Button>
                   </div>
                 </CardContent>

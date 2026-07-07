@@ -16,20 +16,27 @@ import {
   type ServiceTypeInput,
   type ServiceTypeWorkflow,
 } from "./service-types.schemas";
+import { hydrateWorkflowWithProcessTimingDefaults } from "./service-types.workflow-defaults";
 
-function mapServiceType<
+async function mapServiceType<
   T extends {
     created_at: Date;
     updated_at: Date;
     deleted_at: Date | null;
     base_price: { toString(): string };
+    lab_id: string;
     labs?: { currency: string } | null;
   },
 >(serviceType: T) {
+  const workflow_json = await hydrateWorkflowWithProcessTimingDefaults(
+    serviceType.lab_id,
+    normalizeWorkflow((serviceType as { workflow_json?: unknown }).workflow_json),
+  );
+
   return {
     ...mapReferenceDates(serviceType),
     base_price: serviceType.base_price.toString(),
-    workflow_json: normalizeWorkflow((serviceType as { workflow_json?: unknown }).workflow_json),
+    workflow_json,
     currency: serviceType.labs?.currency ?? "BRL",
   };
 }
@@ -86,7 +93,7 @@ export async function listServiceTypesForLoggedLab(user_id: string) {
   });
 
   return {
-    items: serviceTypes.map(mapServiceType),
+    items: await Promise.all(serviceTypes.map(mapServiceType)),
     currency: serviceTypes[0]?.labs?.currency ?? (
       await prisma.labs.findUniqueOrThrow({
         where: { id: lab_id },
@@ -132,6 +139,10 @@ export async function createServiceTypeForLoggedLab(
   const { lab_id } = membership;
   const workflow_json = payload.workflow_json ?? emptyWorkflow;
   await validateWorkflowProcesses(lab_id, workflow_json);
+  const hydratedWorkflow = await hydrateWorkflowWithProcessTimingDefaults(
+    lab_id,
+    workflow_json,
+  );
 
   const serviceType = await prisma.service_types.create({
     data: {
@@ -140,7 +151,7 @@ export async function createServiceTypeForLoggedLab(
       base_price: payload.base_price!,
       delivery_buffer_days: payload.delivery_buffer_days ?? 0,
       notes: optionalString(payload.notes),
-      workflow_json,
+      workflow_json: hydratedWorkflow,
       ...activeStateData(payload),
     },
     include: {
@@ -174,6 +185,10 @@ export async function updateServiceTypeForLoggedLab(
     await validateWorkflowProcesses(lab_id, payload.workflow_json);
   }
 
+  const hydratedWorkflow = payload.workflow_json
+    ? await hydrateWorkflowWithProcessTimingDefaults(lab_id, payload.workflow_json)
+    : undefined;
+
   const serviceType = await prisma.service_types.update({
     where: { id: service_type_id },
     data: {
@@ -181,7 +196,7 @@ export async function updateServiceTypeForLoggedLab(
       base_price: payload.base_price ?? undefined,
       delivery_buffer_days: payload.delivery_buffer_days ?? undefined,
       notes: optionalString(payload.notes),
-      workflow_json: payload.workflow_json,
+      workflow_json: hydratedWorkflow,
       ...activeStateData(payload),
     },
     include: {

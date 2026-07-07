@@ -77,9 +77,7 @@ type ExistingCaseForServiceLineUpdate = ExistingCaseForUpdate & {
       process_id: string;
       workflow_step_id: string;
       snapshot_fixed_minutes: number;
-      snapshot_minutes_per_unit: number;
       snapshot_expected_duration_days: number;
-      snapshot_dependency_lag_days: number;
       snapshot_requires_milling_machine: boolean;
       dependencies: Array<{ depends_on_case_process_id: string }>;
     }>;
@@ -334,9 +332,7 @@ function getWorkflowFromExistingLine(
       process_id: string;
       workflow_step_id: string;
       snapshot_fixed_minutes: number;
-      snapshot_minutes_per_unit: number;
       snapshot_expected_duration_days: number;
-      snapshot_dependency_lag_days: number;
       snapshot_requires_milling_machine: boolean;
       dependencies: Array<{ depends_on_case_process_id: string }>;
     }>;
@@ -351,9 +347,7 @@ function getWorkflowFromExistingLine(
       id: process.workflow_step_id,
       process_id: process.process_id,
       fixed_minutes: process.snapshot_fixed_minutes,
-      minutes_per_unit: process.snapshot_minutes_per_unit,
       expected_duration_days: process.snapshot_expected_duration_days,
-      dependency_lag_days: process.snapshot_dependency_lag_days,
       requires_milling_machine: process.snapshot_requires_milling_machine,
       dependsOn: process.dependencies
         .map((dependency) => stepIdByCaseProcessId.get(dependency.depends_on_case_process_id))
@@ -394,17 +388,15 @@ async function syncCaseServiceLines(
       unit_price: { toString(): string };
       is_unit_price_overridden: boolean;
       quantity: number;
-      case_processes: Array<{
-        id: string;
-        process_id: string;
-        workflow_step_id: string;
-        snapshot_fixed_minutes: number;
-        snapshot_minutes_per_unit: number;
-        snapshot_expected_duration_days: number;
-        snapshot_dependency_lag_days: number;
-        snapshot_requires_milling_machine: boolean;
-        dependencies: Array<{ depends_on_case_process_id: string }>;
-      }>;
+        case_processes: Array<{
+          id: string;
+          process_id: string;
+          workflow_step_id: string;
+          snapshot_fixed_minutes: number;
+          snapshot_expected_duration_days: number;
+          snapshot_requires_milling_machine: boolean;
+          dependencies: Array<{ depends_on_case_process_id: string }>;
+        }>;
     }>;
   },
   plans: ServiceLineWorkflowPlan[],
@@ -566,9 +558,7 @@ async function loadExistingCaseForServiceLineUpdate(
               process_id: true,
               workflow_step_id: true,
               snapshot_fixed_minutes: true,
-              snapshot_minutes_per_unit: true,
               snapshot_expected_duration_days: true,
-              snapshot_dependency_lag_days: true,
               snapshot_requires_milling_machine: true,
               dependencies: {
                 select: {
@@ -806,7 +796,12 @@ export async function createCase(
         return created;
       });
 
-      return mapCase(createdCase);
+      const createdCaseDetails = await prisma.cases.findUniqueOrThrow({
+        where: { id: createdCase.id },
+        include: caseInclude,
+      });
+
+      return mapCase(createdCaseDetails);
     } catch (error) {
       if (attempt < CREATE_CASE_MAX_RETRIES && isCaseCodeCollision(error)) {
         continue;
@@ -842,6 +837,24 @@ export async function updateCase(
   return mapCase(updatedCase);
 }
 
+export async function deleteCase(
+  user_id: string,
+  case_id: string,
+) {
+  const membership = await getLabMember(user_id);
+  assertCanManageCases(membership.role);
+
+  const existingCase = await loadExistingCaseForUpdate(membership, case_id);
+
+  await prisma.$transaction(async (tx) => {
+    await tx.cases.delete({
+      where: { id: existingCase.id },
+    });
+
+    await bumpLabScheduleRevision(tx, membership.lab_id);
+  });
+}
+
 export async function replaceCaseWorkflow(
   user_id: string,
   case_id: string,
@@ -870,12 +883,13 @@ export async function replaceCaseWorkflow(
   const updatedCase = await prisma.$transaction(async (tx) => {
     await replaceWorkflowForExistingCase(tx, existing.id, case_service_id, workflow);
     await bumpLabScheduleRevision(tx, membership.lab_id);
-
-    return tx.cases.findUniqueOrThrow({
-      where: { id: existing.id },
-      include: caseInclude,
-    });
+    return { id: existing.id };
   });
 
-  return mapCase(updatedCase);
+  const reloadedCase = await prisma.cases.findUniqueOrThrow({
+    where: { id: updatedCase.id },
+    include: caseInclude,
+  });
+
+  return mapCase(reloadedCase);
 }

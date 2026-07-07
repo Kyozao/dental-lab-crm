@@ -19,6 +19,11 @@ import {
   buildEmployeeRecentActivity,
   type EmployeeDashboardAssignedProcessRecord,
 } from "./employees.dashboard";
+import {
+  decimalToString,
+  resolveEffectiveLaborCost,
+  type DecimalLike,
+} from "./employees.labor-costs";
 import { ReferenceValidationError } from "../_shared/reference-resource";
 import {
   applyMinuteExceptions,
@@ -33,6 +38,7 @@ import { bumpLabScheduleRevision } from "../_shared/scheduling";
 import type {
   CreateEmployeeInput,
   UpdateEmployeeAvailabilityInput,
+  UpdateEmployeeLaborCostsInput,
   UpdateEmployeeProductivityInput,
   UpdateEmployeeRoleInput,
   UpdateEmployeeProcessesInput,
@@ -49,6 +55,15 @@ import {
 export { EmployeeAuthorizationError, EmployeeConflictError };
 export { SupabaseAdminConfigError };
 
+type EmployeeProcessListItem = {
+  id: string;
+  name: string;
+  default_labor_cost?: string;
+  labor_cost_override?: string | null;
+  effective_labor_cost?: string;
+  productivity_points_per_hour?: string | null;
+};
+
 type EmployeeListItem = {
   id: string;
   lab_member_id: string | null;
@@ -59,10 +74,7 @@ type EmployeeListItem = {
   status: "ACTIVE" | "PENDING";
   is_active: boolean;
   created_at: string;
-  processes: Array<{
-    id: string;
-    name: string;
-  }>;
+  processes: EmployeeProcessListItem[];
 };
 
 type EmployeeRecord = {
@@ -74,9 +86,12 @@ type EmployeeRecord = {
     is_active: boolean;
   };
   processOwnerships?: Array<{
+    productivity_points_per_hour?: DecimalLike;
+    labor_cost_override?: DecimalLike;
     processes: {
       id: string;
       name: string;
+      default_labor_cost?: DecimalLike;
     };
   }>;
   role: UserRole;
@@ -95,10 +110,12 @@ type EmployeeDetailRecord = {
   };
   processOwnerships: Array<{
     process_id: string;
-    productivity_points_per_hour: { toString(): string } | number;
+    productivity_points_per_hour: DecimalLike;
+    labor_cost_override: DecimalLike;
     processes: {
       id: string;
       name: string;
+      default_labor_cost: DecimalLike;
     };
   }>;
   scheduleShifts: Array<{
@@ -165,6 +182,45 @@ export class EmployeeRoleUpdateError extends Error {
   }
 }
 
+function serializeEmployeeProcess(options: {
+  process: {
+    id: string;
+    name: string;
+    default_labor_cost?: DecimalLike;
+  };
+  productivity_points_per_hour?: DecimalLike;
+  labor_cost_override?: DecimalLike;
+}): EmployeeProcessListItem {
+  const defaultLaborCost =
+    options.process.default_labor_cost === undefined
+      ? undefined
+      : decimalToString(options.process.default_labor_cost);
+  const laborCostOverride =
+    options.labor_cost_override === undefined
+      ? undefined
+      : options.labor_cost_override === null
+        ? null
+        : decimalToString(options.labor_cost_override);
+
+  return {
+    id: options.process.id,
+    name: options.process.name,
+    default_labor_cost: defaultLaborCost,
+    labor_cost_override: laborCostOverride,
+    effective_labor_cost:
+      defaultLaborCost === undefined
+        ? undefined
+        : resolveEffectiveLaborCost({
+            defaultLaborCost: options.process.default_labor_cost ?? defaultLaborCost,
+            laborCostOverride: options.labor_cost_override,
+          }),
+    productivity_points_per_hour:
+      options.productivity_points_per_hour === undefined
+        ? undefined
+        : decimalToString(options.productivity_points_per_hour),
+  };
+}
+
 function serializeEmployee(item: EmployeeRecord): EmployeeListItem {
   return {
     id: item.id,
@@ -177,7 +233,13 @@ function serializeEmployee(item: EmployeeRecord): EmployeeListItem {
     is_active: item.users.is_active,
     created_at: item.created_at.toISOString(),
     processes:
-      item.processOwnerships?.map((assignment) => assignment.processes) ?? [],
+      item.processOwnerships?.map((assignment) =>
+        serializeEmployeeProcess({
+          process: assignment.processes,
+          productivity_points_per_hour: assignment.productivity_points_per_hour,
+          labor_cost_override: assignment.labor_cost_override,
+        }),
+      ) ?? [],
   };
 }
 
@@ -208,8 +270,11 @@ function buildEmployeeSelect(lab_id: string) {
           select: {
             id: true,
             name: true,
+            default_labor_cost: true,
           },
         },
+        productivity_points_per_hour: true,
+        labor_cost_override: true,
       },
       orderBy: {
         created_at: "asc",
@@ -296,16 +361,18 @@ function buildEmployeeDetailSelect(lab_id: string) {
     },
     processOwnerships: {
       where: { lab_id },
-      select: {
-        process_id: true,
-        productivity_points_per_hour: true,
-        processes: {
-          select: {
-            id: true,
-            name: true,
+        select: {
+          process_id: true,
+          productivity_points_per_hour: true,
+          labor_cost_override: true,
+          processes: {
+            select: {
+              id: true,
+              name: true,
+              default_labor_cost: true,
+            },
           },
         },
-      },
       orderBy: {
         created_at: "asc",
       },
@@ -418,7 +485,18 @@ function buildEmployeeProcessPermissions(employee: EmployeeDetailRecord) {
     processName: assignment.processes.name,
     isPrimary: true,
     isAllowed: true,
-    productivityPointsPerHour: null,
+    productivityPointsPerHour: Number(assignment.productivity_points_per_hour),
+    defaultLaborCost: Number(assignment.processes.default_labor_cost),
+    laborCostOverride:
+      assignment.labor_cost_override === null
+        ? null
+        : Number(assignment.labor_cost_override),
+    effectiveLaborCost: Number(
+      resolveEffectiveLaborCost({
+        defaultLaborCost: assignment.processes.default_labor_cost,
+        laborCostOverride: assignment.labor_cost_override,
+      }),
+    ),
   }));
 }
 
@@ -651,6 +729,15 @@ function serializeEmployeeScheduleProfile(employee: EmployeeDetailRecord | null)
     processAssignments: employee.processOwnerships.map((assignment) => ({
       processId: assignment.process_id,
       processName: assignment.processes.name,
+      defaultLaborCost: decimalToString(assignment.processes.default_labor_cost),
+      laborCostOverride:
+        assignment.labor_cost_override === null
+          ? null
+          : decimalToString(assignment.labor_cost_override),
+      effectiveLaborCost: resolveEffectiveLaborCost({
+        defaultLaborCost: assignment.processes.default_labor_cost,
+        laborCostOverride: assignment.labor_cost_override,
+      }),
     })),
     weekdayCapacities: employee.scheduleShifts.map((shift) => ({
       id: shift.id,
@@ -838,10 +925,13 @@ export async function listEmployeesForLoggedLab(user_id: string) {
         },
         select: {
           lab_member_id: true,
+          productivity_points_per_hour: true,
+          labor_cost_override: true,
           processes: {
             select: {
               id: true,
               name: true,
+              default_labor_cost: true,
             },
           },
         },
@@ -851,7 +941,11 @@ export async function listEmployeesForLoggedLab(user_id: string) {
     Map<string, EmployeeRecord["processOwnerships"]>
   >((map, assignment) => {
     const current = map.get(assignment.lab_member_id) ?? [];
-    current.push({ processes: assignment.processes });
+    current.push({
+      processes: assignment.processes,
+      productivity_points_per_hour: assignment.productivity_points_per_hour,
+      labor_cost_override: assignment.labor_cost_override,
+    });
     map.set(assignment.lab_member_id, current);
     return map;
   }, new Map());
@@ -878,16 +972,26 @@ export async function getEmployeeForLoggedLab(
   lab_member_id: string,
 ) {
   const membership = await requireEmployeeViewer(user_id);
-  const employee = await prisma.lab_members.findFirst({
-    where: {
-      id: lab_member_id,
-      lab_id: membership.lab_id,
-      users: {
-        deleted_at: null,
+  const [employee, lab] = await Promise.all([
+    prisma.lab_members.findFirst({
+      where: {
+        id: lab_member_id,
+        lab_id: membership.lab_id,
+        users: {
+          deleted_at: null,
+        },
       },
-    },
-    select: buildEmployeeDetailSelect(membership.lab_id),
-  });
+      select: buildEmployeeDetailSelect(membership.lab_id),
+    }),
+    prisma.labs.findUnique({
+      where: {
+        id: membership.lab_id,
+      },
+      select: {
+        currency: true,
+      },
+    }),
+  ]);
 
   if (!employee) {
     throw new EmployeeNotFoundError();
@@ -900,6 +1004,7 @@ export async function getEmployeeForLoggedLab(
     scheduleProfile: serializeEmployeeScheduleProfile(employee),
     dashboard,
     currentUserRole: membership.role,
+    labCurrency: lab?.currency ?? "BRL",
     canAssignProcesses: canAssignEmployeeProcesses(membership.role),
     canEditRole:
       membership.role === UserRole.OWNER || membership.role === UserRole.ADMIN,
@@ -1028,7 +1133,7 @@ export async function updateEmployeeProcessesForLoggedLab(
         deleted_at: null,
         id: { in: payload.process_ids },
       },
-      select: { id: true, name: true },
+      select: { id: true, name: true, default_labor_cost: true },
     }),
   ]);
 
@@ -1076,7 +1181,7 @@ export async function updateEmployeeProcessesForLoggedLab(
 
   const orderedProcesses = payload.process_ids
     .map((processId) => activeProcesses.find((process) => process.id === processId))
-    .filter((process): process is { id: string; name: string } => Boolean(process));
+    .filter((process) => process !== undefined);
 
   return serializeEmployee({
     id: employee.id,
@@ -1147,6 +1252,72 @@ export async function updateEmployeeProductivityForLoggedLab(
         },
         data: {
           productivity_points_per_hour: assignment.productivity_points_per_hour,
+        },
+      });
+    }
+
+    await bumpLabScheduleRevision(tx, lab_id);
+  });
+}
+
+export async function updateEmployeeLaborCostsForLoggedLab(
+  user_id: string,
+  lab_member_id: string,
+  payload: UpdateEmployeeLaborCostsInput,
+) {
+  const { lab_id } = await requireProcessAssignmentManager(user_id);
+
+  const employee = await prisma.lab_members.findFirst({
+    where: {
+      id: lab_member_id,
+      lab_id,
+      users: {
+        is_active: true,
+        deleted_at: null,
+      },
+    },
+    select: {
+      id: true,
+      processOwnerships: {
+        where: { lab_id },
+        select: {
+          process_id: true,
+        },
+      },
+    },
+  });
+
+  if (!employee) {
+    throw new ReferenceValidationError({
+      lab_member_id: [
+        "Employee is inactive, archived, or not assigned to this lab.",
+      ],
+    });
+  }
+
+  const assignedProcessIds = new Set(
+    employee.processOwnerships.map((assignment) => assignment.process_id),
+  );
+  const invalidProcessIds = payload.assignments
+    .map((assignment) => assignment.process_id)
+    .filter((processId) => !assignedProcessIds.has(processId));
+
+  if (invalidProcessIds.length > 0) {
+    throw new ReferenceValidationError({
+      assignments: ["Labor cost overrides can only be updated for assigned processes."],
+    });
+  }
+
+  await prisma.$transaction(async (tx) => {
+    for (const assignment of payload.assignments) {
+      await tx.employee_process_assignments.updateMany({
+        where: {
+          lab_id,
+          lab_member_id,
+          process_id: assignment.process_id,
+        },
+        data: {
+          labor_cost_override: assignment.labor_cost_override,
         },
       });
     }

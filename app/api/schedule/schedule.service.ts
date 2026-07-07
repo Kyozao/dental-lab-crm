@@ -10,7 +10,6 @@ import { prisma } from "@/lib/prisma";
 
 import { RoleAuthorizationError } from "../_shared/authorization";
 import {
-  addDays,
   applyMinuteExceptions,
   applyExceptions,
   buildHorizonDates,
@@ -139,8 +138,6 @@ type ScheduleProposalPayload = {
 
 type MachineCapacityMap = Map<string, Map<string, number>>;
 
-type LabMemberValidatorClient = Pick<Prisma.TransactionClient, "lab_members">;
-
 export class ScheduleProposalNotFoundError extends Error {
   constructor() {
     super("Schedule proposal not found.");
@@ -229,10 +226,7 @@ function priorityWeight(priority: CasePriority) {
 }
 
 function getProcessTotalMinutes(process: ScheduleContext["caseProcesses"][number]) {
-  return (
-    process.snapshot_fixed_minutes +
-    process.snapshot_minutes_per_unit * process.case_services.quantity
-  );
+  return process.snapshot_fixed_minutes * process.case_services.quantity;
 }
 
 function getAvailableMinutes(
@@ -290,6 +284,14 @@ function isMovable(process: ScheduleContext["caseProcesses"][number]) {
     process.status !== CaseProcessStatus.COMPLETED &&
     process.status !== CaseProcessStatus.SKIPPED &&
     process.status !== CaseProcessStatus.CANCELLED
+  );
+}
+
+function isReviewableProcessStatus(status: CaseProcessStatus) {
+  return (
+    status === CaseProcessStatus.LOCKED ||
+    status === CaseProcessStatus.READY ||
+    status === CaseProcessStatus.IN_PROGRESS
   );
 }
 
@@ -419,10 +421,7 @@ export function buildCaseGroupedScheduleReview(input: {
   const grouped = new Map<string, ScheduleReviewCase>();
 
   for (const process of input.processes) {
-    if (
-      process.status !== CaseProcessStatus.READY &&
-      process.status !== CaseProcessStatus.IN_PROGRESS
-    ) {
+    if (!isReviewableProcessStatus(process.status)) {
       continue;
     }
 
@@ -514,11 +513,48 @@ function buildReviewSourceProcesses(context: ScheduleContext): ScheduleReviewSou
   });
 }
 
+function getDependencyDepth(
+  processId: string,
+  dependencyIdsByProcessId: Map<string, string[]>,
+  memo: Map<string, number>,
+  visiting: Set<string>,
+): number {
+  const existing = memo.get(processId);
+  if (existing !== undefined) {
+    return existing;
+  }
+
+  if (visiting.has(processId)) {
+    return 0;
+  }
+
+  visiting.add(processId);
+  const dependencyIds = dependencyIdsByProcessId.get(processId) ?? [];
+  const depth =
+    dependencyIds.length === 0
+      ? 0
+      : Math.max(
+          ...dependencyIds.map((dependencyId) =>
+            getDependencyDepth(dependencyId, dependencyIdsByProcessId, memo, visiting),
+          ),
+        ) + 1;
+  visiting.delete(processId);
+  memo.set(processId, depth);
+  return depth;
+}
+
 function buildScheduleProposalPayload(context: ScheduleContext): ScheduleProposalPayload {
   const capacity = buildEmployeeDayCapacities(context);
   const proposedChanges: ProposalProcessChange[] = [];
   const risks: ScheduleProposalRisk[] = [];
   const readyByProcessId = buildDependencyReadyDates([]);
+  const dependencyIdsByProcessId = new Map(
+    context.caseProcesses.map((process) => [
+      process.id,
+      process.dependencies.map((dependency) => dependency.depends_on_case_process_id),
+    ]),
+  );
+  const dependencyDepthMemo = new Map<string, number>();
 
   const sortedProcesses = [...context.caseProcesses].sort((left, right) => {
     const priorityDelta = priorityWeight(right.cases.priority) - priorityWeight(left.cases.priority);
@@ -528,6 +564,23 @@ function buildScheduleProposalPayload(context: ScheduleContext): ScheduleProposa
       (left.cases.due_date?.getTime() ?? Number.MAX_SAFE_INTEGER) -
       (right.cases.due_date?.getTime() ?? Number.MAX_SAFE_INTEGER);
     if (dueDelta !== 0) return dueDelta;
+
+    if (left.case_id === right.case_id) {
+      const depthDelta =
+        getDependencyDepth(
+          left.id,
+          dependencyIdsByProcessId,
+          dependencyDepthMemo,
+          new Set<string>(),
+        ) -
+        getDependencyDepth(
+          right.id,
+          dependencyIdsByProcessId,
+          dependencyDepthMemo,
+          new Set<string>(),
+        );
+      if (depthDelta !== 0) return depthDelta;
+    }
 
     return left.created_at.getTime() - right.created_at.getTime();
   });
@@ -546,10 +599,7 @@ function buildScheduleProposalPayload(context: ScheduleContext): ScheduleProposa
       dependencyDates.length > 0
         ? dependencyDates.reduce((latest, current) => (current > latest ? current : latest))
         : startOfDay(new Date());
-    const earliestDate = addDays(
-      dependencyReadyDate,
-      process.snapshot_dependency_lag_days,
-    );
+    const earliestDate = dependencyReadyDate;
 
     const candidateAssignments = process.processes.employeeAssignments
       .filter((assignment) =>
@@ -810,37 +860,30 @@ export function applyEditedProposalChanges(
   });
 }
 
-async function validateAssignedLabMember(
-  client: LabMemberValidatorClient,
-  lab_id: string,
-  process_id: string,
-  assigned_lab_member_id: string,
+function buildProposalReviewSourceProcesses(
+  reviewCases: ScheduleProposalPayload["reviewCases"],
 ) {
-  const labMember = await client.lab_members.findFirst({
-    where: {
-      id: assigned_lab_member_id,
-      lab_id,
-      users: {
-        is_active: true,
-        deleted_at: null,
-      },
-      processOwnerships: {
-        some: {
-          lab_id,
-          process_id,
-        },
-      },
-    },
-    select: { id: true },
-  });
-
-  if (!labMember) {
-    throw new ScheduleProposalValidationError({
-      assignedLabMemberId: [
-        "Assigned lab member is inactive, archived, outside this lab, or not assigned to this process.",
-      ],
-    });
-  }
+  return reviewCases.flatMap((reviewCase) =>
+    reviewCase.processes.map((process) => ({
+      caseId: reviewCase.caseId,
+      caseCode: reviewCase.caseCode,
+      patientName: reviewCase.patientName,
+      customerName: reviewCase.customerName,
+      dueDate: reviewCase.dueDate,
+      priority: reviewCase.priority,
+      caseProcessId: process.caseProcessId,
+      workflowStepId: process.workflowStepId,
+      processName: process.processName,
+      status: process.status,
+      editable: process.editable,
+      assignedLabMemberId: process.assignedLabMemberId,
+      assignedLabMemberName: process.assignedLabMemberName,
+      plannedStartDate: process.plannedStartDate,
+      plannedEndDate: process.plannedEndDate,
+      schedulingStatus: process.schedulingStatus,
+      assigneeOptions: process.assigneeOptions,
+    })),
+  );
 }
 
 async function loadScheduleContext(user_id: string) {
@@ -848,7 +891,11 @@ async function loadScheduleContext(user_id: string) {
   const processWhere: Prisma.case_processesWhereInput = {
     cases: { lab_id: membership.lab_id },
     status: {
-      in: [CaseProcessStatus.READY, CaseProcessStatus.IN_PROGRESS],
+      in: [
+        CaseProcessStatus.LOCKED,
+        CaseProcessStatus.READY,
+        CaseProcessStatus.IN_PROGRESS,
+      ],
     },
     ...(membership.role === UserRole.PRODUCTION
       ? { assigned_lab_member_id: membership.id }
@@ -1133,6 +1180,35 @@ export async function approveScheduleProposalForLoggedLab(
 ) {
   const membership = await getSingleLabMembership(user_id);
   assertCanManageSchedule(membership.role);
+  const workloadEmployees = await prisma.lab_members.findMany({
+    where: {
+      lab_id: membership.lab_id,
+      users: {
+        is_active: true,
+        deleted_at: null,
+      },
+    },
+    select: {
+      id: true,
+      users: {
+        select: {
+          name: true,
+        },
+      },
+      scheduleShifts: {
+        select: {
+          day_of_week: true,
+          available_minutes: true,
+        },
+      },
+      scheduleExceptions: {
+        select: {
+          exception_date: true,
+          available_minutes: true,
+        },
+      },
+    },
+  });
 
   return prisma.$transaction(async (tx) => {
     const proposal = await tx.schedule_proposals.findFirst({
@@ -1180,6 +1256,38 @@ export async function approveScheduleProposalForLoggedLab(
       });
     }
 
+    const assigneePairs = mergedChanges.filter((change) => change.assignedLabMemberId);
+    const assignedLabMemberIds = [...new Set(assigneePairs.map((change) => change.assignedLabMemberId))];
+    const assignedProcessIds = [
+      ...new Set(
+        assigneePairs.map((change) => processById.get(change.caseProcessId)?.process_id).filter(
+          (processId): processId is string => Boolean(processId),
+        ),
+      ),
+    ];
+    const validAssignments = assignedLabMemberIds.length
+      ? await tx.employee_process_assignments.findMany({
+          where: {
+            lab_id: membership.lab_id,
+            lab_member_id: { in: assignedLabMemberIds },
+            process_id: { in: assignedProcessIds },
+            lab_members: {
+              users: {
+                is_active: true,
+                deleted_at: null,
+              },
+            },
+          },
+          select: {
+            lab_member_id: true,
+            process_id: true,
+          },
+        })
+      : [];
+    const validAssignmentKeys = new Set(
+      validAssignments.map((assignment) => `${assignment.lab_member_id}:${assignment.process_id}`),
+    );
+
     for (const change of mergedChanges) {
       const process = processById.get(change.caseProcessId);
       if (!process) {
@@ -1189,12 +1297,14 @@ export async function approveScheduleProposalForLoggedLab(
       }
 
       if (change.assignedLabMemberId) {
-        await validateAssignedLabMember(
-          tx,
-          membership.lab_id,
-          process.process_id,
-          change.assignedLabMemberId,
-        );
+        const assignmentKey = `${change.assignedLabMemberId}:${process.process_id}`;
+        if (!validAssignmentKeys.has(assignmentKey)) {
+          throw new ScheduleProposalValidationError({
+            assignedLabMemberId: [
+              "Assigned lab member is inactive, archived, outside this lab, or not assigned to this process.",
+            ],
+          });
+        }
       }
     }
 
@@ -1203,6 +1313,18 @@ export async function approveScheduleProposalForLoggedLab(
         case_process_id: { in: processIds },
       },
     });
+
+    const allocationRows = mergedChanges.flatMap((change) =>
+      change.assignedLabMemberId
+        ? change.allocations.map((allocation) => ({
+            case_process_id: change.caseProcessId,
+            lab_member_id: change.assignedLabMemberId,
+            allocation_date: new Date(allocation.date),
+            planned_minutes: allocation.plannedMinutes,
+            milling_machine_id: allocation.millingMachineId,
+          }))
+        : [],
+    );
 
     for (const change of mergedChanges) {
       await tx.case_processes.update({
@@ -1215,90 +1337,36 @@ export async function approveScheduleProposalForLoggedLab(
           scheduling_status: mapSchedulingStatus(change.schedulingStatus),
         },
       });
-
-      if (change.allocations.length > 0 && change.assignedLabMemberId) {
-        await tx.case_process_schedule_allocations.createMany({
-          data: change.allocations.map((allocation) => ({
-            case_process_id: change.caseProcessId,
-            lab_member_id: change.assignedLabMemberId,
-            allocation_date: new Date(allocation.date),
-            planned_minutes: allocation.plannedMinutes,
-            milling_machine_id: allocation.millingMachineId,
-          })),
-        });
-      }
     }
 
-    const workloadEmployees = await tx.lab_members.findMany({
-      where: {
-        lab_id: membership.lab_id,
-        users: {
-          is_active: true,
-          deleted_at: null,
-        },
-      },
-      select: {
-        id: true,
-        users: {
-          select: {
-            name: true,
-          },
-        },
-        scheduleShifts: {
-          select: {
-            day_of_week: true,
-            available_minutes: true,
-          },
-        },
-        scheduleExceptions: {
-          select: {
-            exception_date: true,
-            available_minutes: true,
-          },
-        },
-      },
-    });
+    if (allocationRows.length > 0) {
+      await tx.case_process_schedule_allocations.createMany({
+        data: allocationRows,
+      });
+    }
 
     const approvedAt = new Date();
+    const approvedPayload = {
+      ...proposalPayload,
+      changes: mergedChanges,
+      reviewCases: buildCaseGroupedScheduleReview({
+        processes: buildProposalReviewSourceProcesses(proposalPayload.reviewCases),
+        changes: mergedChanges,
+        risks: proposalPayload.risks,
+      }),
+      employeeWorkloads: buildProposalEmployeeWorkloads({
+        employees: workloadEmployees,
+        changes: mergedChanges,
+      }),
+    } satisfies ScheduleProposalPayload;
+
     await tx.schedule_proposals.update({
       where: { id: proposal.id },
       data: {
         status: ScheduleProposalStatus.APPROVED,
         approved_by_user_id: user_id,
         decided_at: approvedAt,
-        changes_json: {
-          ...proposalPayload,
-          changes: mergedChanges,
-          reviewCases: buildCaseGroupedScheduleReview({
-            processes: proposalPayload.reviewCases.flatMap((reviewCase) =>
-              reviewCase.processes.map((process) => ({
-                caseId: reviewCase.caseId,
-                caseCode: reviewCase.caseCode,
-                patientName: reviewCase.patientName,
-                customerName: reviewCase.customerName,
-                dueDate: reviewCase.dueDate,
-                priority: reviewCase.priority,
-                caseProcessId: process.caseProcessId,
-                workflowStepId: process.workflowStepId,
-                processName: process.processName,
-                status: process.status,
-                editable: process.editable,
-                assignedLabMemberId: process.assignedLabMemberId,
-                assignedLabMemberName: process.assignedLabMemberName,
-                plannedStartDate: process.plannedStartDate,
-                plannedEndDate: process.plannedEndDate,
-                schedulingStatus: process.schedulingStatus,
-                assigneeOptions: process.assigneeOptions,
-              })),
-            ),
-            changes: mergedChanges,
-            risks: proposalPayload.risks,
-          }),
-          employeeWorkloads: buildProposalEmployeeWorkloads({
-            employees: workloadEmployees,
-            changes: mergedChanges,
-          }),
-        } as Prisma.InputJsonValue,
+        changes_json: approvedPayload as Prisma.InputJsonValue,
       },
     });
 

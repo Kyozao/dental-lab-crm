@@ -26,6 +26,13 @@ export type UpdateEmployeeProductivityInput = {
   }>;
 };
 
+export type UpdateEmployeeLaborCostsInput = {
+  assignments: Array<{
+    process_id: string;
+    labor_cost_override: string | null;
+  }>;
+};
+
 export type UpdateEmployeeAvailabilityInput = {
   weekday_capacities: Array<{
     id?: string;
@@ -54,6 +61,10 @@ type RoleUpdateValidationResult =
 
 type ProductivityUpdateValidationResult =
   | { success: true; data: UpdateEmployeeProductivityInput }
+  | { success: false; errors: Record<string, string[]> };
+
+type LaborCostUpdateValidationResult =
+  | { success: true; data: UpdateEmployeeLaborCostsInput }
   | { success: false; errors: Record<string, string[]> };
 
 type AvailabilityUpdateValidationResult =
@@ -106,6 +117,39 @@ function addError(
   message: string,
 ) {
   errors[field] = [...(errors[field] ?? []), message];
+}
+
+function parseNullableMoney(
+  value: unknown,
+  field: string,
+  errors: Record<string, string[]>,
+) {
+  if (value === undefined || value === null) return null;
+  if (typeof value === "string" && value.trim() === "") return null;
+
+  const rawValue =
+    typeof value === "number"
+      ? String(value)
+      : typeof value === "string"
+        ? value.trim()
+        : null;
+
+  if (!rawValue || !/^-?\d+(\.\d{1,2})?$/.test(rawValue)) {
+    addError(
+      errors,
+      field,
+      "Labor cost override must be a valid amount with up to 2 decimals.",
+    );
+    return null;
+  }
+
+  const parsed = Number(rawValue);
+  if (!Number.isFinite(parsed) || parsed < 0) {
+    addError(errors, field, "Labor cost override must be zero or greater.");
+    return null;
+  }
+
+  return parsed.toFixed(2);
 }
 
 export function parseCreateEmployeeInput(
@@ -273,6 +317,92 @@ export function parseUpdateEmployeeProductivityInput(
       ): assignment is {
         process_id: string;
         productivity_points_per_hour: string;
+      } => Boolean(assignment),
+    );
+
+  const duplicateProcessIds = new Set<string>();
+  const seenProcessIds = new Set<string>();
+  for (const assignment of assignments) {
+    if (seenProcessIds.has(assignment.process_id)) {
+      duplicateProcessIds.add(assignment.process_id);
+    }
+    seenProcessIds.add(assignment.process_id);
+  }
+
+  if (duplicateProcessIds.size > 0) {
+    assignments.forEach((assignment, index) => {
+      if (duplicateProcessIds.has(assignment.process_id)) {
+        addError(
+          errors,
+          `assignments.${index}.process_id`,
+          "Process is duplicated.",
+        );
+      }
+    });
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return { success: false, errors };
+  }
+
+  return {
+    success: true,
+    data: {
+      assignments,
+    },
+  };
+}
+
+export function parseUpdateEmployeeLaborCostsInput(
+  payload: Record<string, unknown>,
+): LaborCostUpdateValidationResult {
+  if (!Array.isArray(payload.assignments)) {
+    return {
+      success: false,
+      errors: {
+        assignments: ["Assignments must be an array."],
+      },
+    };
+  }
+
+  const errors: Record<string, string[]> = {};
+  const assignments = payload.assignments
+    .map((entry, index) => {
+      if (!entry || typeof entry !== "object" || Array.isArray(entry)) {
+        addError(errors, `assignments.${index}`, "Assignment must be an object.");
+        return null;
+      }
+
+      const process_id = parseIdentifier((entry as Record<string, unknown>).process_id);
+      const labor_cost_override = parseNullableMoney(
+        (entry as Record<string, unknown>).labor_cost_override,
+        `assignments.${index}.labor_cost_override`,
+        errors,
+      );
+
+      if (!process_id) {
+        addError(
+          errors,
+          `assignments.${index}.process_id`,
+          "Process id is required.",
+        );
+      }
+
+      if (!process_id) {
+        return null;
+      }
+
+      return {
+        process_id,
+        labor_cost_override,
+      };
+    })
+    .filter(
+      (
+        assignment,
+      ): assignment is {
+        process_id: string;
+        labor_cost_override: string | null;
       } => Boolean(assignment),
     );
 

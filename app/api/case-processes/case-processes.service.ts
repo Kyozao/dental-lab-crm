@@ -26,9 +26,7 @@ const caseProcessSelect = {
   status: true,
   assigned_lab_member_id: true,
   snapshot_fixed_minutes: true,
-  snapshot_minutes_per_unit: true,
   snapshot_expected_duration_days: true,
-  snapshot_dependency_lag_days: true,
   snapshot_requires_milling_machine: true,
   planned_start_date: true,
   planned_end_date: true,
@@ -69,9 +67,7 @@ type CaseProcessWithRelations = {
   status: CaseProcessStatus;
   assigned_lab_member_id: string | null;
   snapshot_fixed_minutes: number;
-  snapshot_minutes_per_unit: number;
   snapshot_expected_duration_days: number;
-  snapshot_dependency_lag_days: number;
   snapshot_requires_milling_machine: boolean;
   planned_start_date: Date | null;
   planned_end_date: Date | null;
@@ -106,9 +102,7 @@ function mapCaseProcess(caseProcess: CaseProcessWithRelations) {
     status: caseProcess.status,
     assigned_lab_member_id: caseProcess.assigned_lab_member_id,
     fixed_minutes: caseProcess.snapshot_fixed_minutes,
-    minutes_per_unit: caseProcess.snapshot_minutes_per_unit,
     expected_duration_days: caseProcess.snapshot_expected_duration_days,
-    dependency_lag_days: caseProcess.snapshot_dependency_lag_days,
     requires_milling_machine: caseProcess.snapshot_requires_milling_machine,
     planned_start_date: caseProcess.planned_start_date,
     planned_end_date: caseProcess.planned_end_date,

@@ -3,9 +3,8 @@ import { Suspense } from "react";
 import { AddCaseDialog } from "@/features/cases/components/add-case-dialog";
 import { PageHeader } from "@/components/app/page-header";
 import { PageShell } from "@/components/app/page-shell";
-import { Panel } from "@/components/app/panel";
 import { CasesSearchBar } from "@/features/cases/components/cases-search-bar";
-import { CasesTable } from "@/features/cases/components/cases-table";
+import { CasesListSection } from "@/features/cases/components/cases-list-section";
 import {
   mockCustomers,
   mockComponents,
@@ -32,14 +31,12 @@ export default async function CasesPage() {
         <CasesSearchBar customers={mockCustomers} />
       </Suspense>
 
-      <Panel>
-        <Suspense fallback={null}>
-          <CasesTable
-            components={mockComponents}
-            currentUserRole={role}
-          />
-        </Suspense>
-      </Panel>
+      <Suspense fallback={null}>
+        <CasesListSection
+          components={mockComponents}
+          currentUserRole={role}
+        />
+      </Suspense>
     </PageShell>
   );
 }

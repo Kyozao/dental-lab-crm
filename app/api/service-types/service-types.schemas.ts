@@ -5,9 +5,7 @@ export type ServiceTypeWorkflowStep = {
   process_id: string;
   dependsOn: string[];
   fixed_minutes: number;
-  minutes_per_unit: number;
   expected_duration_days: number;
-  dependency_lag_days: number;
   requires_milling_machine: boolean;
 };
 
@@ -169,19 +167,9 @@ export function parseWorkflowJson(
       `${field}.fixed_minutes`,
       errors,
     );
-    const minutes_per_unit = parseNonNegativeInteger(
-      step.minutes_per_unit ?? step.points_per_unit ?? 0,
-      `${field}.minutes_per_unit`,
-      errors,
-    );
     const expected_duration_days = parsePositiveInteger(
       step.expected_duration_days ?? 1,
       `${field}.expected_duration_days`,
-      errors,
-    );
-    const dependency_lag_days = parseNonNegativeInteger(
-      step.dependency_lag_days ?? 0,
-      `${field}.dependency_lag_days`,
       errors,
     );
     const requires_milling_machine =
@@ -201,6 +189,22 @@ export function parseWorkflowJson(
       addError(errors, `${field}.process_id`, "Process is required.");
     }
 
+    if (step.minutes_per_unit !== undefined || step.points_per_unit !== undefined) {
+      addError(
+        errors,
+        `${field}.minutes_per_unit`,
+        "Minutes per unit is no longer supported.",
+      );
+    }
+
+    if (step.dependency_lag_days !== undefined) {
+      addError(
+        errors,
+        `${field}.dependency_lag_days`,
+        "Dependency lag days is no longer supported.",
+      );
+    }
+
     if (id && dependsOn.includes(id)) {
       addError(errors, `${field}.dependsOn`, "Step cannot depend on itself.");
     }
@@ -209,9 +213,7 @@ export function parseWorkflowJson(
       !id ||
       !process_id ||
       fixed_minutes === null ||
-      minutes_per_unit === null ||
-      expected_duration_days === null ||
-      dependency_lag_days === null
+      expected_duration_days === null
     ) {
       return;
     }
@@ -221,9 +223,7 @@ export function parseWorkflowJson(
       process_id,
       dependsOn,
       fixed_minutes,
-      minutes_per_unit,
       expected_duration_days,
-      dependency_lag_days,
       requires_milling_machine,
     });
   });
@@ -283,24 +283,11 @@ export function normalizeWorkflow(value: unknown): ServiceTypeWorkflow {
             Number.isInteger(step.fixed_minutes ?? step.fixed_points)
               ? Math.max(0, Number(step.fixed_minutes ?? step.fixed_points))
               : 1,
-          minutes_per_unit:
-            typeof (step.minutes_per_unit ?? step.points_per_unit) === "number" &&
-            Number.isInteger(step.minutes_per_unit ?? step.points_per_unit)
-              ? Math.max(
-                  0,
-                  Number(step.minutes_per_unit ?? step.points_per_unit),
-                )
-              : 0,
           expected_duration_days:
             typeof step.expected_duration_days === "number" &&
             Number.isInteger(step.expected_duration_days)
               ? Math.max(1, step.expected_duration_days)
               : 1,
-          dependency_lag_days:
-            typeof step.dependency_lag_days === "number" &&
-            Number.isInteger(step.dependency_lag_days)
-              ? Math.max(0, step.dependency_lag_days)
-              : 0,
           requires_milling_machine: step.requires_milling_machine === true,
         },
       ];

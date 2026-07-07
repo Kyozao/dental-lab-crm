@@ -42,6 +42,7 @@ import {
 import { casesQueryKey } from "@/features/cases/hooks/useCases";
 import {
   createCaseCommentApi,
+  deleteCaseApi,
   deleteCaseCommentApi,
   getCaseCommentsApi,
   updateCaseApi,
@@ -188,6 +189,7 @@ export function CaseDetailsDialog({
   const [deletingCommentId, setDeletingCommentId] = React.useState<string | null>(
     null,
   );
+  const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
 
   React.useEffect(() => {
     if (!open) return;
@@ -207,6 +209,7 @@ export function CaseDetailsDialog({
     setStandbyDialogOpen(false);
     setStandbyDraftReason("");
     setCommentsError(null);
+    setDeleteDialogOpen(false);
 
     if (!isCreateMode && caseItem.id) {
       void loadComments(caseItem.id);
@@ -390,17 +393,17 @@ export function CaseDetailsDialog({
   }
 
   async function handleDelete() {
-    if (!caseItem) return;
-
-    const confirmed = window.confirm(
-      `Tem certeza que deseja excluir o caso "${caseItem.patientName}"? Esta acao nao pode ser desfeita.`,
-    );
-
-    if (!confirmed) return;
+    if (!caseItem || isCreateMode) return;
 
     try {
       setIsDeleting(true);
+      setSubmitError(null);
+      await deleteCaseApi(caseItem.id);
+      await queryClient.invalidateQueries({ queryKey: casesQueryKey });
+      setDeleteDialogOpen(false);
       onOpenChange(false);
+    } catch (error) {
+      setSubmitError(buildSubmitError(error, "Could not delete case."));
     } finally {
       setIsDeleting(false);
     }
@@ -1158,10 +1161,10 @@ export function CaseDetailsDialog({
                 <Button
                   type="button"
                   variant="destructive"
-                  onClick={handleDelete}
+                  onClick={() => setDeleteDialogOpen(true)}
                   disabled={isDeleting || isSaving}
                 >
-                  {isDeleting ? "Excluindo..." : "Excluir caso"}
+                  Delete case
                 </Button>
               ) : null}
 
@@ -1224,6 +1227,35 @@ export function CaseDetailsDialog({
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Delete case</DialogTitle>
+            <DialogDescription>
+              {`Delete ${caseItem.patientName || "this case"}${caseItem.code ? ` (${caseItem.code})` : ""}? This permanently removes the case and its related records.`}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setDeleteDialogOpen(false)}
+              disabled={isDeleting}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={() => void handleDelete()}
+              disabled={isDeleting}
+            >
+              {isDeleting ? "Deleting..." : "Delete case"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Dialog>
   );
 }
@@ -1247,9 +1279,7 @@ function cloneWorkflow(workflow: {
     process_id: string;
     dependsOn: string[];
     fixed_minutes: number;
-    minutes_per_unit: number;
     expected_duration_days: number;
-    dependency_lag_days: number;
     requires_milling_machine: boolean;
   }>;
 }) {

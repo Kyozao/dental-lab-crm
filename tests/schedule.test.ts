@@ -32,7 +32,7 @@ test("schedule approval validation rejects malformed and duplicate edits", () =>
   });
 });
 
-test("case-grouped schedule review only includes READY and IN_PROGRESS processes", () => {
+test("case-grouped schedule review includes all incomplete process steps for a case", () => {
   const reviewCases = buildCaseGroupedScheduleReview({
     processes: [
       {
@@ -96,10 +96,10 @@ test("case-grouped schedule review only includes READY and IN_PROGRESS processes
   });
 
   assert.equal(reviewCases.length, 1);
-  assert.equal(reviewCases[0]?.processes.length, 2);
+  assert.equal(reviewCases[0]?.processes.length, 3);
   assert.deepEqual(
     reviewCases[0]?.processes.map((process) => process.caseProcessId),
-    ["process-ready", "process-progress"],
+    ["process-ready", "process-progress", "process-locked"],
   );
 });
 

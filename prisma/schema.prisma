@@ -244,14 +244,18 @@ model price_table_service_prices {
 }
 
 model processes {
-  id          String    @id @default(uuid(7)) @db.Uuid
-  lab_id      String    @db.Uuid
-  name        String
-  description String?
-  is_active   Boolean   @default(true)
-  deleted_at  DateTime?
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt
+  id                            String    @id @default(uuid(7)) @db.Uuid
+  lab_id                        String    @db.Uuid
+  name                          String
+  description                   String?
+  default_fixed_minutes         Int       @default(1)
+  default_expected_duration_days Int      @default(1)
+  default_requires_milling_machine Boolean @default(false)
+  default_labor_cost            Decimal   @default(0) @db.Decimal(10, 2)
+  is_active                     Boolean   @default(true)
+  deleted_at                    DateTime?
+  created_at                    DateTime  @default(now())
+  updated_at                    DateTime  @updatedAt
 
   labs                labs                           @relation(fields: [lab_id], references: [id], onDelete: Cascade)
   case_processes      case_processes[]
@@ -267,6 +271,7 @@ model employee_process_assignments {
   lab_member_id String   @db.Uuid
   process_id    String   @db.Uuid
   productivity_points_per_hour Decimal @default(1) @db.Decimal(10, 2)
+  labor_cost_override Decimal? @db.Decimal(10, 2)
   created_at    DateTime @default(now())
 
   labs        labs        @relation(fields: [lab_id], references: [id], onDelete: Cascade)
@@ -643,9 +648,7 @@ model case_processes {
   status                 CaseProcessStatus @default(LOCKED)
   assigned_lab_member_id String?           @db.Uuid
   snapshot_fixed_minutes Int               @default(1)
-  snapshot_minutes_per_unit Int            @default(0)
   snapshot_expected_duration_days Int      @default(1)
-  snapshot_dependency_lag_days Int         @default(0)
   snapshot_requires_milling_machine Boolean @default(false)
   planned_start_date     DateTime?
   planned_end_date       DateTime?

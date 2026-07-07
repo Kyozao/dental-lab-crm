@@ -22,7 +22,7 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Synoa Dental Lab CRM",
   description:
-    "CAD workload, case tracking, and production dashboard for the dental lab.",
+    "Lab operations, case tracking, and production workflow visibility for the dental lab.",
   manifest: "/manifest.webmanifest",
 };
 

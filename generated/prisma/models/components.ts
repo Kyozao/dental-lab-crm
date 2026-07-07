@@ -559,14 +559,6 @@ export type componentsUncheckedUpdateManyWithoutLabsNestedInput = {
   deleteMany?: Prisma.componentsScalarWhereInput | Prisma.componentsScalarWhereInput[]
 }
 
-export type NullableDecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
-}
-
 export type componentsCreateNestedOneWithoutCaseUsagesInput = {
   create?: Prisma.XOR<Prisma.componentsCreateWithoutCaseUsagesInput, Prisma.componentsUncheckedCreateWithoutCaseUsagesInput>
   connectOrCreate?: Prisma.componentsCreateOrConnectWithoutCaseUsagesInput

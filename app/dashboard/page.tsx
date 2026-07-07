@@ -1,18 +1,17 @@
-import { CadStatsDashboard } from "@/features/dashboard/components/cad-stats-dashboard";
-import { getMockDashboardData } from "@/lib/mock-data/pages";
+import { getDashboardForLoggedLab } from "@/app/api/dashboard/dashboard.service";
+import { LabOperationsDashboard } from "@/features/dashboard/components/lab-operations-dashboard";
 import { requireCurrentLab } from "@/lib/onboarding";
 
 export default async function DashboardPage() {
-  await requireCurrentLab();
-
-  const data = getMockDashboardData();
+  const { user_id } = await requireCurrentLab();
+  const data = await getDashboardForLoggedLab(user_id);
 
   return (
-    <CadStatsDashboard
-      title="Production Statistics"
-      description="Track workload, completions, and bottlenecks across the lab workflow."
+    <LabOperationsDashboard
+      title="Lab operations dashboard"
+      description="Monitor employee workload, case status mix, urgent queues, and completed throughput across the lab."
       summary={data.summary}
-      designerStats={data.designerStats}
+      employeeStats={data.employeeStats}
       statusData={data.statusData}
       isSelfView={false}
     />

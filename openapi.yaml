@@ -48,8 +48,8 @@ paths:
   /api/dashboard:
     get:
       tags: [Dashboard]
-      summary: Get mock dashboard data
-      description: Returns summary, designer stats, and status chart data from the in-memory mock store.
+      summary: Get lab operations dashboard
+      description: Returns live summary metrics, employee workload rows, and case status mix for the authenticated user's lab.
       operationId: getDashboard
       responses:
         "200":
@@ -57,16 +57,19 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    additionalProperties: true
-                  error:
-                    type: "null"
-                  meta:
-                    type: object
-                    additionalProperties: true
+                $ref: "#/components/schemas/DashboardResponse"
+        "401":
+          description: Missing authenticated user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: User has no lab membership
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /api/cases:
     get:
       tags: [Cases]
@@ -537,6 +540,75 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ProcessMutationResponse"
+  /api/employees/{id}:
+    get:
+      tags: [Registry]
+      summary: Get employee detail
+      description: Returns the employee detail payload used by `/employees/{id}`, including assigned process defaults, optional labor cost overrides, and effective labor cost values.
+      operationId: getEmployeeById
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Employee returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeDetailResponse"
+  /api/employees/{id}/processes:
+    put:
+      tags: [Registry]
+      summary: Update employee process assignments
+      description: Replaces the employee's allowed process assignment set. Removing an assignment also removes any labor cost override stored on that assignment row.
+      operationId: updateEmployeeProcesses
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateEmployeeProcessesRequest"
+      responses:
+        "200":
+          description: Employee process assignments updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployeeDetailResponse"
+  /api/employees/{id}/labor-costs:
+    put:
+      tags: [Registry]
+      summary: Update employee labor cost overrides
+      description: Updates labor cost overrides only for already-assigned employee processes. A null override clears back to the process default labor cost.
+      operationId: updateEmployeeLaborCosts
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateEmployeeLaborCostsRequest"
+      responses:
+        "200":
+          description: Employee labor cost overrides updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmptySuccessResponse"
   /api/reports/cad-designer-cases:
     get:
       tags: [Production]
@@ -881,6 +953,20 @@ components:
         description:
           type: string
           nullable: true
+        default_fixed_minutes:
+          type: integer
+          minimum: 0
+          example: 30
+        default_expected_duration_days:
+          type: integer
+          minimum: 1
+          example: 2
+        default_requires_milling_machine:
+          type: boolean
+          example: false
+        default_labor_cost:
+          type: string
+          example: "25.00"
         isActive:
           type: boolean
           example: true
@@ -1386,6 +1472,138 @@ components:
           type: object
           additionalProperties: true
           example: {}
+    DashboardSummary:
+      type: object
+      required:
+        [
+          totalEmployees,
+          totalAssignedCases,
+          totalTeethTracked,
+          openCases,
+          openTeeth,
+          completedThisMonth,
+          urgentOpenCases,
+          avgTurnaroundDays,
+        ]
+      properties:
+        totalEmployees:
+          type: integer
+          example: 12
+        totalAssignedCases:
+          type: integer
+          example: 34
+        totalTeethTracked:
+          type: integer
+          example: 97
+        openCases:
+          type: integer
+          example: 18
+        openTeeth:
+          type: integer
+          example: 42
+        completedThisMonth:
+          type: integer
+          example: 9
+        urgentOpenCases:
+          type: integer
+          example: 3
+        avgTurnaroundDays:
+          type: number
+          nullable: true
+          example: 4.8
+    DashboardEmployeeStat:
+      type: object
+      required:
+        [
+          id,
+          name,
+          totalCases,
+          totalTeethTracked,
+          openCases,
+          openTeeth,
+          closedCases,
+          closedTeeth,
+          completedProcessesThisWeek,
+          completedProcessesThisMonth,
+          urgentOpenCases,
+          overdueCases,
+          avgTurnaroundDays,
+          completionRate,
+        ]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          example: Camila Santos
+        totalCases:
+          type: integer
+        totalTeethTracked:
+          type: integer
+        openCases:
+          type: integer
+        openTeeth:
+          type: integer
+        closedCases:
+          type: integer
+        closedTeeth:
+          type: integer
+        completedProcessesThisWeek:
+          type: integer
+        completedProcessesThisMonth:
+          type: integer
+        urgentOpenCases:
+          type: integer
+        overdueCases:
+          type: integer
+        avgTurnaroundDays:
+          type: number
+          nullable: true
+        completionRate:
+          type: integer
+          example: 38
+    DashboardStatusDatum:
+      type: object
+      required: [status, label, value, fill]
+      properties:
+        status:
+          $ref: "#/components/schemas/CaseStatus"
+        label:
+          type: string
+          example: Production
+        value:
+          type: integer
+          example: 14
+        fill:
+          type: string
+          example: "#2563eb"
+    DashboardPayload:
+      type: object
+      required: [summary, employeeStats, statusData]
+      properties:
+        summary:
+          $ref: "#/components/schemas/DashboardSummary"
+        employeeStats:
+          type: array
+          items:
+            $ref: "#/components/schemas/DashboardEmployeeStat"
+        statusData:
+          type: array
+          items:
+            $ref: "#/components/schemas/DashboardStatusDatum"
+    DashboardResponse:
+      type: object
+      required: [data, error, meta]
+      properties:
+        data:
+          $ref: "#/components/schemas/DashboardPayload"
+        error:
+          nullable: true
+          example: null
+        meta:
+          type: object
+          additionalProperties: true
+          example: {}
     CaseListResponse:
       type: object
       required: [data, error, meta]
@@ -1600,8 +1818,103 @@ components:
         description:
           type: string
           nullable: true
-        isActive:
+        default_fixed_minutes:
+          type: integer
+          minimum: 0
+        default_expected_duration_days:
+          type: integer
+          minimum: 1
+        default_requires_milling_machine:
           type: boolean
+        default_labor_cost:
+          type: string
+          example: "0.00"
+        is_active:
+          type: boolean
+    EmployeeProcessAssignment:
+      type: object
+      required: [id, name, default_labor_cost, labor_cost_override, effective_labor_cost]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        default_labor_cost:
+          type: string
+          example: "20.00"
+        labor_cost_override:
+          type: string
+          nullable: true
+          example: "24.50"
+        effective_labor_cost:
+          type: string
+          example: "24.50"
+        productivity_points_per_hour:
+          type: string
+          nullable: true
+          example: "8.50"
+    EmployeeDetailResponse:
+      type: object
+      required: [data, error, meta]
+      properties:
+        data:
+          type: object
+          required: [id, name, email, role, status, is_active, created_at, processes]
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            email:
+              type: string
+            role:
+              $ref: "#/components/schemas/UserRole"
+            status:
+              type: string
+              enum: [ACTIVE, PENDING]
+            is_active:
+              type: boolean
+            created_at:
+              type: string
+              format: date-time
+            processes:
+              type: array
+              items:
+                $ref: "#/components/schemas/EmployeeProcessAssignment"
+        error:
+          nullable: true
+          example: null
+        meta:
+          type: object
+          additionalProperties: true
+          properties:
+            labCurrency:
+              type: string
+              example: BRL
+    UpdateEmployeeProcessesRequest:
+      type: object
+      required: [process_ids]
+      properties:
+        process_ids:
+          type: array
+          items:
+            type: string
+    UpdateEmployeeLaborCostsRequest:
+      type: object
+      required: [assignments]
+      properties:
+        assignments:
+          type: array
+          items:
+            type: object
+            required: [process_id]
+            properties:
+              process_id:
+                type: string
+              labor_cost_override:
+                type: string
+                nullable: true
+                example: "18.00"
     ServiceTypePayload:
       type: object
       properties:
@@ -1644,6 +1957,20 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/Process"
+        error:
+          nullable: true
+          example: null
+        meta:
+          type: object
+          additionalProperties: true
+          example: {}
+    EmptySuccessResponse:
+      type: object
+      required: [data, error, meta]
+      properties:
+        data:
+          nullable: true
+          example: null
         error:
           nullable: true
           example: null

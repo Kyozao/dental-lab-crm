@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import {
   CalendarDays,
@@ -24,7 +23,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { CaseListItem } from "@/features/cases/cases";
-import { casesQueryKey, useCases } from "@/features/cases/hooks/useCases";
+import { casesQueryKey } from "@/features/cases/hooks/useCases";
 import { useCustomers } from "@/features/cases/hooks/useCustomers";
 import { useEmployees } from "@/features/cases/hooks/useEmployees";
 import { useProcesses } from "@/features/cases/hooks/useProcesses";
@@ -39,31 +38,21 @@ import {
 } from "@/features/cases/types";
 import { casesApi } from "@/features/cases/cases";
 import { CaseProcessStatus } from "@/generated/prisma/enums";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, type UseQueryResult } from "@tanstack/react-query";
 
 type Props = {
   components: ComponentOption[];
   currentUserRole: string;
+  casesQueryResult: UseQueryResult<CaseListItem[], Error>;
 };
 
 export function CasesTable({
   components,
   currentUserRole,
+  casesQueryResult,
 }: Props) {
-  const searchParams = useSearchParams();
   const queryClient = useQueryClient();
-  const casesQuery = useMemo(
-    () => ({
-      limit: searchParams.get("limit") ?? searchParams.get("pageSize") ?? "100",
-      q: searchParams.get("q") ?? undefined,
-      status: searchParams.get("status") ?? undefined,
-      urgent: searchParams.get("urgent") ?? undefined,
-      customerId: searchParams.get("customerId") ?? undefined,
-      currentProcessIds: searchParams.getAll("currentProcessId"),
-    }),
-    [searchParams],
-  );
-  const { data: cases = [], isLoading, isError, error } = useCases(casesQuery);
+  const { data: cases = [], isLoading, isError, error } = casesQueryResult;
   const [open, setOpen] = useState(false);
   const loadCaseOptions = currentUserRole !== "PRODUCTION" && open;
   const [selectedCase, setSelectedCase] = useState<EditableCase | null>(null);

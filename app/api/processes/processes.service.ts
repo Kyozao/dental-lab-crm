@@ -38,6 +38,11 @@ export async function createProcessForLoggedLab(
       lab_id,
       name: payload.name!,
       description: optionalString(payload.description),
+      default_fixed_minutes: payload.default_fixed_minutes ?? 1,
+      default_expected_duration_days: payload.default_expected_duration_days ?? 1,
+      default_requires_milling_machine:
+        payload.default_requires_milling_machine ?? false,
+      default_labor_cost: payload.default_labor_cost ?? "0.00",
       ...activeStateData(payload),
     },
   });
@@ -65,6 +70,12 @@ export async function updateProcessForLoggedLab(
     data: {
       name: optionalString(payload.name) ?? undefined,
       description: optionalString(payload.description),
+      default_fixed_minutes: payload.default_fixed_minutes ?? undefined,
+      default_expected_duration_days:
+        payload.default_expected_duration_days ?? undefined,
+      default_requires_milling_machine:
+        payload.default_requires_milling_machine ?? undefined,
+      default_labor_cost: payload.default_labor_cost ?? undefined,
       ...activeStateData(payload),
     },
   });

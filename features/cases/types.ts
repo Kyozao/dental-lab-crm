@@ -67,6 +67,13 @@ export type ServiceTypeOption = {
 export type ProcessOption = {
   id: string;
   name: string;
+  description?: string | null;
+  is_active?: boolean;
+  deleted_at?: string | null;
+  default_fixed_minutes?: number;
+  default_expected_duration_days?: number;
+  default_requires_milling_machine?: boolean;
+  default_labor_cost?: string;
 };
 
 export type CaseWorkflowStep = {
@@ -74,9 +81,7 @@ export type CaseWorkflowStep = {
   process_id: string;
   dependsOn: string[];
   fixed_minutes: number;
-  minutes_per_unit: number;
   expected_duration_days: number;
-  dependency_lag_days: number;
   requires_milling_machine: boolean;
 };
 
@@ -93,9 +98,7 @@ export type CaseProcessItem = {
   status: string;
   assigned_lab_member_id: string | null;
   fixed_minutes: number;
-  minutes_per_unit: number;
   expected_duration_days: number;
-  dependency_lag_days: number;
   requires_milling_machine: boolean;
   planned_start_date: string | null;
   planned_end_date: string | null;

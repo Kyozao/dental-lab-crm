@@ -20,8 +20,22 @@ export type processesModel = runtime.Types.Result.DefaultSelection<Prisma.$proce
 
 export type AggregateProcesses = {
   _count: ProcessesCountAggregateOutputType | null
+  _avg: ProcessesAvgAggregateOutputType | null
+  _sum: ProcessesSumAggregateOutputType | null
   _min: ProcessesMinAggregateOutputType | null
   _max: ProcessesMaxAggregateOutputType | null
+}
+
+export type ProcessesAvgAggregateOutputType = {
+  default_fixed_minutes: number | null
+  default_expected_duration_days: number | null
+  default_labor_cost: runtime.Decimal | null
+}
+
+export type ProcessesSumAggregateOutputType = {
+  default_fixed_minutes: number | null
+  default_expected_duration_days: number | null
+  default_labor_cost: runtime.Decimal | null
 }
 
 export type ProcessesMinAggregateOutputType = {
@@ -29,6 +43,10 @@ export type ProcessesMinAggregateOutputType = {
   lab_id: string | null
   name: string | null
   description: string | null
+  default_fixed_minutes: number | null
+  default_expected_duration_days: number | null
+  default_requires_milling_machine: boolean | null
+  default_labor_cost: runtime.Decimal | null
   is_active: boolean | null
   deleted_at: Date | null
   created_at: Date | null
@@ -40,6 +58,10 @@ export type ProcessesMaxAggregateOutputType = {
   lab_id: string | null
   name: string | null
   description: string | null
+  default_fixed_minutes: number | null
+  default_expected_duration_days: number | null
+  default_requires_milling_machine: boolean | null
+  default_labor_cost: runtime.Decimal | null
   is_active: boolean | null
   deleted_at: Date | null
   created_at: Date | null
@@ -51,6 +73,10 @@ export type ProcessesCountAggregateOutputType = {
   lab_id: number
   name: number
   description: number
+  default_fixed_minutes: number
+  default_expected_duration_days: number
+  default_requires_milling_machine: number
+  default_labor_cost: number
   is_active: number
   deleted_at: number
   created_at: number
@@ -59,11 +85,27 @@ export type ProcessesCountAggregateOutputType = {
 }
 
 
+export type ProcessesAvgAggregateInputType = {
+  default_fixed_minutes?: true
+  default_expected_duration_days?: true
+  default_labor_cost?: true
+}
+
+export type ProcessesSumAggregateInputType = {
+  default_fixed_minutes?: true
+  default_expected_duration_days?: true
+  default_labor_cost?: true
+}
+
 export type ProcessesMinAggregateInputType = {
   id?: true
   lab_id?: true
   name?: true
   description?: true
+  default_fixed_minutes?: true
+  default_expected_duration_days?: true
+  default_requires_milling_machine?: true
+  default_labor_cost?: true
   is_active?: true
   deleted_at?: true
   created_at?: true
@@ -75,6 +117,10 @@ export type ProcessesMaxAggregateInputType = {
   lab_id?: true
   name?: true
   description?: true
+  default_fixed_minutes?: true
+  default_expected_duration_days?: true
+  default_requires_milling_machine?: true
+  default_labor_cost?: true
   is_active?: true
   deleted_at?: true
   created_at?: true
@@ -86,6 +132,10 @@ export type ProcessesCountAggregateInputType = {
   lab_id?: true
   name?: true
   description?: true
+  default_fixed_minutes?: true
+  default_expected_duration_days?: true
+  default_requires_milling_machine?: true
+  default_labor_cost?: true
   is_active?: true
   deleted_at?: true
   created_at?: true
@@ -131,6 +181,18 @@ export type ProcessesAggregateArgs<ExtArgs extends runtime.Types.Extensions.Inte
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ProcessesAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ProcessesSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ProcessesMinAggregateInputType
@@ -161,6 +223,8 @@ export type processesGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   _count?: ProcessesCountAggregateInputType | true
+  _avg?: ProcessesAvgAggregateInputType
+  _sum?: ProcessesSumAggregateInputType
   _min?: ProcessesMinAggregateInputType
   _max?: ProcessesMaxAggregateInputType
 }
@@ -170,11 +234,17 @@ export type ProcessesGroupByOutputType = {
   lab_id: string
   name: string
   description: string | null
+  default_fixed_minutes: number
+  default_expected_duration_days: number
+  default_requires_milling_machine: boolean
+  default_labor_cost: runtime.Decimal
   is_active: boolean
   deleted_at: Date | null
   created_at: Date
   updated_at: Date
   _count: ProcessesCountAggregateOutputType | null
+  _avg: ProcessesAvgAggregateOutputType | null
+  _sum: ProcessesSumAggregateOutputType | null
   _min: ProcessesMinAggregateOutputType | null
   _max: ProcessesMaxAggregateOutputType | null
 }
@@ -202,6 +272,10 @@ export type processesWhereInput = {
   lab_id?: Prisma.UuidFilter<"processes"> | string
   name?: Prisma.StringFilter<"processes"> | string
   description?: Prisma.StringNullableFilter<"processes"> | string | null
+  default_fixed_minutes?: Prisma.IntFilter<"processes"> | number
+  default_expected_duration_days?: Prisma.IntFilter<"processes"> | number
+  default_requires_milling_machine?: Prisma.BoolFilter<"processes"> | boolean
+  default_labor_cost?: Prisma.DecimalFilter<"processes"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFilter<"processes"> | boolean
   deleted_at?: Prisma.DateTimeNullableFilter<"processes"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"processes"> | Date | string
@@ -216,6 +290,10 @@ export type processesOrderByWithRelationInput = {
   lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  default_fixed_minutes?: Prisma.SortOrder
+  default_expected_duration_days?: Prisma.SortOrder
+  default_requires_milling_machine?: Prisma.SortOrder
+  default_labor_cost?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -234,6 +312,10 @@ export type processesWhereUniqueInput = Prisma.AtLeast<{
   lab_id?: Prisma.UuidFilter<"processes"> | string
   name?: Prisma.StringFilter<"processes"> | string
   description?: Prisma.StringNullableFilter<"processes"> | string | null
+  default_fixed_minutes?: Prisma.IntFilter<"processes"> | number
+  default_expected_duration_days?: Prisma.IntFilter<"processes"> | number
+  default_requires_milling_machine?: Prisma.BoolFilter<"processes"> | boolean
+  default_labor_cost?: Prisma.DecimalFilter<"processes"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFilter<"processes"> | boolean
   deleted_at?: Prisma.DateTimeNullableFilter<"processes"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"processes"> | Date | string
@@ -248,13 +330,19 @@ export type processesOrderByWithAggregationInput = {
   lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  default_fixed_minutes?: Prisma.SortOrder
+  default_expected_duration_days?: Prisma.SortOrder
+  default_requires_milling_machine?: Prisma.SortOrder
+  default_labor_cost?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.processesCountOrderByAggregateInput
+  _avg?: Prisma.processesAvgOrderByAggregateInput
   _max?: Prisma.processesMaxOrderByAggregateInput
   _min?: Prisma.processesMinOrderByAggregateInput
+  _sum?: Prisma.processesSumOrderByAggregateInput
 }
 
 export type processesScalarWhereWithAggregatesInput = {
@@ -265,6 +353,10 @@ export type processesScalarWhereWithAggregatesInput = {
   lab_id?: Prisma.UuidWithAggregatesFilter<"processes"> | string
   name?: Prisma.StringWithAggregatesFilter<"processes"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"processes"> | string | null
+  default_fixed_minutes?: Prisma.IntWithAggregatesFilter<"processes"> | number
+  default_expected_duration_days?: Prisma.IntWithAggregatesFilter<"processes"> | number
+  default_requires_milling_machine?: Prisma.BoolWithAggregatesFilter<"processes"> | boolean
+  default_labor_cost?: Prisma.DecimalWithAggregatesFilter<"processes"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolWithAggregatesFilter<"processes"> | boolean
   deleted_at?: Prisma.DateTimeNullableWithAggregatesFilter<"processes"> | Date | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"processes"> | Date | string
@@ -275,6 +367,10 @@ export type processesCreateInput = {
   id?: string
   name: string
   description?: string | null
+  default_fixed_minutes?: number
+  default_expected_duration_days?: number
+  default_requires_milling_machine?: boolean
+  default_labor_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string
@@ -289,6 +385,10 @@ export type processesUncheckedCreateInput = {
   lab_id: string
   name: string
   description?: string | null
+  default_fixed_minutes?: number
+  default_expected_duration_days?: number
+  default_requires_milling_machine?: boolean
+  default_labor_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string
@@ -301,6 +401,10 @@ export type processesUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  default_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  default_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  default_labor_cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -315,6 +419,10 @@ export type processesUncheckedUpdateInput = {
   lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  default_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  default_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  default_labor_cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -328,6 +436,10 @@ export type processesCreateManyInput = {
   lab_id: string
   name: string
   description?: string | null
+  default_fixed_minutes?: number
+  default_expected_duration_days?: number
+  default_requires_milling_machine?: boolean
+  default_labor_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string
@@ -338,6 +450,10 @@ export type processesUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  default_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  default_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  default_labor_cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -349,6 +465,10 @@ export type processesUncheckedUpdateManyInput = {
   lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  default_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  default_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  default_labor_cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -375,10 +495,20 @@ export type processesCountOrderByAggregateInput = {
   lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  default_fixed_minutes?: Prisma.SortOrder
+  default_expected_duration_days?: Prisma.SortOrder
+  default_requires_milling_machine?: Prisma.SortOrder
+  default_labor_cost?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+}
+
+export type processesAvgOrderByAggregateInput = {
+  default_fixed_minutes?: Prisma.SortOrder
+  default_expected_duration_days?: Prisma.SortOrder
+  default_labor_cost?: Prisma.SortOrder
 }
 
 export type processesMaxOrderByAggregateInput = {
@@ -386,6 +516,10 @@ export type processesMaxOrderByAggregateInput = {
   lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  default_fixed_minutes?: Prisma.SortOrder
+  default_expected_duration_days?: Prisma.SortOrder
+  default_requires_milling_machine?: Prisma.SortOrder
+  default_labor_cost?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -397,10 +531,20 @@ export type processesMinOrderByAggregateInput = {
   lab_id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  default_fixed_minutes?: Prisma.SortOrder
+  default_expected_duration_days?: Prisma.SortOrder
+  default_requires_milling_machine?: Prisma.SortOrder
+  default_labor_cost?: Prisma.SortOrder
   is_active?: Prisma.SortOrder
   deleted_at?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+}
+
+export type processesSumOrderByAggregateInput = {
+  default_fixed_minutes?: Prisma.SortOrder
+  default_expected_duration_days?: Prisma.SortOrder
+  default_labor_cost?: Prisma.SortOrder
 }
 
 export type ProcessesScalarRelationFilter = {
@@ -482,6 +626,10 @@ export type processesCreateWithoutLabsInput = {
   id?: string
   name: string
   description?: string | null
+  default_fixed_minutes?: number
+  default_expected_duration_days?: number
+  default_requires_milling_machine?: boolean
+  default_labor_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string
@@ -494,6 +642,10 @@ export type processesUncheckedCreateWithoutLabsInput = {
   id?: string
   name: string
   description?: string | null
+  default_fixed_minutes?: number
+  default_expected_duration_days?: number
+  default_requires_milling_machine?: boolean
+  default_labor_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string
@@ -536,6 +688,10 @@ export type processesScalarWhereInput = {
   lab_id?: Prisma.UuidFilter<"processes"> | string
   name?: Prisma.StringFilter<"processes"> | string
   description?: Prisma.StringNullableFilter<"processes"> | string | null
+  default_fixed_minutes?: Prisma.IntFilter<"processes"> | number
+  default_expected_duration_days?: Prisma.IntFilter<"processes"> | number
+  default_requires_milling_machine?: Prisma.BoolFilter<"processes"> | boolean
+  default_labor_cost?: Prisma.DecimalFilter<"processes"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFilter<"processes"> | boolean
   deleted_at?: Prisma.DateTimeNullableFilter<"processes"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"processes"> | Date | string
@@ -546,6 +702,10 @@ export type processesCreateWithoutEmployeeAssignmentsInput = {
   id?: string
   name: string
   description?: string | null
+  default_fixed_minutes?: number
+  default_expected_duration_days?: number
+  default_requires_milling_machine?: boolean
+  default_labor_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string
@@ -559,6 +719,10 @@ export type processesUncheckedCreateWithoutEmployeeAssignmentsInput = {
   lab_id: string
   name: string
   description?: string | null
+  default_fixed_minutes?: number
+  default_expected_duration_days?: number
+  default_requires_milling_machine?: boolean
+  default_labor_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string
@@ -586,6 +750,10 @@ export type processesUpdateWithoutEmployeeAssignmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  default_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  default_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  default_labor_cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -599,6 +767,10 @@ export type processesUncheckedUpdateWithoutEmployeeAssignmentsInput = {
   lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  default_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  default_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  default_labor_cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -610,6 +782,10 @@ export type processesCreateWithoutCase_processesInput = {
   id?: string
   name: string
   description?: string | null
+  default_fixed_minutes?: number
+  default_expected_duration_days?: number
+  default_requires_milling_machine?: boolean
+  default_labor_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string
@@ -623,6 +799,10 @@ export type processesUncheckedCreateWithoutCase_processesInput = {
   lab_id: string
   name: string
   description?: string | null
+  default_fixed_minutes?: number
+  default_expected_duration_days?: number
+  default_requires_milling_machine?: boolean
+  default_labor_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string
@@ -650,6 +830,10 @@ export type processesUpdateWithoutCase_processesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  default_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  default_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  default_labor_cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -663,6 +847,10 @@ export type processesUncheckedUpdateWithoutCase_processesInput = {
   lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  default_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  default_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  default_labor_cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -674,6 +862,10 @@ export type processesCreateManyLabsInput = {
   id?: string
   name: string
   description?: string | null
+  default_fixed_minutes?: number
+  default_expected_duration_days?: number
+  default_requires_milling_machine?: boolean
+  default_labor_cost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: boolean
   deleted_at?: Date | string | null
   created_at?: Date | string
@@ -684,6 +876,10 @@ export type processesUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  default_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  default_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  default_labor_cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -696,6 +892,10 @@ export type processesUncheckedUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  default_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  default_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  default_labor_cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -708,6 +908,10 @@ export type processesUncheckedUpdateManyWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_fixed_minutes?: Prisma.IntFieldUpdateOperationsInput | number
+  default_expected_duration_days?: Prisma.IntFieldUpdateOperationsInput | number
+  default_requires_milling_machine?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  default_labor_cost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   is_active?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deleted_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -759,6 +963,10 @@ export type processesSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   lab_id?: boolean
   name?: boolean
   description?: boolean
+  default_fixed_minutes?: boolean
+  default_expected_duration_days?: boolean
+  default_requires_milling_machine?: boolean
+  default_labor_cost?: boolean
   is_active?: boolean
   deleted_at?: boolean
   created_at?: boolean
@@ -774,6 +982,10 @@ export type processesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   lab_id?: boolean
   name?: boolean
   description?: boolean
+  default_fixed_minutes?: boolean
+  default_expected_duration_days?: boolean
+  default_requires_milling_machine?: boolean
+  default_labor_cost?: boolean
   is_active?: boolean
   deleted_at?: boolean
   created_at?: boolean
@@ -786,6 +998,10 @@ export type processesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   lab_id?: boolean
   name?: boolean
   description?: boolean
+  default_fixed_minutes?: boolean
+  default_expected_duration_days?: boolean
+  default_requires_milling_machine?: boolean
+  default_labor_cost?: boolean
   is_active?: boolean
   deleted_at?: boolean
   created_at?: boolean
@@ -798,13 +1014,17 @@ export type processesSelectScalar = {
   lab_id?: boolean
   name?: boolean
   description?: boolean
+  default_fixed_minutes?: boolean
+  default_expected_duration_days?: boolean
+  default_requires_milling_machine?: boolean
+  default_labor_cost?: boolean
   is_active?: boolean
   deleted_at?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type processesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "name" | "description" | "is_active" | "deleted_at" | "created_at" | "updated_at", ExtArgs["result"]["processes"]>
+export type processesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "name" | "description" | "default_fixed_minutes" | "default_expected_duration_days" | "default_requires_milling_machine" | "default_labor_cost" | "is_active" | "deleted_at" | "created_at" | "updated_at", ExtArgs["result"]["processes"]>
 export type processesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   case_processes?: boolean | Prisma.processes$case_processesArgs<ExtArgs>
@@ -830,6 +1050,10 @@ export type $processesPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     lab_id: string
     name: string
     description: string | null
+    default_fixed_minutes: number
+    default_expected_duration_days: number
+    default_requires_milling_machine: boolean
+    default_labor_cost: runtime.Decimal
     is_active: boolean
     deleted_at: Date | null
     created_at: Date
@@ -1264,6 +1488,10 @@ export interface processesFieldRefs {
   readonly lab_id: Prisma.FieldRef<"processes", 'String'>
   readonly name: Prisma.FieldRef<"processes", 'String'>
   readonly description: Prisma.FieldRef<"processes", 'String'>
+  readonly default_fixed_minutes: Prisma.FieldRef<"processes", 'Int'>
+  readonly default_expected_duration_days: Prisma.FieldRef<"processes", 'Int'>
+  readonly default_requires_milling_machine: Prisma.FieldRef<"processes", 'Boolean'>
+  readonly default_labor_cost: Prisma.FieldRef<"processes", 'Decimal'>
   readonly is_active: Prisma.FieldRef<"processes", 'Boolean'>
   readonly deleted_at: Prisma.FieldRef<"processes", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"processes", 'DateTime'>

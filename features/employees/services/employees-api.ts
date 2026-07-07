@@ -85,6 +85,7 @@ export async function getEmployeeApi(employeeId: string) {
   const body = (await response.json()) as ApiSuccess<Employee> & {
     meta: {
       currentUserRole?: UserRole;
+      labCurrency?: string;
       canAssignProcesses?: boolean;
       canEditRole?: boolean;
       canManageCapacity?: boolean;
@@ -97,6 +98,7 @@ export async function getEmployeeApi(employeeId: string) {
     employee: body.data,
     scheduleProfile: body.meta.scheduleProfile ?? null,
     dashboard: body.meta.employeeDashboard ?? null,
+    labCurrency: body.meta.labCurrency ?? "BRL",
     currentUserRole: body.meta.currentUserRole ?? null,
     canAssignProcesses: Boolean(body.meta.canAssignProcesses),
     canEditRole: Boolean(body.meta.canEditRole),
@@ -168,6 +170,27 @@ export async function updateEmployeeProductivityApi(
   }>,
 ) {
   const response = await fetch(`/api/employees/${employeeId}/productivity`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ assignments }),
+  });
+
+  if (!response.ok) {
+    throw new Error(await parseApiError(response));
+  }
+}
+
+export async function updateEmployeeLaborCostsApi(
+  employeeId: string,
+  assignments: Array<{
+    process_id: string;
+    labor_cost_override: string | null;
+  }>,
+) {
+  const response = await fetch(`/api/employees/${employeeId}/labor-costs`, {
     method: "PUT",
     headers: {
       Accept: "application/json",

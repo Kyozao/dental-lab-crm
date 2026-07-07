@@ -42,8 +42,7 @@ export async function deleteCaseCommentApi(caseId: string, commentId: string) {
 }
 
 export async function deleteCaseApi(_caseId: string) {
-  void _caseId;
-  return;
+  return casesApi.delete(_caseId);
 }
 
 export async function uploadCaseAttachmentApi(

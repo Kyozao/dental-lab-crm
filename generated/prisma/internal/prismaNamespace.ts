@@ -3245,6 +3245,10 @@ export const ProcessesScalarFieldEnum = {
   lab_id: 'lab_id',
   name: 'name',
   description: 'description',
+  default_fixed_minutes: 'default_fixed_minutes',
+  default_expected_duration_days: 'default_expected_duration_days',
+  default_requires_milling_machine: 'default_requires_milling_machine',
+  default_labor_cost: 'default_labor_cost',
   is_active: 'is_active',
   deleted_at: 'deleted_at',
   created_at: 'created_at',
@@ -3260,6 +3264,7 @@ export const Employee_process_assignmentsScalarFieldEnum = {
   lab_member_id: 'lab_member_id',
   process_id: 'process_id',
   productivity_points_per_hour: 'productivity_points_per_hour',
+  labor_cost_override: 'labor_cost_override',
   created_at: 'created_at'
 } as const
 
@@ -3520,9 +3525,7 @@ export const Case_processesScalarFieldEnum = {
   status: 'status',
   assigned_lab_member_id: 'assigned_lab_member_id',
   snapshot_fixed_minutes: 'snapshot_fixed_minutes',
-  snapshot_minutes_per_unit: 'snapshot_minutes_per_unit',
   snapshot_expected_duration_days: 'snapshot_expected_duration_days',
-  snapshot_dependency_lag_days: 'snapshot_dependency_lag_days',
   snapshot_requires_milling_machine: 'snapshot_requires_milling_machine',
   planned_start_date: 'planned_start_date',
   planned_end_date: 'planned_end_date',

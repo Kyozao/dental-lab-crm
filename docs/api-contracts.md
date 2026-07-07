@@ -111,6 +111,89 @@ Short description of what the route does.
 
 ---
 
+### `GET /api/dashboard`
+
+**Purpose**  
+Returns the lab operations dashboard for the logged-in user's lab, including summary KPIs, employee workload rows, and case status mix.
+
+**Auth**  
+`Required`
+
+**Input**
+
+- query params: none
+- path params: none
+- headers: authenticated user headers
+- body: none
+
+**Success response**
+
+```json
+{
+  "data": {
+    "summary": {
+      "totalEmployees": 12,
+      "totalAssignedCases": 34,
+      "totalTeethTracked": 97,
+      "openCases": 18,
+      "openTeeth": 42,
+      "completedThisMonth": 9,
+      "urgentOpenCases": 3,
+      "avgTurnaroundDays": 4.8
+    },
+    "employeeStats": [
+      {
+        "id": "member_001",
+        "name": "Camila Santos",
+        "totalCases": 8,
+        "totalTeethTracked": 21,
+        "openCases": 5,
+        "openTeeth": 11,
+        "closedCases": 3,
+        "closedTeeth": 10,
+        "completedProcessesThisWeek": 4,
+        "completedProcessesThisMonth": 11,
+        "urgentOpenCases": 1,
+        "overdueCases": 2,
+        "avgTurnaroundDays": 2.4,
+        "completionRate": 38
+      }
+    ],
+    "statusData": [
+      {
+        "status": "IN_PRODUCTION",
+        "label": "Production",
+        "value": 14,
+        "fill": "#2563eb"
+      }
+    ]
+  },
+  "error": null,
+  "meta": {}
+}
+```
+
+**Error response**
+
+```json
+{
+  "data": null,
+  "error": {
+    "code": "FORBIDDEN",
+    "message": "No lab membership found for this user."
+  },
+  "meta": {}
+}
+```
+
+**Notes**
+
+- the route is scoped to the logged-in user's lab membership
+- `employeeStats` uses assigned `case_processes` as the ownership source of truth
+- summary teeth counts prefer `elements_qty` and fall back to parsing `teeth`
+- status mix is built from visible lab cases grouped by `cases.current_status`
+- old dashboard keys such as `designerStats`, `totalDesigners`, and `totalTeethDesigned` are no longer part of the contract
+
 ## Planned route groups
 
 ### Auth
@@ -186,6 +269,9 @@ Production behavior:
 - `POST /api/processes`
 - `PATCH /api/processes/:id`
 - `DELETE /api/processes/:id`
+- `GET /api/employees/:id`
+- `PUT /api/employees/:id/processes`
+- `PUT /api/employees/:id/labor-costs`
 
 Reference resource behavior:
 
@@ -196,7 +282,12 @@ Reference resource behavior:
 - service type responses include `workflowJson`
 - service type create/update accepts `workflowJson: { steps: [{ id, processId, dependsOn }] }`
 - service type workflow templates reject duplicate step ids, missing dependency step ids, self-dependencies, dependency cycles, inactive processes, archived processes, and processes outside the logged-in user's lab
-- `/api/processes` manages reusable lab process definitions; `DELETE` archives processes instead of hard-deleting them
+- `/api/processes` manages reusable lab process definitions; responses now include `default_labor_cost` alongside the existing default timing fields
+- process create/update validates `default_labor_cost` as a zero-or-greater money amount with up to 2 decimals
+- `DELETE /api/processes/:id` archives processes instead of hard-deleting them
+- `GET /api/employees/:id` includes assigned process rows with `default_labor_cost`, nullable `labor_cost_override`, and derived `effective_labor_cost`
+- `PUT /api/employees/:id/labor-costs` only updates overrides for already-assigned employee processes; sending `null` clears the override back to the process default
+- removing an employee process assignment also removes any stored override because the override lives on `employee_process_assignments`
 
 ### Reports
 

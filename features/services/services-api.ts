@@ -55,6 +55,18 @@ type ServiceTypeResponse = {
   meta: Record<string, never>;
 };
 
+type ProcessResponse = {
+  data: ProcessOption;
+  error: string | null;
+  meta: Record<string, never>;
+};
+
+type ProcessesResponse = {
+  data: ProcessOption[];
+  error: string | null;
+  meta: Record<string, never>;
+};
+
 type LabSettingsResponse = {
   data: LabSettings;
   error: string | null;
@@ -81,6 +93,16 @@ export type ServiceTypeMutationInput = {
   workflow_json: ServiceTypeOption["workflow_json"];
 };
 
+export type ProcessMutationInput = {
+  name: string;
+  description: string | null;
+  default_fixed_minutes: number;
+  default_expected_duration_days: number;
+  default_requires_milling_machine: boolean;
+  default_labor_cost: string;
+  is_active: boolean;
+};
+
 export type PriceTableMutationInput = {
   name: string;
   is_active: boolean;
@@ -92,6 +114,37 @@ export type PriceTableMutationInput = {
 
 export async function listServicesApi() {
   const response = await api<ServiceTypesResponse>("/api/service-types");
+  return response.data;
+}
+
+export async function listProcessesApi() {
+  const response = await api<ProcessesResponse>("/api/processes");
+  return response.data;
+}
+
+export async function createProcessApi(input: ProcessMutationInput) {
+  const response = await api<ProcessResponse>("/api/processes", {
+    method: "POST",
+    body: JSON.stringify(input),
+  });
+  return response.data;
+}
+
+export async function updateProcessApi(
+  processId: string,
+  input: Partial<ProcessMutationInput>,
+) {
+  const response = await api<ProcessResponse>(`/api/processes/${processId}`, {
+    method: "PATCH",
+    body: JSON.stringify(input),
+  });
+  return response.data;
+}
+
+export async function archiveProcessApi(processId: string) {
+  const response = await api<ProcessResponse>(`/api/processes/${processId}`, {
+    method: "DELETE",
+  });
   return response.data;
 }
 
@@ -184,6 +237,17 @@ export type ServiceEditorState = {
   workflow_json: NonNullable<ServiceTypeOption["workflow_json"]>;
 };
 
+export type ProcessEditorState = {
+  id?: string;
+  name: string;
+  description: string;
+  default_fixed_minutes: number;
+  default_expected_duration_days: number;
+  default_requires_milling_machine: boolean;
+  default_labor_cost: string;
+  is_active: boolean;
+};
+
 export type PriceTableEditorState = {
   id?: string;
   name: string;
@@ -201,6 +265,18 @@ export function buildDefaultServiceEditorState(): ServiceEditorState {
     notes: "",
     is_active: true,
     workflow_json: { steps: [] },
+  };
+}
+
+export function buildDefaultProcessEditorState(): ProcessEditorState {
+  return {
+    name: "",
+    description: "",
+    default_fixed_minutes: 1,
+    default_expected_duration_days: 1,
+    default_requires_milling_machine: false,
+    default_labor_cost: "0.00",
+    is_active: true,
   };
 }
 
@@ -234,6 +310,20 @@ export function buildServiceEditorState(service: ServiceTypeOption): ServiceEdit
     notes: service.notes ?? "",
     is_active: service.is_active ?? true,
     workflow_json: service.workflow_json ?? { steps: [] },
+  };
+}
+
+export function buildProcessEditorState(process: ProcessOption): ProcessEditorState {
+  return {
+    id: process.id,
+    name: process.name,
+    description: process.description ?? "",
+    default_fixed_minutes: process.default_fixed_minutes ?? 1,
+    default_expected_duration_days: process.default_expected_duration_days ?? 1,
+    default_requires_milling_machine:
+      process.default_requires_milling_machine ?? false,
+    default_labor_cost: process.default_labor_cost ?? "0.00",
+    is_active: process.is_active ?? true,
   };
 }
 

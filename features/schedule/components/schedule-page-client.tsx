@@ -455,8 +455,8 @@ export function SchedulePageClient({
           <div className="mt-4 grid gap-3">
             <ScopeCard
               icon={<CalendarClock className="size-4" />}
-              title="Active production only"
-              description="The review list stays aligned with READY and IN_PROGRESS production work."
+              title="Incomplete workflow review"
+              description="The review list includes locked, ready, and in-progress workflow steps for active production cases."
             />
             <ScopeCard
               icon={<Users className="size-4" />}
@@ -609,8 +609,8 @@ export function SchedulePageClient({
                               key={process.caseProcessId}
                               className="rounded-2xl border bg-background px-4 py-4"
                             >
-                              <div className="flex flex-wrap items-start justify-between gap-3">
-                                <div className="space-y-2">
+                              <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(320px,420px)] xl:items-start">
+                                <div className="space-y-3">
                                   <div className="flex flex-wrap items-center gap-2">
                                     <p className="font-medium">{process.processName}</p>
                                     <Badge variant="outline">{process.status.toLowerCase()}</Badge>
@@ -621,11 +621,29 @@ export function SchedulePageClient({
                                       ? `${shortDate(process.plannedStartDate)} to ${shortDate(process.plannedEndDate ?? process.plannedStartDate)}`
                                       : "No plan window generated"}
                                   </p>
+                                  <div className="grid gap-3 sm:grid-cols-3">
+                                    <ProcessMetaCard
+                                      label="Workflow"
+                                      value={formatProcessStatus(process.status)}
+                                    />
+                                    <ProcessMetaCard
+                                      label="Window"
+                                      value={
+                                        process.plannedStartDate
+                                          ? `${shortDate(process.plannedStartDate)} to ${shortDate(process.plannedEndDate ?? process.plannedStartDate)}`
+                                          : "Not scheduled"
+                                      }
+                                    />
+                                    <ProcessMetaCard
+                                      label="Assignee"
+                                      value={process.assignedLabMemberName ?? "Unassigned"}
+                                    />
+                                  </div>
                                 </div>
 
                                 {process.editable && schedule.canManage ? (
-                                  <div className="min-w-[280px] space-y-3">
-                                    <div>
+                                  <div className="space-y-3 xl:justify-self-stretch">
+                                    <div className="rounded-xl border bg-muted/10 px-3 py-3">
                                       <p className="mb-2 text-xs uppercase tracking-[0.16em] text-muted-foreground">
                                         Proposed assignee
                                       </p>
@@ -635,7 +653,7 @@ export function SchedulePageClient({
                                           updateDraftAssignee(process.caseProcessId, value)
                                         }
                                       >
-                                        <SelectTrigger className="w-full">
+                                        <SelectTrigger className="w-full bg-background">
                                           <SelectValue placeholder="Select employee" />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -655,6 +673,9 @@ export function SchedulePageClient({
                                           )}
                                         </SelectContent>
                                       </Select>
+                                      <p className="mt-2 text-xs text-muted-foreground">
+                                        Reassign this workflow step without opening the inspector.
+                                      </p>
                                     </div>
                                     <LiveWorkloadCard
                                       workload={selectedWorkload}
@@ -664,7 +685,7 @@ export function SchedulePageClient({
                                     />
                                   </div>
                                 ) : (
-                                  <div className="min-w-[280px] space-y-3">
+                                  <div className="space-y-3 xl:justify-self-stretch">
                                     <div className="rounded-xl border bg-muted/20 px-3 py-3 text-sm">
                                       <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
                                         Assignee
@@ -722,6 +743,17 @@ function MetricCard({ label, value }: { label: string; value: string }) {
   );
 }
 
+function ProcessMetaCard({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl border bg-muted/10 px-3 py-3">
+      <p className="text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+        {label}
+      </p>
+      <p className="mt-1 text-sm font-medium">{value}</p>
+    </div>
+  );
+}
+
 function LiveWorkloadCard({
   workload,
   workloadDeltaMinutes,
@@ -740,6 +772,16 @@ function LiveWorkloadCard({
       </div>
     );
   }
+
+  const capacityRatio =
+    workload.availableMinutes > 0
+      ? workload.scheduledMinutes / workload.availableMinutes
+      : 0;
+  const cappedCapacityPercent = Math.max(0, Math.min(capacityRatio, 1)) * 100;
+  const overflowPercent =
+    workload.availableMinutes > 0 && capacityRatio > 1
+      ? Math.min((capacityRatio - 1) * 100, 100)
+      : 0;
 
   return (
     <div className="rounded-xl border bg-muted/10 px-3 py-3 text-sm">
@@ -764,6 +806,29 @@ function LiveWorkloadCard({
           </p>
           <p className="mt-1 font-medium">{formatMinutesAsHours(workload.remainingMinutes)}</p>
         </div>
+      </div>
+      <div className="mt-3">
+        <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
+          <span>Employee workload</span>
+          <span>{Math.round(capacityRatio * 100)}%</span>
+        </div>
+        <div className="mt-2 h-3 overflow-hidden rounded-full bg-muted">
+          <div
+            className={cn(
+              "h-full rounded-full transition-[width] duration-200",
+              workload.overbookedDayCount > 0 ? "bg-amber-500" : "bg-emerald-500",
+            )}
+            style={{ width: `${cappedCapacityPercent}%` }}
+          />
+        </div>
+        {overflowPercent > 0 ? (
+          <div className="mt-2 h-2 overflow-hidden rounded-full bg-red-100">
+            <div
+              className="h-full rounded-full bg-red-500 transition-[width] duration-200"
+              style={{ width: `${overflowPercent}%` }}
+            />
+          </div>
+        ) : null}
       </div>
       <div className="mt-3 flex flex-wrap gap-2 text-xs">
         <Badge variant="outline">This step {formatSignedMinutes(processMinutes)}</Badge>
@@ -870,4 +935,12 @@ function formatSignedMinutes(minutes: number) {
   }
 
   return `${minutes > 0 ? "+" : "-"}${(Math.abs(minutes) / 60).toFixed(1)}h`;
+}
+
+function formatProcessStatus(status: string) {
+  return status
+    .toLowerCase()
+    .split("_")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
 }

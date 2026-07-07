@@ -15,6 +15,9 @@ import { cn } from "@/lib/utils";
 export type WorkflowProcessOption = {
   id: string;
   name: string;
+  default_fixed_minutes?: number;
+  default_expected_duration_days?: number;
+  default_requires_milling_machine?: boolean;
 };
 
 export type WorkflowStep = {
@@ -22,9 +25,7 @@ export type WorkflowStep = {
   process_id: string;
   dependsOn: string[];
   fixed_minutes: number;
-  minutes_per_unit: number;
   expected_duration_days: number;
-  dependency_lag_days: number;
   requires_milling_machine: boolean;
 };
 
@@ -52,10 +53,13 @@ type Props = {
   processes: WorkflowProcessOption[];
   taskItems?: WorkflowTaskItem[];
   assigneeOptions?: WorkflowAssigneeOption[];
+  description?: string;
   showInspectorAssignee?: boolean;
   disabled?: boolean;
   statusDisabled?: boolean;
   assigneeDisabled?: boolean;
+  timingDisabled?: boolean;
+  timingDisabledMessage?: string | null;
   updatingProcessId?: string | null;
   statusError?: string | null;
   onStatusChange?: (taskItemId: string, status: string) => void;
@@ -82,8 +86,6 @@ const LEVEL_GAP = 150;
 const NODE_GAP = 96;
 const MIN_CANVAS_WIDTH = 900;
 const MIN_CANVAS_HEIGHT = 560;
-const MIN_ZOOM = 0.45;
-const MAX_ZOOM = 1.6;
 const NO_ASSIGNEE_VALUE = "__none";
 
 export function WorkflowEditor({
@@ -91,10 +93,13 @@ export function WorkflowEditor({
   processes,
   taskItems = [],
   assigneeOptions = [],
+  description = "Edits here apply only to this case.",
   showInspectorAssignee = true,
   disabled = false,
   statusDisabled = false,
   assigneeDisabled = false,
+  timingDisabled = false,
+  timingDisabledMessage = null,
   updatingProcessId = null,
   statusError = null,
   onStatusChange,
@@ -104,19 +109,8 @@ export function WorkflowEditor({
   const [selectedStepId, setSelectedStepId] = React.useState<string | null>(
     workflow.steps[0]?.id ?? null,
   );
-  const [isPanning, setIsPanning] = React.useState(false);
-  const [viewportTransform, setViewportTransform] = React.useState({
-    x: 0,
-    y: 0,
-    scale: 0.9,
-  });
-  const panStartRef = React.useRef<{
-    pointerId: number;
-    startX: number;
-    startY: number;
-    originX: number;
-    originY: number;
-  } | null>(null);
+  const viewportRef = React.useRef<HTMLDivElement | null>(null);
+  const [viewportSize, setViewportSize] = React.useState({ width: 0, height: 0 });
 
   const taskItemByStepId = React.useMemo(
     () =>
@@ -137,6 +131,41 @@ export function WorkflowEditor({
     workflow.steps.find((step) => step.id === selectedStepId) ??
     workflow.steps[0] ??
     null;
+  const viewportNeedsHorizontalScroll =
+    viewportSize.width > 0 &&
+    viewportSize.width < graphLayout.width + CANVAS_PADDING;
+  const viewportTransform = React.useMemo(() => {
+    if (viewportSize.width <= 0) {
+      return { x: 0, y: 0, scale: 1 };
+    }
+
+    if (viewportNeedsHorizontalScroll) {
+      return {
+        x: CANVAS_PADDING / 2,
+        y: CANVAS_PADDING / 2,
+        scale: 1,
+      };
+    }
+
+    const horizontalScale = (viewportSize.width - CANVAS_PADDING) / graphLayout.width;
+    const scale = Math.min(horizontalScale, 1);
+    const x = (viewportSize.width - graphLayout.width * scale) / 2;
+    const y = CANVAS_PADDING / 2;
+
+    return { x, y, scale };
+  }, [graphLayout.width, viewportNeedsHorizontalScroll, viewportSize.width]);
+  const viewportHeight = React.useMemo(() => {
+    return Math.max(
+      MIN_CANVAS_HEIGHT,
+      Math.ceil(graphLayout.height * viewportTransform.scale + CANVAS_PADDING),
+    );
+  }, [graphLayout.height, viewportTransform.scale]);
+  const viewportContentWidth = React.useMemo(() => {
+    return Math.max(
+      viewportSize.width,
+      Math.ceil(graphLayout.width * viewportTransform.scale + CANVAS_PADDING),
+    );
+  }, [graphLayout.width, viewportSize.width, viewportTransform.scale]);
 
   React.useEffect(() => {
     if (workflow.steps.length === 0) {
@@ -149,6 +178,24 @@ export function WorkflowEditor({
     }
   }, [selectedStepId, workflow.steps]);
 
+  React.useEffect(() => {
+    const element = viewportRef.current;
+    if (!element) return;
+
+    const updateViewportSize = () => {
+      setViewportSize({
+        width: element.clientWidth,
+        height: element.clientHeight,
+      });
+    };
+
+    updateViewportSize();
+    const observer = new ResizeObserver(() => updateViewportSize());
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
+
   function updateSteps(updater: (steps: WorkflowStep[]) => WorkflowStep[]) {
     onChange({ steps: updater(workflow.steps) });
   }
@@ -158,17 +205,16 @@ export function WorkflowEditor({
     if (!firstProcess) return;
 
     const stepId = `step-${Date.now()}-${workflow.steps.length + 1}`;
+    const defaults = getProcessDefaults(firstProcess);
     updateSteps((steps) => [
       ...steps,
       {
         id: stepId,
         process_id: firstProcess.id,
         dependsOn: [],
-        fixed_minutes: 1,
-        minutes_per_unit: 0,
-        expected_duration_days: 1,
-        dependency_lag_days: 0,
-        requires_milling_machine: false,
+        fixed_minutes: defaults.fixed_minutes,
+        expected_duration_days: defaults.expected_duration_days,
+        requires_milling_machine: defaults.requires_milling_machine,
       },
     ]);
     setSelectedStepId(stepId);
@@ -185,72 +231,22 @@ export function WorkflowEditor({
     );
   }
 
-  function handleViewportWheel(event: React.WheelEvent<HTMLDivElement>) {
-    event.preventDefault();
-
-    const rect = event.currentTarget.getBoundingClientRect();
-    const nextScale = clamp(
-      viewportTransform.scale * (event.deltaY > 0 ? 0.92 : 1.08),
-      MIN_ZOOM,
-      MAX_ZOOM,
-    );
-    const cursorX = event.clientX - rect.left;
-    const cursorY = event.clientY - rect.top;
-    const contentX = (cursorX - viewportTransform.x) / viewportTransform.scale;
-    const contentY = (cursorY - viewportTransform.y) / viewportTransform.scale;
-
-    setViewportTransform({
-      x: cursorX - contentX * nextScale,
-      y: cursorY - contentY * nextScale,
-      scale: nextScale,
-    });
-  }
-
-  function handleViewportPointerDown(event: React.PointerEvent<HTMLDivElement>) {
-    if (event.button !== 0) return;
-
-    const target = event.target;
-    if (
-      target instanceof HTMLElement &&
-      target.closest("[data-workflow-node], button, input, select, label")
-    ) {
-      return;
-    }
-
-    event.currentTarget.setPointerCapture(event.pointerId);
-    panStartRef.current = {
-      pointerId: event.pointerId,
-      startX: event.clientX,
-      startY: event.clientY,
-      originX: viewportTransform.x,
-      originY: viewportTransform.y,
-    };
-    setIsPanning(true);
-  }
-
-  function handleViewportPointerMove(event: React.PointerEvent<HTMLDivElement>) {
-    const panStart = panStartRef.current;
-    if (!panStart || panStart.pointerId !== event.pointerId) return;
-
-    setViewportTransform((currentTransform) => ({
-      ...currentTransform,
-      x: panStart.originX + event.clientX - panStart.startX,
-      y: panStart.originY + event.clientY - panStart.startY,
-    }));
-  }
-
-  function handleViewportPointerUp(event: React.PointerEvent<HTMLDivElement>) {
-    if (panStartRef.current?.pointerId !== event.pointerId) return;
-
-    panStartRef.current = null;
-    setIsPanning(false);
-    event.currentTarget.releasePointerCapture(event.pointerId);
-  }
-
   function updateProcess(stepId: string, processId: string) {
+    const nextProcess = processes.find((process) => process.id === processId);
+    if (!nextProcess) return;
+
+    const defaults = getProcessDefaults(nextProcess);
     updateSteps((steps) =>
       steps.map((step) =>
-        step.id === stepId ? { ...step, process_id: processId } : step,
+        step.id === stepId
+          ? {
+              ...step,
+              process_id: processId,
+              fixed_minutes: defaults.fixed_minutes,
+              expected_duration_days: defaults.expected_duration_days,
+              requires_milling_machine: defaults.requires_milling_machine,
+            }
+          : step,
       ),
     );
   }
@@ -287,7 +283,7 @@ export function WorkflowEditor({
         <div>
           <h3 className="font-medium">Workflow</h3>
           <p className="text-sm text-muted-foreground">
-            Edits here apply only to this case.
+            {description}
           </p>
         </div>
         <Button
@@ -314,20 +310,52 @@ export function WorkflowEditor({
         </div>
       ) : (
         <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
+          <div className="grid gap-4 md:hidden">
+            {workflow.steps.map((step) => {
+              const taskItem = taskItemByStepId.get(step.id);
+              const status = taskItem?.status ?? "New";
+              const isUpdating = updatingProcessId === taskItem?.id;
+              const processName = getProcessName(processes, step.process_id);
+              const isSelected = selectedStep?.id === step.id;
+
+              return (
+                <MobileWorkflowCard
+                  key={step.id}
+                  step={step}
+                  status={status}
+                  processName={processName}
+                  assigneeName={taskItem?.assignedToName ?? null}
+                  dependencySummaryText={dependencySummary(
+                    step,
+                    workflow.steps,
+                    processes,
+                  )}
+                  taskItem={taskItem}
+                  isSelected={isSelected}
+                  isUpdating={isUpdating}
+                  statusDisabled={statusDisabled}
+                  onSelect={setSelectedStepId}
+                  onStatusChange={onStatusChange}
+                />
+              );
+            })}
+          </div>
+
           <div
-            className={cn(
-              "relative h-[640px] overflow-hidden rounded-md border bg-muted/20",
-              isPanning ? "cursor-grabbing" : "cursor-grab",
-            )}
-            onWheel={handleViewportWheel}
-            onPointerDown={handleViewportPointerDown}
-            onPointerMove={handleViewportPointerMove}
-            onPointerUp={handleViewportPointerUp}
-            onPointerCancel={handleViewportPointerUp}
+            ref={viewportRef}
+            className="relative hidden overflow-hidden rounded-md border bg-muted/20 md:block"
+            style={{ height: viewportHeight }}
           >
             <div
-              className="absolute left-0 top-0 rounded-sm"
+              className="relative rounded-sm"
               style={{
+                minWidth: viewportContentWidth,
+                minHeight: viewportHeight,
+              }}
+            >
+              <div
+                className="absolute left-0 top-0 rounded-sm"
+                style={{
                 width: graphLayout.width,
                 height: graphLayout.height,
                 transform: `translate(${viewportTransform.x}px, ${viewportTransform.y}px) scale(${viewportTransform.scale})`,
@@ -336,58 +364,59 @@ export function WorkflowEditor({
                   "linear-gradient(to right, hsl(var(--border) / 0.45) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border) / 0.45) 1px, transparent 1px)",
                 backgroundSize: "32px 32px",
               }}
-            >
-              <svg
-                className="pointer-events-none absolute inset-0 z-0 size-full text-border"
-                aria-hidden="true"
               >
-                {connectors.map((connector) => (
-                  <path
-                    key={connector.id}
-                    d={connector.path}
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                ))}
-              </svg>
-
-              <div className="relative z-10">
-                {workflow.steps.map((step) => {
-                  const taskItem = taskItemByStepId.get(step.id);
-                  const status = taskItem?.status ?? "New";
-                  const isUpdating = updatingProcessId === taskItem?.id;
-                  const processName = getProcessName(processes, step.process_id);
-                  const isSelected = selectedStep?.id === step.id;
-                  const position = graphLayout.positions.get(step.id) ?? {
-                    x: CANVAS_PADDING,
-                    y: CANVAS_PADDING,
-                  };
-
-                  return (
-                    <WorkflowGraphNode
-                      key={step.id}
-                      step={step}
-                      status={status}
-                      processName={processName}
-                      assigneeName={taskItem?.assignedToName ?? null}
-                      dependencySummaryText={dependencySummary(
-                        step,
-                        workflow.steps,
-                        processes,
-                      )}
-                      position={position}
-                      taskItem={taskItem}
-                      isSelected={isSelected}
-                      isUpdating={isUpdating}
-                      statusDisabled={statusDisabled}
-                      onSelect={setSelectedStepId}
-                      onStatusChange={onStatusChange}
+                <svg
+                  className="pointer-events-none absolute inset-0 z-0 size-full text-border"
+                  aria-hidden="true"
+                >
+                  {connectors.map((connector) => (
+                    <path
+                      key={connector.id}
+                      d={connector.path}
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
-                  );
-                })}
+                  ))}
+                </svg>
+
+                <div className="relative z-10">
+                  {workflow.steps.map((step) => {
+                    const taskItem = taskItemByStepId.get(step.id);
+                    const status = taskItem?.status ?? "New";
+                    const isUpdating = updatingProcessId === taskItem?.id;
+                    const processName = getProcessName(processes, step.process_id);
+                    const isSelected = selectedStep?.id === step.id;
+                    const position = graphLayout.positions.get(step.id) ?? {
+                      x: CANVAS_PADDING,
+                      y: CANVAS_PADDING,
+                    };
+
+                    return (
+                      <WorkflowGraphNode
+                        key={step.id}
+                        step={step}
+                        status={status}
+                        processName={processName}
+                        assigneeName={taskItem?.assignedToName ?? null}
+                        dependencySummaryText={dependencySummary(
+                          step,
+                          workflow.steps,
+                          processes,
+                        )}
+                        position={position}
+                        taskItem={taskItem}
+                        isSelected={isSelected}
+                        isUpdating={isUpdating}
+                        statusDisabled={statusDisabled}
+                        onSelect={setSelectedStepId}
+                        onStatusChange={onStatusChange}
+                      />
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
@@ -402,6 +431,8 @@ export function WorkflowEditor({
             disabled={disabled}
             statusDisabled={statusDisabled}
             assigneeDisabled={assigneeDisabled}
+            timingDisabled={timingDisabled}
+            timingDisabledMessage={timingDisabledMessage}
             updatingProcessId={updatingProcessId}
             onProcessChange={updateProcess}
             onStepFieldsChange={updateStepFields}
@@ -413,6 +444,78 @@ export function WorkflowEditor({
         </div>
       )}
     </section>
+  );
+}
+
+function MobileWorkflowCard({
+  step,
+  status,
+  processName,
+  assigneeName,
+  dependencySummaryText,
+  taskItem,
+  isSelected,
+  isUpdating,
+  statusDisabled,
+  onSelect,
+  onStatusChange,
+}: {
+  step: WorkflowStep;
+  status: string;
+  processName: string;
+  assigneeName: string | null;
+  dependencySummaryText: string;
+  taskItem?: WorkflowTaskItem;
+  isSelected: boolean;
+  isUpdating: boolean;
+  statusDisabled: boolean;
+  onSelect: (stepId: string) => void;
+  onStatusChange?: (taskItemId: string, status: string) => void;
+}) {
+  return (
+    <div className="grid gap-3">
+      <button
+        type="button"
+        onClick={() => onSelect(step.id)}
+        className={cn(
+          "grid min-h-[100px] w-full gap-2 rounded-md border bg-background px-3 py-3 text-left shadow-sm transition hover:border-foreground/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
+          getNodeStateClassName(status),
+          isSelected && "border-primary ring-2 ring-primary/20",
+        )}
+      >
+        <div className="flex min-w-0 items-start justify-between gap-3">
+          <span className="min-w-0 truncate text-sm font-medium">
+            {processName}
+          </span>
+          <span
+            className={cn(
+              "shrink-0 rounded-md border px-2 py-1 text-xs",
+              getStatusBadgeClassName(status),
+            )}
+          >
+            {formatStatus(status)}
+          </span>
+        </div>
+        <span className="text-xs text-muted-foreground">
+          {dependencySummaryText}
+        </span>
+        <span className="truncate text-xs text-muted-foreground">
+          {assigneeName ? `Assigned to ${assigneeName}` : "Unassigned"}
+        </span>
+      </button>
+
+      {taskItem ? (
+        <div className="flex flex-wrap gap-2">
+          <TaskStatusActions
+            taskItemId={taskItem.id}
+            status={taskItem.status}
+            disabled={statusDisabled || isUpdating || !onStatusChange}
+            isUpdating={isUpdating}
+            onStatusChange={onStatusChange}
+          />
+        </div>
+      ) : null}
+    </div>
   );
 }
 
@@ -510,6 +613,8 @@ function WorkflowStepInspector({
   disabled,
   statusDisabled,
   assigneeDisabled,
+  timingDisabled,
+  timingDisabledMessage,
   updatingProcessId,
   onProcessChange,
   onStepFieldsChange,
@@ -527,6 +632,8 @@ function WorkflowStepInspector({
   disabled: boolean;
   statusDisabled: boolean;
   assigneeDisabled: boolean;
+  timingDisabled: boolean;
+  timingDisabledMessage: string | null;
   updatingProcessId: string | null;
   onProcessChange: (stepId: string, processId: string) => void;
   onStepFieldsChange: (
@@ -602,31 +709,12 @@ function WorkflowStepInspector({
               min={0}
               step={1}
               value={step.fixed_minutes}
-              disabled={disabled}
+              disabled={disabled || timingDisabled}
               onChange={(event) =>
                 onStepFieldsChange(
                   step.id,
                   { fixed_minutes: Math.max(0, Number(event.target.value) || 0) },
                 )
-              }
-              className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:opacity-60"
-            />
-          </div>
-          <div className="grid gap-2">
-            <label className="text-sm font-medium" htmlFor="workflow-step-minutes-per-unit">
-              Minutes per unit
-            </label>
-            <input
-              id="workflow-step-minutes-per-unit"
-              type="number"
-              min={0}
-              step={1}
-              value={step.minutes_per_unit}
-              disabled={disabled}
-              onChange={(event) =>
-                onStepFieldsChange(step.id, {
-                  minutes_per_unit: Math.max(0, Number(event.target.value) || 0),
-                })
               }
               className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:opacity-60"
             />
@@ -641,7 +729,7 @@ function WorkflowStepInspector({
               min={1}
               step={1}
               value={step.expected_duration_days}
-              disabled={disabled}
+              disabled={disabled || timingDisabled}
               onChange={(event) =>
                 onStepFieldsChange(step.id, {
                   expected_duration_days: Math.max(
@@ -653,29 +741,10 @@ function WorkflowStepInspector({
               className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:opacity-60"
             />
           </div>
-          <div className="grid gap-2">
-            <label className="text-sm font-medium" htmlFor="workflow-step-lag">
-              Lag days
-            </label>
-            <input
-              id="workflow-step-lag"
-              type="number"
-              min={0}
-              step={1}
-              value={step.dependency_lag_days}
-              disabled={disabled}
-              onChange={(event) =>
-                onStepFieldsChange(step.id, {
-                  dependency_lag_days: Math.max(
-                    0,
-                    Number(event.target.value) || 0,
-                  ),
-                })
-              }
-              className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm disabled:opacity-60"
-            />
-          </div>
         </div>
+        {timingDisabledMessage ? (
+          <p className="text-xs text-muted-foreground">{timingDisabledMessage}</p>
+        ) : null}
 
         <label className="flex items-center gap-2 rounded-md border px-3 py-2 text-sm">
           <input
@@ -930,8 +999,12 @@ function wouldCreateCycle(
   return dependencyCanReachStep(dependencyId);
 }
 
-function clamp(value: number, min: number, max: number) {
-  return Math.min(Math.max(value, min), max);
+function getProcessDefaults(process: WorkflowProcessOption) {
+  return {
+    fixed_minutes: process.default_fixed_minutes ?? 1,
+    expected_duration_days: process.default_expected_duration_days ?? 1,
+    requires_milling_machine: process.default_requires_milling_machine ?? false,
+  };
 }
 
 function getProcessName(processes: WorkflowProcessOption[], processId: string) {

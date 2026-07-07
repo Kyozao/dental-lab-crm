@@ -20,6 +20,10 @@ import {
   parseUpdateServiceTypeInput,
 } from "@/app/api/service-types/service-types.schemas";
 import {
+  parseCreateProcessInput,
+  parseUpdateProcessInput,
+} from "@/app/api/processes/processes.schemas";
+import {
   parseCreatePriceTableInput,
   parseUpdatePriceTableInput,
 } from "@/app/api/price-tables/price-tables.schemas";
@@ -27,6 +31,7 @@ import { parseUpdateCustomerInput } from "@/app/api/customers/customers.schemas"
 import {
   parseCreateEmployeeInput,
   parseUpdateEmployeeAvailabilityInput,
+  parseUpdateEmployeeLaborCostsInput,
   parseUpdateEmployeeProductivityInput,
   parseUpdateEmployeeRoleInput,
   parseUpdateEmployeeProcessesInput,
@@ -315,6 +320,47 @@ test("service type validation requires a valid base price", () => {
       notes: undefined,
       is_active: undefined,
       workflow_json: undefined,
+    },
+  });
+});
+
+test("process validation requires a name and valid default settings", () => {
+  const missing = parseCreateProcessInput({
+    default_fixed_minutes: -1,
+    default_expected_duration_days: 0,
+    default_labor_cost: -1,
+    default_minutes_per_unit: 2,
+    default_dependency_lag_days: 1,
+    default_requires_milling_machine: "yes",
+  });
+  const valid = parseUpdateProcessInput({
+    name: " Design ",
+    default_fixed_minutes: 10,
+    default_expected_duration_days: 3,
+    default_requires_milling_machine: true,
+    default_labor_cost: "12.5",
+  });
+
+  assert.equal(missing.success, false);
+  assert.deepEqual(missing.errors, {
+    name: ["This field is required."],
+    default_fixed_minutes: ["Must be a non-negative integer."],
+    default_expected_duration_days: ["Must be a positive integer."],
+    default_labor_cost: ["Labor cost must be zero or greater."],
+    default_minutes_per_unit: ["Minutes per unit is no longer supported."],
+    default_dependency_lag_days: ["Dependency lag days is no longer supported."],
+    default_requires_milling_machine: ["Must be a boolean."],
+  });
+  assert.deepEqual(valid, {
+    success: true,
+    data: {
+      name: "Design",
+      description: undefined,
+      default_fixed_minutes: 10,
+      default_expected_duration_days: 3,
+      default_requires_milling_machine: true,
+      default_labor_cost: "12.50",
+      is_active: undefined,
     },
   });
 });
@@ -791,6 +837,59 @@ test("employee productivity validation requires assigned process ids and positiv
         {
           process_id: "process-1",
           productivity_points_per_hour: "8.50",
+        },
+      ],
+    },
+  });
+});
+
+test("employee labor cost override validation accepts clears and rejects invalid decimals", () => {
+  const invalid = parseUpdateEmployeeLaborCostsInput({
+    assignments: [
+      {
+        process_id: " ",
+        labor_cost_override: "-2",
+      },
+      {
+        process_id: "process-1",
+        labor_cost_override: "12.345",
+      },
+    ],
+  });
+  const valid = parseUpdateEmployeeLaborCostsInput({
+    assignments: [
+      {
+        process_id: " process-1 ",
+        labor_cost_override: "18.5",
+      },
+      {
+        process_id: "process-2",
+        labor_cost_override: null,
+      },
+    ],
+  });
+
+  assert.equal(invalid.success, false);
+  assert.deepEqual(invalid.errors, {
+    "assignments.0.process_id": ["Process id is required."],
+    "assignments.0.labor_cost_override": [
+      "Labor cost override must be zero or greater.",
+    ],
+    "assignments.1.labor_cost_override": [
+      "Labor cost override must be a valid amount with up to 2 decimals.",
+    ],
+  });
+  assert.deepEqual(valid, {
+    success: true,
+    data: {
+      assignments: [
+        {
+          process_id: "process-1",
+          labor_cost_override: "18.50",
+        },
+        {
+          process_id: "process-2",
+          labor_cost_override: null,
         },
       ],
     },

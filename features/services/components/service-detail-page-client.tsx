@@ -10,12 +10,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useProcesses } from "@/features/cases/hooks/useProcesses";
 import { serviceTypesQueryKey } from "@/features/cases/hooks/useServiceTypes";
+import { WorkflowEditor } from "@/features/workflows/components/workflow-editor";
 
 import {
   buildServiceEditorState,
   getCurrentLabSettingsApi,
   getServiceApi,
+  processOptionsReady,
   updateServiceApi,
   type ServiceEditorState,
 } from "../services-api";
@@ -33,6 +36,7 @@ export function ServiceDetailPageClient({ serviceId }: Props) {
     queryKey: ["service-type", serviceId],
     queryFn: () => getServiceApi(serviceId),
   });
+  const processesQuery = useProcesses(true);
   const labSettingsQuery = useQuery({
     queryKey: labSettingsQueryKey,
     queryFn: getCurrentLabSettingsApi,
@@ -48,8 +52,10 @@ export function ServiceDetailPageClient({ serviceId }: Props) {
   }, [serviceQuery.data]);
 
   const currency = labSettingsQuery.data?.currency ?? serviceQuery.data?.currency ?? "BRL";
+  const processes = processOptionsReady(processesQuery.data);
   const loading =
     serviceQuery.isLoading ||
+    processesQuery.isLoading ||
     labSettingsQuery.isLoading ||
     !editorState;
 
@@ -102,19 +108,26 @@ export function ServiceDetailPageClient({ serviceId }: Props) {
       <PanelHeader>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <Link href="/services" className="text-sm text-muted-foreground hover:text-foreground">
-              Back to services
-            </Link>
+            <div className="flex flex-wrap gap-3 text-sm text-muted-foreground">
+              <Link href="/services" className="hover:text-foreground">
+                Services
+              </Link>
+              <span aria-hidden="true">/</span>
+              <span className="text-foreground">Overview</span>
+            </div>
             <h2 className="text-base font-semibold">{editorState.name || "Service"}</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Update the customer-facing service definition and workflow template here. Workflow timing and default step rules still come from the shared{" "}
+              <Link
+                href="/services/processes"
+                className="underline-offset-4 hover:text-foreground hover:underline"
+              >
+                process catalog
+              </Link>
+              .
+            </p>
           </div>
-          <div className="flex gap-2">
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => router.push(`/services/${serviceId}/workflow`)}
-            >
-              Workflow
-            </Button>
+          <div className="flex flex-wrap gap-2">
             <Button type="button" variant="outline" onClick={() => router.push("/services")}>
               Close
             </Button>
@@ -125,38 +138,42 @@ export function ServiceDetailPageClient({ serviceId }: Props) {
         </div>
       </PanelHeader>
 
-      <div className="grid gap-6 px-4 pb-4 sm:grid-cols-2 sm:px-6 sm:pb-6">
-        <div className="space-y-2">
-          <Label htmlFor="service-name">Name</Label>
-          <Input
-            id="service-name"
-            value={editorState.name}
-            onChange={(event) =>
-              setEditorState((current) =>
-                current ? { ...current, name: event.target.value } : current,
-              )
-            }
-          />
+      <div className="grid gap-6 px-4 pb-4 sm:px-6 sm:pb-6">
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div className="space-y-2">
+            <Label htmlFor="service-name">Name</Label>
+            <Input
+              id="service-name"
+              value={editorState.name}
+              onChange={(event) =>
+                setEditorState((current) =>
+                  current ? { ...current, name: event.target.value } : current,
+                )
+              }
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="service-price">Unit price</Label>
+            <Input
+              id="service-price"
+              type="number"
+              min={0}
+              step="0.01"
+              value={editorState.base_price}
+              onChange={(event) =>
+                setEditorState((current) =>
+                  current ? { ...current, base_price: event.target.value } : current,
+                )
+              }
+            />
+            <p className="text-xs text-muted-foreground">
+              Saved in {currency}. Customer price tables can override this default per customer.
+            </p>
+          </div>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="service-price">Unit price</Label>
-          <Input
-            id="service-price"
-            type="number"
-            min={0}
-            step="0.01"
-            value={editorState.base_price}
-            onChange={(event) =>
-              setEditorState((current) =>
-                current ? { ...current, base_price: event.target.value } : current,
-              )
-            }
-          />
-          <p className="text-xs text-muted-foreground">Saved in {currency}.</p>
-        </div>
-
-        <div className="space-y-2 sm:col-span-2">
           <Label htmlFor="service-notes">Notes</Label>
           <Textarea
             id="service-notes"
@@ -169,7 +186,7 @@ export function ServiceDetailPageClient({ serviceId }: Props) {
           />
         </div>
 
-        <div className="flex items-center gap-2 sm:col-span-2">
+        <div className="flex items-center gap-2">
           <input
             id="service-active"
             type="checkbox"
@@ -182,6 +199,33 @@ export function ServiceDetailPageClient({ serviceId }: Props) {
             className="h-4 w-4"
           />
           <Label htmlFor="service-active">Active service</Label>
+        </div>
+
+        <div className="grid gap-3 border-t border-border/40 pt-6">
+          <div>
+            <h3 className="text-sm font-medium">Workflow template</h3>
+            <p className="text-sm text-muted-foreground">
+              Define the process graph copied into each new case service line. Process timing, duration, and milling defaults are pulled from the selected process definitions.
+            </p>
+          </div>
+
+          <WorkflowEditor
+            workflow={editorState.workflow_json}
+            processes={processes}
+            taskItems={[]}
+            assigneeOptions={[]}
+            description="Template changes here apply to future case service lines."
+            disabled={false}
+            statusDisabled
+            assigneeDisabled
+            timingDisabled
+            timingDisabledMessage="Minutes and min days come from the selected process. Update them in the process catalog if the shared defaults need to change."
+            onChange={(workflow) =>
+              setEditorState((current) =>
+                current ? { ...current, workflow_json: workflow } : current,
+              )
+            }
+          />
         </div>
       </div>
 

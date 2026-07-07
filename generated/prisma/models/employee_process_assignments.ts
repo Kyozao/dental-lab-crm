@@ -28,10 +28,12 @@ export type AggregateEmployee_process_assignments = {
 
 export type Employee_process_assignmentsAvgAggregateOutputType = {
   productivity_points_per_hour: runtime.Decimal | null
+  labor_cost_override: runtime.Decimal | null
 }
 
 export type Employee_process_assignmentsSumAggregateOutputType = {
   productivity_points_per_hour: runtime.Decimal | null
+  labor_cost_override: runtime.Decimal | null
 }
 
 export type Employee_process_assignmentsMinAggregateOutputType = {
@@ -40,6 +42,7 @@ export type Employee_process_assignmentsMinAggregateOutputType = {
   lab_member_id: string | null
   process_id: string | null
   productivity_points_per_hour: runtime.Decimal | null
+  labor_cost_override: runtime.Decimal | null
   created_at: Date | null
 }
 
@@ -49,6 +52,7 @@ export type Employee_process_assignmentsMaxAggregateOutputType = {
   lab_member_id: string | null
   process_id: string | null
   productivity_points_per_hour: runtime.Decimal | null
+  labor_cost_override: runtime.Decimal | null
   created_at: Date | null
 }
 
@@ -58,6 +62,7 @@ export type Employee_process_assignmentsCountAggregateOutputType = {
   lab_member_id: number
   process_id: number
   productivity_points_per_hour: number
+  labor_cost_override: number
   created_at: number
   _all: number
 }
@@ -65,10 +70,12 @@ export type Employee_process_assignmentsCountAggregateOutputType = {
 
 export type Employee_process_assignmentsAvgAggregateInputType = {
   productivity_points_per_hour?: true
+  labor_cost_override?: true
 }
 
 export type Employee_process_assignmentsSumAggregateInputType = {
   productivity_points_per_hour?: true
+  labor_cost_override?: true
 }
 
 export type Employee_process_assignmentsMinAggregateInputType = {
@@ -77,6 +84,7 @@ export type Employee_process_assignmentsMinAggregateInputType = {
   lab_member_id?: true
   process_id?: true
   productivity_points_per_hour?: true
+  labor_cost_override?: true
   created_at?: true
 }
 
@@ -86,6 +94,7 @@ export type Employee_process_assignmentsMaxAggregateInputType = {
   lab_member_id?: true
   process_id?: true
   productivity_points_per_hour?: true
+  labor_cost_override?: true
   created_at?: true
 }
 
@@ -95,6 +104,7 @@ export type Employee_process_assignmentsCountAggregateInputType = {
   lab_member_id?: true
   process_id?: true
   productivity_points_per_hour?: true
+  labor_cost_override?: true
   created_at?: true
   _all?: true
 }
@@ -191,6 +201,7 @@ export type Employee_process_assignmentsGroupByOutputType = {
   lab_member_id: string
   process_id: string
   productivity_points_per_hour: runtime.Decimal
+  labor_cost_override: runtime.Decimal | null
   created_at: Date
   _count: Employee_process_assignmentsCountAggregateOutputType | null
   _avg: Employee_process_assignmentsAvgAggregateOutputType | null
@@ -223,6 +234,7 @@ export type employee_process_assignmentsWhereInput = {
   lab_member_id?: Prisma.UuidFilter<"employee_process_assignments"> | string
   process_id?: Prisma.UuidFilter<"employee_process_assignments"> | string
   productivity_points_per_hour?: Prisma.DecimalFilter<"employee_process_assignments"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: Prisma.DecimalNullableFilter<"employee_process_assignments"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Prisma.DateTimeFilter<"employee_process_assignments"> | Date | string
   labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
   lab_members?: Prisma.XOR<Prisma.Lab_membersScalarRelationFilter, Prisma.lab_membersWhereInput>
@@ -235,6 +247,7 @@ export type employee_process_assignmentsOrderByWithRelationInput = {
   lab_member_id?: Prisma.SortOrder
   process_id?: Prisma.SortOrder
   productivity_points_per_hour?: Prisma.SortOrder
+  labor_cost_override?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   labs?: Prisma.labsOrderByWithRelationInput
   lab_members?: Prisma.lab_membersOrderByWithRelationInput
@@ -251,6 +264,7 @@ export type employee_process_assignmentsWhereUniqueInput = Prisma.AtLeast<{
   lab_member_id?: Prisma.UuidFilter<"employee_process_assignments"> | string
   process_id?: Prisma.UuidFilter<"employee_process_assignments"> | string
   productivity_points_per_hour?: Prisma.DecimalFilter<"employee_process_assignments"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: Prisma.DecimalNullableFilter<"employee_process_assignments"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Prisma.DateTimeFilter<"employee_process_assignments"> | Date | string
   labs?: Prisma.XOR<Prisma.LabsScalarRelationFilter, Prisma.labsWhereInput>
   lab_members?: Prisma.XOR<Prisma.Lab_membersScalarRelationFilter, Prisma.lab_membersWhereInput>
@@ -263,6 +277,7 @@ export type employee_process_assignmentsOrderByWithAggregationInput = {
   lab_member_id?: Prisma.SortOrder
   process_id?: Prisma.SortOrder
   productivity_points_per_hour?: Prisma.SortOrder
+  labor_cost_override?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   _count?: Prisma.employee_process_assignmentsCountOrderByAggregateInput
   _avg?: Prisma.employee_process_assignmentsAvgOrderByAggregateInput
@@ -280,12 +295,14 @@ export type employee_process_assignmentsScalarWhereWithAggregatesInput = {
   lab_member_id?: Prisma.UuidWithAggregatesFilter<"employee_process_assignments"> | string
   process_id?: Prisma.UuidWithAggregatesFilter<"employee_process_assignments"> | string
   productivity_points_per_hour?: Prisma.DecimalWithAggregatesFilter<"employee_process_assignments"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: Prisma.DecimalNullableWithAggregatesFilter<"employee_process_assignments"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"employee_process_assignments"> | Date | string
 }
 
 export type employee_process_assignmentsCreateInput = {
   id?: string
   productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Date | string
   labs: Prisma.labsCreateNestedOneWithoutEmployeeProcessAssignmentsInput
   lab_members: Prisma.lab_membersCreateNestedOneWithoutProcessOwnershipsInput
@@ -298,12 +315,14 @@ export type employee_process_assignmentsUncheckedCreateInput = {
   lab_member_id: string
   process_id: string
   productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Date | string
 }
 
 export type employee_process_assignmentsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   labs?: Prisma.labsUpdateOneRequiredWithoutEmployeeProcessAssignmentsNestedInput
   lab_members?: Prisma.lab_membersUpdateOneRequiredWithoutProcessOwnershipsNestedInput
@@ -316,6 +335,7 @@ export type employee_process_assignmentsUncheckedUpdateInput = {
   lab_member_id?: Prisma.StringFieldUpdateOperationsInput | string
   process_id?: Prisma.StringFieldUpdateOperationsInput | string
   productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -325,12 +345,14 @@ export type employee_process_assignmentsCreateManyInput = {
   lab_member_id: string
   process_id: string
   productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Date | string
 }
 
 export type employee_process_assignmentsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -340,6 +362,7 @@ export type employee_process_assignmentsUncheckedUpdateManyInput = {
   lab_member_id?: Prisma.StringFieldUpdateOperationsInput | string
   process_id?: Prisma.StringFieldUpdateOperationsInput | string
   productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -365,11 +388,13 @@ export type employee_process_assignmentsCountOrderByAggregateInput = {
   lab_member_id?: Prisma.SortOrder
   process_id?: Prisma.SortOrder
   productivity_points_per_hour?: Prisma.SortOrder
+  labor_cost_override?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
 
 export type employee_process_assignmentsAvgOrderByAggregateInput = {
   productivity_points_per_hour?: Prisma.SortOrder
+  labor_cost_override?: Prisma.SortOrder
 }
 
 export type employee_process_assignmentsMaxOrderByAggregateInput = {
@@ -378,6 +403,7 @@ export type employee_process_assignmentsMaxOrderByAggregateInput = {
   lab_member_id?: Prisma.SortOrder
   process_id?: Prisma.SortOrder
   productivity_points_per_hour?: Prisma.SortOrder
+  labor_cost_override?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
 
@@ -387,11 +413,13 @@ export type employee_process_assignmentsMinOrderByAggregateInput = {
   lab_member_id?: Prisma.SortOrder
   process_id?: Prisma.SortOrder
   productivity_points_per_hour?: Prisma.SortOrder
+  labor_cost_override?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
 }
 
 export type employee_process_assignmentsSumOrderByAggregateInput = {
   productivity_points_per_hour?: Prisma.SortOrder
+  labor_cost_override?: Prisma.SortOrder
 }
 
 export type employee_process_assignmentsCreateNestedManyWithoutLabsInput = {
@@ -520,9 +548,18 @@ export type employee_process_assignmentsUncheckedUpdateManyWithoutProcessesNeste
   deleteMany?: Prisma.employee_process_assignmentsScalarWhereInput | Prisma.employee_process_assignmentsScalarWhereInput[]
 }
 
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
 export type employee_process_assignmentsCreateWithoutLabsInput = {
   id?: string
   productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Date | string
   lab_members: Prisma.lab_membersCreateNestedOneWithoutProcessOwnershipsInput
   processes: Prisma.processesCreateNestedOneWithoutEmployeeAssignmentsInput
@@ -533,6 +570,7 @@ export type employee_process_assignmentsUncheckedCreateWithoutLabsInput = {
   lab_member_id: string
   process_id: string
   productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Date | string
 }
 
@@ -571,12 +609,14 @@ export type employee_process_assignmentsScalarWhereInput = {
   lab_member_id?: Prisma.UuidFilter<"employee_process_assignments"> | string
   process_id?: Prisma.UuidFilter<"employee_process_assignments"> | string
   productivity_points_per_hour?: Prisma.DecimalFilter<"employee_process_assignments"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: Prisma.DecimalNullableFilter<"employee_process_assignments"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Prisma.DateTimeFilter<"employee_process_assignments"> | Date | string
 }
 
 export type employee_process_assignmentsCreateWithoutLab_membersInput = {
   id?: string
   productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Date | string
   labs: Prisma.labsCreateNestedOneWithoutEmployeeProcessAssignmentsInput
   processes: Prisma.processesCreateNestedOneWithoutEmployeeAssignmentsInput
@@ -587,6 +627,7 @@ export type employee_process_assignmentsUncheckedCreateWithoutLab_membersInput =
   lab_id: string
   process_id: string
   productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Date | string
 }
 
@@ -619,6 +660,7 @@ export type employee_process_assignmentsUpdateManyWithWhereWithoutLab_membersInp
 export type employee_process_assignmentsCreateWithoutProcessesInput = {
   id?: string
   productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Date | string
   labs: Prisma.labsCreateNestedOneWithoutEmployeeProcessAssignmentsInput
   lab_members: Prisma.lab_membersCreateNestedOneWithoutProcessOwnershipsInput
@@ -629,6 +671,7 @@ export type employee_process_assignmentsUncheckedCreateWithoutProcessesInput = {
   lab_id: string
   lab_member_id: string
   productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Date | string
 }
 
@@ -663,12 +706,14 @@ export type employee_process_assignmentsCreateManyLabsInput = {
   lab_member_id: string
   process_id: string
   productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Date | string
 }
 
 export type employee_process_assignmentsUpdateWithoutLabsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lab_members?: Prisma.lab_membersUpdateOneRequiredWithoutProcessOwnershipsNestedInput
   processes?: Prisma.processesUpdateOneRequiredWithoutEmployeeAssignmentsNestedInput
@@ -679,6 +724,7 @@ export type employee_process_assignmentsUncheckedUpdateWithoutLabsInput = {
   lab_member_id?: Prisma.StringFieldUpdateOperationsInput | string
   process_id?: Prisma.StringFieldUpdateOperationsInput | string
   productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -687,6 +733,7 @@ export type employee_process_assignmentsUncheckedUpdateManyWithoutLabsInput = {
   lab_member_id?: Prisma.StringFieldUpdateOperationsInput | string
   process_id?: Prisma.StringFieldUpdateOperationsInput | string
   productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -695,12 +742,14 @@ export type employee_process_assignmentsCreateManyLab_membersInput = {
   lab_id: string
   process_id: string
   productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Date | string
 }
 
 export type employee_process_assignmentsUpdateWithoutLab_membersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   labs?: Prisma.labsUpdateOneRequiredWithoutEmployeeProcessAssignmentsNestedInput
   processes?: Prisma.processesUpdateOneRequiredWithoutEmployeeAssignmentsNestedInput
@@ -711,6 +760,7 @@ export type employee_process_assignmentsUncheckedUpdateWithoutLab_membersInput =
   lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   process_id?: Prisma.StringFieldUpdateOperationsInput | string
   productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -719,6 +769,7 @@ export type employee_process_assignmentsUncheckedUpdateManyWithoutLab_membersInp
   lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   process_id?: Prisma.StringFieldUpdateOperationsInput | string
   productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -727,12 +778,14 @@ export type employee_process_assignmentsCreateManyProcessesInput = {
   lab_id: string
   lab_member_id: string
   productivity_points_per_hour?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Date | string
 }
 
 export type employee_process_assignmentsUpdateWithoutProcessesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   labs?: Prisma.labsUpdateOneRequiredWithoutEmployeeProcessAssignmentsNestedInput
   lab_members?: Prisma.lab_membersUpdateOneRequiredWithoutProcessOwnershipsNestedInput
@@ -743,6 +796,7 @@ export type employee_process_assignmentsUncheckedUpdateWithoutProcessesInput = {
   lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   lab_member_id?: Prisma.StringFieldUpdateOperationsInput | string
   productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -751,6 +805,7 @@ export type employee_process_assignmentsUncheckedUpdateManyWithoutProcessesInput
   lab_id?: Prisma.StringFieldUpdateOperationsInput | string
   lab_member_id?: Prisma.StringFieldUpdateOperationsInput | string
   productivity_points_per_hour?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  labor_cost_override?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -762,6 +817,7 @@ export type employee_process_assignmentsSelect<ExtArgs extends runtime.Types.Ext
   lab_member_id?: boolean
   process_id?: boolean
   productivity_points_per_hour?: boolean
+  labor_cost_override?: boolean
   created_at?: boolean
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   lab_members?: boolean | Prisma.lab_membersDefaultArgs<ExtArgs>
@@ -774,6 +830,7 @@ export type employee_process_assignmentsSelectCreateManyAndReturn<ExtArgs extend
   lab_member_id?: boolean
   process_id?: boolean
   productivity_points_per_hour?: boolean
+  labor_cost_override?: boolean
   created_at?: boolean
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   lab_members?: boolean | Prisma.lab_membersDefaultArgs<ExtArgs>
@@ -786,6 +843,7 @@ export type employee_process_assignmentsSelectUpdateManyAndReturn<ExtArgs extend
   lab_member_id?: boolean
   process_id?: boolean
   productivity_points_per_hour?: boolean
+  labor_cost_override?: boolean
   created_at?: boolean
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   lab_members?: boolean | Prisma.lab_membersDefaultArgs<ExtArgs>
@@ -798,10 +856,11 @@ export type employee_process_assignmentsSelectScalar = {
   lab_member_id?: boolean
   process_id?: boolean
   productivity_points_per_hour?: boolean
+  labor_cost_override?: boolean
   created_at?: boolean
 }
 
-export type employee_process_assignmentsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "lab_member_id" | "process_id" | "productivity_points_per_hour" | "created_at", ExtArgs["result"]["employee_process_assignments"]>
+export type employee_process_assignmentsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "lab_id" | "lab_member_id" | "process_id" | "productivity_points_per_hour" | "labor_cost_override" | "created_at", ExtArgs["result"]["employee_process_assignments"]>
 export type employee_process_assignmentsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   labs?: boolean | Prisma.labsDefaultArgs<ExtArgs>
   lab_members?: boolean | Prisma.lab_membersDefaultArgs<ExtArgs>
@@ -831,6 +890,7 @@ export type $employee_process_assignmentsPayload<ExtArgs extends runtime.Types.E
     lab_member_id: string
     process_id: string
     productivity_points_per_hour: runtime.Decimal
+    labor_cost_override: runtime.Decimal | null
     created_at: Date
   }, ExtArgs["result"]["employee_process_assignments"]>
   composites: {}
@@ -1263,6 +1323,7 @@ export interface employee_process_assignmentsFieldRefs {
   readonly lab_member_id: Prisma.FieldRef<"employee_process_assignments", 'String'>
   readonly process_id: Prisma.FieldRef<"employee_process_assignments", 'String'>
   readonly productivity_points_per_hour: Prisma.FieldRef<"employee_process_assignments", 'Decimal'>
+  readonly labor_cost_override: Prisma.FieldRef<"employee_process_assignments", 'Decimal'>
   readonly created_at: Prisma.FieldRef<"employee_process_assignments", 'DateTime'>
 }
     

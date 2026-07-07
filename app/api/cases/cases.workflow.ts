@@ -8,12 +8,13 @@ import type {
   CaseServiceLineInput,
   CreateCaseInput,
 } from "./cases.schemas";
-import { caseInclude, InactiveReferenceError } from "./cases.utils";
+import { InactiveReferenceError } from "./cases.utils";
 import type {
   ServiceTypeWorkflow,
   ServiceTypeWorkflowStep,
 } from "../service-types/service-types.schemas";
 import { normalizeWorkflow } from "../service-types/service-types.schemas";
+import { hydrateWorkflowWithProcessTimingDefaults } from "../service-types/service-types.workflow-defaults";
 
 type ServiceLineWorkflowPlan = {
   input: CaseServiceLineInput;
@@ -34,9 +35,7 @@ function isWorkflowStep(value: Prisma.JsonValue): value is ServiceTypeWorkflowSt
   const process_id = value.process_id;
   const dependsOn = value.dependsOn;
   const fixed_minutes = value.fixed_minutes ?? value.fixed_points;
-  const minutes_per_unit = value.minutes_per_unit ?? value.points_per_unit;
   const expected_duration_days = value.expected_duration_days;
-  const dependency_lag_days = value.dependency_lag_days;
   const requires_milling_machine = value.requires_milling_machine;
 
   return (
@@ -47,15 +46,9 @@ function isWorkflowStep(value: Prisma.JsonValue): value is ServiceTypeWorkflowSt
     typeof fixed_minutes === "number" &&
     Number.isInteger(fixed_minutes) &&
     fixed_minutes >= 0 &&
-    typeof minutes_per_unit === "number" &&
-    Number.isInteger(minutes_per_unit) &&
-    minutes_per_unit >= 0 &&
     typeof expected_duration_days === "number" &&
     Number.isInteger(expected_duration_days) &&
     expected_duration_days >= 1 &&
-    typeof dependency_lag_days === "number" &&
-    Number.isInteger(dependency_lag_days) &&
-    dependency_lag_days >= 0 &&
     typeof requires_milling_machine === "boolean"
   );
 }
@@ -65,6 +58,16 @@ function normalizeWorkflowJson(value: Prisma.JsonValue | undefined): ServiceType
   return {
     steps: normalized.steps.filter(isWorkflowStep),
   };
+}
+
+async function getHydratedWorkflowForLab(
+  lab_id: string,
+  workflow: ServiceTypeWorkflow,
+) {
+  if (workflow.steps.length === 0) return workflow;
+
+  await validateWorkflowProcesses(lab_id, workflow);
+  return hydrateWorkflowWithProcessTimingDefaults(lab_id, workflow);
 }
 
 export async function getWorkflowForServiceType(
@@ -83,10 +86,7 @@ export async function getWorkflowForServiceType(
   });
 
   const workflow = normalizeWorkflowJson(serviceType?.workflow_json);
-  if (workflow.steps.length === 0) return workflow;
-
-  await validateWorkflowProcesses(lab_id, workflow);
-  return workflow;
+  return getHydratedWorkflowForLab(lab_id, workflow);
 }
 
 export async function getWorkflowForCaseCreate(
@@ -156,9 +156,7 @@ function buildCaseProcessRows(
     process_id: step.process_id,
     workflow_step_id: step.id,
     snapshot_fixed_minutes: step.fixed_minutes ?? 1,
-    snapshot_minutes_per_unit: step.minutes_per_unit ?? 0,
     snapshot_expected_duration_days: step.expected_duration_days ?? 1,
-    snapshot_dependency_lag_days: step.dependency_lag_days ?? 0,
     snapshot_requires_milling_machine: step.requires_milling_machine ?? false,
     status:
       step.dependsOn.length === 0
@@ -352,13 +350,10 @@ export async function createCaseWithWorkflow(
         CaseStatus.IN_PRODUCTION
           ? "Case created."
           : null),
-    },
+      },
   });
 
-  return tx.cases.findUniqueOrThrow({
-    where: { id: item.id },
-    include: caseInclude,
-  });
+  return { id: item.id };
 }
 
 export async function createWorkflowForExistingCase(

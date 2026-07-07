@@ -27,6 +27,7 @@ export async function GET(
       error: null,
       meta: {
         currentUserRole: result.currentUserRole,
+        labCurrency: result.labCurrency,
         canAssignProcesses: result.canAssignProcesses,
         canEditRole: result.canEditRole,
         canManageCapacity: result.canManageCapacity,

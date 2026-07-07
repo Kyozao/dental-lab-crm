@@ -18,10 +18,10 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/app/empty-state";
 import { PageHeader } from "@/components/app/page-header";
 import { PageShell } from "@/components/app/page-shell";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
@@ -38,9 +38,9 @@ import {
 import { CASE_STATUS_META } from "@/features/cases/constants";
 
 type SummaryStats = {
-  totalDesigners: number;
+  totalEmployees: number;
   totalAssignedCases: number;
-  totalTeethDesigned: number;
+  totalTeethTracked: number;
   openCases: number;
   openTeeth: number;
   completedThisMonth: number;
@@ -48,18 +48,17 @@ type SummaryStats = {
   avgTurnaroundDays: number | null;
 };
 
-type DesignerStat = {
+type EmployeeStat = {
   id: string;
   name: string;
   totalCases: number;
-  totalTeethDesigned: number;
-  activeCases: number;
-  activeTeeth: number;
-  completedCases: number;
-  completedTeeth: number;
-  completedThisWeek: number;
-  completedThisMonth: number;
-  completedTeethThisMonth: number;
+  totalTeethTracked: number;
+  openCases: number;
+  openTeeth: number;
+  closedCases: number;
+  closedTeeth: number;
+  completedProcessesThisWeek: number;
+  completedProcessesThisMonth: number;
   urgentOpenCases: number;
   overdueCases: number;
   avgTurnaroundDays: number | null;
@@ -73,11 +72,11 @@ type StatusDatum = {
   fill: string;
 };
 
-interface CadStatsDashboardProps {
+interface LabOperationsDashboardProps {
   title: string;
   description: string;
   summary: SummaryStats;
-  designerStats: DesignerStat[];
+  employeeStats: EmployeeStat[];
   statusData: StatusDatum[];
   isSelfView: boolean;
 }
@@ -87,8 +86,8 @@ const workloadConfig = {
     label: "Open teeth",
     color: "#2563eb",
   },
-  completedTeeth: {
-    label: "Completed teeth",
+  closedTeeth: {
+    label: "Closed teeth",
     color: "#16a34a",
   },
 } satisfies ChartConfig;
@@ -102,67 +101,67 @@ const statusConfig = Object.fromEntries(
 
 function formatDays(value: number | null) {
   if (value === null) {
-    return "—";
+    return "-";
   }
 
   return `${value.toFixed(1)}d`;
 }
 
-export function CadStatsDashboard({
+export function LabOperationsDashboard({
   title,
   description,
   summary,
-  designerStats,
+  employeeStats,
   statusData,
   isSelfView,
-}: CadStatsDashboardProps) {
-  const workloadData = designerStats.slice(0, 6).map((designer) => ({
-    name: designer.name,
-    openTeeth: designer.activeTeeth,
-    completedTeeth: designer.completedTeeth,
+}: LabOperationsDashboardProps) {
+  const workloadData = employeeStats.slice(0, 6).map((employee) => ({
+    name: employee.name,
+    openTeeth: employee.openTeeth,
+    closedTeeth: employee.closedTeeth,
   }));
 
   const summaryCards = [
     {
-      label: "Designers tracked",
-      value: summary.totalDesigners.toLocaleString(),
-      hint: isSelfView ? "Your personal workflow view" : "Active workflow groups",
+      label: "Employees tracked",
+      value: summary.totalEmployees.toLocaleString(),
+      hint: isSelfView ? "Your assigned operations view" : "Active employees in this lab",
       icon: Users,
     },
     {
       label: "Assigned cases",
       value: summary.totalAssignedCases.toLocaleString(),
-      hint: "Total workload on record",
+      hint: "Unique cases linked to assigned work",
       icon: Layers3,
     },
     {
-      label: "Teeth designed",
-      value: summary.totalTeethDesigned.toLocaleString(),
-      hint: "Summed from case elements",
+      label: "Teeth tracked",
+      value: summary.totalTeethTracked.toLocaleString(),
+      hint: "Uses elements quantity with teeth fallback",
       icon: BarChart3,
     },
     {
       label: "Open teeth",
       value: summary.openTeeth.toLocaleString(),
-      hint: "Still in progress",
+      hint: `${summary.openCases.toLocaleString()} open cases`,
       icon: BarChart3,
     },
     {
       label: "Completed this month",
       value: summary.completedThisMonth.toLocaleString(),
-      hint: "Throughput this month",
+      hint: "Done cases finished this month",
       icon: CheckCircle2,
     },
     {
       label: "Urgent open cases",
       value: summary.urgentOpenCases.toLocaleString(),
-      hint: "Need fast follow-up",
+      hint: "Cases that need immediate follow-up",
       icon: AlertTriangle,
     },
     {
       label: "Avg. turnaround",
       value: formatDays(summary.avgTurnaroundDays),
-      hint: "From creation to done",
+      hint: "Average from case creation to final completion",
       icon: Clock3,
     },
   ];
@@ -174,9 +173,9 @@ export function CadStatsDashboard({
         description={description}
         badge={
           isSelfView ? (
-          <Badge variant="outline" className="w-fit">
-            Showing only your assigned cases
-          </Badge>
+            <Badge variant="outline" className="w-fit">
+              Showing only your assigned cases
+            </Badge>
           ) : null
         }
       />
@@ -190,9 +189,7 @@ export function CadStatsDashboard({
               <CardContent className="flex items-start justify-between gap-4 pt-6">
                 <div className="space-y-1">
                   <p className="text-sm text-muted-foreground">{item.label}</p>
-                  <p className="text-3xl font-semibold tracking-tight">
-                    {item.value}
-                  </p>
+                  <p className="text-3xl font-semibold tracking-tight">{item.value}</p>
                   <p className="text-xs text-muted-foreground">{item.hint}</p>
                 </div>
                 <div className="rounded-lg bg-accent p-2 text-muted-foreground">
@@ -207,9 +204,9 @@ export function CadStatsDashboard({
       <div className="grid gap-6 xl:grid-cols-[2fr_1fr]">
         <Card>
           <CardHeader>
-            <CardTitle>Teeth by workflow group</CardTitle>
+            <CardTitle>Teeth by employee</CardTitle>
             <CardDescription>
-              Open versus completed teeth across the busiest workflow groups.
+              Open versus closed teeth across the busiest employees.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -223,21 +220,13 @@ export function CadStatsDashboard({
                     cursor={false}
                     content={<ChartTooltipContent indicator="dot" />}
                   />
-                  <Bar
-                    dataKey="openTeeth"
-                    fill="var(--color-openTeeth)"
-                    radius={6}
-                  />
-                  <Bar
-                    dataKey="completedTeeth"
-                    fill="var(--color-completedTeeth)"
-                    radius={6}
-                  />
+                  <Bar dataKey="openTeeth" fill="var(--color-openTeeth)" radius={6} />
+                  <Bar dataKey="closedTeeth" fill="var(--color-closedTeeth)" radius={6} />
                 </BarChart>
               </ChartContainer>
             ) : (
               <EmptyState
-                title="No CAD activity yet"
+                title="No employee workload is visible yet"
                 className="flex h-80 flex-col items-center justify-center rounded-lg border border-dashed"
               />
             )}
@@ -248,7 +237,7 @@ export function CadStatsDashboard({
           <CardHeader>
             <CardTitle>Case status mix</CardTitle>
             <CardDescription>
-              Distribution of all visible CAD cases by stage.
+              Distribution of visible cases by current status.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -304,7 +293,7 @@ export function CadStatsDashboard({
               </>
             ) : (
               <EmptyState
-                title="No case statuses to display yet"
+                title="No case statuses are available yet"
                 className="flex h-72 flex-col items-center justify-center rounded-lg border border-dashed"
               />
             )}
@@ -314,34 +303,33 @@ export function CadStatsDashboard({
 
       <Card>
         <CardHeader>
-          <CardTitle>Designer leaderboard</CardTitle>
+          <CardTitle>Employee workload</CardTitle>
           <CardDescription>
-            Quick comparison of throughput, urgency, and turnaround time.
+            Compare open work, closed volume, urgent queues, and process throughput.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {designerStats.length ? (
+          {employeeStats.length ? (
             <div className="grid gap-4 lg:grid-cols-2">
-              {designerStats.map((designer) => (
+              {employeeStats.map((employee) => (
                 <div
-                  key={designer.id}
+                  key={employee.id}
                   className="rounded-xl border border-border/60 bg-background p-4"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h3 className="font-semibold text-foreground">
-                        {designer.name}
-                      </h3>
+                      <h3 className="font-semibold text-foreground">{employee.name}</h3>
                       <p className="text-sm text-muted-foreground">
-                        {designer.totalCases} assigned •{" "}
-                        {designer.totalTeethDesigned} teeth designed •{" "}
-                        {designer.completionRate}% complete
+                        {employee.totalCases} tracked cases · {employee.totalTeethTracked} teeth
+                        · {employee.completionRate}% closed
                       </p>
                     </div>
-                    {designer.urgentOpenCases > 0 ? (
+                    {employee.urgentOpenCases > 0 ? (
                       <Badge variant="destructive">
-                        {designer.urgentOpenCases} urgent
+                        {employee.urgentOpenCases} urgent
                       </Badge>
+                    ) : employee.overdueCases > 0 ? (
+                      <Badge variant="outline">{employee.overdueCases} overdue</Badge>
                     ) : (
                       <Badge variant="secondary">On track</Badge>
                     )}
@@ -350,38 +338,30 @@ export function CadStatsDashboard({
                   <dl className="mt-4 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
                     <div className="rounded-lg bg-muted/50 p-3">
                       <dt className="text-muted-foreground">Open cases</dt>
-                      <dd className="mt-1 text-lg font-semibold">
-                        {designer.activeCases}
-                      </dd>
+                      <dd className="mt-1 text-lg font-semibold">{employee.openCases}</dd>
                     </div>
                     <div className="rounded-lg bg-muted/50 p-3">
                       <dt className="text-muted-foreground">Open teeth</dt>
-                      <dd className="mt-1 text-lg font-semibold">
-                        {designer.activeTeeth}
-                      </dd>
+                      <dd className="mt-1 text-lg font-semibold">{employee.openTeeth}</dd>
                     </div>
                     <div className="rounded-lg bg-muted/50 p-3">
-                      <dt className="text-muted-foreground">Done cases</dt>
-                      <dd className="mt-1 text-lg font-semibold">
-                        {designer.completedCases}
-                      </dd>
+                      <dt className="text-muted-foreground">Closed cases</dt>
+                      <dd className="mt-1 text-lg font-semibold">{employee.closedCases}</dd>
                     </div>
                     <div className="rounded-lg bg-muted/50 p-3">
-                      <dt className="text-muted-foreground">Done teeth</dt>
-                      <dd className="mt-1 text-lg font-semibold">
-                        {designer.completedTeeth}
-                      </dd>
+                      <dt className="text-muted-foreground">Closed teeth</dt>
+                      <dd className="mt-1 text-lg font-semibold">{employee.closedTeeth}</dd>
                     </div>
                     <div className="rounded-lg bg-muted/50 p-3">
-                      <dt className="text-muted-foreground">Month teeth</dt>
+                      <dt className="text-muted-foreground">Month processes</dt>
                       <dd className="mt-1 text-lg font-semibold">
-                        {designer.completedTeethThisMonth}
+                        {employee.completedProcessesThisMonth}
                       </dd>
                     </div>
                     <div className="rounded-lg bg-muted/50 p-3">
                       <dt className="text-muted-foreground">Avg. time</dt>
                       <dd className="mt-1 text-lg font-semibold">
-                        {formatDays(designer.avgTurnaroundDays)}
+                        {formatDays(employee.avgTurnaroundDays)}
                       </dd>
                     </div>
                   </dl>
@@ -389,7 +369,7 @@ export function CadStatsDashboard({
               ))}
             </div>
           ) : (
-            <EmptyState title="No workflow groups were found yet" />
+            <EmptyState title="No employee records were found for this dashboard" />
           )}
         </CardContent>
       </Card>

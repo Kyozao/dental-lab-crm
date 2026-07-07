@@ -94,17 +94,32 @@ export function ServiceWorkflowPageClient({ serviceId }: Props) {
       <PanelHeader>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div>
-            <Link
-              href="/services"
-              className="text-sm text-muted-foreground hover:text-foreground"
-            >
-              Back to services
-            </Link>
+            <div className="flex flex-wrap gap-3 text-sm text-muted-foreground">
+              <Link href="/services" className="hover:text-foreground">
+                Services
+              </Link>
+              <span aria-hidden="true">/</span>
+              <Link href={`/services/${serviceId}`} className="hover:text-foreground">
+                {editorState.name || "Service"}
+              </Link>
+              <span aria-hidden="true">/</span>
+              <span className="text-foreground">Workflow</span>
+            </div>
             <h2 className="text-base font-semibold">
               {editorState.name || "Service"} workflow
             </h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              This workflow stays service-specific. Process definitions remain shared references in the{" "}
+              <Link
+                href="/services/processes"
+                className="underline-offset-4 hover:text-foreground hover:underline"
+              >
+                process catalog
+              </Link>
+              .
+            </p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <Button
               type="button"
               variant="outline"
@@ -123,7 +138,7 @@ export function ServiceWorkflowPageClient({ serviceId }: Props) {
         <div>
           <h3 className="text-sm font-medium">Workflow template</h3>
           <p className="text-sm text-muted-foreground">
-            Define the process graph copied into each new case service line.
+            Define the process graph copied into each new case service line. Process timing, duration, and milling defaults are pulled from the selected process definitions.
           </p>
         </div>
 
@@ -132,9 +147,12 @@ export function ServiceWorkflowPageClient({ serviceId }: Props) {
           processes={processes}
           taskItems={[]}
           assigneeOptions={[]}
+          description="Template changes here apply to future case service lines."
           disabled={false}
           statusDisabled
           assigneeDisabled
+          timingDisabled
+          timingDisabledMessage="Minutes and min days come from the selected process. Update them in the process catalog if the shared defaults need to change."
           onChange={(workflow) =>
             setEditorState((current) =>
               current ? { ...current, workflow_json: workflow } : current,
